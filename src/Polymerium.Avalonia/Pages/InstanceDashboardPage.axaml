@@ -9,7 +9,7 @@
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:launching="clr-namespace:TridentCore.Core.Engines.Launching;assembly=TridentCore.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:trident="using:TridentCore.Core"
+    xmlns:trident="using:TridentCore.Abstractions"
     xmlns:v="https://github.com/d3ara1n/Polymerium/Pages"
     d:DesignHeight="600"
     d:DesignWidth="800"

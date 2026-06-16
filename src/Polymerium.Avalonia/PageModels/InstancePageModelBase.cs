@@ -7,6 +7,7 @@ using Polymerium.Avalonia.Exceptions;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Widgets;
+using TridentCore.Abstractions;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Tasks;
 using TridentCore.Core;

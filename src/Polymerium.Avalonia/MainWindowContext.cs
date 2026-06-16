@@ -715,12 +715,12 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Running:
                     model.IsPending = true;
                     model.Progress = 0d;
-                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Installing);
+                    Dispatcher.UIThread.Post(() => model.State = InstanceState.Installing);
                     break;
                 case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
-                        model.State = InstanceEntryState.Idle;
+                        model.State = InstanceState.Idle;
                         _entries.Remove(model);
                         _notificationService.PopMessage(e.FailureReason,
                                                         Resources.MainWindow_InstanceInstallingDangerNotificationTitle
@@ -732,7 +732,7 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Finished:
                     Dispatcher.UIThread.Post(() =>
                     {
-                        model.State = InstanceEntryState.Idle;
+                        model.State = InstanceState.Idle;
                         _notificationService.PopMessage(Resources
                                                            .MainWindow_InstanceInstallingSuccessNotificationMessage,
                                                         e.Key,
@@ -756,7 +756,7 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
-                        model.State = InstanceEntryState.Idle;
+                        model.State = InstanceState.Idle;
                         _entries.Remove(model);
                     });
                     e.StateUpdated -= OnStateChanged;
@@ -799,12 +799,12 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Running:
                     model.IsPending = true;
                     model.Progress = 0d;
-                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Updating);
+                    Dispatcher.UIThread.Post(() => model.State = InstanceState.Updating);
                     break;
                 case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
-                        model.State = InstanceEntryState.Idle;
+                        model.State = InstanceState.Idle;
                         _notificationService.PopMessage(e.FailureReason,
                                                         Resources.MainWindow_InstanceUpdatingDangerNotificationTitle
                                                                  .Replace("{0}", e.Key),
@@ -815,7 +815,7 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Finished:
                     Dispatcher.UIThread.Post(() =>
                     {
-                        model.State = InstanceEntryState.Idle;
+                        model.State = InstanceState.Idle;
                         _notificationService.PopMessage(Resources.MainWindow_InstanceUpdatingSuccessNotificationMessage,
                                                         e.Key,
                                                         GrowlLevel.Success,
@@ -837,7 +837,7 @@ public partial class MainWindowContext : ObservableObject
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
-                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
+                    Dispatcher.UIThread.Post(() => model.State = InstanceState.Idle);
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:
@@ -890,12 +890,12 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Running:
                     model.IsPending = true;
                     model.Progress = 0d;
-                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Preparing);
+                    Dispatcher.UIThread.Post(() => model.State = InstanceState.Deploying);
                     break;
                 case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
-                        model.State = InstanceEntryState.Idle;
+                        model.State = InstanceState.Idle;
                         _notificationService.PopMessage(e.FailureReason,
                                                         Resources.MainWindow_InstanceDeployingNotificationTitle
                                                                  .Replace("{0}", e.Key),
@@ -906,7 +906,7 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Finished:
                     Dispatcher.UIThread.Post(() =>
                     {
-                        model.State = InstanceEntryState.Idle;
+                        model.State = InstanceState.Idle;
                         _notificationService.PopMessage(Resources
                                                            .MainWindow_InstanceDeployingSuccessNotificationMessage,
                                                         e.Key,
@@ -916,7 +916,7 @@ public partial class MainWindowContext : ObservableObject
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
-                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
+                    Dispatcher.UIThread.Post(() => model.State = InstanceState.Idle);
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:
@@ -950,13 +950,13 @@ public partial class MainWindowContext : ObservableObject
                         model.Progress = 0d;
                         // 不从 ProfileManager 里取，反正 UI 上只要行为类似就好
                         model.LastPlayedAtRaw = DateTimeOffset.Now;
-                        model.State = InstanceEntryState.Running;
+                        model.State = InstanceState.Running;
                     });
                     break;
                 case TrackerState.Faulted when e.FailureReason is not OperationCanceledException:
                     Dispatcher.UIThread.Post(() =>
                     {
-                        model.State = InstanceEntryState.Idle;
+                        model.State = InstanceState.Idle;
 
                         // Determine if this is an account issue or game crash
                         var isAccountIssue = e.FailureReason is AccountException
@@ -1017,7 +1017,7 @@ public partial class MainWindowContext : ObservableObject
                 case TrackerState.Finished:
                     Dispatcher.UIThread.Post(() =>
                     {
-                        model.State = InstanceEntryState.Idle;
+                        model.State = InstanceState.Idle;
                         _notificationService.PopMessage(Resources
                                                            .MainWindow_InstanceLaunchingSuccessNotificationMessage,
                                                         e.Key,
@@ -1036,7 +1036,7 @@ public partial class MainWindowContext : ObservableObject
                     e.StateUpdated -= OnStateChanged;
                     break;
                 case TrackerState.Faulted when e.FailureReason is OperationCanceledException:
-                    Dispatcher.UIThread.Post(() => model.State = InstanceEntryState.Idle);
+                    Dispatcher.UIThread.Post(() => model.State = InstanceState.Idle);
                     e.StateUpdated -= OnStateChanged;
                     break;
                 default:

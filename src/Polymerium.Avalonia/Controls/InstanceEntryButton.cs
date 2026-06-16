@@ -1,15 +1,16 @@
 using Avalonia;
 using Avalonia.Controls;
 using Polymerium.Avalonia.Models;
+using TridentCore.Abstractions;
 
 namespace Polymerium.Avalonia.Controls;
 
 public class InstanceEntryButton : Button
 {
-    public static readonly StyledProperty<InstanceEntryState> StateProperty =
-        AvaloniaProperty.Register<InstanceEntryButton, InstanceEntryState>(nameof(State));
+    public static readonly StyledProperty<InstanceState> StateProperty =
+        AvaloniaProperty.Register<InstanceEntryButton, InstanceState>(nameof(State));
 
-    public InstanceEntryState State
+    public InstanceState State
     {
         get => GetValue(StateProperty);
         set => SetValue(StateProperty, value);
