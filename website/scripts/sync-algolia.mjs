@@ -23,7 +23,7 @@ const records = JSON.parse(content);
 const client = algoliasearch(appId, apiKey);
 
 await sync(client, {
-  indexName: 'document',
+  indexName: process.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME || 'document',
   documents: records,
 });
 

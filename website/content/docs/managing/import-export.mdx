@@ -60,9 +60,58 @@ Not all modpack formats work the same way under the hood:
 
   This means a CurseForge modpack should ideally only reference CurseForge mods, and a Modrinth modpack should only reference Modrinth mods. If you mix sources, the modpack won't pass platform review when publishing.
 
-- **Trident and MultiMC** formats are **offline** — they bundle the actual mod files inside the archive. No internet resolution needed on import.
+- **MultiMC** format is **offline** — it bundles the actual mod files inside the archive. No internet resolution needed on import.
+
+- **Trident** is neither purely online nor offline. By default it stores online references (PURLs) and resolves mods at deploy time, but can optionally bundle mod files in offline mode. See the [Trident Portable Instance](#trident-portable-instance) section below for details.
 
 Keep this in mind when choosing a format for publishing your modpack.
+
+## Trident Portable Instance
+
+The Trident format is fundamentally different from other modpack formats. Rather than being just a mod list, it's a **complete instance snapshot** — a portable representation of everything Polymerium knows about an instance.
+
+### What's Inside
+
+A Trident `.zip` archive contains:
+
+| File | Purpose |
+|------|---------|
+| `trident.index.json` | Full instance profile: mod list with PURLs, tags, rules, overrides, source tracking |
+| `trident.options.json` | Export configuration (offline mode, excluded tags, included overrides) |
+| `icon.png` (or other format) | Instance icon — bundled automatically if present |
+| `README.md` | Instance readme |
+| `CHANGELOG.md` | Instance changelog |
+| `LICENSE.txt` | Instance license |
+| `import/` | Override files (configs, scripts, custom resources) |
+
+### Rich Metadata
+
+Trident preserves dimensions of data that other formats cannot represent:
+
+- **Per-mod enable/disable state** — not just which mods are included, but which are active
+- **Tags** — user-defined labels for categorization
+- **Deployment rules** — per-mod overrides for destination path, skipping, or normalization
+- **Instance overrides** — JVM arguments, window size, server address, deploy strategy
+- **Source tracking** — where each mod came from, preserved across export/import cycles
+
+This makes Trident the only format that can faithfully reproduce an instance's full configuration — not just its mod list.
+
+### Online by Default, Offline When Needed
+
+Trident is a **hybrid** format:
+
+- **Online mode (default, recommended)**: Mods are stored as PURL references (e.g. `modrinth:fabric-api/P7uGFii0`). The actual `.jar` files are resolved and downloaded at deploy time. The archive stays small and can be version-controlled.
+- **Offline mode (optional)**: All enabled mod `.jar` files are bundled into the archive. Useful for archival or air-gapped environments.
+
+Online mode is recommended for everyday use: smaller archives, fresher mods on import, and the `trident.index.json` is human-readable and diff-friendly.
+
+### Instance Attachments
+
+Unlike other modpack formats, Trident treats instance-level documentation files as first-class citizens of the format. `icon.png`, `README.md`, `CHANGELOG.md`, and `LICENSE.txt` are bundled automatically if they exist in the instance's home directory. These are files that describe the *instance itself* — not the game — and they survive export/import cycles intact.
+
+### Ideal as Instance Templates
+
+Because Trident captures the complete instance configuration, it excels as an **instance template**. Export a well-configured instance once, then import it repeatedly to batch-create uniformly pre-configured instances. Tags, rules, overrides, and documentation all transfer faithfully — no manual reconfiguration needed.
 
 ## Migrating From Another Launcher
 
