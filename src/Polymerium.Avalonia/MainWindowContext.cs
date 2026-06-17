@@ -80,6 +80,10 @@ public partial class MainWindowContext : ObservableObject
         SubscribeProfileList(profileManager);
         SubscribeState(aggregator);
 
+        // 顶栏未读徽标：转发 app 级 NotificationService 的未读计数（数据归属仍在服务）
+        _notificationService.UnreadCountChanged += OnUnreadCountChanged;
+        UnreadNotificationCount = _notificationService.UnreadCount;
+
         var filter = this.WhenValueChanged(x => x.FilterText).Select(BuildFilter);
         _ = _entries
            .Connect()
@@ -152,6 +156,9 @@ public partial class MainWindowContext : ObservableObject
 
     [ObservableProperty]
     public partial AppUpdateModel? CurrentUpdate { get; set; }
+
+    [ObservableProperty]
+    public partial int UnreadNotificationCount { get; set; }
 
     #endregion
 
@@ -426,11 +433,7 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private void OpenNotificationSidebar()
-    {
-        var sidebar = new NotificationSidebar { DataContext = _notificationService };
-        _overlayService.PopSidebar(sidebar);
-    }
+    private void OpenNotificationSidebar() => _overlayService.PopSidebar<NotificationSidebar>();
 
     private bool CanOpenUpdateModal(AppUpdateModel? model) => model != null;
 
@@ -514,6 +517,12 @@ public partial class MainWindowContext : ObservableObject
     private void OnUpdateFound(AppUpdateModel? model)
     {
         Dispatcher.UIThread.Post(() => CurrentUpdate = model);
+    }
+
+    // NotificationService 的事件假定在 UI 线程触发（见服务注释），此处直接赋值即可
+    private void OnUnreadCountChanged(int count)
+    {
+        UnreadNotificationCount = count;
     }
 
     #endregion
