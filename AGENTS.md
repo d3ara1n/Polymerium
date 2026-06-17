@@ -62,4 +62,11 @@
   - **Nested type (类中类)** when it is dedicated to an outer class, even if that class exposes it through its public API (e.g. as a parameter or return type). The fact that callers must supply/pass values of that type does **not** make it independent. Example: `SkinView` nests inside `AccountHelper` because it exists only to describe `AccountHelper`'s body-render URLs.
   - **Own file** when it is a shared model — a type with its own data/properties that View, ViewModel, and Services may all consume is a standalone entity and gets its own file (under `Models/` for models). Example: `SkinFrame` is a model the view binds to and view models build, so it lives in `Models/SkinFrame.cs`, not tucked inside the control.
 
+## Git Commit
+
+- 首行按 Conventional Commits 格式：`type(scope): description`
+- 关联 Jira issue 时，issue key 放首行开头：`POLY-XX: type(scope): description`
+- 关联 GitHub issue 时，issue key 放首行末尾括号内：`type(scope): description (#nnn)`
+- body 写变更要点，与首行空一行隔开
+
 @ROLLING.md
