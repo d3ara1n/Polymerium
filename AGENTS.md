@@ -15,6 +15,16 @@
 - `submodules/Trident.Net` is a git submodule and is part of the solution build. Treat it as an integral part of this project: it participates in the same development workflow and should be edited freely alongside the main codebase. Do not treat submodule changes as out-of-scope — feel free to modify files under `submodules/Trident.Net` when the task requires it. `Huskui.Avalonia` is consumed as a NuGet package, not a submodule.
 - Fresh clones need submodules initialized: `git submodule update --init --recursive`.
 
+## Documentation Website
+
+- The project's public-facing docs site lives at `website/` — a Next.js app built with [Fumadocs](https://fumadocs.dev).
+- Deployed on Vercel at **polymerium.dearain.dev**.
+- Content is written in MDX under `website/content/docs/`, organized into sections: `getting-started`, `concepts`, `managing`, `advanced`, `guides`, `comparisons`.
+- Every `.mdx` page has a Chinese counterpart (`.zh.mdx`). When editing content, update both files.
+- Navigation structure is defined per-section via `meta.json` (and `meta.zh.json`).
+- Dev server: `cd website && npm run dev` → opens at `http://localhost:3000`.
+- Build: `cd website && npm run build`. Post-build syncs search index to Algolia via `scripts/sync-algolia.mjs`.
+
 ## Verified Commands
 
 - Full solution build: `dotnet build "Polymerium.slnx"`

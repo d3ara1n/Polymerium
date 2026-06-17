@@ -26,7 +26,7 @@ export default function CustomSearchDialog(props: SharedProps) {
   const { locale } = useI18n();
   const { search, setSearch, query } = useAlgoliaSearch({
     client,
-    indexName: 'document',
+    indexName: process.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME || 'document',
     locale,
   });
 
