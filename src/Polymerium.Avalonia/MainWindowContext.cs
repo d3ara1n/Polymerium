@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Avalonia;
@@ -30,13 +29,15 @@ using TridentCore.Abstractions.Extensions;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Tasks;
 using TridentCore.Abstractions.Utilities;
-using TridentCore.Core.Exceptions;
 using TridentCore.Core.Igniters;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
 using TridentCore.Core.Utilities;
 using Velopack;
 using NotificationSidebar = Polymerium.Avalonia.Sidebars.NotificationSidebar;
+using System.Reactive.Disposables;
+using System.Reactive.Disposables.Fluent;
+using TridentCore.Abstractions.Reactive;
 
 namespace Polymerium.Avalonia;
 
@@ -45,6 +46,7 @@ public partial class MainWindowContext : ObservableObject
 
     #region Fields
 
+    private readonly CompositeDisposable _disposables = new();
     private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
 
     #endregion
@@ -91,7 +93,8 @@ public partial class MainWindowContext : ObservableObject
            .SortAndBind(out var view,
                         SortExpressionComparer<InstanceEntryModel>.Descending(x => x.LastPlayedAtRaw
                                                                                ?? DateTimeOffset.MinValue))
-           .Subscribe();
+           .Subscribe()
+           .DisposeWith(_disposables);
         View = view;
     }
 
@@ -118,8 +121,14 @@ public partial class MainWindowContext : ObservableObject
     public void OnDeinitialize()
     {
         _updateService.SetHandler(null);
-
         _notificationService.ClearAll();
+        _notificationService.UnreadCountChanged -= OnUnreadCountChanged;
+
+        _disposables.Dispose();
+
+        _profileManager.ProfileAdded -= OnProfileAdded;
+        _profileManager.ProfileUpdated -= OnProfileUpdated;
+        _profileManager.ProfileRemoved -= OnProfileRemoved;
     }
 
     #endregion
@@ -233,8 +242,6 @@ public partial class MainWindowContext : ObservableObject
             if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is ModpackExporterModel model)
             {
                 var top = TopLevelHelper.GetTopLevel();
-                if (top != null)
-                {
                     var storage = top.StorageProvider;
                     if (storage.CanOpen)
                     {
@@ -307,7 +314,7 @@ public partial class MainWindowContext : ObservableObject
                                 notification.Dispose();
                             }
                         }
-                    }
+
                 }
             }
 
@@ -624,7 +631,8 @@ public partial class MainWindowContext : ObservableObject
                                   break;
                           }
                       }
-                  });
+                  })
+                  .DisposeWith(_disposables);
     }
 
     private void HandleSnapshotUpdate(InstanceStateSnapshot snapshot)

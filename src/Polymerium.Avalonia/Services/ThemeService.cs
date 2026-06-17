@@ -10,69 +10,41 @@ namespace Polymerium.Avalonia.Services;
 /// </summary>
 public sealed class ThemeService(ConfigurationService configurationService)
 {
-    private AccentColor _accent = configurationService.Value.ApplicationStyleAccent;
-
-    private int _themeVariantIndex = configurationService.Value.ApplicationStyleThemeVariant;
-
-    private int _transparencyIndex = configurationService.Value.ApplicationStyleBackground;
-
-    private CornerStyle _corner = configurationService.Value.ApplicationStyleCorner;
-
-    private bool _titleBarVisible = configurationService.Value.ApplicationTitleBarVisibility;
-
-    private bool _leftPanelMode = configurationService.Value.ApplicationLeftPanelMode;
-
     public AccentColor Accent
     {
-        get => _accent;
-        set => Set(ref _accent, value, v => configurationService.Value.ApplicationStyleAccent = v);
-    }
+        get;
+        set => Set(ref field, value, v => configurationService.Value.ApplicationStyleAccent = v);
+    } = configurationService.Value.ApplicationStyleAccent;
 
     public int ThemeVariantIndex
     {
-        get => _themeVariantIndex;
-        set => Set(
-            ref _themeVariantIndex,
-            value,
-            v => configurationService.Value.ApplicationStyleThemeVariant = v
-        );
-    }
+        get;
+        set => Set(ref field, value, v => configurationService.Value.ApplicationStyleThemeVariant = v);
+    } = configurationService.Value.ApplicationStyleThemeVariant;
 
     public int TransparencyIndex
     {
-        get => _transparencyIndex;
-        set => Set(
-            ref _transparencyIndex,
-            value,
-            v => configurationService.Value.ApplicationStyleBackground = v
-        );
-    }
+        get;
+        set => Set(ref field, value, v => configurationService.Value.ApplicationStyleBackground = v);
+    } = configurationService.Value.ApplicationStyleBackground;
 
     public CornerStyle Corner
     {
-        get => _corner;
-        set => Set(ref _corner, value, v => configurationService.Value.ApplicationStyleCorner = v);
-    }
+        get;
+        set => Set(ref field, value, v => configurationService.Value.ApplicationStyleCorner = v);
+    } = configurationService.Value.ApplicationStyleCorner;
 
     public bool TitleBarVisible
     {
-        get => _titleBarVisible;
-        set => Set(
-            ref _titleBarVisible,
-            value,
-            v => configurationService.Value.ApplicationTitleBarVisibility = v
-        );
-    }
+        get;
+        set => Set(ref field, value, v => configurationService.Value.ApplicationTitleBarVisibility = v);
+    } = configurationService.Value.ApplicationTitleBarVisibility;
 
     public bool LeftPanelMode
     {
-        get => _leftPanelMode;
-        set => Set(
-            ref _leftPanelMode,
-            value,
-            v => configurationService.Value.ApplicationLeftPanelMode = v
-        );
-    }
+        get;
+        set => Set(ref field, value, v => configurationService.Value.ApplicationLeftPanelMode = v);
+    } = configurationService.Value.ApplicationLeftPanelMode;
 
     /// <summary>
     ///     任意主题状态变化时触发。事件不携带快照，消费方收到通知后自行读取当前状态。

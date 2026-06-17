@@ -19,7 +19,7 @@
     x:DataType="app:MainWindowContext"
     Icon="/Assets/Icon.App.ico"
     Loaded="Control_OnLoaded"
-    Unloaded="Control_OnUnloded"
+    Unloaded="Control_OnUnloaded"
     mc:Ignorable="d">
     <NativeMenu.Menu>
         <NativeMenu>
@@ -30,6 +30,11 @@
                             Command="{Binding NewInstanceCommand}"
                             Gesture="Cmd+N"
                             Header="{x:Static lang:Resources.AppMenu_NewInstanceText}" />
+                        <NativeMenuItemSeparator />
+                        <NativeMenuItem
+                            Command="{Binding GoSettingsCommand}"
+                            Gesture="Cmd+,"
+                            Header="{x:Static lang:Resources.AppMenu_SettingsText}" />
                     </NativeMenu>
                 </NativeMenuItem.Menu>
             </NativeMenuItem>
@@ -59,6 +64,10 @@
             <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_HelpText}">
                 <NativeMenuItem.Menu>
                     <NativeMenu>
+                        <NativeMenuItem
+                            Command="{Binding AboutCommand}"
+                            Header="{x:Static lang:Resources.AppMenu_AboutText}" />
+                        <NativeMenuItemSeparator />
                         <NativeMenuItem
                             Command="{Binding CheckForUpdatesCommand}"
                             Header="{x:Static lang:Resources.AppMenu_CheckForUpdatesText}" />
