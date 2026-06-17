@@ -33,7 +33,7 @@ public class ActivitySink(InstanceStateAggregator aggregator, PersistenceService
     {
         switch (snapshot.Tracker)
         {
-            case InstallTracker install when install.State == TrackerState.Finished:
+            case InstallTracker { State: TrackerState.Finished } install:
                 persistenceService.AppendAction(new()
                 {
                     Key = install.Key,
@@ -41,7 +41,7 @@ public class ActivitySink(InstanceStateAggregator aggregator, PersistenceService
                     New = install.Reference,
                 });
                 break;
-            case UpdateTracker update when update.State == TrackerState.Finished:
+            case UpdateTracker { State: TrackerState.Finished } update:
                 persistenceService.AppendAction(new()
                 {
                     Key = update.Key,

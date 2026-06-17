@@ -37,6 +37,15 @@ public class OverlayService(IViewActivator activator)
 
     public void PopSidebar(Sidebar sidebar) => _drawerHandler?.Invoke(sidebar);
 
+    // 与 PopModal<TModal> 对齐：通过 activator 激活 View（按命名约定配对 Model、注入 DI、挂 ViewModelMixin），
+    // 享受 OverlayHost 加入/移除可视树时自动触发的 InitializeAsync/DeinitializeAsync 生命周期托管。
+    public void PopSidebar<TSidebar>(object? parameter = null)
+        where TSidebar : Sidebar
+    {
+        var sidebar = (TSidebar)activator.Activate(typeof(TSidebar), parameter)!;
+        PopSidebar(sidebar);
+    }
+
     #endregion
 
     #region Modals

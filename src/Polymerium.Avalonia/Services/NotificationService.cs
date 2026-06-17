@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -7,83 +8,113 @@ using Avalonia.Animation;
 using Avalonia.Collections;
 using Avalonia.Styling;
 using Avalonia.Threading;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.Avalonia.Models;
 
 namespace Polymerium.Avalonia.Services;
 
-public partial class NotificationService : ObservableObject
+// 门面服务：持有 app 级单例的 canonical 通知数据，对外只暴露命令式方法 + 状态事件。
+// 不继承 ObservableObject、不暴露可绑定集合/命令——View 侧的绑定一律经由 NotificationSidebarViewModel 投影。
+public class NotificationService
 {
     private const int MAX_NOTIFICATION_COUNT = 100;
 
-    // 持久通知集合：app 级单例持有，NotificationSidebar 直接绑定，不受窗口生命周期影响。
-    public ObservableCollection<NotificationModel> Notifications { get; } = [];
+    // canonical 数据：app 级单例持有，不受窗口生命周期影响。仅本类管理方法可变更。
+    private readonly ObservableCollection<NotificationModel> _notifications = [];
 
-    [ObservableProperty]
-    public partial int UnreadNotificationCount { get; set; }
+    /// <summary>
+    ///     当前未读通知数。仅在 UI 线程上通过本类的管理方法变更。
+    /// </summary>
+    public int UnreadCount { get; private set; }
 
-    [RelayCommand]
-    private void MarkAllAsRead()
+    /// <summary>
+    ///     返回当前通知快照（只读出口），供 ViewModel 做初始填充。
+    ///     返回的是同一批 NotificationModel 引用，逐项属性（如 IsRead）由 model 自身可观察，无需 VM 转发。
+    /// </summary>
+    public IReadOnlyList<NotificationModel> GetSnapshot() => _notifications;
+
+    #region Events
+
+    // 所有事件均假定在 UI 线程上触发（与本类管理方法的调用线程一致，PopMessage 已 marshal 到 UI 线程）。
+    public event Action<NotificationModel>? NotificationAdded;
+    public event Action<NotificationModel>? NotificationRemoved;
+    public event Action<NotificationModel>? NotificationReadChanged;
+    public event Action<int>? UnreadCountChanged;
+
+    #endregion
+
+    #region Management
+
+    public void MarkAllAsRead()
     {
-        foreach (var model in Notifications.Where(x => !x.IsRead))
+        foreach (var model in _notifications.Where(x => !x.IsRead))
         {
             model.IsRead = true;
+            NotificationReadChanged?.Invoke(model);
         }
 
-        UnreadNotificationCount = 0;
+        if (UnreadCount != 0)
+        {
+            UnreadCount = 0;
+            UnreadCountChanged?.Invoke(UnreadCount);
+        }
     }
 
-    [RelayCommand]
-    private void MarkAsRead(NotificationModel? model)
+    public void MarkAsRead(NotificationModel? model)
     {
         if (model is { IsRead: false })
         {
             model.IsRead = true;
-            UnreadNotificationCount--;
+            NotificationReadChanged?.Invoke(model);
+            UnreadCount--;
+            UnreadCountChanged?.Invoke(UnreadCount);
         }
     }
 
-    [RelayCommand]
-    private void MarkAsUnread(NotificationModel? model)
+    public void MarkAsUnread(NotificationModel? model)
     {
         if (model is { IsRead: true })
         {
             model.IsRead = false;
-            UnreadNotificationCount++;
+            NotificationReadChanged?.Invoke(model);
+            UnreadCount++;
+            UnreadCountChanged?.Invoke(UnreadCount);
         }
     }
 
-    [RelayCommand]
-    private void RemoveNotification(NotificationModel? model)
+    public void RemoveNotification(NotificationModel? model)
     {
-        if (model is not null && Notifications.Contains(model))
+        if (model is not null && _notifications.Contains(model))
         {
             model.OnRemoved();
-            Notifications.Remove(model);
+            _notifications.Remove(model);
+            NotificationRemoved?.Invoke(model);
             if (!model.IsRead)
             {
-                UnreadNotificationCount--;
+                UnreadCount--;
+                UnreadCountChanged?.Invoke(UnreadCount);
             }
         }
     }
 
     public void PopNotification(NotificationModel model)
     {
-        if (Notifications.Count >= MAX_NOTIFICATION_COUNT)
+        if (_notifications.Count >= MAX_NOTIFICATION_COUNT)
         {
-            var first = Notifications.FirstOrDefault();
+            var first = _notifications.FirstOrDefault();
             if (first != null)
             {
                 first.OnRemoved();
-                Notifications.Remove(first);
+                _notifications.Remove(first);
+                NotificationRemoved?.Invoke(first);
             }
         }
 
-        Notifications.Add(model);
-        UnreadNotificationCount++;
+        _notifications.Add(model);
+        UnreadCount++;
+        NotificationAdded?.Invoke(model);
+        UnreadCountChanged?.Invoke(UnreadCount);
     }
 
     /// <summary>
@@ -91,11 +122,13 @@ public partial class NotificationService : ObservableObject
     /// </summary>
     public void ClearAll()
     {
-        foreach (var model in Notifications)
+        foreach (var model in _notifications)
         {
             model.OnRemoved();
         }
     }
+
+    #endregion
     private static readonly Animation Countdown = new()
     {
         Duration = TimeSpan.FromSeconds(7),
