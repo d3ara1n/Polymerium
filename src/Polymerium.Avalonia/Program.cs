@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.Services.Sinks;
 using Sentry;
 using TridentCore.Abstractions;
 using TridentCore.Core.Lifetimes;
@@ -94,7 +95,6 @@ internal static class Program
 
         #endregion
 
-
         var services = new ServiceCollection();
         Startup.ConfigureServices(services, IsDebug);
         Services = services.BuildServiceProvider();
@@ -113,6 +113,11 @@ internal static class Program
         );
         ImageLoader.AsyncImageLoader = loader;
         ImageBrushLoader.AsyncImageLoader = loader;
+
+        // 初始化 Sinks：订阅 Aggregator 的事件流（仅需一次，不依赖窗口生命周期）
+        Services.GetRequiredService<ActivitySink>().Attach();
+        Services.GetRequiredService<NotificationSink>().Attach();
+        Services.GetRequiredService<CrashDiagnosisSink>().Attach();
 
         #endregion
 
@@ -140,7 +145,6 @@ internal static class Program
         }
 
         #endregion
-
 
         #region 8. 处置整个服务容器
 

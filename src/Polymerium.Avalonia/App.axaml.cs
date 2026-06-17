@@ -10,11 +10,12 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using Huskui.Avalonia;
+using Huskui.Avalonia.Controls;
+using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Services;
-using Polymerium.Avalonia.Services.Sinks;
 using Sentry;
 using TridentCore.Core.Lifetimes;
 
@@ -94,8 +95,20 @@ public class App : Application
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            // macOS: 关闭主窗口不退出应用，允许通过 Dock 栏重新打开
+            if (OperatingSystem.IsMacOS())
+            {
+                desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            }
+
             desktop.MainWindow = ConstructWindow();
             _ = StartLifetimeServicesAsync(desktop);
+        }
+
+        // macOS: Dock 栏点击重新打开主窗口
+        if (Application.Current?.TryGetFeature<IActivatableLifetime>() is { } activatable)
+        {
+            activatable.Activated += OnActivated;
         }
 
         base.OnFrameworkInitializationCompleted();
@@ -176,7 +189,33 @@ public class App : Application
         }
     }
 
-    private static Window ConstructWindow()
+    private static void OnActivated(object? sender, ActivatedEventArgs e)
+    {
+        if (e.Kind != ActivationKind.Reopen)
+        {
+            return;
+        }
+
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            return;
+        }
+
+        // 已关闭的窗口引用仍留在 MainWindow 属性上，需要判断是否真正可用
+        var window = desktop.MainWindow;
+        if (window is null || window.IsVisible == false)
+        {
+            window = ConstructWindow();
+            desktop.MainWindow = window;
+            window.Show();
+        }
+        else
+        {
+            window.Activate();
+        }
+    }
+
+    internal static Window ConstructWindow()
     {
         if (Program.Services is null)
         {
@@ -184,10 +223,39 @@ public class App : Application
         }
 
         var configuration = Program.Services.GetRequiredService<ConfigurationService>();
-
         var window = new MainWindow();
 
-        // 还原窗口大小
+        #region Wire
+
+        var navigation = Program.Services.GetRequiredService<NavigationService>();
+        navigation.SetHandler(
+            window.Navigate,
+            window.GoBack,
+            window.CanGoBack,
+            window.ClearHistory
+        );
+
+        var activator = Program.Services.GetRequiredService<IViewActivator>();
+        window.SetFrameActivator(activator);
+
+        var overlay = Program.Services.GetRequiredService<OverlayService>();
+        overlay.SetHandler(window.PopToast, window.PopSidebar, window.PopModal, window.PopDialog);
+
+        var notification = Program.Services.GetRequiredService<NotificationService>();
+        notification.SetHandler(window.PopGrowl);
+
+        // Unwire：卸载时断开服务 handler，防止悬空引用
+        window.Unloaded += (_, _) =>
+        {
+            navigation.SetHandler(null!, null!, null!, null!);
+            overlay.SetHandler(null!, null!, null!, null!);
+            notification.SetHandler((Action<GrowlItem>?)null!);
+        };
+
+        #endregion
+
+        #region Window Size Persistence
+
         window.Opened += (_, _) =>
         {
             var w = configuration.Value.ApplicationWindowWidth;
@@ -205,47 +273,16 @@ public class App : Application
             configuration.Value.ApplicationWindowHeight = window.Height;
         };
 
+        #endregion
+
         var themeService = Program.Services.GetRequiredService<ThemeService>();
         window.AttachTheme(themeService);
-        // 并不还原窗体大小，没必要
-
-        #region Navigation
-
-        // Link navigation service
-        var navigation = Program.Services.GetRequiredService<NavigationService>();
-        navigation.SetHandler(
-            window.Navigate,
-            window.GoBack,
-            window.CanGoBack,
-            window.ClearHistory
-        );
-
-        var activator = Program.Services.GetRequiredService<IViewActivator>();
-        window.SetFrameActivator(activator);
-
-        #endregion
-
-        #region Overlay & Notification
-
-        var overlay = Program.Services.GetRequiredService<OverlayService>();
-        overlay.SetHandler(window.PopToast, window.PopSidebar, window.PopModal, window.PopDialog);
-        var notification = Program.Services.GetRequiredService<NotificationService>();
-        notification.SetHandler(window.PopGrowl);
-
-        #endregion
 
         // 需要放在整个 window 初始化之后，因为 MainWindowContext 的构造函数要求 window 已与服务绑定
         var viewModel = ActivatorUtilities.CreateInstance<MainWindowContext>(Program.Services);
         window.DataContext = viewModel;
+
         notification.SetHandler(notification.PopNotification);
-
-        // 初始化 Sinks：订阅 Aggregator 的事件流
-        Program.Services.GetRequiredService<ActivitySink>().Attach();
-        Program.Services.GetRequiredService<NotificationSink>().Attach();
-        Program.Services.GetRequiredService<CrashDiagnosisSink>().Attach();
-
-        // 应用级 NativeMenu 的 DataContext 设为同一个 ViewModel，使菜单命令绑定生效
-        Application.Current!.DataContext = viewModel;
 
         // MainWindowContext 没有 InitializeAsync 能力，这里代替进行初始化
         navigation.Navigate<LandingPage>();

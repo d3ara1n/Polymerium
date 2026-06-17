@@ -51,8 +51,22 @@ public partial class MainWindow : AppWindow
     internal void AttachTheme(ThemeService theme)
     {
         ApplyTheme(theme);
-        theme.ThemeChanged += (_, _) => ApplyTheme(theme);
+        _themeService = theme;
+        theme.ThemeChanged += OnThemeChanged;
     }
+
+    internal void DetachTheme()
+    {
+        if (_themeService is not null)
+        {
+            _themeService.ThemeChanged -= OnThemeChanged;
+            _themeService = null;
+        }
+    }
+
+    private ThemeService? _themeService;
+
+    private void OnThemeChanged(object? sender, EventArgs _) => ApplyTheme(_themeService!);
 
     private void ApplyTheme(ThemeService theme)
     {
@@ -121,12 +135,14 @@ public partial class MainWindow : AppWindow
         }
     }
 
-    private void Control_OnUnloded(object? sender, RoutedEventArgs e)
+    private void Control_OnUnloaded(object? sender, RoutedEventArgs e)
     {
         if (DataContext is MainWindowContext context)
         {
             context.OnDeinitialize();
         }
+
+        DetachTheme();
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -183,28 +199,6 @@ public partial class MainWindow : AppWindow
                 WindowState = WindowState.Normal;
                 break;
         }
-    }
-
-    private void TitleBarDragArea_OnPointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-        {
-            return;
-        }
-
-        BeginMoveDrag(e);
-        e.Handled = true;
-    }
-
-    private void TitleBarDragArea_OnDoubleTapped(object? sender, TappedEventArgs e)
-    {
-        if (!CanResize)
-        {
-            return;
-        }
-
-        ToggleMaximize();
-        e.Handled = true;
     }
 
     private void MinimizeButton_OnClick(object? sender, RoutedEventArgs e)
