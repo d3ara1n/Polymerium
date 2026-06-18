@@ -1,4 +1,4 @@
-<UserControl
+﻿<UserControl
     x:Class="Polymerium.Avalonia.Components.RotatingSkinView"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -17,8 +17,8 @@
     <Grid RowDefinitions="Auto,Auto">
         <Grid
             Grid.Row="0"
-            ColumnDefinitions="Auto,*,Auto"
-            HorizontalAlignment="Center">
+            HorizontalAlignment="Center"
+            ColumnDefinitions="Auto,*,Auto">
             <Button
                 Name="PreviousButton"
                 Classes="Small"
@@ -27,7 +27,9 @@
                 VerticalAlignment="Center"
                 Click="OnPreviousClicked"
                 CornerRadius="{StaticResource FullCornerRadius}">
-                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ChevronLeft" />
+                <fi:SymbolIcon
+                    FontSize="{StaticResource MediumFontSize}"
+                    Symbol="ChevronLeft" />
             </Button>
             <ItemsControl
                 Name="FramesList"
@@ -47,9 +49,9 @@
                             Height="190"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
-                            Stretch="Uniform"
                             async:ImageLoader.Source="{Binding Url, FallbackValue={x:Static app:AssetUriIndex.SteveFaceImage}}"
-                            Opacity="{Binding FrameOpacity}">
+                            Opacity="{Binding FrameOpacity}"
+                            Stretch="Uniform">
                             <Image.Transitions>
                                 <Transitions>
                                     <DoubleTransition
@@ -71,7 +73,9 @@
                 VerticalAlignment="Center"
                 Click="OnNextClicked"
                 CornerRadius="{StaticResource FullCornerRadius}">
-                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ChevronRight" />
+                <fi:SymbolIcon
+                    FontSize="{StaticResource MediumFontSize}"
+                    Symbol="ChevronRight" />
             </Button>
         </Grid>
 
@@ -82,7 +86,9 @@
             HorizontalAlignment="Center">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" Spacing="6" />
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="6" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>

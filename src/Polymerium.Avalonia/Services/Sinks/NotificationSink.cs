@@ -166,7 +166,7 @@ public class NotificationSink(
 
     private static bool IsProcessFaulted(Exception? ex) => ex is ProcessFaultedException
                                                            or AggregateException
-                                                           {
-                                                               InnerException: ProcessFaultedException
-                                                           };
+    {
+        InnerException: ProcessFaultedException
+    };
 }

@@ -164,11 +164,11 @@ public static class SkinGeometry
         var min = new Vector3(float.MaxValue);
         var max = new Vector3(float.MinValue);
         foreach (var f in faces)
-        foreach (var v in new[] { f.V0, f.V1, f.V2, f.V3 })
-        {
-            min = Vector3.Min(min, v);
-            max = Vector3.Max(max, v);
-        }
+            foreach (var v in new[] { f.V0, f.V1, f.V2, f.V3 })
+            {
+                min = Vector3.Min(min, v);
+                max = Vector3.Max(max, v);
+            }
 
         return new BoundingBox(min, max);
     }

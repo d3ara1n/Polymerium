@@ -739,7 +739,9 @@
                     ItemsSource="{Binding SkinViewSamples}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel ItemSpacing="12" LineSpacing="12" />
+                            <WrapPanel
+                                ItemSpacing="12"
+                                LineSpacing="12" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
@@ -754,8 +756,8 @@
                                     <Image
                                         Width="120"
                                         Height="220"
-                                        Stretch="Uniform"
-                                        async:ImageLoader.Source="{Binding Url}" />
+                                        async:ImageLoader.Source="{Binding Url}"
+                                        Stretch="Uniform" />
                                 </Border>
                                 <TextBlock
                                     HorizontalAlignment="Center"

@@ -94,9 +94,9 @@
                 Spacing="8">
                 <Button
                     Classes="Primary"
-                    IsDefault="True"
                     IsEnabled="{Binding !$parent[app:AppUpdateModal].IsDownloading, FallbackValue=True}"
-                    Command="{Binding $parent[app:AppUpdateModal].ConfirmUpdateCommand}">
+                    Command="{Binding $parent[app:AppUpdateModal].ConfirmUpdateCommand}"
+                    IsDefault="True">
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="6">

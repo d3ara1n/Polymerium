@@ -48,44 +48,44 @@ public class AppImageLoader(
         IStorageProvider? storageProvider = null
     )
     {
-            if (_cache.TryGetValue(url, out var cached))
-            {
-                // 负缓存命中：加载过的失败结果在短期内直接返回 null，避免重复请求网络。
-                if (cached is NegativeMarker)
-                    return null;
-                return cached as Bitmap;
-            }
-
-            Bitmap? bitmap;
-            try
-            {
-                bitmap = url.StartsWith("poly://", StringComparison.Ordinal)
-                             ? await skinRenderer.RenderAsync(url).ConfigureAwait(false)
-                             : await LoadAsync(url, storageProvider).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                logger.LogWarning(ex, "Failed to load image: {Url}", url);
-                CacheNegative(url);
+        if (_cache.TryGetValue(url, out var cached))
+        {
+            // 负缓存命中：加载过的失败结果在短期内直接返回 null，避免重复请求网络。
+            if (cached is NegativeMarker)
                 return null;
-            }
+            return cached as Bitmap;
+        }
 
-            if (bitmap != null)
-            {
-                _cache.Set(
-                    url,
-                    bitmap,
-                    new MemoryCacheEntryOptions()
-                        .SetSize(1)
-                        .SetSlidingExpiration(SLIDING_EXPIRATION)
-                );
-            }
-            else
-            {
-                CacheNegative(url);
-            }
+        Bitmap? bitmap;
+        try
+        {
+            bitmap = url.StartsWith("poly://", StringComparison.Ordinal)
+                         ? await skinRenderer.RenderAsync(url).ConfigureAwait(false)
+                         : await LoadAsync(url, storageProvider).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Failed to load image: {Url}", url);
+            CacheNegative(url);
+            return null;
+        }
 
-            return bitmap;
+        if (bitmap != null)
+        {
+            _cache.Set(
+                url,
+                bitmap,
+                new MemoryCacheEntryOptions()
+                    .SetSize(1)
+                    .SetSlidingExpiration(SLIDING_EXPIRATION)
+            );
+        }
+        else
+        {
+            CacheNegative(url);
+        }
+
+        return bitmap;
     }
 
     private void CacheNegative(string url)

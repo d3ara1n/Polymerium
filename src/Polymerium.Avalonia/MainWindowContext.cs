@@ -242,78 +242,78 @@ public partial class MainWindowContext : ObservableObject
             if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is ModpackExporterModel model)
             {
                 var top = TopLevelHelper.GetTopLevel();
-                    var storage = top.StorageProvider;
-                    if (storage.CanOpen)
+                var storage = top.StorageProvider;
+                if (storage.CanOpen)
+                {
+                    var name = !string.IsNullOrEmpty(model.NameOverride) ? model.NameOverride : dialog.NameOriginal;
+                    var author = !string.IsNullOrEmpty(model.AuthorOverride)
+                                     ? model.AuthorOverride
+                                     : dialog.AuthorOriginal;
+                    var version = !string.IsNullOrEmpty(model.VersionOverride)
+                                      ? model.VersionOverride
+                                      : dialog.VersionOriginal;
+                    var storageItem = await storage.SaveFilePickerAsync(new()
                     {
-                        var name = !string.IsNullOrEmpty(model.NameOverride) ? model.NameOverride : dialog.NameOriginal;
-                        var author = !string.IsNullOrEmpty(model.AuthorOverride)
-                                         ? model.AuthorOverride
-                                         : dialog.AuthorOriginal;
-                        var version = !string.IsNullOrEmpty(model.VersionOverride)
-                                          ? model.VersionOverride
-                                          : dialog.VersionOriginal;
-                        var storageItem = await storage.SaveFilePickerAsync(new()
-                        {
-                            SuggestedStartLocation =
-                                await storage
-                                   .TryGetWellKnownFolderAsync(WellKnownFolder
-                                                                  .Downloads),
-                            SuggestedFileName =
-                                $"{name}.{version}",
-                            DefaultExtension = "zip",
-                            FileTypeChoices =
-                            [
-                                new(Resources
+                        SuggestedStartLocation =
+                            await storage
+                               .TryGetWellKnownFolderAsync(WellKnownFolder
+                                                              .Downloads),
+                        SuggestedFileName =
+                            $"{name}.{version}",
+                        DefaultExtension = "zip",
+                        FileTypeChoices =
+                        [
+                            new(Resources
                                        .Shared_ZipArchiveFileTypeText)
                                 {
                                     Patterns = ["*.zip"],
                                 },
                             ],
-                        });
-                        if (storageItem is not null)
+                    });
+                    if (storageItem is not null)
+                    {
+                        profile.SetOverride(Profile.OVERRIDE_MODPACK_NAME, name);
+                        profile.SetOverride(Profile.OVERRIDE_MODPACK_AUTHOR, author);
+                        profile.SetOverride(Profile.OVERRIDE_MODPACK_VERSION, version);
+                        var notification = _notificationService.PopProgress(name,
+                                                                                Resources
+                                                                                   .MainWindow_ExportModpackProgressingNotificationMessage,
+                                                                                thumbnail: ThumbnailHelper
+                                                                                   .ForInstance(key));
+                        try
                         {
-                            profile.SetOverride(Profile.OVERRIDE_MODPACK_NAME, name);
-                            profile.SetOverride(Profile.OVERRIDE_MODPACK_AUTHOR, author);
-                            profile.SetOverride(Profile.OVERRIDE_MODPACK_VERSION, version);
-                            var notification = _notificationService.PopProgress(name,
-                                                                                    Resources
-                                                                                       .MainWindow_ExportModpackProgressingNotificationMessage,
-                                                                                    thumbnail: ThumbnailHelper
-                                                                                       .ForInstance(key));
-                            try
+                            using var container = await Task.Run(async () => await _exporterAgent.ExportAsync(pack,
+                                                                     model.SelectedExporterLabel,
+                                                                     key,
+                                                                     name,
+                                                                     author,
+                                                                     version));
+                            notification.Report(50);
+                            await using var stream = await storageItem.OpenWriteAsync();
+                            await Task.Run(async () =>
                             {
-                                using var container = await Task.Run(async () => await _exporterAgent.ExportAsync(pack,
-                                                                         model.SelectedExporterLabel,
-                                                                         key,
-                                                                         name,
-                                                                         author,
-                                                                         version));
-                                notification.Report(50);
-                                await using var stream = await storageItem.OpenWriteAsync();
-                                await Task.Run(async () =>
-                                {
-                                    await _exporterAgent.PackCompressedAsync(stream, container);
-                                });
-                                notification.Report(100);
-                                await Task.Delay(TimeSpan.FromSeconds(1));
-                                var path = storageItem.TryGetLocalPath();
-                                _notificationService.PopMessage(path ?? Resources.Enum_Unknown,
-                                                                Resources
-                                                                   .MainWindow_ExportModpackSuccessNotificationTitle,
-                                                                thumbnail: ThumbnailHelper.ForInstance(key));
-                            }
-                            catch (Exception ex)
-                            {
-                                _notificationService.PopMessage(ex,
-                                                                Resources
-                                                                   .MainWindow_ExportModpackDangerNotificationTitle,
-                                                                thumbnail: ThumbnailHelper.ForInstance(key));
-                            }
-                            finally
-                            {
-                                notification.Dispose();
-                            }
+                                await _exporterAgent.PackCompressedAsync(stream, container);
+                            });
+                            notification.Report(100);
+                            await Task.Delay(TimeSpan.FromSeconds(1));
+                            var path = storageItem.TryGetLocalPath();
+                            _notificationService.PopMessage(path ?? Resources.Enum_Unknown,
+                                                            Resources
+                                                               .MainWindow_ExportModpackSuccessNotificationTitle,
+                                                            thumbnail: ThumbnailHelper.ForInstance(key));
                         }
+                        catch (Exception ex)
+                        {
+                            _notificationService.PopMessage(ex,
+                                                            Resources
+                                                               .MainWindow_ExportModpackDangerNotificationTitle,
+                                                            thumbnail: ThumbnailHelper.ForInstance(key));
+                        }
+                        finally
+                        {
+                            notification.Dispose();
+                        }
+                    }
 
                 }
             }

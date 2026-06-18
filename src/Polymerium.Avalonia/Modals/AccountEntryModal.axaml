@@ -1,4 +1,4 @@
-<husk:Modal
+﻿<husk:Modal
     x:Class="Polymerium.Avalonia.Modals.AccountEntryModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -19,7 +19,9 @@
         CornerRadius="{StaticResource MediumCornerRadius}">
         <Grid ColumnDefinitions="Auto,*">
             <!--  Rotating skin preview on a gradient that echoes the account button  -->
-            <Border Grid.Column="0" Padding="10">
+            <Border
+                Grid.Column="0"
+                Padding="10">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="100%,0%" EndPoint="0%,100%">
                         <GradientStop Offset="0" Color="{Binding Color1}" />
@@ -27,9 +29,9 @@
                     </LinearGradientBrush>
                 </Border.Background>
                 <app:RotatingSkinView
-                    Fallback="{Binding BodyUrl}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
+                    Fallback="{Binding BodyUrl}"
                     Sources="{Binding SkinViews}" />
             </Border>
 
@@ -63,21 +65,25 @@
                     </Button>
                 </Panel>
 
-                <Border Height="1" Background="{StaticResource ControlBorderBrush}" />
+                <Border
+                    Height="1"
+                    Background="{StaticResource ControlBorderBrush}" />
 
                 <!--  UUID with copy  -->
                 <DockPanel>
                     <Button
+                        DockPanel.Dock="Right"
                         Classes="Small"
                         Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
                         CommandParameter="{Binding Uuid}"
-                        CornerRadius="{StaticResource FullCornerRadius}"
-                        DockPanel.Dock="Right">
+                        CornerRadius="{StaticResource FullCornerRadius}">
                         <fi:SymbolIcon
                             FontSize="{StaticResource MediumFontSize}"
                             Symbol="Copy" />
                     </Button>
-                    <StackPanel Margin="0,0,8,0" Spacing="2">
+                    <StackPanel
+                        Margin="0,0,8,0"
+                        Spacing="2">
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{x:Static lang:Resources.AccountEntryModal_UuidLabelText}" />
