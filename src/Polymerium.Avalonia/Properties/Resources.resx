@@ -3048,6 +3048,9 @@ Affected entries: {0}
     <data name="AccountCreationAuthlib_DoneSubtitle" xml:space="preserve">
         <value>Authentication successful</value>
     </data>
+    <data name="AccountCreationAuthlib_DropHint" xml:space="preserve">
+        <value>Drag the authentication server button here</value>
+    </data>
     <data name="AppMenu_AboutText" xml:space="preserve">
         <value>About Polymerium</value>
     </data>

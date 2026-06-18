@@ -3039,6 +3039,9 @@
     <data name="AccountCreationAuthlib_DoneSubtitle" xml:space="preserve">
         <value>认证成功</value>
     </data>
+    <data name="AccountCreationAuthlib_DropHint" xml:space="preserve">
+        <value>将认证服务器按钮拖到此处</value>
+    </data>
     <data name="AppMenu_AboutText" xml:space="preserve">
         <value>关于 Polymerium</value>
     </data>
