@@ -36,7 +36,6 @@
             Icon="LocalLanguage"
             Summary="{x:Static lang:Resources.SettingsPage_DisplaySubtitle}">
             <app:SettingsEntryItem
-                IsVisible="{Binding CanCustomizeTitleBar}"
                 Header="{x:Static lang:Resources.SettingsPage_TitleBarVisibilityLabelText}">
                 <ToggleSwitch
                     IsChecked="{Binding TitleBarVisibility, Mode=TwoWay}"
