@@ -102,7 +102,6 @@ public partial class SettingsPageModel : ViewModelBase
 
     public OverlayService OverlayService { get; }
     public UpdateService UpdateService { get; }
-    public bool CanCustomizeTitleBar => !OperatingSystem.IsMacOS();
 
     #endregion
 
