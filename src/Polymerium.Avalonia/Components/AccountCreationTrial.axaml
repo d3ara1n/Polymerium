@@ -105,5 +105,23 @@
                 </StackPanel>
             </DockPanel>
         </TabStripItem>
+        <TabStripItem Name="HerobrineItem">
+            <DockPanel HorizontalSpacing="8">
+                <TextBlock
+                    DockPanel.Dock="Left"
+                    VerticalAlignment="Center"
+                    FontSize="24"
+                    Text="👁️" />
+                <StackPanel>
+                    <TextBlock
+                        FontSize="{StaticResource LargeFontSize}"
+                        Text="Herobrine" />
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="He is here"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </DockPanel>
+        </TabStripItem>
     </TabStrip>
 </app:AccountCreationStep>
