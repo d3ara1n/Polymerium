@@ -35,9 +35,9 @@ public sealed class SkinRenderService(
     private const string AlexAssetUri = "avares://Polymerium/Assets/Images/Skins/Alex.png";
 
     /// <summary>
-///     第三方皮肤镜像根：按 UUID 返回原始皮肤 PNG（64×64 展开图），供本地渲染。
-///     用常量集中便于上游不可用时一键换源。现在使用 mineatar，其原图端点在国内直连可达。
-/// </summary>
+    ///     第三方皮肤镜像根：按 UUID 返回原始皮肤 PNG（64×64 展开图），供本地渲染。
+    ///     用常量集中便于上游不可用时一键换源。现在使用 mineatar，其原图端点在国内直连可达。
+    /// </summary>
     private const string SkinMirrorBase = "https://api.mineatar.io/skin/";
 
     /// <summary>

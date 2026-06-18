@@ -266,8 +266,8 @@
                 Spacing="8">
                 <Button
                     Classes="Primary"
-                    IsDefault="True"
-                    Command="{Binding $parent[app:ProfileRuleSelectorsModal].AddSelectorCommand}">
+                    Command="{Binding $parent[app:ProfileRuleSelectorsModal].AddSelectorCommand}"
+                    IsDefault="True">
                     <husk:IconLabel
                         Icon="Add"
                         Text="添加新选择器" />

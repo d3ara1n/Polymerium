@@ -295,8 +295,8 @@
                 Spacing="8">
                 <Button
                     Classes="Primary"
-                    IsDefault="True"
-                    Command="{Binding $parent[app:ProfileRulesModal].AddRuleCommand}">
+                    Command="{Binding $parent[app:ProfileRulesModal].AddRuleCommand}"
+                    IsDefault="True">
                     <husk:IconLabel
                         Icon="Add"
                         Text="{x:Static lang:Resources.ProfileRulesModal_AddRuleButtonText}" />

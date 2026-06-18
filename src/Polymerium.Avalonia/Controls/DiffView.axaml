@@ -124,12 +124,12 @@
                         </ScrollViewer>
                         <app:DiffOverviewBar
                             x:Name="PART_OverviewBar"
+                            Width="{x:Static app:DiffOverviewBar.DEFAULT_WIDTH}"
+                            Margin="2"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Stretch"
-                            Margin="2"
-                            Width="{x:Static app:DiffOverviewBar.DEFAULT_WIDTH}"
-                            TotalLines="{Binding $parent[app:DiffView].TotalLineCount}"
                             Markers="{Binding $parent[app:DiffView].Markers}"
+                            TotalLines="{Binding $parent[app:DiffView].TotalLineCount}"
                             ViewTopRatio="{Binding $parent[app:DiffView].OverviewTopRatio}"
                             ViewportRatio="{Binding $parent[app:DiffView].OverviewViewportRatio}" />
                         <ScrollBar

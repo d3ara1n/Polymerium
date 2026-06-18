@@ -36,9 +36,9 @@ public static class SkinFormat
     private static bool IsBlank(SKBitmap skin, int x, int y, int w, int h)
     {
         for (var i = 0; i < w; i++)
-        for (var j = 0; j < h; j++)
-            if (skin.GetPixel(x + i, y + j).Alpha != 0)
-                return false;
+            for (var j = 0; j < h; j++)
+                if (skin.GetPixel(x + i, y + j).Alpha != 0)
+                    return false;
         return true;
     }
 }
