@@ -6057,6 +6057,12 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string AccountCreationAuthlib_DropHint {
+            get {
+                return ResourceManager.GetString("AccountCreationAuthlib_DropHint", resourceCulture);
+            }
+        }
+        
         public static string AppMenu_AboutText {
             get {
                 return ResourceManager.GetString("AppMenu_AboutText", resourceCulture);

@@ -2,8 +2,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia.Controls;
 using Polymerium.Avalonia.Controls;
 using TridentCore.Abstractions.Accounts;
 using TridentCore.Core.Services;
@@ -140,6 +142,39 @@ public partial class AccountCreationAuthlibInjector : AccountCreationStep
         catch (Exception ex)
         {
             ErrorMessage = ex.Message;
+        }
+    }
+
+    private const string AUTHLIB_INJECTOR_PREFIX = "authlib-injector:yggdrasil-server:";
+
+    private void DropZone_OnDragOver(object? sender, DropZone.DragOverEventArgs e)
+    {
+        if (e.Data.Contains(DataFormat.Text))
+            e.Accepted = true;
+    }
+
+    private void DropZone_OnDrop(object? sender, DropZone.DropEventArgs e)
+    {
+        var raw = e.Data.TryGetText()?.Trim();
+        if (raw is null)
+        {
+            return;
+        }
+
+        string? url = null;
+        if (raw.StartsWith(AUTHLIB_INJECTOR_PREFIX, StringComparison.OrdinalIgnoreCase))
+        {
+            url = Uri.UnescapeDataString(raw[AUTHLIB_INJECTOR_PREFIX.Length..]);
+        }
+        else if (Uri.TryCreate(raw, UriKind.Absolute, out var parsed)
+                 && parsed.Scheme is "http" or "https")
+        {
+            url = raw;
+        }
+
+        if (!string.IsNullOrEmpty(url))
+        {
+            ServerUrl = url;
         }
     }
 }
