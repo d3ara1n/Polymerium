@@ -6,6 +6,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Polymerium.Avalonia.Controls;
 
@@ -18,7 +19,7 @@ namespace Polymerium.Avalonia.Controls;
 ///     通过 <see cref="ContentSize" /> 与 <see cref="ViewportRect" /> 暴露画布尺寸与可视区域，
 ///     供小地图 / 滚动条等辅助控件绑定。
 /// </summary>
-public class ZoomView : ContentControl
+public partial class ZoomView : ContentControl
 {
     private Matrix _matrix = Matrix.Identity;
     private Point _lastPointer;
@@ -33,6 +34,8 @@ public class ZoomView : ContentControl
     private ScrollBar? _vScrollBar;
     // 防止滚动条 Value 与 Matrix 双向同步时递归
     private bool _suppressScrollSync;
+    // 防止 Zoom 属性与 Matrix 双向同步时递归
+    private bool _suppressZoomSync;
 
     public static readonly StyledProperty<double> ZoomSpeedProperty =
         AvaloniaProperty.Register<ZoomView, double>(nameof(ZoomSpeed), 1.2);
@@ -48,6 +51,12 @@ public class ZoomView : ContentControl
 
     public static readonly StyledProperty<Rect> ViewportRectProperty =
         AvaloniaProperty.Register<ZoomView, Rect>(nameof(ViewportRect));
+
+    public static readonly StyledProperty<double> ZoomProperty =
+        AvaloniaProperty.Register<ZoomView, double>(nameof(Zoom));
+
+    public static readonly StyledProperty<double> EffectiveMinZoomValueProperty =
+        AvaloniaProperty.Register<ZoomView, double>(nameof(EffectiveMinZoomValue));
 
     /// <summary>
     ///     每次滚轮的缩放倍率，&gt;1（默认 1.2）。
@@ -95,6 +104,24 @@ public class ZoomView : ContentControl
     }
 
     /// <summary>
+    ///     当前缩放比例（= ZoomX）。双向：外部（滑条）设定时以视口中心缩放到该值。
+    /// </summary>
+    public double Zoom
+    {
+        get => GetValue(ZoomProperty);
+        set => SetValue(ZoomProperty, value);
+    }
+
+    /// <summary>
+    ///     动态缩放下限（contain fit），供滑条 Minimum 绑定。
+    /// </summary>
+    public double EffectiveMinZoomValue
+    {
+        get => GetValue(EffectiveMinZoomValueProperty);
+        private set => SetValue(EffectiveMinZoomValueProperty, value);
+    }
+
+    /// <summary>
     ///     当前水平缩放比例。
     /// </summary>
     public double ZoomX => _matrix.M11;
@@ -130,7 +157,48 @@ public class ZoomView : ContentControl
         }
     }
 
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        // Zoom 属性由外部（滑条）设定时，以视口中心缩放到该值。
+        // 内部同步 Zoom 时置 _suppressZoomSync 跳过，避免递归。
+        if (change.Property == ZoomProperty && !_suppressZoomSync)
+        {
+            ZoomToValue(Zoom);
+        }
+    }
+
+    /// <summary>
+    ///     将缩放设为指定值，以视口中心为锚点（滑条缩放语义）。
+    /// </summary>
+    private void ZoomToValue(double value)
+    {
+        if (!IsContentValid || _viewportSize.Width <= 0)
+        {
+            return;
+        }
+
+        var target = Math.Clamp(value, EffectiveMinZoom(), MaxZoom);
+        var scale = _matrix.M11;
+        if (Math.Abs(target - scale) < 1e-9)
+        {
+            return;
+        }
+
+        // 视口中心在内容坐标的位置 = (-M31 + vp.W/2)/scale，以它为锚点缩放。
+        var cx = (-_matrix.M31 + _viewportSize.Width / 2) / scale;
+        var cy = (-_matrix.M32 + _viewportSize.Height / 2) / scale;
+        ZoomAt(target / scale, cx, cy);
+    }
+
     #endregion
+
+    private double ViewportCenterContentX =>
+        _matrix.M11 == 0 ? 0 : (-_matrix.M31 + _viewportSize.Width / 2) / _matrix.M11;
+
+    private double ViewportCenterContentY =>
+        _matrix.M22 == 0 ? 0 : (-_matrix.M32 + _viewportSize.Height / 2) / _matrix.M22;
+
 
     #region Layout
 
@@ -334,6 +402,9 @@ public class ZoomView : ContentControl
         UpdateExposed();
     }
 
+    public void ZoomIn() => ZoomAt(ZoomSpeed, ViewportCenterContentX, ViewportCenterContentY);
+    public void ZoomOut() => ZoomAt(1.0 / ZoomSpeed, ViewportCenterContentX, ViewportCenterContentY);
+
     /// <summary>
     ///     自适应（cover fit）：较短维充满视口、较长维溢出可滚动。
     ///     例：纵向长条内容 → 宽充满视口、高溢出，用户上下滚动，缩放不致太小、看得清。
@@ -418,6 +489,21 @@ public class ZoomView : ContentControl
             ContentSize = _contentSize;
         }
 
+        // 动态下限随画布/视口变化，同步暴露给滑条 Minimum
+        var effMin = EffectiveMinZoom();
+        if (!Equals(EffectiveMinZoomValue, effMin))
+        {
+            _suppressZoomSync = true;
+            try
+            {
+                EffectiveMinZoomValue = effMin;
+            }
+            finally
+            {
+                _suppressZoomSync = false;
+            }
+        }
+
         if (!IsContentValid || _matrix.M11 == 0)
         {
             return;
@@ -432,6 +518,20 @@ public class ZoomView : ContentControl
         if (!Equals(ViewportRect, rect))
         {
             ViewportRect = rect;
+        }
+
+        // 当前缩放同步给滑条（防递归）
+        _suppressZoomSync = true;
+        try
+        {
+            if (!Equals(Zoom, scale))
+            {
+                Zoom = scale;
+            }
+        }
+        finally
+        {
+            _suppressZoomSync = false;
         }
 
         UpdateScrollBars();

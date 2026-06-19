@@ -1,7 +1,8 @@
 <ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:app="https://github.com/d3ara1n/Polymerium">
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia">
 
     <ControlTheme
         x:Key="{x:Type app:ZoomView}"
@@ -21,28 +22,78 @@
                             Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}" />
 
-                    <!--  浮动层·底部：水平滚动条（不可水平滚动时由代码隐藏）  -->
-                    <ScrollBar
-                        x:Name="PART_HScrollBar"
-                        Margin="0,0,0,2"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Bottom"
-                        Orientation="Horizontal"
-                        Visibility="Hidden" />
+                        <!--  浮动层·底部：水平滚动条（右端给集中控件区留出空间）  -->
+                        <ScrollBar
+                            x:Name="PART_HScrollBar"
+                            Margin="0,0,204,2"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal"
+                            Visibility="Hidden" />
 
-                    <!--  浮动层·右侧：垂直滚动条（不可垂直滚动时由代码隐藏）  -->
-                    <ScrollBar
-                        x:Name="PART_VScrollBar"
-                        Margin="0,2,2,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Stretch"
-                        Orientation="Vertical"
-                        Visibility="Hidden" />
+                        <!--  浮动层·右侧：垂直滚动条（底端给集中控件区留出空间）  -->
+                        <ScrollBar
+                            x:Name="PART_VScrollBar"
+                            Margin="0,2,2,172"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Stretch"
+                            Orientation="Vertical"
+                            Visibility="Hidden" />
 
-                    <!--
-                        浮动层·右下：QoL 控件占位（小地图 / 缩放等级），
-                        待后续实现，与外部工具栏错开避免遮挡。
-                    -->
+                        <!--  浮动层·右下：集中控件区（竖直：小地图 + 一排操作）  -->
+                        <StackPanel Spacing="8">
+                            <!--  小地图（下一步实现，先占位）  -->
+                            <Border
+                                x:Name="PART_Minimap"
+                                Width="180"
+                                Height="120"
+                                Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="2" />
+
+                            <!--  一排：缩放条（两侧加减）+ 全视图 + 自适应  -->
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <Button
+                                    Classes="Small"
+                                    Command="{Binding ZoomOut, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Padding="6,4"
+                                    Content="-" />
+                                <!--  缩放滑条（线性，范围由 EffectiveMinZoomValue~MaxZoom 决定）  -->
+                                <Slider
+                                    x:Name="PART_ZoomSlider"
+                                    Width="120"
+                                    VerticalAlignment="Center"
+                                    LargeChange="0.2"
+                                    Maximum="{TemplateBinding MaxZoom}"
+                                    Minimum="{TemplateBinding EffectiveMinZoomValue}"
+                                    SmallChange="0.05"
+                                    TickFrequency="0"
+                                    Value="{TemplateBinding Zoom, Mode=TwoWay}" />
+                                <Button
+                                    Classes="Small"
+                                    Command="{Binding ZoomIn, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Padding="6,4"
+                                    Content="+" />
+                                <Button
+                                    Classes="Small"
+                                    Command="{Binding FitToAll, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Padding="6,4"
+                                    ToolTip.Tip="全视图">
+                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowMinimize" />
+                                </Button>
+                                <Button
+                                    Classes="Small"
+                                    Command="{Binding FitToContent, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Padding="6,4"
+                                    ToolTip.Tip="自适应">
+                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowExpand" />
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
                     </Panel>
                 </Border>
             </ControlTemplate>
