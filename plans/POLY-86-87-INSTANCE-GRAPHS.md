@@ -135,6 +135,18 @@ POC（POLY-86）跑通后，POLY-87 复用同一 `GraphPanel` 控件：
 - 布局：力导向（MSAGL `Ranking` 或 `MDS`）比分层更适合多对多关系
 - 入口：需新增（POLY-86 有现成禁用菜单项，POLY-87 没有）
 
+## QoL（Quality of Life）待办
+
+以下项在「只显示已安装包之间的依赖关系」完成并提交后再做：
+
+- **节点样式美化**：按 `IsRequired` 区分软/硬依赖边样式（虚线/实线、不同颜色），根节点（被依赖多）与叶节点视觉区分
+- **ZoomView 辅助控件**：
+  - 侧边滚动条（同步可视区域位置）
+  - 可视区域小地图（minimap，缩略图 + 当前视口框）
+  - 缩放等级显示（如 `120%` 角标）+ 重置/适应按钮
+- **边路由**：横平竖直 + 同结构线条合并（需 fork AvaloniaGraphControl 或自写算法，200-1000 行）
+- **本地化**：modal 标题等文案抽到 `Resources.resx` + `Resources.zh-hans.resx` + `Resources.Designer.cs`
+
 ---
 
 ## 进度日志
@@ -151,3 +163,5 @@ POC（POLY-86）跑通后，POLY-87 复用同一 `GraphPanel` 控件：
 - **2026-06-19** POC 阶段 3 完成：从 Subpage 改为 Modal。新建 `Modals/InstanceDependencyGraphModal.axaml(.cs)`（husk:Modal + Stretch + 底部关闭按钮 `Dialog_DismissButtonText` + smoothScroll:ScrollView + GraphPanel），Graph 构建逻辑（硬编码）从 PageModel 搬到 Modal 自身，走实例模式 `$parent[app:InstanceDependencyGraphModal].DependencyGraph` 绑定。`InstanceSetupPageModel.GotoDependencyGraph` 改为 `overlayService.PopModal(new InstanceDependencyGraphModal())`。删除旧 `InstanceDependencyGraphPage` + `InstanceDependencyGraphPageModel` + 用户手动加的 PageEntries 侧边栏入口。保留 `Models/DependencyGraphNode.cs`。全量 build 通过（0 Error，10s）。待人眼验证 modal 弹出 + 缩放交互在固定容器下的表现
 - **2026-06-19** 用户实测 SmoothScroll 仍有问题：滚轮不滚动、拖拽总是回到原点看不到右半部分。决定弃用 SmoothScroll，自研 ZoomView 控件。用户拍板交互：直接滚轮缩放 + 中键拖拽平移 + 无限平移
 - **2026-06-19** POC 阶段 4 完成：自研 `Controls/ZoomView.cs`（继承 ContentControl，RenderTransform + 单 Matrix，以鼠标为锚点的滚轮缩放公式 `M_new = ScaleAt(s,s,cx,cy) * M`，中键拖拽平移用视口坐标 delta，MinZoom/MaxZoom/ZoomSpeed 可配，Reset() 方法）。架构参考 PanAndZoom 的 ZoomBorder（不用 ScrollViewer/InteractionTracker，避开 SmoothScroll 的坑）。Modal 从 `smoothScroll:ScrollView` 换为 `app:ZoomView`。清理 SmoothScroll 全部引用：csproj 移除包、App.axaml 移除命名空间+两个主题（ScrollViewDefaultTheme 和用户手动加的 ScrollViewerSmoothTheme）、Modal 移除命名空间+控件。全量 build 通过（0 Error，19.96s，SmoothScroll 已从 restore 消失）。待人眼验证 ZoomView 缩放/拖拽手感
+- **2026-06-19** POC 阶段 5 完成（接入真实数据 + ModalModel 化）：新增 `ModalModels/InstanceDependencyGraphModalModel.cs`（注入 `IViewContext<InstanceBasicModel>`、`ProfileManager`、`DataService`、`NotificationService`；`OnInitializeAsync` 里从 `profile.Setup.Packages` 解析 purl → 批量 `dataService.ResolvePackagesAsync(batch, Filter.None)` 拿 Package（含 Dependencies + ProjectName）→ 二次批量 `dataService.QueryProjectsAsync` 拿依赖项 ProjectName → 用 (Label,Namespace,ProjectId) 去重建节点，硬依赖优先于软依赖，构建 `Graph`）。`InstanceDependencyGraphModal.axaml(.cs)` 去掉硬编码 `BuildSampleGraph` 与实例模式绑定，改走 ModalModel DataContext 绑定（`{Binding DependencyGraph}`，根节点加 `x:DataType=modalModels:InstanceDependencyGraphModalModel`）。`InstanceSetupPageModel.GotoDependencyGraph` 改为 `overlayService.PopModal<InstanceDependencyGraphModal>(Basic)` 传 InstanceBasicModel 作为参数。`DependencyGraphNode` 扩展为 `record(Key, Label, IsInstalled, IsRequired)` 支持后续样式区分。全量 build 通过（0 Error）。待人眼验证真实依赖图渲染
+- **2026-06-19** POC 阶段 6 完成（按反馈收敛数据范围 + 自适应视图）：用户反馈「不该把网络上的依赖也画出来，只需已安装包之间的依赖关系，孤儿节点不要」。重写 `BuildGraphAsync`：去掉二次 `QueryProjectsAsync`；只建已安装包节点字典，只连「指向另一个已安装包」的依赖边，GraphPanel 从 Edges 推导节点集合使孤儿包自然不出现。`DependencyGraphNode` 简化为 `record(Key, Label)`（不再需要 IsInstalled/IsRequired，全是已安装包，边样式区分留 QoL）。新增自适应视图：`ZoomView.FitToContent()`（计算使内容充满并居中视口的缩放+平移，不放大超过 1×）；`InstanceDependencyGraphModal.axaml.cs` 订阅 `GraphPanel.LayoutUpdated`，第一次拿到有效尺寸时 fit 一次后取消订阅。QoL 项（节点样式美化、ZoomView 滚动条/小地图/缩放等级、边路由、本地化）写入计划待提交后做。全量 build 通过（0 Error，CS9124 警告随冗余字段赋值移除而消失）
