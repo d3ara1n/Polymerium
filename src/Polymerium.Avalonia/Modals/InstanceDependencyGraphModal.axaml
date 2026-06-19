@@ -15,29 +15,25 @@
     x:DataType="modalModels:InstanceDependencyGraphModalModel"
     d:DesignHeight="600"
     d:DesignWidth="900"
+    Padding="8"
     mc:Ignorable="d">
     <!--
         ModalModel 模式：DataContext 为 InstanceDependencyGraphModalModel（由 PopModal<T> 通过
         SimpleViewActivator 自动配对、注入 DI、挂 ViewModelMixin）。绑定直接走 {Binding}。
-        ZoomView：自研缩放容器，直接滚轮缩放（鼠标为锚）+ 中键拖拽平移 + 无限平移。
+
+        布局：ZoomView 满铺 modal（仅留 8px 边距），所有辅助控件浮动其上。
+            - 右上角：关闭按钮
+            - 右下角：预留给 QoL 控件（小地图 / 滚动条 / 缩放等级滑条 / 回到自适应按钮）
+        Grid 中后声明的子元素位于上层，因此 ZoomView 先声明、浮动控件后声明。
     -->
-    <DockPanel VerticalSpacing="12">
-        <!--  Footer: 关闭按钮（项目通用约定）  -->
-        <StackPanel
-            DockPanel.Dock="Bottom"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal">
-            <Button
-                Command="{Binding $parent[app:InstanceDependencyGraphModal].Dismiss}"
-                Content="{x:Static lang:Resources.Dialog_DismissButtonText}"
-                IsCancel="True" />
-        </StackPanel>
-        <!--  主体：自研 ZoomView + GraphPanel  -->
+    <Grid>
+        <!--  底层：ZoomView + GraphPanel（满铺）  -->
         <app:ZoomView
             x:Name="ZoomView"
             Background="{StaticResource CardBackgroundBrush}"
             MaxZoom="10"
             MinZoom="0.1"
+            CornerRadius="{StaticResource SmallCornerRadius}"
             ZoomSpeed="1.2">
             <agc:GraphPanel
                 x:Name="GraphPanel"
@@ -59,5 +55,19 @@
                 </agc:GraphPanel.DataTemplates>
             </agc:GraphPanel>
         </app:ZoomView>
-    </DockPanel>
+
+        <!--  浮动层·右上：关闭按钮  -->
+        <Button
+            Margin="8"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Command="{Binding $parent[app:InstanceDependencyGraphModal].Dismiss}"
+            Content="{x:Static lang:Resources.Dialog_DismissButtonText}"
+            IsCancel="True" />
+
+        <!--
+            浮动层·右下：QoL 控件占位（小地图 / 滚动条 / 缩放等级滑条 / 回到自适应按钮）
+            待后续实现，集中在此区域，避免与 ZoomView 内容互相遮挡。
+        -->
+    </Grid>
 </husk:Modal>
