@@ -32,6 +32,8 @@ public partial class ZoomView : ContentControl
     private ContentPresenter? _presenter;
     private ScrollBar? _hScrollBar;
     private ScrollBar? _vScrollBar;
+    // 小地图
+    private ZoomMinimap? _minimap;
     // 防止滚动条 Value 与 Matrix 双向同步时递归
     private bool _suppressScrollSync;
     // 防止 Zoom 属性与 Matrix 双向同步时递归
@@ -145,6 +147,7 @@ public partial class ZoomView : ContentControl
         _presenter = e.NameScope.Find<ContentPresenter>("PART_ContentPresenter");
         _hScrollBar = e.NameScope.Find<ScrollBar>("PART_HScrollBar");
         _vScrollBar = e.NameScope.Find<ScrollBar>("PART_VScrollBar");
+        _minimap = e.NameScope.Find<ZoomMinimap>("PART_Minimap");
 
         if (_hScrollBar != null)
         {
@@ -155,6 +158,29 @@ public partial class ZoomView : ContentControl
         {
             _vScrollBar.ValueChanged += OnVScrollBarValueChanged;
         }
+
+        if (_minimap != null)
+        {
+            _minimap.ViewportChanged += OnMinimapViewportChanged;
+        }
+    }
+
+    /// <summary>
+    ///     小地图拖动回设可视区域左上角（画布坐标）→ 平移 Matrix。
+    ///     tx = -x*scale，ty = -y*scale（与 ClampMatrix 的可滚动区间一致）。
+    /// </summary>
+    private void OnMinimapViewportChanged(object? sender, Point contentTopLeft)
+    {
+        if (!IsContentValid)
+        {
+            return;
+        }
+
+        var scale = _matrix.M11;
+        _matrix = new Matrix(scale, 0, 0, scale, -contentTopLeft.X * scale, -contentTopLeft.Y * scale);
+        ClampMatrix();
+        ApplyTransform();
+        UpdateExposed();
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)

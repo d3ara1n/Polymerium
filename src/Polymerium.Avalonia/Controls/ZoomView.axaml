@@ -41,16 +41,14 @@
                             Visibility="Hidden" />
 
                         <!--  浮动层·右下：集中控件区（竖直：小地图 + 一排操作）  -->
-                        <StackPanel Spacing="8">
-                            <!--  小地图（下一步实现，先占位）  -->
-                            <Border
+                        <StackPanel Spacing="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="6">
+                            <!--  小地图：示意性，显示可视区域在画布的位置/比例（非缩略图）  -->
+                            <app:ZoomMinimap
                                 x:Name="PART_Minimap"
                                 Width="180"
                                 Height="120"
-                                Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
-                                BorderBrush="{StaticResource ControlBorderBrush}"
-                                BorderThickness="1"
-                                CornerRadius="2" />
+                                ContentSize="{TemplateBinding ContentSize}"
+                                ViewportRect="{TemplateBinding ViewportRect}" />
 
                             <!--  一排：缩放条（两侧加减）+ 全视图 + 自适应  -->
                             <StackPanel

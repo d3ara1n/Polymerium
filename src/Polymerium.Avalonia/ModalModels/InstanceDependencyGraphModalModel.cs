@@ -34,6 +34,22 @@ public partial class InstanceDependencyGraphModalModel(
     [ObservableProperty]
     public partial Graph? DependencyGraph { get; private set; }
 
+    /// <summary>已安装包总数。</summary>
+    [ObservableProperty]
+    public partial int TotalPackages { get; private set; }
+
+    /// <summary>在图中可见的包数（参与至少一条依赖边）。</summary>
+    [ObservableProperty]
+    public partial int VisiblePackages { get; private set; }
+
+    /// <summary>未显示的包数（孤儿：既不依赖也不被依赖）。</summary>
+    [ObservableProperty]
+    public partial int HiddenPackages { get; private set; }
+
+    /// <summary>依赖边数。</summary>
+    [ObservableProperty]
+    public partial int EdgeCount { get; private set; }
+
     #endregion
 
     #region Overrides
@@ -49,7 +65,13 @@ public partial class InstanceDependencyGraphModalModel(
         try
         {
             // 构建依赖图是 I/O + CPU 混合任务，丢到后台线程避免阻塞 UI。
-            DependencyGraph = await Task.Run(() => BuildGraphAsync(profile, token), token);
+            var result = await Task.Run(() => BuildGraphAsync(profile, token), token);
+            // 统计在 UI 线程上设，避免跨线程改 ObservableProperty。
+            DependencyGraph = result.Graph;
+            TotalPackages = result.Total;
+            VisiblePackages = result.Visible;
+            HiddenPackages = result.Hidden;
+            EdgeCount = result.Edges;
         }
         catch (System.Exception ex)
         {
@@ -64,7 +86,7 @@ public partial class InstanceDependencyGraphModalModel(
     /// </summary>
     private static string NodeKey(string label, string? ns, string pid) => $"{label}|{ns ?? string.Empty}|{pid}";
 
-    private async Task<Graph> BuildGraphAsync(Profile profile, CancellationToken token)
+    private async Task<GraphBuildResult> BuildGraphAsync(Profile profile, CancellationToken token)
     {
         // 1. 解析已安装包的 purl → PackageIdentifier
         var installed = new List<PackageIdentifier>();
@@ -78,7 +100,7 @@ public partial class InstanceDependencyGraphModalModel(
 
         if (installed.Count == 0)
         {
-            return new Graph();
+            return new GraphBuildResult(new Graph(), 0, 0, 0, 0);
         }
 
         token.ThrowIfCancellationRequested();
@@ -103,6 +125,8 @@ public partial class InstanceDependencyGraphModalModel(
         //    GraphPanel 内部从 Edges 推导节点集合，因此只加边即可——
         //    没有任何边（既不依赖也不被依赖）的孤儿包自然不会出现在图里。
         var graph = new Graph { Orientation = Graph.Orientations.Horizontal };
+        // 记录参与边的节点 key（用于区分孤儿）
+        var connected = new HashSet<string>();
         foreach (var (_, pkg) in packages)
         {
             var parentKey = NodeKey(pkg.Label, pkg.Namespace, pkg.ProjectId);
@@ -123,10 +147,21 @@ public partial class InstanceDependencyGraphModalModel(
                 if (nodes.TryGetValue(depKey, out var child))
                 {
                     graph.Edges.Add(new Edge(parent, child));
+                    connected.Add(parentKey);
+                    connected.Add(depKey);
                 }
             }
         }
 
-        return graph;
+        return new GraphBuildResult(
+            graph,
+            Total: nodes.Count,
+            Visible: connected.Count,
+            Hidden: nodes.Count - connected.Count,
+            Edges: graph.Edges.Count
+        );
     }
+
+    /// <summary>依赖图构建结果（含统计）。</summary>
+    private record GraphBuildResult(Graph Graph, int Total, int Visible, int Hidden, int Edges);
 }
