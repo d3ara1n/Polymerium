@@ -2,20 +2,28 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Layout;
 using Avalonia.Media;
 
 namespace Polymerium.Avalonia.Controls;
 
 /// <summary>
-///     可缩放可平移的内容容器。滚轮缩放（以鼠标位置为锚点），中键拖拽平移。
-///     使用 child 的 RenderTransform + 单个 Matrix 表达变换，不依赖 ScrollViewer/InteractionTracker。
-///     参考 PanAndZoom 的 ZoomBorder 架构，按本项目需求裁剪（无限平移、中键拖拽）。
+///     有界可缩放可平移内容容器。
+///     画布 = Content 的自然尺寸（GraphPanel 的 MSAGL 布局尺寸），平移被 clamp 在画布边缘内，
+///     缩放下限动态计算为「可视区域已看到整高或整宽」的临界值（cover fit），
+///     上限由 <see cref="MaxZoom" /> 约束。
+///     滚轮缩放以鼠标位置为锚点，中键拖拽平移按内容坐标跟手（delta 除以当前缩放）。
+///     通过 <see cref="ContentSize" /> 与 <see cref="ViewportRect" /> 暴露画布尺寸与可视区域，
+///     供小地图 / 滚动条等辅助控件绑定。
 /// </summary>
 public class ZoomView : ContentControl
 {
     private Matrix _matrix = Matrix.Identity;
     private Point _lastPointer;
     private bool _isPanning;
+    private bool _fitted;
+    private Size _contentSize;
+    private Size _viewportSize;
 
     public static readonly StyledProperty<double> ZoomSpeedProperty =
         AvaloniaProperty.Register<ZoomView, double>(nameof(ZoomSpeed), 1.2);
@@ -26,8 +34,14 @@ public class ZoomView : ContentControl
     public static readonly StyledProperty<double> MaxZoomProperty =
         AvaloniaProperty.Register<ZoomView, double>(nameof(MaxZoom), 10.0);
 
+    public static readonly StyledProperty<Size> ContentSizeProperty =
+        AvaloniaProperty.Register<ZoomView, Size>(nameof(ContentSize));
+
+    public static readonly StyledProperty<Rect> ViewportRectProperty =
+        AvaloniaProperty.Register<ZoomView, Rect>(nameof(ViewportRect));
+
     /// <summary>
-    ///     每次滚轮的缩放倍率，>1（默认 1.2）。
+    ///     每次滚轮的缩放倍率，&gt;1（默认 1.2）。
     /// </summary>
     public double ZoomSpeed
     {
@@ -36,7 +50,7 @@ public class ZoomView : ContentControl
     }
 
     /// <summary>
-    ///     最小缩放比例（默认 0.1）。
+    ///     用户设定的绝对缩放下限（默认 0.1）。实际下限取 max(this, 动态 fit 下限)。
     /// </summary>
     public double MinZoom
     {
@@ -45,12 +59,30 @@ public class ZoomView : ContentControl
     }
 
     /// <summary>
-    ///     最大缩放比例（默认 10）。
+    ///     缩放上限（默认 10）。
     /// </summary>
     public double MaxZoom
     {
         get => GetValue(MaxZoomProperty);
         set => SetValue(MaxZoomProperty, value);
+    }
+
+    /// <summary>
+    ///     画布（Content 自然）尺寸，供小地图等控件绑定。
+    /// </summary>
+    public Size ContentSize
+    {
+        get => GetValue(ContentSizeProperty);
+        private set => SetValue(ContentSizeProperty, value);
+    }
+
+    /// <summary>
+    ///     当前可视区域在画布（Content）坐标系中的矩形，供小地图 / 滚动条绑定。
+    /// </summary>
+    public Rect ViewportRect
+    {
+        get => GetValue(ViewportRectProperty);
+        private set => SetValue(ViewportRectProperty, value);
     }
 
     /// <summary>
@@ -69,6 +101,98 @@ public class ZoomView : ContentControl
         Focusable = true;
     }
 
+    #region Layout
+
+    protected override Size MeasureOverride(Size availableSize)
+    {
+        // ZoomView 自身占满父给的视口，但 content 必须用 infinity measure，
+        // 否则 Avalonia 会把 content.DesiredSize 截断到 availableSize——
+        // 对 GraphPanel 这种自然尺寸远大于视口的控件，会丢掉真实画布尺寸，
+        // 导致 fit 下限计算成 1×、只能看到左上角一小块。
+        _viewportSize = availableSize;
+        if (Content is Layoutable content)
+        {
+            content.Measure(Size.Infinity);
+            _contentSize = content.DesiredSize;
+        }
+        return availableSize;
+    }
+
+    protected override Size ArrangeOverride(Size finalSize)
+    {
+        var size = base.ArrangeOverride(finalSize);
+        _viewportSize = finalSize;
+        // 注意：不在这里读 content.DesiredSize——base.ArrangeOverride 内部会用 finalSize
+        // 重新 measure content，把 DesiredSize 截断回视口尺寸，会覆盖掉 MeasureOverride 里
+        // 用 Size.Infinity 拿到的真实画布尺寸。_contentSize 只由 MeasureOverride 维护。
+
+        if (!_fitted && IsContentValid && _viewportSize.Width > 0)
+        {
+            // 首次拿到有效画布 + 视口尺寸时做一次自适应（contain fit）。
+            FitToContent();
+            _fitted = true;
+        }
+        else
+        {
+            // 视口尺寸变化（窗口缩放等）后，按新视口重新 clamp 并刷新暴露属性。
+            ClampMatrix();
+            ApplyTransform();
+            UpdateExposed();
+        }
+
+        return size;
+    }
+
+    private bool IsContentValid => _contentSize.Width > 0 && _contentSize.Height > 0;
+
+    /// <summary>
+    ///     动态缩放下限：可视区域已看到整张图时的 contain fit 比例。
+    ///     取 min(vp.W/content.W, vp.H/content.H)——较短那维刚好充满视口、较长那维全可见，
+    ///     即「宽和长谁先全部可见就停在谁那」。再与 1.0 取小（图比视口小时不放大，
+    ///     自然尺寸即已全可见），最后与用户设定的 <see cref="MinZoom" /> 取大。
+    /// </summary>
+    private double EffectiveMinZoom()
+    {
+        if (!IsContentValid || _viewportSize.Width <= 0 || _viewportSize.Height <= 0)
+        {
+            return MinZoom;
+        }
+
+        var fitFloor = Math.Min(
+            1.0,
+            Math.Min(_viewportSize.Width / _contentSize.Width, _viewportSize.Height / _contentSize.Height)
+        );
+        return Math.Max(MinZoom, fitFloor);
+    }
+
+    /// <summary>
+    ///     将矩阵的平移分量 clamp 到画布边缘内：
+    ///     该维缩放后 &gt; 视口 → 可滚动，平移被夹在 [vp - scaled, 0]；
+    ///     该维缩放后 ≤ 视口 → 不可滚动，居中。
+    /// </summary>
+    private void ClampMatrix()
+    {
+        if (!IsContentValid || _viewportSize.Width <= 0)
+        {
+            return;
+        }
+
+        var scale = _matrix.M11;
+        var scaledW = _contentSize.Width * scale;
+        var scaledH = _contentSize.Height * scale;
+        var tx = scaledW > _viewportSize.Width
+            ? Math.Clamp(_matrix.M31, _viewportSize.Width - scaledW, 0)
+            : (_viewportSize.Width - scaledW) / 2;
+        var ty = scaledH > _viewportSize.Height
+            ? Math.Clamp(_matrix.M32, _viewportSize.Height - scaledH, 0)
+            : (_viewportSize.Height - scaledH) / 2;
+        _matrix = new Matrix(scale, 0, 0, scale, tx, ty);
+    }
+
+    #endregion
+
+    #region Pointer
+
     protected override void OnPointerWheelChanged(PointerWheelEventArgs e)
     {
         base.OnPointerWheelChanged(e);
@@ -77,7 +201,6 @@ public class ZoomView : ContentControl
             return;
         }
 
-        // 直接滚轮缩放（不要求修饰键），以鼠标位置（内容坐标）为锚点。
         var origin = e.GetPosition(content);
         var delta = e.Delta.Y;
         if (Math.Abs(delta) < 0.001)
@@ -85,7 +208,6 @@ public class ZoomView : ContentControl
             return;
         }
 
-        // 滚轮向上（delta > 0）放大，向下（delta < 0）缩小。
         var factor = delta > 0 ? ZoomSpeed : 1.0 / ZoomSpeed;
         ZoomAt(factor, origin.X, origin.Y);
         e.Handled = true;
@@ -100,7 +222,6 @@ public class ZoomView : ContentControl
         }
 
         var properties = e.GetCurrentPoint(this).Properties;
-        // 中键拖拽平移（避免和内容本身的左键交互冲突，如未来节点可选）。
         if (!properties.IsMiddleButtonPressed)
         {
             return;
@@ -121,17 +242,17 @@ public class ZoomView : ContentControl
             return;
         }
 
-        // 拖拽在视口坐标（this）里取 delta，再除以当前缩放，使内容坐标跟手：
+        // 拖拽在视口坐标里取 delta，再除以当前缩放，使内容坐标跟手：
         // 缩小（scale<1）时平移量被放大，浏览全局更省力；放大时精细微调。
-        // 若用裸 delta 则是屏幕跟手，缩小后图小、相对位移太小，拖动费力。
         var current = e.GetPosition(this);
         var dx = (current.X - _lastPointer.X) / ZoomX;
         var dy = (current.Y - _lastPointer.Y) / ZoomY;
         _lastPointer = current;
 
-        // TranslatePrepend = Translate(dx,dy) * matrix
         _matrix = Matrix.CreateTranslation(dx, dy) * _matrix;
+        ClampMatrix();
         ApplyTransform();
+        UpdateExposed();
         e.Handled = true;
     }
 
@@ -149,65 +270,69 @@ public class ZoomView : ContentControl
         e.Handled = true;
     }
 
+    #endregion
+
+    #region Public API
+
     /// <summary>
     ///     以内容坐标 (cx, cy) 为锚点缩放。M_new = ScaleAt(s, s, cx, cy) * M。
+    ///     结果被 clamp 到 [EffectiveMinZoom, MaxZoom] 与画布边缘内。
     /// </summary>
     public void ZoomAt(double factor, double cx, double cy)
     {
-        var newZoomX = _matrix.M11 * factor;
-        var newZoomY = _matrix.M22 * factor;
-        if (newZoomX < MinZoom || newZoomX > MaxZoom || newZoomY < MinZoom || newZoomY > MaxZoom)
+        var currentScale = _matrix.M11;
+        var newScale = currentScale * factor;
+        var clampedScale = Math.Clamp(newScale, EffectiveMinZoom(), MaxZoom);
+        if (Math.Abs(clampedScale - currentScale) < 1e-9)
         {
             return;
         }
 
-        // ScaleAt(s,s,cx,cy) = { s,0,0,s, cx-s*cx, cy-s*cy }
-        var scaleAt = new Matrix(factor, 0, 0, factor, cx - factor * cx, cy - factor * cy);
+        var actualFactor = clampedScale / currentScale;
+        var scaleAt = new Matrix(
+            actualFactor,
+            0,
+            0,
+            actualFactor,
+            cx - actualFactor * cx,
+            cy - actualFactor * cy
+        );
         _matrix = scaleAt * _matrix;
+        ClampMatrix();
         ApplyTransform();
+        UpdateExposed();
     }
 
     /// <summary>
-    ///     重置变换到单位矩阵。
+    ///     自适应：缩放到动态下限（contain fit），整张图刚好全部进入视口——
+    ///     较短维充满、较长维有空白居中。即「回到自适应」按钮的行为。
+    /// </summary>
+    public void FitToContent()
+    {
+        if (!IsContentValid || _viewportSize.Width <= 0)
+        {
+            return;
+        }
+
+        var scale = EffectiveMinZoom();
+        _matrix = new Matrix(scale, 0, 0, scale, 0, 0);
+        ClampMatrix();
+        ApplyTransform();
+        UpdateExposed();
+    }
+
+    /// <summary>
+    ///     重置到 1× 并 clamp（不会突破动态下限）。
     /// </summary>
     public void Reset()
     {
         _matrix = Matrix.Identity;
+        ClampMatrix();
         ApplyTransform();
+        UpdateExposed();
     }
 
-    /// <summary>
-    ///     自适应内容：计算使 Content 充满并居中于视口所需的缩放与平移，一次性应用。
-    ///     需在 Content 完成布局（Bounds 有效）后调用，否则 no-op。
-    /// </summary>
-    public void FitToContent()
-    {
-        if (Content is not Visual content)
-        {
-            return;
-        }
-
-        var contentBounds = content.Bounds;
-        var viewport = Bounds;
-        if (contentBounds.Width <= 0 || contentBounds.Height <= 0
-            || viewport.Width <= 0 || viewport.Height <= 0)
-        {
-            return;
-        }
-
-        var scaleX = viewport.Width / contentBounds.Width;
-        var scaleY = viewport.Height / contentBounds.Height;
-        var scale = Math.Min(scaleX, scaleY);
-        // 不放大超过 1，避免对小图过度拉伸；下限受 MinZoom 约束。
-        scale = Math.Clamp(scale, MinZoom, Math.Min(1.0, MaxZoom));
-
-        // 内容本地 (0,0) 经 M=(s,0,0,s,tx,ty) 映射到 Bounds.Position + (tx,ty)。
-        // 要内容居中于视口：tx = (vp.W - s*cb.W)/2 - cb.X
-        var tx = (viewport.Width - scale * contentBounds.Width) / 2 - contentBounds.X;
-        var ty = (viewport.Height - scale * contentBounds.Height) / 2 - contentBounds.Y;
-        _matrix = new Matrix(scale, 0, 0, scale, tx, ty);
-        ApplyTransform();
-    }
+    #endregion
 
     private void ApplyTransform()
     {
@@ -215,6 +340,30 @@ public class ZoomView : ContentControl
         {
             content.RenderTransformOrigin = new RelativePoint(0, 0, RelativeUnit.Absolute);
             content.RenderTransform = new MatrixTransform { Matrix = _matrix };
+        }
+    }
+
+    private void UpdateExposed()
+    {
+        if (!Equals(ContentSize, _contentSize))
+        {
+            ContentSize = _contentSize;
+        }
+
+        if (!IsContentValid || _matrix.M11 == 0)
+        {
+            return;
+        }
+
+        var scale = _matrix.M11;
+        var vx = -_matrix.M31 / scale;
+        var vy = -_matrix.M32 / scale;
+        var vw = _viewportSize.Width / scale;
+        var vh = _viewportSize.Height / scale;
+        var rect = new Rect(vx, vy, vw, vh);
+        if (!Equals(ViewportRect, rect))
+        {
+            ViewportRect = rect;
         }
     }
 }
