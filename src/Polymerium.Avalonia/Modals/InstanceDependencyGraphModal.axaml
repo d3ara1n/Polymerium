@@ -47,6 +47,16 @@
             </agc:GraphPanel>
         </app:ZoomView>
 
+        <!--  加载指示  -->
+        <husk:ProgressRing
+            Width="32"
+            Height="32"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            IsIndeterminate="True"
+            IsVisible="{Binding IsLoading}"
+            Theme="{StaticResource SolidProgressRingTheme}" />
+
         <!--  关闭按钮  -->
         <Button
             Margin="8"
@@ -78,21 +88,23 @@
                     <TextBlock
                         FontSize="{StaticResource MediumFontSize}"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{Binding TotalPackages}" />
+                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                        Text="{Binding VisiblePackages}" />
                     <TextBlock
                         FontSize="{StaticResource SmallFontSize}"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_TotalPackagesLabel}" />
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_VisiblePackagesLabel}" />
                 </StackPanel>
                 <StackPanel Spacing="2">
                     <TextBlock
                         FontSize="{StaticResource MediumFontSize}"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{Binding VisiblePackages}" />
+                        Text="{Binding TotalPackages}" />
                     <TextBlock
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_VisiblePackagesLabel}" />
+                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_TotalPackagesLabel}" />
                 </StackPanel>
                 <StackPanel Spacing="2">
                     <TextBlock
