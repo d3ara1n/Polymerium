@@ -6200,5 +6200,29 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("MainWindow_OpenGitHubDangerNotificationTitle", resourceCulture);
             }
         }
+        
+        public static string InstanceDependencyGraphModal_TotalPackagesLabel {
+            get {
+                return ResourceManager.GetString("InstanceDependencyGraphModal_TotalPackagesLabel", resourceCulture);
+            }
+        }
+        
+        public static string InstanceDependencyGraphModal_VisiblePackagesLabel {
+            get {
+                return ResourceManager.GetString("InstanceDependencyGraphModal_VisiblePackagesLabel", resourceCulture);
+            }
+        }
+        
+        public static string InstanceDependencyGraphModal_HiddenPackagesLabel {
+            get {
+                return ResourceManager.GetString("InstanceDependencyGraphModal_HiddenPackagesLabel", resourceCulture);
+            }
+        }
+        
+        public static string InstanceDependencyGraphModal_DependencyCountLabel {
+            get {
+                return ResourceManager.GetString("InstanceDependencyGraphModal_DependencyCountLabel", resourceCulture);
+            }
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -25,7 +26,7 @@ public partial class InstanceDependencyGraphModalModel(
 {
     #region Direct
 
-    public InstanceBasicModel Basic { get; } = context.Parameter!;
+    public InstanceBasicModel Basic { get; } = context.GetRequiredParameter();
 
     #endregion
 
@@ -34,19 +35,15 @@ public partial class InstanceDependencyGraphModalModel(
     [ObservableProperty]
     public partial Graph? DependencyGraph { get; private set; }
 
-    /// <summary>已安装包总数。</summary>
     [ObservableProperty]
     public partial int TotalPackages { get; private set; }
 
-    /// <summary>在图中可见的包数（参与至少一条依赖边）。</summary>
     [ObservableProperty]
     public partial int VisiblePackages { get; private set; }
 
-    /// <summary>未显示的包数（孤儿：既不依赖也不被依赖）。</summary>
     [ObservableProperty]
     public partial int HiddenPackages { get; private set; }
 
-    /// <summary>依赖边数。</summary>
     [ObservableProperty]
     public partial int EdgeCount { get; private set; }
 
@@ -64,16 +61,14 @@ public partial class InstanceDependencyGraphModalModel(
 
         try
         {
-            // 构建依赖图是 I/O + CPU 混合任务，丢到后台线程避免阻塞 UI。
             var result = await Task.Run(() => BuildGraphAsync(profile, token), token);
-            // 统计在 UI 线程上设，避免跨线程改 ObservableProperty。
             DependencyGraph = result.Graph;
             TotalPackages = result.Total;
             VisiblePackages = result.Visible;
             HiddenPackages = result.Hidden;
             EdgeCount = result.Edges;
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             notificationService.PopMessage(ex, "Failed to build dependency graph");
         }
@@ -81,14 +76,10 @@ public partial class InstanceDependencyGraphModalModel(
 
     #endregion
 
-    /// <summary>
-    ///     节点 key：(Label, Namespace, ProjectId) 三元组拼接，避免不同仓库同名项目冲突。
-    /// </summary>
     private static string NodeKey(string label, string? ns, string pid) => $"{label}|{ns ?? string.Empty}|{pid}";
 
     private async Task<GraphBuildResult> BuildGraphAsync(Profile profile, CancellationToken token)
     {
-        // 1. 解析已安装包的 purl → PackageIdentifier
         var installed = new List<PackageIdentifier>();
         foreach (var entry in profile.Setup.Packages)
         {
@@ -105,15 +96,12 @@ public partial class InstanceDependencyGraphModalModel(
 
         token.ThrowIfCancellationRequested();
 
-        // 2. 批量解析已安装包 → Package（含 Dependencies 与 ProjectName）
         var packages = await dataService
                             .ResolvePackagesAsync(installed, Filter.None)
                             .ConfigureAwait(false);
 
         token.ThrowIfCancellationRequested();
 
-        // 3. 建立已安装包节点字典：key = (Label, Namespace, ProjectId) → node
-        //    只画已安装包之间的依赖关系，网络上的依赖项不拉取、不绘制。
         var nodes = new Dictionary<string, DependencyGraphNode>();
         foreach (var (_, pkg) in packages)
         {
@@ -121,11 +109,7 @@ public partial class InstanceDependencyGraphModalModel(
             nodes[key] = new DependencyGraphNode(key, pkg.ProjectName);
         }
 
-        // 4. 只连「指向另一个已安装包」的依赖边。
-        //    GraphPanel 内部从 Edges 推导节点集合，因此只加边即可——
-        //    没有任何边（既不依赖也不被依赖）的孤儿包自然不会出现在图里。
         var graph = new Graph { Orientation = Graph.Orientations.Horizontal };
-        // 记录参与边的节点 key（用于区分孤儿）
         var connected = new HashSet<string>();
         foreach (var (_, pkg) in packages)
         {
@@ -138,7 +122,6 @@ public partial class InstanceDependencyGraphModalModel(
             foreach (var dep in pkg.Dependencies)
             {
                 var depKey = NodeKey(dep.Label, dep.Namespace, dep.ProjectId);
-                // 跳过自环与指向未安装包的依赖
                 if (depKey == parentKey)
                 {
                     continue;
@@ -162,6 +145,5 @@ public partial class InstanceDependencyGraphModalModel(
         );
     }
 
-    /// <summary>依赖图构建结果（含统计）。</summary>
     private record GraphBuildResult(Graph Graph, int Total, int Visible, int Hidden, int Edges);
 }

@@ -18,17 +18,7 @@
     d:DesignWidth="900"
     Padding="8"
     mc:Ignorable="d">
-    <!--
-        ModalModel 模式：DataContext 为 InstanceDependencyGraphModalModel（由 PopModal<T> 通过
-        SimpleViewActivator 自动配对、注入 DI、挂 ViewModelMixin）。绑定直接走 {Binding}。
-
-        布局：ZoomView 满铺 modal（仅留 8px 边距），所有辅助控件浮动其上。
-            - 右上角：关闭按钮
-            - 右下角：预留给 QoL 控件（小地图 / 滚动条 / 缩放等级滑条 / 回到自适应按钮）
-        Grid 中后声明的子元素位于上层，因此 ZoomView 先声明、浮动控件后声明。
-    -->
     <Grid>
-        <!--  底层：ZoomView + GraphPanel（满铺）  -->
         <app:ZoomView
             x:Name="ZoomView"
             Background="{StaticResource CardBackgroundBrush}"
@@ -57,7 +47,7 @@
             </agc:GraphPanel>
         </app:ZoomView>
 
-        <!--  浮动层·右上：关闭按钮（与 AccountEntryModal 同样式）  -->
+        <!--  关闭按钮  -->
         <Button
             Margin="8"
             HorizontalAlignment="Right"
@@ -73,12 +63,7 @@
                 Symbol="Dismiss" />
         </Button>
 
-        <!--
-            QoL 控件（滚动条 / 小地图 / 缩放滑条 / 全视图 / 自适应）均已内置进 ZoomView 模板，
-            集中在 ZoomView 右下角。此处不再重复布局。
-        -->
-
-        <!--  浮动层·左下：包数量统计卡片  -->
+        <!--  统计卡片  -->
         <Border
             Margin="8"
             Padding="12,8"
@@ -97,7 +82,7 @@
                     <TextBlock
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="总包数" />
+                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_TotalPackagesLabel}" />
                 </StackPanel>
                 <StackPanel Spacing="2">
                     <TextBlock
@@ -107,7 +92,7 @@
                     <TextBlock
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="已显示" />
+                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_VisiblePackagesLabel}" />
                 </StackPanel>
                 <StackPanel Spacing="2">
                     <TextBlock
@@ -117,7 +102,7 @@
                     <TextBlock
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="未显示" />
+                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_HiddenPackagesLabel}" />
                 </StackPanel>
                 <StackPanel Spacing="2">
                     <TextBlock
@@ -127,7 +112,7 @@
                     <TextBlock
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="依赖关系" />
+                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependencyCountLabel}" />
                 </StackPanel>
             </StackPanel>
         </Border>
