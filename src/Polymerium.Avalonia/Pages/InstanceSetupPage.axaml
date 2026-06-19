@@ -699,7 +699,7 @@
                                         Icon="{fie:SymbolIcon Symbol=ArrowTurnRightUp,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
-                                        IsEnabled="False"
+                                        Command="{Binding GotoDependencyGraphCommand}"
                                         Header="{x:Static lang:Resources.InstanceSetupPage_DependencyGraphMenuText}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowSplit,
                                                               FontSize={StaticResource MediumFontSize}}" />
