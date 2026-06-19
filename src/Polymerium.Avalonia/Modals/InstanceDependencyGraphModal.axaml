@@ -5,6 +5,7 @@
     xmlns:agc="clr-namespace:AvaloniaGraphControl;assembly=AvaloniaGraphControl"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -56,18 +57,46 @@
             </agc:GraphPanel>
         </app:ZoomView>
 
-        <!--  浮动层·右上：关闭按钮  -->
+        <!--  浮动层·右上：关闭按钮（与 AccountEntryModal 同样式）  -->
         <Button
             Margin="8"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
+            Classes="Small"
             Command="{Binding $parent[app:InstanceDependencyGraphModal].Dismiss}"
-            Content="{x:Static lang:Resources.Dialog_DismissButtonText}"
-            IsCancel="True" />
+            CornerRadius="{StaticResource FullCornerRadius}"
+            IsCancel="True">
+            <fi:SymbolIcon
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="{StaticResource MediumFontSize}"
+                Symbol="Dismiss" />
+        </Button>
 
         <!--
-            浮动层·右下：QoL 控件占位（小地图 / 滚动条 / 缩放等级滑条 / 回到自适应按钮）
-            待后续实现，集中在此区域，避免与 ZoomView 内容互相遮挡。
+            浮动层·右下：QoL 控件区。集中在此避免与 ZoomView 内容遮挡。
+            后续滚动条 / 小地图 / 缩放等级滑条陆续加入本区。
         -->
+        <StackPanel
+            Margin="8"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal"
+            Spacing="4">
+            <!--  全视图（contain fit）：整图可见  -->
+            <Button
+                Classes="Small"
+                Command="{Binding $parent[app:InstanceDependencyGraphModal].FitToAllCommand}"
+                ToolTip.Tip="全视图">
+                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowMinimize" />
+            </Button>
+            <!--  自适应（cover fit）：短维充满、长维溢出  -->
+            <Button
+                Classes="Small"
+                Command="{Binding $parent[app:InstanceDependencyGraphModal].FitToContentCommand}"
+                ToolTip.Tip="自适应">
+                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowExpand" />
+            </Button>
+        </StackPanel>
     </Grid>
 </husk:Modal>

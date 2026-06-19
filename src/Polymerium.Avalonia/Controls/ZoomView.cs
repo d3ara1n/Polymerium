@@ -10,7 +10,7 @@ namespace Polymerium.Avalonia.Controls;
 /// <summary>
 ///     有界可缩放可平移内容容器。
 ///     画布 = Content 的自然尺寸（GraphPanel 的 MSAGL 布局尺寸），平移被 clamp 在画布边缘内，
-///     缩放下限动态计算为「可视区域已看到整高或整宽」的临界值（cover fit），
+///     缩放下限动态计算为「可视区域已看到整张图」的临界值（contain fit），
 ///     上限由 <see cref="MaxZoom" /> 约束。
 ///     滚轮缩放以鼠标位置为锚点，中键拖拽平移按内容坐标跟手（delta 除以当前缩放）。
 ///     通过 <see cref="ContentSize" /> 与 <see cref="ViewportRect" /> 暴露画布尺寸与可视区域，
@@ -128,7 +128,7 @@ public class ZoomView : ContentControl
 
         if (!_fitted && IsContentValid && _viewportSize.Width > 0)
         {
-            // 首次拿到有效画布 + 视口尺寸时做一次自适应（contain fit）。
+            // 首次拿到有效画布 + 视口尺寸时做一次自适应（cover fit）。
             FitToContent();
             _fitted = true;
         }
@@ -304,8 +304,11 @@ public class ZoomView : ContentControl
     }
 
     /// <summary>
-    ///     自适应：缩放到动态下限（contain fit），整张图刚好全部进入视口——
-    ///     较短维充满、较长维有空白居中。即「回到自适应」按钮的行为。
+    ///     自适应（cover fit）：较短维充满视口、较长维溢出可滚动。
+    ///     例：纵向长条内容 → 宽充满视口、高溢出，用户上下滚动，缩放不致太小、看得清。
+    ///     缩放比例受 <see cref="EffectiveMinZoom" /> 下限约束，不会比 contain fit 更小。
+    ///     溢出维初始居中（而非顶端对齐），即「自适应做到溢出那边居中」。
+    ///     即「回到自适应」按钮的行为。
     /// </summary>
     public void FitToContent()
     {
@@ -314,9 +317,21 @@ public class ZoomView : ContentControl
             return;
         }
 
-        var scale = EffectiveMinZoom();
-        _matrix = new Matrix(scale, 0, 0, scale, 0, 0);
-        ClampMatrix();
+        // cover fit：取较大比例 → 短维充满、长维溢出。
+        var coverScale = Math.Max(
+            _viewportSize.Width / _contentSize.Width,
+            _viewportSize.Height / _contentSize.Height
+        );
+        // 不超过 MaxZoom，不低于 contain fit 下限（避免缩到整图可见还小）。
+        var scale = Math.Clamp(coverScale, EffectiveMinZoom(), MaxZoom);
+        var scaledW = _contentSize.Width * scale;
+        var scaledH = _contentSize.Height * scale;
+        // 短维充满（scaled≈vp）→ 居中平移 = 0；长维溢出（scaled>vp）→ 居中平移 = (vp-scaled)/2。
+        // 与 ClampMatrix 的「顶端对齐滚动」不同，这里初始把溢出维居中显示。
+        var tx = (_viewportSize.Width - scaledW) / 2;
+        var ty = (_viewportSize.Height - scaledH) / 2;
+        _matrix = new Matrix(scale, 0, 0, scale, tx, ty);
+        // 不走 ClampMatrix：它会夹到 [vp-scaled, 0] 顶端对齐，覆盖掉居中意图。
         ApplyTransform();
         UpdateExposed();
     }
@@ -327,6 +342,24 @@ public class ZoomView : ContentControl
     public void Reset()
     {
         _matrix = Matrix.Identity;
+        ClampMatrix();
+        ApplyTransform();
+        UpdateExposed();
+    }
+
+    /// <summary>
+    ///     全视图（contain fit）：整张图刚好全部进入视口——较短维充满、较长维留白居中。
+    ///     缩放比例 = <see cref="EffectiveMinZoom" />，即缩放下限本身。
+    /// </summary>
+    public void FitToAll()
+    {
+        if (!IsContentValid || _viewportSize.Width <= 0)
+        {
+            return;
+        }
+
+        var scale = EffectiveMinZoom();
+        _matrix = new Matrix(scale, 0, 0, scale, 0, 0);
         ClampMatrix();
         ApplyTransform();
         UpdateExposed();
