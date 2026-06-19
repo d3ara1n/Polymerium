@@ -74,29 +74,8 @@
         </Button>
 
         <!--
-            浮动层·右下：QoL 控件区。集中在此避免与 ZoomView 内容遮挡。
-            后续滚动条 / 小地图 / 缩放等级滑条陆续加入本区。
+            QoL 控件（滚动条 / 小地图 / 缩放滑条 / 全视图 / 自适应）均已内置进 ZoomView 模板，
+            集中在 ZoomView 右下角。此处不再重复布局。
         -->
-        <StackPanel
-            Margin="8"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Orientation="Horizontal"
-            Spacing="4">
-            <!--  全视图（contain fit）：整图可见  -->
-            <Button
-                Classes="Small"
-                Command="{Binding $parent[app:InstanceDependencyGraphModal].FitToAllCommand}"
-                ToolTip.Tip="全视图">
-                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowMinimize" />
-            </Button>
-            <!--  自适应（cover fit）：短维充满、长维溢出  -->
-            <Button
-                Classes="Small"
-                Command="{Binding $parent[app:InstanceDependencyGraphModal].FitToContentCommand}"
-                ToolTip.Tip="自适应">
-                <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowExpand" />
-            </Button>
-        </StackPanel>
     </Grid>
 </husk:Modal>
