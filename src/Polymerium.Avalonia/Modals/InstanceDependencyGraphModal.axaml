@@ -8,16 +8,18 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:modalModels="clr-namespace:Polymerium.Avalonia.ModalModels"
     xmlns:models="clr-namespace:Polymerium.Avalonia.Models"
     HorizontalAlignment="Stretch"
     VerticalAlignment="Stretch"
+    x:DataType="modalModels:InstanceDependencyGraphModalModel"
     d:DesignHeight="600"
     d:DesignWidth="900"
     mc:Ignorable="d">
     <!--
-        POC 阶段 4：自研 ZoomView 替代 SmoothScroll 的 ScrollView（后者拖拽回弹+滚轮无效）。
-        ZoomView：直接滚轮缩放（鼠标为锚）+ 中键拖拽平移 + 无限平移。
-        数据走实例模式：$parent[app:InstanceDependencyGraphModal].DependencyGraph（modal 自身持有）。
+        ModalModel 模式：DataContext 为 InstanceDependencyGraphModalModel（由 PopModal<T> 通过
+        SimpleViewActivator 自动配对、注入 DI、挂 ViewModelMixin）。绑定直接走 {Binding}。
+        ZoomView：自研缩放容器，直接滚轮缩放（鼠标为锚）+ 中键拖拽平移 + 无限平移。
     -->
     <DockPanel VerticalSpacing="12">
         <!--  Footer: 关闭按钮（项目通用约定）  -->
@@ -32,12 +34,14 @@
         </StackPanel>
         <!--  主体：自研 ZoomView + GraphPanel  -->
         <app:ZoomView
+            x:Name="ZoomView"
             Background="{StaticResource CardBackgroundBrush}"
             MaxZoom="10"
             MinZoom="0.1"
             ZoomSpeed="1.2">
             <agc:GraphPanel
-                Graph="{Binding $parent[app:InstanceDependencyGraphModal].DependencyGraph, Mode=OneTime}"
+                x:Name="GraphPanel"
+                Graph="{Binding DependencyGraph}"
                 LayoutMethod="SugiyamaScheme">
                 <agc:GraphPanel.DataTemplates>
                     <DataTemplate

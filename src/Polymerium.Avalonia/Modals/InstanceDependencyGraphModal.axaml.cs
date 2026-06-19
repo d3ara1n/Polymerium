@@ -1,37 +1,35 @@
-using AvaloniaGraphControl;
+using System;
 using Huskui.Avalonia.Controls;
-using Polymerium.Avalonia.Models;
 
 namespace Polymerium.Avalonia.Modals;
 
 public partial class InstanceDependencyGraphModal : Modal
 {
-    public InstanceDependencyGraphModal() => InitializeComponent();
+    private bool _fitted;
 
-    /// <summary>
-    ///     POC 阶段：硬编码 DAG，验证 AvaloniaGraphControl 在 Avalonia 12 + .NET 10 下能否渲染。
-    ///     阶段 3 接入业务数据时，改为由调用方（InstanceSetupPageModel）构建后传入。
-    /// </summary>
-    public Graph DependencyGraph { get; } = BuildSampleGraph();
-
-    private static Graph BuildSampleGraph()
+    public InstanceDependencyGraphModal()
     {
-        var minecraft = new DependencyGraphNode("Minecraft 1.20.1");
-        var fabricLoader = new DependencyGraphNode("Fabric Loader 0.16.0");
-        var fabricApi = new DependencyGraphNode("Fabric API");
-        var sodium = new DependencyGraphNode("Sodium");
-        var lithium = new DependencyGraphNode("Lithium");
-        var phosphor = new DependencyGraphNode("Phosphor");
+        InitializeComponent();
+        // GraphPanel 的 MSAGL 布局在 MeasureOverride 里同步完成，Arrange 后 Bounds 即有效。
+        // 监听 LayoutUpdated，第一次拿到有效尺寸时做一次自适应，然后取消订阅。
+        GraphPanel.LayoutUpdated += OnLayoutUpdated;
+    }
 
-        var graph = new Graph
+    private void OnLayoutUpdated(object? sender, EventArgs e)
+    {
+        if (_fitted)
         {
-            Orientation = Graph.Orientations.Horizontal
-        };
-        graph.Edges.Add(new Edge(minecraft, fabricLoader));
-        graph.Edges.Add(new Edge(fabricLoader, fabricApi));
-        graph.Edges.Add(new Edge(fabricApi, sodium));
-        graph.Edges.Add(new Edge(fabricApi, lithium));
-        graph.Edges.Add(new Edge(fabricApi, phosphor));
-        return graph;
+            return;
+        }
+
+        // 需 ZoomView 与 GraphPanel 都有有效尺寸；Graph 非空才会触发实际布局。
+        if (GraphPanel.Bounds.Width <= 0 || ZoomView.Bounds.Width <= 0)
+        {
+            return;
+        }
+
+        ZoomView.FitToContent();
+        _fitted = true;
+        GraphPanel.LayoutUpdated -= OnLayoutUpdated;
     }
 }

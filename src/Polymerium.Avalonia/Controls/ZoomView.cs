@@ -175,6 +175,39 @@ public class ZoomView : ContentControl
         ApplyTransform();
     }
 
+    /// <summary>
+    ///     自适应内容：计算使 Content 充满并居中于视口所需的缩放与平移，一次性应用。
+    ///     需在 Content 完成布局（Bounds 有效）后调用，否则 no-op。
+    /// </summary>
+    public void FitToContent()
+    {
+        if (Content is not Visual content)
+        {
+            return;
+        }
+
+        var contentBounds = content.Bounds;
+        var viewport = Bounds;
+        if (contentBounds.Width <= 0 || contentBounds.Height <= 0
+            || viewport.Width <= 0 || viewport.Height <= 0)
+        {
+            return;
+        }
+
+        var scaleX = viewport.Width / contentBounds.Width;
+        var scaleY = viewport.Height / contentBounds.Height;
+        var scale = Math.Min(scaleX, scaleY);
+        // 不放大超过 1，避免对小图过度拉伸；下限受 MinZoom 约束。
+        scale = Math.Clamp(scale, MinZoom, Math.Min(1.0, MaxZoom));
+
+        // 内容本地 (0,0) 经 M=(s,0,0,s,tx,ty) 映射到 Bounds.Position + (tx,ty)。
+        // 要内容居中于视口：tx = (vp.W - s*cb.W)/2 - cb.X
+        var tx = (viewport.Width - scale * contentBounds.Width) / 2 - contentBounds.X;
+        var ty = (viewport.Height - scale * contentBounds.Height) / 2 - contentBounds.Y;
+        _matrix = new Matrix(scale, 0, 0, scale, tx, ty);
+        ApplyTransform();
+    }
+
     private void ApplyTransform()
     {
         if (Content is Visual content)

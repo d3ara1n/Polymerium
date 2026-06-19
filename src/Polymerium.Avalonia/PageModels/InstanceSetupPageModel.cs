@@ -698,7 +698,7 @@ public partial class InstanceSetupPageModel(
 
     [RelayCommand]
     private void GotoDependencyGraph()
-        => overlayService.PopModal(new InstanceDependencyGraphModal());
+        => overlayService.PopModal<InstanceDependencyGraphModal>(Basic);
 
     [RelayCommand]
     private async Task UpdateBatchAsync()
