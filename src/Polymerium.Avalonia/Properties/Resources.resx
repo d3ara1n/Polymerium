@@ -3120,4 +3120,16 @@ Affected entries: {0}
     <data name="MainWindow_OpenGitHubDangerNotificationTitle" xml:space="preserve">
         <value>Failed to open GitHub</value>
     </data>
+    <data name="InstanceDependencyGraphModal_TotalPackagesLabel" xml:space="preserve">
+        <value>Total packages</value>
+    </data>
+    <data name="InstanceDependencyGraphModal_VisiblePackagesLabel" xml:space="preserve">
+        <value>Visible</value>
+    </data>
+    <data name="InstanceDependencyGraphModal_HiddenPackagesLabel" xml:space="preserve">
+        <value>Hidden</value>
+    </data>
+    <data name="InstanceDependencyGraphModal_DependencyCountLabel" xml:space="preserve">
+        <value>Dependencies</value>
+    </data>
 </root>
