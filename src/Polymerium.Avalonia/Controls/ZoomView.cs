@@ -1,6 +1,8 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
@@ -24,6 +26,13 @@ public class ZoomView : ContentControl
     private bool _fitted;
     private Size _contentSize;
     private Size _viewportSize;
+
+    // 模板子控件引用
+    private ContentPresenter? _presenter;
+    private ScrollBar? _hScrollBar;
+    private ScrollBar? _vScrollBar;
+    // 防止滚动条 Value 与 Matrix 双向同步时递归
+    private bool _suppressScrollSync;
 
     public static readonly StyledProperty<double> ZoomSpeedProperty =
         AvaloniaProperty.Register<ZoomView, double>(nameof(ZoomSpeed), 1.2);
@@ -100,6 +109,28 @@ public class ZoomView : ContentControl
         ClipToBounds = true;
         Focusable = true;
     }
+
+    #region Template
+
+    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    {
+        base.OnApplyTemplate(e);
+        _presenter = e.NameScope.Find<ContentPresenter>("PART_ContentPresenter");
+        _hScrollBar = e.NameScope.Find<ScrollBar>("PART_HScrollBar");
+        _vScrollBar = e.NameScope.Find<ScrollBar>("PART_VScrollBar");
+
+        if (_hScrollBar != null)
+        {
+            _hScrollBar.ValueChanged += OnHScrollBarValueChanged;
+        }
+
+        if (_vScrollBar != null)
+        {
+            _vScrollBar.ValueChanged += OnVScrollBarValueChanged;
+        }
+    }
+
+    #endregion
 
     #region Layout
 
@@ -369,6 +400,10 @@ public class ZoomView : ContentControl
 
     private void ApplyTransform()
     {
+        // RenderTransform 必须设在 Content（如 GraphPanel）上，而不是 ContentPresenter：
+        // ContentPresenter 的 Bounds 是视口大小，对它设变换会让超出视口的 Content 受限于其布局
+        // 边界而无法完整缩放。设在 Content 上则 Content 完整渲染自己全部（如 GraphPanel 所有节点），
+        // 变换后的像素再由 ZoomView 的 ClipToBounds 裁到视口。
         if (Content is Visual content)
         {
             content.RenderTransformOrigin = new RelativePoint(0, 0, RelativeUnit.Absolute);
@@ -398,5 +433,115 @@ public class ZoomView : ContentControl
         {
             ViewportRect = rect;
         }
+
+        UpdateScrollBars();
     }
+
+    #region ScrollBar 同步
+
+    /// <summary>
+    ///     根据 Matrix 与画布/视口尺寸刷新滚动条的 Maximum/ViewportSize/Value/Visibility。
+    ///     滚动条 Value 范围 [0, Maximum]，Maximum = 该维缩放后超出视口的部分（可滚动距离）。
+    ///     Value=0 对应顶端对齐（tx=0），Value=Maximum 对应底端（tx=vp-scaled）。
+    ///     通过 <see cref="_suppressScrollSync" /> 避免与 OnScrollBarValueChanged 递归。
+    /// </summary>
+    private void UpdateScrollBars()
+    {
+        if (_suppressScrollSync || _hScrollBar == null || _vScrollBar == null)
+        {
+            return;
+        }
+
+        var scale = _matrix.M11;
+        var scaledW = _contentSize.Width * scale;
+        var scaledH = _contentSize.Height * scale;
+
+        // 水平：仅当缩放后宽超出视口时可滚动
+        var hMax = Math.Max(0, scaledW - _viewportSize.Width);
+        _suppressScrollSync = true;
+        try
+        {
+            _hScrollBar.Maximum = hMax;
+            _hScrollBar.ViewportSize = _viewportSize.Width;
+            _hScrollBar.Value = Math.Clamp(-_matrix.M31, 0, hMax);
+            _hScrollBar.IsVisible = hMax > 0;
+
+            // 垂直
+            var vMax = Math.Max(0, scaledH - _viewportSize.Height);
+            _vScrollBar.Maximum = vMax;
+            _vScrollBar.ViewportSize = _viewportSize.Height;
+            _vScrollBar.Value = Math.Clamp(-_matrix.M32, 0, vMax);
+            _vScrollBar.IsVisible = vMax > 0;
+        }
+        finally
+        {
+            _suppressScrollSync = false;
+        }
+    }
+
+    private void OnHScrollBarValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
+    {
+        if (_suppressScrollSync)
+        {
+            return;
+        }
+
+        // Value (0~Maximum) → 平移 tx = -Value（顶端对齐为 0，底端为 vp-scaled）
+        _suppressScrollSync = true;
+        try
+        {
+            _matrix = new Matrix(_matrix.M11, 0, 0, _matrix.M22, -e.NewValue, _matrix.M32);
+            ApplyTransform();
+            // 视口矩形也要刷新（平移变了），但不再调 UpdateScrollBars（会递归）
+            UpdateViewportRectOnly();
+        }
+        finally
+        {
+            _suppressScrollSync = false;
+        }
+    }
+
+    private void OnVScrollBarValueChanged(object? sender, RangeBaseValueChangedEventArgs e)
+    {
+        if (_suppressScrollSync)
+        {
+            return;
+        }
+
+        _suppressScrollSync = true;
+        try
+        {
+            _matrix = new Matrix(_matrix.M11, 0, 0, _matrix.M22, _matrix.M31, -e.NewValue);
+            ApplyTransform();
+            UpdateViewportRectOnly();
+        }
+        finally
+        {
+            _suppressScrollSync = false;
+        }
+    }
+
+    /// <summary>
+    ///     仅刷新 ViewportRect（不碰滚动条），供滚动条拖动回调用，避免递归。
+    /// </summary>
+    private void UpdateViewportRectOnly()
+    {
+        if (!IsContentValid || _matrix.M11 == 0)
+        {
+            return;
+        }
+
+        var scale = _matrix.M11;
+        var vx = -_matrix.M31 / scale;
+        var vy = -_matrix.M32 / scale;
+        var vw = _viewportSize.Width / scale;
+        var vh = _viewportSize.Height / scale;
+        var rect = new Rect(vx, vy, vw, vh);
+        if (!Equals(ViewportRect, rect))
+        {
+            ViewportRect = rect;
+        }
+    }
+
+    #endregion
 }

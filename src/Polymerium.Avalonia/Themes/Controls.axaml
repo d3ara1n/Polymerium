@@ -8,8 +8,7 @@
         <ResourceInclude Source="/Controls/LaunchBar.axaml" />
         <ResourceInclude Source="/Controls/InstanceEntryButton.axaml" />
         <ResourceInclude Source="/Controls/InstancePackageButton.axaml" />
-        <ResourceInclude Source="/Controls/EmptyContainer.axaml" />
-        <ResourceInclude Source="/Controls/ExhibitModpackButton.axaml" />
+        <ResourceInclude Source="/Controls/EmptyContainer.axaml" />        <ResourceInclude Source="/Controls/ExhibitModpackButton.axaml" />
         <ResourceInclude Source="/Controls/ExhibitPackageButton.axaml" />
         <ResourceInclude Source="/Controls/ExhibitPendingPackageButton.axaml" />
         <ResourceInclude Source="/Controls/SettingsEntry.axaml" />
@@ -25,5 +24,6 @@
         <ResourceInclude Source="/Controls/FancyListBox.axaml" />
         <ResourceInclude Source="/Controls/DiffView.axaml" />
         <ResourceInclude Source="/Controls/DateRangePicker.axaml" />
+        <ResourceInclude Source="/Controls/ZoomView.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
