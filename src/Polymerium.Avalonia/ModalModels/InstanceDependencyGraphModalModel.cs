@@ -36,6 +36,9 @@ public partial class InstanceDependencyGraphModalModel(
     public partial Graph? DependencyGraph { get; private set; }
 
     [ObservableProperty]
+    public partial bool IsLoading { get; private set; } = true;
+
+    [ObservableProperty]
     public partial int TotalPackages { get; private set; }
 
     [ObservableProperty]
@@ -56,6 +59,7 @@ public partial class InstanceDependencyGraphModalModel(
         if (!profileManager.TryGetImmutable(Basic.Key, out var profile))
         {
             notificationService.PopMessage("Instance not found", "Dependency Graph");
+            IsLoading = false;
             return;
         }
 
@@ -71,6 +75,10 @@ public partial class InstanceDependencyGraphModalModel(
         catch (Exception ex)
         {
             notificationService.PopMessage(ex, "Failed to build dependency graph");
+        }
+        finally
+        {
+            IsLoading = false;
         }
     }
 
