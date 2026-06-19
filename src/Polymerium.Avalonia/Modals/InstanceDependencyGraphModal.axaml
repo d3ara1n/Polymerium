@@ -1,0 +1,59 @@
+<husk:Modal
+    x:Class="Polymerium.Avalonia.Modals.InstanceDependencyGraphModal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:agc="clr-namespace:AvaloniaGraphControl;assembly=AvaloniaGraphControl"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Polymerium.Avalonia.Models"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    d:DesignHeight="600"
+    d:DesignWidth="900"
+    mc:Ignorable="d">
+    <!--
+        POC 阶段 4：自研 ZoomView 替代 SmoothScroll 的 ScrollView（后者拖拽回弹+滚轮无效）。
+        ZoomView：直接滚轮缩放（鼠标为锚）+ 中键拖拽平移 + 无限平移。
+        数据走实例模式：$parent[app:InstanceDependencyGraphModal].DependencyGraph（modal 自身持有）。
+    -->
+    <DockPanel VerticalSpacing="12">
+        <!--  Footer: 关闭按钮（项目通用约定）  -->
+        <StackPanel
+            DockPanel.Dock="Bottom"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Command="{Binding $parent[app:InstanceDependencyGraphModal].Dismiss}"
+                Content="{x:Static lang:Resources.Dialog_DismissButtonText}"
+                IsCancel="True" />
+        </StackPanel>
+        <!--  主体：自研 ZoomView + GraphPanel  -->
+        <app:ZoomView
+            Background="{StaticResource CardBackgroundBrush}"
+            MaxZoom="10"
+            MinZoom="0.1"
+            ZoomSpeed="1.2">
+            <agc:GraphPanel
+                Graph="{Binding $parent[app:InstanceDependencyGraphModal].DependencyGraph, Mode=OneTime}"
+                LayoutMethod="SugiyamaScheme">
+                <agc:GraphPanel.DataTemplates>
+                    <DataTemplate
+                        x:DataType="models:DependencyGraphNode"
+                        DataType="models:DependencyGraphNode">
+                        <Border
+                            Padding="12,6"
+                            Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
+                            BorderBrush="{StaticResource ControlAccentBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="4">
+                            <TextBlock FontSize="13" Text="{Binding Label}" />
+                        </Border>
+                    </DataTemplate>
+                </agc:GraphPanel.DataTemplates>
+            </agc:GraphPanel>
+        </app:ZoomView>
+    </DockPanel>
+</husk:Modal>

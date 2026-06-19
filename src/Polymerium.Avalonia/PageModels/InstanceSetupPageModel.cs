@@ -697,6 +697,10 @@ public partial class InstanceSetupPageModel(
     private void GotoPackageExplorerPage() => navigationService.Navigate<PackageExplorerPage>(Basic.Key);
 
     [RelayCommand]
+    private void GotoDependencyGraph()
+        => overlayService.PopModal(new InstanceDependencyGraphModal());
+
+    [RelayCommand]
     private async Task UpdateBatchAsync()
     {
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
