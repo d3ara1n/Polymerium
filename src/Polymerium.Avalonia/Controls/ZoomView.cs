@@ -121,11 +121,12 @@ public class ZoomView : ContentControl
             return;
         }
 
-        // 拖拽在视口坐标（this）里做 delta，再换算成矩阵平移。
-        // 用视口 delta 而非内容 delta：拖拽手感与屏幕 1:1，不受缩放影响。
+        // 拖拽在视口坐标（this）里取 delta，再除以当前缩放，使内容坐标跟手：
+        // 缩小（scale<1）时平移量被放大，浏览全局更省力；放大时精细微调。
+        // 若用裸 delta 则是屏幕跟手，缩小后图小、相对位移太小，拖动费力。
         var current = e.GetPosition(this);
-        var dx = current.X - _lastPointer.X;
-        var dy = current.Y - _lastPointer.Y;
+        var dx = (current.X - _lastPointer.X) / ZoomX;
+        var dy = (current.Y - _lastPointer.Y) / ZoomY;
         _lastPointer = current;
 
         // TranslatePrepend = Translate(dx,dy) * matrix
