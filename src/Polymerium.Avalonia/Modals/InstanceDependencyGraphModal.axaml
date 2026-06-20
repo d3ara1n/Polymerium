@@ -39,7 +39,7 @@
                         <app:DependencyGraphCard
                             Command="{Binding $parent[app:InstanceDependencyGraphModal].((app:InstanceDependencyGraphModalModel)DataContext)?.SelectNodeCommand}"
                             CommandParameter="{Binding Key}"
-                            IsSelected="{Binding IsSelected, Mode=TwoWay}">
+                            IsSelected="{Binding IsSelected, Mode=OneWay}">
                             <Grid ColumnDefinitions="40,*" ColumnSpacing="10">
                                 <Border
                                     Grid.Column="0"

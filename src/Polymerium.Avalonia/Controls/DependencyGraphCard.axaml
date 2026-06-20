@@ -42,7 +42,7 @@
 
 
         <Style Selector="^:pointerover /template/ Border#Frame">
-            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         </Style>
 
 

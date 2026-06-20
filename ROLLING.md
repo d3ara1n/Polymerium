@@ -7,3 +7,5 @@ Each version file follows the Keep a Changelog convention with the four sections
 Every section must always be present even when empty using a bare dash `-` as placeholder and sub-versions within a file are ordered newest-first with each sub-version carrying the full four-section structure.
 
 Entries use fixed verb patterns per section: Added uses 添加/新增/提供/增加, Changed uses 优化/修改/调整/更换/重写, Fixed uses 修复/尝试性修复, and Removed uses 移除.
+
+Changelog entries must only describe user-visible behavior — never mention class names, method names, internal services, event names, or implementation reasoning. Write what the user sees change, not how the code implements it.
