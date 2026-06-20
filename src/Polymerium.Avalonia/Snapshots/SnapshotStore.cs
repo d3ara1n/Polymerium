@@ -84,6 +84,16 @@ public class SnapshotStore : ISnapshotStore
         return data;
     }
 
+    public void DeleteOrphanReferences()
+    {
+        var existingSnapshotIds = _freeSql.Select<SnapshotRecord>().ToList(x => x.Id).ToHashSet();
+        var orphanIds = _freeSql.Select<ReferenceRecord>().ToList(x => x.SnapshotId)
+            .Distinct().Where(id => !existingSnapshotIds.Contains(id)).ToList();
+        if (orphanIds.Count > 0)
+            _freeSql.Delete<ReferenceRecord>()
+                .Where(x => orphanIds.Contains(x.SnapshotId)).ExecuteAffrows();
+    }
+
     #region Helper Methods
 
     private static Guid ParseId(object id)
