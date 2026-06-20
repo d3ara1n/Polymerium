@@ -63,24 +63,7 @@ internal static class Program
 
         Startup.InitializeUnhostedServices();
 
-        var overrideFile = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".trident.home"
-        );
-        if (File.Exists(overrideFile))
-        {
-            var firstLine = File.ReadLines(overrideFile).FirstOrDefault();
-            if (
-                !string.IsNullOrWhiteSpace(firstLine)
-                && Path.IsPathRooted(firstLine)
-                && !File.Exists(firstLine)
-            )
-            {
-                PathDef.Default = new(firstLine);
-            }
-        }
-
-        var firstRunFile = Path.Combine(PathDef.Default.PrivateDirectory(Brand), "first_run");
+        var firstRunFile = Path.Combine(PathDef.Default.PrivateDataDirectory(Brand), "first_run");
         if (!File.Exists(firstRunFile))
         {
             FirstRun = true;
