@@ -35,8 +35,7 @@
             Title="{x:Static lang:Resources.SettingsPage_DisplayTitle}"
             Icon="LocalLanguage"
             Summary="{x:Static lang:Resources.SettingsPage_DisplaySubtitle}">
-            <app:SettingsEntryItem
-                Header="{x:Static lang:Resources.SettingsPage_TitleBarVisibilityLabelText}">
+            <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_TitleBarVisibilityLabelText}">
                 <ToggleSwitch
                     IsChecked="{Binding TitleBarVisibility, Mode=TwoWay}"
                     OffContent="{x:Static lang:Resources.Enum_Off}"
