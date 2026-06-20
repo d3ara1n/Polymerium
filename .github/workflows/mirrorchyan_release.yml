@@ -56,7 +56,7 @@ jobs:
             -   uses: MirrorChyan/uploading-action@v1
                 with:
                     filetype: latest-release
-                    filename: ${{ fromJson('{"win":"Polymerium-win-Setup.exe","linux":"Polymerium.AvaloniaImage","osx":"Polymerium-osx-Setup.pkg"}')[matrix.os] }}
+                    filename: ${{ fromJson('{"win":"Polymerium-win-Setup.exe","linux":"Polymerium.AppImage","osx":"Polymerium-osx-Setup.pkg"}')[matrix.os] }}
                     mirrorchyan_rid: Polymerium_setup
                     tag: ${{ inputs.tag }}
 
