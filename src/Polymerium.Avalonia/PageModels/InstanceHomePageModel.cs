@@ -141,7 +141,10 @@ public partial class InstanceHomePageModel(
            .Select(x => x.Last())
            .Subscribe(x =>
             {
-                DeployingProgress = x ?? 0d;
+                DeployingProgress = (double)x.Current / x.Total;
+                DeployingProgressCurrent = x.Current;
+                DeployingProgressTotal = x.Total;
+                HasDeployingFileCount = true;
                 DeployingPending = false;
             })
            .DisposeWith(tracker)
@@ -151,6 +154,7 @@ public partial class InstanceHomePageModel(
             {
                 DeployingMessage = GetStageTitle(stage);
                 DeployingPending = true;
+                HasDeployingFileCount = false;
             })
            .DisposeWith(tracker)
            .DisposeWith(_subscription);
@@ -309,6 +313,15 @@ public partial class InstanceHomePageModel(
 
     [ObservableProperty]
     public partial double DeployingProgress { get; set; }
+
+    [ObservableProperty]
+    public partial int DeployingProgressCurrent { get; set; }
+
+    [ObservableProperty]
+    public partial int DeployingProgressTotal { get; set; }
+
+    [ObservableProperty]
+    public partial bool HasDeployingFileCount { get; set; }
 
     [ObservableProperty]
     public partial string DeployingMessage { get; set; } = string.Empty;

@@ -623,10 +623,18 @@
                                 </ProgressBar>
                                 <StackPanel
                                     HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
+                                    VerticalAlignment="Center"
+                                    Spacing="2">
                                     <TextBlock
                                         Text="{Binding DeployingMessage, Mode=OneWay}"
                                         TextAlignment="Center" />
+                                    <TextBlock
+                                        IsVisible="{Binding HasDeployingFileCount, Mode=OneWay}"
+                                        TextAlignment="Center">
+                                        <Run Text="{Binding DeployingProgressCurrent, Mode=OneWay}" />
+                                        <Run Text=" / " />
+                                        <Run Text="{Binding DeployingProgressTotal, Mode=OneWay}" />
+                                    </TextBlock>
                                 </StackPanel>
 
                             </Panel>
