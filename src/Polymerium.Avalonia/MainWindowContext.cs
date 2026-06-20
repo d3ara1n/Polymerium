@@ -670,8 +670,10 @@ public partial class MainWindowContext : ObservableObject
             {
                 model.State = InstanceState.Idle;
                 model.IsPending = false;
-                // Install 完成后从列表移除（安装的是新实例，列表里不该留）
-                if (snapshot.Tracker is InstallTracker && snapshot.Tracker.State is TrackerState.Finished or TrackerState.Faulted)
+                // Install 完成后移除临时占位条目。ProfileAdded 可能在 tracker
+                // 完成前已经填充了真实数据 — 此时保留条目，供后续 Deploy 阶段接管。
+                if (snapshot.Tracker is InstallTracker && snapshot.Tracker.State is TrackerState.Finished or TrackerState.Faulted
+                    && model.Basic.Source is null)
                 {
                     _entries.Remove(model);
                 }

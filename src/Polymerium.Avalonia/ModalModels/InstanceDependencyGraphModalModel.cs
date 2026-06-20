@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,7 +61,7 @@ public partial class InstanceDependencyGraphModalModel(
     public partial DependencyGraphNode? SelectedNode { get; private set; }
 
     [ObservableProperty]
-    public partial IReadOnlyList<DependencyEntry> SelectedDependencies { get; private set; }
+    public partial ObservableCollection<DependencyEntry> SelectedDependencies { get; private set; }
         = [];
 
     #endregion
@@ -111,36 +112,36 @@ public partial class InstanceDependencyGraphModalModel(
         if (string.IsNullOrEmpty(key) || !_nodes.TryGetValue(key, out var node))
         {
             SelectedNode = null;
-            SelectedDependencies = [];
+            SelectedDependencies.Clear();
             return;
         }
 
         SelectedNode = node;
         node.IsSelected = true;
 
+        SelectedDependencies.Clear();
+
         // 该节点的 Package 元数据，取所有出边依赖（依赖图只关心已安装包之间的关系，未安装依赖不显示）
         if (_packages.TryGetValue(node.Key, out var pkg))
         {
-            SelectedDependencies = pkg.Dependencies
-                                      .Where(dep => _packages.ContainsKey(
-                                          NodeKey(dep.Label, dep.Namespace, dep.ProjectId)))
+            foreach (var entry in pkg.Dependencies
                                       .Select(dep =>
                                        {
                                            var depKey = NodeKey(dep.Label, dep.Namespace, dep.ProjectId);
-                                           var depPkg = _packages[depKey];
-                                           return new DependencyEntry(
-                                               depKey,
-                                               depPkg.ProjectName,
-                                               dep.IsRequired
-                                           );
+                                           return _packages.TryGetValue(depKey, out var depPkg)
+                                               ? new DependencyEntry(
+                                                   depKey,
+                                                   depPkg.ProjectName,
+                                                   dep.IsRequired)
+                                               : null;
                                        })
+                                      .Where(e => e is not null)
+                                      .Cast<DependencyEntry>()
                                       .OrderByDescending(e => e.IsRequired)
-                                      .ThenBy(e => e.ProjectName, StringComparer.CurrentCultureIgnoreCase)
-                                      .ToList();
-        }
-        else
-        {
-            SelectedDependencies = [];
+                                      .ThenBy(e => e.ProjectName, StringComparer.CurrentCultureIgnoreCase))
+            {
+                SelectedDependencies.Add(entry);
+            }
         }
     }
 
@@ -176,13 +177,13 @@ public partial class InstanceDependencyGraphModalModel(
         var packageMap = new Dictionary<string, Package>();
         foreach (var (_, pkg) in packages)
         {
-            packageMap[NodeKey(pkg.Label, pkg.Namespace, pkg.ProjectId)] = pkg;
+            var key = NodeKey(pkg.Label, pkg.Namespace, pkg.ProjectId);
+            packageMap[key] = pkg;
         }
 
         var nodes = new Dictionary<string, DependencyGraphNode>();
-        foreach (var pkg in packageMap.Values)
+        foreach (var (key, pkg) in packageMap)
         {
-            var key = NodeKey(pkg.Label, pkg.Namespace, pkg.ProjectId);
             nodes[key] = new(
                              key,
                              pkg.Label,
@@ -198,9 +199,8 @@ public partial class InstanceDependencyGraphModalModel(
 
         var graph = new Graph { Orientation = Graph.Orientations.Horizontal };
         var connected = new HashSet<string>();
-        foreach (var pkg in packageMap.Values)
+        foreach (var (parentKey, pkg) in packageMap)
         {
-            var parentKey = NodeKey(pkg.Label, pkg.Namespace, pkg.ProjectId);
             if (!nodes.TryGetValue(parentKey, out var parent))
             {
                 continue;
