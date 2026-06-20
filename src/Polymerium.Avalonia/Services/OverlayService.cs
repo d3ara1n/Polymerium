@@ -31,6 +31,13 @@ public class OverlayService(IViewActivator activator)
 
     public void PopToast(Toast toast) => _toastHandler?.Invoke(toast);
 
+    public void PopToast<TToast>(object? parameter = null)
+        where TToast : Toast
+    {
+        var toast = (TToast)activator.Activate(typeof(TToast), parameter)!;
+        PopToast(toast);
+    }
+
     #endregion
 
     #region Drawers
