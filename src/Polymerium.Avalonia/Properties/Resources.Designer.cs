@@ -6224,5 +6224,17 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_DependencyCountLabel", resourceCulture);
             }
         }
+        
+        public static string InstanceDependencyGraphModal_DependenciesTitle {
+            get {
+                return ResourceManager.GetString("InstanceDependencyGraphModal_DependenciesTitle", resourceCulture);
+            }
+        }
+        
+        public static string InstanceDependencyGraphModal_RequiredTagText {
+            get {
+                return ResourceManager.GetString("InstanceDependencyGraphModal_RequiredTagText", resourceCulture);
+            }
+        }
     }
 }

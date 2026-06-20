@@ -3123,4 +3123,10 @@
     <data name="InstanceDependencyGraphModal_DependencyCountLabel" xml:space="preserve">
         <value>依赖关系</value>
     </data>
+    <data name="InstanceDependencyGraphModal_DependenciesTitle" xml:space="preserve">
+        <value>依赖列表</value>
+    </data>
+    <data name="InstanceDependencyGraphModal_RequiredTagText" xml:space="preserve">
+        <value>必需</value>
+    </data>
 </root>

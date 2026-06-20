@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:agc="clr-namespace:AvaloniaGraphControl;assembly=AvaloniaGraphControl"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
@@ -18,9 +19,10 @@
     d:DesignWidth="900"
     Padding="8"
     mc:Ignorable="d">
-    <Grid>
+    <Grid ColumnDefinitions="*,Auto">
         <app:ZoomView
             x:Name="ZoomView"
+            Grid.Column="0"
             Background="{StaticResource CardBackgroundBrush}"
             MaxZoom="10"
             MinZoom="0.1"
@@ -34,21 +36,160 @@
                     <DataTemplate
                         x:DataType="models:DependencyGraphNode"
                         DataType="models:DependencyGraphNode">
-                        <Border
-                            Padding="12,6"
-                            Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
-                            BorderBrush="{StaticResource ControlAccentBorderBrush}"
-                            BorderThickness="1"
-                            CornerRadius="4">
-                            <TextBlock FontSize="13" Text="{Binding Label}" />
-                        </Border>
+                        <app:DependencyGraphCard
+                            Command="{Binding $parent[app:InstanceDependencyGraphModal].((app:InstanceDependencyGraphModalModel)DataContext)?.SelectNodeCommand}"
+                            CommandParameter="{Binding Key}"
+                            IsSelected="{Binding IsSelected, Mode=TwoWay}">
+                            <Grid ColumnDefinitions="40,*" ColumnSpacing="10">
+                                <Border
+                                    Grid.Column="0"
+                                    Width="40"
+                                    Height="40"
+                                    VerticalAlignment="Center"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <Image
+                                        async:ImageLoader.Source="{Binding Thumbnail}"
+                                        Stretch="UniformToFill" />
+                                </Border>
+                                <StackPanel
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Spacing="2">
+                                    <TextBlock
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{Binding ProjectName, FallbackValue=Name}"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Binding Author, StringFormat={}@{0}}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                            </Grid>
+                        </app:DependencyGraphCard>
                     </DataTemplate>
                 </agc:GraphPanel.DataTemplates>
             </agc:GraphPanel>
         </app:ZoomView>
 
+        <!--  右侧详情面板  -->
+        <Border
+            Grid.Column="1"
+            MinWidth="300"
+            MaxWidth="340"
+            Margin="8,0,0,0"
+            Padding="16"
+            VerticalAlignment="Stretch"
+            Background="{StaticResource ControlFillColorDefaultBrush}"
+            CornerRadius="{StaticResource SmallCornerRadius}"
+            IsVisible="{Binding SelectedNode, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <Grid RowDefinitions="Auto,Auto,Auto,*" RowSpacing="12">
+                <!--  头部：缩略图 + 包名 + 作者 + 关闭按钮  -->
+                <Grid Grid.Row="0" ColumnDefinitions="48,*,Auto" ColumnSpacing="12">
+                    <Border
+                        Grid.Column="0"
+                        Width="48"
+                        Height="48"
+                        CornerRadius="{StaticResource SmallCornerRadius}">
+                        <Border.Background>
+                            <ImageBrush async:ImageBrushLoader.Source="{Binding SelectedNode?.Thumbnail}" Stretch="UniformToFill" />
+                        </Border.Background>
+                    </Border>
+                    <StackPanel
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Spacing="2">
+                        <TextBlock
+                            FontSize="{StaticResource LargeFontSize}"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{Binding SelectedNode.ProjectName}"
+                            TextTrimming="CharacterEllipsis" />
+                        <TextBlock
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding SelectedNode.Author, StringFormat={}@{0}}" />
+                    </StackPanel>
+                    <Button
+                        Grid.Column="2"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        Classes="Small"
+                        Command="{Binding SelectNodeCommand}"
+                        CommandParameter="{x:Null}"
+                        CornerRadius="{StaticResource FullCornerRadius}"
+                        Cursor="Hand">
+                        <fi:SymbolIcon
+                            FontSize="{StaticResource MediumFontSize}"
+                            Symbol="ChevronRight" />
+                    </Button>
+                </Grid>
+
+                <!--  元信息行  -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="6">
+                    <husk:Tag>
+                        <TextBlock Text="{Binding SelectedNode?.Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                    </husk:Tag>
+                    <husk:Tag>
+                        <TextBlock Text="{Binding SelectedNode?.ReleaseType, Converter={x:Static app:LocalizedEnumConverters.LocalizedReleaseType}}" />
+                    </husk:Tag>
+                </StackPanel>
+
+                <Separator Grid.Row="2" />
+
+                <!--  依赖表  -->
+                <Grid Grid.Row="3" RowDefinitions="Auto,*" RowSpacing="8">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="6">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependenciesTitle}" />
+                        <husk:Tag Classes="Status">
+                            <TextBlock Text="{Binding SelectedDependencies.Count}" />
+                        </husk:Tag>
+                    </StackPanel>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled">
+                        <ItemsControl ItemsSource="{Binding SelectedDependencies}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="models:DependencyEntry">
+                                    <Button
+                                        Padding="8,6"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        Background="Transparent"
+                                        Classes="Small"
+                                        Command="{Binding $parent[app:InstanceDependencyGraphModal].((app:InstanceDependencyGraphModalModel)DataContext)?.SelectNodeCommand}"
+                                        CommandParameter="{Binding Key}"
+                                        CornerRadius="{StaticResource SmallCornerRadius}"
+                                        Cursor="Hand">
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                VerticalAlignment="Center"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Binding ProjectName}"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <husk:Tag
+                                                Grid.Column="1"
+                                                Classes="Status"
+                                                VerticalAlignment="Center"
+                                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                                IsVisible="{Binding IsRequired}">
+                                                <TextBlock Text="{x:Static lang:Resources.InstanceDependencyGraphModal_RequiredTagText}" />
+                                            </husk:Tag>
+                                        </Grid>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+        </Border>
+
         <!--  加载指示  -->
         <husk:ProgressRing
+            Grid.Column="0"
             Width="32"
             Height="32"
             HorizontalAlignment="Center"
@@ -59,6 +200,7 @@
 
         <!--  关闭按钮  -->
         <Button
+            Grid.Column="0"
             Margin="8"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
@@ -75,13 +217,12 @@
 
         <!--  统计卡片  -->
         <Border
+            Grid.Column="0"
             Margin="8"
             Padding="12,8"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
             Background="{StaticResource ControlFillColorDefaultBrush}"
-            BorderBrush="{StaticResource ControlStrokeColorDefaultBrush}"
-            BorderThickness="1"
             CornerRadius="{StaticResource SmallCornerRadius}">
             <StackPanel Orientation="Horizontal" Spacing="16">
                 <StackPanel Spacing="2">
