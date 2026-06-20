@@ -1,0 +1,58 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium">
+    <ControlTheme x:Key="{x:Type app:DependencyGraphCard}" TargetType="app:DependencyGraphCard">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    x:Name="Frame"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    Padding="{TemplateBinding Padding}">
+                    <Border.Transitions>
+                        <Transitions>
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="BorderBrush"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <TransformOperationsTransition
+                                Easing="SineEaseOut"
+                                Property="RenderTransform"
+                                Duration="{StaticResource ControlFastestAnimationDuration}" />
+                        </Transitions>
+                    </Border.Transitions>
+                    <ContentPresenter
+                        Padding="{TemplateBinding Padding}"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+
+        <Style Selector="^:pointerover /template/ Border#Frame">
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentBorderBrush}" />
+        </Style>
+
+
+        <Style Selector="^:pressed /template/ Border#Frame">
+            <Setter Property="RenderTransform" Value="scale(0.98)" />
+        </Style>
+
+
+        <Style Selector="^:selected /template/ Border#Frame">
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentBorderBrush}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

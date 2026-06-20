@@ -1,13 +1,5 @@
 # AGENTS
 
-## Use These Sources, Not The README Commands
-
-- `README.md` is partially stale for development workflow. It mentions `Development.ps1`, `Production.ps1`, and `Publish.ps1`, but this repo only ships these root scripts:
-- `pwsh scripts/Format-Files.ps1`
-- `pwsh scripts/Publish-Folder.ps1 -Rid <rid>`
-- `pwsh scripts/Publish-Velopack.ps1 -Version <semver> -Rid <rid>`
-- `pwsh scripts/Workflow_Update-Changelog.ps1 -Version <semver>`
-
 ## Repo Shape
 
 - This repo is a .NET 10 solution rooted at `Polymerium.slnx`.
@@ -30,7 +22,7 @@
 - Full solution build: `dotnet build "Polymerium.slnx"`
 - Focused app build: `dotnet build "src/Polymerium.Avalonia/Polymerium.Avalonia.csproj"`
 - There are no test projects in this repo right now. `dotnet test "Polymerium.slnx"` is not a meaningful verification step; use build plus targeted checks instead.
-- **Do NOT run any formatting tools** (`scripts/Format-Files.ps1`, `csharpier`, `xstyler`, etc.). They operate across the entire repo including submodules and will produce unintended changes in unrelated files. Only the user may invoke formatting.
+- **Do NOT run any formatting tools** (`scripts/Format-Files.ps1`, `csharpier`, `xstyler`, etc.). They operate across the entire repo including submodules and will produce unintended changes, and can also corrupt parts of the code. Only the user may invoke formatting.
 
 ## Architecture Entry Points
 
@@ -38,6 +30,46 @@
 - DI wiring lives in `src/Polymerium.Avalonia/Startup.cs`.
 - Window construction, global exception hooks, and startup of lifetime services live in `src/Polymerium.Avalonia/App.axaml.cs`.
 - The first navigation goes to `LandingPage`; shell-level state, notifications, OOBE, and update prompts are coordinated from `src/Polymerium.Avalonia/MainWindowContext.cs`.
+
+## Directory Layout
+
+Under `src/Polymerium.Avalonia/`, directories are organized by role. View + ViewModel pairs always live in sibling `Xxx/` + `XxxModels/` folders and are paired by naming convention (see ViewModel Mechanism):
+
+- `Pages/` + `PageModels/` — full-screen pages and their view models (the navigated content).
+- `Dialogs/` + `DialogModels/` — modal dialogs (centered, blocking).
+- `Modals/` + `ModalModels/` — modal overlays (non-blocking, cover the host).
+- `Sidebars/` + `SidebarModels/` — drawer sidebars (slide in from an edge).
+- `Toasts/` — transient toast notifications. There is no `ToastsModels/` folder **yet**, so existing toasts are still constructed inline and passed to `OverlayService.PopToast(Toast)`. The mechanism is fully wired, though: `OverlayService.PopToast<TToast>(parameter)` is provided and routes through the same activator as other overlays — add `ToastsModels/` + a `ToastModel` the moment a toast needs a view model.
+- `Components/` / `Controls/` / `Widgets/` — reusable Avalonia controls, grouped by scope (larger composite components vs. small atomic widgets).
+- `Services/` — application services (navigation, overlay, data, persistence, instance management, etc.).
+- `Repositories/` — data access / storage adapters.
+- `Snapshots/` — snapshot/version store for instances.
+- `Facilities/` — framework-level glue (base classes, activators, mixins, persistence helpers). `ViewModelBase`, `SimpleViewActivator`, `SimpleViewStatePersistence` live here.
+- `Converters/` / `Rendering/` / `Themes/` — value converters, custom rendering helpers, and styling/ControlThemes.
+- `Models/` — shared data models (DTOs/entities) consumed by views, view models, and services; these get their own files, not nested types.
+- `Utilities/` — stateless helpers and extension methods.
+- `Migrations/` — database migration definitions.
+- `Assets/` / `Properties/` / `Exceptions/` — static assets, `.resx` localization, and domain exception types.
+
+App-level files at the project root: `Program.cs` (entry), `Startup.cs` (DI), `App.axaml(.cs)` (window/lifetime), `MainWindow.axaml(.cs)` + `MainWindowContext.cs` (shell), `Configuration.cs`, `ErrorReporter.cs`, `AppBuilderExtensions.cs`.
+
+## ViewModel Mechanism
+
+Built on **CommunityToolkit.Mvvm** (source-generator-based) + the **Huskui.Avalonia** activation system, with **DynamicData** for reactive collections. There is **no** ReactiveUI and **no** string-based routing.
+
+- **Base class** — `ViewModelBase` (`Facilities/ViewModelBase.cs`) extends CommunityToolkit's `ObservableObject` and implements Huskui's `IViewModel`. It exposes **only** two lifecycle hooks, `OnInitializeAsync(CancellationToken)` / `OnDeinitializeAsync()`, overridable as virtual methods. It does **not** provide `IsBusy`, global exception handling, or navigation awareness — each page/overlay implements those itself when needed.
+- **View ↔ ViewModel pairing** — by naming convention, resolved at runtime by `SimpleViewActivator` (`Facilities/SimpleViewActivator.cs`). A type `Pages.FooPage` is paired with `PageModels.FooPageModel`; `Dialogs.FooDialog` ↔ `DialogModels.FooDialogModel`; the same pattern applies to `Modals/`↔`ModalModels/` and `Sidebars/`↔`SidebarModels/`. **This convention is universal across pages and overlays.**
+- **DataContext is set by the activator**, not by code-behind and not by a ViewLocator. View `.axaml` files use `x:DataType="..."` purely for compile-time binding checks; view code-behind is minimal (constructor + `InitializeComponent()`).
+- **Two creation entry points, same activator** — and five view-model kinds share it: `Page`/`PageModel`, `Dialog`/`DialogModel`, `Modal`/`ModalModel`, `Sidebar`/`SidebarModel`, and `Toast`/`ToastModel`. The pairing convention and the `IViewActivator`-based DataContext wiring are identical across all five.
+  - Navigated content (pages) → `NavigationService.Navigate<TPage>(parameter)` (`Services/NavigationService.cs`), hosted by the `<husk:Frame>` in `MainWindow.axaml`. Type-safe, parameterized.
+  - Overlays (dialogs/modals/sidebars/toasts) → `OverlayService` (`Services/OverlayService.cs`) calls the **same** `IViewActivator.Activate(typeof(T), parameter)`; the host is the overlay host instead of the frame. e.g. `overlayService.PopModal<TModal>(param)`, `.PopSidebar<TSidebar>(param)`, `.CreateDialog<TDialog>(param)` / `.PopDialogAsync(dialog)`, `.PopToast<TToast>(param)`. There is also a pass-through `PopToast(Toast)` for the common case where a toast is assembled inline with no view model.
+- **Dependency injection & parameters** — PageModels/OverlayModels are **not** pre-registered in the container; the activator constructs them via `IServiceProvider` on demand and injects services through the constructor. Navigation/overlay parameters are delivered by injecting `IViewContext` or `IViewContext<T>` (where `T` is the parameter type). Registration is one line in `Startup.cs`: `AddViewModelActivation<SimpleViewActivator>()`.
+- **Lifecycle** — override `OnInitializeAsync` / `OnDeinitializeAsync`. Initialize runs when the view enters the visual tree; Deinitialize runs when it leaves. Typical pattern: subscribe to events/observables in `OnInitializeAsync`, unsubscribe in `OnDeinitializeAsync` (see `LandingPageModel.cs`).
+- **Commands & properties** — use CommunityToolkit source generators: `[RelayCommand]` (generates a `XxxCommand`, supports async and `CanExecute`) and `[ObservableProperty]`. Observable collections use `ObservableCollection<T>`; advanced reactive pipelines use DynamicData (`SourceCache<T, K>` + `.Connect().Filter().SortAndBind(...)`), e.g. `MainWindowContext.cs`.
+- **Optional state persistence** — implement `IStatefulViewModel<TState>`; `SimpleViewStatePersistence` persists it through `PersistenceService`.
+- **Shell exception** — `MainWindowContext` is **not** a `ViewModelBase`/PageModel; it only extends `ObservableObject` and is instantiated explicitly as `MainWindow.DataContext` in `App.axaml.cs`.
+
+Rule of thumb: to add a new screen, create `FooPage.axaml` + `FooPageModel.cs` (or the `Foo*` overlay equivalents) in the right pair of folders, follow the naming, and navigate/activate it — no manual DataContext wiring or container registration is needed.
 
 ## Persistence And Runtime Paths
 
@@ -57,8 +89,8 @@
 ## Localization
 
 - Localized strings live in `src/Polymerium.Avalonia/Properties/Resources.resx` and `Resources.zh-hans.resx`.
-- `Resources.Designer.cs` is generated from the `.resx` files; edit the `.resx` and `Resource.Designer.cs` to pass the build process.
-- If encountered build failure due to missing localized string references, tell the user to generate `Rsources.Designer.cs` in the IDE to fix that or fix it by yourself.
+- `Resources.Designer.cs` is normally regenerated from the `.resx` by the IDE's resx designer, but in practice the designer does not reliably update `Resources.Designer.cs` after editing `.resx`.
+- When you add or change localized strings in `.resx`, you must **manually add the matching field in `Resources.Designer.cs`** to keep the build green; do not rely on the IDE to do it.
 
 ## Expected Build Noise
 
@@ -72,8 +104,44 @@
   - **Nested type (类中类)** when it is dedicated to an outer class, even if that class exposes it through its public API (e.g. as a parameter or return type). The fact that callers must supply/pass values of that type does **not** make it independent. Example: `SkinView` nests inside `AccountHelper` because it exists only to describe `AccountHelper`'s body-render URLs.
   - **Own file** when it is a shared model — a type with its own data/properties that View, ViewModel, and Services may all consume is a standalone entity and gets its own file (under `Models/` for models). Example: `SkinFrame` is a model the view binds to and view models build, so it lives in `Models/SkinFrame.cs`, not tucked inside the control.
 
+## Comments
+
+**Do not write comments that restate the code or the project's already-documented conventions.** A comment must earn its place by carrying information that is **not** obvious from reading the surrounding code. Two anti-patterns to avoid:
+
+- **Restating the obvious.** A method that does `Close(); Dispose();` needs no `// Close the dialog and release resources` above it — the two lines already say exactly that. Names, types, and the code flow itself are the documentation; a comment that paraphrases them is noise.
+- **Repeating a project-wide mechanism at a single call site.** If a convention is already described in this AGENTS.md (e.g. the activator-driven ViewModel lifecycle) or is the default behavior shared by every sibling method (e.g. every `Pop*`/`Navigate*` goes through the same activator), do **not** single out one site to re-explain it. Doing so implies the others differ when they don't, and misleads future readers. Comment the **exception**, never the rule.
+
+When in doubt, leave the comment out. Reserve comments for non-local knowledge: why a workaround exists, a non-obvious constraint or invariant, a link to an upstream issue, or a warning about something the next reader will get wrong without the hint.
+
+## Styling Conventions (Avalonia)
+
+When writing or editing `.axaml` ControlThemes, follow the project's (and the upstream Huskui theme's) naming rules for selectors:
+
+- **Style classes (variant selectors) are `PascalCase`.** A class denotes a **variant** — a named look the consumer opts into — and the name is an adjective or noun describing that variant. Examples in use: `Primary`, `Danger`, `Small`, `Status`, `Warning`, `Success`, applied as `Classes="Primary Small"`.
+- **Pseudo-classes (state selectors) are `all-lowercase`.** A pseudo-class denotes a **runtime state** of the control and is almost always an adjective describing that state. Examples: `:pointerover`, `:pressed`, `:checked`, `:disabled`, `:focus`, `:selected`, `:error`. Never capitalize a pseudo-class.
+
+The distinguishing question: **is the consumer choosing a look (`Primary`) or is the control reporting its own state (`:pressed`)?** Variant → PascalCase class; state → lowercase pseudo-class.
+
+- **A variant class may only set the control's own exposed properties** (e.g. `Background`, `Foreground`, `BorderBrush`, `CornerRadius`, `Padding`). It must **not** reach into the control template and restyle named parts (`/template/ Border#PART_Xxx`). Restyling template internals is reserved for pseudo-class-driven states inside the same ControlTheme; variant classes stay at the public-property surface so they compose cleanly when consumers stack them (`Classes="Primary Small"`). For example, a `Primary` class on a Button changes `Background`/`Foreground`; it does **not** touch the inner `ContentPresenter` or `PART_Background` rectangle directly.
+- Consumer-facing usage (`Classes="..."`) uses the variant names above; the corresponding selector definitions live in the Huskui theme and the per-control ControlThemes under `src/Polymerium.Avalonia/Controls/*.axaml`. When adding a new variant, define its `Style Selector="... .YourVariant"` setter on exposed properties only, and use it as `Classes="YourVariant"`.
+
+## Template Part Naming
+
+When a control's `ControlTheme` template contains named elements that are referenced from code-behind (via `OnApplyTemplate` / `NameScope.Find<T>`), follow the Huskui convention:
+
+- **Code-behind referenced parts get the `PART_` prefix.** Declare them in code-behind exactly as Huskui does:
+  ```csharp
+  [TemplatePart(PART_ScrollViewer, typeof(ScrollViewer))]
+  public const string PART_ScrollViewer = nameof(PART_ScrollViewer);
+  ```
+  Then use `e.NameScope.Find<ScrollViewer>(PART_ScrollViewer)` instead of string literals like `Find<ScrollViewer>("PART_ScrollViewer")`.
+- **Template-internal elements that are NOT referenced from code-behind do NOT use the `PART_` prefix.** Give them descriptive, short names like `Background`, `Border`, `Indicator`, `ContentPresenter`, `GlowBorder` — these names serve only styling selectors within the same ControlTheme and never appear in C#.
+- Every code-behind referenced part gets its own `[TemplatePart]` attribute + `public const string` declaration; do not skip the attribute or use bare strings.
+- `nameof(PART_Xxx)` self-checks: if you rename the constant, the `nameof` string updates automatically, keeping the XAML name and the C# constant in sync. Existing Polymerium controls (`DateRangePicker`, `DiffView`, `ZoomView`) currently use bare string literals — new controls must adopt this pattern, and existing ones may be migrated incrementally.
+
 ## Git Commit
 
+- **Do not commit on your own initiative.** Make all the edits you need, then stop and wait for the user to explicitly tell you to commit (e.g. "提交"). Never auto-commit after editing without being asked.
 - 首行按 Conventional Commits 格式：`type(scope): description`
 - 关联 Jira issue 时，issue key 放首行开头：`POLY-XX: type(scope): description`
 - 关联 GitHub issue 时，issue key 放首行末尾括号内：`type(scope): description (#nnn)`

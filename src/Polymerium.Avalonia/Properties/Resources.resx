@@ -3132,4 +3132,10 @@ Affected entries: {0}
     <data name="InstanceDependencyGraphModal_DependencyCountLabel" xml:space="preserve">
         <value>Dependencies</value>
     </data>
+    <data name="InstanceDependencyGraphModal_DependenciesTitle" xml:space="preserve">
+        <value>Dependencies</value>
+    </data>
+    <data name="InstanceDependencyGraphModal_RequiredTagText" xml:space="preserve">
+        <value>Required</value>
+    </data>
 </root>

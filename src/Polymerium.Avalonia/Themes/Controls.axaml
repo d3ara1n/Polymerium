@@ -26,5 +26,6 @@
         <ResourceInclude Source="/Controls/DiffView.axaml" />
         <ResourceInclude Source="/Controls/DateRangePicker.axaml" />
         <ResourceInclude Source="/Controls/ZoomView.axaml" />
+        <ResourceInclude Source="/Controls/DependencyGraphCard.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

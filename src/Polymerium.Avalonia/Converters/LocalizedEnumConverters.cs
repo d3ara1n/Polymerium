@@ -48,6 +48,25 @@ public static class LocalizedEnumConverters
             }
         );
 
+    public static IValueConverter LocalizedReleaseType { get; } =
+        new RelayConverter(
+            (v, _) =>
+            {
+                if (v is ReleaseType type)
+                {
+                    return type switch
+                    {
+                        ReleaseType.Release => Resources.ReleaseType_Release,
+                        ReleaseType.Beta => Resources.ReleaseType_Beta,
+                        ReleaseType.Alpha => Resources.ReleaseType_Alpha,
+                        _ => type,
+                    };
+                }
+
+                return v;
+            }
+        );
+
     public static IValueConverter LocalizedLaunchMode { get; } =
         new RelayConverter(
             (v, _) =>
