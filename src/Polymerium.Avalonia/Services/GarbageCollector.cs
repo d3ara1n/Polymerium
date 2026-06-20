@@ -78,6 +78,7 @@ public class GarbageCollector(
             var store = snapshotStoreFactory.Open(key);
             try
             {
+                store.DeleteOrphanReferences();
                 var referencedHashes = store.GetAllReferencedHashes();
                 var objectsDir = PathDef.Default.DirectoryOfSnapshotObjects(key);
                 if (Directory.Exists(objectsDir))
