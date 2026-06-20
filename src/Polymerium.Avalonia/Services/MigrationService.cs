@@ -28,24 +28,24 @@ public class MigrationService
     public void EvaluateFiles()
     {
         foreach (var migration in _migrations.OfType<MigrationBase.FileMigration>())
-        {}
+        { }
     }
 
     public void EvaluateKeys()
     {
         foreach (var migration in _migrations.OfType<MigrationBase.ConfigKeyMigration>())
-        {}
+        { }
     }
 
     public void EvaluateMaps()
     {
         foreach (var migration in _migrations.OfType<MigrationBase.ConfigMapMigration>())
-        {}
+        { }
     }
 
     public void EvaluateValues()
     {
         foreach (var migration in _migrations.OfType<MigrationBase.ConfigCustomMigration>())
-        {}
+        { }
     }
 }

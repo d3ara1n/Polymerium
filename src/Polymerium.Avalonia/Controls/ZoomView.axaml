@@ -1,4 +1,4 @@
-<ResourceDictionary
+﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
@@ -40,7 +40,11 @@
                             Visibility="Hidden" />
 
                         <!--  右下控件区  -->
-                        <StackPanel Spacing="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8">
+                        <StackPanel
+                            Margin="8"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Spacing="8">
                             <app:ZoomMinimap
                                 x:Name="PART_Minimap"
                                 Width="180"
@@ -54,8 +58,8 @@
                                 Spacing="4">
                                 <Button
                                     Classes="Small"
-                                    Command="{Binding ZoomOut, RelativeSource={RelativeSource TemplatedParent}}"
                                     Padding="6,4"
+                                    Command="{Binding ZoomOut, RelativeSource={RelativeSource TemplatedParent}}"
                                     Content="-" />
                                 <Slider
                                     x:Name="PART_ZoomSlider"
@@ -66,23 +70,28 @@
                                     Minimum="{TemplateBinding EffectiveMinZoomValue}"
                                     SmallChange="0.05"
                                     TickFrequency="0"
-                                    Value="{TemplateBinding Zoom, Mode=TwoWay}" />
+                                    Value="{TemplateBinding Zoom,
+                                                            Mode=TwoWay}" />
                                 <Button
                                     Classes="Small"
-                                    Command="{Binding ZoomIn, RelativeSource={RelativeSource TemplatedParent}}"
                                     Padding="6,4"
+                                    Command="{Binding ZoomIn, RelativeSource={RelativeSource TemplatedParent}}"
                                     Content="+" />
                                 <Button
                                     Classes="Small"
-                                    Command="{Binding FitToAll, RelativeSource={RelativeSource TemplatedParent}}"
-                                    Padding="6,4">
-                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowMinimize" />
+                                    Padding="6,4"
+                                    Command="{Binding FitToAll, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="ArrowMinimize" />
                                 </Button>
                                 <Button
                                     Classes="Small"
-                                    Command="{Binding FitToContent, RelativeSource={RelativeSource TemplatedParent}}"
-                                    Padding="6,4">
-                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ArrowExpand" />
+                                    Padding="6,4"
+                                    Command="{Binding FitToContent, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="ArrowExpand" />
                                 </Button>
                             </StackPanel>
                         </StackPanel>

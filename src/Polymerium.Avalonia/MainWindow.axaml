@@ -24,14 +24,22 @@
     <husk:AppWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
-                <!-- macOS Tahoe 风格侧边栏：Liquid Glass 毛玻璃背景 + 玻璃边缘描边 + 柔和浮起投影 -->
+                <!--  macOS Tahoe 风格侧边栏：Liquid Glass 毛玻璃背景 + 玻璃边缘描边 + 柔和浮起投影  -->
                 <ResourceDictionary x:Key="Light">
-                    <SolidColorBrush x:Key="SidebarBackground" Color="#bfffffff" />
-                    <SolidColorBrush x:Key="SidebarBorder" Color="#14000000" />
+                    <SolidColorBrush
+                        x:Key="SidebarBackground"
+                        Color="#bfffffff" />
+                    <SolidColorBrush
+                        x:Key="SidebarBorder"
+                        Color="#14000000" />
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
-                    <SolidColorBrush x:Key="SidebarBackground" Color="#cc1e1e1e" />
-                    <SolidColorBrush x:Key="SidebarBorder" Color="#14FFFFFF" />
+                    <SolidColorBrush
+                        x:Key="SidebarBackground"
+                        Color="#cc1e1e1e" />
+                    <SolidColorBrush
+                        x:Key="SidebarBorder"
+                        Color="#14FFFFFF" />
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
@@ -102,16 +110,24 @@
                 MinWidth="200"
                 MaxWidth="400" />
         </Grid.ColumnDefinitions>
-        <Border x:Name="Main" Grid.Column="0">
+        <Border
+            x:Name="Main"
+            Grid.Column="0">
             <DockPanel>
                 <Panel>
                     <husk:Frame x:Name="Root" />
                 </Panel>
             </DockPanel>
         </Border>
-        <Border x:Name="Sidebar" Grid.Column="1" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource SidebarBorder}" Background="{DynamicResource SidebarBackground}">
+        <Border
+            x:Name="Sidebar"
+            Grid.Column="1"
+            Background="{DynamicResource SidebarBackground}"
+            BorderBrush="{DynamicResource SidebarBorder}"
+            BorderThickness="0,0,1,0">
             <DockPanel>
-                <Grid x:Name="TitleBar"
+                <Grid
+                    x:Name="TitleBar"
                     DockPanel.Dock="Top"
                     IsVisible="{Binding $parent[app:MainWindow].IsTitleBarVisible, Mode=OneWay}"
                     ColumnDefinitions="*,Auto">
@@ -121,7 +137,10 @@
                         Background="Transparent"
                         WindowDecorationProperties.ElementRole="TitleBar" />
                     <StackPanel Grid.Column="1">
-                        <husk:ButtonGroup BorderThickness="0" IsVisible="{OnPlatform Default={x:True}, macOS={x:False}}">
+                        <husk:ButtonGroup
+                            IsVisible="{OnPlatform Default={x:True},
+                                                   macOS={x:False}}"
+                            BorderThickness="0">
                             <husk:ButtonGroup.Styles>
                                 <Style Selector="Button">
                                     <Setter Property="Padding" Value="10" />
@@ -160,8 +179,7 @@
                                 WindowDecorationProperties.ElementRole="CloseButton">
                                 <Button.Styles>
                                     <Style Selector="Button:pointerover fi|SymbolIcon">
-                                        <Setter Property="Foreground"
-                                                Value="{StaticResource ControlDangerForegroundBrush}" />
+                                        <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
                                     </Style>
                                 </Button.Styles>
                                 <fi:SymbolIcon Symbol="Dismiss">
@@ -184,7 +202,9 @@
                         Orientation="Horizontal"
                         Spacing="6">
                         <StackPanel.Margin>
-                            <OnPlatform Default="12,0,0,-9" macOS="72, 8, 0, -1"/>
+                            <OnPlatform
+                                Default="12,0,0,-9"
+                                macOS="72, 8, 0, -1" />
                         </StackPanel.Margin>
                         <StackPanel.Effect>
                             <DropShadowEffect
@@ -323,7 +343,7 @@
                                 IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                 Command="{Binding $parent[TextBox].Clear}"
                                 Content="{fie:SymbolIcon Symbol=Dismiss,
-                                                     FontSize={StaticResource MediumFontSize}}"
+                                                         FontSize={StaticResource MediumFontSize}}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                         </TextBox.InnerRightContent>
                     </TextBox>
@@ -389,39 +409,39 @@
                                                             CommandParameter="{Binding Basic.Key}"
                                                             Header="{x:Static lang:Resources.MainWindow_PlayMenuText}"
                                                             Icon="{fie:SymbolIcon Symbol=Rocket,
-                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).DeployCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
                                                             Header="{x:Static lang:Resources.MainWindow_DeployMenuText}"
                                                             Icon="{fie:SymbolIcon Symbol=SettingsCogMultiple,
-                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem Header="-" />
                                                         <MenuItem
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
                                                             Header="{x:Static lang:Resources.MainWindow_ExportModpackMenuText}"
                                                             Icon="{fie:SymbolIcon Symbol=FolderZip,
-                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
                                                             Header="{x:Static lang:Resources.MainWindow_OpenFolderMenuText}"
                                                             Icon="{fie:SymbolIcon Symbol=FolderOpen,
-                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem Header="-" />
                                                         <MenuItem
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).GotoSetupCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
                                                             Header="{x:Static lang:Resources.MainWindow_SetupMenuText}"
                                                             Icon="{fie:SymbolIcon Symbol=BoxMultiple,
-                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).GotoPropertiesCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
                                                             Header="{x:Static lang:Resources.MainWindow_PropertiesMenuText}"
                                                             Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,
-                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
                                                     </MenuFlyout>
                                                 </app:InstanceEntryButton.ContextFlyout>
                                             </app:InstanceEntryButton>
