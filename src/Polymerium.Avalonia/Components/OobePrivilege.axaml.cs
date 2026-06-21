@@ -40,8 +40,8 @@ public partial class OobePrivilege : OobeStep
     private bool Check()
     {
         // Logic: Check if we can create a symlink from ~/.trident/.polymerium/symlink to first_run
-        var first = Path.Combine(PathDef.Default.PrivateDataDirectory(Program.Brand), "first_run");
-        var symlink = Path.Combine(PathDef.Default.PrivateDataDirectory(Program.Brand), "symlink");
+        var first = Path.Combine(PathDef.Default.PrivateDataDirectory(), "first_run");
+        var symlink = Path.Combine(PathDef.Default.PrivateDataDirectory(), "symlink");
 
         // If symlink already exists and points to first_run, we're good
         if (

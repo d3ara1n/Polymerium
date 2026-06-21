@@ -15,10 +15,11 @@ dotnet tool install --global TridentCore.Cli
 
 | 选项 | 说明 |
 |--------|-------------|
-| `--home <path>` | 覆盖数据目录 |
 | `--json` | 以 JSON 格式输出结果 |
 | `--no-interactive` | 禁用交互式提示 |
 | `--verbose` / `--debug` | 增加输出详细程度 |
+
+数据目录的覆盖不是 CLI 参数——它由共享的路径层解析，在桌面应用和 CLI 中行为完全一致：`TRIDENT_HOME` 环境变量、从当前目录向上查找的 `.trident/` 文件夹、或 `~/.trident.home` 文件。详见 [自定义数据目录 →](/docs/guides/custom-data-directory)。
 
 ## 实例命令
 

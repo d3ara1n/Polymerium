@@ -118,10 +118,10 @@ trident --mcp
 
 ## 自定义数据目录
 
-使用 `--home` 指定不同的数据目录。详见 [自定义数据目录 →](/docs/guides/custom-data-directory)。
+CLI 的数据目录由与桌面应用相同的路径层解析，不涉及任何 CLI 参数。设置 `TRIDENT_HOME` 环境变量即可为单次运行或整个会话重定位它。详见 [自定义数据目录 →](/docs/guides/custom-data-directory)。
 
 ```bash
-trident --home /opt/minecraft-data instance list
+TRIDENT_HOME=/opt/minecraft-data trident instance list
 ```
 
 这适用于：

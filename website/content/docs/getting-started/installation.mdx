@@ -54,18 +54,24 @@ When you open Polymerium for the first time, the OOBE (Out-of-Box Experience) wi
 
 ## What Gets Installed Where
 
-Polymerium stores all its data in `~/.trident/` on every platform. This includes settings, cached files, and your instances.
+Starting with **1.10.0**, Polymerium follows each platform's standard directory conventions instead of bundling everything under one folder. Data is split into four categories, each placed in the location the OS expects:
 
-| Data | Location |
-|------|----------|
-| Settings | `~/.trident/settings.json` |
-| Persistence DB | `~/.trident/persistence.sqlite.db` |
-| HTTP cache | `~/.trident/cache.sqlite.db` |
-| Shared mod cache | `~/.trident/cache/packages/` |
-| Game assets | `~/.trident/cache/assets/` |
-| Instances | `~/.trident/instances/` |
+- **Config** — `settings.json`
+- **Data** — the persistence database (`persistence.sqlite.db`) and first-run marker
+- **Cache** — the HTTP cache (`cache.sqlite.db`), crash-report cache, and the shared cache: mod files, game assets, and Java runtimes (under `packages/`, `assets/`, `runtimes/`)
+- **Instances** — your Minecraft instances
 
-> Want to place data on a different drive? See [Custom Data Directory →](/docs/guides/custom-data-directory).
+| Category | Windows | Linux | macOS |
+|---|---|---|---|
+| Config | `%APPDATA%\Polymerium` | `~/.config/polymerium` | `~/Library/Application Support/dev.dearain.Polymerium` |
+| Data | `%LOCALAPPDATA%\Polymerium` | `~/.local/share/polymerium` | (same as Config) |
+| Cache (HTTP + crash reports) | `%TEMP%\Polymerium` | `~/.cache/polymerium` | `~/Library/Caches/dev.dearain.Polymerium` |
+| Cache (shared: mods/assets/runtimes) | `%TEMP%\Trident` | `~/.cache/trident` | `~/Library/Caches/dev.dearain.trident` |
+| Instances | `%LOCALAPPDATA%\Trident\instances` | `~/.local/share/trident/instances` | `~/Library/Application Support/dev.dearain.trident/instances` |
+
+> **Behavior change since 1.10.0** — before 1.10.0, Polymerium stored **everything** under a single `~/.trident/` directory on every platform (settings under `~/.trident/.polymerium/`, the shared cache under `~/.trident/cache/`, and instances under `~/.trident/instances/`). For backward compatibility, if a `~/.trident/` directory already exists from a previous install, Polymerium **keeps using it** instead of switching to the per-platform locations above — so existing setups are not disturbed. Brand-new installs get the split layout automatically.
+>
+> Want to place data on a different drive, or force the classic single-root layout? See [Custom Data Directory →](/docs/guides/custom-data-directory).
 
 ## Next Step
 

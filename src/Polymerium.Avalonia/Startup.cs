@@ -131,7 +131,7 @@ public static class Startup
            .AddSqliteCache(setup =>
             {
                 setup.MemoryOnly = false;
-                var dir = PathDef.Default.PrivateConfigDirectory(Program.Brand);
+                var dir = PathDef.Default.PrivateCacheDirectory();
                 var path = Path.Combine(dir, "cache.sqlite.db");
                 if (!Directory.Exists(dir))
                 {
@@ -221,7 +221,7 @@ public static class Startup
                 options.Dsn = "https://70f1e791a5f2b8cb31f0947a1bac5e7a@o941379.ingest.us.sentry.io/4510328831410176";
                 options.AutoSessionTracking = true;
                 options.Environment = Program.IsDebug ? "Development" : "Production";
-                options.CacheDirectoryPath = PathDef.Default.PrivateConfigDirectory(Program.Brand);
+                options.CacheDirectoryPath = PathDef.Default.PrivateCacheDirectory();
                 options.AddExceptionFilterForType<OperationCanceledException>();
                 options.AddExceptionFilterForType<TaskCanceledException>();
                 options.SetBeforeSend(@event =>
