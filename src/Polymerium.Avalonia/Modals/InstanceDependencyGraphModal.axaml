@@ -23,11 +23,18 @@
         <app:ZoomView
             x:Name="ZoomView"
             Grid.Column="0"
-            Background="{StaticResource CardBackgroundBrush}"
-            CornerRadius="{StaticResource SmallCornerRadius}"
+            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
             MaxZoom="10"
             MinZoom="0.1"
             ZoomSpeed="1.2">
+            <app:ZoomView.CornerRadius>
+                <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                    <Binding Path="CornerRadius"
+                             RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Modal}" />
+                    <Binding Path="Padding"
+                             RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Modal}" />
+                </MultiBinding>
+            </app:ZoomView.CornerRadius>
             <agc:GraphPanel
                 x:Name="GraphPanel"
                 Graph="{Binding DependencyGraph}"
@@ -41,12 +48,12 @@
                             CommandParameter="{Binding Key}"
                             IsSelected="{Binding IsSelected, Mode=OneWay}">
                             <Grid
-                                ColumnDefinitions="40,*"
+                                ColumnDefinitions="Auto,*"
                                 ColumnSpacing="10">
                                 <Border
                                     Grid.Column="0"
-                                    Width="40"
-                                    Height="40"
+                                    Height="32"
+                                    Width="32"
                                     VerticalAlignment="Center"
                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                     <Image
@@ -140,10 +147,12 @@
                     Orientation="Horizontal"
                     Spacing="6">
                     <husk:Tag>
-                        <TextBlock Text="{Binding SelectedNode?.Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                        <TextBlock
+                            Text="{Binding SelectedNode?.Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
                     </husk:Tag>
                     <husk:Tag>
-                        <TextBlock Text="{Binding SelectedNode?.ReleaseType, Converter={x:Static app:LocalizedEnumConverters.LocalizedReleaseType}}" />
+                        <TextBlock
+                            Text="{Binding SelectedNode?.ReleaseType, Converter={x:Static app:LocalizedEnumConverters.LocalizedReleaseType}}" />
                     </husk:Tag>
                 </StackPanel>
 
@@ -197,7 +206,8 @@
                                                 VerticalAlignment="Center"
                                                 IsVisible="{Binding IsRequired}"
                                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <TextBlock Text="{x:Static lang:Resources.InstanceDependencyGraphModal_RequiredTagText}" />
+                                                <TextBlock
+                                                    Text="{x:Static lang:Resources.InstanceDependencyGraphModal_RequiredTagText}" />
                                             </husk:Tag>
                                         </Grid>
                                     </Button>
