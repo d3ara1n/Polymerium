@@ -33,7 +33,6 @@
                         </Transitions>
                     </Border.Transitions>
                     <ContentPresenter
-                        Padding="{TemplateBinding Padding}"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
                         Content="{TemplateBinding Content}"
