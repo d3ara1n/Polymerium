@@ -54,18 +54,24 @@ Polymerium 使用符号链接在实例之间共享模组文件，无需重复存
 
 ## 安装内容在哪里
 
-Polymerium 在所有平台上将所有数据存储在 `~/.trident/` 中。这包括设置、缓存文件和你的实例。
+从 **1.10.0** 开始，Polymerium 遵循各平台的标准目录约定，而不再把所有数据塞进同一个文件夹。数据按职责拆为四类，分别放在操作系统约定的位置：
 
-| 数据 | 位置 |
-|------|----------|
-| 设置 | `~/.trident/settings.json` |
-| 持久化数据库 | `~/.trident/persistence.sqlite.db` |
-| HTTP 缓存 | `~/.trident/cache.sqlite.db` |
-| 共享模组缓存 | `~/.trident/cache/packages/` |
-| 游戏资源 | `~/.trident/cache/assets/` |
-| 实例 | `~/.trident/instances/` |
+- **配置（Config）** —— `settings.json`
+- **数据（Data）** —— 持久化数据库（`persistence.sqlite.db`）与首次运行标记
+- **缓存（Cache）** —— HTTP 缓存（`cache.sqlite.db`）、崩溃报告缓存，以及共享缓存：模组文件、游戏资源、Java 运行时（分别位于 `packages/`、`assets/`、`runtimes/`）
+- **实例（Instances）** —— 你的 Minecraft 实例
 
-> 想将数据放在其他磁盘上？参见 [自定义数据目录 →](/docs/guides/custom-data-directory)。
+| 类别 | Windows | Linux | macOS |
+|---|---|---|---|
+| 配置 | `%APPDATA%\Polymerium` | `~/.config/polymerium` | `~/Library/Application Support/dev.dearain.Polymerium` |
+| 数据 | `%LOCALAPPDATA%\Polymerium` | `~/.local/share/polymerium` | （同配置） |
+| 缓存（HTTP + 崩溃报告） | `%TEMP%\Polymerium` | `~/.cache/polymerium` | `~/Library/Caches/dev.dearain.Polymerium` |
+| 缓存（共享：模组/资源/运行时） | `%TEMP%\Trident` | `~/.cache/trident` | `~/Library/Caches/dev.dearain.trident` |
+| 实例 | `%LOCALAPPDATA%\Trident\instances` | `~/.local/share/trident/instances` | `~/Library/Application Support/dev.dearain.trident/instances` |
+
+> **自 1.10.0 起的行为变化** —— 在 1.10.0 之前，Polymerium 在所有平台上都把**全部数据**统一存放在单个 `~/.trident/` 目录下（设置在 `~/.trident/.polymerium/`，共享缓存在 `~/.trident/cache/`，实例在 `~/.trident/instances/`）。出于兼容性考虑，如果旧版本已经创建了 `~/.trident/` 目录，Polymerium **会继续沿用该目录**，而不会改用上表中的平台分类位置——因此既有环境不会被动。全新的安装才会自动启用分类布局。
+>
+> 想把数据放到其他磁盘，或强制使用经典的单根目录布局？参见 [自定义数据目录 →](/docs/guides/custom-data-directory)。
 
 ## 下一步
 

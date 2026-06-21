@@ -5,102 +5,162 @@ description: Move Polymerium's entire data directory — settings, caches, and i
 
 ## Why Move the Data Directory?
 
-By default, Polymerium stores everything under `~/.trident/`:
+By default, Polymerium stores its data in each platform's standard locations — settings and databases in your app-data folder, the shared mod/asset/runtime cache in your cache folder, and instances in your data folder. See [What Gets Installed Where](/docs/getting-started/installation#what-gets-installed-where) for the exact paths.
 
-- **Settings and databases** in `~/.trident/.polymerium/`
-- **Shared cache** in `~/.trident/cache/` (mod files, assets, Java runtimes)
-- **Your instances** in `~/.trident/instances/`
+The shared cache grows large over time, and on Windows it lives under `%TEMP%`, which sits on your `C:` drive and may be swept by disk cleanup. Relocating the **entire** data root to a different drive lets you:
 
-On Windows, `~` is typically `C:\Users\<YourName>`. If you have a small C: drive or want to keep game data on a separate SSD, the shared cache can grow large over time. Moving the entire data directory lets you reclaim that space.
+- Reclaim space on a small `C:` drive.
+- Keep the cache somewhere persistent instead of an ephemeral temp directory.
+- Run a fully portable setup from an external SSD or USB drive.
+
+When you set a custom data root, Polymerium switches to the **classic single-root layout**: config, data, cache, and instances all live together under that one root — the same layout pre-1.10.0 installs used.
 
 ## How It Works
 
-Polymerium uses a file called `~/.trident.home` to override the default data location. This file:
+Polymerium resolves its data root at startup by checking, in this priority order:
 
-- Lives at `~/.trident.home` (your user profile directory)
-- Contains a single line: an absolute path to the new data root
-- Is read once at startup, before anything else
+1. **`TRIDENT_HOME` environment variable** — if set to an existing directory, that directory becomes the root. *(highest priority)*
+2. **`.trident` working-directory marker** — Polymerium walks up from its current working directory; the first ancestor containing a `.trident/` folder uses that folder as the root. Handy for portable setups.
+3. **`~/.trident.home` file** — a file in your user profile whose first line is an absolute path to the new root.
 
-On Windows, `~/.trident.home` is `C:\Users\<YourName>\.trident.home`.
+If none of these is set:
+
+- If a `~/.trident/` directory already exists (from an older install), Polymerium **keeps using it**.
+- Otherwise it uses the per-platform standard locations.
+
+When a custom root is in effect, the layout under it is:
+
+| What | Location |
+|---|---|
+| Settings, HTTP cache, persistence DB | `<root>/.polymerium/` |
+| Shared cache (mods, assets, runtimes) | `<root>/cache/` |
+| Instances | `<root>/instances/` |
+
+> The chosen root is resolved at startup; the subdirectories (`.polymerium/`, `cache/`, `instances/`) are created automatically on first launch. If you point the override at a path that does not yet exist, Polymerium creates the folder tree when it first writes to it — just make sure the path is not already taken by a file.
 
 ## Setting It Up
 
 ### Step 1: Close Polymerium
 
-Make sure Polymerium is not running. The override file is only read at startup.
+The data root is resolved only at startup, so make sure Polymerium is not running.
 
-### Step 2: Choose a New Location
+### Step 2: Create the Target Directory
 
-Pick an empty directory (or one that doesn't exist yet) on the drive you want to use. For example:
+Create an empty folder on the drive you want to use (or point at a path that doesn't exist yet — Polymerium creates it on first launch).
 
-| Platform | Example path |
-|----------|-------------|
+| Platform | Example |
+|----------|---------|
 | Windows | `D:\PolymeriumData` |
 | Linux | `/mnt/games/polymerium` |
 | macOS | `/Volumes/External/polymerium` |
 
-The directory will be created automatically on first launch.
+### Step 3: Point Polymerium to It
 
-### Step 3: Create the Override File
+Pick one of the three methods.
 
-Create a file named `.trident.home` in your user profile directory and put the absolute path in it:
+**Method A — `.trident.home` file (recommended for desktop use)**
+
+Create a file named `.trident.home` in your user profile directory containing the absolute path to the root (the folder does not need to exist yet — Polymerium creates it on first launch).
 
 **Windows (PowerShell):**
 ```powershell
+New-Item -Path "D:\PolymeriumData" -ItemType Directory -Force
 New-Item -Path "$env:USERPROFILE\.trident.home" -ItemType File -Force
 Set-Content -Path "$env:USERPROFILE\.trident.home" -Value "D:\PolymeriumData"
 ```
 
 **Linux / macOS (Terminal):**
 ```bash
+mkdir -p /mnt/games/polymerium
 echo "/mnt/games/polymerium" > ~/.trident.home
+```
+
+On Windows, `~/.trident.home` is `C:\Users\<YourName>\.trident.home`.
+
+**Method B — `TRIDENT_HOME` environment variable**
+
+Set the variable to the target directory. This takes priority over every other method and is well-suited to scripts, shortcuts, and CI:
+
+```powershell
+# Windows (current session)
+$env:TRIDENT_HOME = "D:\PolymeriumData"
+```
+```bash
+# Linux / macOS
+export TRIDENT_HOME=/mnt/games/polymerium
+```
+
+Make it persistent through your shell profile or system environment variables.
+
+**Method C — `.trident` portable marker**
+
+Create a `.trident/` folder inside your target directory and launch Polymerium with that directory (or any subfolder) as the working directory. The `.trident/` folder itself becomes the root, so data lands under `<target>/.trident/`.
+
+```bash
+mkdir -p /mnt/games/polymerium/.trident
+cd /mnt/games/polymerium
+polymerium
 ```
 
 ### Step 4: Launch Polymerium
 
-Start Polymerium. It will detect the `.trident.home` file, switch to the new data root, and create the necessary directories automatically.
+Start Polymerium. It detects the override, switches to the custom root, and creates the `.polymerium/`, `cache/`, and `instances/` subdirectories.
 
 ## Validation Rules
 
-The path in `.trident.home` must:
+The override path (in `.trident.home` or `TRIDENT_HOME`) must:
 
-- Be an **absolute** path (e.g. `D:\Data`, not `..\Data`)
-- **Not** point to an existing file (it can be a new directory, or an existing directory)
+- Be an **absolute** path (e.g. `D:\Data`, not `..\Data`).
+- Not point to an existing file (it can be a directory that does not exist yet — Polymerium creates it on first launch — or an existing directory).
 
-If the file exists but the path is invalid (relative path, or points to an existing file), Polymerium silently falls back to the default `~/.trident/`.
+If `.trident.home` exists but its path is relative or points to an existing file, Polymerium ignores it and falls back to the default resolution.
 
-> On first launch with a new data root, Polymerium creates a fresh setup — settings revert to defaults and the shared cache starts empty. Old data in `~/.trident/` is **not deleted or migrated automatically**.
+> On first launch with a new root, Polymerium starts fresh — settings revert to defaults and the shared cache starts empty. Data at the previous location is **not deleted or migrated automatically**.
 
 ## Migrating Existing Data
 
-If you already have instances and settings under `~/.trident/` and want to move them:
+If you already have instances and settings (under `~/.trident/` or in the per-platform locations) and want to move them:
 
 1. Close Polymerium.
-2. Create the `.trident.home` file pointing to the new path.
-3. Copy the entire contents of `~/.trident/` to the new location.
-4. Launch Polymerium — your instances, settings, and cache will be picked up.
+2. Create the target directory and set up the override (above).
+3. Copy your existing data into the new root:
+   - Settings and databases → `<root>/.polymerium/`
+   - Shared cache → `<root>/cache/`
+   - Instances → `<root>/instances/`
+4. Launch Polymerium — your instances, settings, and cache are picked up.
 
 ## Switching Back
 
 To revert to the default location:
 
 1. Close Polymerium.
-2. Delete `~/.trident.home`.
-3. Launch Polymerium — it will use `~/.trident/` again.
+2. Remove the override — delete `~/.trident.home`, unset `TRIDENT_HOME`, or stop launching from the marked directory.
+3. Launch Polymerium — it resolves the default again.
 
-> Nothing is deleted when you switch or remove the override. Your data at the custom path remains as-is. Move it back manually if needed.
+> Nothing is deleted when you switch or remove an override. Your data at the custom path stays put; move it back manually if needed.
+
+## Before 1.10.0
+
+This guide describes **1.10.0 and later**. Earlier versions behaved differently:
+
+- **A single root on every platform.** Everything lived under `~/.trident/` — settings under `~/.trident/.polymerium/`, the shared cache under `~/.trident/cache/`, and instances under `~/.trident/instances/`. There was no per-platform split.
+- **No `TRIDENT_HOME` environment variable.** Only the `.trident.home` file and the `.trident` working-directory marker were available as overrides.
+
+Existing installs with a `~/.trident/` directory keep working unchanged — Polymerium detects the legacy root and keeps using it — so you don't have to migrate unless you want to.
 
 ## Use Cases
 
 | Scenario | Benefit |
 |----------|---------|
 | Small C: drive on Windows | Move bulky cache to D: or an external SSD |
-| Multiple Polymerium profiles | Point different `.trident.home` files to different roots for separate setups |
+| Avoid Windows `%TEMP%` | Keep the shared cache somewhere persistent |
+| Multiple Polymerium profiles | Point different overrides at different roots for separate setups |
 | Keeping game data off the system drive | Useful for dual-boot setups or OS reinstalls |
 | External drive | Keep everything portable — plug in and play on any machine running Polymerium |
 
 ## Limitations
 
-- The `.trident.home` file is in your user profile directory — it applies globally, not per-instance.
+- Overrides are global — they relocate the **entire** data root, not individual instances.
 - Polymerium does not migrate old data automatically. You must copy it yourself.
-- The path must be absolute. Relative paths and environment variables are not supported.
+- The override path must be absolute and must not point to an existing file. Relative paths and environment-variable expansion inside `.trident.home` are not supported; the target directory itself is created automatically if it does not exist.
+- The `.trident` portable marker makes the `.trident/` folder the root, so data lands under `<target>/.trident/`.

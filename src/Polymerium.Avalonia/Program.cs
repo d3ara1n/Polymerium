@@ -61,9 +61,10 @@ internal static class Program
 
         #region 0. 这些设置需要在整个应用启动的第一时间完成
 
+        PathDef.BrandNames = new("polymerium", "Polymerium", "dev.dearain.Polymerium");
         Startup.InitializeUnhostedServices();
 
-        var firstRunFile = Path.Combine(PathDef.Default.PrivateDataDirectory(Brand), "first_run");
+        var firstRunFile = Path.Combine(PathDef.Default.PrivateDataDirectory(), "first_run");
         if (!File.Exists(firstRunFile))
         {
             FirstRun = true;

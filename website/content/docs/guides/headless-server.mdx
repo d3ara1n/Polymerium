@@ -118,10 +118,10 @@ See [MCP Mode →](/docs/advanced/mcp) for the full tool list and usage examples
 
 ## Custom Data Directory
 
-Use `--home` to specify a different data directory. See [Custom Data Directory →](/docs/guides/custom-data-directory).
+The CLI resolves its data directory through the same path layer as the desktop app — no CLI flag involved. Set the `TRIDENT_HOME` environment variable to relocate it for a single run or a whole session. See [Custom Data Directory →](/docs/guides/custom-data-directory).
 
 ```bash
-trident --home /opt/minecraft-data instance list
+TRIDENT_HOME=/opt/minecraft-data trident instance list
 ```
 
 This is useful for:

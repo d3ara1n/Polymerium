@@ -15,10 +15,11 @@ dotnet tool install --global TridentCore.Cli
 
 | Option | Description |
 |--------|-------------|
-| `--home <path>` | Override the data directory |
 | `--json` | Output results as JSON |
 | `--no-interactive` | Disable interactive prompts |
 | `--verbose` / `--debug` | Increase output verbosity |
+
+Data-directory overrides are not CLI flags — they are resolved by the shared path layer and work identically in the desktop app and the CLI: the `TRIDENT_HOME` environment variable, a `.trident/` folder walked up from the current directory, or a `~/.trident.home` file. See [Custom Data Directory →](/docs/guides/custom-data-directory).
 
 ## Instance Commands
 
