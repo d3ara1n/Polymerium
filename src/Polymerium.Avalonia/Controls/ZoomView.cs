@@ -23,6 +23,13 @@ public partial class ZoomView : ContentControl
     private bool _suppressScrollSync;
     private bool _suppressZoomSync;
 
+    /// <summary>
+    /// Fixed viewport-pixel distance moved per wheel unit when panning (no modifier).
+    /// Avalonia already normalizes the raw native delta (÷5 for mouse, ÷50 for trackpad),
+    /// so this single factor covers both devices.
+    /// </summary>
+    private const double WheelPanDistance = 50;
+
     public static readonly StyledProperty<double> ZoomSpeedProperty =
         AvaloniaProperty.Register<ZoomView, double>(nameof(ZoomSpeed), 1.2);
 
@@ -94,6 +101,8 @@ public partial class ZoomView : ContentControl
     {
         ClipToBounds = true;
         Focusable = true;
+        // macOS-only routed event; never fires on Win/Linux, safe to always subscribe.
+        AddHandler(InputElement.PointerTouchPadGestureMagnifyEvent, OnMagnify);
     }
 
     #region Template
@@ -203,21 +212,59 @@ public partial class ZoomView : ContentControl
     protected override void OnPointerWheelChanged(PointerWheelEventArgs e)
     {
         base.OnPointerWheelChanged(e);
+        if (e.Handled || Content is not Visual)
+        {
+            return;
+        }
+
+        // KeyModifiers.Control is ⌘ on macOS and Ctrl elsewhere, so one check covers both.
+        if (e.KeyModifiers == KeyModifiers.Control)
+        {
+            var content = (Visual)Content;
+            var origin = e.GetPosition(content);
+            var delta = e.Delta.Y;
+            if (Math.Abs(delta) < 0.001)
+            {
+                return;
+            }
+
+            var factor = delta > 0 ? ZoomSpeed : 1.0 / ZoomSpeed;
+            ZoomAt(factor, origin.X, origin.Y);
+            e.Handled = true;
+            return;
+        }
+
+        // No modifier = pan (content follows the fingers, Figma-style).
+        // With macOS natural scrolling on, e.Delta already encodes the finger
+        // direction, so feed it straight in. Avalonia normalizes the raw native
+        // delta (÷5 mouse, ÷50 trackpad) up front, so one factor covers both.
+        PanBy(e.Delta.X * WheelPanDistance / ZoomX, e.Delta.Y * WheelPanDistance / ZoomY);
+        e.Handled = true;
+    }
+
+    // e.Delta.X carries the NSEvent.magnification increment (e.g. +0.1 = +10% this frame).
+    private void OnMagnify(object? sender, PointerDeltaEventArgs e)
+    {
         if (e.Handled || Content is not Visual content)
         {
             return;
         }
 
-        var origin = e.GetPosition(content);
-        var delta = e.Delta.Y;
-        if (Math.Abs(delta) < 0.001)
+        var magnification = e.Delta.X;
+        if (Math.Abs(magnification) < 1e-4)
         {
             return;
         }
 
-        var factor = delta > 0 ? ZoomSpeed : 1.0 / ZoomSpeed;
-        ZoomAt(factor, origin.X, origin.Y);
+        var origin = e.GetPosition(content);
+        ZoomAt(1.0 + magnification, origin.X, origin.Y);
         e.Handled = true;
+    }
+
+    private void PanBy(double dx, double dy)
+    {
+        _matrix = Matrix.CreateTranslation(dx, dy) * _matrix;
+        Commit();
     }
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
@@ -254,8 +301,7 @@ public partial class ZoomView : ContentControl
         var dy = (current.Y - _lastPointer.Y) / ZoomY;
         _lastPointer = current;
 
-        _matrix = Matrix.CreateTranslation(dx, dy) * _matrix;
-        Commit();
+        PanBy(dx, dy);
         e.Handled = true;
     }
 
