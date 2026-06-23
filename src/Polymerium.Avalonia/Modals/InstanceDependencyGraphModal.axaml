@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:agc="clr-namespace:AvaloniaGraphControl;assembly=AvaloniaGraphControl"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
-    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
@@ -98,7 +97,7 @@
                                     VerticalAlignment="Center"
                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                     <Image
-                                        async:ImageLoader.Source="{Binding Thumbnail}"
+                                        Source="{Binding Thumbnail}"
                                         Stretch="UniformToFill" />
                                 </Border>
                                 <StackPanel
@@ -119,27 +118,13 @@
                                 <StackPanel
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
-                                    Orientation="Horizontal"
                                     Spacing="2">
-                                    <fi:SymbolIcon
-                                        FontSize="{StaticResource CaptionFontSize}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Symbol="ArrowDown" />
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        FontSize="{StaticResource CaptionFontSize}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{Binding PrerequisiteCount}" />
-                                    <fi:SymbolIcon
-                                        Margin="4,0,0,0"
-                                        FontSize="{StaticResource CaptionFontSize}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Symbol="ArrowUp" />
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        FontSize="{StaticResource CaptionFontSize}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{Binding DependentCount}" />
+                                    <husk:IconLabel Icon="ArrowDown"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding DependencyCount}" />
+                                    <husk:IconLabel Icon="ArrowUp"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding DependentCount}" />
                                 </StackPanel>
                             </Grid>
                         </app:DependencyGraphCard>
@@ -174,7 +159,7 @@
                         CornerRadius="{StaticResource SmallCornerRadius}">
                         <Border.Background>
                             <ImageBrush
-                                async:ImageBrushLoader.Source="{Binding SelectedNode?.Thumbnail}"
+                                Source="{Binding SelectedNode?.Thumbnail}"
                                 Stretch="UniformToFill" />
                         </Border.Background>
                     </Border>
@@ -226,7 +211,7 @@
 
                 <!--  前置 / 附属（Tab）  -->
                 <TabControl Grid.Row="3">
-                    <TabItem Header="{x:Static lang:Resources.InstanceDependencyGraphModal_PrerequisitesTitle}">
+                    <TabItem Header="{x:Static lang:Resources.InstanceDependencyGraphModal_DependenciesTitle}">
                         <Grid RowDefinitions="Auto,*" RowSpacing="8">
                             <StackPanel
                                 Grid.Row="0"
@@ -235,16 +220,16 @@
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                    Text="{x:Static lang:Resources.InstanceDependencyGraphModal_PrerequisitesTitle}" />
+                                    Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependenciesTitle}" />
                                 <husk:Tag Classes="Status">
-                                    <TextBlock Text="{Binding SelectedPrerequisites.Count}" />
+                                    <TextBlock Text="{Binding SelectedDependencies.Count}" />
                                 </husk:Tag>
                             </StackPanel>
                             <ScrollViewer
                                 Grid.Row="1"
                                 HorizontalScrollBarVisibility="Disabled">
                                 <ItemsControl
-                                    ItemsSource="{Binding SelectedPrerequisites}"
+                                    ItemsSource="{Binding SelectedDependencies}"
                                     ItemTemplate="{StaticResource DependencyEntryTemplate}" />
                             </ScrollViewer>
                         </Grid>

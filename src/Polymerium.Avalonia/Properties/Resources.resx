@@ -3150,9 +3150,6 @@ Affected entries: {0}
     <data name="InstanceDependencyGraphModal_DependenciesTitle" xml:space="preserve">
         <value>Dependencies</value>
     </data>
-    <data name="InstanceDependencyGraphModal_PrerequisitesTitle" xml:space="preserve">
-        <value>Prerequisites</value>
-    </data>
     <data name="InstanceDependencyGraphModal_DependentsTitle" xml:space="preserve">
         <value>Dependents</value>
     </data>

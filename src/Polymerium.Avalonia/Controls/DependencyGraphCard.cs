@@ -11,14 +11,6 @@ public class DependencyGraphCard : Button
     public static readonly StyledProperty<bool> IsMissingProperty =
         AvaloniaProperty.Register<DependencyGraphCard, bool>(nameof(IsMissing));
 
-    static DependencyGraphCard()
-    {
-        IsSelectedProperty.Changed.AddClassHandler<DependencyGraphCard>((card, e) =>
-            card.PseudoClasses.Set(SELECTED_CLASS, (bool)e.NewValue!));
-        IsMissingProperty.Changed.AddClassHandler<DependencyGraphCard>((card, e) =>
-            card.PseudoClasses.Set(MISSING_CLASS, (bool)e.NewValue!));
-    }
-
     public bool IsSelected
     {
         get => GetValue(IsSelectedProperty);
@@ -31,6 +23,21 @@ public class DependencyGraphCard : Button
         set => SetValue(IsMissingProperty, value);
     }
 
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == IsSelectedProperty)
+        {
+            PseudoClasses.Set(SELECTED_CLASS, change.GetNewValue<bool>());
+        }
+
+        if (change.Property == IsMissingProperty)
+        {
+            PseudoClasses.Set(MISSING_CLASS, change.GetNewValue<bool>());
+        }
+    }
+
     private const string SELECTED_CLASS = ":selected";
-    private const string MISSING_CLASS = "missing";
+    private const string MISSING_CLASS = ":missing";
 }

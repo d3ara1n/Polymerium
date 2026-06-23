@@ -3139,9 +3139,6 @@
         <value>依赖关系</value>
     </data>
     <data name="InstanceDependencyGraphModal_DependenciesTitle" xml:space="preserve">
-        <value>依赖列表</value>
-    </data>
-    <data name="InstanceDependencyGraphModal_PrerequisitesTitle" xml:space="preserve">
         <value>前置</value>
     </data>
     <data name="InstanceDependencyGraphModal_DependentsTitle" xml:space="preserve">

@@ -88,9 +88,9 @@ Rule of thumb: to add a new screen, create `FooPage.axaml` + `FooPageModel.cs` (
 
 ## Localization
 
-- Localized strings live in `src/Polymerium.Avalonia/Properties/Resources.resx` and `Resources.zh-hans.resx`.
-- `Resources.Designer.cs` is normally regenerated from the `.resx` by the IDE's resx designer, but in practice the designer does not reliably update `Resources.Designer.cs` after editing `.resx`.
-- When you add or change localized strings in `.resx`, you must **manually add the matching field in `Resources.Designer.cs`** to keep the build green; do not rely on the IDE to do it.
+- Localized strings live in `src/Polymerium.Avalonia/Properties/Resources.resx` (English, the source) and `Resources.zh-hans.resx` (Chinese). Both files use the same set of resource keys.
+- `Resources.Designer.cs` holds the `public static string` accessors that XAML references as `{x:Static lang:Resources.KeyName}`. It mirrors the keys in `Resources.resx` one-to-one.
+- Every change to a localized string — add, rename, edit a value, or delete — must be applied to all three files: `Resources.resx`, `Resources.zh-hans.resx`, and `Resources.Designer.cs`. Apply it to the two `.resx` files first (same key, localized value each), then to `Designer.cs`. Do not expect the IDE or any codegen to sync them; the agent does it by hand each time. Renaming or deleting a key means updating every `{x:Static}` reference too.
 
 ## Expected Build Noise
 

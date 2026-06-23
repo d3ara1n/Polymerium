@@ -57,8 +57,10 @@
         </Style>
 
         <Style Selector="^:missing /template/ Border#Frame">
-            <Setter Property="BorderBrush" Value="{StaticResource ControlDangerForegroundBrush}" />
-            <Setter Property="Background" Value="{StaticResource ControlDangerBackgroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
+        </Style>
+        <Style Selector="^:missing:selected /template/ Border#Frame">
+            <Setter Property="BorderBrush" Value="{StaticResource ControlDangerBorderBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>
