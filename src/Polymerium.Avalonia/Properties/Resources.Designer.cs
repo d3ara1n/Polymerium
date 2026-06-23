@@ -2661,6 +2661,30 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string InstanceActionCard_AddText {
+            get {
+                return ResourceManager.GetString("InstanceActionCard_AddText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceActionCard_RemoveText {
+            get {
+                return ResourceManager.GetString("InstanceActionCard_RemoveText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceActionCard_UpdateText {
+            get {
+                return ResourceManager.GetString("InstanceActionCard_UpdateText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceActionCard_UnknownText {
+            get {
+                return ResourceManager.GetString("InstanceActionCard_UnknownText", resourceCulture);
+            }
+        }
+        
         public static string InstanceActivitiesPage_TotalHoursLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_TotalHoursLabelText", resourceCulture);
@@ -6288,6 +6312,90 @@ namespace Polymerium.Avalonia.Properties {
         public static string ProfileRuleSelectorsModal_AddSelectorButtonText {
             get {
                 return ResourceManager.GetString("ProfileRuleSelectorsModal_AddSelectorButtonText", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_ComputeDiffDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_ComputeDiffDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_DeleteConfirmationMessage {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_DeleteConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_DeleteConfirmationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_DeleteConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_DeleteDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_DeleteDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_DeleteSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_DeleteSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_DeleteSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_DeleteSuccessNotificationTitle", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_LoadSnapshotsDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_LoadSnapshotsDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_RestoreConfirmationMessage {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_RestoreConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_RestoreConfirmationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_RestoreConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_RestoreDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_RestoreDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_RestoreProgressStatusFormat {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_RestoreProgressStatusFormat", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_RestoreProgressTitle {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_RestoreProgressTitle", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_RestoreSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_RestoreSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_RestoreSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_RestoreSuccessNotificationTitle", resourceCulture);
             }
         }
         

@@ -704,12 +704,22 @@
                             <Button
                                 DockPanel.Dock="Left"
                                 Margin="4"
-                                IsEnabled="{Binding State, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=Idle}"
                                 Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                                 BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
                                 Command="{Binding PlayCommand}"
                                 Foreground="{StaticResource ControlBlackForegroundBrush}"
                                 Theme="{StaticResource LaunchButtonTheme}">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                        <Binding
+                                            Converter="{x:Static husk:ObjectConverters.Match}"
+                                            ConverterParameter="Idle"
+                                            Path="State" />
+                                        <Binding
+                                            Converter="{x:Static ObjectConverters.IsNotNull}"
+                                            Path="SelectedAccount" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
                                 <Button.CornerRadius>
                                     <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
                                         <Binding

@@ -23,7 +23,18 @@
                 <TextBox
                     Grid.Column="0"
                     PlaceholderText="{x:Static lang:Resources.SnapshotManagementPage_SearchPlaceholder}"
-                    Text="{Binding SearchText, Mode=TwoWay}" />
+                    Text="{Binding SearchText, Mode=TwoWay}">
+                    <TextBox.InnerRightContent>
+                        <Button
+                            IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                            Command="{Binding $parent[TextBox].Clear}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
+                                Symbol="Dismiss" />
+                        </Button>
+                    </TextBox.InnerRightContent>
+                </TextBox>
             </Grid>
 
             <Panel>

@@ -1332,6 +1332,18 @@
     <data name="MainWindow_ExportModpackMenuText" xml:space="preserve">
         <value>Export Modpack</value>
     </data>
+    <data name="InstanceActionCard_AddText" xml:space="preserve">
+        <value>Add</value>
+    </data>
+    <data name="InstanceActionCard_RemoveText" xml:space="preserve">
+        <value>Remove</value>
+    </data>
+    <data name="InstanceActionCard_UpdateText" xml:space="preserve">
+        <value>Update</value>
+    </data>
+    <data name="InstanceActionCard_UnknownText" xml:space="preserve">
+        <value>Unknown</value>
+    </data>
     <data name="InstanceActivitiesPage_TotalHoursLabelText" xml:space="preserve">
         <value>Total Hours</value>
     </data>
@@ -3164,6 +3176,48 @@ Affected entries: {0}
     </data>
     <data name="ProfileRuleSelectorsModal_AddSelectorButtonText" xml:space="preserve">
         <value>Add selector</value>
+    </data>
+    <data name="SnapshotManagementPage_ComputeDiffDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to compute diff</value>
+    </data>
+    <data name="SnapshotManagementPage_DeleteConfirmationMessage" xml:space="preserve">
+        <value>Are you sure you want to delete snapshot '{0}'? This action cannot be undone.</value>
+    </data>
+    <data name="SnapshotManagementPage_DeleteConfirmationTitle" xml:space="preserve">
+        <value>Delete Snapshot</value>
+    </data>
+    <data name="SnapshotManagementPage_DeleteDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to delete snapshot</value>
+    </data>
+    <data name="SnapshotManagementPage_DeleteSuccessNotificationMessage" xml:space="preserve">
+        <value>Snapshot '{0}' deleted</value>
+    </data>
+    <data name="SnapshotManagementPage_DeleteSuccessNotificationTitle" xml:space="preserve">
+        <value>Deleted</value>
+    </data>
+    <data name="SnapshotManagementPage_LoadSnapshotsDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to load snapshots</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreConfirmationMessage" xml:space="preserve">
+        <value>Restoring to snapshot '{0}' will overwrite the current file layout. Continue?</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreConfirmationTitle" xml:space="preserve">
+        <value>Restore Snapshot</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to restore snapshot</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreProgressStatusFormat" xml:space="preserve">
+        <value>{0} files processed</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreProgressTitle" xml:space="preserve">
+        <value>Restoring Snapshot</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreSuccessNotificationMessage" xml:space="preserve">
+        <value>Snapshot '{0}' restored</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreSuccessNotificationTitle" xml:space="preserve">
+        <value>Restored</value>
     </data>
     <data name="SnapshotManagementPage_SearchPlaceholder" xml:space="preserve">
         <value>Search snapshots...</value>

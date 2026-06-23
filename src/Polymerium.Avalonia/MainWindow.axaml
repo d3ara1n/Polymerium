@@ -477,7 +477,7 @@
                         Grid.Column="0"
                         Command="{Binding NavigateCommand}"
                         CommandParameter="{x:Type app:SettingsPage}"
-                        Theme="{StaticResource GhostButtonTheme}">
+                        Theme="{StaticResource OutlineButtonTheme}">
                         <fi:SymbolIcon
                             FontSize="18"
                             IconVariant="Color"

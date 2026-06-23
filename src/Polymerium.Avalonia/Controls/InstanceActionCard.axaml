@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
     <ControlTheme
         x:Key="{x:Type app:InstanceActionCard}"
         TargetType="app:InstanceActionCard">
@@ -56,27 +57,27 @@
                                         <husk:Tag Classes="Status Small Success">
                                             <husk:IconLabel
                                                 Icon="Add"
-                                                Text="Add" />
+                                                Text="{x:Static lang:Resources.InstanceActionCard_AddText}" />
                                         </husk:Tag>
                                     </husk:SwitchCase>
                                     <husk:SwitchCase Value="Remove">
                                         <husk:Tag Classes="Status Small Danger">
                                             <husk:IconLabel
                                                 Icon="Dismiss"
-                                                Text="Remove" />
+                                                Text="{x:Static lang:Resources.InstanceActionCard_RemoveText}" />
                                         </husk:Tag>
                                     </husk:SwitchCase>
                                     <husk:SwitchCase Value="Update">
                                         <husk:Tag Classes="Status Small Warning">
                                             <husk:IconLabel
                                                 Icon="ArrowUp"
-                                                Text="Update" />
+                                                Text="{x:Static lang:Resources.InstanceActionCard_UpdateText}" />
                                         </husk:Tag>
                                     </husk:SwitchCase>
                                     <husk:SwitchCase Value="Unknown">
                                         <husk:Tag
                                             Classes="Status Small"
-                                            Content="Unknown" />
+                                            Content="{x:Static lang:Resources.InstanceActionCard_UnknownText}" />
                                     </husk:SwitchCase>
                                 </husk:SwitchContainer>
                             </Grid>
