@@ -10,20 +10,42 @@
     Header="{x:Static lang:Resources.AccountCreationAuthlib_Title}">
     <StackPanel Spacing="12">
         <husk:DropZone
-            Height="48"
+            Padding="12"
             DragOver="DropZone_OnDragOver"
             Drop="DropZone_OnDrop">
-            <StackPanel
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Orientation="Horizontal"
-                Spacing="8">
-                <fi:SymbolIcon
-                    FontSize="14"
-                    Symbol="ArrowImport" />
-                <TextBlock
-                    VerticalAlignment="Center"
-                    Text="{x:Static lang:Resources.AccountCreationAuthlib_DropHint}" />
+            <StackPanel Spacing="8">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="8">
+                    <fi:SymbolIcon
+                        FontSize="14"
+                        Symbol="ArrowImport" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Static lang:Resources.AccountCreationAuthlib_DropHint}" />
+                </StackPanel>
+                <husk:Divider />
+                <WrapPanel
+                    HorizontalAlignment="Center"
+                    ItemSpacing="6" LineSpacing="4">
+                    <HyperlinkButton
+                        Content="LittleSkin"
+                        Command="{Binding $parent[app:AccountCreationAuthlibInjector].SetServerUrlCommand}"
+                        CommandParameter="https://littleskin.cn/api/yggdrasil" />
+                    <HyperlinkButton
+                        Content="HelloSkin"
+                        Command="{Binding $parent[app:AccountCreationAuthlibInjector].SetServerUrlCommand}"
+                        CommandParameter="https://helloskin.cn/api/yggdrasil" />
+                    <HyperlinkButton
+                        Content="VlssuSkin"
+                        Command="{Binding $parent[app:AccountCreationAuthlibInjector].SetServerUrlCommand}"
+                        CommandParameter="https://skin.vlssu.com/api/yggdrasil" />
+                    <HyperlinkButton
+                        Content="Ely.by"
+                        Command="{Binding $parent[app:AccountCreationAuthlibInjector].SetServerUrlCommand}"
+                        CommandParameter="https://account.ely.by/api/authlib-injector" />
+                </WrapPanel>
             </StackPanel>
         </husk:DropZone>
         <StackPanel>
