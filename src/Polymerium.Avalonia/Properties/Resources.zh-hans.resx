@@ -1323,6 +1323,18 @@
     <data name="MainWindow_ExportModpackMenuText" xml:space="preserve">
         <value>导出整合包</value>
     </data>
+    <data name="InstanceActionCard_AddText" xml:space="preserve">
+        <value>添加</value>
+    </data>
+    <data name="InstanceActionCard_RemoveText" xml:space="preserve">
+        <value>移除</value>
+    </data>
+    <data name="InstanceActionCard_UpdateText" xml:space="preserve">
+        <value>更新</value>
+    </data>
+    <data name="InstanceActionCard_UnknownText" xml:space="preserve">
+        <value>未知</value>
+    </data>
     <data name="InstanceActivitiesPage_TotalHoursLabelText" xml:space="preserve">
         <value>总小时</value>
     </data>
@@ -3155,6 +3167,48 @@
     </data>
     <data name="ProfileRuleSelectorsModal_AddSelectorButtonText" xml:space="preserve">
         <value>添加新选择器</value>
+    </data>
+    <data name="SnapshotManagementPage_ComputeDiffDangerNotificationTitle" xml:space="preserve">
+        <value>计算差异失败</value>
+    </data>
+    <data name="SnapshotManagementPage_DeleteConfirmationMessage" xml:space="preserve">
+        <value>确定要删除快照「{0}」吗？此操作不可撤销。</value>
+    </data>
+    <data name="SnapshotManagementPage_DeleteConfirmationTitle" xml:space="preserve">
+        <value>删除快照</value>
+    </data>
+    <data name="SnapshotManagementPage_DeleteDangerNotificationTitle" xml:space="preserve">
+        <value>删除快照失败</value>
+    </data>
+    <data name="SnapshotManagementPage_DeleteSuccessNotificationMessage" xml:space="preserve">
+        <value>快照「{0}」已删除</value>
+    </data>
+    <data name="SnapshotManagementPage_DeleteSuccessNotificationTitle" xml:space="preserve">
+        <value>删除成功</value>
+    </data>
+    <data name="SnapshotManagementPage_LoadSnapshotsDangerNotificationTitle" xml:space="preserve">
+        <value>加载快照失败</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreConfirmationMessage" xml:space="preserve">
+        <value>还原到快照「{0}」将覆盖当前的文件布局，确定继续吗？</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreConfirmationTitle" xml:space="preserve">
+        <value>还原快照</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreDangerNotificationTitle" xml:space="preserve">
+        <value>还原快照失败</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreProgressStatusFormat" xml:space="preserve">
+        <value>已处理 {0} 个文件</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreProgressTitle" xml:space="preserve">
+        <value>还原快照</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreSuccessNotificationMessage" xml:space="preserve">
+        <value>快照「{0}」已还原</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreSuccessNotificationTitle" xml:space="preserve">
+        <value>还原成功</value>
     </data>
     <data name="SnapshotManagementPage_SearchPlaceholder" xml:space="preserve">
         <value>搜索快照...</value>

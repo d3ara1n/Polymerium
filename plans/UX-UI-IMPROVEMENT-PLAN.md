@@ -11,11 +11,14 @@
 | 编号 | 问题 | 状态 |
 |------|------|------|
 | P1-5 | 日志级别过滤器加文字标签 | ✅ 已完成 |
+| P2-7 | 全局导航按钮风格统一（Settings→Outline，Marketplace 保持 Primary） | ✅ 已完成 |
 | P2-8 | 侧边栏 Toolbar 区重构（通知移左 + 更多菜单） | ✅ 已完成 |
-| P2-10 | 本地化缺口修补（tooltip / 硬编码中文） | ✅ 已完成（Random Play 暂保留 🤔） |
+| P2-10 | 本地化缺口修补（tooltip / 硬编码中文 / InstanceActionCard 标签 / SnapshotManagementPageModel 文案） | ✅ 已完成（Random Play 暂保留 🤔） |
 | P2-11 | Super Power 重命名为「高级与实验性」 | ✅ 已完成 |
 | P2-12 | 设置页导航锚点 | ⏳ 待定（详见该节方案） |
-| 其余 | P0-1/2/3、P1-4/6、P2-7/9、P3 | 未开始 |
+| P3 | InstanceHomePage 无账户禁用启动；SnapshotManagementPage 搜索清空按钮 + 删除/还原二次确认 | ✅ 已完成 |
+| P3 | 异步图片加载失败 fallback（AccountEntryButton / InstanceEntryButton） | 未开始 |
+| 其余 | P0-1/2/3、P1-4/6、P2-9 | 未开始 |
 
 ## 总体判断
 

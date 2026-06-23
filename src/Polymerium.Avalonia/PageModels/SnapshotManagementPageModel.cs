@@ -19,6 +19,7 @@ using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.ModalModels;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
+using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using TridentCore.Abstractions.Snapshots;
 using TridentCore.Abstractions.Extensions;
@@ -112,7 +113,7 @@ public partial class SnapshotManagementPageModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, "Failed to load snapshots");
+            _notificationService.PopMessage(ex, Resources.SnapshotManagementPage_LoadSnapshotsDangerNotificationTitle);
         }
 
         return Task.CompletedTask;
@@ -144,7 +145,7 @@ public partial class SnapshotManagementPageModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
-                    _notificationService.PopMessage(ex, "Failed to compute diff");
+                    _notificationService.PopMessage(ex, Resources.SnapshotManagementPage_ComputeDiffDangerNotificationTitle);
                 }
             }
 
@@ -181,8 +182,8 @@ public partial class SnapshotManagementPageModel : ViewModelBase
 
         var label = target.DisplayLabel;
         var confirmed = await _overlayService.RequestConfirmationAsync(
-            $"确定要删除快照「{label}」吗？此操作不可撤销。",
-            "删除快照");
+            Resources.SnapshotManagementPage_DeleteConfirmationMessage.Replace("{0}", label),
+            Resources.SnapshotManagementPage_DeleteConfirmationTitle);
         if (!confirmed)
             return;
 
@@ -206,11 +207,14 @@ public partial class SnapshotManagementPageModel : ViewModelBase
             });
 
             SelectedSnapshot = null;
-            _notificationService.PopMessage($"快照「{label}」已删除", "删除成功", GrowlLevel.Success);
+            _notificationService.PopMessage(
+                Resources.SnapshotManagementPage_DeleteSuccessNotificationMessage.Replace("{0}", label),
+                Resources.SnapshotManagementPage_DeleteSuccessNotificationTitle,
+                GrowlLevel.Success);
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, "删除快照失败");
+            _notificationService.PopMessage(ex, Resources.SnapshotManagementPage_DeleteDangerNotificationTitle);
         }
     }
 
@@ -222,14 +226,14 @@ public partial class SnapshotManagementPageModel : ViewModelBase
 
         var label = target.DisplayLabel;
         var confirmed = await _overlayService.RequestConfirmationAsync(
-            $"还原到快照「{label}」将覆盖当前的文件布局，确定继续吗？",
-            "还原快照");
+            Resources.SnapshotManagementPage_RestoreConfirmationMessage.Replace("{0}", label),
+            Resources.SnapshotManagementPage_RestoreConfirmationTitle);
         if (!confirmed)
             return;
 
         var progress = new ProgressModal
         {
-            Title = "还原快照",
+            Title = Resources.SnapshotManagementPage_RestoreProgressTitle,
             IsIndeterminate = false,
         };
         _overlayService.PopModal(progress);
@@ -237,7 +241,7 @@ public partial class SnapshotManagementPageModel : ViewModelBase
         try
         {
             var restored = new Progress<int>(x =>
-                Dispatcher.UIThread.Post(() => progress.StatusText = $"已处理 {x} 个文件"));
+                Dispatcher.UIThread.Post(() => progress.StatusText = Resources.SnapshotManagementPage_RestoreProgressStatusFormat.Replace("{0}", x.ToString())));
             await Context.Handle.RestoreAsync(target.Source.Id, restored);
 
             if (_profileManager.TryGetMutable(Context.Basic.Key, out var guard))
@@ -246,11 +250,14 @@ public partial class SnapshotManagementPageModel : ViewModelBase
                 await guard.DisposeAsync();
             }
 
-            _notificationService.PopMessage($"快照「{label}」已还原", "还原成功", GrowlLevel.Success);
+            _notificationService.PopMessage(
+                Resources.SnapshotManagementPage_RestoreSuccessNotificationMessage.Replace("{0}", label),
+                Resources.SnapshotManagementPage_RestoreSuccessNotificationTitle,
+                GrowlLevel.Success);
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, "还原快照失败");
+            _notificationService.PopMessage(ex, Resources.SnapshotManagementPage_RestoreDangerNotificationTitle);
         }
         finally
         {
