@@ -136,7 +136,7 @@ V3 的立场：**除了在英语正版社区不提 Authlib 作为卖点，其他
 |---|---|---|
 | 1 | **建 Discord** | 频道：welcome / support / showcase / modpacks。挂 comparison 页链接。 |
 | 2 | README 微调 | Discord 徽章 + 账号安全强信号 + Dev Mode callout 升级 |
-| 3 | comparison 页 SEO | title: "Polymerium vs Prism Launcher — Switch Loaders · Snapshots · In-Place Updates"；og:image；JSON-LD |
+| 3 | comparison 页 SEO | title: "Prism Launcher Alternative — Switch Loaders · Snapshots · In-Place Updates"；og:image；JSON-LD |
 | 4 | 注册 Reddit/YouTube/VK 账号，**潜伏 1 周** | 别急着发广告。在 r/feedthebeast 回答问题攒 karma。 |
 
 ### Week 3 — 引爆
