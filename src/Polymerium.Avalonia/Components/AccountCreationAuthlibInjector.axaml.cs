@@ -145,6 +145,9 @@ public partial class AccountCreationAuthlibInjector : AccountCreationStep
         }
     }
 
+    [RelayCommand]
+    private void SetServerUrl(string url) => ServerUrl = url;
+
     private const string AUTHLIB_INJECTOR_PREFIX = "authlib-injector:yggdrasil-server:";
 
     private void DropZone_OnDragOver(object? sender, DropZone.DragOverEventArgs e)
