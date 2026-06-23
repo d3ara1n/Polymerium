@@ -19,6 +19,8 @@ public partial class UpdateService(
 
     public bool IsAvailable => updateManager.IsInstalled || Program.IsDebug;
 
+    public bool CanCheckUpdate => IsAvailable && !IsChecking;
+
     public AppUpdateState UpdateState { get; private set; } =
         updateManager.IsInstalled || Program.IsDebug
             ? AppUpdateState.Idle

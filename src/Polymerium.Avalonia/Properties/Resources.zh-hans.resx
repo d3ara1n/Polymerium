@@ -3111,6 +3111,9 @@
     <data name="MainWindow_OpenGitHubDangerNotificationTitle" xml:space="preserve">
         <value>打开 GitHub 失败</value>
     </data>
+    <data name="MainWindow_CheckForUpdatesDangerNotificationTitle" xml:space="preserve">
+        <value>检查更新失败</value>
+    </data>
     <data name="InstanceDependencyGraphModal_TotalPackagesLabel" xml:space="preserve">
         <value>总包数</value>
     </data>

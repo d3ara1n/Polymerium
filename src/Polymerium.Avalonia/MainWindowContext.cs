@@ -500,9 +500,21 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand(CanExecute = nameof(CanCheckForUpdates))]
-    private async Task CheckForUpdatesAsync() => await _updateService.CheckUpdateAsync();
+    private async Task CheckForUpdatesAsync()
+    {
+        try
+        {
+            await _updateService.CheckUpdateAsync();
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, Resources.MainWindow_CheckForUpdatesDangerNotificationTitle);
+        }
 
-    private bool CanCheckForUpdates => _updateService.IsAvailable;
+        CheckForUpdatesCommand.NotifyCanExecuteChanged();
+    }
+
+    private bool CanCheckForUpdates => _updateService.CanCheckUpdate;
 
     [RelayCommand]
     private async Task OpenGitHubAsync()
