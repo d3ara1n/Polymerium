@@ -106,12 +106,14 @@ Rule of thumb: to add a new screen, create `FooPage.axaml` + `FooPageModel.cs` (
 
 ## Comments
 
-**Do not write comments that restate the code or the project's already-documented conventions.** A comment must earn its place by carrying information that is **not** obvious from reading the surrounding code. Two anti-patterns to avoid:
+**The default is no comment.** Names, types, and control flow are the documentation; a method that reads `Close(); Dispose();` needs no `// Close the dialog and release resources` above it. A comment earns its place only when the code is **counter-intuitive** — when a reader following the obvious reading would reach the wrong conclusion without a hint. Write to explain the *why*, never the *what*.
 
-- **Restating the obvious.** A method that does `Close(); Dispose();` needs no `// Close the dialog and release resources` above it — the two lines already say exactly that. Names, types, and the code flow itself are the documentation; a comment that paraphrases them is noise.
+Two anti-patterns to avoid:
+
+- **Restating the obvious.** Paraphrasing what the code already says in plain sight is noise. If the names and types already tell the story, the comment goes.
 - **Repeating a project-wide mechanism at a single call site.** If a convention is already described in this AGENTS.md (e.g. the activator-driven ViewModel lifecycle) or is the default behavior shared by every sibling method (e.g. every `Pop*`/`Navigate*` goes through the same activator), do **not** single out one site to re-explain it. Doing so implies the others differ when they don't, and misleads future readers. Comment the **exception**, never the rule.
 
-When in doubt, leave the comment out. Reserve comments for non-local knowledge: why a workaround exists, a non-obvious constraint or invariant, a link to an upstream issue, or a warning about something the next reader will get wrong without the hint.
+When in doubt, leave the comment out. The legitimate reasons to write one are narrow and non-local: why a workaround exists, a non-obvious constraint or invariant, a link to an upstream issue, or a warning about something the next reader will get wrong without the hint.
 
 ## Styling Conventions (Avalonia)
 
