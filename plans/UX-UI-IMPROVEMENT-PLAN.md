@@ -10,15 +10,20 @@
 
 | 编号 | 问题 | 状态 |
 |------|------|------|
+| P0-1 | 实例内图标导航栏可发现性 | ⏳ 待定（最大问题，需专门讨论方案） |
+| P0-2 | 创建流程漏掉加载器选择 | ❌ 驳回（高级用户创建后于 Setup 配置加载器符合工作流） |
+| P0-3 | “怎么启动游戏”不直观 | ❌ 驳回（实例管理范式，对齐 PrismLauncher；首页大按钮是目录管理/PCL2 的诉求，不属于本产品范式） |
+| P1-4 | Mod 管理工具栏拥挤 | ❌ 驳回（目标用户即高级用户/整合包作者，信息密度合理） |
 | P1-5 | 日志级别过滤器加文字标签 | ✅ 已完成 |
-| P2-7 | 全局导航按钮风格统一（Settings→Outline，Marketplace 保持 Primary） | ✅ 已完成 |
-| P2-8 | 侧边栏 Toolbar 区重构（通知移左 + 更多菜单） | ✅ 已完成 |
-| P2-10 | 本地化缺口修补（tooltip / 硬编码中文 / InstanceActionCard 标签 / SnapshotManagementPageModel 文案） | ✅ 已完成（Random Play 暂保留 🤔） |
-| P2-11 | Super Power 重命名为「高级与实验性」 | ✅ 已完成 |
-| P2-12 | 设置页导航锚点 | ⏳ 待定（详见该节方案） |
-| P3 | InstanceHomePage 无账户禁用启动；SnapshotManagementPage 搜索清空按钮 + 删除/还原二次确认 | ✅ 已完成 |
-| P3 | 异步图片加载失败 fallback（AccountEntryButton / InstanceEntryButton） | 未开始 |
-| 其余 | P0-1/2/3、P1-4/6、P2-9 | 未开始 |
+| P1-6 | 工程级功能裸露给普通用户 | ❌ 驳回（产品定位即高级用户，功能暴露合理） |
+| P2-7 | 导航按钮风格混用 | ✅ 已完成 |
+| P2-8 | 侧边栏职责过载 | ✅ 已完成 |
+| P2-9 | 空状态 4 套实现 | ❌ 驳回（视觉上无问题） |
+| P2-10 | 本地化缺口 | ✅ 已完成（Random Play 暂保留 🤔） |
+| P2-11 | Super Power 命名 | ✅ 已完成 |
+| P2-12 | 设置页导航锚点 | ⏳ 待定 |
+| P3 | 无账户禁用启动 / 快照搜索清空 / 快照删除确认 | ✅ 已完成 |
+| P3 | 异步图片加载失败 fallback（AccountEntryButton / InstanceEntryButton） | 未开始（实际影响小：AccountEntryButton 有渐变兜底，InstanceEntryButton 缩略图非关键） |
 
 ## 总体判断
 
