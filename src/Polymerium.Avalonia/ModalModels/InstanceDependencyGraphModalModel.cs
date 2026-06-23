@@ -27,9 +27,10 @@ public partial class InstanceDependencyGraphModalModel(
     NotificationService notificationService
 ) : ViewModelBase
 {
-    // 构图后保留，供详情面板按选中节点计算依赖列表
+    // 构图后保留，供详情面板按选中节点计算前置/附属
     private IReadOnlyDictionary<string, Package> _packages = new Dictionary<string, Package>();
     private IReadOnlyDictionary<string, DependencyGraphNode> _nodes = new Dictionary<string, DependencyGraphNode>();
+    private IReadOnlyDictionary<string, List<string>> _incoming = new Dictionary<string, List<string>>();
 
     #region Direct
 
@@ -58,10 +59,19 @@ public partial class InstanceDependencyGraphModalModel(
     public partial int EdgeCount { get; private set; }
 
     [ObservableProperty]
-    public partial DependencyGraphNode? SelectedNode { get; private set; }
+    public partial int MissingCount { get; private set; }
 
     [ObservableProperty]
-    public partial ObservableCollection<DependencyEntry> SelectedDependencies { get; private set; }
+    public partial DependencyGraphNode? SelectedNode { get; private set; }
+
+    // 前置：当前包依赖的图内节点（出边）
+    [ObservableProperty]
+    public partial ObservableCollection<DependencyEntry> SelectedPrerequisites { get; private set; }
+        = [];
+
+    // 附属：依赖当前包的图内节点（入边）
+    [ObservableProperty]
+    public partial ObservableCollection<DependencyEntry> SelectedDependents { get; private set; }
         = [];
 
     #endregion
@@ -83,10 +93,12 @@ public partial class InstanceDependencyGraphModalModel(
             DependencyGraph = result.Graph;
             _packages = result.Packages;
             _nodes = result.Nodes;
+            _incoming = result.Incoming;
             TotalPackages = result.Total;
             VisiblePackages = result.Visible;
             HiddenPackages = result.Hidden;
             EdgeCount = result.Edges;
+            MissingCount = result.Missing;
         }
         catch (Exception ex)
         {
@@ -102,45 +114,71 @@ public partial class InstanceDependencyGraphModalModel(
 
     #region Commands
 
-    /// <summary>选中某个节点（按 Key），刷新右侧详情面板的依赖列表。传 null 清空选中。</summary>
+    /// <summary>选中某个节点（按 Key），刷新右侧详情面板的前置与附属列表。传 null 清空选中。</summary>
     [RelayCommand]
     private void SelectNode(string? key)
     {
-        // 先清除上一次选中的节点状态（驱动控件清除高亮）
         SelectedNode?.IsSelected = false;
 
         if (string.IsNullOrEmpty(key) || !_nodes.TryGetValue(key, out var node))
         {
             SelectedNode = null;
-            SelectedDependencies.Clear();
+            SelectedPrerequisites.Clear();
+            SelectedDependents.Clear();
             return;
         }
 
         SelectedNode = node;
         node.IsSelected = true;
 
-        SelectedDependencies.Clear();
+        SelectedPrerequisites.Clear();
+        SelectedDependents.Clear();
 
-        // 该节点的 Package 元数据，取所有出边依赖（依赖图只关心已安装包之间的关系，未安装依赖不显示）
+        // 前置（出边）：当前包依赖的图内节点
         if (_packages.TryGetValue(node.Key, out var pkg))
         {
             foreach (var entry in pkg.Dependencies
-                                      .Select(dep =>
-                                       {
-                                           var depKey = NodeKey(dep.Label, dep.Namespace, dep.ProjectId);
-                                           return _packages.TryGetValue(depKey, out var depPkg)
-                                               ? new DependencyEntry(
-                                                   depKey,
-                                                   depPkg.ProjectName,
-                                                   dep.IsRequired)
-                                               : null;
-                                       })
-                                      .Where(e => e is not null)
-                                      .Cast<DependencyEntry>()
-                                      .OrderByDescending(e => e.IsRequired)
-                                      .ThenBy(e => e.ProjectName, StringComparer.CurrentCultureIgnoreCase))
+                                     .Select(dep =>
+                                      {
+                                          var depKey = NodeKey(dep.Label, dep.Namespace, dep.ProjectId);
+                                          return _nodes.TryGetValue(depKey, out var depNode)
+                                              ? new DependencyEntry(depKey,
+                                                                    depNode.ProjectName,
+                                                                    dep.IsRequired,
+                                                                    depNode.IsMissing)
+                                              : null;
+                                      })
+                                     .Where(e => e is not null)
+                                     .Cast<DependencyEntry>()
+                                     .OrderByDescending(e => e.IsRequired)
+                                     .ThenBy(e => e.ProjectName, StringComparer.CurrentCultureIgnoreCase))
             {
-                SelectedDependencies.Add(entry);
+                SelectedPrerequisites.Add(entry);
+            }
+        }
+
+        // 附属（入边）：依赖当前包的图内节点
+        if (_incoming.TryGetValue(node.Key, out var dependents))
+        {
+            foreach (var entry in dependents
+                                   .Select(depKey =>
+                                    {
+                                        if (!_nodes.TryGetValue(depKey, out var depNode))
+                                            return null;
+                                        var isRequired = _packages.TryGetValue(depKey, out var depPkg)
+                                         && depPkg.Dependencies.Any(d =>
+                                            NodeKey(d.Label, d.Namespace, d.ProjectId) == node.Key && d.IsRequired);
+                                        return new DependencyEntry(depKey,
+                                                                   depNode.ProjectName,
+                                                                   isRequired,
+                                                                   depNode.IsMissing);
+                                    })
+                                   .Where(e => e is not null)
+                                   .Cast<DependencyEntry>()
+                                   .OrderByDescending(e => e.IsRequired)
+                                   .ThenBy(e => e.ProjectName, StringComparer.CurrentCultureIgnoreCase))
+            {
+                SelectedDependents.Add(entry);
             }
         }
     }
@@ -151,96 +189,193 @@ public partial class InstanceDependencyGraphModalModel(
 
     private async Task<GraphBuildResult> BuildGraphAsync(Profile profile, CancellationToken token)
     {
-        var installed = new List<PackageIdentifier>();
+        var installedKeys = new HashSet<string>();
+        var layer = new List<PackageIdentifier>();
         foreach (var entry in profile.Setup.Packages)
         {
             if (PackageHelper.TryParse(entry.Purl, out var purl))
             {
-                installed.Add(new(purl.Label, purl.Namespace, purl.Pid, purl.Vid));
+                layer.Add(new(purl.Label, purl.Namespace, purl.Pid, purl.Vid));
+                installedKeys.Add(NodeKey(purl.Label, purl.Namespace, purl.Pid));
             }
         }
 
-        if (installed.Count == 0)
+        if (layer.Count == 0)
         {
-            return new(new(), new Dictionary<string, Package>(),
-                       new Dictionary<string, DependencyGraphNode>(), 0, 0, 0, 0);
+            return new(new(),
+                       new Dictionary<string, Package>(),
+                       new Dictionary<string, DependencyGraphNode>(),
+                       new Dictionary<string, List<string>>(),
+                       0, 0, 0, 0, 0);
         }
 
         token.ThrowIfCancellationRequested();
 
-        var packages = await dataService
-                            .ResolvePackagesAsync(installed, Filter.None)
-                            .ConfigureAwait(false);
+        // 广度优先逐层批量解析：已安装包为第一层，每层解析完后从「已安装」包的依赖构建下一层。
+        // 缺失依赖（未安装）也会被解析以获取展示元数据，但作为叶子不再向下展开。
+        var resolved = new Dictionary<string, Package>();
+        var visited = new HashSet<string>(installedKeys);
 
-        token.ThrowIfCancellationRequested();
-
-        var packageMap = new Dictionary<string, Package>();
-        foreach (var (_, pkg) in packages)
+        while (layer.Count > 0)
         {
-            var key = NodeKey(pkg.Label, pkg.Namespace, pkg.ProjectId);
-            packageMap[key] = pkg;
-        }
+            token.ThrowIfCancellationRequested();
+            var batch = await dataService
+                              .ResolvePackagesAsync(layer, Filter.None)
+                              .ConfigureAwait(false);
 
-        var nodes = new Dictionary<string, DependencyGraphNode>();
-        foreach (var (key, pkg) in packageMap)
-        {
-            nodes[key] = new(
-                             key,
-                             pkg.Label,
-                             pkg.ProjectName,
-                             pkg.Namespace,
-                             pkg.ProjectId,
-                             pkg.Kind,
-                             pkg.Author,
-                             pkg.Thumbnail,
-                             pkg.ReleaseType
-                            );
-        }
+            var nextLayer = new List<PackageIdentifier>();
 
-        var graph = new Graph { Orientation = Graph.Orientations.Horizontal };
-        var connected = new HashSet<string>();
-        foreach (var (parentKey, pkg) in packageMap)
-        {
-            if (!nodes.TryGetValue(parentKey, out var parent))
+            foreach (var (_, pkg) in batch)
             {
-                continue;
+                var key = NodeKey(pkg.Label, pkg.Namespace, pkg.ProjectId);
+                resolved[key] = pkg;
             }
+
+            // 只从「已安装」包向下追依赖；缺失包作为叶子
+            foreach (var (_, pkg) in batch)
+            {
+                var pkgKey = NodeKey(pkg.Label, pkg.Namespace, pkg.ProjectId);
+                if (!installedKeys.Contains(pkgKey))
+                    continue;
+
+                foreach (var dep in pkg.Dependencies)
+                {
+                    var depKey = NodeKey(dep.Label, dep.Namespace, dep.ProjectId);
+                    if (depKey == pkgKey)
+                        continue;
+
+                    if (visited.Add(depKey))
+                        nextLayer.Add(new(dep.Label, dep.Namespace, dep.ProjectId, dep.VersionId));
+                }
+            }
+
+            layer = nextLayer;
+        }
+
+        // 识别 required 缺失：已安装包声明的 required 依赖，其 key 不在已安装集合
+        var missingDeps = new Dictionary<string, Dependency>();
+        foreach (var (key, pkg) in resolved)
+        {
+            if (!installedKeys.Contains(key))
+                continue;
+
+            foreach (var dep in pkg.Dependencies)
+            {
+                var depKey = NodeKey(dep.Label, dep.Namespace, dep.ProjectId);
+                if (dep.IsRequired && !installedKeys.Contains(depKey))
+                    missingDeps[depKey] = dep;
+            }
+        }
+
+        // 构建节点
+        var nodes = new Dictionary<string, DependencyGraphNode>();
+        foreach (var (key, pkg) in resolved)
+        {
+            if (installedKeys.Contains(key))
+            {
+                nodes[key] = new(key,
+                                 pkg.Label,
+                                 pkg.ProjectName,
+                                 pkg.Namespace,
+                                 pkg.ProjectId,
+                                 pkg.Kind,
+                                 pkg.Author,
+                                 pkg.Thumbnail,
+                                 pkg.ReleaseType);
+            }
+        }
+
+        foreach (var (key, dep) in missingDeps)
+        {
+            if (nodes.ContainsKey(key))
+                continue;
+
+            if (resolved.TryGetValue(key, out var pkg))
+            {
+                nodes[key] = new(key,
+                                 pkg.Label,
+                                 pkg.ProjectName,
+                                 pkg.Namespace,
+                                 pkg.ProjectId,
+                                 pkg.Kind,
+                                 pkg.Author,
+                                 pkg.Thumbnail,
+                                 pkg.ReleaseType) { IsMissing = true };
+            }
+            else
+            {
+                // 完全无法解析，用依赖声明兜底
+                nodes[key] = new(key,
+                                 dep.Label,
+                                 dep.ProjectId,
+                                 dep.Namespace,
+                                 dep.ProjectId,
+                                 ResourceKind.Mod,
+                                 null,
+                                 null,
+                                 ReleaseType.Release) { IsMissing = true };
+            }
+        }
+
+        // 构建边（只从已安装包出边，连向图内节点）+ 计数 + 入边索引
+        var graph = new Graph { Orientation = Graph.Orientations.Horizontal };
+        var outgoing = new Dictionary<string, int>();
+        var incoming = new Dictionary<string, List<string>>();
+        var connected = new HashSet<string>();
+
+        foreach (var (parentKey, pkg) in resolved)
+        {
+            if (!installedKeys.Contains(parentKey))
+                continue;
+            if (!nodes.TryGetValue(parentKey, out var parent))
+                continue;
 
             foreach (var dep in pkg.Dependencies)
             {
                 var depKey = NodeKey(dep.Label, dep.Namespace, dep.ProjectId);
                 if (depKey == parentKey)
-                {
                     continue;
-                }
+                if (!nodes.TryGetValue(depKey, out var child))
+                    continue;
 
-                if (nodes.TryGetValue(depKey, out var child))
-                {
-                    graph.Edges.Add(new(parent, child));
-                    connected.Add(parentKey);
-                    connected.Add(depKey);
-                }
+                graph.Edges.Add(new(parent, child));
+                outgoing[parentKey] = outgoing.GetValueOrDefault(parentKey) + 1;
+                if (!incoming.TryGetValue(depKey, out var list))
+                    incoming[depKey] = list = new();
+                if (!list.Contains(parentKey))
+                    list.Add(parentKey);
+                connected.Add(parentKey);
+                connected.Add(depKey);
             }
         }
 
-        return new(
-                   graph,
-                   packageMap,
+        // 回填计数
+        foreach (var (key, node) in nodes)
+        {
+            node.PrerequisiteCount = outgoing.GetValueOrDefault(key);
+            node.DependentCount = incoming.TryGetValue(key, out var list) ? list.Count : 0;
+        }
+
+        return new(graph,
+                   resolved,
                    nodes,
+                   incoming,
                    Total: nodes.Count,
                    Visible: connected.Count,
                    Hidden: nodes.Count - connected.Count,
-                   Edges: graph.Edges.Count
-                  );
+                   Edges: graph.Edges.Count,
+                   Missing: missingDeps.Count);
     }
 
     private record GraphBuildResult(
         Graph Graph,
         IReadOnlyDictionary<string, Package> Packages,
         IReadOnlyDictionary<string, DependencyGraphNode> Nodes,
+        IReadOnlyDictionary<string, List<string>> Incoming,
         int Total,
         int Visible,
         int Hidden,
-        int Edges
+        int Edges,
+        int Missing
     );
 }

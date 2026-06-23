@@ -30,6 +30,15 @@ public sealed partial class DependencyGraphNode(
     public Uri? Thumbnail { get; } = thumbnail;
     public ReleaseType ReleaseType { get; } = releaseType;
 
+    /// <summary>该节点对应的包未安装（required 依赖缺失），以错误色占位绘制。</summary>
+    public bool IsMissing { get; set; }
+
+    /// <summary>前置数：该包依赖了多少个图内节点（出边）。</summary>
+    public int PrerequisiteCount { get; set; }
+
+    /// <summary>附属数：多少个图内节点依赖该包（入边）。</summary>
+    public int DependentCount { get; set; }
+
     /// <summary>是否在图上被选中。由 ModalModel.SelectNode 维护，控件据此驱动 :selected 样式。</summary>
     [ObservableProperty]
     public partial bool IsSelected { get; set; }

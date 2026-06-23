@@ -19,6 +19,46 @@
     d:DesignWidth="900"
     x:DataType="modalModels:InstanceDependencyGraphModalModel"
     mc:Ignorable="d">
+    <husk:Modal.Resources>
+        <DataTemplate
+            x:Key="DependencyEntryTemplate"
+            x:DataType="models:DependencyEntry">
+            <Button
+                Classes="Small"
+                Padding="8,6"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                Background="Transparent"
+                Command="{Binding $parent[app:InstanceDependencyGraphModal].((app:InstanceDependencyGraphModalModel)DataContext)?.SelectNodeCommand}"
+                CommandParameter="{Binding Key}"
+                CornerRadius="{StaticResource SmallCornerRadius}"
+                Cursor="Hand">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{Binding ProjectName}"
+                        TextTrimming="CharacterEllipsis" />
+                    <StackPanel
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        Spacing="4">
+                        <husk:Tag
+                            Classes="Status Danger"
+                            IsVisible="{Binding IsMissing}">
+                            <TextBlock Text="{x:Static lang:Resources.InstanceDependencyGraphModal_MissingTagText}" />
+                        </husk:Tag>
+                        <husk:Tag
+                            Classes="Status"
+                            IsVisible="{Binding IsRequired}">
+                            <TextBlock Text="{x:Static lang:Resources.InstanceDependencyGraphModal_RequiredTagText}" />
+                        </husk:Tag>
+                    </StackPanel>
+                </Grid>
+            </Button>
+        </DataTemplate>
+    </husk:Modal.Resources>
     <Grid ColumnDefinitions="*,Auto">
         <app:ZoomView
             x:Name="ZoomView"
@@ -46,9 +86,10 @@
                         <app:DependencyGraphCard
                             Command="{Binding $parent[app:InstanceDependencyGraphModal].((app:InstanceDependencyGraphModalModel)DataContext)?.SelectNodeCommand}"
                             CommandParameter="{Binding Key}"
+                            IsMissing="{Binding IsMissing, Mode=OneWay}"
                             IsSelected="{Binding IsSelected, Mode=OneWay}">
                             <Grid
-                                ColumnDefinitions="Auto,*"
+                                ColumnDefinitions="Auto,*,Auto"
                                 ColumnSpacing="10">
                                 <Border
                                     Grid.Column="0"
@@ -74,6 +115,31 @@
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                         Text="{Binding Author, StringFormat={}@{0}}"
                                         TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Column="2"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="2">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource CaptionFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Symbol="ArrowDown" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource CaptionFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Binding PrerequisiteCount}" />
+                                    <fi:SymbolIcon
+                                        Margin="4,0,0,0"
+                                        FontSize="{StaticResource CaptionFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Symbol="ArrowUp" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource CaptionFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Binding DependentCount}" />
                                 </StackPanel>
                             </Grid>
                         </app:DependencyGraphCard>
@@ -158,64 +224,55 @@
 
                 <Separator Grid.Row="2" />
 
-                <!--  依赖表  -->
-                <Grid
-                    Grid.Row="3"
-                    RowDefinitions="Auto,*"
-                    RowSpacing="8">
-                    <StackPanel
-                        Grid.Row="0"
-                        Orientation="Horizontal"
-                        Spacing="6">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependenciesTitle}" />
-                        <husk:Tag Classes="Status">
-                            <TextBlock Text="{Binding SelectedDependencies.Count}" />
-                        </husk:Tag>
-                    </StackPanel>
-                    <ScrollViewer
-                        Grid.Row="1"
-                        HorizontalScrollBarVisibility="Disabled">
-                        <ItemsControl ItemsSource="{Binding SelectedDependencies}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="models:DependencyEntry">
-                                    <Button
-                                        Classes="Small"
-                                        Padding="8,6"
-                                        HorizontalAlignment="Stretch"
-                                        HorizontalContentAlignment="Stretch"
-                                        Background="Transparent"
-                                        Command="{Binding $parent[app:InstanceDependencyGraphModal].((app:InstanceDependencyGraphModalModel)DataContext)?.SelectNodeCommand}"
-                                        CommandParameter="{Binding Key}"
-                                        CornerRadius="{StaticResource SmallCornerRadius}"
-                                        Cursor="Hand">
-                                        <Grid
-                                            ColumnDefinitions="*,Auto"
-                                            ColumnSpacing="8">
-                                            <TextBlock
-                                                Grid.Column="0"
-                                                VerticalAlignment="Center"
-                                                FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                Text="{Binding ProjectName}"
-                                                TextTrimming="CharacterEllipsis" />
-                                            <husk:Tag
-                                                Grid.Column="1"
-                                                Classes="Status"
-                                                VerticalAlignment="Center"
-                                                IsVisible="{Binding IsRequired}"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <TextBlock
-                                                    Text="{x:Static lang:Resources.InstanceDependencyGraphModal_RequiredTagText}" />
-                                            </husk:Tag>
-                                        </Grid>
-                                    </Button>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </Grid>
+                <!--  前置 / 附属（Tab）  -->
+                <TabControl Grid.Row="3">
+                    <TabItem Header="{x:Static lang:Resources.InstanceDependencyGraphModal_PrerequisitesTitle}">
+                        <Grid RowDefinitions="Auto,*" RowSpacing="8">
+                            <StackPanel
+                                Grid.Row="0"
+                                Orientation="Horizontal"
+                                Spacing="6">
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{x:Static lang:Resources.InstanceDependencyGraphModal_PrerequisitesTitle}" />
+                                <husk:Tag Classes="Status">
+                                    <TextBlock Text="{Binding SelectedPrerequisites.Count}" />
+                                </husk:Tag>
+                            </StackPanel>
+                            <ScrollViewer
+                                Grid.Row="1"
+                                HorizontalScrollBarVisibility="Disabled">
+                                <ItemsControl
+                                    ItemsSource="{Binding SelectedPrerequisites}"
+                                    ItemTemplate="{StaticResource DependencyEntryTemplate}" />
+                            </ScrollViewer>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="{x:Static lang:Resources.InstanceDependencyGraphModal_DependentsTitle}">
+                        <Grid RowDefinitions="Auto,*" RowSpacing="8">
+                            <StackPanel
+                                Grid.Row="0"
+                                Orientation="Horizontal"
+                                Spacing="6">
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependentsTitle}" />
+                                <husk:Tag Classes="Status">
+                                    <TextBlock Text="{Binding SelectedDependents.Count}" />
+                                </husk:Tag>
+                            </StackPanel>
+                            <ScrollViewer
+                                Grid.Row="1"
+                                HorizontalScrollBarVisibility="Disabled">
+                                <ItemsControl
+                                    ItemsSource="{Binding SelectedDependents}"
+                                    ItemTemplate="{StaticResource DependencyEntryTemplate}" />
+                            </ScrollViewer>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
             </Grid>
         </Border>
 
@@ -300,6 +357,18 @@
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependencyCountLabel}" />
+                </StackPanel>
+                <StackPanel Spacing="2">
+                    <TextBlock
+                        FontSize="{StaticResource MediumFontSize}"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Foreground="{StaticResource ControlDangerForegroundBrush}"
+                        Text="{Binding MissingCount}" />
+                    <TextBlock
+                        FontSize="{StaticResource SmallFontSize}"
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Foreground="{StaticResource ControlDangerForegroundBrush}"
+                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_MissingCountLabel}" />
                 </StackPanel>
             </StackPanel>
         </Border>

@@ -6261,6 +6261,30 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string InstanceDependencyGraphModal_PrerequisitesTitle {
+            get {
+                return ResourceManager.GetString("InstanceDependencyGraphModal_PrerequisitesTitle", resourceCulture);
+            }
+        }
+        
+        public static string InstanceDependencyGraphModal_DependentsTitle {
+            get {
+                return ResourceManager.GetString("InstanceDependencyGraphModal_DependentsTitle", resourceCulture);
+            }
+        }
+        
+        public static string InstanceDependencyGraphModal_MissingTagText {
+            get {
+                return ResourceManager.GetString("InstanceDependencyGraphModal_MissingTagText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceDependencyGraphModal_MissingCountLabel {
+            get {
+                return ResourceManager.GetString("InstanceDependencyGraphModal_MissingCountLabel", resourceCulture);
+            }
+        }
+        
         public static string InstanceDependencyGraphModal_RequiredTagText {
             get {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_RequiredTagText", resourceCulture);

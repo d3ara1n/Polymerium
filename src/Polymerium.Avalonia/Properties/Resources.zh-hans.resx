@@ -3141,6 +3141,18 @@
     <data name="InstanceDependencyGraphModal_DependenciesTitle" xml:space="preserve">
         <value>依赖列表</value>
     </data>
+    <data name="InstanceDependencyGraphModal_PrerequisitesTitle" xml:space="preserve">
+        <value>前置</value>
+    </data>
+    <data name="InstanceDependencyGraphModal_DependentsTitle" xml:space="preserve">
+        <value>附属</value>
+    </data>
+    <data name="InstanceDependencyGraphModal_MissingTagText" xml:space="preserve">
+        <value>缺失</value>
+    </data>
+    <data name="InstanceDependencyGraphModal_MissingCountLabel" xml:space="preserve">
+        <value>缺失依赖</value>
+    </data>
     <data name="InstanceDependencyGraphModal_RequiredTagText" xml:space="preserve">
         <value>必需</value>
     </data>

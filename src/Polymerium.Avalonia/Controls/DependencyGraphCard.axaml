@@ -55,5 +55,10 @@
         <Style Selector="^:selected /template/ Border#Frame">
             <Setter Property="BorderBrush" Value="{StaticResource ControlAccentBorderBrush}" />
         </Style>
+
+        <Style Selector="^:missing /template/ Border#Frame">
+            <Setter Property="BorderBrush" Value="{StaticResource ControlDangerForegroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlDangerBackgroundBrush}" />
+        </Style>
     </ControlTheme>
 </ResourceDictionary>
