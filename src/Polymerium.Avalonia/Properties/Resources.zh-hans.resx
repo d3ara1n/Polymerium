@@ -352,13 +352,13 @@
         <value>应用程序设置</value>
     </data>
     <data name="SettingsPage_SuperPowerTitle" xml:space="preserve">
-        <value>超能力</value>
+        <value>高级与实验性</value>
     </data>
     <data name="SettingsPage_SuperPowerSubtitle" xml:space="preserve">
-        <value>味大，我为自己带盐</value>
+        <value>解锁调试、实验与高级能力</value>
     </data>
     <data name="SettingsPage_SuperPowerLabelText" xml:space="preserve">
-        <value>激活</value>
+        <value>启用</value>
     </data>
     <data name="SettingsPage_DisplayTitle" xml:space="preserve">
         <value>显示与外观</value>
@@ -3128,5 +3128,62 @@
     </data>
     <data name="InstanceDependencyGraphModal_RequiredTagText" xml:space="preserve">
         <value>必需</value>
+    </data>
+    <data name="InstanceDashboardPage_FilterInformationText" xml:space="preserve">
+        <value>信息</value>
+    </data>
+    <data name="InstanceDashboardPage_FilterWarningText" xml:space="preserve">
+        <value>警告</value>
+    </data>
+    <data name="InstanceDashboardPage_FilterErrorText" xml:space="preserve">
+        <value>错误</value>
+    </data>
+    <data name="InstancePage_ImportAssetToolTipText" xml:space="preserve">
+        <value>从文件导入资源</value>
+    </data>
+    <data name="InstancePage_ExportModpackToolTipText" xml:space="preserve">
+        <value>导出整合包到文件</value>
+    </data>
+    <data name="InstancePage_ManageSnapshotsToolTipText" xml:space="preserve">
+        <value>管理快照</value>
+    </data>
+    <data name="InstancePage_OpenFolderToolTipText" xml:space="preserve">
+        <value>打开实例文件夹</value>
+    </data>
+    <data name="ProfileRuleSelectorsModal_AddSelectorButtonText" xml:space="preserve">
+        <value>添加新选择器</value>
+    </data>
+    <data name="SnapshotManagementPage_SearchPlaceholder" xml:space="preserve">
+        <value>搜索快照...</value>
+    </data>
+    <data name="SnapshotManagementPage_EmptyListLabelText" xml:space="preserve">
+        <value>没有匹配的快照</value>
+    </data>
+    <data name="SnapshotManagementPage_DiffSectionLabelText" xml:space="preserve">
+        <value>与上一个快照的差异</value>
+    </data>
+    <data name="SnapshotManagementPage_FilesAddedLabelText" xml:space="preserve">
+        <value>文件新增</value>
+    </data>
+    <data name="SnapshotManagementPage_FilesRemovedLabelText" xml:space="preserve">
+        <value>文件移除</value>
+    </data>
+    <data name="SnapshotManagementPage_PackagesAddedLabelText" xml:space="preserve">
+        <value>包新增</value>
+    </data>
+    <data name="SnapshotManagementPage_PackagesRemovedLabelText" xml:space="preserve">
+        <value>包移除</value>
+    </data>
+    <data name="SnapshotManagementPage_ConfigInfoLabelText" xml:space="preserve">
+        <value>配置信息</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreButtonText" xml:space="preserve">
+        <value>还原</value>
+    </data>
+    <data name="SnapshotManagementPage_DeleteButtonText" xml:space="preserve">
+        <value>删除</value>
+    </data>
+    <data name="SnapshotManagementPage_SelectToViewLabelText" xml:space="preserve">
+        <value>选择一个快照查看详情</value>
     </data>
 </root>

@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Padding="0"
     d:DesignHeight="600"
@@ -171,7 +172,7 @@
                             Spacing="2">
                             <Button
                                 Command="{Binding ImportFromFileCommand}"
-                                ToolTip.Tip="Import asset from file">
+                                ToolTip.Tip="{x:Static lang:Resources.InstancePage_ImportAssetToolTipText}">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                                         <Binding
@@ -198,7 +199,7 @@
                                 Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
                                 CommandParameter="{Binding Basic.Key}"
                                 CornerRadius="{StaticResource ExtraSmallCornerRadius}"
-                                ToolTip.Tip="Export modpack to file">
+                                ToolTip.Tip="{x:Static lang:Resources.InstancePage_ExportModpackToolTipText}">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                                         <Binding
@@ -218,7 +219,7 @@
                             <Button
                                 Command="{Binding ManageSnapshotsAsyncCommand, FallbackValue={x:Null}}"
                                 CornerRadius="{StaticResource ExtraSmallCornerRadius}"
-                                ToolTip.Tip="Manage snapshots">
+                                ToolTip.Tip="{x:Static lang:Resources.InstancePage_ManageSnapshotsToolTipText}">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                                         <Binding
@@ -233,7 +234,7 @@
                             </Button>
                             <Button
                                 Command="{Binding OpenFolderCommand}"
-                                ToolTip.Tip="Open instance folder">
+                                ToolTip.Tip="{x:Static lang:Resources.InstancePage_OpenFolderToolTipText}">
                                 <Button.CornerRadius>
                                     <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
                                         <StaticResource ResourceKey="ExtraSmallCornerRadius" />

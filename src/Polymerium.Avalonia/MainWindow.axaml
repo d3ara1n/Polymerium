@@ -291,42 +291,54 @@
                         Grid.Row="3"
                         Grid.Column="0"
                         Grid.ColumnSpan="3"
-                        ColumnDefinitions="*,Auto,Auto"
+                        ColumnDefinitions="Auto,*,Auto"
                         ColumnSpacing="8">
-                        <TextBlock
-                            Grid.Column="0"
-                            VerticalAlignment="Center"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="Toolbar" />
                         <Button
-                            Grid.Column="1"
-                            Classes="Small Primary"
-                            IsVisible="{Binding CurrentUpdate, Converter={x:Static ObjectConverters.IsNotNull}}"
-                            Command="{Binding OpenUpdateModalCommand}"
-                            CommandParameter="{Binding CurrentUpdate}">
-                            <StackPanel
-                                Orientation="Horizontal"
-                                Spacing="6">
+                            Grid.Column="0"
+                            Classes="Small"
+                            Command="{Binding OpenNotificationSidebarCommand}"
+                            Theme="{StaticResource GhostButtonTheme}">
+                            <husk:IconLabel
+                                VerticalAlignment="Center"
+                                Icon="Alert"
+                                Text="{Binding UnreadNotificationCount}" />
+                        </Button>
+                        <StackPanel
+                            Grid.Column="2"
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <Button
+                                Classes="Small Primary"
+                                IsVisible="{Binding CurrentUpdate, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                Command="{Binding OpenUpdateModalCommand}"
+                                CommandParameter="{Binding CurrentUpdate}">
                                 <husk:IconLabel
                                     VerticalAlignment="Center"
                                     Icon="ArrowUp"
                                     Text="{x:Static lang:Resources.MainWindow_UpdateAvailableButtonText}" />
-                            </StackPanel>
-                        </Button>
-                        <Button
-                            Grid.Column="2"
-                            Classes="Small"
-                            Command="{Binding OpenNotificationSidebarCommand}"
-                            Theme="{StaticResource GhostButtonTheme}">
-                            <StackPanel
-                                Orientation="Horizontal"
-                                Spacing="6">
-                                <husk:IconLabel
-                                    VerticalAlignment="Center"
-                                    Icon="Alert"
-                                    Text="{Binding UnreadNotificationCount}" />
-                            </StackPanel>
-                        </Button>
+                            </Button>
+                            <Button
+                                Classes="Small"
+                                Theme="{StaticResource GhostButtonTheme}">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="MoreVertical" />
+                                <Button.Flyout>
+                                    <MenuFlyout>
+                                        <MenuItem
+                                            Command="{Binding AboutCommand}"
+                                            Header="{x:Static lang:Resources.AppMenu_AboutText}" />
+                                        <MenuItem
+                                            Command="{Binding CheckForUpdatesCommand}"
+                                            Header="{x:Static lang:Resources.AppMenu_CheckForUpdatesText}" />
+                                        <MenuItem Header="-" />
+                                        <MenuItem
+                                            Command="{Binding OpenGitHubCommand}"
+                                            Header="{x:Static lang:Resources.AppMenu_FeedbackText}" />
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+                        </StackPanel>
                     </Grid>
                     <husk:Divider
                         Grid.Row="4"
