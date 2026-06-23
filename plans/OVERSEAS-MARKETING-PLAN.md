@@ -314,3 +314,44 @@ Polymerium 要 symlink → 海外 Windows 用户必须开 Developer Mode，**Pri
 - 引爆点：一条 "I built an MCP server into a Minecraft launcher" 的技术文
 
 玩家线的社区基本盘（Discord/Reddit karma/YouTube 关系）会成为破圈线的承接池。
+
+---
+
+## 附录 C：文案写作原则（反 AI 味指南）
+
+### AI 味的 5 个结构信号
+
+针对当前 README 和 side agent 生成的文案，以下模式会让读者第一眼判定为 AI 生成：
+
+1. **Emoji 作为节级前缀。** 每个 heading 都带 emoji（🌟🚀🎯📦🔧🎮）是 AI 的标准输出 pattern。真实项目只在少处用——表头的平台小图标、下载按钮旁的指示——而不是每节一个。
+2. **完美的三段式平行结构。** 每节恰好 3 个 bullet，每个 bullet 恰好是 "Bold Noun: One sentence." —— GPT 的默认格式。真人写的 bullet 数量不均、句式会变、有的更短。
+3. **三代演进叙事。** "1st Gen → 2nd Gen → 3rd Gen"是 SaaS landing page 模板的变体，在 MC 社区违和。玩家不在乎"第几代"，在乎"这东西让我少折腾什么"。
+4. **形容词堆砌。** "beautiful, responsive" "revolutionary" "game-changing" "seamlessly" ——不能验证，不信任，占篇幅。对开源项目杀伤力最大。
+5. **"Made with ❤️"。** 社区已将其视为 AI 文案 watermark。且 emoji 在不同终端渲染不一致。
+
+### 三条硬原则
+
+**原则 A：用"用户自己的话"写，不用"营销话术"。**
+- ❌ "Zero Duplication: Multiple instances sharing the same mods? Only one copy exists on disk"
+- ✅ "Each mod lives in one place, symlinked into every instance that needs it."
+
+不完整句子、用口语、可以有停顿。读者的注意力在"这东西能不能解决我的问题"，不在"这个文案写得是不是很漂亮"。
+
+**原则 B：信息密度代替形容词密度。功能就是最好的营销。**
+MC 玩家对着屏幕的时间比看 README 的时间多。每句文案问自己：这句话能不能被截图证伪？"秒切加载器"能截图，"beautiful interface"不能。"快照回滚"能录屏，"revolutionary approach"不能。
+
+**原则 C：允许不完美——人类写的 README 有棱角。**
+- 有些节更长、有些更短、有些没有 emoji
+- 可以有括号里的自嘲或吐槽（"Apple Developer account costs money, so the PKG isn't notarized"）
+- 对比部分可以直言竞品的好——"Prism has 370+ Weblate contributors. We have 2. Pick what matters to you." 这种诚实本身就是可信度
+
+### 具体执行检查表
+
+- [ ] 每个 heading 去 emoji（平台小图标除外）
+- [ ] 每节要点数量不均（2 个 / 4 个 / 5 个均可，避免恰好 3 个）
+- [ ] 删除 "next-generation" "revolutionary" "seamlessly" "game-changing" "beautiful" "incredible"
+- [ ] 删除 "Made with ❤️"
+- [ ] 用具体操作代替形容词（"改一行 JSON 换加载器" → 不说 "Instant Switching"）
+- [ ] 加一节"What it doesn't do (yet)"——诚实列出短板
+- [ ] 隐私段说实话：token 存本地、Sentry 用于崩溃收集、MIT 可审计
+- [ ] Authlib 描述为兼容性功能（"Third-party auth servers, Yggdrasil-compatible"），不是卖点
