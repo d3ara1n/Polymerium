@@ -6201,6 +6201,12 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string MainWindow_CheckForUpdatesDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_CheckForUpdatesDangerNotificationTitle", resourceCulture);
+            }
+        }
+        
         public static string InstanceDependencyGraphModal_TotalPackagesLabel {
             get {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_TotalPackagesLabel", resourceCulture);

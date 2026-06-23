@@ -146,7 +146,7 @@ public partial class SettingsPageModel : ViewModelBase
         }
     }
 
-    private bool CanCheckUpdate() => UpdateService.IsAvailable;
+    private bool CanCheckUpdate() => UpdateService.CanCheckUpdate;
 
     [RelayCommand(CanExecute = nameof(CanCheckUpdate))]
     private async Task CheckUpdatesAsync()
