@@ -119,12 +119,16 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
     #region Reactive
 
     [ObservableProperty]
-    public partial RepositoryBasicModel SelectedRepository { get; set; }
+    public partial RepositoryBasicModel? SelectedRepository { get; set; }
 
-    partial void OnSelectedRepositoryChanged(RepositoryBasicModel value)
+    partial void OnSelectedRepositoryChanged(RepositoryBasicModel? value)
     {
-        var cur = SelectedRepository;
-        HeaderImage = cur.Label switch
+        if (value is null)
+        {
+            return;
+        }
+
+        HeaderImage = value.Label switch
         {
             "curseforge" => AssetUriIndex.RepositoryHeaderCurseforgeBitmap,
             "modrinth" => AssetUriIndex.RepositoryHeaderModrinthBitmap,
@@ -177,6 +181,11 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
     [RelayCommand]
     private async Task SearchAsync()
     {
+        if (SelectedRepository is null)
+        {
+            return;
+        }
+
         if (Exhibits is { IsFetching: true })
         {
             return;
@@ -205,10 +214,10 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
                                                              x.UpdatedAt,
                                                              x.DownloadCount,
                                                              x.Reference)
-                               {
-                                   IsFavorite =
+                                {
+                                    IsFavorite =
                                         _persistenceService.IsFavoriteProject(x.Label, x.Namespace, x.Pid),
-                               })
+                                })
                                .ToArray();
                     return tasks;
                 }
@@ -255,6 +264,11 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
     [RelayCommand]
     private async Task FavoriteModpackAsync(ExhibitModel? exhibit)
     {
+        if (SelectedRepository is null)
+        {
+            return;
+        }
+
         if (exhibit is null)
         {
             return;
