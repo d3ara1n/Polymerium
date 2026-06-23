@@ -3150,6 +3150,18 @@ Affected entries: {0}
     <data name="InstanceDependencyGraphModal_DependenciesTitle" xml:space="preserve">
         <value>Dependencies</value>
     </data>
+    <data name="InstanceDependencyGraphModal_PrerequisitesTitle" xml:space="preserve">
+        <value>Prerequisites</value>
+    </data>
+    <data name="InstanceDependencyGraphModal_DependentsTitle" xml:space="preserve">
+        <value>Dependents</value>
+    </data>
+    <data name="InstanceDependencyGraphModal_MissingTagText" xml:space="preserve">
+        <value>Missing</value>
+    </data>
+    <data name="InstanceDependencyGraphModal_MissingCountLabel" xml:space="preserve">
+        <value>Missing</value>
+    </data>
     <data name="InstanceDependencyGraphModal_RequiredTagText" xml:space="preserve">
         <value>Required</value>
     </data>
