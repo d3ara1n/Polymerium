@@ -361,13 +361,13 @@
         <value>Application Settings</value>
     </data>
     <data name="SettingsPage_SuperPowerTitle" xml:space="preserve">
-        <value>Super Power</value>
+        <value>Advanced &amp; Experimental</value>
     </data>
     <data name="SettingsPage_SuperPowerSubtitle" xml:space="preserve">
-        <value>sudo superpower activate</value>
+        <value>Unlock debug, experimental and advanced capabilities</value>
     </data>
     <data name="SettingsPage_SuperPowerLabelText" xml:space="preserve">
-        <value>Activate</value>
+        <value>Enable</value>
     </data>
     <data name="SettingsPage_DisplayTitle" xml:space="preserve">
         <value>Display and Appearance</value>
@@ -3137,5 +3137,62 @@ Affected entries: {0}
     </data>
     <data name="InstanceDependencyGraphModal_RequiredTagText" xml:space="preserve">
         <value>Required</value>
+    </data>
+    <data name="InstanceDashboardPage_FilterInformationText" xml:space="preserve">
+        <value>Info</value>
+    </data>
+    <data name="InstanceDashboardPage_FilterWarningText" xml:space="preserve">
+        <value>Warning</value>
+    </data>
+    <data name="InstanceDashboardPage_FilterErrorText" xml:space="preserve">
+        <value>Error</value>
+    </data>
+    <data name="InstancePage_ImportAssetToolTipText" xml:space="preserve">
+        <value>Import asset from file</value>
+    </data>
+    <data name="InstancePage_ExportModpackToolTipText" xml:space="preserve">
+        <value>Export modpack to file</value>
+    </data>
+    <data name="InstancePage_ManageSnapshotsToolTipText" xml:space="preserve">
+        <value>Manage snapshots</value>
+    </data>
+    <data name="InstancePage_OpenFolderToolTipText" xml:space="preserve">
+        <value>Open instance folder</value>
+    </data>
+    <data name="ProfileRuleSelectorsModal_AddSelectorButtonText" xml:space="preserve">
+        <value>Add selector</value>
+    </data>
+    <data name="SnapshotManagementPage_SearchPlaceholder" xml:space="preserve">
+        <value>Search snapshots...</value>
+    </data>
+    <data name="SnapshotManagementPage_EmptyListLabelText" xml:space="preserve">
+        <value>No matching snapshots</value>
+    </data>
+    <data name="SnapshotManagementPage_DiffSectionLabelText" xml:space="preserve">
+        <value>Changes since last snapshot</value>
+    </data>
+    <data name="SnapshotManagementPage_FilesAddedLabelText" xml:space="preserve">
+        <value>Files added</value>
+    </data>
+    <data name="SnapshotManagementPage_FilesRemovedLabelText" xml:space="preserve">
+        <value>Files removed</value>
+    </data>
+    <data name="SnapshotManagementPage_PackagesAddedLabelText" xml:space="preserve">
+        <value>Packages added</value>
+    </data>
+    <data name="SnapshotManagementPage_PackagesRemovedLabelText" xml:space="preserve">
+        <value>Packages removed</value>
+    </data>
+    <data name="SnapshotManagementPage_ConfigInfoLabelText" xml:space="preserve">
+        <value>Configuration</value>
+    </data>
+    <data name="SnapshotManagementPage_RestoreButtonText" xml:space="preserve">
+        <value>Restore</value>
+    </data>
+    <data name="SnapshotManagementPage_DeleteButtonText" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="SnapshotManagementPage_SelectToViewLabelText" xml:space="preserve">
+        <value>Select a snapshot to view details</value>
     </data>
 </root>

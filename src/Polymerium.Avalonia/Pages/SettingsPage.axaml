@@ -20,7 +20,7 @@
         <!--  Super Power  -->
         <app:SettingsEntry
             Title="{x:Static lang:Resources.SettingsPage_SuperPowerTitle}"
-            Icon="Wand"
+            Icon="Beaker"
             Summary="{x:Static lang:Resources.SettingsPage_SuperPowerSubtitle}">
             <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_SuperPowerLabelText}">
                 <ToggleSwitch

@@ -270,7 +270,7 @@
                     IsDefault="True">
                     <husk:IconLabel
                         Icon="Add"
-                        Text="添加新选择器" />
+                        Text="{x:Static lang:Resources.ProfileRuleSelectorsModal_AddSelectorButtonText}" />
                 </Button>
                 <Button
                     Command="{Binding $parent[husk:Modal].Dismiss}"

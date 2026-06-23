@@ -6236,5 +6236,119 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_RequiredTagText", resourceCulture);
             }
         }
+        
+        public static string InstanceDashboardPage_FilterInformationText {
+            get {
+                return ResourceManager.GetString("InstanceDashboardPage_FilterInformationText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceDashboardPage_FilterWarningText {
+            get {
+                return ResourceManager.GetString("InstanceDashboardPage_FilterWarningText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceDashboardPage_FilterErrorText {
+            get {
+                return ResourceManager.GetString("InstanceDashboardPage_FilterErrorText", resourceCulture);
+            }
+        }
+        
+        public static string InstancePage_ImportAssetToolTipText {
+            get {
+                return ResourceManager.GetString("InstancePage_ImportAssetToolTipText", resourceCulture);
+            }
+        }
+        
+        public static string InstancePage_ExportModpackToolTipText {
+            get {
+                return ResourceManager.GetString("InstancePage_ExportModpackToolTipText", resourceCulture);
+            }
+        }
+        
+        public static string InstancePage_ManageSnapshotsToolTipText {
+            get {
+                return ResourceManager.GetString("InstancePage_ManageSnapshotsToolTipText", resourceCulture);
+            }
+        }
+        
+        public static string InstancePage_OpenFolderToolTipText {
+            get {
+                return ResourceManager.GetString("InstancePage_OpenFolderToolTipText", resourceCulture);
+            }
+        }
+        
+        public static string ProfileRuleSelectorsModal_AddSelectorButtonText {
+            get {
+                return ResourceManager.GetString("ProfileRuleSelectorsModal_AddSelectorButtonText", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_SearchPlaceholder {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_SearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_EmptyListLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_EmptyListLabelText", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_DiffSectionLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_DiffSectionLabelText", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_FilesAddedLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_FilesAddedLabelText", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_FilesRemovedLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_FilesRemovedLabelText", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_PackagesAddedLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_PackagesAddedLabelText", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_PackagesRemovedLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_PackagesRemovedLabelText", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_ConfigInfoLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_ConfigInfoLabelText", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_RestoreButtonText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_RestoreButtonText", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_DeleteButtonText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_DeleteButtonText", resourceCulture);
+            }
+        }
+        
+        public static string SnapshotManagementPage_SelectToViewLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_SelectToViewLabelText", resourceCulture);
+            }
+        }
     }
 }

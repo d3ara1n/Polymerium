@@ -467,6 +467,7 @@
                                     Height="{StaticResource MediumFontSize}"
                                     Background="{StaticResource ControlBackgroundBrush}"
                                     CornerRadius="{StaticResource FullCornerRadius}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstanceDashboardPage_FilterInformationText}" />
                             </StackPanel>
                         </ToggleButton>
                         <!--  Warning 过滤  -->
@@ -487,6 +488,7 @@
                                     Height="{StaticResource MediumFontSize}"
                                     Background="{StaticResource ControlWarningBackgroundBrush}"
                                     CornerRadius="{StaticResource FullCornerRadius}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstanceDashboardPage_FilterWarningText}" />
                             </StackPanel>
                         </ToggleButton>
                         <!--  Error 过滤  -->
@@ -507,6 +509,7 @@
                                     Height="{StaticResource MediumFontSize}"
                                     Background="{StaticResource ControlDangerBackgroundBrush}"
                                     CornerRadius="{StaticResource FullCornerRadius}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstanceDashboardPage_FilterErrorText}" />
                             </StackPanel>
                         </ToggleButton>
                     </StackPanel>

@@ -6,11 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:SnapshotManagementPageModel"
-    Header="快照列表"
+    Header="{x:Static lang:Resources.SnapshotManagementPage_Title}"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <Grid ColumnDefinitions="4*,Auto,6*">
@@ -21,7 +22,7 @@
                 ColumnDefinitions="*,Auto">
                 <TextBox
                     Grid.Column="0"
-                    PlaceholderText="搜索快照..."
+                    PlaceholderText="{x:Static lang:Resources.SnapshotManagementPage_SearchPlaceholder}"
                     Text="{Binding SearchText, Mode=TwoWay}" />
             </Grid>
 
@@ -69,7 +70,7 @@
                     <TextBlock
                         HorizontalAlignment="Center"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="没有匹配的快照" />
+                        Text="{x:Static lang:Resources.SnapshotManagementPage_EmptyListLabelText}" />
                 </StackPanel>
             </Panel>
         </DockPanel>
@@ -131,7 +132,7 @@
                                             HorizontalAlignment="Center"
                                             FontSize="{StaticResource CaptionFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="包数量" />
+                                            Text="{x:Static lang:Resources.SnapshotManagementPage_PackageCountLabelText}" />
                                     </StackPanel>
                                 </Border>
                                 <Border
@@ -149,7 +150,7 @@
                                             HorizontalAlignment="Center"
                                             FontSize="{StaticResource CaptionFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="文件数" />
+                                            Text="{x:Static lang:Resources.SnapshotManagementPage_FileCountLabelText}" />
                                     </StackPanel>
                                 </Border>
                                 <Border
@@ -167,7 +168,7 @@
                                             HorizontalAlignment="Center"
                                             FontSize="{StaticResource CaptionFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="总大小" />
+                                            Text="{x:Static lang:Resources.SnapshotManagementPage_TotalSizeLabelText}" />
                                     </StackPanel>
                                 </Border>
                             </Grid>
@@ -183,7 +184,7 @@
                                         FontSize="{StaticResource SmallFontSize}"
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="与上一个快照的差异" />
+                                        Text="{x:Static lang:Resources.SnapshotManagementPage_DiffSectionLabelText}" />
                                     <Grid
                                         ColumnDefinitions="*,*"
                                         ColumnSpacing="8"
@@ -196,7 +197,7 @@
                                             <TextBlock
                                                 FontSize="{StaticResource CaptionFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="文件新增" />
+                                                Text="{x:Static lang:Resources.SnapshotManagementPage_FilesAddedLabelText}" />
                                             <TextBlock
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -210,7 +211,7 @@
                                             <TextBlock
                                                 FontSize="{StaticResource CaptionFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="文件移除" />
+                                                Text="{x:Static lang:Resources.SnapshotManagementPage_FilesRemovedLabelText}" />
                                             <TextBlock
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -224,7 +225,7 @@
                                             <TextBlock
                                                 FontSize="{StaticResource CaptionFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="包新增" />
+                                                Text="{x:Static lang:Resources.SnapshotManagementPage_PackagesAddedLabelText}" />
                                             <TextBlock
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -238,7 +239,7 @@
                                             <TextBlock
                                                 FontSize="{StaticResource CaptionFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="包移除" />
+                                                Text="{x:Static lang:Resources.SnapshotManagementPage_PackagesRemovedLabelText}" />
                                             <TextBlock
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -257,7 +258,7 @@
                                     FontSize="{StaticResource SmallFontSize}"
                                     FontWeight="{StaticResource ControlStrongFontWeight}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="配置信息" />
+                                    Text="{x:Static lang:Resources.SnapshotManagementPage_ConfigInfoLabelText}" />
                                 <Grid
                                     ColumnDefinitions="Auto,*"
                                     ColumnSpacing="8"
@@ -267,7 +268,7 @@
                                         Grid.Row="0"
                                         Grid.Column="0"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="游戏版本" />
+                                        Text="{x:Static lang:Resources.SnapshotManagementPage_GameVersionLabelText}" />
                                     <TextBlock
                                         Grid.Row="0"
                                         Grid.Column="1"
@@ -276,7 +277,7 @@
                                         Grid.Row="1"
                                         Grid.Column="0"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="加载器" />
+                                        Text="{x:Static lang:Resources.SnapshotManagementPage_LoaderLabelText}" />
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="1"
@@ -295,7 +296,7 @@
                                     Command="{Binding $parent[app:SnapshotManagementPage].((app:SnapshotManagementPageModel)DataContext).RestoreCommand}">
                                     <husk:IconLabel
                                         Icon="ArrowReset"
-                                        Text="还原" />
+                                        Text="{x:Static lang:Resources.SnapshotManagementPage_RestoreButtonText}" />
                                 </Button>
                                 <Button
                                     Grid.Column="1"
@@ -303,7 +304,7 @@
                                     Command="{Binding $parent[app:SnapshotManagementPage].((app:SnapshotManagementPageModel)DataContext).DeleteCommand}">
                                     <husk:IconLabel
                                         Icon="Delete"
-                                        Text="删除" />
+                                        Text="{x:Static lang:Resources.SnapshotManagementPage_DeleteButtonText}" />
                                 </Button>
                             </Grid>
                         </StackPanel>
@@ -324,7 +325,7 @@
                 <TextBlock
                     HorizontalAlignment="Center"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="选择一个快照查看详情" />
+                    Text="{x:Static lang:Resources.SnapshotManagementPage_SelectToViewLabelText}" />
             </StackPanel>
         </husk:PlaceholderContainer>
     </Grid>
