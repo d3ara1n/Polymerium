@@ -120,7 +120,7 @@ internal static class Program
         {
             try
             {
-                runtime.StopAsync().GetAwaiter().GetResult();
+                runtime.StopAsync().WaitAsync(TimeSpan.FromSeconds(10)).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
