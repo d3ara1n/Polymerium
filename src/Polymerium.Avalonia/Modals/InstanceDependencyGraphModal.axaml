@@ -59,21 +59,21 @@
         </DataTemplate>
     </husk:Modal.Resources>
     <Grid ColumnDefinitions="*,Auto">
-        <app:ZoomView
+        <husk:ZoomView
             x:Name="ZoomView"
             Grid.Column="0"
             Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
             MaxZoom="10"
             MinZoom="0.1"
             ZoomSpeed="1.2">
-            <app:ZoomView.CornerRadius>
+            <husk:ZoomView.CornerRadius>
                 <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
                     <Binding Path="CornerRadius"
                              RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Modal}" />
                     <Binding Path="Padding"
                              RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Modal}" />
                 </MultiBinding>
-            </app:ZoomView.CornerRadius>
+            </husk:ZoomView.CornerRadius>
             <agc:GraphPanel
                 x:Name="GraphPanel"
                 Graph="{Binding DependencyGraph}"
@@ -131,7 +131,7 @@
                     </DataTemplate>
                 </agc:GraphPanel.DataTemplates>
             </agc:GraphPanel>
-        </app:ZoomView>
+        </husk:ZoomView>
 
         <!--  右侧详情面板  -->
         <Border
