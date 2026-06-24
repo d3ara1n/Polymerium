@@ -29,15 +29,15 @@ public class DependencyGraphCard : Button
 
         if (change.Property == IsSelectedProperty)
         {
-            PseudoClasses.Set(SELECTED_CLASS, change.GetNewValue<bool>());
+            PseudoClasses.Set(CLASS_SELECTED, change.GetNewValue<bool>());
         }
 
         if (change.Property == IsMissingProperty)
         {
-            PseudoClasses.Set(MISSING_CLASS, change.GetNewValue<bool>());
+            PseudoClasses.Set(CLASS_MISSING, change.GetNewValue<bool>());
         }
     }
 
-    private const string SELECTED_CLASS = ":selected";
-    private const string MISSING_CLASS = ":missing";
+    private const string CLASS_SELECTED = ":selected";
+    private const string CLASS_MISSING = ":missing";
 }

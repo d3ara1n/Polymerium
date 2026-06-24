@@ -139,7 +139,18 @@ When a control's `ControlTheme` template contains named elements that are refere
   Then use `e.NameScope.Find<ScrollViewer>(PART_ScrollViewer)` instead of string literals like `Find<ScrollViewer>("PART_ScrollViewer")`.
 - **Template-internal elements that are NOT referenced from code-behind do NOT use the `PART_` prefix.** Give them descriptive, short names like `Background`, `Border`, `Indicator`, `ContentPresenter`, `GlowBorder` — these names serve only styling selectors within the same ControlTheme and never appear in C#.
 - Every code-behind referenced part gets its own `[TemplatePart]` attribute + `public const string` declaration; do not skip the attribute or use bare strings.
-- `nameof(PART_Xxx)` self-checks: if you rename the constant, the `nameof` string updates automatically, keeping the XAML name and the C# constant in sync. Existing Polymerium controls (`DateRangePicker`, `DiffView`, `ZoomView`) currently use bare string literals — new controls must adopt this pattern, and existing ones may be migrated incrementally.
+- `nameof(PART_Xxx)` self-checks: if you rename the constant, the `nameof` string updates automatically, keeping the XAML name and the C# constant in sync.
+
+## Pseudo-class Registration
+
+**Pseudo-class names used in code-behind must be declared as `public const string` with a `CLASS_` prefix**, same principle as `PART_`. Never use bare pseudo-class string literals in `PseudoClasses.Set` / `PseudoClasses.Remove`:
+
+```csharp
+public const string CLASS_Error = ":error";
+public const string CLASS_Selected = ":selected";
+```
+
+Then use `PseudoClasses.Set(CLASS_Error, true)` instead of `PseudoClasses.Set(":error", true)`. Pseudo-class selectors in `.axaml` are still written as bare `:error`/`:selected` in style selectors — the constant is only for code-behind references.
 
 ## Git Commit
 
