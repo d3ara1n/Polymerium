@@ -2,6 +2,7 @@ import { Provider } from '@/app/provider';
 import { i18nProvider } from 'fumadocs-ui/i18n';
 import { Inter } from 'next/font/google';
 import { translations } from '@/lib/layout.shared';
+import { i18n } from '@/lib/i18n';
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
@@ -39,6 +40,10 @@ export const metadata: Metadata = {
     siteName: 'Polymerium',
   },
 };
+
+export function generateStaticParams() {
+  return i18n.languages.map((lang) => ({ lang }));
+}
 
 export default async function Layout({ params, children }: LayoutProps<'/[lang]'>) {
   const { lang } = await params;
