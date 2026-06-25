@@ -2,7 +2,7 @@
 
 ### ✨ Highlights ✨
 
-- 优化设置页布局为左侧浮动分组导航并支持点击定位与滚动高亮
+- Restructure the settings page with a floating section navigation that jumps to a section on click and highlights the active one while scrolling
 
 ### Fixed
 
@@ -14,7 +14,7 @@
 
 ### Changed
 
-- 优化设置页布局为左侧浮动分组导航并支持点击定位与滚动高亮
+- Restructure the settings page with a floating section navigation that jumps to a section on click and highlights the active one while scrolling
 
 ### Removed
 
