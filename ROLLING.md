@@ -9,3 +9,5 @@ Every section must always be present, even when empty, using a bare dash `-` as 
 Entries use fixed verb patterns per section: Added uses Add/Introduce/Provide, Changed uses Change/Update/Improve/Adjust/Replace/Rework, Fixed uses Fix/Attempt to fix, and Removed uses Remove/Drop.
 
 Changelog entries must describe only user-visible behavior — never class names, method names, internal services, event names, or implementation reasoning. Write what the user sees change, not how the code implements it.
+
+All changes made to the same module or feature during one release cycle collapse into a single entry describing the final outcome, because users only see the shipped result and never the intermediate iterations — never split development steps into separate entries such as adding an icon in one and then replacing it in another, since each intermediate state never reached a user. The changelog is written for end users, so judge every entry from their perspective: it must state what a reader of the release notes will observe, not the sequence of changes made while building it.

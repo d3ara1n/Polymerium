@@ -157,4 +157,6 @@ public static class InternalConverters
 
         return v;
     });
+
+    public static IValueConverter SidebarExpandedToWidth { get; } = new RelayConverter((v, _) => v is true ? 160d : 64d);
 }

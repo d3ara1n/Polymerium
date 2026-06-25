@@ -6381,6 +6381,30 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string InstancePage_ImportAssetLabelText {
+            get {
+                return ResourceManager.GetString("InstancePage_ImportAssetLabelText", resourceCulture);
+            }
+        }
+        
+        public static string InstancePage_ExportModpackLabelText {
+            get {
+                return ResourceManager.GetString("InstancePage_ExportModpackLabelText", resourceCulture);
+            }
+        }
+        
+        public static string InstancePage_ManageSnapshotsLabelText {
+            get {
+                return ResourceManager.GetString("InstancePage_ManageSnapshotsLabelText", resourceCulture);
+            }
+        }
+        
+        public static string InstancePage_OpenFolderLabelText {
+            get {
+                return ResourceManager.GetString("InstancePage_OpenFolderLabelText", resourceCulture);
+            }
+        }
+        
         public static string ProfileRuleSelectorsModal_AddSelectorButtonText {
             get {
                 return ResourceManager.GetString("ProfileRuleSelectorsModal_AddSelectorButtonText", resourceCulture);

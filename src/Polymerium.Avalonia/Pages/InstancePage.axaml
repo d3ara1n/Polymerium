@@ -48,21 +48,58 @@
             <Grid ColumnDefinitions="Auto,*">
                 <Border
                     Grid.Column="0"
-                    Width="64"
+                    Width="{Binding ViewState?.IsSidebarExpanded,FallbackValue={x:False}, Converter={x:Static app:InternalConverters.SidebarExpandedToWidth}}"
                     Margin="12,12,0,12"
                     Background="{StaticResource LayerBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
+                    <Border.Transitions>
+                        <Transitions>
+                            <DoubleTransition
+                                Easing="CubicEaseOut"
+                                Property="Width"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                        </Transitions>
+                    </Border.Transitions>
                     <Grid
                         RowDefinitions="Auto,*,Auto,Auto"
                         RowSpacing="12">
-                        <Button
-                            Grid.Row="0"
-                            Margin="12"
-                            Command="{Binding $parent[husk:Frame].GoBackCommand}">
-                            <fi:SymbolIcon
-                                FontSize="{StaticResource MediumFontSize}"
-                                Symbol="ArrowLeft" />
-                        </Button>
+                        <StackPanel
+                            Grid.Row="0" Margin="12" Spacing="2">
+                            <Button
+                                Command="{Binding $parent[husk:Frame].GoBackCommand}">
+                                <Button.CornerRadius>
+                                    <MultiBinding
+                                        Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
+                                        <StaticResource ResourceKey="MediumCornerRadius" />
+                                        <StaticResource ResourceKey="ExtraSmallCornerRadius" />
+                                    </MultiBinding>
+                                </Button.CornerRadius>
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="ArrowLeft" />
+                            </Button>
+                            <Button
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding ToggleSidebarCommand}">
+                                <Button.CornerRadius>
+                                    <MultiBinding
+                                        Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
+                                        <StaticResource ResourceKey="ExtraSmallCornerRadius" />
+                                        <StaticResource ResourceKey="MediumCornerRadius" />
+                                    </MultiBinding>
+                                </Button.CornerRadius>
+                                <Panel>
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        IsVisible="{Binding !ViewState?.IsSidebarExpanded,FallbackValue={x:True}}"
+                                        Symbol="PanelLeftExpand" />
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        IsVisible="{Binding ViewState?.IsSidebarExpanded,FallbackValue={x:False}}"
+                                        Symbol="PanelLeftContract" />
+                                </Panel>
+                            </Button>
+                        </StackPanel>
                         <ListBox
                             x:Name="EntryBox"
                             Grid.Row="1"
@@ -115,32 +152,29 @@
                                                         </Transitions>
                                                     </Border.Transitions>
                                                 </Border>
-                                                <!-- <ContentPresenter
-                                                    Name="PART_ContentPresenter"
-                                                    Margin="8"
-                                                    Content="{TemplateBinding Content}"
-                                                    ContentTemplate="{TemplateBinding ContentTemplate}">
-                                                    <ContentPresenter.Transitions>
-                                                        <Transitions>
-                                                            <BrushTransition
-                                                                Property="Foreground"
-                                                                Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                                        </Transitions>
-                                                    </ContentPresenter.Transitions>
-                                                </ContentPresenter>-->
-                                                <fi:SymbolIcon
-                                                    Margin="8"
-                                                    HorizontalAlignment="Center"
-                                                    FontSize="18"
-                                                    Symbol="{Binding Icon, RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:InstanceSubpageEntryModel}">
-                                                    <fi:SymbolIcon.Transitions>
-                                                        <Transitions>
-                                                            <BrushTransition
-                                                                Property="Foreground"
-                                                                Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                                        </Transitions>
-                                                    </fi:SymbolIcon.Transitions>
-                                                </fi:SymbolIcon>
+                                                <Grid ColumnDefinitions="Auto,*">
+                                                    <fi:SymbolIcon
+                                                        Grid.Column="0"
+                                                        Margin="24,8,0,8"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="{StaticResource MediumFontSize}"
+                                                        Symbol="{Binding Icon, RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:InstanceSubpageEntryModel}">
+                                                        <fi:SymbolIcon.Transitions>
+                                                            <Transitions>
+                                                                <BrushTransition
+                                                                    Property="Foreground"
+                                                                    Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                                            </Transitions>
+                                                        </fi:SymbolIcon.Transitions>
+                                                    </fi:SymbolIcon>
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        Margin="10,0,12,0"
+                                                        VerticalAlignment="Center"
+                                                        IsVisible="{Binding $parent[app:InstancePage].((app:InstancePageModel)DataContext).ViewState.IsSidebarExpanded, FallbackValue={x:False}}"
+                                                        Text="{Binding Label, RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:InstanceSubpageEntryModel}"
+                                                        TextTrimming="CharacterEllipsis" />
+                                                </Grid>
                                             </Panel>
                                         </ControlTemplate>
                                     </Setter>
@@ -155,7 +189,8 @@
                                         <Setter Property="RenderTransform" Value="scaleX(1.0)" />
                                     </Style>
                                     <Style Selector="^:selected /template/ fi|SymbolIcon">
-                                        <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
+                                        <Setter Property="Foreground"
+                                                Value="{StaticResource ControlAccentForegroundBrush}" />
                                         <Setter Property="IconVariant" Value="Filled" />
                                     </Style>
                                 </ControlTheme>
@@ -172,6 +207,7 @@
                             Spacing="2">
                             <Button
                                 Command="{Binding ImportFromFileCommand}"
+                                HorizontalContentAlignment="Stretch"
                                 ToolTip.Tip="{x:Static lang:Resources.InstancePage_ImportAssetToolTipText}">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -186,19 +222,33 @@
                                     </MultiBinding>
                                 </Button.IsEnabled>
                                 <Button.CornerRadius>
-                                    <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
+                                    <MultiBinding
+                                        Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
                                         <StaticResource ResourceKey="MediumCornerRadius" />
                                         <StaticResource ResourceKey="ExtraSmallCornerRadius" />
                                     </MultiBinding>
                                 </Button.CornerRadius>
-                                <fi:SymbolIcon
-                                    FontSize="{StaticResource MediumFontSize}"
-                                    Symbol="DocumentAdd" />
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <fi:SymbolIcon
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        Height="{StaticResource MediumFontSize}"
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="DocumentAdd" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        IsVisible="{Binding ViewState?.IsSidebarExpanded,FallbackValue={x:False}}"
+                                        Text="{x:Static lang:Resources.InstancePage_ImportAssetLabelText}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </Grid>
                             </Button>
                             <Button
                                 Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
                                 CommandParameter="{Binding Basic.Key}"
                                 CornerRadius="{StaticResource ExtraSmallCornerRadius}"
+                                HorizontalContentAlignment="Stretch"
                                 ToolTip.Tip="{x:Static lang:Resources.InstancePage_ExportModpackToolTipText}">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -212,13 +262,26 @@
                                             Path="State" />
                                     </MultiBinding>
                                 </Button.IsEnabled>
-                                <fi:SymbolIcon
-                                    FontSize="{StaticResource MediumFontSize}"
-                                    Symbol="FolderZip" />
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <fi:SymbolIcon
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        Height="{StaticResource MediumFontSize}"
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="FolderZip" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        IsVisible="{Binding ViewState?.IsSidebarExpanded,FallbackValue={x:False}}"
+                                        Text="{x:Static lang:Resources.InstancePage_ExportModpackLabelText}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </Grid>
                             </Button>
                             <Button
                                 Command="{Binding ManageSnapshotsAsyncCommand, FallbackValue={x:Null}}"
                                 CornerRadius="{StaticResource ExtraSmallCornerRadius}"
+                                HorizontalContentAlignment="Stretch"
                                 ToolTip.Tip="{x:Static lang:Resources.InstancePage_ManageSnapshotsToolTipText}">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -228,37 +291,76 @@
                                             Path="State" />
                                     </MultiBinding>
                                 </Button.IsEnabled>
-                                <fi:SymbolIcon
-                                    FontSize="{StaticResource MediumFontSize}"
-                                    Symbol="Storage" />
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <fi:SymbolIcon
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        Height="{StaticResource MediumFontSize}"
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="Storage" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        IsVisible="{Binding ViewState?.IsSidebarExpanded,FallbackValue={x:False}}"
+                                        Text="{x:Static lang:Resources.InstancePage_ManageSnapshotsLabelText}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </Grid>
                             </Button>
                             <Button
                                 Command="{Binding OpenFolderCommand}"
+                                HorizontalContentAlignment="Stretch"
                                 ToolTip.Tip="{x:Static lang:Resources.InstancePage_OpenFolderToolTipText}">
                                 <Button.CornerRadius>
-                                    <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
+                                    <MultiBinding
+                                        Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
                                         <StaticResource ResourceKey="ExtraSmallCornerRadius" />
                                         <StaticResource ResourceKey="MediumCornerRadius" />
                                     </MultiBinding>
                                 </Button.CornerRadius>
-                                <fi:SymbolIcon
-                                    FontSize="{StaticResource MediumFontSize}"
-                                    Symbol="FolderOpen" />
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <fi:SymbolIcon
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        Height="{StaticResource MediumFontSize}"
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="FolderOpen" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        IsVisible="{Binding ViewState?.IsSidebarExpanded,FallbackValue={x:False}}"
+                                        Text="{x:Static lang:Resources.InstancePage_OpenFolderLabelText}"
+                                        TextWrapping="Wrap"
+                                        MaxLines="2"
+                                        TextTrimming="CharacterEllipsis" />
+                                </Grid>
                             </Button>
                         </StackPanel>
-                        <Border
+                        <Grid
                             Grid.Row="3"
-                            Height="{Binding $self.Bounds.Width}"
-                            Margin="8"
-                            BackgroundSizing="InnerBorderEdge"
-                            BorderBrush="{StaticResource ControlBorderBrush}"
-                            BorderThickness="2"
-                            CornerRadius="{StaticResource SmallCornerRadius}"
-                            ToolTip.Tip="{Binding Basic.Name}">
-                            <Border.Background>
-                                <ImageBrush Source="{Binding Basic.Thumbnail}" />
-                            </Border.Background>
-                        </Border>
+                            Margin="12,0"
+                            ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Border
+                                Grid.Column="0"
+                                Width="40"
+                                Height="40"
+                                BackgroundSizing="InnerBorderEdge"
+                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                ToolTip.Tip="{Binding Basic.Name}">
+                                <Border.Background>
+                                    <ImageBrush Source="{Binding Basic.Thumbnail}" />
+                                </Border.Background>
+                            </Border>
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                IsVisible="{Binding ViewState?.IsSidebarExpanded,FallbackValue={x:False}}"
+                                Text="{Binding Basic.Name}"
+                                TextTrimming="CharacterEllipsis" />
+                        </Grid>
                     </Grid>
                 </Border>
                 <Panel Grid.Column="1">

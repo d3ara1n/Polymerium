@@ -139,7 +139,7 @@
         <value>Files</value>
     </data>
     <data name="InstancePage_WorkspacePageText" xml:space="preserve">
-        <value>Modpack Workspace</value>
+        <value>Modpack</value>
     </data>
     <data name="InstancePage_WidgetsPageText" xml:space="preserve">
         <value>Widgets</value>
@@ -3209,6 +3209,18 @@ Affected entries: {0}
     </data>
     <data name="InstancePage_OpenFolderToolTipText" xml:space="preserve">
         <value>Open instance folder</value>
+    </data>
+    <data name="InstancePage_ImportAssetLabelText" xml:space="preserve">
+        <value>Import File</value>
+    </data>
+    <data name="InstancePage_ExportModpackLabelText" xml:space="preserve">
+        <value>Export Modpack</value>
+    </data>
+    <data name="InstancePage_ManageSnapshotsLabelText" xml:space="preserve">
+        <value>Manage Snapshots</value>
+    </data>
+    <data name="InstancePage_OpenFolderLabelText" xml:space="preserve">
+        <value>Open Folder</value>
     </data>
     <data name="ProfileRuleSelectorsModal_AddSelectorButtonText" xml:space="preserve">
         <value>Add selector</value>
