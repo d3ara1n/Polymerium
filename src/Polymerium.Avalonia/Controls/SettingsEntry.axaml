@@ -14,7 +14,7 @@
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid ColumnDefinitions="55*,12,45*">
+                <Grid ColumnDefinitions="5*,12,5*">
                     <Grid
                         Grid.Column="0"
                         ColumnDefinitions="Auto,8,*">

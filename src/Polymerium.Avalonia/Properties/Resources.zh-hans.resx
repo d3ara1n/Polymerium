@@ -1221,6 +1221,9 @@
     <data name="InstancePage_KeyNotFoundExceptionMessage" xml:space="preserve">
         <value>'{0}' 指向的实例不存在或未准备完</value>
     </data>
+    <data name="SettingsPage_AboutTitle" xml:space="preserve">
+        <value>关于</value>
+    </data>
     <data name="SettingsPage_MaintenanceTitle" xml:space="preserve">
         <value>维护</value>
     </data>
