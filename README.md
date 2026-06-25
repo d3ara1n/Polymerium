@@ -220,6 +220,16 @@ Polymerium respects your privacy:
 
 ---
 
+## 🤖 On AI-Assisted Development
+
+Before 2026, Polymerium was built entirely by hand over several years — foundational libraries, custom UI controls, and the desktop application — with zero AI-generated code anywhere in the codebase.
+
+With the arrival of capable coding models this year, AI agents have started to participate in the project's construction. In practice, however, current LLMs show critical gaps in software engineering and domain-specific knowledge (notably Avalonia), producing code with visible quality issues that demand human review and correction.
+
+Even so, agent assistance has measurably accelerated development: work that once spanned a month now ships within a week. The workflow remains unchanged in principle — AI proposes the plan and handles the labor-intensive initial implementation, then a human developer reviews, corrects, and completes the remainder, ensuring the codebase stays on course.
+
+---
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
