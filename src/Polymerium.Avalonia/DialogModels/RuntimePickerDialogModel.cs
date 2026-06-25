@@ -16,10 +16,10 @@ public partial class RuntimePickerDialogModel : ViewModelBase
     [ObservableProperty]
     public partial RuntimePickerDialogCandidateCollection? Candidates { get; private set; }
 
-    public override async Task InitializeAsync(CancellationToken cancellationToken)
+    protected override async Task OnInitializeAsync(CancellationToken token)
     {
-        await base.InitializeAsync(cancellationToken);
-        await ScanAsync(cancellationToken);
+        await base.OnInitializeAsync(token);
+        await ScanAsync(token);
     }
 
     [RelayCommand(AllowConcurrentExecutions = false)]
