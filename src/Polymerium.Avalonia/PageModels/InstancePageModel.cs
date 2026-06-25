@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
 using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
+using Huskui.Avalonia.Mvvm.States;
 using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Exceptions;
 using Polymerium.Avalonia.Facilities;
@@ -22,23 +22,20 @@ using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using Polymerium.Avalonia.Widgets;
 using TridentCore.Abstractions;
-using TridentCore.Abstractions.Tasks;
 using TridentCore.Abstractions.Utilities;
-using TridentCore.Core;
 using TridentCore.Core.Services;
-using TridentCore.Core.Services.Instances;
 using TridentCore.Core.Utilities;
 
 namespace Polymerium.Avalonia.PageModels;
 
-public partial class InstancePageModel : ViewModelBase
+public partial class InstancePageModel : ViewModelBase,
+    IStatefulViewModel<InstancePageModel.SidebarState>
 {
     public InstancePageModel(
         IViewContext context,
         OverlayService overlayService,
         ProfileManager profileManager,
         InstanceStateAggregator aggregator,
-        InstanceManager instanceManager,
         WidgetHostService widgetHostService,
         NotificationService notificationService,
         DataService dataService,
@@ -47,7 +44,6 @@ public partial class InstancePageModel : ViewModelBase
     {
         _profileManager = profileManager;
         _overlayService = overlayService;
-        _instanceManager = instanceManager;
         _notificationService = notificationService;
         _dataService = dataService;
         _persistenceService = persistenceService;
@@ -270,7 +266,6 @@ public partial class InstancePageModel : ViewModelBase
 
     #region Injected
 
-    private readonly InstanceManager _instanceManager;
     private readonly ProfileManager _profileManager;
     private readonly OverlayService _overlayService;
     private readonly DataService _dataService;
@@ -378,6 +373,22 @@ public partial class InstancePageModel : ViewModelBase
 
     [ObservableProperty]
     public partial InstanceState State { get; set; } = InstanceState.Idle;
+
+    [ObservableProperty]
+    public partial SidebarState? ViewState { get; set; }
+
+    [RelayCommand]
+    private void ToggleSidebar() => ViewState?.IsSidebarExpanded = !ViewState.IsSidebarExpanded;
+
+    #endregion
+
+    #region Nested type: SidebarState
+
+    public partial class SidebarState : ModelBase
+    {
+        [ObservableProperty]
+        public partial bool IsSidebarExpanded { get; set; } = true;
+    }
 
     #endregion
 }

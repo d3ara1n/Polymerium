@@ -130,7 +130,7 @@
         <value>文件</value>
     </data>
     <data name="InstancePage_WorkspacePageText" xml:space="preserve">
-        <value>整合包工作区</value>
+        <value>整合包</value>
     </data>
     <data name="InstancePage_WidgetsPageText" xml:space="preserve">
         <value>微件</value>
@@ -3200,6 +3200,18 @@
     </data>
     <data name="InstancePage_OpenFolderToolTipText" xml:space="preserve">
         <value>打开实例文件夹</value>
+    </data>
+    <data name="InstancePage_ImportAssetLabelText" xml:space="preserve">
+        <value>导入文件</value>
+    </data>
+    <data name="InstancePage_ExportModpackLabelText" xml:space="preserve">
+        <value>导出整合包</value>
+    </data>
+    <data name="InstancePage_ManageSnapshotsLabelText" xml:space="preserve">
+        <value>管理快照</value>
+    </data>
+    <data name="InstancePage_OpenFolderLabelText" xml:space="preserve">
+        <value>打开文件夹</value>
     </data>
     <data name="ProfileRuleSelectorsModal_AddSelectorButtonText" xml:space="preserve">
         <value>添加新选择器</value>
