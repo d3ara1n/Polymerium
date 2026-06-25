@@ -331,8 +331,6 @@
                                         FontSize="{StaticResource SmallFontSize}"
                                         IsVisible="{Binding ViewState?.IsSidebarExpanded,FallbackValue={x:False}}"
                                         Text="{x:Static lang:Resources.InstancePage_OpenFolderLabelText}"
-                                        TextWrapping="Wrap"
-                                        MaxLines="2"
                                         TextTrimming="CharacterEllipsis" />
                                 </Grid>
                             </Button>
@@ -359,6 +357,8 @@
                                 VerticalAlignment="Center"
                                 IsVisible="{Binding ViewState?.IsSidebarExpanded,FallbackValue={x:False}}"
                                 Text="{Binding Basic.Name}"
+                                TextWrapping="Wrap"
+                                MaxLines="2"
                                 TextTrimming="CharacterEllipsis" />
                         </Grid>
                     </Grid>

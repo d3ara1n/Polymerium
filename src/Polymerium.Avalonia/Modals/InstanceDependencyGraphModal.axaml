@@ -119,10 +119,10 @@
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
                                     Spacing="2">
-                                    <husk:IconLabel Icon="ArrowDown"
+                                    <husk:IconLabel Icon="ArrowUp"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                     Text="{Binding DependencyCount}" />
-                                    <husk:IconLabel Icon="ArrowUp"
+                                    <husk:IconLabel Icon="ArrowDown"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                     Text="{Binding DependentCount}" />
                                 </StackPanel>
