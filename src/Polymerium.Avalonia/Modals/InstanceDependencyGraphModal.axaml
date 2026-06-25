@@ -170,12 +170,12 @@
                         <TextBlock
                             FontSize="{StaticResource LargeFontSize}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{Binding SelectedNode.ProjectName}"
+                            Text="{Binding SelectedNode?.ProjectName}"
                             TextTrimming="CharacterEllipsis" />
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{Binding SelectedNode.Author, StringFormat={}@{0}}" />
+                            Text="{Binding SelectedNode?.Author, StringFormat={}@{0}}" />
                     </StackPanel>
                     <Button
                         Grid.Column="2"
@@ -211,51 +211,39 @@
 
                 <!--  前置 / 附属（Tab）  -->
                 <TabControl Grid.Row="3">
-                    <TabItem Header="{x:Static lang:Resources.InstanceDependencyGraphModal_DependenciesTitle}">
-                        <Grid RowDefinitions="Auto,*" RowSpacing="8">
-                            <StackPanel
-                                Grid.Row="0"
-                                Orientation="Horizontal"
-                                Spacing="6">
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal" Spacing="4">
                                 <TextBlock
-                                    VerticalAlignment="Center"
-                                    FontWeight="{StaticResource ControlStrongFontWeight}"
                                     Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependenciesTitle}" />
                                 <husk:Tag Classes="Status">
                                     <TextBlock Text="{Binding SelectedDependencies.Count}" />
                                 </husk:Tag>
                             </StackPanel>
-                            <ScrollViewer
-                                Grid.Row="1"
-                                HorizontalScrollBarVisibility="Disabled">
-                                <ItemsControl
-                                    ItemsSource="{Binding SelectedDependencies}"
-                                    ItemTemplate="{StaticResource DependencyEntryTemplate}" />
-                            </ScrollViewer>
-                        </Grid>
+                        </TabItem.Header>
+                        <ScrollViewer
+                            HorizontalScrollBarVisibility="Disabled">
+                            <ItemsControl
+                                ItemsSource="{Binding SelectedDependencies}"
+                                ItemTemplate="{StaticResource DependencyEntryTemplate}" />
+                        </ScrollViewer>
                     </TabItem>
-                    <TabItem Header="{x:Static lang:Resources.InstanceDependencyGraphModal_DependentsTitle}">
-                        <Grid RowDefinitions="Auto,*" RowSpacing="8">
-                            <StackPanel
-                                Grid.Row="0"
-                                Orientation="Horizontal"
-                                Spacing="6">
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal" Spacing="4">
                                 <TextBlock
-                                    VerticalAlignment="Center"
-                                    FontWeight="{StaticResource ControlStrongFontWeight}"
                                     Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependentsTitle}" />
                                 <husk:Tag Classes="Status">
                                     <TextBlock Text="{Binding SelectedDependents.Count}" />
                                 </husk:Tag>
                             </StackPanel>
-                            <ScrollViewer
-                                Grid.Row="1"
-                                HorizontalScrollBarVisibility="Disabled">
-                                <ItemsControl
-                                    ItemsSource="{Binding SelectedDependents}"
-                                    ItemTemplate="{StaticResource DependencyEntryTemplate}" />
-                            </ScrollViewer>
-                        </Grid>
+                        </TabItem.Header>
+                        <ScrollViewer
+                            HorizontalScrollBarVisibility="Disabled">
+                            <ItemsControl
+                                ItemsSource="{Binding SelectedDependents}"
+                                ItemTemplate="{StaticResource DependencyEntryTemplate}" />
+                        </ScrollViewer>
                     </TabItem>
                 </TabControl>
             </Grid>

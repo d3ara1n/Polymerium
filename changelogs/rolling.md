@@ -6,7 +6,7 @@
 
 ### Fixed
 
--
+- Fix duplicated labels in Dependency Graph page
 
 ### Added
 
