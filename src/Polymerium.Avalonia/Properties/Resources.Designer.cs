@@ -1785,6 +1785,18 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string DangerConfirmDialog_PromptText {
+            get {
+                return ResourceManager.GetString("DangerConfirmDialog_PromptText", resourceCulture);
+            }
+        }
+        
+        public static string DangerConfirmDialog_InputPlaceholderText {
+            get {
+                return ResourceManager.GetString("DangerConfirmDialog_InputPlaceholderText", resourceCulture);
+            }
+        }
+        
         public static string Dialog_ConfirmButtonText {
             get {
                 return ResourceManager.GetString("Dialog_ConfirmButtonText", resourceCulture);
@@ -2472,6 +2484,42 @@ namespace Polymerium.Avalonia.Properties {
         public static string SettingsPage_MaintenanceSubtitle {
             get {
                 return ResourceManager.GetString("SettingsPage_MaintenanceSubtitle", resourceCulture);
+            }
+        }
+        
+        public static string SettingsPage_ToolsGroupTitle {
+            get {
+                return ResourceManager.GetString("SettingsPage_ToolsGroupTitle", resourceCulture);
+            }
+        }
+        
+        public static string SettingsPage_DangerZoneDividerText {
+            get {
+                return ResourceManager.GetString("SettingsPage_DangerZoneDividerText", resourceCulture);
+            }
+        }
+        
+        public static string SettingsPage_StorageManagementDescription {
+            get {
+                return ResourceManager.GetString("SettingsPage_StorageManagementDescription", resourceCulture);
+            }
+        }
+        
+        public static string SettingsPage_GarbageCollectDescription {
+            get {
+                return ResourceManager.GetString("SettingsPage_GarbageCollectDescription", resourceCulture);
+            }
+        }
+        
+        public static string SettingsPage_ClearStatisticsDescription {
+            get {
+                return ResourceManager.GetString("SettingsPage_ClearStatisticsDescription", resourceCulture);
+            }
+        }
+        
+        public static string SettingsPage_ClearRecordsDescription {
+            get {
+                return ResourceManager.GetString("SettingsPage_ClearRecordsDescription", resourceCulture);
             }
         }
         

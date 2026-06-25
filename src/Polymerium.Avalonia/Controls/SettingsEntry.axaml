@@ -14,7 +14,7 @@
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid ColumnDefinitions="5*,12,5*">
+                <Grid ColumnDefinitions="4*,6*" ColumnSpacing="12">
                     <Grid
                         Grid.Column="0"
                         ColumnDefinitions="Auto,8,*">
@@ -38,7 +38,7 @@
                         </StackPanel>
                     </Grid>
                     <ItemsPresenter
-                        Grid.Column="2"
+                        Grid.Column="1"
                         ItemsPanel="{TemplateBinding ItemsPanel}" />
                 </Grid>
             </ControlTemplate>

@@ -3,6 +3,7 @@
 ### ✨ Highlights ✨
 
 - Restructure the settings page with a floating section navigation that jumps to a section on click and highlights the active one while scrolling
+- Restructure the maintenance action area into a grouped tools panel that separates safe actions from destructive ones with a labeled divider
 
 ### Fixed
 
@@ -10,11 +11,12 @@
 
 ### Added
 
--
+- Require retyping a verification code to confirm destructive data-clearing operations
 
 ### Changed
 
 - Restructure the settings page with a floating section navigation that jumps to a section on click and highlights the active one while scrolling
+- Restructure the maintenance action area into a grouped tools panel that separates safe actions from destructive ones with a labeled divider
 
 ### Removed
 

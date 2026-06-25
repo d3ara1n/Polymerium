@@ -143,6 +143,22 @@ public class OverlayService(IViewActivator activator)
         return await PopDialogAsync(dialog);
     }
 
+    public async Task<bool> RequestStrongConfirmationAsync(string? message = null, string? title = null)
+    {
+        var dialog = new DangerConfirmDialog();
+        if (title != null)
+        {
+            dialog.Title = title;
+        }
+
+        if (message != null)
+        {
+            dialog.Message = message;
+        }
+
+        return await PopDialogAsync(dialog);
+    }
+
     public async Task<string?> RequestFileAsync(
         string? message = null,
         string? title = null,

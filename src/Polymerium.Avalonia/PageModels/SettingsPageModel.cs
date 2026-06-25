@@ -87,16 +87,8 @@ public partial class SettingsPageModel : ViewModelBase
 
         UpdateProxyStatusText();
 
-        SafeCode = Random.Shared.Next(1000, 9999).ToString();
         SyncUpdateState();
     }
-
-    #region SafeCode
-
-    [ObservableProperty]
-    public partial string SafeCode { get; set; }
-
-    #endregion
 
     #region Service Export
 
@@ -187,8 +179,9 @@ public partial class SettingsPageModel : ViewModelBase
     private async Task ClearStatisticsAsync()
     {
         var confirmed =
-            await OverlayService.RequestConfirmationAsync(Resources.SettingsPage_ClearStatisticsConfirmationMessage,
-                                                          Resources.SettingsPage_ClearStatisticsConfirmationTitle);
+            await OverlayService.RequestStrongConfirmationAsync(
+                Resources.SettingsPage_ClearStatisticsConfirmationMessage,
+                Resources.SettingsPage_ClearStatisticsConfirmationTitle);
         if (confirmed)
         {
             _persistenceService.ClearAllActivities();
@@ -199,8 +192,9 @@ public partial class SettingsPageModel : ViewModelBase
     private async Task ClearRecordsAsync()
     {
         var confirmed =
-            await OverlayService.RequestConfirmationAsync(Resources.SettingsPage_ClearRecordsConfirmationMessage,
-                                                          Resources.SettingsPage_ClearRecordsConfirmationTitle);
+            await OverlayService.RequestStrongConfirmationAsync(
+                Resources.SettingsPage_ClearRecordsConfirmationMessage,
+                Resources.SettingsPage_ClearRecordsConfirmationTitle);
         if (confirmed)
         {
             _persistenceService.ClearAllActions();
