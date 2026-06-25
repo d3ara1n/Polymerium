@@ -631,37 +631,126 @@
                             </TextBlock>
                         </StackPanel>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_StorageManagementLabelText}">
-                        <Button
-                            Classes="Small"
-                            HorizontalAlignment="Left"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="{x:Type app:MaintenanceStoragePage}"
-                            Content="{x:Static lang:Resources.SettingsPage_StorageManagementButtonText}" />
-                    </app:SettingsEntryItem>
-                    <app:SafeLock
-                        Name="Lock"
-                        SafeCode="{Binding SafeCode}" />
-                    <app:SettingsEntryItem
-                        IsEnabled="{Binding #Lock.IsUnlocked}"
-                        Header="{x:Static lang:Resources.SettingsPage_DataManagementLabelText}">
-                        <StackPanel
-                            Orientation="Horizontal"
-                            Spacing="8">
-                            <Button
-                                Classes="Small"
-                                Command="{Binding GarbageCollectCommand}"
-                                Content="{x:Static lang:Resources.SettingsPage_GarbageCollectButtonText}" />
-                            <Button
-                                Classes="Small"
-                                Command="{Binding ClearStatisticsCommand}"
-                                Content="{x:Static lang:Resources.SettingsPage_ClearStatisticsButtonText}" />
-                            <Button
-                                Classes="Small"
-                                Command="{Binding ClearRecordsCommand}"
-                                Content="{x:Static lang:Resources.SettingsPage_ClearRecordsButtonText}" />
+                    <GroupBox>
+                        <GroupBox.Header>
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{x:Static lang:Resources.SettingsPage_ToolsGroupTitle}" />
+                        </GroupBox.Header>
+                        <StackPanel Spacing="4">
+                            <!--  Storage Management: navigate to the sub-page  -->
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Spacing="2">
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{x:Static lang:Resources.SettingsPage_StorageManagementLabelText}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.SettingsPage_StorageManagementDescription}"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                                <Button
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Classes="Small"
+                                    Command="{Binding NavigateCommand}"
+                                    CommandParameter="{x:Type app:MaintenanceStoragePage}"
+                                    Theme="{StaticResource OutlineButtonTheme}">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="ArrowRight" />
+                                </Button>
+                            </Grid>
+                            <!--  Garbage Collect: safe, side-effect but harmless  -->
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Spacing="2">
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{x:Static lang:Resources.SettingsPage_GarbageCollectButtonText}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.SettingsPage_GarbageCollectDescription}"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                                <Button
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Classes="Small"
+                                    Command="{Binding GarbageCollectCommand}"
+                                    Theme="{StaticResource OutlineButtonTheme}">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="Checkmark" />
+                                </Button>
+                            </Grid>
+                            <husk:Divider
+                                Margin="0,8"
+                                Content="{x:Static lang:Resources.SettingsPage_DangerZoneDividerText}" />
+                            <!--  Clear Statistics: destructive, strong-confirm gated  -->
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Spacing="2">
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{x:Static lang:Resources.SettingsPage_ClearStatisticsButtonText}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.SettingsPage_ClearStatisticsDescription}"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                                <Button
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Classes="Small"
+                                    Command="{Binding ClearStatisticsCommand}"
+                                    Theme="{StaticResource OutlineButtonTheme}">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                        Symbol="Checkmark" />
+                                </Button>
+                            </Grid>
+                            <!--  Clear Records: destructive, strong-confirm gated  -->
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Spacing="2">
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{x:Static lang:Resources.SettingsPage_ClearRecordsButtonText}" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.SettingsPage_ClearRecordsDescription}"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                                <Button
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Classes="Small"
+                                    Command="{Binding ClearRecordsCommand}"
+                                    Theme="{StaticResource OutlineButtonTheme}">
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                        Symbol="Checkmark" />
+                                </Button>
+                            </Grid>
                         </StackPanel>
-                    </app:SettingsEntryItem>
+                    </GroupBox>
                 </app:SettingsEntry>
                 <husk:Divider />
                 <!--  About  -->

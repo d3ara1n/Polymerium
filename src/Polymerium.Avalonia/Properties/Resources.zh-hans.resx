@@ -885,6 +885,12 @@
     <data name="InstancePackageModal_AddTagButtonText" xml:space="preserve">
         <value>添加</value>
     </data>
+    <data name="DangerConfirmDialog_PromptText" xml:space="preserve">
+        <value>输入上方验证码以确认</value>
+    </data>
+    <data name="DangerConfirmDialog_InputPlaceholderText" xml:space="preserve">
+        <value>验证码</value>
+    </data>
     <data name="Dialog_ConfirmButtonText" xml:space="preserve">
         <value>确定</value>
     </data>
@@ -1229,6 +1235,24 @@
     </data>
     <data name="SettingsPage_MaintenanceSubtitle" xml:space="preserve">
         <value>检查更新、清理缓存之类的杂七杂八</value>
+    </data>
+    <data name="SettingsPage_ToolsGroupTitle" xml:space="preserve">
+        <value>工具</value>
+    </data>
+    <data name="SettingsPage_DangerZoneDividerText" xml:space="preserve">
+        <value>危险操作</value>
+    </data>
+    <data name="SettingsPage_StorageManagementDescription" xml:space="preserve">
+        <value>查看各类资源与实例的磁盘占用</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectDescription" xml:space="preserve">
+        <value>清理孤立数据和未使用的快照文件。安全，不会影响现有实例</value>
+    </data>
+    <data name="SettingsPage_ClearStatisticsDescription" xml:space="preserve">
+        <value>重置所有实例的游戏时长和活动记录。此操作不可撤销</value>
+    </data>
+    <data name="SettingsPage_ClearRecordsDescription" xml:space="preserve">
+        <value>删除所有实例的操作历史记录。此操作不可撤销</value>
     </data>
     <data name="SettingsPage_StorageManagementButtonText" xml:space="preserve">
         <value>管理</value>

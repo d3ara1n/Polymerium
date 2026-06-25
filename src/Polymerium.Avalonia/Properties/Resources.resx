@@ -894,6 +894,12 @@
     <data name="InstancePackageModal_AddTagButtonText" xml:space="preserve">
         <value>Add</value>
     </data>
+    <data name="DangerConfirmDialog_PromptText" xml:space="preserve">
+        <value>Enter the code above to confirm</value>
+    </data>
+    <data name="DangerConfirmDialog_InputPlaceholderText" xml:space="preserve">
+        <value>Code</value>
+    </data>
     <data name="Dialog_ConfirmButtonText" xml:space="preserve">
         <value>Confirm</value>
     </data>
@@ -1238,6 +1244,24 @@
     </data>
     <data name="SettingsPage_MaintenanceSubtitle" xml:space="preserve">
         <value>Check for updates, clear cache, etc.</value>
+    </data>
+    <data name="SettingsPage_ToolsGroupTitle" xml:space="preserve">
+        <value>Tools</value>
+    </data>
+    <data name="SettingsPage_DangerZoneDividerText" xml:space="preserve">
+        <value>Danger Zone</value>
+    </data>
+    <data name="SettingsPage_StorageManagementDescription" xml:space="preserve">
+        <value>View disk usage by resource type and instance</value>
+    </data>
+    <data name="SettingsPage_GarbageCollectDescription" xml:space="preserve">
+        <value>Remove orphaned data and unused snapshot files. Safe and does not affect existing instances</value>
+    </data>
+    <data name="SettingsPage_ClearStatisticsDescription" xml:space="preserve">
+        <value>Reset playtime and activity records for all instances. This cannot be undone</value>
+    </data>
+    <data name="SettingsPage_ClearRecordsDescription" xml:space="preserve">
+        <value>Delete action history for all instances. This cannot be undone</value>
     </data>
     <data name="SettingsPage_StorageManagementLabelText" xml:space="preserve">
         <value>Storage Management</value>
