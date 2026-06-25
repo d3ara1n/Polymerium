@@ -1230,6 +1230,9 @@
     <data name="InstancePage_KeyNotFoundExceptionMessage" xml:space="preserve">
         <value>Key '{0}' to the instance is not found or prepared</value>
     </data>
+    <data name="SettingsPage_AboutTitle" xml:space="preserve">
+        <value>About</value>
+    </data>
     <data name="SettingsPage_MaintenanceTitle" xml:space="preserve">
         <value>Maintenance</value>
     </data>

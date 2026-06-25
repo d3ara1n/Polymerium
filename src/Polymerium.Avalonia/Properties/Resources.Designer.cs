@@ -2457,6 +2457,12 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string SettingsPage_AboutTitle {
+            get {
+                return ResourceManager.GetString("SettingsPage_AboutTitle", resourceCulture);
+            }
+        }
+        
         public static string SettingsPage_MaintenanceTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_MaintenanceTitle", resourceCulture);
