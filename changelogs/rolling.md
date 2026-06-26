@@ -2,7 +2,7 @@
 
 ### ✨ Highlights ✨
 
--
+- Rework the settings navigation into an inline sidebar
 
 ### Fixed
 
@@ -14,7 +14,7 @@
 
 ### Changed
 
--
+- Rework the settings navigation into an inline sidebar
 
 ### Removed
 
