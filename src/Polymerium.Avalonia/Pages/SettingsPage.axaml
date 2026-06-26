@@ -14,43 +14,81 @@
     Header="{x:Static lang:Resources.SettingsPage_Title}"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
-    <Grid
-        ColumnDefinitions="Auto,*" ColumnSpacing="16">
-        <!--  Floating section navigation  -->
-        <Border
+    <husk:Page.Resources>
+        <ControlTheme
+            x:Key="SettingsNavListItemTheme"
+            TargetType="ListBoxItem">
+            <Setter Property="Padding" Value="10,6" />
+            <Setter Property="Margin" Value="0,1" />
+            <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Panel>
+                        <Border
+                            Name="Background"
+                            Background="{StaticResource TransparentBrush}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                            <Border.Transitions>
+                                <Transitions>
+                                    <BrushTransition
+                                        Easing="SineEaseOut"
+                                        Property="Background"
+                                        Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                </Transitions>
+                            </Border.Transitions>
+                        </Border>
+                        <ContentPresenter
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Foreground="{TemplateBinding Foreground}" />
+                    </Panel>
+                </ControlTemplate>
+            </Setter>
+            <Style Selector="^:pointerover:not(:selected) /template/ Border#Background">
+                <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
+            </Style>
+            <Style Selector="^:selected /template/ Border#Background">
+                <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
+            </Style>
+        </ControlTheme>
+    </husk:Page.Resources>
+    <Grid ColumnDefinitions="Auto,Auto,*">
+        <!--  Inline section navigation  -->
+        <ListBox
+            x:Name="NavList"
             Grid.Column="0"
-            VerticalAlignment="Top"
-            Background="{StaticResource FlyoutBackgroundBrush}"
-            BoxShadow="0 8 24 0 #26000000"
-            CornerRadius="{StaticResource MediumCornerRadius}"
-            Padding="4">
-            <ListBox
-                x:Name="NavList"
-                MinWidth="168"
-                Background="Transparent"
-                BorderThickness="0"
-                SelectionChanged="OnNavSelectionChanged">
-                <ListBox.ItemTemplate>
-                    <DataTemplate x:DataType="app:SettingsSectionModel">
-                        <StackPanel
-                            Margin="10,8"
-                            Orientation="Horizontal"
-                            Spacing="8">
-                            <fi:SymbolIcon
-                                VerticalAlignment="Center"
-                                FontSize="{StaticResource MediumFontSize}"
-                                Symbol="{Binding Icon}" />
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Text="{Binding Title}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Border>
+            MinWidth="168"
+            Margin="0,0,16,0"
+            Background="Transparent"
+            BorderThickness="0"
+            ItemContainerTheme="{StaticResource SettingsNavListItemTheme}"
+            SelectionChanged="OnNavSelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="app:SettingsSectionModel">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <fi:SymbolIcon
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
+                            Symbol="{Binding Icon}" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{Binding Title}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <husk:Divider
+            Grid.Column="1"
+            Orientation="Vertical" />
         <ScrollViewer
             x:Name="Scroller"
-            Grid.Column="1"
+            Grid.Column="2"
+            Margin="16,0,0,0"
             HorizontalScrollBarVisibility="Disabled"
             VerticalScrollBarVisibility="Auto">
             <StackPanel
