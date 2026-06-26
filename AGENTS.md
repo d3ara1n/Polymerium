@@ -125,6 +125,12 @@ Two anti-patterns to avoid:
 - **Restating the obvious.** Paraphrasing what the code already says in plain sight is noise. If the names and types already tell the story, the comment goes.
 - **Repeating a project-wide mechanism at a single call site.** If a convention is already described in this AGENTS.md (e.g. the activator-driven ViewModel lifecycle) or is the default behavior shared by every sibling method (e.g. every `Pop*`/`Navigate*` goes through the same activator), do **not** single out one site to re-explain it. Doing so implies the others differ when they don't, and misleads future readers. Comment the **exception**, never the rule.
 
+**Emphasis comments.** When a comment does earn its place — a non-obvious constraint, gotcha, or warning the next reader will get wrong without the hint — promote it above ordinary commentary with a leading tag. This is one tier higher than a plain `//` comment: a tagged line signals "this matters, read me carefully."
+
+The format is fixed regardless of tag: first line `// TAG: ` (two slashes, one space, the tag, one space); continuation lines `//  ` (two slashes, **two** spaces — one more than a normal comment — so the line visibly belongs to the tagged block). No variants such as `//NOTE:`, `// note:`, or `// NB:`.
+
+Tags are `PascalCase` and pick the intent: `NOTE` for a non-obvious constraint or invariant the code relies on; `TODO` for known unfinished work; `HACK` for a deliberate workaround that should ideally not exist; `FIXME`/`BUG` for a known defect; `WARNING` for a footgun. Use the most specific tag that fits.
+
 When in doubt, leave the comment out. The legitimate reasons to write one are narrow and non-local: why a workaround exists, a non-obvious constraint or invariant, a link to an upstream issue, or a warning about something the next reader will get wrong without the hint.
 
 ## Styling Conventions (Avalonia)
