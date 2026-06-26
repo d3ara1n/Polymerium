@@ -9,6 +9,7 @@
 ### Fixed
 
 - Fix duplicated labels in Dependency Graph page
+- Fix the Linux AppImage crashing on startup (#72)
 
 ### Added
 

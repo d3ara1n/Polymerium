@@ -86,6 +86,18 @@ Rule of thumb: to add a new screen, create `FooPage.axaml` + `FooPageModel.cs` (
 - The release workflow contains a case-fix for published localization output: `zh-hans` must become `zh-Hans`. Preserve that quirk if you touch packaging or localization.
 - `scripts/Workflow_Update-Changelog.ps1` rewrites `CHANGELOG.md`, `RELEASE_CHANGELOG.md`, and `changelogs/rolling.md`, and archives into `changelogs/v<major>.<minor>.md`.
 
+## Release Flow
+
+Releases are **tag-driven**: pushing a `v*` tag triggers `.github/workflows/publish.yml`, which builds self-contained `win-x64` / `linux-x64` / `osx-arm64` artifacts, runs `Workflow_Update-Changelog.ps1` **inside CI** (so never run that script locally right before a release — CI will archive the rolling section itself), and pushes the changelog commit back to `main`. The workflow ends by creating a **draft** GitHub Release; a human must click *Publish release* to flip it to published, which in turn fires `mirrorchyan_release.yml` to upload to Mirror酱.
+
+The human-side sequence is therefore:
+
+1. `git push origin main` — land the code (PR merge, etc.).
+2. `git tag vX.Y.Z && git push origin vX.Y.Z` — trigger the build. Version number is whatever the tag says (`GitVersion.yml` runs with `increment: None`).
+3. On GitHub, review the draft Release and click *Publish release*.
+
+Version-numbering convention: **`minor` increments mark milestones, not individual features** — until a milestone lands, ship under a `patch` bump (e.g. `v1.10.3`, not `v1.11.0`).
+
 ## Localization
 
 - Localized strings live in `src/Polymerium.Avalonia/Properties/Resources.resx` (English, the source) and `Resources.zh-hans.resx` (Chinese). Both files use the same set of resource keys.
