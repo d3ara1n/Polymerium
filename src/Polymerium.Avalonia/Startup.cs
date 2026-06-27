@@ -2,7 +2,12 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Mime;
 using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Threading;
 using Huskui.Avalonia.Mvvm;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -31,6 +36,7 @@ namespace Polymerium.Avalonia;
 
 public static class Startup
 {
+    private static SingleInstance? SINGLE_INSTANCE;
     public static void ConfigureServices(IServiceCollection services, bool debug)
     {
         services
@@ -210,8 +216,18 @@ public static class Startup
            .AddSingleton<SkinRenderService>();
     }
 
-    public static void InitializeUnhostedServices()
+    public static bool InitializeUnhostedServices()
     {
+        SINGLE_INSTANCE = new();
+        if (!SINGLE_INSTANCE.IsFirstInstance)
+        {
+            SINGLE_INSTANCE.Dispose();
+            SingleInstance.Send(new());
+            return false;
+        }
+        SINGLE_INSTANCE.Received += OnIpcReceived;
+        SINGLE_INSTANCE.StartServer();
+
         #region SentrySdk Init (only in Debug)
 
         if (!Program.IsDebug)
@@ -252,6 +268,8 @@ public static class Startup
         }
 
         #endregion
+
+        return true;
     }
 
     public static void DeinitializeUnhostedServices()
@@ -260,5 +278,24 @@ public static class Startup
         {
             SentrySdk.Close();
         }
+        SINGLE_INSTANCE?.Dispose();
+    }
+
+    private static void OnIpcReceived(SingleInstance.Message message)
+    {
+        if (message.Action != "activate")
+            return;
+
+        Dispatcher.UIThread.Post(() =>
+        {
+            if (
+                Application.Current?.ApplicationLifetime
+                is IClassicDesktopStyleApplicationLifetime { MainWindow: { } window })
+            {
+                if (window.WindowState == WindowState.Minimized)
+                    window.WindowState = WindowState.Normal;
+                window.Activate();
+            }
+        });
     }
 }

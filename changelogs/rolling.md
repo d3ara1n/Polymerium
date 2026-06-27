@@ -3,6 +3,7 @@
 ### ✨ Highlights ✨
 
 - Rework the settings navigation into an inline sidebar
+- Block launching a second instance and instead bring the already running window to the foreground
 
 ### Fixed
 
@@ -12,7 +13,7 @@
 
 ### Added
 
--
+- Block launching a second instance and instead bring the already running window to the foreground
 
 ### Changed
 
