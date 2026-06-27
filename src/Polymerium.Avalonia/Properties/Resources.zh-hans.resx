@@ -219,6 +219,24 @@
     <data name="InstancePropertiesPage_DangerZoneSubtitle" xml:space="preserve">
         <value>这些设置一旦应用无法恢复</value>
     </data>
+    <data name="InstancePropertiesPage_ResetConfirmationTitle" xml:space="preserve">
+        <value>重置实例</value>
+    </data>
+    <data name="InstancePropertiesPage_ResetConfirmationMessage" xml:space="preserve">
+        <value>所有本地改动都将被丢弃，实例重置为打包时的状态，存档和配置会被清空。</value>
+    </data>
+    <data name="InstancePropertiesPage_DeleteConfirmationTitle" xml:space="preserve">
+        <value>删除实例</value>
+    </data>
+    <data name="InstancePropertiesPage_DeleteConfirmationMessage" xml:space="preserve">
+        <value>该实例配置将被移除，其文件也会被标记删除。此操作不可撤销。</value>
+    </data>
+    <data name="InstancePropertiesPage_UnlockConfirmationTitle" xml:space="preserve">
+        <value>解除来源关联</value>
+    </data>
+    <data name="InstancePropertiesPage_UnlockConfirmationMessage" xml:space="preserve">
+        <value>该实例将不再链接到其来源，之后无法再从来源获取更新。</value>
+    </data>
     <data name="InstancePropertiesPage_SacrificeLabelText" xml:space="preserve">
         <value>牺牲</value>
     </data>

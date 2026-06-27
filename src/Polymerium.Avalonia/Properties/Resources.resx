@@ -228,6 +228,24 @@
     <data name="InstancePropertiesPage_DangerZoneSubtitle" xml:space="preserve">
         <value>These settings are applied instantly and can't be recovered</value>
     </data>
+    <data name="InstancePropertiesPage_ResetConfirmationTitle" xml:space="preserve">
+        <value>Reset Instance</value>
+    </data>
+    <data name="InstancePropertiesPage_ResetConfirmationMessage" xml:space="preserve">
+        <value>All local changes will be discarded and the instance reset to its packaged state. Saves and configs will be wiped.</value>
+    </data>
+    <data name="InstancePropertiesPage_DeleteConfirmationTitle" xml:space="preserve">
+        <value>Delete Instance</value>
+    </data>
+    <data name="InstancePropertiesPage_DeleteConfirmationMessage" xml:space="preserve">
+        <value>The instance profile will be removed and its files scheduled for deletion. This cannot be undone.</value>
+    </data>
+    <data name="InstancePropertiesPage_UnlockConfirmationTitle" xml:space="preserve">
+        <value>Detach Source</value>
+    </data>
+    <data name="InstancePropertiesPage_UnlockConfirmationMessage" xml:space="preserve">
+        <value>The instance will no longer be linked to its source and won't receive updates from it.</value>
+    </data>
     <data name="InstancePropertiesPage_SacrificeLabelText" xml:space="preserve">
         <value>Scrifice</value>
     </data>
