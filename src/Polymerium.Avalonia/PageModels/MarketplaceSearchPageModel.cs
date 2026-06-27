@@ -214,10 +214,10 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
                                                              x.UpdatedAt,
                                                              x.DownloadCount,
                                                              x.Reference)
-                                {
-                                    IsFavorite =
+                               {
+                                   IsFavorite =
                                         _persistenceService.IsFavoriteProject(x.Label, x.Namespace, x.Pid),
-                                })
+                               })
                                .ToArray();
                     return tasks;
                 }

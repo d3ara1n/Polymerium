@@ -1,4 +1,4 @@
-<husk:Dialog
+﻿<husk:Dialog
     x:Class="Polymerium.Avalonia.Dialogs.DangerConfirmDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,8 +9,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="320"
     IsPrimaryButtonVisible="True"
-    Result="{Binding $self.TypedCode, Mode=OneWay}"
     PrimaryText="{x:Static lang:Resources.Dialog_ConfirmButtonText}"
+    Result="{Binding $self.TypedCode, Mode=OneWay}"
     mc:Ignorable="d">
     <StackPanel Spacing="12">
         <TextBlock
@@ -19,8 +19,8 @@
             Text="{x:Static lang:Resources.DangerConfirmDialog_PromptText}"
             TextWrapping="Wrap" />
         <Border
-            HorizontalAlignment="Center"
             Padding="24,10"
+            HorizontalAlignment="Center"
             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
             BorderBrush="{StaticResource ControlBorderBrush}"
             BorderThickness="1"
@@ -32,9 +32,9 @@
         </Border>
         <TextBox
             x:Name="CodeInput"
-            PlaceholderText="{x:Static lang:Resources.DangerConfirmDialog_InputPlaceholderText}"
-            Text="{Binding $parent[app:DangerConfirmDialog].TypedCode, Mode=TwoWay}"
+            HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Center"
-            HorizontalAlignment="Stretch" />
+            PlaceholderText="{x:Static lang:Resources.DangerConfirmDialog_InputPlaceholderText}"
+            Text="{Binding $parent[app:DangerConfirmDialog].TypedCode, Mode=TwoWay}" />
     </StackPanel>
 </husk:Dialog>

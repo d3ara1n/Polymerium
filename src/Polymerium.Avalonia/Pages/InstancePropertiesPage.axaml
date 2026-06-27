@@ -325,8 +325,7 @@
                 Title="{x:Static lang:Resources.InstancePropertiesPage_DangerZoneTitle}"
                 Icon="WarningShield"
                 Summary="{x:Static lang:Resources.InstancePropertiesPage_DangerZoneSubtitle}">
-                <app:SettingsEntryItem
-                    Header="{x:Static lang:Resources.InstancePropertiesPage_SacrificeLabelText}">
+                <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_SacrificeLabelText}">
                     <Grid ColumnDefinitions="*,8,*">
                         <Button
                             Grid.Column="0"

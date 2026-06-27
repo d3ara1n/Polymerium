@@ -35,7 +35,8 @@ public partial class DangerConfirmDialog : Dialog
 
     #region Direct Properties
 
-    public string ChallengeCode {
+    public string ChallengeCode
+    {
         get;
         private init => SetAndRaise(ChallengeCodeProperty, ref field, value);
     }

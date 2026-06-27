@@ -1,4 +1,4 @@
-<husk:Page
+﻿<husk:Page
     x:Class="Polymerium.Avalonia.Pages.SettingsPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -678,7 +678,9 @@
                         </GroupBox.Header>
                         <StackPanel Spacing="4">
                             <!--  Storage Management: navigate to the sub-page  -->
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <Grid
+                                ColumnDefinitions="*,Auto"
+                                ColumnSpacing="16">
                                 <StackPanel
                                     Grid.Column="0"
                                     VerticalAlignment="Center"
@@ -694,8 +696,8 @@
                                 </StackPanel>
                                 <Button
                                     Grid.Column="1"
-                                    VerticalAlignment="Center"
                                     Classes="Small"
+                                    VerticalAlignment="Center"
                                     Command="{Binding NavigateCommand}"
                                     CommandParameter="{x:Type app:MaintenanceStoragePage}"
                                     Theme="{StaticResource OutlineButtonTheme}">
@@ -705,7 +707,9 @@
                                 </Button>
                             </Grid>
                             <!--  Garbage Collect: safe, side-effect but harmless  -->
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <Grid
+                                ColumnDefinitions="*,Auto"
+                                ColumnSpacing="16">
                                 <StackPanel
                                     Grid.Column="0"
                                     VerticalAlignment="Center"
@@ -721,8 +725,8 @@
                                 </StackPanel>
                                 <Button
                                     Grid.Column="1"
-                                    VerticalAlignment="Center"
                                     Classes="Small"
+                                    VerticalAlignment="Center"
                                     Command="{Binding GarbageCollectCommand}"
                                     Theme="{StaticResource OutlineButtonTheme}">
                                     <fi:SymbolIcon
@@ -734,7 +738,9 @@
                                 Margin="0,8"
                                 Content="{x:Static lang:Resources.SettingsPage_DangerZoneDividerText}" />
                             <!--  Clear Statistics: destructive, strong-confirm gated  -->
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <Grid
+                                ColumnDefinitions="*,Auto"
+                                ColumnSpacing="16">
                                 <StackPanel
                                     Grid.Column="0"
                                     VerticalAlignment="Center"
@@ -750,8 +756,8 @@
                                 </StackPanel>
                                 <Button
                                     Grid.Column="1"
-                                    VerticalAlignment="Center"
                                     Classes="Small"
+                                    VerticalAlignment="Center"
                                     Command="{Binding ClearStatisticsCommand}"
                                     Theme="{StaticResource OutlineButtonTheme}">
                                     <fi:SymbolIcon
@@ -761,7 +767,9 @@
                                 </Button>
                             </Grid>
                             <!--  Clear Records: destructive, strong-confirm gated  -->
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <Grid
+                                ColumnDefinitions="*,Auto"
+                                ColumnSpacing="16">
                                 <StackPanel
                                     Grid.Column="0"
                                     VerticalAlignment="Center"
@@ -777,8 +785,8 @@
                                 </StackPanel>
                                 <Button
                                     Grid.Column="1"
-                                    VerticalAlignment="Center"
                                     Classes="Small"
+                                    VerticalAlignment="Center"
                                     Command="{Binding ClearRecordsCommand}"
                                     Theme="{StaticResource OutlineButtonTheme}">
                                     <fi:SymbolIcon

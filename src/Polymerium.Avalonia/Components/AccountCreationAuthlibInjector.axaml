@@ -28,23 +28,24 @@
                 <husk:Divider />
                 <WrapPanel
                     HorizontalAlignment="Center"
-                    ItemSpacing="6" LineSpacing="4">
+                    ItemSpacing="6"
+                    LineSpacing="4">
                     <HyperlinkButton
-                        Content="LittleSkin"
                         Command="{Binding $parent[app:AccountCreationAuthlibInjector].SetServerUrlCommand}"
-                        CommandParameter="https://littleskin.cn/api/yggdrasil" />
+                        CommandParameter="https://littleskin.cn/api/yggdrasil"
+                        Content="LittleSkin" />
                     <HyperlinkButton
-                        Content="HelloSkin"
                         Command="{Binding $parent[app:AccountCreationAuthlibInjector].SetServerUrlCommand}"
-                        CommandParameter="https://helloskin.cn/api/yggdrasil" />
+                        CommandParameter="https://helloskin.cn/api/yggdrasil"
+                        Content="HelloSkin" />
                     <HyperlinkButton
-                        Content="VlssuSkin"
                         Command="{Binding $parent[app:AccountCreationAuthlibInjector].SetServerUrlCommand}"
-                        CommandParameter="https://skin.vlssu.com/api/yggdrasil" />
+                        CommandParameter="https://skin.vlssu.com/api/yggdrasil"
+                        Content="VlssuSkin" />
                     <HyperlinkButton
-                        Content="Ely.by"
                         Command="{Binding $parent[app:AccountCreationAuthlibInjector].SetServerUrlCommand}"
-                        CommandParameter="https://account.ely.by/api/authlib-injector" />
+                        CommandParameter="https://account.ely.by/api/authlib-injector"
+                        Content="Ely.by" />
                 </WrapPanel>
             </StackPanel>
         </husk:DropZone>
