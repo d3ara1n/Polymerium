@@ -549,68 +549,68 @@ public partial class PackageExplorerPageModel : ViewModelBase
                 switch (model)
                 {
                     case { State: ExhibitState.Adding }:
-                    {
-                        var entry = new Profile.Rice.Entry
                         {
-                            Enabled = true,
-                            Purl = PackageHelper.ToPurl(model.Label,
-                                                        model.Namespace,
-                                                        model.ProjectId,
-                                                        model.PendingVersionId),
-                            Source = null,
-                        };
-                        _persistenceService.AppendAction(new()
-                        {
-                            Key = Basic.Key,
-                            Kind = PersistenceService.ActionKind.EditPackage,
-                            New = entry.Purl,
-                        });
-                        guard.Value.Setup.Packages.Add(entry);
-                        model.State = ExhibitState.Editable;
-                        model.Installed = entry;
-                        model.InstalledVersionName = model.PendingVersionName;
-                        model.InstalledVersionId = model.PendingVersionId;
-                        break;
-                    }
-                    case { State: ExhibitState.Removing, Installed: not null }:
-                    {
-                        var exist = guard.Value.Setup.Packages.FirstOrDefault(x => x.Purl == model.Installed.Purl);
-                        if (exist != null)
-                        {
-                            guard.Value.Setup.Packages.Remove(exist);
+                            var entry = new Profile.Rice.Entry
+                            {
+                                Enabled = true,
+                                Purl = PackageHelper.ToPurl(model.Label,
+                                                            model.Namespace,
+                                                            model.ProjectId,
+                                                            model.PendingVersionId),
+                                Source = null,
+                            };
+                            _persistenceService.AppendAction(new()
+                            {
+                                Key = Basic.Key,
+                                Kind = PersistenceService.ActionKind.EditPackage,
+                                New = entry.Purl,
+                            });
+                            guard.Value.Setup.Packages.Add(entry);
+                            model.State = ExhibitState.Editable;
+                            model.Installed = entry;
+                            model.InstalledVersionName = model.PendingVersionName;
+                            model.InstalledVersionId = model.PendingVersionId;
+                            break;
                         }
+                    case { State: ExhibitState.Removing, Installed: not null }:
+                        {
+                            var exist = guard.Value.Setup.Packages.FirstOrDefault(x => x.Purl == model.Installed.Purl);
+                            if (exist != null)
+                            {
+                                guard.Value.Setup.Packages.Remove(exist);
+                            }
 
-                        _persistenceService.AppendAction(new()
-                        {
-                            Key = Basic.Key,
-                            Kind = PersistenceService.ActionKind.EditPackage,
-                            Old = model.Installed.Purl,
-                        });
-                        model.State = null;
-                        model.Installed = null;
-                        model.InstalledVersionName = null;
-                        model.InstalledVersionId = null;
-                        break;
-                    }
+                            _persistenceService.AppendAction(new()
+                            {
+                                Key = Basic.Key,
+                                Kind = PersistenceService.ActionKind.EditPackage,
+                                Old = model.Installed.Purl,
+                            });
+                            model.State = null;
+                            model.Installed = null;
+                            model.InstalledVersionName = null;
+                            model.InstalledVersionId = null;
+                            break;
+                        }
                     case { State: ExhibitState.Modifying, Installed: not null }:
-                    {
-                        var old = model.Installed.Purl;
-                        model.Installed.Purl = PackageHelper.ToPurl(model.Label,
-                                                                    model.Namespace,
-                                                                    model.ProjectId,
-                                                                    model.PendingVersionId);
-                        _persistenceService.AppendAction(new()
                         {
-                            Key = Basic.Key,
-                            Kind = PersistenceService.ActionKind.EditPackage,
-                            Old = old,
-                            New = model.Installed.Purl,
-                        });
-                        model.State = ExhibitState.Editable;
-                        model.InstalledVersionName = model.PendingVersionName;
-                        model.InstalledVersionId = model.PendingVersionId;
-                        break;
-                    }
+                            var old = model.Installed.Purl;
+                            model.Installed.Purl = PackageHelper.ToPurl(model.Label,
+                                                                        model.Namespace,
+                                                                        model.ProjectId,
+                                                                        model.PendingVersionId);
+                            _persistenceService.AppendAction(new()
+                            {
+                                Key = Basic.Key,
+                                Kind = PersistenceService.ActionKind.EditPackage,
+                                Old = old,
+                                New = model.Installed.Purl,
+                            });
+                            model.State = ExhibitState.Editable;
+                            model.InstalledVersionName = model.PendingVersionName;
+                            model.InstalledVersionId = model.PendingVersionId;
+                            break;
+                        }
                 }
             }
 

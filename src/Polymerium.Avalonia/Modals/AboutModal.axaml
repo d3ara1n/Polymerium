@@ -116,7 +116,9 @@
             <!--  Links  -->
             <WrapPanel
                 HorizontalAlignment="Center"
-                Orientation="Horizontal" ItemSpacing="8" LineSpacing="4">
+                ItemSpacing="8"
+                LineSpacing="4"
+                Orientation="Horizontal">
                 <Button
                     Command="{Binding $parent[app:AboutModal].OpenLinkCommand}"
                     CommandParameter="{Binding $parent[app:AboutModal].RepositoryUrl}">

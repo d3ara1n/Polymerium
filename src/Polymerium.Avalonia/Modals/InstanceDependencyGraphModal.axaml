@@ -32,7 +32,9 @@
                 CommandParameter="{Binding Key}"
                 CornerRadius="{StaticResource SmallCornerRadius}"
                 Cursor="Hand">
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Grid
+                    ColumnDefinitions="*,Auto"
+                    ColumnSpacing="8">
                     <TextBlock
                         Grid.Column="0"
                         VerticalAlignment="Center"
@@ -68,10 +70,14 @@
             ZoomSpeed="1.2">
             <husk:ZoomView.CornerRadius>
                 <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
-                    <Binding Path="CornerRadius"
-                             RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Modal}" />
-                    <Binding Path="Padding"
-                             RelativeSource="{RelativeSource FindAncestor, AncestorType=husk:Modal}" />
+                    <Binding
+                        Path="CornerRadius"
+                        RelativeSource="{RelativeSource FindAncestor,
+                                                        AncestorType=husk:Modal}" />
+                    <Binding
+                        Path="Padding"
+                        RelativeSource="{RelativeSource FindAncestor,
+                                                        AncestorType=husk:Modal}" />
                 </MultiBinding>
             </husk:ZoomView.CornerRadius>
             <agc:GraphPanel
@@ -92,8 +98,8 @@
                                 ColumnSpacing="10">
                                 <Border
                                     Grid.Column="0"
-                                    Height="32"
                                     Width="32"
+                                    Height="32"
                                     VerticalAlignment="Center"
                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                     <Image
@@ -119,12 +125,14 @@
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
                                     Spacing="2">
-                                    <husk:IconLabel Icon="ArrowUp"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{Binding DependencyCount}" />
-                                    <husk:IconLabel Icon="ArrowDown"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{Binding DependentCount}" />
+                                    <husk:IconLabel
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Icon="ArrowUp"
+                                        Text="{Binding DependencyCount}" />
+                                    <husk:IconLabel
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Icon="ArrowDown"
+                                        Text="{Binding DependentCount}" />
                                 </StackPanel>
                             </Grid>
                         </app:DependencyGraphCard>
@@ -198,12 +206,10 @@
                     Orientation="Horizontal"
                     Spacing="6">
                     <husk:Tag>
-                        <TextBlock
-                            Text="{Binding SelectedNode?.Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                        <TextBlock Text="{Binding SelectedNode?.Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
                     </husk:Tag>
                     <husk:Tag>
-                        <TextBlock
-                            Text="{Binding SelectedNode?.ReleaseType, Converter={x:Static app:LocalizedEnumConverters.LocalizedReleaseType}}" />
+                        <TextBlock Text="{Binding SelectedNode?.ReleaseType, Converter={x:Static app:LocalizedEnumConverters.LocalizedReleaseType}}" />
                     </husk:Tag>
                 </StackPanel>
 
@@ -213,36 +219,36 @@
                 <TabControl Grid.Row="3">
                     <TabItem>
                         <TabItem.Header>
-                            <StackPanel Orientation="Horizontal" Spacing="4">
-                                <TextBlock
-                                    Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependenciesTitle}" />
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <TextBlock Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependenciesTitle}" />
                                 <husk:Tag Classes="Status">
                                     <TextBlock Text="{Binding SelectedDependencies.Count}" />
                                 </husk:Tag>
                             </StackPanel>
                         </TabItem.Header>
-                        <ScrollViewer
-                            HorizontalScrollBarVisibility="Disabled">
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                             <ItemsControl
-                                ItemsSource="{Binding SelectedDependencies}"
-                                ItemTemplate="{StaticResource DependencyEntryTemplate}" />
+                                ItemTemplate="{StaticResource DependencyEntryTemplate}"
+                                ItemsSource="{Binding SelectedDependencies}" />
                         </ScrollViewer>
                     </TabItem>
                     <TabItem>
                         <TabItem.Header>
-                            <StackPanel Orientation="Horizontal" Spacing="4">
-                                <TextBlock
-                                    Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependentsTitle}" />
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <TextBlock Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependentsTitle}" />
                                 <husk:Tag Classes="Status">
                                     <TextBlock Text="{Binding SelectedDependents.Count}" />
                                 </husk:Tag>
                             </StackPanel>
                         </TabItem.Header>
-                        <ScrollViewer
-                            HorizontalScrollBarVisibility="Disabled">
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                             <ItemsControl
-                                ItemsSource="{Binding SelectedDependents}"
-                                ItemTemplate="{StaticResource DependencyEntryTemplate}" />
+                                ItemTemplate="{StaticResource DependencyEntryTemplate}"
+                                ItemsSource="{Binding SelectedDependents}" />
                         </ScrollViewer>
                     </TabItem>
                 </TabControl>
