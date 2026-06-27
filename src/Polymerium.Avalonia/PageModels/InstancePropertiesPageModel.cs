@@ -46,8 +46,6 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         _configurationService = configurationService;
         _persistenceService = persistenceService;
         _instanceService = instanceService;
-
-        SafeCode = Random.Shared.Next(1000, 9999).ToString();
     }
 
     #region Other
@@ -224,8 +222,15 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     private void CheckIntegrity() => _instanceService.Deploy(Basic.Key, false, BehaviorResolveDependency, true);
 
     [RelayCommand]
-    private void ResetInstance()
+    private async Task ResetInstanceAsync()
     {
+        if (!await _overlayService.RequestStrongConfirmationAsync(
+                Resources.InstancePropertiesPage_ResetConfirmationMessage,
+                Resources.InstancePropertiesPage_ResetConfirmationTitle))
+        {
+            return;
+        }
+
         if (!InstanceManager.IsInUse(Basic.Key))
         {
             var build = PathDef.Default.DirectoryOfBuild(Basic.Key);
@@ -262,8 +267,15 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     }
 
     [RelayCommand]
-    private void DeleteInstance()
+    private async Task DeleteInstanceAsync()
     {
+        if (!await _overlayService.RequestStrongConfirmationAsync(
+                Resources.InstancePropertiesPage_DeleteConfirmationMessage,
+                Resources.InstancePropertiesPage_DeleteConfirmationTitle))
+        {
+            return;
+        }
+
         var path = PathDef.Default.FileOfBomb(Basic.Key);
         var dir = Path.GetDirectoryName(path);
         if (dir != null && !Directory.Exists(dir))
@@ -287,8 +299,15 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     }
 
     [RelayCommand]
-    private void UnlockInstance()
+    private async Task UnlockInstanceAsync()
     {
+        if (!await _overlayService.RequestStrongConfirmationAsync(
+                Resources.InstancePropertiesPage_UnlockConfirmationMessage,
+                Resources.InstancePropertiesPage_UnlockConfirmationTitle))
+        {
+            return;
+        }
+
         _owned?.Value.Setup.Source = null;
 
         var oldSource = Basic.Source;
@@ -369,9 +388,6 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
 
     [ObservableProperty]
     public required partial string NameOverwrite { get; set; }
-
-    [ObservableProperty]
-    public partial string SafeCode { get; set; }
 
     #endregion
 
