@@ -5,8 +5,11 @@ using System.Linq;
 using System.Net.Http;
 using AsyncImageLoader;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Threading;
 using Huskui.Avalonia.Mvvm.States;
+using Polymerium.Avalonia.Facilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Polymerium.Avalonia.Properties;
@@ -62,7 +65,8 @@ internal static class Program
         #region 0. 这些设置需要在整个应用启动的第一时间完成
 
         PathDef.BrandNames = new("polymerium", "Polymerium", "dev.dearain.Polymerium");
-        Startup.InitializeUnhostedServices();
+        if (!Startup.InitializeUnhostedServices())
+            return;
 
         var firstRunFile = Path.Combine(PathDef.Default.PrivateDataDirectory(), "first_run");
         if (!File.Exists(firstRunFile))
