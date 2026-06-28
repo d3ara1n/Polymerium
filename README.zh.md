@@ -4,7 +4,7 @@
 
 <div align="center">
 
-**下一代 Minecraft 实例管理器，以全新思维重新定义游戏管理。**
+**一个简单的理念：实例是一份可编辑的配置，不是一堆复制的文件。**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![.NET 10.0](https://img.shields.io/badge/.NET-10-5C2D91?style=for-the-badge&logoColor=white)](https://dotnet.microsoft.com/)
@@ -21,87 +21,101 @@
 
 ---
 
-## 🎮 体验 Polymerium 的实际效果
+## 实际效果
 
 <div align="center">
 
-[![Screenshot](assets/screenshots/overview.avif)](#-体验-polymerium-的实际效果)
+[![Screenshot](assets/screenshots/overview.avif)](#实际效果)
 
-*从启动到游戏，只需几秒钟* ⚡
+*从打开应用到启动游戏。*
 
 </div>
 
 ---
 
-## 🌟 Polymerium 的独特之处
+## 不同之处
 
-> **传统的 Minecraft 启动器管理文件。Polymerium 管理体验。**
+> Polymerium 里的实例是一份描述，不是一堆复制的文件。
 
-### 🚀 Minecraft 启动器的演进
+换加载器、增删模组、更新整个整合包——改的是这份描述，Polymerium 按需重建文件，你的存档和设置原封不动。
 
-| 世代      | 管理重点   | 典型方式           |
-|---------|--------|----------------|
-| **第一代** | 📁 版本  | 所谓的“版本隔离”      |
-| **第二代** | 📦 实例  | 隔离的游戏环境，资源复制存储 |
-| **第三代** | 🧬 元数据 | 声明式配置，按需部署     |
+- **换加载器不用重来。** Forge 到 NeoForge、Fabric 到 Quilt——改个加载器，重新部署，模组全保留。
+- **原地更新整合包。** 导入新版本，你的世界和设置照旧。
+- **随时回滚。** 每次改动都能快照。改炸了？一键还原，还能看到具体动了什么。
 
-**Polymerium 是第三代启动器。** 它不是复制和存储每个实例的数千个模组文件，而是将您的游戏设置描述为轻量级元数据，并按需构建实际的游戏文件。这种革命性的方法带来了几个改变游戏规则的好处：
-
-### 🎯 **智能资源管理**
-
-- **零重复**：多个实例共享相同的模组？磁盘上只存在一个副本
-- **符号链接魔法**：文件被智能链接而非复制，节省数 GB 的存储空间
-- **即时切换**：在几秒钟内切换完全不同的模组包
-
-### 📦 **便携式游戏体验**
-
-- **元数据驱动**：您的整个游戏设置都包含在一个小小的配置文件中
-- **版本控制就绪**：使用 Git 协作开发模组包
-- **真正的便携性**：通过简单的文件传输分享您的确切游戏体验
-
-### 🔧 **轻松维护**
-
-- **完整性保证**：每次部署都会验证文件的完整性和正确性
-- **依赖解析**：自动处理模组依赖和冲突
-- **一键更新**：无缝升级单个模组或整个模组包
-
-### 🎮 **以玩家为中心的设计**
-
-- **无需寻找 Java**：配置一次 Java，到处可用
-- **账户灵活性**：多个账户，每个都链接到特定实例
-- **干净卸载**：通过删除两个文件夹完全移除 Polymerium
+文件是链接的，不是复制的——十个整合包共用同一批模组，不会占十倍的磁盘。整套配置就一个小文件，可以用 Git 管版本、可以分享、可以搬走。
 
 ---
 
-## ✨ 主要功能
+## 功能
 
-### 🏗️ 现代架构
+<div align="center">
+<table>
+  <tr>
+    <td width="55%" valign="top">
+      <b>一目了然</b><br><br>
+      你的所有实例、账户、最近玩过的世界都在一处。接着上次的地方继续，或者开个新的。
+    </td>
+    <td width="45%">
+      <img src="assets/screenshots/landing.png" alt="首页仪表盘">
+    </td>
+  </tr>
+  <tr>
+    <td width="45%">
+      <img src="assets/screenshots/instance.png" alt="实例主页与启动面板">
+    </td>
+    <td width="55%" valign="top">
+      <b>部署即启动</b><br><br>
+      选个实例，按下启动。Polymerium 一步把配置变成正在运行的游戏——不用手动折腾文件，切换到另一个实例也是瞬间的事。
+    </td>
+  </tr>
+  <tr>
+    <td width="55%" valign="top">
+      <b>管的是模组，不是文件</b><br><br>
+      像浏览列表条目一样浏览、筛选、启用、更新模组——而不是对付一个文件夹里的文件。列表和网格视图随意切，按来源或类型筛选，更新单个模组或整个整合包。
+    </td>
+    <td width="45%">
+      <img src="assets/screenshots/setup.png" alt="模组管理">
+    </td>
+  </tr>
+  <tr>
+    <td width="45%">
+      <img src="assets/screenshots/graph.png" alt="依赖关系图">
+    </td>
+    <td width="55%" valign="top">
+      <b>看懂完整的依赖关系</b><br><br>
+      每个模组、每一层依赖，可视化铺开。在按下启动之前就能发现冲突和缺失。
+    </td>
+  </tr>
+  <tr>
+    <td width="55%" valign="top">
+      <b>从大型市场直接安装</b><br><br>
+      CurseForge 和 Modrinth，内置。按游戏版本和加载器搜索筛选，不用离开应用就装进实例。
+    </td>
+    <td width="45%">
+      <img src="assets/screenshots/marketplace.png" alt="市场搜索">
+    </td>
+  </tr>
+</table>
+</div>
 
-- 🎨 **Avalonia UI**：美观、响应式的跨平台界面
-- 📋 **元数据引擎**：轻量级实例描述，每次都能完美重建
-- 🚀 **部署系统**：智能文件管理与完整性检查
-- 🔗 **资源池**：共享文件存储与符号链接分发
+### 还有更多
 
-### 🌐 平台集成
-
-- 🎟️ **CurseForge 和 Modrinth**：与主要模组仓库的原生集成
-- 📦 **模组包发布**：将您的实例导出为可分发的模组包
-- 📝 **自动更新日志**：为您的模组包版本生成文档
-
-### 👨‍💻 开发者体验
-
-- 📸 **实例快照**：保存和恢复完整的游戏状态
-- 📜 **分层配置**：将用户设置与核心游戏数据分离
-- 🔄 **构建可重现性**：从相同元数据进行相同部署
+- **快照** —— 保存和恢复完整的游戏状态，带差异视图。
+- **Git 友好的整合包** —— 实例就是个配置文件，可以用 Git 管版本、协作开发。
+- **跨平台** —— Windows、Linux、macOS（Apple Silicon）同一套代码。
+- **干净卸载** —— 删两个文件夹，Polymerium 彻底消失。
 
 ---
 
 ## 开始使用
 
-### 📥 安装
+### 安装
 
 > [!NOTE]
-> Polymerium 目前正在积极开发中。功能和界面可能在版本之间发生变化。
+> Polymerium 正在积极开发中，功能和界面可能随版本调整。
+
+**Microsoft OAuth · 开源 MIT · 凭据只存本地。**
 
 下载前请先查看对应平台的注意事项：
 
@@ -154,50 +168,46 @@ Polymerium 使用[符号链接](https://www.wikiwand.com/en/Symbolic_link)进行
 
 [已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=github-readme)
 
-**📥 下载** -> **🚀 运行** -> **⚙️ 设置**
-
 1. **下载** 对应平台的安装包
 2. **运行** 安装器或可执行文件
 3. **按照** 向导完成初始配置
 
-### 🚀 快速开始
+### 快速开始
 
-**🎮 创建** → **📦 添加内容** → **🔧 部署** → **▶️ 游戏**
-
-1. **创建实例**：定义您的 Minecraft 版本和模组加载器
-2. **添加内容**：从 CurseForge 或 Modrinth 浏览和安装模组
-3. **部署**：让 Polymerium 构建您的游戏文件
-4. **游戏**：直接启动或导出为模组包
+1. **创建实例** —— 选个 Minecraft 版本和模组加载器
+2. **添加内容** —— 从 CurseForge 或 Modrinth 装模组
+3. **部署** —— Polymerium 构建游戏文件
+4. **游戏** —— 直接启动，或导出成整合包
 
 ---
 
-## 🏗️ 架构概览
+## 架构
 
-| 🛠️ 技术          | 📋 用途            | 🔗 集成 |
-|-----------------|------------------|-------|
-| **.NET 10.0**   | 具有 C# 预览功能的最新运行时 | 核心平台  |
-| **Avalonia 12** | 跨平台 XAML UI 框架   | 表示层   |
-| **MVVM 模式**     | 清晰的关注点分离         | 架构模式  |
-| **依赖注入**        | 模块化、可测试的架构       | 服务管理  |
-| **响应式扩展**       | 响应式数据处理          | 数据流   |
+| 技术 | 用途 | 集成 |
+| --- | --- | --- |
+| **.NET 10** | 带 C# 预览功能的运行时 | 核心平台 |
+| **Avalonia 12** | 跨平台 XAML UI 框架 | 表示层 |
+| **MVVM** | 关注点分离 | 架构模式 |
+| **依赖注入** | 模块化、可测试的服务 | 服务管理 |
+| **响应式扩展** | 响应式数据流 | 数据流 |
 
-### 📁 项目结构
+### 项目结构
 
 ```sh
 Polymerium/
-├── 📖 website/                # 文档与项目网站
-├── 🎨 src/                    # 应用源码
-├── 🔗 submodules/             # 引入的外部项目源码
-├── 📝 notes/                  # 内部笔记
-├── 📜 changelogs/             # 版本更新日志
-├── 🛠️ scripts/                # 构建与发布脚本
-├── 🖼️ assets/                 # 截图与素材
-└── 📋 plans/                  # 规划文档
+├── website/        # 文档与项目网站
+├── src/            # 应用源码
+├── submodules/     # 引入的外部项目源码
+├── notes/          # 内部笔记
+├── changelogs/     # 版本更新日志
+├── scripts/        # 构建与发布脚本
+├── assets/         # 截图与素材
+└── plans/          # 规划文档
 ```
 
 ---
 
-## 🖥️ 平台支持
+## 平台支持
 
 | 平台                                                                                                         | 状态         |
 |------------------------------------------------------------------------------------------------------------|------------|
@@ -218,7 +228,7 @@ Polymerium 尊重您的隐私：
 
 ---
 
-## 🤖 关于 AI 辅助开发
+## 关于 AI 辅助开发
 
 2026 年之前，Polymerium 的基础库、控件库与桌面应用全部由人工花费数年编写，代码库中不含任何一行 AI 生成的代码。
 
@@ -234,15 +244,15 @@ Polymerium 尊重您的隐私：
 
 ---
 
-## 📊 项目统计
+## 项目统计
 
 [![Star History Chart](https://api.star-history.com/svg?repos=d3ara1n/Polymerium&type=Date)](https://www.star-history.com/#d3ara1n/Polymerium&Date)
 
 ![Repobeats Analytics](https://repobeats.axiom.co/api/embed/594b206d199e6aae83226e6b7b834f6896322858.svg "Repobeats analytics image")
 
-## 📚 参考资料与致谢
+## 参考资料
 
-### 🔗 技术参考
+### 技术参考
 
 - [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher) - 游戏启动过程和 Fabric/Quilt 部署
 - [Tutorial: Writing a Launcher](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E5%99%A8) -
@@ -250,14 +260,14 @@ Polymerium 尊重您的隐私：
 - [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper) - Forge 集成参考
 - [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme) - 身份验证实现
 
-### 🙏 特别感谢
+### 特别感谢
 
 - **Minecraft 社区** - 为了令人难以置信的模组生态系统
 - **Avalonia 团队** - 为了出色的跨平台 UI 框架
 - **API 提供商** - CurseForge 和 Modrinth 提供的公共 API
 - **贡献者** - 每一个帮助 Polymerium 变得更好的人
 
-## 📄 许可证
+## 许可证 (FOSSA)
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium.svg?type=large&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium?ref=badge_large&issueType=license)
 
@@ -267,8 +277,6 @@ Polymerium 尊重您的隐私：
 
 <div align="center">
 
-**Polymerium：为现代时代重新思考 Minecraft 实例管理** ✨
-
-由 Polymerium 团队用 ❤️ 制作
+Polymerium —— 把实例当成一份配置，而不是一堆复制的文件。
 
 </div>
