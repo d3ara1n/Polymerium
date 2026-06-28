@@ -4,7 +4,7 @@
 
 <div align="center">
 
-**A next-generation Minecraft instance manager that thinks differently about game management.**
+**A Minecraft instance manager built on a simple idea: your instance is a recipe, not a pile of copied files.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![.NET 10.0](https://img.shields.io/badge/.NET-10-5C2D91?style=for-the-badge&logoColor=white)](https://dotnet.microsoft.com/)
@@ -21,89 +21,101 @@
 
 ---
 
-## 🎮 Experience Polymerium in Action
+## In action
 
 <div align="center">
 
-[![Screenshot](assets/screenshots/overview.avif)](#-experience-polymerium-in-action)
+[![Screenshot](assets/screenshots/overview.avif)](#in-action)
 
-*From launch to gameplay in seconds* ⚡
+*From opening the app to launching the game.*
 
 </div>
 
 ---
 
-## 🌟 What Makes Polymerium Different
+## What makes it different
 
-> **Traditional Minecraft launchers manage files. Polymerium manages experiences.**
+> An instance in Polymerium is a description, not a pile of copied files.
 
-### 🚀 The Evolution of Minecraft Launchers
+Change the loader, swap mods in and out, update the whole pack — the description changes, Polymerium rebuilds the files on demand, and your saves and settings stay put.
 
-| Generation  | Management Focus | Representative Approach                             |
-|-------------|------------------|-----------------------------------------------------|
-| **1st Gen** | 📁 Versions      | "Version Isolation" mechanism                       |
-| **2nd Gen** | 📦 Instances     | Isolated game environments with copied resources    |
-| **3rd Gen** | 🧬 Metadata      | Declarative configuration with on-demand deployment |
+- **Switch loaders without rebuilding.** Forge to NeoForge, Fabric to Quilt — change the loader, redeploy, keep your mods.
+- **Update modpacks in place.** Drop in a new version; your saves, settings and worlds carry over.
+- **Roll back anything.** Every change can be snapshotted. Break something? One click restores it, with a diff of exactly what moved.
 
-**Polymerium is a third-generation launcher.** Instead of copying and storing thousands of mod files for each instance,
-Polymerium describes your game setup as lightweight metadata and builds the actual game files on-demand. This
-revolutionary approach brings several game-changing benefits:
-
-### 🎯 **Smart Resource Management**
-
-- **Zero Duplication**: Multiple instances sharing the same mods? Only one copy exists on disk
-- **Symlink Magic**: Files are intelligently linked, not copied, saving gigabytes of storage
-- **Instant Switching**: Change between completely different modpacks in seconds
-
-### 📦 **Portable Game Experiences**
-
-- **Metadata-Driven**: Your entire game setup fits in a tiny configuration file
-- **Version Control Ready**: Use Git to collaborate on modpack development
-- **True Portability**: Share your exact game experience with a simple file transfer
-
-### 🔧 **Effortless Maintenance**
-
-- **Integrity Guaranteed**: Every deployment validates file completeness and correctness
-- **Dependency Resolution**: Automatically handles mod dependencies and conflicts
-- **One-Click Updates**: Upgrade individual mods or entire modpacks seamlessly
-
-### 🎮 **Player-Focused Design**
-
-- **No Java Hunting**: Configure Java once, works everywhere
-- **Account Flexibility**: Multiple accounts, each linked to specific instances
-- **Clean Uninstall**: Remove Polymerium completely by deleting two folders
+Because files are linked instead of duplicated, ten modpacks sharing the same mods don't cost ten times the disk. Your whole setup fits in a tiny config file — version-control it, share it, move it between machines.
 
 ---
 
-## ✨ Key Features
+## Features
 
-### 🏗️ Modern Architecture
+<div align="center">
+<table>
+  <tr>
+    <td width="55%" valign="top">
+      <b>Everything at a glance</b><br><br>
+      All your instances, accounts, and the worlds you've been playing — in one place. Jump back into what you were doing, or start something new.
+    </td>
+    <td width="45%">
+      <img src="assets/screenshots/landing.png" alt="Home dashboard">
+    </td>
+  </tr>
+  <tr>
+    <td width="45%">
+      <img src="assets/screenshots/instance.png" alt="Instance home with launch pad">
+    </td>
+    <td width="55%" valign="top">
+      <b>Deploy and launch</b><br><br>
+      Pick an instance, hit play. Polymerium turns the metadata into a running game in one step — no manual file juggling, and jumping to another instance is instant.
+    </td>
+  </tr>
+  <tr>
+    <td width="55%" valign="top">
+      <b>Manage mods, not files</b><br><br>
+      Browse, filter, enable and update mods as entries in a list — not as files in a folder. Switch between list and grid, filter by source or type, update one mod or the whole pack.
+    </td>
+    <td width="45%">
+      <img src="assets/screenshots/setup.png" alt="Mod management">
+    </td>
+  </tr>
+  <tr>
+    <td width="45%">
+      <img src="assets/screenshots/graph.png" alt="Dependency graph">
+    </td>
+    <td width="55%" valign="top">
+      <b>See the full dependency graph</b><br><br>
+      Every mod and every layer of dependency, laid out visually. Spot conflicts and missing requirements before you ever hit launch.
+    </td>
+  </tr>
+  <tr>
+    <td width="55%" valign="top">
+      <b>Install from the big marketplaces</b><br><br>
+      CurseForge and Modrinth, built in. Search, filter by game version and loader, and install straight into an instance without leaving the app.
+    </td>
+    <td width="45%">
+      <img src="assets/screenshots/marketplace.png" alt="Marketplace search">
+    </td>
+  </tr>
+</table>
+</div>
 
-- 🎨 **Avalonia UI**: Beautiful, responsive interface that works across platforms
-- 📋 **Metadata Engine**: Lightweight instance descriptions that rebuild perfectly every time
-- 🚀 **Deployment System**: Intelligent file management with integrity checking
-- 🔗 **Resource Pooling**: Shared file storage with symlink distribution
+### And more
 
-### 🌐 Platform Integration
-
-- 🎟️ **CurseForge & Modrinth**: Native integration with major mod repositories
-- 📦 **Modpack Publishing**: Export your instances as distributable modpacks
-- 📝 **Automatic Changelogs**: Generated documentation for your modpack versions
-
-### 👨‍💻 Developer Experience
-
-- 📸 **Instance Snapshots**: Save and restore complete game states
-- 📜 **Layered Configuration**: Separate user settings from core game data
-- 🔄 **Build Reproducibility**: Identical deployments from the same metadata
+- **Snapshots** — save and restore complete game states, with a diff view of what changed.
+- **Git-friendly modpacks** — an instance is a config file, so you can version-control your pack and collaborate on it.
+- **Cross-platform** — Windows, Linux and macOS (Apple Silicon) from one codebase.
+- **Clean uninstall** — remove Polymerium entirely by deleting two folders.
 
 ---
 
 ## Getting Started
 
-### 📥 Installation
+### Installation
 
 > [!NOTE]
-> Polymerium is currently in active development. Features and UI may change between releases.
+> Polymerium is in active development. Features and UI may change between releases.
+
+**Microsoft OAuth · Open source MIT · Credentials never leave your machine.**
 
 Before downloading, check the note for your platform:
 
@@ -156,50 +168,46 @@ The PKG installer is not signed with an Apple Developer certificate, so macOS Ga
 
 [已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=github-readme)
 
-**📥 Download** -> **🚀 Run** -> **⚙️ Setup**
-
 1. **Download** the package for your platform
 2. **Run** the installer or executable
 3. **Follow** the setup wizard to configure your first instance
 
-### 🚀 Quick Start
+### Quick start
 
-**🎮 Create** → **📦 Add Content** → **🔧 Deploy** → **▶️ Play**
-
-1. **Create Instance**: Define your Minecraft version and mod loader
-2. **Add Content**: Browse and install mods from CurseForge or Modrinth
-3. **Deploy**: Let Polymerium build your game files
-4. **Play**: Launch directly or export as a modpack
+1. **Create** an instance — pick a Minecraft version and a mod loader
+2. **Add content** — install mods from CurseForge or Modrinth
+3. **Deploy** — Polymerium builds the game files
+4. **Play** — launch it, or export the whole thing as a modpack
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture
 
-| 🛠️ Technology           | 📋 Purpose                              | 🔗 Integration       |
-|--------------------------|-----------------------------------------|----------------------|
-| **.NET 10.0**            | Latest runtime with C# preview features | Core platform        |
-| **Avalonia 12**          | Cross-platform XAML UI framework        | Presentation layer   |
-| **MVVM Pattern**         | Clean separation of concerns            | Architecture pattern |
-| **Dependency Injection** | Modular, testable architecture          | Service management   |
-| **Reactive Extensions**  | Responsive data handling                | Data flow            |
+| Technology | Purpose | Integration |
+| --- | --- | --- |
+| **.NET 10** | Runtime with C# preview features | Core platform |
+| **Avalonia 12** | Cross-platform XAML UI framework | Presentation |
+| **MVVM** | Separation of concerns | Architecture pattern |
+| **Dependency Injection** | Modular, testable services | Service management |
+| **Reactive Extensions** | Responsive data flow | Data flow |
 
-### 📁 Project Structure
+### Project structure
 
 ```sh
 Polymerium/
-├── 📖 website/                # Documentation & project site
-├── 🎨 src/                    # Application source code
-├── 🔗 submodules/             # Embedded third-party project sources
-├── 📝 notes/                  # Internal notes
-├── 📜 changelogs/             # Version changelogs
-├── 🛠️ scripts/                # Build & publish scripts
-├── 🖼️ assets/                 # Screenshots and media
-└── 📋 plans/                  # Planning documents
+├── website/        # Documentation & project site
+├── src/            # Application source code
+├── submodules/     # Embedded third-party project sources
+├── notes/          # Internal notes
+├── changelogs/     # Version changelogs
+├── scripts/        # Build & publish scripts
+├── assets/         # Screenshots and media
+└── plans/          # Planning documents
 ```
 
 ---
 
-## 🖥️ Platform Support
+## Platform support
 
 | Platform                                                                                                   | Status         |
 |------------------------------------------------------------------------------------------------------------|----------------|
@@ -220,7 +228,7 @@ Polymerium respects your privacy:
 
 ---
 
-## 🤖 On AI-Assisted Development
+## On AI-assisted development
 
 Before 2026, Polymerium was built entirely by hand over several years — foundational libraries, custom UI controls, and the desktop application — with zero AI-generated code anywhere in the codebase.
 
@@ -236,15 +244,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📊 Project Statistics
+## Project statistics
 
 [![Star History Chart](https://api.star-history.com/svg?repos=d3ara1n/Polymerium&type=Date)](https://www.star-history.com/#d3ara1n/Polymerium&Date)
 
 ![Repobeats Analytics](https://repobeats.axiom.co/api/embed/594b206d199e6aae83226e6b7b834f6896322858.svg "Repobeats analytics image")
 
-## 📚 References & Acknowledgments
+## References & acknowledgments
 
-### 🔗 Technical References
+### Technical references
 
 - [Inside a Minecraft Launcher](https://ryanccn.dev/posts/inside-a-minecraft-launcher) - Game launch process and
   Fabric/Quilt deployment
@@ -253,14 +261,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ForgeWrapper](https://github.com/ZekerZhayard/ForgeWrapper) - Forge integration reference
 - [Microsoft Authentication Scheme](https://wiki.vg/Microsoft_Authentication_Scheme) - Authentication implementation
 
-### 🙏 Special Thanks
+### Special thanks
 
 - **Minecraft Community** - For the incredible modding ecosystem
 - **Avalonia Team** - For the excellent cross-platform UI framework
 - **API Providers** - CurseForge and Modrinth for their public APIs
 - **Contributors** - Everyone who helps make Polymerium better
 
-## 📄 License
+## License (FOSSA)
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium.svg?type=large&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium?ref=badge_large&issueType=license)
 
@@ -270,8 +278,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE.t
 
 <div align="center">
 
-**Polymerium: Rethinking Minecraft instance management for the modern era** ✨
-
-Made with ❤️ by the Polymerium team
+Polymerium — treat your instance as a recipe, not a pile of copied files.
 
 </div>
