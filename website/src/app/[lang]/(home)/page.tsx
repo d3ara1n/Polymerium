@@ -24,6 +24,9 @@ import {
   House,
 } from 'lucide-react';
 import { LinkButton } from '@/components/link-button';
+import { DownloadButton, type DownloadLabels } from '@/components/download-button';
+import { detectPlatform, getMirrorChyanUrl, getRelease } from '@/lib/releases';
+import { headers } from 'next/headers';
 import {
   Accordion,
   AccordionContent,
@@ -46,6 +49,13 @@ function useDict(lang: string) {
       ctaDownload: '下载',
       ctaCli: '命令行工具',
       ctaViewDocs: '查看文档',
+
+      // Download split button
+      downloadFor: (name: string) => `下载 ${name} 版`,
+      platformName: { windows: 'Windows', macos: 'macOS', linux: 'Linux' },
+      appleSilicon: '仅 Apple Silicon',
+      allReleases: 'GitHub 全部版本',
+      mirrorHint: '已有 Mirror酱 CDK？前往高速下载',
 
       // Tech badges
       badgeCrossPlatform: '跨平台',
@@ -186,6 +196,13 @@ function useDict(lang: string) {
     ctaDownload: 'Download',
     ctaCli: 'CLI Tool',
     ctaViewDocs: 'View Docs',
+
+    // Download split button
+    downloadFor: (name: string) => `Download for ${name}`,
+    platformName: { windows: 'Windows', macos: 'macOS', linux: 'Linux' },
+    appleSilicon: 'Apple Silicon only',
+    allReleases: 'All releases on GitHub',
+    mirrorHint: 'Already have a Mirror酱 CDK? Fast download',
 
     badgeCrossPlatform: 'Cross-platform',
     badgeOpenSource: 'MIT License',
@@ -358,6 +375,20 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
   const lang = params.lang;
   const d = useDict(lang);
 
+  const userAgent = (await headers()).get('user-agent') ?? '';
+  const platform = detectPlatform(userAgent);
+  const release = await getRelease();
+  const detectedPlatformName = platform ? d.platformName[platform] : null;
+  const downloadLabels: DownloadLabels = {
+    detectedDownloadLabel: detectedPlatformName
+      ? d.downloadFor(detectedPlatformName)
+      : d.ctaDownload,
+    genericDownloadLabel: d.ctaDownload,
+    platformName: d.platformName,
+    appleSilicon: d.appleSilicon,
+    allReleases: d.allReleases,
+  };
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -442,10 +473,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
 
           {/* CTA buttons */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <LinkButton href={DOWNLOAD_URL} size="lg" className="rounded-full px-7 text-sm font-semibold shadow-lg">
-                <Download className="size-4" />
-                {d.ctaDownload}
-            </LinkButton>
+            <DownloadButton release={release} platform={platform} labels={downloadLabels} />
             <LinkButton href={`/${lang}/docs/advanced/cli`} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
                 <Terminal className="size-4" />
                 {d.ctaCli}
@@ -455,6 +483,18 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                 <ArrowRight className="size-4" />
             </LinkButton>
           </div>
+
+          {lang === 'zh' && (
+            <p className="mt-4 flex items-center justify-center gap-1.5 text-sm text-muted-foreground">
+              <Zap className="size-3.5 text-primary" />
+              <a
+                href={getMirrorChyanUrl()}
+                className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
+              >
+                {d.mirrorHint}
+              </a>
+            </p>
+          )}
 
           {/* App schematic — simplified Polymerium UI mockup */}
           <div className="mx-auto mt-16 max-w-4xl">
@@ -865,10 +905,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
           <h2 className="text-3xl font-bold text-foreground">{d.ctaTitle}</h2>
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{d.ctaSub}</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <LinkButton href={DOWNLOAD_URL} size="lg" className="rounded-full px-7 text-sm font-semibold shadow-lg">
-                <Download className="size-4" />
-                {d.ctaDownload}
-            </LinkButton>
+            <DownloadButton release={release} platform={platform} labels={downloadLabels} />
             <LinkButton href={`/${lang}/docs/advanced/cli`} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
                 <Terminal className="size-4" />
                 {d.ctaCli}
