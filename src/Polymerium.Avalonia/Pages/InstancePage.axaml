@@ -341,7 +341,7 @@
                         </StackPanel>
                         <Grid
                             Grid.Row="3"
-                            Margin="12,0"
+                            Margin="12,0,12,12"
                             ColumnDefinitions="Auto,*"
                             ColumnSpacing="12">
                             <Border
