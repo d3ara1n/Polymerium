@@ -10,7 +10,7 @@
 
 ### Added
 
--
+- Add Microsoft account and Xbox Live authentication endpoints to the network checker alongside the existing download sources
 
 ### Changed
 

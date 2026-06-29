@@ -17,6 +17,8 @@ public partial class NetworkCheckerWidget : WidgetBase
 {
     private readonly IReadOnlyList<(string Display, string Url)> _websites =
     [
+        ("Microsoft Login", "https://login.microsoftonline.com"),
+        ("Xbox Live Auth", "https://user.auth.xboxlive.com"),
         ("GitHub Assets", "https://release-assets.githubusercontent.com"),
         ("Mojang Meta", "https://launchermeta.mojang.com"),
         ("PrismLauncher Meta", "https://meta.prismlauncher.org"),
