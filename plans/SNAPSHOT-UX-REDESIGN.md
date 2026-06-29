@@ -306,8 +306,6 @@ ConfirmSaveCommand (async):
 public CleanupResult CleanupOrphans() { ... }
 ```
 
-> 现有 `plans/archived/GC-DESIGN.md` 已有 GC 设计基础，可对齐。
-
 ---
 
 ## 数据模型与 ViewModel 变更汇总
