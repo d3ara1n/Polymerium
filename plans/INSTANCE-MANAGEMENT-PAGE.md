@@ -106,9 +106,11 @@ Tier 2  Recent   (Idle 未 pin 本会话新建)
 | 重启应用 | Recent 清空；未 pin 的 Idle 实例从主列表消失 |
 | 删除实例 | 从 P / R 清理 + unpin 持久化 |
 
-### Pinned 持久化
+### Pinned 持久化与共享
 
-复用 `PersistenceService` 的 `WidgetLocalSection` 机制（`GetWidgetLocalData<T>(key, widgetId, indicator)` `:370` / `SetWidgetLocalData<T>(...)` `:379`），用固定的 `(widgetId, indicator)` 存 Pinned key 集合（如 `string[]`）。不新建数据表，不引入 schema 变更。
+Pinned key 集合复用 `PersistenceService` 的 `WidgetLocalSection` 机制（`GetWidgetLocalData<T>(key, widgetId, indicator)` `:370` / `SetWidgetLocalData<T>(...)` `:379`），用固定的 `(widgetId, indicator)` 存 `string[]`。不新建数据表，不引入 schema 变更。
+
+> NOTE: Pinned 集合归属从原设计「MainWindowContext 内部 HashSet」调整为 **InstanceService 持有的可观察状态**。pin / unpin 不仅改主界面 `_entries` 成员资格，还要从 InstancesPage 右键触发——集合必须跨 VM 共享。InstanceService 持有它并暴露变更流，MainWindowContext 订阅构建 `_entries` 的 P 成员，InstancesPageModel 订阅刷新卡片 📌 角标；任一处改 pin，另一边自动刷新。
 
 ### InstancesPage 设计（Phase C）
 
@@ -118,17 +120,21 @@ Tier 2  Recent   (Idle 未 pin 本会话新建)
 
 `InstanceEntryButton` 的 ControlTheme 绑定 `State` / `Progress` / `IsPending`，并用 `^[State=Installing]` / `=Updating` / `=Deploying` / `=Running` 四组选择器切换状态 Tag 与进度条可见性——它一身兼展示 + 状态瞭望 + 动作入口，正是主界面侧边栏"职责过重、无法扩展管理能力"的根因。复用等于把压垮它的东西原样搬过去，分类 / 筛选 / 批量仍无处生长。
 
-新建 `Controls/InstanceCard.axaml`（ControlTheme）+ `Controls/InstanceCard.cs`，只绑展示字段：
+新建 `Controls/InstanceCard.axaml`（ControlTheme）+ `Controls/InstanceCard.cs`，纯展示 + 跳转，**零按钮**。绑展示字段：
 
-| 绑定 | 来源 |
-|---|---|
-| 封面缩略图 | `Basic.Thumbnail`（右侧渐隐 ImageBrush，沿用 InstanceEntryButton 处理） |
-| 来源标签 | `Basic.SourceLabel` + `#` + `Basic.Key` |
-| 名称 | `Basic.Name` |
-| 元信息 Tag | `Basic.LoaderLabel` / `Basic.Version` |
-| 上次游玩 | `LastPlayedAt`（Humanize） |
+| 绑定 | 来源 | 样式 |
+|---|---|---|
+| 封面 | `Basic.Thumbnail` | **小正方形**（保持 icon 原貌不拉伸）+ 周围主题色渐变兜底。icon 是唯一位图素材且质量参差，不做横向 banner（拉伸变形） |
+| 钉住角标 | `IsPinned` | 已钉住才显 📌，左上角 |
+| 名称 | `Basic.Name` | 主角，大字粗体 |
+| 来源 | `Basic.SourceLabel` | 次要色单行。**不带 `#Key`**（技术噪音）、不带 "from"（i18n 不好做） |
+| 固有属性 | `Basic.LoaderLabel` / `Basic.Version` | **淡 inline**（`┄ Fabric · 1.20.1`），与用户标签严格区分 |
+| 用户标签 | `Tags` | hash 自动分配主题色的色点 + 名，溢出收 `+N`；无标签时整段隐去 |
+| 上次游玩 | `LastPlayedAt` | 最弱，沉底 |
 
-不含状态徽章、不含进度条、不含任何动作入口。点击 = 导航；右键菜单在页面 ItemTemplate 上挂（参照 `AccountsPage.axaml` 的 `ContextFlyout` 写法），不在控件内。
+固有属性（系统读出的技术身份）和用户标签（主观贴的分类）**必须不同样式**——前者淡 inline，后者色点药丸——否则用户分不清「哪些是我标的」。
+
+整卡点击 = `Navigate<InstancePage>(key)`；hover = accent 边框 + 微缩放（沿用 `AccountEntryButton`）；**卡片上无任何按钮**，动作全进右键菜单（见下）。
 
 #### 卡片模型：新建 InstanceCardModel，不走 InstanceEntryModel
 
@@ -136,42 +142,60 @@ Tier 2  Recent   (Idle 未 pin 本会话新建)
 
 - 复用 `InstanceBasicModel` 作 `Basic`（含 Key / Name / Version / LoaderLabel / SourceLabel / Thumbnail + `UpdateIcon()`）
 - 加 `LastPlayedAtRaw`（`ObservableProperty` + `[NotifyPropertyChangedFor(nameof(LastPlayedAt))]`，Humanize 输出，照 `InstanceEntryModel` 同款写法）
+- 加 `IsPinned`（`ObservableProperty`，从 InstanceService 的 Pinned 可观察集合派生）
+- 加 `Tags`（`ObservableCollection<string>`，从 PersistenceService 按 key 读取）
 - 不含 State / Progress / IsPending
 
-#### 布局：卡片网格，骨架照 AccountsPage
+#### 布局：卡片网格全宽，筛选走 flyout
 
-`husk:Page` + `Header`（标题）+ 顶栏（搜索框 + 排序选择）+ 空态 + `ItemsControl` / `WrapPanel` + `InstanceCard` ItemTemplate + `ContextFlyout`。完全沿用 `AccountsPage.axaml` 的骨架与 `AccountsPageModel` 的结构。
+`husk:Page` + `Header`（标题 + 右侧按钮组：排序 ▾ / 筛选 / 新建实例）+ 搜索框（激活的筛选项以可移除药丸回显在搜索栏旁）+ 空态 + `ItemsControl` / `WrapPanel` + `InstanceCard` ItemTemplate + `ContextFlyout`。
+
+筛选不常驻——点 Header 的「筛选」按钮弹 `Flyout`，内含固有 facet（加载器 / 版本 / 来源）+ 用户标签多选；排序按钮挨着，下拉选名称 / 上次游玩 + 升降序。这样卡片网格保持全宽，不被常驻筛选条或分组侧栏吃横向空间。骨架仍沿用 `AccountsPage.axaml`。
 
 #### 数据源：直连 ProfileManager 全集
 
 不走主界面的 `_entries`（那是 P ∪ A ∪ R 收窄集）。`InstancesPageModel.OnInitializeAsync` 遍历 `profileManager.Profiles`，对每个 `(key, item)` 构建 `InstanceCardModel`（`LastPlayedAtRaw` 取 `persistenceService.GetLastActivity(key)?.End`），订阅 `ProfileAdded` / `Updated` / `Removed` 增删卡片模型；`OnDeinitializeAsync` 反订阅。
 
-#### 排序 + 搜索
+#### 排序 + 搜索 + 筛选
 
-DynamicData `SourceCache<InstanceCardModel, string>` + `.Filter(filterText).SortAndBind(SortExpressionComparer)` 绑到 `ItemsControl`。最小版两个排序键（名称、上次游玩），顶栏一个 `TextBox`（FilterText 双向绑定）+ 排序选择。搜索从主界面挪走本就归此页，成本极低。
+DynamicData `SourceCache<InstanceCardModel, string>` + `.Filter(composite).SortAndBind(SortExpressionComparer)` 绑到 `ItemsControl`。filter 是搜索文本（名称包含）与 flyout 选中的 facet / 标签的复合谓词。最小版两个排序键（名称、上次游玩）。搜索框常驻顶栏，facet / 标签筛选走 flyout。
+
+#### 标签（用户自定义）
+
+用户标签是实例的**主观用途分类**（联机 / 测试 / 已弃坑……），补充固有 facet（加载器 / 版本 / 来源）覆盖不了的维度。
+
+- **持久化**：`PersistenceService` 按 Profile key 存 `string[]`（走与 Pinned 同类的轻量存储，**不碰 Profile 本身**——标签是 Instance 的管理属性，不是 Profile 的技术属性）。全局标签列表不单独存，运行时扫所有实例的 tags 去重聚合，增删自动反映。
+- **卡片展示**：色点 + 名，色点颜色按标签名 hash 取主题色板（零用户成本有视觉区分）；溢出收 `+N`。
+- **筛选**：在筛选 flyout 的「我的标签」区多选，与 facet 复合成 filter。
+- **贴标入口**：右键菜单「编辑标签」项或实例属性页——具体交互属后半，最小版只做展示 + 筛选消费。
+
+> 标签的展示与筛选进 Phase C（卡片和 flyout 本来就要画）；贴标 / 管理标签的 UI 进后半。
 
 #### 右键菜单与命令分层
 
-主界面右键取消后，导出 / 打开文件夹 / 设置 / 属性四项迁到 InstancesPage 右键。当前这四个 Command 全在 `MainWindowContext`，调用面不一致（grep 核查）：
+主界面右键菜单整个搬到 InstancesPage，再加钉住项。主界面当前右键 7 项（`MainWindow.axaml:419-455`）：启动(Play) / 部署(Deploy) / — / 导出(Export) / 文件夹(OpenFolder) / — / 设置(GotoSetup) / 属性(GotoProperties)。InstancesPage 右键 = 这 7 项 + 钉住(Pin/Unpin)。
 
-| 命令 | 当前位置 | 调用方 | 迁移策略 |
-|---|---|---|---|
-| `ExportInstanceAsync` | `MainWindowContext.cs:186`（154 行 UI 编排，依赖 ExporterAgent / OverlayService / NotificationService） | `MainWindow.axaml:433` + `InstancePage.axaml:248`（爬 `$parent` 到 shell） | 逻辑下沉 InstanceService；InstancePage.axaml:248 改绑 InstancePageModel 自身命令（顺手修 `$parent` 反模式） |
-| `OpenFolder` | `MainWindowContext.cs:405`（按 key 转目录） | 仅 `MainWindow.axaml:439`（其余页面用各自版本 / `InternalCommands.OpenFolderCommand` 按 path） | 逻辑下沉 InstanceService（按 key）；主界面 Command 删除 |
-| `GotoProperties` | `MainWindowContext.cs:422` | 仅 `MainWindow.axaml:452` | 逻辑下沉 InstanceService；Command 删除 |
-| `GotoSetup` | `MainWindowContext.cs:432` | 仅 `MainWindow.axaml:446` | 逻辑下沉 InstanceService；Command 删除 |
+命令分层——`InstanceService` 承载所有实例相关编排，各 VM 持 `[RelayCommand]` 一行转发：
 
-**分层原则**：`InstanceService` 当前是薄封装（仅 `DeployAndLaunch` / `Deploy`，见 `Services/InstanceService.cs`），功能薄弱，正好充实——承载实例相关的业务 / IO / 导航编排（导出、打开目录、跳转属性 / 设置）。**Command 只留在 ViewModel**（MainWindowContext / InstancesPageModel / InstancePageModel 各自持有 `[RelayCommand]`，方法体仅 `_instanceService.Xxx(key)` 一行转发）。InstanceService 新增依赖：ExporterAgent、OverlayService、NotificationService、NavigationService。
+| 动作 | 逻辑归属 | 说明 |
+|---|---|---|
+| 启动 / 部署 | InstanceService（**已有** `DeployAndLaunch` / `Deploy`） | 原本就在 InstanceService，VM 转发即可 |
+| 导出 / 打开文件夹 / 设置 / 属性 | InstanceService（**下沉**） | 当前在 MainWindowContext；`ExportInstanceAsync`（`:186`，154 行）还被 `InstancePage.axaml:248` 经 `$parent` 引用，下沉后该处改绑 InstancePageModel 自身命令（修反模式） |
+| 钉住 / 取消钉住 | InstanceService（**新增**） | 改 Pinned 可观察集合 + 持久化；主界面 / 管理页订阅自动刷新 |
+
+InstanceService 新增依赖：ExporterAgent、OverlayService、NotificationService、NavigationService（导出 / 打开 / 跳转编排需要）。Command 只留 ViewModel，方法体 `_instanceService.Xxx(key)`。
+
+> NOTE: 启动在右键里只是动作项，不要求卡片承担状态显示——卡片仍纯展示无运行状态。启动的状态反馈归主界面 Active 区和实例页，管理页不掺和。
 
 迁移后各 ViewModel 的 Command：
 
 | ViewModel | 持有 Command | 转发 |
 |---|---|---|
-| `InstancesPageModel`（新建） | Export / OpenFolder / GotoProperties / GotoSetup / ViewInstance | → InstanceService |
+| `InstancesPageModel`（新建） | Play / Deploy / Export / OpenFolder / GotoSetup / GotoProperties / Pin / Unpin / ViewInstance | → InstanceService |
 | `InstancePageModel` | 新增 ExportInstance（修 `:248` 的 `$parent` 反模式） | → InstanceService |
-| `MainWindowContext` | **删除** Export / OpenFolder / GotoProperties / GotoSetup 四个 Command（主界面右键取消后无消费者）；保留 ViewInstance（侧边栏点击导航仍需要） | — |
+| `MainWindowContext` | **删除** Export / OpenFolder / GotoSetup / GotoProperties 四个 Command（主界面右键取消后无消费者）；Play / Deploy / ViewInstance 的去留取决于 Phase B 主界面侧边栏交互（Active 行是否保留启动入口） | — |
 
-点击导航：`ViewInstance` → `Navigate<InstancePage>(key)`（注意是 `InstancePage` 外壳，非 `InstanceWorkspacePage` 子页；原计划此处笔误已修正）。
+点击导航：`ViewInstance` → `Navigate<InstancePage>(key)`（`InstancePage` 外壳，非 `InstanceWorkspacePage` 子页；原计划笔误已修正）。
 
 ### 入口移位
 
@@ -182,25 +206,25 @@ DynamicData `SourceCache<InstanceCardModel, string>` + `.Filter(filterText).Sort
 | 文件 | 改动 | 阶段 |
 |---|---|---|
 | `Models/InstanceEntryModel.cs` | 新增 `IsPinned`（ObservableProperty）+ Recent 序号字段 | A |
-| `Services/PersistenceService.cs` | 新增 Pinned key 集合存取（复用 `WidgetLocalSection`，`:370` / `:379` 附近） | A |
-| `Services/InstanceService.cs` | 充实：新增 `ExportInstanceAsync` / `OpenFolder`（按 key）/ `GotoProperties` / `GotoSetup` 编排；新增依赖 ExporterAgent / OverlayService / NotificationService / NavigationService | C |
-| `MainWindowContext.cs:55` | `_entries` 语义收窄；新增 Pinned key 集（HashSet）+ Recent FIFO 列表 | A |
+| `Services/PersistenceService.cs` | 新增 Pinned key 集合存取 + 标签按 key 存取（复用 `WidgetLocalSection`，`:370` / `:379` 附近） | A/C |
+| `Services/InstanceService.cs` | 充实：新增 `ExportInstanceAsync` / `OpenFolder`（按 key）/ `GotoProperties` / `GotoSetup` / `Pin` / `Unpin` 编排 + **Pinned 可观察集合**（跨 VM 共享）；新增依赖 ExporterAgent / OverlayService / NotificationService / NavigationService | A/C |
+| `MainWindowContext.cs:55` | `_entries` 语义收窄；订阅 InstanceService 的 Pinned 可观察集合构建 P 成员 + Recent FIFO 列表 | A |
 | `MainWindowContext.cs:551` `SubscribeProfileList` | 改为只加 Pinned | A |
 | `MainWindowContext.cs:571` `OnProfileAdded` | 追加 R（cap 3） | A |
 | `MainWindowContext.cs:614` `OnProfileRemoved` | 同步清 P / R + unpin 持久化 | A |
 | `MainWindowContext.cs:628/650/676` 状态钩子 | 增加成员资格判断（Active 进、Idle 非 P 非 R 出） | A |
 | `MainWindowContext.cs` filter pipeline（`:89`–`:97`） | 删除 `FilterText` + `BuildFilter`，pipeline 退化为 `.Sort(tierComparer).Bind()` | B |
-| `MainWindowContext.cs` | 新增 `Pin` / `Unpin` 命令；**删除** Export / OpenFolder / GotoProperties / GotoSetup 四个 Command（主界面右键取消后无消费者）；保留 ViewInstance | B/C |
+| `MainWindowContext.cs` | 新增 `Pin` / `Unpin` 命令（转发 InstanceService）；**删除** Export / OpenFolder / GotoProperties / GotoSetup 四个 Command（主界面右键取消后无消费者） | B/C |
 | `MainWindow.axaml` Row 5（`:352` 附近） | 删除搜索框 `TextBox` | B |
 | `MainWindow.axaml` Row 6 | 实例区右键菜单取消（`:433` / `:439` / `:446` / `:452`），仅留 pin / unpin + 点击导航 | B |
 | `MainWindow.axaml` Row 8（`:508` 附近） | Accounts 移到 Settings 旁，原位改 Instances 入口（`Navigate<InstancesPage>()`） | C |
-| `Models/InstanceCardModel.cs` | **新建**：Basic + LastPlayedAtRaw，无状态 | C |
-| `Controls/InstanceCard.axaml(.cs)` | **新建**：纯展示卡片控件，绑 Basic + 封面 + 上次游玩，无状态无动作 | C |
-| `Pages/InstancesPage.axaml(.cs)` | **新建**：卡片网格 + 顶栏（搜索 + 排序）+ 空态 + 右键菜单 | C |
-| `PageModels/InstancesPageModel.cs` | **新建**：ProfileManager 全集 → InstanceCardModel；订阅增删；Filter + SortAndBind；ViewInstance / Export / OpenFolder / GotoProperties / GotoSetup 命令转发 InstanceService | C |
+| `Models/InstanceCardModel.cs` | **新建**：Basic + LastPlayedAtRaw + IsPinned + Tags，无运行状态 | C |
+| `Controls/InstanceCard.axaml(.cs)` | **新建**：纯展示卡片，零按钮；小正方形封面 + 渐变兜底 + 📌 角标 + 名称/来源/固有属性淡 inline/标签色点/上次游玩；整卡点击导航 | C |
+| `Pages/InstancesPage.axaml(.cs)` | **新建**：全宽卡片网格 + Header（排序 ▾ / 筛选 flyout / 新建）+ 搜索框（激活筛选回显）+ 空态 + 右键菜单（7 项 + 钉住） | C |
+| `PageModels/InstancesPageModel.cs` | **新建**：ProfileManager 全集 → InstanceCardModel；订阅增删 + 订阅 InstanceService Pinned 刷新角标；Filter（搜索+facet+标签）+ SortAndBind；Play / Deploy / Export / OpenFolder / GotoSetup / GotoProperties / Pin / Unpin / ViewInstance 转发 InstanceService | C |
 | `Pages/InstancePage.axaml:248` | `$parent` ExportInstanceCommand → 绑定 InstancePageModel 自身命令（修反模式） | C |
 | `PageModels/InstancePageModel.cs` | 新增 ExportInstanceCommand 转发 InstanceService | C |
-| `Properties/Resources.resx` / `Resources.zh-hans.resx` / `Resources.Designer.cs` | 新增 Pinned / Recent / InstancesPage / InstanceCard 文案（三文件同步） | B/C |
+| `Properties/Resources.resx` / `Resources.zh-hans.resx` / `Resources.Designer.cs` | 新增 Pinned / Recent / InstancesPage / InstanceCard / 标签相关文案（三文件同步） | B/C |
 
 ## 阶段
 
@@ -208,8 +232,8 @@ DynamicData `SourceCache<InstanceCardModel, string>` + `.Filter(filterText).Sort
 |---|---|---|
 | Phase A | 数据层：`IsPinned` 字段、Pinned 持久化、钩子重构（`_entries` 收窄为 P ∪ A ∪ R） | ⏳ 待实施 |
 | Phase B | 主界面 UI：tier 排序 + 去搜索框 + pin / unpin 交互 + 视觉强化 | ⏳ 待实施 |
-| Phase C | InstancesPage 最小骨架（新建 InstanceCard + InstanceCardModel + InstancesPage(.axaml/.cs) + InstancesPageModel）+ InstanceService 充实（导出 / 打开目录 / 跳转下沉，Command 留 VM 转发）+ InstancePage.axaml:248 反模式修正 + 入口移位 | ⏳ 待实施 |
-| 后半 | InstancesPage 高级管理（自定义分组 / 筛选 / 批量操作） | 留白，下次计划 |
+| Phase C | InstancesPage 最小骨架（InstanceCard + InstanceCardModel + InstancesPage(.axaml/.cs) + InstancesPageModel）+ InstanceService 充实（导出 / 打开 / 跳转 + Pin/Unpin + Pinned 可观察集合，Command 留 VM 转发）+ 筛选 flyout（facet）+ 标签展示 + InstancePage.axaml:248 反模式修正 + 入口移位 | ⏳ 待实施 |
+| 后半 | 贴标 / 管理标签 UI + 标签筛选进 flyout + 批量操作（多选 + 批量导出 / 删除 / 部署）+ 自定义分组（视需要） | 留白，下次计划 |
 
 ## 验收标准
 
@@ -280,3 +304,13 @@ Active 判据是 `entry.State != Idle`（条目自身属性），无需独立 ke
 > NOTE: 这里的"动作编排下沉"与非目标里那条"不做 MainWindowContext → InstanceService 的实例管理搬运"不冲突——后者指 `_entries` 状态 / 列表归属（POLY-99 动机已失效，不动），前者指导出 / 打开 / 导航等无状态动作的归集。两者是不同层面的东西。
 
 `OpenFolder` 已有多处分头实现（MainWindowContext 按 key、InstancePageModel、`InternalCommands` 按 path）；主界面那套随右键取消删除，InstancesPage 复用 InstanceService 的按 key 版本（`OpenFolder` 的按 path 版本保留给文件页等按 path 场景）。
+
+### 卡片交互：为何零按钮，启动进右键而非卡片
+
+曾在「卡上显式按钮（启动 / 跳转 / 更多）」与「整卡点击 + 零按钮」之间取舍。选后者：
+
+- 实例卡片动作多（启动 / 部署 / 导出 / 文件夹 / 设置 / 属性 / 钉住），全做成按钮会把卡片挤满、喧宾夺主，违背「纯展示 + 留白」。
+- 整卡点击做最高频的「进实例页」，其余动作收进右键菜单——桌面用户右键、触屏长按，不占卡片视觉。
+- 启动特意不进卡片显式按钮：启动是强状态动作（运行中变停止），但管理页定位是无运行状态。放卡片上会逼卡片承担状态显示，破坏定位。启动留在右键菜单里作为动作项——点了就启动，状态反馈归主界面 Active 区和实例页，卡片始终无状态。
+
+封面用小正方形 icon + 渐变兜底而非横向 banner：icon 是 instance 唯一位图素材、且来自整合包的图标质量参差，正方形拉成横向 banner 必变形。小尺寸保持原貌 + 渐变托底，质量差也耐看。
