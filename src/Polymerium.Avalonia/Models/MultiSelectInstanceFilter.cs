@@ -15,7 +15,6 @@ public class MultiSelectInstanceFilter : InstanceFilterBase
 {
     private readonly CompositeDisposable _disposables = new();
     private readonly Func<InstanceCardModel, IEnumerable<string>> _valuesOf;
-    private bool _isActive;
 
     public override string Label { get; }
 
@@ -25,8 +24,8 @@ public class MultiSelectInstanceFilter : InstanceFilterBase
 
     public override bool IsActive
     {
-        get => _isActive;
-        protected set => SetProperty(ref _isActive, value);
+        get;
+        protected set => SetProperty(ref field, value);
     }
 
     public MultiSelectInstanceFilter(
@@ -40,8 +39,7 @@ public class MultiSelectInstanceFilter : InstanceFilterBase
 
         source.TransformMany(valuesOf, v => v)
               .Transform(v => new FilterOptionModel(v, displayOf?.Invoke(v)))
-              .Sort(SortExpressionComparer<FilterOptionModel>.Ascending(o => o.Label))
-              .Bind(out var options)
+              .SortAndBind(out var options, SortExpressionComparer<FilterOptionModel>.Ascending(o => o.Label))
               .Subscribe()
               .DisposeWith(_disposables);
         Options = options;
