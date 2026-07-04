@@ -23,24 +23,21 @@
     <DockPanel>
         <Grid
             Margin="0,0,0,8"
-            ColumnDefinitions="*,Auto"
+            ColumnDefinitions="Auto,*,Auto"
             ColumnSpacing="8"
             DockPanel.Dock="Top">
             <TextBox
                 Grid.Column="0"
+                MinWidth="222"
                 Text="{Binding FilterText, Mode=TwoWay}"
                 PlaceholderText="{x:Static lang:Resources.InstancesPage_SearchWatermark}" />
             <StackPanel
-                Grid.Column="1"
+                Grid.Column="2"
                 Orientation="Horizontal"
                 Spacing="4">
-                <ComboBox
-                    MinWidth="140"
-                    SelectedIndex="{Binding SortIndex}">
-                    <ComboBoxItem Content="{x:Static lang:Resources.InstancesPage_SortByLastPlayed}" />
-                    <ComboBoxItem Content="{x:Static lang:Resources.InstancesPage_SortByName}" />
-                </ComboBox>
-                <Button Theme="{StaticResource GhostButtonTheme}">
+                <Button
+                    Theme="{StaticResource GhostButtonTheme}"
+                    Classes.Primary="{Binding AnyFilterActive, Mode=OneWay}">
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="6">
@@ -122,6 +119,12 @@
                         </Flyout>
                     </Button.Flyout>
                 </Button>
+                <ComboBox
+                    MinWidth="140"
+                    SelectedIndex="{Binding SortIndex}">
+                    <ComboBoxItem Content="{x:Static lang:Resources.InstancesPage_SortByLastPlayed}" />
+                    <ComboBoxItem Content="{x:Static lang:Resources.InstancesPage_SortByName}" />
+                </ComboBox>
                 <Button
                     Classes="Primary"
                     Command="{Binding NewInstanceCommand}">

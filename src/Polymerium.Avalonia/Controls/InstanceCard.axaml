@@ -31,7 +31,7 @@
         <Setter Property="Padding" Value="16" />
         <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="ClipToBounds" Value="False"/>
+        <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate x:DataType="app:InstanceCardModel">
                 <Border
@@ -45,44 +45,52 @@
                             Margin="{TemplateBinding Padding}"
                             HorizontalAlignment="Stretch"
                             Spacing="10">
-                            <Border
-                                Width="72"
-                                Height="72"
-                                HorizontalAlignment="Left"
-                                CornerRadius="{StaticResource MediumCornerRadius}"
-                                ClipToBounds="True">
-                                <Panel>
-                                    <Rectangle>
-                                        <Rectangle.Fill>
-                                            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                                                <GradientStop Offset="0"
-                                                              Color="{DynamicResource CardBackdropStartColor}" />
-                                                <GradientStop Offset="1" Color="{DynamicResource CardBackdropEndColor}" />
-                                            </LinearGradientBrush>
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-                                    <Image
-                                        Width="48"
-                                        Height="48"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Source="{Binding Basic.Thumbnail, FallbackValue={x:Null}}"
-                                        Stretch="UniformToFill" />
-                                </Panel>
-                            </Border>
-                            <TextBlock
-                                FontSize="{StaticResource LargeFontSize}"
-                                FontWeight="{StaticResource ControlStrongFontWeight}"
-                                MaxLines="2"
-                                Text="{Binding Basic.Name, FallbackValue=NAME}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="Wrap" />
-                            <TextBlock
-                                FontSize="{StaticResource SmallFontSize}"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                MaxLines="1"
-                                Text="{Binding Basic.SourceLabel, FallbackValue=local}"
-                                TextTrimming="CharacterEllipsis" />
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                <Border Grid.Column="0"
+                                        Width="56"
+                                        Height="56"
+                                        CornerRadius="{StaticResource MediumCornerRadius}"
+                                        ClipToBounds="True">
+                                    <Panel>
+                                        <Rectangle>
+                                            <Rectangle.Fill>
+                                                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                                    <GradientStop Offset="0"
+                                                                  Color="{DynamicResource CardBackdropStartColor}" />
+                                                    <GradientStop Offset="1"
+                                                                  Color="{DynamicResource CardBackdropEndColor}" />
+                                                </LinearGradientBrush>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                        <Border CornerRadius="{StaticResource SmallCornerRadius}"
+                                            Width="36"
+                                            Height="36"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                            <Border.Background>
+                                                <ImageBrush
+                                                    Source="{Binding Basic.Thumbnail, FallbackValue={x:Null}}"
+                                                    Stretch="UniformToFill" />
+                                            </Border.Background>
+                                        </Border>
+                                    </Panel>
+                                </Border>
+                                <StackPanel Grid.Column="1" Spacing="2">
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        MaxLines="1"
+                                        Text="{Binding Basic.SourceLabel,Converter={x:Static husk:StringConverters.ToUpper}, FallbackValue=LOCAL}"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <TextBlock
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        MaxLines="2"
+                                        Text="{Binding Basic.Name, FallbackValue=NAME}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Grid>
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
