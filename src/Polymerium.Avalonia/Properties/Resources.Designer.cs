@@ -2421,6 +2421,18 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string MainWindow_PinMenuText {
+            get {
+                return ResourceManager.GetString("MainWindow_PinMenuText", resourceCulture);
+            }
+        }
+        
+        public static string MainWindow_UnpinMenuText {
+            get {
+                return ResourceManager.GetString("MainWindow_UnpinMenuText", resourceCulture);
+            }
+        }
+        
         public static string Enum_Day {
             get {
                 return ResourceManager.GetString("Enum_Day", resourceCulture);
@@ -6594,6 +6606,60 @@ namespace Polymerium.Avalonia.Properties {
         public static string SnapshotManagementPage_SelectToViewLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_SelectToViewLabelText", resourceCulture);
+            }
+        }
+        
+        public static string MainWindow_InstancesButtonText {
+            get {
+                return ResourceManager.GetString("MainWindow_InstancesButtonText", resourceCulture);
+            }
+        }
+        
+        public static string InstancesPage_Title {
+            get {
+                return ResourceManager.GetString("InstancesPage_Title", resourceCulture);
+            }
+        }
+        
+        public static string InstancesPage_SearchWatermark {
+            get {
+                return ResourceManager.GetString("InstancesPage_SearchWatermark", resourceCulture);
+            }
+        }
+        
+        public static string InstancesPage_NewInstanceButtonText {
+            get {
+                return ResourceManager.GetString("InstancesPage_NewInstanceButtonText", resourceCulture);
+            }
+        }
+        
+        public static string InstancesPage_SortByLastPlayed {
+            get {
+                return ResourceManager.GetString("InstancesPage_SortByLastPlayed", resourceCulture);
+            }
+        }
+        
+        public static string InstancesPage_SortByName {
+            get {
+                return ResourceManager.GetString("InstancesPage_SortByName", resourceCulture);
+            }
+        }
+        
+        public static string InstancesPage_FilterButtonText {
+            get {
+                return ResourceManager.GetString("InstancesPage_FilterButtonText", resourceCulture);
+            }
+        }
+        
+        public static string InstancesPage_FilterFlyoutHeader {
+            get {
+                return ResourceManager.GetString("InstancesPage_FilterFlyoutHeader", resourceCulture);
+            }
+        }
+        
+        public static string InstancesPage_FilterPlaceholderText {
+            get {
+                return ResourceManager.GetString("InstancesPage_FilterPlaceholderText", resourceCulture);
             }
         }
     }

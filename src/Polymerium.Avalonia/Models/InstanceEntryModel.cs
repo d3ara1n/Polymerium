@@ -35,5 +35,11 @@ public partial class InstanceEntryModel : ModelBase
 
     public string LastPlayedAt => LastPlayedAtRaw.Humanize();
 
+    [ObservableProperty]
+    public partial bool IsPinned { get; set; }
+
+    [ObservableProperty]
+    public partial int? RecentOrder { get; set; }
+
     #endregion
 }

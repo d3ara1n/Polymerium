@@ -23,7 +23,7 @@ public class GarbageCollector(
         var activeUuids = freeSql.Select<PersistenceService.Account>().ToList(x => x.Uuid).ToHashSet();
         var activeKeyList = activeKeys.ToList();
 
-        var totalSteps = 6 + activeKeyList.Count;
+        var totalSteps = 8 + activeKeyList.Count;
         var completed = 0;
 
         var orphanSelectorKeys = freeSql.Select<PersistenceService.AccountSelector>().ToList(x => x.Key)
@@ -64,6 +64,20 @@ public class GarbageCollector(
         if (orphanWidgetKeys.Count > 0)
             freeSql.Delete<PersistenceService.WidgetLocalSection>()
                 .Where(x => orphanWidgetKeys.Contains(x.Key)).ExecuteAffrows();
+        progress.Report((double)++completed / totalSteps);
+
+        var orphanPinnedKeys = freeSql.Select<PersistenceService.PinnedInstance>().ToList(x => x.Key)
+            .Where(k => !activeKeys.Contains(k)).ToList();
+        if (orphanPinnedKeys.Count > 0)
+            freeSql.Delete<PersistenceService.PinnedInstance>()
+                .Where(x => orphanPinnedKeys.Contains(x.Key)).ExecuteAffrows();
+        progress.Report((double)++completed / totalSteps);
+
+        var orphanTagKeys = freeSql.Select<PersistenceService.InstanceTag>().ToList(x => x.Key)
+            .Distinct().Where(k => !activeKeys.Contains(k)).ToList();
+        if (orphanTagKeys.Count > 0)
+            freeSql.Delete<PersistenceService.InstanceTag>()
+                .Where(x => orphanTagKeys.Contains(x.Key)).ExecuteAffrows();
         progress.Report((double)++completed / totalSteps);
 
         foreach (var key in activeKeyList)

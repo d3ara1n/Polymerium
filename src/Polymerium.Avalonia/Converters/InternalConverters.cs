@@ -159,4 +159,22 @@ public static class InternalConverters
     });
 
     public static IValueConverter SidebarExpandedToWidth { get; } = new RelayConverter((v, _) => v is true ? 160d : 64d);
+
+    public static IValueConverter TagToBrush { get; } = new RelayConverter((v, _) =>
+    {
+        var name = v as string ?? string.Empty;
+        Color[] palette =
+        [
+            Color.FromRgb(0x00, 0x90, 0xFF), // Blue
+            Color.FromRgb(0x2B, 0x9A, 0x66), // Green
+            Color.FromRgb(0xDC, 0x3E, 0x42), // Red
+            Color.FromRgb(0xFF, 0xC5, 0x3D), // Amber
+            Color.FromRgb(0x83, 0x47, 0xB9), // Purple
+            Color.FromRgb(0xEF, 0x5F, 0x00), // Orange
+            Color.FromRgb(0x0D, 0x9B, 0x8A), // Teal
+            Color.FromRgb(0xAB, 0x4A, 0xBA), // Plum
+        ];
+        var index = Math.Abs(name.GetHashCode()) % palette.Length;
+        return new SolidColorBrush(palette[index]);
+    });
 }

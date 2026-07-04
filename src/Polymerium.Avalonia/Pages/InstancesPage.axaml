@@ -1,0 +1,181 @@
+﻿<husk:Page
+    x:Class="Polymerium.Avalonia.Pages.InstancesPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="app:InstancesPageModel"
+    mc:Ignorable="d">
+    <husk:Page.Header>
+        <DockPanel HorizontalSpacing="8">
+            <TextBlock
+                Text="{x:Static lang:Resources.InstancesPage_Title}"
+                Theme="{StaticResource PageHeaderTextBlockTheme}" />
+        </DockPanel>
+    </husk:Page.Header>
+    <DockPanel>
+        <Grid
+            Margin="0,0,0,8"
+            ColumnDefinitions="*,Auto"
+            ColumnSpacing="8"
+            DockPanel.Dock="Top">
+            <TextBox
+                Grid.Column="0"
+                Text="{Binding FilterText, Mode=TwoWay}"
+                PlaceholderText="{x:Static lang:Resources.InstancesPage_SearchWatermark}" />
+            <StackPanel
+                Grid.Column="1"
+                Orientation="Horizontal"
+                Spacing="4">
+                <ComboBox
+                    MinWidth="140"
+                    SelectedIndex="{Binding SortIndex}">
+                    <ComboBoxItem Content="{x:Static lang:Resources.InstancesPage_SortByLastPlayed}" />
+                    <ComboBoxItem Content="{x:Static lang:Resources.InstancesPage_SortByName}" />
+                </ComboBox>
+                <Button Theme="{StaticResource GhostButtonTheme}">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <fi:SymbolIcon
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
+                            Symbol="Filter" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Static lang:Resources.InstancesPage_FilterButtonText}" />
+                    </StackPanel>
+                    <Button.Flyout>
+                        <Flyout Placement="BottomEdgeAlignedRight">
+                            <StackPanel Spacing="8">
+                                <TextBlock
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{x:Static lang:Resources.InstancesPage_FilterFlyoutHeader}" />
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{x:Static lang:Resources.InstancesPage_FilterPlaceholderText}" />
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+                <Button
+                    Classes="Primary"
+                    Command="{Binding NewInstanceCommand}">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="7">
+                        <fi:SymbolIcon
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
+                            Symbol="AddStarburst" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Static lang:Resources.InstancesPage_NewInstanceButtonText}" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Panel>
+            <StackPanel
+                    VerticalAlignment="Center"
+                IsVisible="{Binding View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
+                Spacing="8">
+                <fi:SymbolIcon
+                    HorizontalAlignment="Center"
+                    FontSize="{StaticResource ExtraLargeFontSize}"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Symbol="Apps" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="{StaticResource LargeFontSize}"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+            </StackPanel>
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding View}" Padding="4">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel
+                                ItemSpacing="8"
+                                LineSpacing="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="app:InstanceCardModel">
+                            <app:InstanceCard
+                                Width="220"
+                                Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
+                                CommandParameter="{Binding Basic.Key}">
+                                <app:InstanceCard.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuItem
+                                            Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).PlayCommand, FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Basic.Key}"
+                                            Header="{x:Static lang:Resources.MainWindow_PlayMenuText}"
+                                            Icon="{fie:SymbolIcon Symbol=Rocket,
+                                                                  FontSize={StaticResource MediumFontSize}}" />
+                                        <MenuItem
+                                            Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).DeployCommand, FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Basic.Key}"
+                                            Header="{x:Static lang:Resources.MainWindow_DeployMenuText}"
+                                            Icon="{fie:SymbolIcon Symbol=SettingsCogMultiple,
+                                                                  FontSize={StaticResource MediumFontSize}}" />
+                                        <MenuItem Header="-" />
+                                        <MenuItem
+                                            Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Basic.Key}"
+                                            Header="{x:Static lang:Resources.MainWindow_ExportModpackMenuText}"
+                                            Icon="{fie:SymbolIcon Symbol=FolderZip,
+                                                                  FontSize={StaticResource MediumFontSize}}" />
+                                        <MenuItem
+                                            Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Basic.Key}"
+                                            Header="{x:Static lang:Resources.MainWindow_OpenFolderMenuText}"
+                                            Icon="{fie:SymbolIcon Symbol=FolderOpen,
+                                                                  FontSize={StaticResource MediumFontSize}}" />
+                                        <MenuItem Header="-" />
+                                        <MenuItem
+                                            Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).GotoSetupCommand, FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Basic.Key}"
+                                            Header="{x:Static lang:Resources.MainWindow_SetupMenuText}"
+                                            Icon="{fie:SymbolIcon Symbol=BoxMultiple,
+                                                                  FontSize={StaticResource MediumFontSize}}" />
+                                        <MenuItem
+                                            Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).GotoPropertiesCommand, FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Basic.Key}"
+                                            Header="{x:Static lang:Resources.MainWindow_PropertiesMenuText}"
+                                            Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,
+                                                                  FontSize={StaticResource MediumFontSize}}" />
+                                        <MenuItem Header="-" />
+                                        <MenuItem
+                                            Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).PinCommand, FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Basic.Key}"
+                                            Header="{x:Static lang:Resources.MainWindow_PinMenuText}"
+                                            Icon="{fie:SymbolIcon Symbol=Pin,
+                                                                  FontSize={StaticResource MediumFontSize}}"
+                                            IsVisible="{Binding !IsPinned}" />
+                                        <MenuItem
+                                            Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).UnpinCommand, FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Basic.Key}"
+                                            Header="{x:Static lang:Resources.MainWindow_UnpinMenuText}"
+                                            Icon="{fie:SymbolIcon Symbol=PinOff,
+                                                                  FontSize={StaticResource MediumFontSize}}"
+                                            IsVisible="{Binding IsPinned}" />
+                                    </MenuFlyout>
+                                </app:InstanceCard.ContextFlyout>
+                            </app:InstanceCard>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Panel>
+    </DockPanel>
+</husk:Page>

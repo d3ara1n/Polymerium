@@ -245,8 +245,7 @@
                             </Button>
                             <Button
                                 HorizontalContentAlignment="Stretch"
-                                Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
-                                CommandParameter="{Binding Basic.Key}"
+                                Command="{Binding ExportInstanceCommand}"
                                 CornerRadius="{StaticResource ExtraSmallCornerRadius}"
                                 ToolTip.Tip="{x:Static lang:Resources.InstancePage_ExportModpackToolTipText}">
                                 <Button.IsEnabled>
