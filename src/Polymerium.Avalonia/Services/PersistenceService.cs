@@ -146,6 +146,29 @@ public class PersistenceService(IFreeSql freeSql)
 
     #endregion
 
+    #region Nested type: PinnedInstance
+
+    public class PinnedInstance
+    {
+        [Column(IsPrimary = true)]
+        public required string Key { get; set; }
+    }
+
+    #endregion
+
+    #region Nested type: InstanceTag
+
+    public class InstanceTag
+    {
+        [Column(IsPrimary = true)]
+        public required string Key { get; set; }
+
+        [Column(IsPrimary = true)]
+        public required string Tag { get; set; }
+    }
+
+    #endregion
+
 
     #region Actions
 
@@ -365,6 +388,26 @@ public class PersistenceService(IFreeSql freeSql)
 
     #endregion
 
+    #region PinnedInstance
+
+    public bool IsPinnedInstance(string key) => freeSql.Select<PinnedInstance>().Where(x => x.Key == key).Any();
+
+    public IEnumerable<string> GetPinnedInstanceKeys() => freeSql.Select<PinnedInstance>().ToList(x => x.Key);
+
+    public void SetPinnedInstance(string key, bool pinned)
+    {
+        if (pinned)
+        {
+            freeSql.InsertOrUpdate<PinnedInstance>().SetSource(new() { Key = key }).ExecuteAffrows();
+        }
+        else
+        {
+            freeSql.Delete<PinnedInstance>().Where(x => x.Key == key).ExecuteAffrows();
+        }
+    }
+
+    #endregion
+
     #region Widgets
 
     public T? GetWidgetLocalData<T>(string key, string widgetId, string indicator)
@@ -389,6 +432,21 @@ public class PersistenceService(IFreeSql freeSql)
 
         freeSql.InsertOrUpdate<WidgetLocalSection>().SetSource(widgetSection).ExecuteAffrows();
     }
+
+    public string[] GetInstanceTags(string key) =>
+        freeSql.Select<InstanceTag>().Where(x => x.Key == key).ToList(x => x.Tag).ToArray();
+
+    public void SetInstanceTags(string key, string[] tags)
+    {
+        freeSql.Delete<InstanceTag>().Where(x => x.Key == key).ExecuteAffrows();
+        foreach (var tag in tags)
+        {
+            freeSql.Insert(new InstanceTag { Key = key, Tag = tag }).ExecuteAffrows();
+        }
+    }
+
+    public void RemoveInstanceTags(string key) =>
+        freeSql.Delete<InstanceTag>().Where(x => x.Key == key).ExecuteAffrows();
 
     #endregion
 

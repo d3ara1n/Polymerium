@@ -39,7 +39,8 @@ public partial class InstancePageModel : ViewModelBase,
         WidgetHostService widgetHostService,
         NotificationService notificationService,
         DataService dataService,
-        PersistenceService persistenceService
+        PersistenceService persistenceService,
+        InstanceService instanceService
     )
     {
         _profileManager = profileManager;
@@ -48,6 +49,7 @@ public partial class InstancePageModel : ViewModelBase,
         _dataService = dataService;
         _persistenceService = persistenceService;
         _aggregator = aggregator;
+        _instanceService = instanceService;
         SelectedPage =
             context.Parameter switch
             {
@@ -103,17 +105,10 @@ public partial class InstancePageModel : ViewModelBase,
     #region Commands
 
     [RelayCommand]
-    private Task OpenFolder()
-    {
-        var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
-        return TopLevelHelper.LaunchDirectoryInfoAsync(
-            TopLevelHelper.GetTopLevel(),
-            new(dir),
-            Resources.Shared_FailedToOpenInstanceFolderDangerNotificationTitle,
-            _notificationService,
-            thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
-        );
-    }
+    private Task OpenFolder() => _instanceService.OpenFolder(Basic.Key);
+
+    [RelayCommand]
+    private Task ExportInstance() => _instanceService.ExportInstanceAsync(Basic.Key);
 
     [RelayCommand]
     private void ManageSnapshotsAsync()
@@ -272,6 +267,7 @@ public partial class InstancePageModel : ViewModelBase,
     private readonly NotificationService _notificationService;
     private readonly PersistenceService _persistenceService;
     private readonly InstanceStateAggregator _aggregator;
+    private readonly InstanceService _instanceService;
 
     #endregion
 

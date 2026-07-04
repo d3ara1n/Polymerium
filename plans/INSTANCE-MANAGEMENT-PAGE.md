@@ -2,7 +2,7 @@
 
 > 制定日期：2026-06-30
 > 定位：把实例的"管理"职责从主界面侧边栏剥离到独立的 InstancesPage——主界面实例列表当前同时承载浏览 / 入口 / 状态 / 增删同步四职，过重且阻塞了排序、分组、批量操作等管理能力的扩展
-> 当前状态：蓝本（全篇定稿）。前半（主界面瘦身）+ Phase C（InstancesPage 最小骨架）方案已定；后半（InstancesPage 高级管理：自定义分组 / 筛选 / 批量操作）仍留白，下次计划续写
+> 当前状态：已实施（Phase A / B / C 落地，构建通过）。后半（贴标 UI / facet 筛选聚合 / 批量操作 / 视觉 polish）仍留白，下次计划续写
 > 关联 Issue：[POLY-23](https://d3ara1n.atlassian.net/browse/POLY-23)
 
 计划主角是独立的 InstancesPage（管理），主界面侧边栏只保留 Pinned / Active / Recent 三类轻量瞭望入口（见"三类来源定义"）。
@@ -173,27 +173,29 @@ DynamicData `SourceCache<InstanceCardModel, string>` + `.Filter(composite).SortA
 
 #### 右键菜单与命令分层
 
-主界面右键菜单整个搬到 InstancesPage，再加钉住项。主界面当前右键 7 项（`MainWindow.axaml:419-455`）：启动(Play) / 部署(Deploy) / — / 导出(Export) / 文件夹(OpenFolder) / — / 设置(GotoSetup) / 属性(GotoProperties)。InstancesPage 右键 = 这 7 项 + 钉住(Pin/Unpin)。
+三处实例右键（主界面侧边栏 / InstancesPage / InstancePage）内容基本一致——实例的动作需求到处都一样，区别只在载体不在动作集。有了 InstanceService 聚合动作逻辑，三处各自持 `[RelayCommand]` 一行转发，代码不重复，也不存在「迁移」——每个 VM 注入 InstanceService 即可。
 
-命令分层——`InstanceService` 承载所有实例相关编排，各 VM 持 `[RelayCommand]` 一行转发：
+实例右键标准集（主界面当前右键 7 项 `MainWindow.axaml:419-455` + 钉住）：启动(Play) / 部署(Deploy) / — / 导出(Export) / 文件夹(OpenFolder) / — / 设置(GotoSetup) / 属性(GotoProperties) / — / 钉住(Pin/Unpin)。
+
+动作逻辑归属：
 
 | 动作 | 逻辑归属 | 说明 |
 |---|---|---|
-| 启动 / 部署 | InstanceService（**已有** `DeployAndLaunch` / `Deploy`） | 原本就在 InstanceService，VM 转发即可 |
-| 导出 / 打开文件夹 / 设置 / 属性 | InstanceService（**下沉**） | 当前在 MainWindowContext；`ExportInstanceAsync`（`:186`，154 行）还被 `InstancePage.axaml:248` 经 `$parent` 引用，下沉后该处改绑 InstancePageModel 自身命令（修反模式） |
+| 启动 / 部署 | InstanceService（**已有** `DeployAndLaunch` / `Deploy`） | 原本就在 InstanceService |
+| 导出 / 打开文件夹 / 设置 / 属性 | InstanceService（**下沉**） | 当前在 MainWindowContext；下沉后 InstancePage.axaml:248 改绑 InstancePageModel 自身命令（修 `$parent` 反模式） |
 | 钉住 / 取消钉住 | InstanceService（**新增**） | 改 Pinned 可观察集合 + 持久化；主界面 / 管理页订阅自动刷新 |
 
-InstanceService 新增依赖：ExporterAgent、OverlayService、NotificationService、NavigationService（导出 / 打开 / 跳转编排需要）。Command 只留 ViewModel，方法体 `_instanceService.Xxx(key)`。
+InstanceService 新增依赖：ExporterAgent、OverlayService、NotificationService、NavigationService。各 VM 的 Command 方法体 = `_instanceService.Xxx(key)`。
 
-> NOTE: 启动在右键里只是动作项，不要求卡片承担状态显示——卡片仍纯展示无运行状态。启动的状态反馈归主界面 Active 区和实例页，管理页不掺和。
+> NOTE: 启动在右键里只是动作项，不要求卡片承担状态显示——卡片仍纯展示无运行状态，启动的状态反馈归主界面 Active 区和实例页。
 
-迁移后各 ViewModel 的 Command：
+各 ViewModel 的 Command（全部保留 / 新增，转发 InstanceService）：
 
 | ViewModel | 持有 Command | 转发 |
 |---|---|---|
-| `InstancesPageModel`（新建） | Play / Deploy / Export / OpenFolder / GotoSetup / GotoProperties / Pin / Unpin / ViewInstance | → InstanceService |
-| `InstancePageModel` | 新增 ExportInstance（修 `:248` 的 `$parent` 反模式） | → InstanceService |
-| `MainWindowContext` | **删除** Export / OpenFolder / GotoSetup / GotoProperties 四个 Command（主界面右键取消后无消费者）；Play / Deploy / ViewInstance 的去留取决于 Phase B 主界面侧边栏交互（Active 行是否保留启动入口） | — |
+| `MainWindowContext` | Play / Deploy / Export / OpenFolder / GotoSetup / GotoProperties / Pin / Unpin / ViewInstance（**全部保留**，方法体改转发 InstanceService） | → InstanceService |
+| `InstancesPageModel`（新建） | 同上全套 | → InstanceService |
+| `InstancePageModel` | 整理右键为符合实例场景的全套（导出等），转发 InstanceService；修 `:248` 的 `$parent` 反模式 | → InstanceService |
 
 点击导航：`ViewInstance` → `Navigate<InstancePage>(key)`（`InstancePage` 外壳，非 `InstanceWorkspacePage` 子页；原计划笔误已修正）。
 
@@ -207,33 +209,33 @@ InstanceService 新增依赖：ExporterAgent、OverlayService、NotificationServ
 |---|---|---|
 | `Models/InstanceEntryModel.cs` | 新增 `IsPinned`（ObservableProperty）+ Recent 序号字段 | A |
 | `Services/PersistenceService.cs` | 新增 Pinned key 集合存取 + 标签按 key 存取（复用 `WidgetLocalSection`，`:370` / `:379` 附近） | A/C |
-| `Services/InstanceService.cs` | 充实：新增 `ExportInstanceAsync` / `OpenFolder`（按 key）/ `GotoProperties` / `GotoSetup` / `Pin` / `Unpin` 编排 + **Pinned 可观察集合**（跨 VM 共享）；新增依赖 ExporterAgent / OverlayService / NotificationService / NavigationService | A/C |
+| `Services/InstanceService.cs` | 充实：新增 `ExportInstanceAsync` / `OpenFolder`（按 key）/ `GotoProperties` / `GotoSetup` / `Pin` / `Unpin` 编排 + **Pinned 可观察集合**（跨 VM 共享）；新增依赖 ExporterAgent / OverlayService / NotificationService / NavigationService。动作下沉前置于 Phase B（主界面命令转发依赖它） | A/B |
 | `MainWindowContext.cs:55` | `_entries` 语义收窄；订阅 InstanceService 的 Pinned 可观察集合构建 P 成员 + Recent FIFO 列表 | A |
 | `MainWindowContext.cs:551` `SubscribeProfileList` | 改为只加 Pinned | A |
 | `MainWindowContext.cs:571` `OnProfileAdded` | 追加 R（cap 3） | A |
 | `MainWindowContext.cs:614` `OnProfileRemoved` | 同步清 P / R + unpin 持久化 | A |
 | `MainWindowContext.cs:628/650/676` 状态钩子 | 增加成员资格判断（Active 进、Idle 非 P 非 R 出） | A |
 | `MainWindowContext.cs` filter pipeline（`:89`–`:97`） | 删除 `FilterText` + `BuildFilter`，pipeline 退化为 `.Sort(tierComparer).Bind()` | B |
-| `MainWindowContext.cs` | 新增 `Pin` / `Unpin` 命令（转发 InstanceService）；**删除** Export / OpenFolder / GotoProperties / GotoSetup 四个 Command（主界面右键取消后无消费者） | B/C |
+| `MainWindowContext.cs` | Play / Deploy / Export / OpenFolder / GotoSetup / GotoProperties 命令方法体改转发 InstanceService；新增 Pin / Unpin 命令；ViewInstance 保留 | B/C |
 | `MainWindow.axaml` Row 5（`:352` 附近） | 删除搜索框 `TextBox` | B |
-| `MainWindow.axaml` Row 6 | 实例区右键菜单取消（`:433` / `:439` / `:446` / `:452`），仅留 pin / unpin + 点击导航 | B |
+| `MainWindow.axaml` Row 6 | 实例区右键菜单**保留全部**，追加 pin / unpin 项；命令改绑转发后的 MainWindowContext 命令 | B |
 | `MainWindow.axaml` Row 8（`:508` 附近） | Accounts 移到 Settings 旁，原位改 Instances 入口（`Navigate<InstancesPage>()`） | C |
 | `Models/InstanceCardModel.cs` | **新建**：Basic + LastPlayedAtRaw + IsPinned + Tags，无运行状态 | C |
 | `Controls/InstanceCard.axaml(.cs)` | **新建**：纯展示卡片，零按钮；小正方形封面 + 渐变兜底 + 📌 角标 + 名称/来源/固有属性淡 inline/标签色点/上次游玩；整卡点击导航 | C |
 | `Pages/InstancesPage.axaml(.cs)` | **新建**：全宽卡片网格 + Header（排序 ▾ / 筛选 flyout / 新建）+ 搜索框（激活筛选回显）+ 空态 + 右键菜单（7 项 + 钉住） | C |
 | `PageModels/InstancesPageModel.cs` | **新建**：ProfileManager 全集 → InstanceCardModel；订阅增删 + 订阅 InstanceService Pinned 刷新角标；Filter（搜索+facet+标签）+ SortAndBind；Play / Deploy / Export / OpenFolder / GotoSetup / GotoProperties / Pin / Unpin / ViewInstance 转发 InstanceService | C |
 | `Pages/InstancePage.axaml:248` | `$parent` ExportInstanceCommand → 绑定 InstancePageModel 自身命令（修反模式） | C |
-| `PageModels/InstancePageModel.cs` | 新增 ExportInstanceCommand 转发 InstanceService | C |
+| `PageModels/InstancePageModel.cs` | 整理右键为符合实例场景的全套（导出等），转发 InstanceService；修 `:248` `$parent` 反模式 | C |
 | `Properties/Resources.resx` / `Resources.zh-hans.resx` / `Resources.Designer.cs` | 新增 Pinned / Recent / InstancesPage / InstanceCard / 标签相关文案（三文件同步） | B/C |
 
 ## 阶段
 
 | 阶段 | 内容 | 状态 |
 |---|---|---|
-| Phase A | 数据层：`IsPinned` 字段、Pinned 持久化、钩子重构（`_entries` 收窄为 P ∪ A ∪ R） | ⏳ 待实施 |
-| Phase B | 主界面 UI：tier 排序 + 去搜索框 + pin / unpin 交互 + 视觉强化 | ⏳ 待实施 |
-| Phase C | InstancesPage 最小骨架（InstanceCard + InstanceCardModel + InstancesPage(.axaml/.cs) + InstancesPageModel）+ InstanceService 充实（导出 / 打开 / 跳转 + Pin/Unpin + Pinned 可观察集合，Command 留 VM 转发）+ 筛选 flyout（facet）+ 标签展示 + InstancePage.axaml:248 反模式修正 + 入口移位 | ⏳ 待实施 |
-| 后半 | 贴标 / 管理标签 UI + 标签筛选进 flyout + 批量操作（多选 + 批量导出 / 删除 / 部署）+ 自定义分组（视需要） | 留白，下次计划 |
+| Phase A | 数据层：`IsPinned` / `RecentOrder` 字段、Pinned / 标签持久化、钩子重构（`_entries` 收窄为 P ∪ A ∪ R）。**实施调整**：Pinned 集合归属从原设计的 MainWindowContext 内部 HashSet 改为 InstanceService 持有的可观察 `SourceCache`（跨 VM 共享，因 pin 入口在多处） | ✅ 已完成 |
+| Phase B | 主界面 UI：tier 排序 + 去搜索框 + pin / unpin 交互。**实施调整**：右键菜单保留全部（原设计「取消仅留 pin/unpin」改为「保留全套 + pin/unpin」，因 InstanceService 聚合后无需迁移）；视觉强化只做了 pinned 角标，Active 淡底色 / Recent ✨ 延后（InstanceEntryButton 已有状态 Tag，非阻塞） | ✅ 已完成 |
+| Phase C | InstancesPage 全套（InstanceCard + InstanceCardModel + InstancesPage(.axaml/.cs) + InstancesPageModel）+ InstanceService 充实（导出 / 打开 / 跳转 + Pin/Unpin，Command 留 VM 转发）+ InstancePage.axaml:248 反模式修正 + 入口移位。**实施调整**：筛选 Flyout 最小占位（facet 聚合延后至后半）；标签 +N 截断延后（现 wrap 布局） | ✅ 已完成 |
+| 后半 | 贴标 / 管理标签 UI + facet 筛选聚合进 Flyout + 批量操作（多选 + 批量导出 / 删除 / 部署）+ 自定义分组（视需要）+ 视觉 polish（Active 淡底色 / Recent ✨ / tags +N 截断） | 留白，下次计划 |
 
 ## 验收标准
 

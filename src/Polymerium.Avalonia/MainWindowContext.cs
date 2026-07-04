@@ -48,6 +48,8 @@ public partial class MainWindowContext : ObservableObject
 
     private readonly CompositeDisposable _disposables = new();
     private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
+    private readonly List<string> _recent = [];
+    private int _recentCounter;
 
     #endregion
 
@@ -62,7 +64,6 @@ public partial class MainWindowContext : ObservableObject
         OverlayService overlayService,
         UpdateService updateService,
         UpdateManager updateManager,
-        ExporterAgent exporterAgent,
         ConfigurationService configurationService)
     {
         _profileManager = profileManager;
@@ -73,7 +74,6 @@ public partial class MainWindowContext : ObservableObject
         _overlayService = overlayService;
         _updateService = updateService;
         _updateManager = updateManager;
-        _exporterAgent = exporterAgent;
         _configurationService = configurationService;
 
         _updateService.SetHandler(OnUpdateFound);
@@ -86,20 +86,20 @@ public partial class MainWindowContext : ObservableObject
         _notificationService.UnreadCountChanged += OnUnreadCountChanged;
         UnreadNotificationCount = _notificationService.UnreadCount;
 
-        var filter = this.WhenValueChanged(x => x.FilterText).Select(BuildFilter);
+        _instanceService.PinnedChangeStream
+                        .Subscribe(OnPinnedChanged)
+                        .DisposeWith(_disposables);
+
         _ = _entries
            .Connect()
-           .Filter(filter)
            .SortAndBind(out var view,
-                        SortExpressionComparer<InstanceEntryModel>.Descending(x => x.LastPlayedAtRaw
-                                                                               ?? DateTimeOffset.MinValue))
+                        SortExpressionComparer<InstanceEntryModel>
+                            .Ascending(m => GetTier(m))
+                            .ThenByDescending(x => x.LastPlayedAtRaw ?? DateTimeOffset.MinValue))
            .Subscribe()
            .DisposeWith(_disposables);
         View = view;
     }
-
-    private static Func<InstanceEntryModel, bool> BuildFilter(string? filter) =>
-        x => string.IsNullOrEmpty(filter) || x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
 
     #region Lifecycles
 
@@ -149,7 +149,6 @@ public partial class MainWindowContext : ObservableObject
     private readonly UpdateService _updateService;
     private readonly UpdateManager _updateManager;
     private readonly ProfileManager _profileManager;
-    private readonly ExporterAgent _exporterAgent;
     private readonly ConfigurationService _configurationService;
 
     #endregion
@@ -158,10 +157,6 @@ public partial class MainWindowContext : ObservableObject
 
     [ObservableProperty]
     public partial ReadOnlyObservableCollection<InstanceEntryModel> View { get; set; }
-
-    [ObservableProperty]
-    public partial string FilterText { get; set; } = string.Empty;
-
 
     [ObservableProperty]
     public partial AppUpdateModel? CurrentUpdate { get; set; }
@@ -183,159 +178,7 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private async Task ExportInstanceAsync(string? key)
-    {
-        if (key is not null && _profileManager.TryGetImmutable(key, out var profile))
-        {
-            var loaderLabel = "None";
-            if (profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader))
-            {
-                loaderLabel = LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version);
-            }
-
-            var overrideName = profile.GetOverride<string>(Profile.OVERRIDE_MODPACK_NAME);
-            var overrideAuthor = profile.GetOverride<string>(Profile.OVERRIDE_MODPACK_AUTHOR);
-            var overrideVersion = profile.GetOverride<string>(Profile.OVERRIDE_MODPACK_VERSION);
-
-            var user = string.Empty;
-            var account = _persistenceService.GetAccounts().FirstOrDefault(x => x.IsDefault);
-            if (account != null)
-            {
-                user = AccountHelper.ToCooked(account).Username;
-            }
-
-            var dataPath = PathDef.Default.FileOfPackData(key);
-            PackData? pack = null;
-            try
-            {
-                if (File.Exists(dataPath))
-                {
-                    pack = JsonSerializer.Deserialize<PackData>(await File.ReadAllTextAsync(dataPath),
-                                                                FileHelper.SerializerOptions);
-                }
-            }
-            catch (Exception ex)
-            {
-                _notificationService.PopMessage(ex,
-                                                Resources.MainWindow_ReadPackConfigDangerNotificationTitle,
-                                                GrowlLevel.Warning,
-                                                thumbnail: ThumbnailHelper.ForInstance(key));
-            }
-
-            pack ??= new();
-
-            var availableTags = profile.Setup.Packages.SelectMany(x => x.Tags).Distinct().OrderBy(x => x).ToList();
-
-            var dialog = new ModpackExporterDialog
-            {
-                Pack = pack,
-                AvailableTags = availableTags,
-                OverlayService = _overlayService,
-                NameOriginal = !string.IsNullOrEmpty(overrideName) ? overrideName : profile.Name,
-                LoaderLabel = loaderLabel,
-                PackageCount = profile.Setup.Packages.Count,
-                AuthorOriginal = !string.IsNullOrEmpty(overrideAuthor) ? overrideAuthor : user,
-                VersionOriginal = !string.IsNullOrEmpty(overrideVersion) ? overrideVersion : "1.0.0",
-                Result = new ModpackExporterModel(key),
-            };
-
-            if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is ModpackExporterModel model)
-            {
-                var top = TopLevelHelper.GetTopLevel();
-                var storage = top.StorageProvider;
-                if (storage.CanOpen)
-                {
-                    var name = !string.IsNullOrEmpty(model.NameOverride) ? model.NameOverride : dialog.NameOriginal;
-                    var author = !string.IsNullOrEmpty(model.AuthorOverride)
-                                     ? model.AuthorOverride
-                                     : dialog.AuthorOriginal;
-                    var version = !string.IsNullOrEmpty(model.VersionOverride)
-                                      ? model.VersionOverride
-                                      : dialog.VersionOriginal;
-                    var storageItem = await storage.SaveFilePickerAsync(new()
-                    {
-                        SuggestedStartLocation =
-                            await storage
-                               .TryGetWellKnownFolderAsync(WellKnownFolder
-                                                              .Downloads),
-                        SuggestedFileName =
-                            $"{name}.{version}",
-                        DefaultExtension = "zip",
-                        FileTypeChoices =
-                        [
-                            new(Resources
-                                       .Shared_ZipArchiveFileTypeText)
-                                {
-                                    Patterns = ["*.zip"],
-                                },
-                            ],
-                    });
-                    if (storageItem is not null)
-                    {
-                        profile.SetOverride(Profile.OVERRIDE_MODPACK_NAME, name);
-                        profile.SetOverride(Profile.OVERRIDE_MODPACK_AUTHOR, author);
-                        profile.SetOverride(Profile.OVERRIDE_MODPACK_VERSION, version);
-                        var notification = _notificationService.PopProgress(name,
-                                                                                Resources
-                                                                                   .MainWindow_ExportModpackProgressingNotificationMessage,
-                                                                                thumbnail: ThumbnailHelper
-                                                                                   .ForInstance(key));
-                        try
-                        {
-                            using var container = await Task.Run(async () => await _exporterAgent.ExportAsync(pack,
-                                                                     model.SelectedExporterLabel,
-                                                                     key,
-                                                                     name,
-                                                                     author,
-                                                                     version));
-                            notification.Report(50);
-                            await using var stream = await storageItem.OpenWriteAsync();
-                            await Task.Run(async () =>
-                            {
-                                await _exporterAgent.PackCompressedAsync(stream, container);
-                            });
-                            notification.Report(100);
-                            await Task.Delay(TimeSpan.FromSeconds(1));
-                            var path = storageItem.TryGetLocalPath();
-                            _notificationService.PopMessage(path ?? Resources.Enum_Unknown,
-                                                            Resources
-                                                               .MainWindow_ExportModpackSuccessNotificationTitle,
-                                                            thumbnail: ThumbnailHelper.ForInstance(key));
-                        }
-                        catch (Exception ex)
-                        {
-                            _notificationService.PopMessage(ex,
-                                                            Resources
-                                                               .MainWindow_ExportModpackDangerNotificationTitle,
-                                                            thumbnail: ThumbnailHelper.ForInstance(key));
-                        }
-                        finally
-                        {
-                            notification.Dispose();
-                        }
-                    }
-
-                }
-            }
-
-            var dir = Path.GetDirectoryName(dataPath);
-            if (dir != null && !Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-
-            try
-            {
-                await File.WriteAllTextAsync(dataPath, JsonSerializer.Serialize(pack, FileHelper.SerializerOptions));
-            }
-            catch (Exception ex)
-            {
-                _notificationService.PopMessage(ex,
-                                                Resources.MainWindow_SavePackConfigDangerNotificationTitle,
-                                                thumbnail: ThumbnailHelper.ForInstance(key));
-            }
-        }
-    }
+    private Task ExportInstanceAsync(string? key) => _instanceService.ExportInstanceAsync(key);
 
     [RelayCommand]
     private void Navigate(Type? page)
@@ -373,71 +216,19 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private void Play(string key)
-    {
-        try
-        {
-            _instanceService.DeployAndLaunch(key, LaunchMode.Managed);
-        }
-        catch (Exception ex)
-        {
-            _notificationService.PopMessage(ex,
-                                            Resources.Shared_FailedToLaunchInstanceDangerNotificationTitle,
-                                            thumbnail: ThumbnailHelper.ForInstance(key));
-        }
-    }
+    private void Play(string key) => _instanceService.Play(key);
 
     [RelayCommand]
-    private void Deploy(string key)
-    {
-        try
-        {
-            _instanceService.Deploy(key);
-        }
-        catch (Exception ex)
-        {
-            _notificationService.PopMessage(ex,
-                                            Resources.Shared_FailedToDeployInstanceDangerNotificationTitle,
-                                            thumbnail: ThumbnailHelper.ForInstance(key));
-        }
-    }
+    private void Deploy(string key) => _instanceService.Deploy(key);
 
     [RelayCommand]
-    private Task OpenFolder(string? key)
-    {
-        if (key != null)
-        {
-            var dir = PathDef.Default.DirectoryOfHome(key);
-            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
-                                                           new(dir),
-                                                           Resources
-                                                              .Shared_FailedToOpenInstanceFolderDangerNotificationTitle,
-                                                           _notificationService,
-                                                           thumbnail: ThumbnailHelper.ForInstance(key));
-        }
-
-        return Task.CompletedTask;
-    }
+    private Task OpenFolder(string? key) => _instanceService.OpenFolder(key);
 
     [RelayCommand]
-    private void GotoProperties(string? key)
-    {
-        if (key != null)
-        {
-            _navigationService.Navigate<InstancePage>(new InstancePageModel.CompositeParameter(key,
-                                                          typeof(InstancePropertiesPage)));
-        }
-    }
+    private void GotoProperties(string? key) => _instanceService.GotoProperties(key);
 
     [RelayCommand]
-    private void GotoSetup(string? key)
-    {
-        if (key != null)
-        {
-            _navigationService.Navigate<InstancePage>(new InstancePageModel.CompositeParameter(key,
-                                                          typeof(InstanceSetupPage)));
-        }
-    }
+    private void GotoSetup(string? key) => _instanceService.GotoSetup(key);
 
     [RelayCommand]
     private void OpenNotificationSidebar() => _overlayService.PopSidebar<NotificationSidebar>();
@@ -478,6 +269,9 @@ public partial class MainWindowContext : ObservableObject
 
     [RelayCommand]
     private void GoAccounts() => _navigationService.Navigate<AccountsPage>();
+
+    [RelayCommand]
+    private void GoInstances() => _navigationService.Navigate<InstancesPage>();
 
     [RelayCommand]
     private void GoStorage() => _navigationService.Navigate<MaintenanceStoragePage>();
@@ -557,12 +351,21 @@ public partial class MainWindowContext : ObservableObject
         var list = new List<InstanceEntryModel>();
         foreach (var (key, item) in manager.Profiles)
         {
-            InstanceEntryModel model = new(key, item.Name, item.Setup.Version, item.Setup.Loader, item.Setup.Source)
+            if (!_instanceService.IsPinned(key))
             {
+                continue;
+            }
+
+            list.Add(new(key,
+                         item.Name,
+                         item.Setup.Version,
+                         item.Setup.Loader,
+                         item.Setup.Source)
+            {
+                IsPinned = true,
                 LastPlayedAtRaw =
                     DateTimeHelper.FromPersistedLocalDateTime(_persistenceService.GetLastActivity(key)?.End),
-            };
-            list.Add(model);
+            });
         }
 
         _entries.AddOrUpdate(list);
@@ -570,55 +373,62 @@ public partial class MainWindowContext : ObservableObject
 
     private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
-        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var exist = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
-        if (exist != null)
+        Dispatcher.UIThread.Post(() =>
         {
-            // Import
-            exist.Basic.Name = e.Value.Name;
-            exist.Basic.Source = e.Value.Setup.Source;
-            exist.Basic.Version = e.Value.Setup.Version;
-            exist.Basic.Loader = e.Value.Setup.Loader;
-            exist.Basic.UpdateIcon();
-        }
-        else
-        {
-            // Install
-            exist = new(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader, e.Value.Setup.Source);
-            _entries.AddOrUpdate(exist);
-        }
+            InstanceEntryModel entry;
+            if (_entries.Lookup(e.Key) is { HasValue: true, Value: var existing })
+            {
+                existing.Basic.Name = e.Value.Name;
+                existing.Basic.Source = e.Value.Setup.Source;
+                existing.Basic.Version = e.Value.Setup.Version;
+                existing.Basic.Loader = e.Value.Setup.Loader;
+                existing.Basic.UpdateIcon();
+                entry = existing;
+            }
+            else
+            {
+                entry = new(e.Key, e.Value.Name, e.Value.Setup.Version, e.Value.Setup.Loader, e.Value.Setup.Source);
+                _entries.AddOrUpdate(entry);
+            }
 
-        // 把以下代码放在这里并不合理，但也没其他地方可以放
-        var defaultAccount = _persistenceService.GetDefaultAccount();
-        if (defaultAccount != null)
-        {
-            var cooked = AccountHelper.ToCooked(defaultAccount);
-            _persistenceService.SetAccountSelector(e.Key, cooked.Uuid);
-        }
+            AddRecent(e.Key, entry);
+
+            var defaultAccount = _persistenceService.GetDefaultAccount();
+            if (defaultAccount != null)
+            {
+                var cooked = AccountHelper.ToCooked(defaultAccount);
+                _persistenceService.SetAccountSelector(e.Key, cooked.Uuid);
+            }
+        });
     }
 
     private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
-        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
-        if (model is not null)
+        Dispatcher.UIThread.Post(() =>
         {
-            model.Basic.Name = e.Value.Name;
-            model.Basic.Source = e.Value.Setup.Source;
-            model.Basic.Version = e.Value.Setup.Version;
-            model.Basic.Loader = e.Value.Setup.Loader;
-            model.Basic.UpdateIcon();
-        }
+            if (_entries.Lookup(e.Key) is { HasValue: true, Value: var model })
+            {
+                model.Basic.Name = e.Value.Name;
+                model.Basic.Source = e.Value.Setup.Source;
+                model.Basic.Version = e.Value.Setup.Version;
+                model.Basic.Loader = e.Value.Setup.Loader;
+                model.Basic.UpdateIcon();
+            }
+        });
     }
 
     private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
-        // NOTE: 事件有可能在其他线程触发，不过 ModelBase 好像天生有跨线程操作的神力
-        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == e.Key);
-        if (model is not null)
+        Dispatcher.UIThread.Post(() =>
         {
-            _entries.Remove(model);
-        }
+            _recent.Remove(e.Key);
+            if (_instanceService.IsPinned(e.Key))
+            {
+                _instanceService.Unpin(e.Key);
+            }
+
+            _entries.RemoveKey(e.Key);
+        });
     }
 
     #endregion
@@ -649,8 +459,7 @@ public partial class MainWindowContext : ObservableObject
 
     private void HandleSnapshotUpdate(InstanceStateSnapshot snapshot)
     {
-        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == snapshot.Key);
-        if (model is not null)
+        if (_entries.Lookup(snapshot.Key) is { HasValue: true, Value: var model })
         {
             Dispatcher.UIThread.Post(() =>
             {
@@ -659,37 +468,118 @@ public partial class MainWindowContext : ObservableObject
                 model.Progress = snapshot.Progress is TrackerProgress.Determinate d ? d.Percent : 0d;
             });
         }
-        else if (snapshot.State == InstanceState.Installing)
+        else if (snapshot.State != InstanceState.Idle)
         {
-            // Install 创建的新实例不在列表中，需要添加
-            var newModel = new InstanceEntryModel(snapshot.Key, snapshot.Key, "N/A", null, null);
+            // 未 pin 非 recent 的实例从 InstancesPage 启动：状态必须可见，拉进 _entries
+            InstanceEntryModel entry = _profileManager.TryGetImmutable(snapshot.Key, out var profile)
+                ? new(snapshot.Key, profile.Name, profile.Setup.Version, profile.Setup.Loader, profile.Setup.Source)
+                : new(snapshot.Key, snapshot.Key, "N/A", null, null);
+
             Dispatcher.UIThread.Post(() =>
             {
-                newModel.State = snapshot.State;
-                newModel.IsPending = true;
-                newModel.Progress = 0d;
-                _entries.AddOrUpdate(newModel);
+                entry.State = snapshot.State;
+                entry.IsPending = snapshot.Progress is TrackerProgress.Indeterminate;
+                entry.Progress = snapshot.Progress is TrackerProgress.Determinate d ? d.Percent : 0d;
+                _entries.AddOrUpdate(entry);
             });
         }
     }
 
     private void HandleSnapshotRemove(InstanceStateSnapshot snapshot)
     {
-        var model = _entries.Items.FirstOrDefault(x => x.Basic.Key == snapshot.Key);
-        if (model is not null)
+        if (_entries.Lookup(snapshot.Key) is { HasValue: true, Value: var model })
         {
             Dispatcher.UIThread.Post(() =>
             {
                 model.State = InstanceState.Idle;
                 model.IsPending = false;
-                // Install 完成后移除临时占位条目。ProfileAdded 可能在 tracker
-                // 完成前已经填充了真实数据 — 此时保留条目，供后续 Deploy 阶段接管。
-                if (snapshot.Tracker is InstallTracker && snapshot.Tracker.State is TrackerState.Finished or TrackerState.Faulted
-                    && model.Basic.Source is null)
+                model.Progress = 0d;
+                if (!ShouldShow(model))
                 {
                     _entries.Remove(model);
                 }
             });
+        }
+    }
+
+    private void OnPinnedChanged(IChangeSet<string, string> change)
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            foreach (var item in change)
+            {
+                var pinned = item.Reason is ChangeReason.Add or ChangeReason.Update;
+                if (_entries.Lookup(item.Key) is { HasValue: true, Value: var entry })
+                {
+                    entry.IsPinned = pinned;
+                    if (!pinned && !ShouldShow(entry))
+                    {
+                        _entries.Remove(entry);
+                    }
+                }
+                else if (pinned && _profileManager.TryGetImmutable(item.Key, out var profile))
+                {
+                    _entries.AddOrUpdate(new InstanceEntryModel(item.Key,
+                                             profile.Name,
+                                             profile.Setup.Version,
+                                             profile.Setup.Loader,
+                                             profile.Setup.Source)
+                    {
+                        IsPinned = true,
+                        LastPlayedAtRaw =
+                            DateTimeHelper.FromPersistedLocalDateTime(_persistenceService.GetLastActivity(item.Key)?.End),
+                    });
+                }
+            }
+        });
+    }
+
+    private void AddRecent(string key, InstanceEntryModel entry)
+    {
+        if (_recent.Contains(key))
+        {
+            return;
+        }
+
+        _recent.Add(key);
+        entry.RecentOrder = ++_recentCounter;
+        while (_recent.Count > 3)
+        {
+            var oldestKey = _recent[0];
+            _recent.RemoveAt(0);
+            if (_entries.Lookup(oldestKey) is { HasValue: true, Value: var stale })
+            {
+                stale.RecentOrder = null;
+                if (!ShouldShow(stale))
+                {
+                    _entries.Remove(stale);
+                }
+            }
+        }
+    }
+
+    private static int GetTier(InstanceEntryModel m) => m.State == InstanceState.Idle
+        ? m.IsPinned ? 1 : (m.RecentOrder.HasValue ? 2 : 3)
+        : 0;
+
+    private static bool ShouldShow(InstanceEntryModel m) =>
+        m.IsPinned || m.State != InstanceState.Idle || m.RecentOrder.HasValue;
+
+    [RelayCommand]
+    private void Pin(string? key)
+    {
+        if (key != null)
+        {
+            _instanceService.Pin(key);
+        }
+    }
+
+    [RelayCommand]
+    private void Unpin(string? key)
+    {
+        if (key != null)
+        {
+            _instanceService.Unpin(key);
         }
     }
 

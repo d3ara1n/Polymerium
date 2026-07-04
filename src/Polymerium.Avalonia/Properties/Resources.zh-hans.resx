@@ -1203,6 +1203,12 @@
     <data name="MainWindow_PropertiesMenuText" xml:space="preserve">
         <value>属性</value>
     </data>
+    <data name="MainWindow_PinMenuText" xml:space="preserve">
+        <value>钉住</value>
+    </data>
+    <data name="MainWindow_UnpinMenuText" xml:space="preserve">
+        <value>取消钉住</value>
+    </data>
     <data name="Enum_Month" xml:space="preserve">
         <value>月</value>
     </data>
@@ -3308,5 +3314,32 @@
     </data>
     <data name="SnapshotManagementPage_SelectToViewLabelText" xml:space="preserve">
         <value>选择一个快照查看详情</value>
+    </data>
+    <data name="MainWindow_InstancesButtonText" xml:space="preserve">
+        <value>实例</value>
+    </data>
+    <data name="InstancesPage_Title" xml:space="preserve">
+        <value>实例</value>
+    </data>
+    <data name="InstancesPage_SearchWatermark" xml:space="preserve">
+        <value>按名称搜索实例...</value>
+    </data>
+    <data name="InstancesPage_NewInstanceButtonText" xml:space="preserve">
+        <value>新建实例</value>
+    </data>
+    <data name="InstancesPage_SortByLastPlayed" xml:space="preserve">
+        <value>上次游玩</value>
+    </data>
+    <data name="InstancesPage_SortByName" xml:space="preserve">
+        <value>名称</value>
+    </data>
+    <data name="InstancesPage_FilterButtonText" xml:space="preserve">
+        <value>筛选</value>
+    </data>
+    <data name="InstancesPage_FilterFlyoutHeader" xml:space="preserve">
+        <value>筛选</value>
+    </data>
+    <data name="InstancesPage_FilterPlaceholderText" xml:space="preserve">
+        <value>更多筛选即将推出</value>
     </data>
 </root>

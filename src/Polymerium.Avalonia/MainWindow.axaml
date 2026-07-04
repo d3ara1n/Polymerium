@@ -227,7 +227,7 @@
                     Margin="9"
                     ColumnDefinitions="Auto,*,Auto"
                     ColumnSpacing="8"
-                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*,Auto,Auto"
+                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto,Auto"
                     RowSpacing="8">
                     <Button
                         Grid.Row="0"
@@ -344,31 +344,14 @@
                         Grid.Row="4"
                         Grid.Column="0"
                         Grid.ColumnSpan="3" />
-                    <TextBox
-                        Grid.Row="5"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        PlaceholderText="{x:Static lang:Resources.MainWindow_InstanceFilterPlaceholder}"
-                        Text="{Binding FilterText, Mode=TwoWay}">
-                        <TextBox.InnerRightContent>
-                            <Button
-                                IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                Command="{Binding $parent[TextBox].Clear}"
-                                Content="{fie:SymbolIcon Symbol=Dismiss,
-                                                         FontSize={StaticResource MediumFontSize}}"
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
-                        </TextBox.InnerRightContent>
-                    </TextBox>
                     <husk:DropContainer
-                        Grid.Row="6"
+                        Grid.Row="5"
                         Grid.Column="0"
                         Grid.ColumnSpan="3"
                         DragOver="DropContainer_OnDragOver"
                         Drop="DropContainer_OnDrop">
                         <husk:DropContainer.Overlay>
-                            <Panel
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
+                            <Panel>
                                 <Rectangle
                                     Fill="{StaticResource ControlInteractiveBackgroundBrush}"
                                     RadiusX="6"
@@ -454,6 +437,21 @@
                                                             Header="{x:Static lang:Resources.MainWindow_PropertiesMenuText}"
                                                             Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
+                                                        <MenuItem Header="-" />
+                                                        <MenuItem
+                                                            Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).PinCommand, FallbackValue={x:Null}}"
+                                                            CommandParameter="{Binding Basic.Key}"
+                                                            Header="{x:Static lang:Resources.MainWindow_PinMenuText}"
+                                                            Icon="{fie:SymbolIcon Symbol=Pin,
+                                                                                  FontSize={StaticResource MediumFontSize}}"
+                                                            IsVisible="{Binding !IsPinned}" />
+                                                        <MenuItem
+                                                            Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).UnpinCommand, FallbackValue={x:Null}}"
+                                                            CommandParameter="{Binding Basic.Key}"
+                                                            Header="{x:Static lang:Resources.MainWindow_UnpinMenuText}"
+                                                            Icon="{fie:SymbolIcon Symbol=PinOff,
+                                                                                  FontSize={StaticResource MediumFontSize}}"
+                                                            IsVisible="{Binding IsPinned}" />
                                                     </MenuFlyout>
                                                 </app:InstanceEntryButton.ContextFlyout>
                                             </app:InstanceEntryButton>
@@ -477,7 +475,8 @@
                         Grid.Column="0"
                         Command="{Binding NavigateCommand}"
                         CommandParameter="{x:Type app:SettingsPage}"
-                        Theme="{StaticResource OutlineButtonTheme}">
+                        Theme="{StaticResource OutlineButtonTheme}"
+                        ToolTip.Tip="{x:Static lang:Resources.AppMenu_SettingsText}">
                         <fi:SymbolIcon
                             FontSize="18"
                             IconVariant="Color"
@@ -486,9 +485,7 @@
                     <Button
                         Grid.Row="8"
                         Grid.Column="1"
-                        Grid.ColumnSpan="2"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="{x:Type app:AccountsPage}"
+                        Command="{Binding GoInstancesCommand}"
                         Theme="{StaticResource OutlineButtonTheme}">
                         <StackPanel
                             Orientation="Horizontal"
@@ -496,11 +493,23 @@
                             <fi:SymbolIcon
                                 FontSize="18"
                                 IconVariant="Color"
-                                Symbol="People" />
+                                Symbol="Apps" />
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.MainWindow_AccountButtonText}" />
+                                Text="{x:Static lang:Resources.MainWindow_InstancesButtonText}" />
                         </StackPanel>
+                    </Button>
+                    <Button
+                        Grid.Row="8"
+                        Grid.Column="2"
+                        Command="{Binding NavigateCommand}"
+                        CommandParameter="{x:Type app:AccountsPage}"
+                        Theme="{StaticResource OutlineButtonTheme}"
+                        ToolTip.Tip="{x:Static lang:Resources.MainWindow_AccountButtonText}">
+                        <fi:SymbolIcon
+                            FontSize="18"
+                            IconVariant="Color"
+                            Symbol="People" />
                     </Button>
                 </Grid>
             </DockPanel>

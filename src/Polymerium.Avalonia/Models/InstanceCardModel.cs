@@ -1,14 +1,14 @@
 using System;
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.Avalonia.Facilities;
-using TridentCore.Abstractions;
 
 namespace Polymerium.Avalonia.Models;
 
-public partial class InstanceEntryModel : ModelBase
+public partial class InstanceCardModel : ModelBase
 {
-    public InstanceEntryModel(
+    public InstanceCardModel(
         string key,
         string name,
         string version,
@@ -21,15 +21,6 @@ public partial class InstanceEntryModel : ModelBase
     #region Reactive
 
     [ObservableProperty]
-    public partial InstanceState State { get; set; }
-
-    [ObservableProperty]
-    public partial double Progress { get; set; }
-
-    [ObservableProperty]
-    public partial bool IsPending { get; set; }
-
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(LastPlayedAt))]
     public partial DateTimeOffset? LastPlayedAtRaw { get; set; }
 
@@ -38,8 +29,7 @@ public partial class InstanceEntryModel : ModelBase
     [ObservableProperty]
     public partial bool IsPinned { get; set; }
 
-    [ObservableProperty]
-    public partial int? RecentOrder { get; set; }
+    public ObservableCollection<string> Tags { get; } = [];
 
     #endregion
 }

@@ -1212,6 +1212,12 @@
     <data name="MainWindow_PropertiesMenuText" xml:space="preserve">
         <value>Properties</value>
     </data>
+    <data name="MainWindow_PinMenuText" xml:space="preserve">
+        <value>Pin</value>
+    </data>
+    <data name="MainWindow_UnpinMenuText" xml:space="preserve">
+        <value>Unpin</value>
+    </data>
     <data name="Enum_Day" xml:space="preserve">
         <value>Day</value>
     </data>
@@ -3317,5 +3323,32 @@ Affected entries: {0}
     </data>
     <data name="SnapshotManagementPage_SelectToViewLabelText" xml:space="preserve">
         <value>Select a snapshot to view details</value>
+    </data>
+    <data name="MainWindow_InstancesButtonText" xml:space="preserve">
+        <value>Instances</value>
+    </data>
+    <data name="InstancesPage_Title" xml:space="preserve">
+        <value>Instances</value>
+    </data>
+    <data name="InstancesPage_SearchWatermark" xml:space="preserve">
+        <value>Search instances by name...</value>
+    </data>
+    <data name="InstancesPage_NewInstanceButtonText" xml:space="preserve">
+        <value>New Instance</value>
+    </data>
+    <data name="InstancesPage_SortByLastPlayed" xml:space="preserve">
+        <value>Last Played</value>
+    </data>
+    <data name="InstancesPage_SortByName" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="InstancesPage_FilterButtonText" xml:space="preserve">
+        <value>Filter</value>
+    </data>
+    <data name="InstancesPage_FilterFlyoutHeader" xml:space="preserve">
+        <value>Filters</value>
+    </data>
+    <data name="InstancesPage_FilterPlaceholderText" xml:space="preserve">
+        <value>More filters coming soon</value>
     </data>
 </root>
