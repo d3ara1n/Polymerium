@@ -1,0 +1,115 @@
+<husk:Dialog
+    x:Class="Polymerium.Avalonia.Dialogs.TagsEditorDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{x:Static lang:Resources.TagsEditorDialog_Title}"
+    Width="380"
+    d:DesignHeight="420"
+    d:DesignWidth="380"
+    IsPrimaryButtonVisible="True"
+    Message="{x:Static lang:Resources.TagsEditorDialog_Prompt}"
+    mc:Ignorable="d">
+    <Grid
+        RowDefinitions="Auto,Auto,Auto"
+        RowSpacing="12">
+        <!--  当前标签标题  -->
+        <TextBlock
+            Grid.Row="0"
+            FontSize="{StaticResource SmallFontSize}"
+            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+            Text="{x:Static lang:Resources.TagsEditorDialog_CurrentTagsLabel}" />
+
+        <!--  当前标签展示区（可删除）  -->
+        <ScrollViewer
+            Grid.Row="1"
+            MaxHeight="200">
+            <Panel>
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    IsVisible="{Binding !$parent[app:TagsEditorDialog].HasTags}"
+                    Spacing="6">
+                    <fi:SymbolIcon
+                        HorizontalAlignment="Center"
+                        FontSize="{StaticResource LargeFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Symbol="Tag" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="{StaticResource SmallFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.TagsEditorDialog_EmptyText}" />
+                </StackPanel>
+                <ItemsControl
+                    IsVisible="{Binding $parent[app:TagsEditorDialog].HasTags}"
+                    ItemsSource="{Binding $parent[app:TagsEditorDialog].Tags}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel
+                                ItemSpacing="6"
+                                LineSpacing="6" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <Border
+                                Padding="8,3"
+                                Background="{StaticResource LayerBackgroundBrush}"
+                                BorderBrush="{StaticResource ControlBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{StaticResource ExtraSmallCornerRadius}">
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Spacing="6">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Text="{Binding}" />
+                                    <Button
+                                        Padding="2"
+                                        Command="{Binding $parent[app:TagsEditorDialog].RemoveTagCommand}"
+                                        CommandParameter="{Binding}"
+                                        Cursor="Hand"
+                                        Theme="{StaticResource GhostButtonTheme}">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Symbol="Dismiss" />
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Panel>
+        </ScrollViewer>
+
+        <!--  输入区：AutoCompleteBox + 添加按钮  -->
+        <DockPanel Grid.Row="2">
+            <Button
+                DockPanel.Dock="Right"
+                Margin="6,0,0,0"
+                VerticalAlignment="Stretch"
+                Command="{Binding $parent[app:TagsEditorDialog].AddTagCommand}"
+                Theme="{StaticResource GhostButtonTheme}">
+                <fi:SymbolIcon
+                    FontSize="{StaticResource MediumFontSize}"
+                    Symbol="Add" />
+            </Button>
+            <AutoCompleteBox
+                x:Name="InputBox"
+                FilterMode="Contains"
+                ItemsSource="{Binding $parent[app:TagsEditorDialog].Suggestions}"
+                KeyDown="OnInputKeyDown"
+                MinimumPrefixLength="0"
+                PlaceholderText="{x:Static lang:Resources.TagsEditorDialog_InputPlaceholder}"
+                Text="{Binding $parent[app:TagsEditorDialog].InputText, Mode=TwoWay}" />
+        </DockPanel>
+    </Grid>
+</husk:Dialog>

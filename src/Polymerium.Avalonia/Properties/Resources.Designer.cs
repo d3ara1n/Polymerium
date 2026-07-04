@@ -1593,6 +1593,36 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string TagsEditorDialog_Title {
+            get {
+                return ResourceManager.GetString("TagsEditorDialog_Title", resourceCulture);
+            }
+        }
+        
+        public static string TagsEditorDialog_Prompt {
+            get {
+                return ResourceManager.GetString("TagsEditorDialog_Prompt", resourceCulture);
+            }
+        }
+        
+        public static string TagsEditorDialog_InputPlaceholder {
+            get {
+                return ResourceManager.GetString("TagsEditorDialog_InputPlaceholder", resourceCulture);
+            }
+        }
+        
+        public static string TagsEditorDialog_CurrentTagsLabel {
+            get {
+                return ResourceManager.GetString("TagsEditorDialog_CurrentTagsLabel", resourceCulture);
+            }
+        }
+        
+        public static string TagsEditorDialog_EmptyText {
+            get {
+                return ResourceManager.GetString("TagsEditorDialog_EmptyText", resourceCulture);
+            }
+        }
+        
         public static string PackagePickerDialog_Title {
             get {
                 return ResourceManager.GetString("PackagePickerDialog_Title", resourceCulture);
@@ -6657,9 +6687,33 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string InstancesPage_FilterPlaceholderText {
+        public static string InstancesPage_FilterLoaderLabel {
             get {
-                return ResourceManager.GetString("InstancesPage_FilterPlaceholderText", resourceCulture);
+                return ResourceManager.GetString("InstancesPage_FilterLoaderLabel", resourceCulture);
+            }
+        }
+        
+        public static string InstancesPage_FilterTagsLabel {
+            get {
+                return ResourceManager.GetString("InstancesPage_FilterTagsLabel", resourceCulture);
+            }
+        }
+        
+        public static string InstancesPage_FilterClearButtonText {
+            get {
+                return ResourceManager.GetString("InstancesPage_FilterClearButtonText", resourceCulture);
+            }
+        }
+        
+        public static string InstancesPage_FilterEmptyText {
+            get {
+                return ResourceManager.GetString("InstancesPage_FilterEmptyText", resourceCulture);
+            }
+        }
+        
+        public static string InstancesPage_EditTagsMenuText {
+            get {
+                return ResourceManager.GetString("InstancesPage_EditTagsMenuText", resourceCulture);
             }
         }
     }

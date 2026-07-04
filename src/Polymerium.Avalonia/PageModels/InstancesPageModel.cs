@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using System.Reactive.Linq;
@@ -11,12 +12,15 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using DynamicData.Binding;
+using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
+using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.FileModels;
+using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Services;
 
 namespace Polymerium.Avalonia.PageModels;
@@ -25,12 +29,13 @@ public partial class InstancesPageModel(
     ProfileManager profileManager,
     PersistenceService persistenceService,
     InstanceService instanceService,
-    NavigationService navigationService) : ViewModelBase
+    NavigationService navigationService,
+    OverlayService overlayService) : ViewModelBase
 {
     private readonly CompositeDisposable _disposables = new();
     private readonly SourceCache<InstanceCardModel, string> _cards = new(x => x.Basic.Key);
+    private readonly List<InstanceFilterBase> _filters = [];
     private IDisposable? _pipeline;
-    private ReadOnlyObservableCollection<InstanceCardModel> _view = new(new ObservableCollection<InstanceCardModel>());
 
     #region Reactive
 
@@ -40,11 +45,16 @@ public partial class InstancesPageModel(
     [ObservableProperty]
     public partial int SortIndex { get; set; }
 
+    [ObservableProperty]
+    public partial bool AnyFilterActive { get; set; }
+
+    public IReadOnlyList<InstanceFilterBase> Filters => _filters;
+
     public ReadOnlyObservableCollection<InstanceCardModel> View
     {
-        get => _view;
-        private set => SetProperty(ref _view, value);
-    }
+        get;
+        private set => SetProperty(ref field, value);
+    } = new(new());
 
     #endregion
 
@@ -65,6 +75,13 @@ public partial class InstancesPageModel(
                        .Subscribe(OnPinnedChanged)
                        .DisposeWith(_disposables);
 
+        SetupFilters();
+
+        Observable.CombineLatest(_filters.Select(f => f.WhenValueChanged(x => x.IsActive)).ToArray())
+                  .Select(xs => xs.Any(x => x))
+                  .Subscribe(x => AnyFilterActive = x)
+                  .DisposeWith(_disposables);
+
         RebuildPipeline();
 
         return base.OnInitializeAsync(token);
@@ -73,6 +90,10 @@ public partial class InstancesPageModel(
     protected override Task OnDeinitializeAsync()
     {
         _pipeline?.Dispose();
+        foreach (var filter in _filters)
+        {
+            filter.Dispose();
+        }
         _disposables.Dispose();
 
         profileManager.ProfileAdded -= OnProfileAdded;
@@ -88,12 +109,38 @@ public partial class InstancesPageModel(
 
     partial void OnSortIndexChanged(int value) => RebuildPipeline();
 
+    private void SetupFilters()
+    {
+        _filters.Add(new MultiSelectInstanceFilter(
+            _cards.Connect(),
+            GetLoaderValues,
+            Resources.InstancesPage_FilterLoaderLabel));
+
+        _filters.Add(new MultiSelectInstanceFilter(
+            _cards.Connect(),
+            card => card.Tags,
+            Resources.InstancesPage_FilterTagsLabel));
+    }
+
+    private static IEnumerable<string> GetLoaderValues(InstanceCardModel card)
+    {
+        yield return LoaderHelper.TryParse(card.Basic.Loader, out var result)
+            ? LoaderHelper.ToDisplayName(result.Identity)
+            : Resources.Enum_Vanilla;
+    }
+
     private void RebuildPipeline()
     {
         _pipeline?.Dispose();
         var text = this.WhenValueChanged(x => x.FilterText).Select(BuildTextFilter);
+        var predicates = _filters.Select(f => f.Predicate).Append(text).ToArray();
+        var combined = Observable.CombineLatest(predicates)
+                                .Select(xs => xs.Aggregate(
+                                     new Func<InstanceCardModel, bool>(_ => true),
+                                     (acc, p) => x => acc(x) && p(x)));
+
         _pipeline = _cards.Connect()
-                          .Filter(text)
+                          .Filter(combined)
                           .SortAndBind(out var view, BuildComparer(SortIndex))
                           .Subscribe();
         View = view;
@@ -230,6 +277,53 @@ public partial class InstancesPageModel(
         if (key != null)
         {
             instanceService.Unpin(key);
+        }
+    }
+
+    [RelayCommand]
+    private async Task EditTags(string? key)
+    {
+        if (key is null || _cards.Lookup(key) is not { HasValue: true, Value: var card })
+        {
+            return;
+        }
+
+        var original = card.Tags.ToArray();
+        var suggestions = _cards.Items
+                                .SelectMany(c => c.Tags)
+                                .Where(t => !card.Tags.Contains(t))
+                                .Distinct()
+                                .OrderBy(t => t)
+                                .ToList();
+
+        var dialog = new TagsEditorDialog
+        {
+            InitialTags = original,
+            Suggestions = suggestions,
+        };
+
+        if (await overlayService.PopDialogAsync(dialog)
+            && dialog.Result is IReadOnlyList<string> updated)
+        {
+            foreach (var removed in original.Except(updated).ToList())
+            {
+                card.Tags.Remove(removed);
+            }
+            foreach (var added in updated.Except(original).ToList())
+            {
+                card.Tags.Add(added);
+            }
+
+            persistenceService.SetInstanceTags(key, updated.ToArray());
+        }
+    }
+
+    [RelayCommand]
+    private void ClearFilters()
+    {
+        foreach (var filter in _filters)
+        {
+            filter.Clear();
         }
     }
 
