@@ -217,6 +217,24 @@ Polymerium/
 
 ---
 
+## Known Issues
+
+These are upstream limitations in Avalonia and are not actionable within Polymerium.
+
+### Rendering
+
+- **Gradient color banding** — Avalonia's brush gradient rendering produces visible color jumps in certain gradient transitions. The issue is rooted in the framework's gradient shader and affects all Avalonia applications, not just Polymerium.
+
+### Window chrome
+
+- **Limited custom title bar support on macOS and Linux** — Avalonia's custom title bar chrome support is limited on macOS and Linux. Self-drawn title bars suffer from layout quirks and inconsistent styling that deviate from platform conventions, resulting in visually rough button placement and appearance compared to Windows.
+
+### Popups
+
+- **Poor shadow rendering on macOS** — Avalonia's Tooltip and Flyout popups on macOS cannot render with a truly transparent background, which breaks the platform's native drop shadow effect. The result is a harsh, boxy outline instead of the soft shadow expected on macOS.
+
+---
+
 ## Privacy & Security
 
 Polymerium respects your privacy:
