@@ -798,6 +798,21 @@
     <data name="TagPickerDialog_NoExistingTagsLabelText" xml:space="preserve">
         <value>No existing tags</value>
     </data>
+    <data name="TagsEditorDialog_Title" xml:space="preserve">
+        <value>Edit Tags</value>
+    </data>
+    <data name="TagsEditorDialog_Prompt" xml:space="preserve">
+        <value>Add or remove tags</value>
+    </data>
+    <data name="TagsEditorDialog_InputPlaceholder" xml:space="preserve">
+        <value>Type a tag and press Enter...</value>
+    </data>
+    <data name="TagsEditorDialog_CurrentTagsLabel" xml:space="preserve">
+        <value>Current Tags</value>
+    </data>
+    <data name="TagsEditorDialog_EmptyText" xml:space="preserve">
+        <value>No tags yet</value>
+    </data>
     <data name="PackagePickerDialog_Title" xml:space="preserve">
         <value>Select a Package</value>
     </data>
@@ -3348,7 +3363,19 @@ Affected entries: {0}
     <data name="InstancesPage_FilterFlyoutHeader" xml:space="preserve">
         <value>Filters</value>
     </data>
-    <data name="InstancesPage_FilterPlaceholderText" xml:space="preserve">
-        <value>More filters coming soon</value>
+    <data name="InstancesPage_FilterLoaderLabel" xml:space="preserve">
+        <value>Loader</value>
+    </data>
+    <data name="InstancesPage_FilterTagsLabel" xml:space="preserve">
+        <value>Tags</value>
+    </data>
+    <data name="InstancesPage_FilterClearButtonText" xml:space="preserve">
+        <value>Clear</value>
+    </data>
+    <data name="InstancesPage_FilterEmptyText" xml:space="preserve">
+        <value>No options available</value>
+    </data>
+    <data name="InstancesPage_EditTagsMenuText" xml:space="preserve">
+        <value>Edit Tags</value>
     </data>
 </root>

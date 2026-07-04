@@ -789,6 +789,21 @@
     <data name="TagPickerDialog_NoExistingTagsLabelText" xml:space="preserve">
         <value>暂无现有标签</value>
     </data>
+    <data name="TagsEditorDialog_Title" xml:space="preserve">
+        <value>编辑标签</value>
+    </data>
+    <data name="TagsEditorDialog_Prompt" xml:space="preserve">
+        <value>添加或移除标签</value>
+    </data>
+    <data name="TagsEditorDialog_InputPlaceholder" xml:space="preserve">
+        <value>输入标签后回车添加...</value>
+    </data>
+    <data name="TagsEditorDialog_CurrentTagsLabel" xml:space="preserve">
+        <value>当前标签</value>
+    </data>
+    <data name="TagsEditorDialog_EmptyText" xml:space="preserve">
+        <value>还没有标签</value>
+    </data>
     <data name="PackagePickerDialog_Title" xml:space="preserve">
         <value>选择一个包</value>
     </data>
@@ -3339,7 +3354,19 @@
     <data name="InstancesPage_FilterFlyoutHeader" xml:space="preserve">
         <value>筛选</value>
     </data>
-    <data name="InstancesPage_FilterPlaceholderText" xml:space="preserve">
-        <value>更多筛选即将推出</value>
+    <data name="InstancesPage_FilterLoaderLabel" xml:space="preserve">
+        <value>加载器</value>
+    </data>
+    <data name="InstancesPage_FilterTagsLabel" xml:space="preserve">
+        <value>标签</value>
+    </data>
+    <data name="InstancesPage_FilterClearButtonText" xml:space="preserve">
+        <value>清除</value>
+    </data>
+    <data name="InstancesPage_FilterEmptyText" xml:space="preserve">
+        <value>没有可选项</value>
+    </data>
+    <data name="InstancesPage_EditTagsMenuText" xml:space="preserve">
+        <value>编辑标签</value>
     </data>
 </root>

@@ -54,14 +54,70 @@
                     </StackPanel>
                     <Button.Flyout>
                         <Flyout Placement="BottomEdgeAlignedRight">
-                            <StackPanel Spacing="8">
-                                <TextBlock
-                                    FontSize="{StaticResource MediumFontSize}"
-                                    FontWeight="{StaticResource ControlStrongFontWeight}"
-                                    Text="{x:Static lang:Resources.InstancesPage_FilterFlyoutHeader}" />
-                                <TextBlock
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstancesPage_FilterPlaceholderText}" />
+                            <StackPanel
+                                MinWidth="240"
+                                MaxWidth="280"
+                                Spacing="10">
+                                <DockPanel>
+                                    <TextBlock
+                                        DockPanel.Dock="Left"
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{x:Static lang:Resources.InstancesPage_FilterFlyoutHeader}" />
+                                    <Button
+                                        HorizontalAlignment="Right"
+                                        Classes="Ghost"
+                                        Command="{Binding ClearFiltersCommand}"
+                                        IsVisible="{Binding AnyFilterActive}"
+                                        Padding="6,2">
+                                        <TextBlock
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Text="{x:Static lang:Resources.InstancesPage_FilterClearButtonText}" />
+                                    </Button>
+                                </DockPanel>
+                                <ItemsControl ItemsSource="{Binding Filters}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="app:InstanceFilterBase">
+                                            <StackPanel Spacing="6">
+                                                <TextBlock
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding Label}" />
+                                                <ItemsControl
+                                                    IsVisible="{Binding Options.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                                    ItemsSource="{Binding Options}">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <WrapPanel ItemSpacing="4" LineSpacing="4" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate x:DataType="app:FilterOptionModel">
+                                                            <ToggleButton
+                                                                Padding="8,3"
+                                                                IsChecked="{Binding IsSelected}">
+                                                                <ToggleButton.Styles>
+                                                                    <Style Selector="ToggleButton:checked">
+                                                                        <Setter Property="Background" Value="{StaticResource ControlAccentBackgroundBrush}" />
+                                                                        <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
+                                                                    </Style>
+                                                                </ToggleButton.Styles>
+                                                                <TextBlock
+                                                                    FontSize="{StaticResource SmallFontSize}"
+                                                                    Text="{Binding Label}" />
+                                                            </ToggleButton>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                                <TextBlock
+                                                    IsVisible="{Binding Options.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{x:Static lang:Resources.InstancesPage_FilterEmptyText}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>
@@ -155,6 +211,12 @@
                                             Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,
                                                                   FontSize={StaticResource MediumFontSize}}" />
                                         <MenuItem Header="-" />
+                                        <MenuItem
+                                            Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).EditTagsCommand, FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Basic.Key}"
+                                            Header="{x:Static lang:Resources.InstancesPage_EditTagsMenuText}"
+                                            Icon="{fie:SymbolIcon Symbol=Tag,
+                                                                  FontSize={StaticResource MediumFontSize}}" />
                                         <MenuItem
                                             Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).PinCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding Basic.Key}"
