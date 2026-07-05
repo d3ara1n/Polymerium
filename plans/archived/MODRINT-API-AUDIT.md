@@ -173,4 +173,23 @@ Polymerium 主仓侧：子模块 bump 指针（审核修复合入 Trident.Net ma
 
 ## 审核记录
 
-（审核进行时在此追加每个端点的结论。格式建议：`### 端点名 — ✅/❌ — 结论 + 证据`）
+**审核完成**：2026-07-05。源码（labrinth `v0.15.7`）+ 生产 API 实测双验证。详细端点结论、偏差表、运行时坑汇总见 [`MODRINTH-API-AUDIT-RECORD.md`](./MODRINTH-API-AUDIT-RECORD.md)。
+
+### 路由层
+
+11/11 端点路径与 HTTP 方法全部与 labrinth 源码一致,无幽灵端点。重点验证的「先分页后过滤」bug 已在生产修复（实测 `limit=5 + game_versions 过滤` 返回过滤后的 5 条,末版本 `GUEd3mz0` 与无过滤的 `JjCVwmVA` 不同）。
+
+### 已修复（submodules/Trident.Net）
+
+| 项 | 文件 | 改动 |
+|----|------|------|
+| P1 `algorithm` 默认值 | `Clients/IModrinthClient.cs` | 加 NOTE 注释,说明固定 sha1 的原因（唯一调用点 IdentifyAsync 用 SHA1）与改的前提 |
+| P2 `loaders` 格式严格 | `Clients/IModrinthClient.cs` | 加 WARNING 注释,标注必须 JSON 数组、裸字符串/逗号分隔静默返回空 |
+| P3 `limit`/`offset` 形参 | `Clients/IModrinthClient.cs` + `Repositories/ModrinthRepository.cs` | `GetProjectVersionsAsync` 加可选 limit/offset;Resolve/ResolveBatch 传 `limit:1` 取最新,Inspect 保持全量。实测 `limit=1` 与无 limit 的第一条结果一致 |
+| P4 facets 新 key | `Utilities/ModrinthHelper.cs` | `BuildFacets` 的 `versions`→`game_versions`、`project_type`→`project_types`。实测 v2 兼容新 key（`game_versions`→97、`project_types`→77,与旧 key 结果一致）|
+
+### 不修的（记录在案）
+
+- **v2/v3 混用**：v2 tag 转发 v3、v2 search 不走 v3 转发,风险低。迁 v3 search 会破坏 `SearchHit` 模型（v3 字段名全改：`title`→`name`、`description`→`summary`、`project_type`→`project_types` 数组、分页 `limit/offset`→`page/hits_per_page`）,是 breaking 级改动,不值当。
+- **query naming 全局化**：`IUrlParameterKeyFormatter` 作用于共享 `RefitSettings`,会影响 CurseForge 等其他 client,独立任务。
+- **模型字段对齐**：本次未逐字段深审响应 vs 模型,未发现丢字段。
