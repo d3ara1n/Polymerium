@@ -2,7 +2,7 @@
 
 > 制定日期：2026-06-29
 > 定位：基础设施任务，是 Recipe 系统的前置条件之一。
-> 当前状态：**未实施**。本文档是未来实施的蓝本，据此编码不需重新调研。
+> 当前状态：蓝本，✅ 已实施（2026-07-06）。下游任务直接消费 InternalUriHelper。
 > Jira：[POLY-115](https://d3ara1n.atlassian.net/browse/POLY-115)
 > 依赖：无。
 
@@ -117,17 +117,17 @@ Polymerium 内部概念资源统一用：
 
 **本任务只交付**：
 - `recipe://` 的字符串形式约定。
-- 一个 `InternalUri` 工具类（§3.4）能识别和构造它。
+- 一个 `InternalUriHelper` 工具类（§3.4）能识别和构造它。
 - 为后续 `Entry.Source` 存储 recipe:// 提供判定基础。
 
 **不交付**：recipe 的解析（`recipe://qol` 指向哪个 recipe 文件）、导入、UI——这些在 Recipe 系统任务和 SOURCE-REFERENCE-SEMANTICS 任务里。
 
 ### 3.4 集中的 scheme 工具
 
-新增 `src/Polymerium.Avalonia/Utilities/InternalUri.cs`（或放合适命名空间），收敛散落的 `StartsWith`：
+新增 `src/Polymerium.Avalonia/Utilities/InternalUriHelper.cs`（或放合适命名空间），收敛散落的 `StartsWith`：
 
 ```csharp
-public static class InternalUri
+public static class InternalUriHelper
 {
     public static bool IsInternal(string? s) =>
         s is not null && s.Contains("://", StringComparison.Ordinal);
@@ -144,7 +144,7 @@ public static class InternalUri
 }
 ```
 
-`AppImageLoader`、`AccountHelper`、`SkinRenderService` 统一改用 `InternalUri.IsKind(url, "skin")` / `InternalUri.Skin(...)`，消灭裸字符串 `"poly://"`。
+`AppImageLoader`、`AccountHelper`、`SkinRenderService` 统一改用 `InternalUriHelper.IsKind(url, "skin")` / `InternalUriHelper.Skin(...)`，消灭裸字符串 `"poly://"`。
 
 > 这个工具不放 Trident——内部 URI 是 Polymerium 宿主的概念，Trident 的 Purl 体系自洽，不需引入。
 
@@ -152,10 +152,10 @@ public static class InternalUri
 
 现有 `Entry.Source` 里存的整合包标识是 Purl 文本（如 `curseforge:all-the-mods`，由 `CurseForgeImporter` 写入，见 `Importers/CurseForgeImporter.cs:38`）。这些文本 **不含 `://`**，因此：
 
-- `InternalUri.IsInternal(source)` 对所有现存 Source 返回 `false`（Purl 不被误判为内部 URI）。
+- `InternalUriHelper.IsInternal(source)` 对所有现存 Source 返回 `false`（Purl 不被误判为内部 URI）。
 - 反之 `recipe://xxx` 含 `://`，`PackageHelper.TryParse` 会解析失败——recipe 标识不会被当 Purl。
 
-任何"这个 Source 是 recipe 还是整合包"的判断，用 `InternalUri.IsKind(source, "recipe")`，**不要**用 `PackageHelper.TryParse`。这条边界规则要在 SOURCE-REFERENCE-SEMANTICS 任务的所有 Source 读取点贯彻。
+任何"这个 Source 是 recipe 还是整合包"的判断，用 `InternalUriHelper.IsKind(source, "recipe")`，**不要**用 `PackageHelper.TryParse`。这条边界规则要在 SOURCE-REFERENCE-SEMANTICS 任务的所有 Source 读取点贯彻。
 
 ---
 
@@ -163,10 +163,10 @@ public static class InternalUri
 
 | 层 | 文件 | 改动 |
 |----|------|------|
-| 工具 | `Utilities/InternalUri.cs`（新增） | scheme 判定与构造工具 |
+| 工具 | `Utilities/InternalUriHelper.cs`（新增） | scheme 判定与构造工具 |
 | 渲染 | `Services/SkinRenderService.cs` | `Scheme` 改 `skin://`，解析入口调整 |
-| 图片加载 | `AppImageLoader.cs` | 路由分支用 `InternalUri.IsKind` |
-| 账号 | `Utilities/AccountHelper.cs` | 7 处拼接改 `InternalUri.Skin` |
+| 图片加载 | `AppImageLoader.cs` | 路由分支用 `InternalUriHelper.IsKind` |
+| 账号 | `Utilities/AccountHelper.cs` | 7 处拼接改 `InternalUriHelper.Skin` |
 | 测试样本 | `PageModels/UnknownPageModel.cs` | 7 处同步 |
 
 本任务**不改动** Profile / LockData / Importer / 部署管线——它只建立命名规范和工具，recipe:// 的消费点（Source 语义、UI 分组）在后续任务接入。
@@ -179,8 +179,8 @@ public static class InternalUri
 |---|------|------|
 | 1 | 全局搜索 `poly://` | 仅可能在历史 git 记录出现，源码中归零 |
 | 2 | 皮肤头像/全身渲染 | 与迁移前行为一致（`skin://` 正确路由到 `SkinRenderService`） |
-| 3 | `InternalUri.IsKind("curseforge:jei", "recipe")` | 返回 `false`（Purl 不误判） |
-| 4 | `InternalUri.IsKind("recipe://qol", "recipe")` | 返回 `true` |
+| 3 | `InternalUriHelper.IsKind("curseforge:jei", "recipe")` | 返回 `false`（Purl 不误判） |
+| 4 | `InternalUriHelper.IsKind("recipe://qol", "recipe")` | 返回 `true` |
 | 5 | `PackageHelper.TryParse("recipe://qol", out _)` | 返回 `false`（recipe 不被当 Purl） |
 | 6 | 旧 `data.lock.json` / `profile.json` 读取 | 不受影响（从未持久化 poly://） |
 
@@ -191,7 +191,7 @@ public static class InternalUri
 | 风险 | 取舍 |
 |------|------|
 | 迁移后 `MemoryCache` 旧 key 失效，首次重渲染皮肤 | 皮肤渲染轻量、按需触发，用户无感；无需做 key 迁移 |
-| 引入 `InternalUri` 工具看似过度设计（当前只有 skin） | recipe 即将到来，提前收敛避免 `StartsWith` 再次散落；工具极轻 |
+| 引入 `InternalUriHelper` 工具看似过度设计（当前只有 skin） | recipe 即将到来，提前收敛避免 `StartsWith` 再次散落；工具极轻 |
 | 未来若 recipe 需要带 query（如 `recipe://qol?v=2`） | `<kind>://<id>[?query]` 规范已预留 query 位，按需扩展 |
 
 ---
@@ -201,7 +201,7 @@ public static class InternalUri
 - **不改 Purl 体系** —— `label:...` 是 Trident 标准，外部仓库标识不动。
 - **不实现 recipe 解析逻辑** —— 只定义形式和判定工具，recipe 指向什么、怎么导入在 Recipe 系统任务。
 - **不持久化迁移 `poly://`** —— 它从未持久化，无需迁移。
-- **不统一图片加载为通用 scheme handler 框架** —— 当前只有 skin 一种图片 scheme，`InternalUri.IsKind` + `SkinRenderService` 足够；待真出现第二种图片 scheme 再抽象（见备选 B.1）。
+- **不统一图片加载为通用 scheme handler 框架** —— 当前只有 skin 一种图片 scheme，`InternalUriHelper.IsKind` + `SkinRenderService` 足够；待真出现第二种图片 scheme 再抽象（见备选 B.1）。
 
 ---
 
@@ -209,7 +209,7 @@ public static class InternalUri
 
 ### B.1 内部 URI 的路由抽象
 
-当前选：**`InternalUri` 静态工具 + 各消费方自行处理**（§3.4）
+当前选：**`InternalUriHelper` 静态工具 + 各消费方自行处理**（§3.4）
 
 | 备选 | 做法 | 取舍 |
 |------|------|------|

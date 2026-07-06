@@ -7,6 +7,7 @@ using Avalonia.Platform.Storage;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.Utilities;
 
 namespace Polymerium.Avalonia;
 
@@ -59,7 +60,7 @@ public class AppImageLoader(
         Bitmap? bitmap;
         try
         {
-            bitmap = url.StartsWith("poly://", StringComparison.Ordinal)
+            bitmap = InternalUriHelper.IsKind(url, "skin")
                          ? await skinRenderer.RenderAsync(url).ConfigureAwait(false)
                          : await LoadAsync(url, storageProvider).ConfigureAwait(false);
         }
