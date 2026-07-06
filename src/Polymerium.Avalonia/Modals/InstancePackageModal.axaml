@@ -442,7 +442,7 @@
                                                 Classes="Small"
                                                 Margin="4,0,0,0"
                                                 Padding="6"
-                                                IsVisible="{Binding $parent[app:InstancePackageModal].((app:InstancePackageInfoModel)DataContext).Owner.IsLocked, Converter={x:Static BoolConverters.Not}, FallbackValue=False}"
+                                                IsVisible="{Binding $parent[app:InstancePackageModal].((app:InstancePackageInfoModel)DataContext).Owner.CanUpdate, FallbackValue=False}"
                                                 Command="{Binding $parent[app:InstancePackageModal].RemoveVersionCommand}"
                                                 Theme="{StaticResource GhostButtonTheme}">
                                                 <fi:SymbolIcon
@@ -457,7 +457,7 @@
                         <husk:SwitchContainer
                             Grid.Row="1"
                             TargetType="x:Boolean"
-                            Value="{Binding Owner.IsLocked}">
+                            Value="{Binding Owner.CanUpdate, Converter={x:Static BoolConverters.Not}}">
                             <husk:SwitchCase Value="True">
                                 <StackPanel
                                     VerticalAlignment="Center"

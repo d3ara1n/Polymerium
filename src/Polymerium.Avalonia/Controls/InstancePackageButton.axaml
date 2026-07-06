@@ -111,7 +111,7 @@
                                                 Spacing="4">
                                                 <husk:Tag
                                                     Classes="Primary"
-                                                    IsVisible="{Binding Owner.IsLocked}"
+                                                    IsVisible="{Binding Owner.CanUpdate, Converter={x:Static BoolConverters.Not}}"
                                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                                     <husk:IconLabel
                                                         Icon="LockClosed"

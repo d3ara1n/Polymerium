@@ -4,7 +4,7 @@ using TridentCore.Abstractions.FileModels;
 
 namespace Polymerium.Avalonia.Models;
 
-public partial class InstancePackageModel(Profile.Rice.Entry entry, bool isLocked) : ModelBase
+public partial class InstancePackageModel(Profile.Rice.Entry entry, bool canUpdate) : ModelBase
 {
     #region Other
 
@@ -22,6 +22,8 @@ public partial class InstancePackageModel(Profile.Rice.Entry entry, bool isLocke
 
     public Profile.Rice.Entry Entry => entry;
 
+    public bool CanRemove => entry.Source is null;
+
     public int PersistentIndex { get; set; }
 
     #endregion
@@ -29,7 +31,7 @@ public partial class InstancePackageModel(Profile.Rice.Entry entry, bool isLocke
     #region Reactive
 
     [ObservableProperty]
-    public partial bool IsLocked { get; set; } = isLocked;
+    public partial bool CanUpdate { get; set; } = canUpdate;
 
     [ObservableProperty]
     public partial bool IsEnabled { get; set; } = entry.Enabled;

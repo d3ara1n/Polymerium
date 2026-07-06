@@ -21,6 +21,7 @@ using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.Utilities;
 using Refit;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Repositories;
@@ -184,7 +185,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                                                                project.ProjectId));
         if (installed is not null)
         {
-            model.State = installed.Source == null || installed.Source != Basic.Source
+            model.State = PackageSourceHelper.CanUpdate(installed.Source, Basic.Source)
                               ? ExhibitState.Editable
                               : ExhibitState.Locked;
             model.Installed = installed;
@@ -361,7 +362,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                                                                   x.Pid));
                                     if (installed is not null)
                                     {
-                                        model.State = installed.Source == null || installed.Source != Basic.Source
+                                        model.State = PackageSourceHelper.CanUpdate(installed.Source, Basic.Source)
                                                           ? ExhibitState.Editable
                                                           : ExhibitState.Locked;
                                         model.Installed = installed;
