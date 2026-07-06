@@ -26,5 +26,6 @@
         <ResourceInclude Source="/Controls/FancyListBox.axaml" />
         <ResourceInclude Source="/Controls/DateRangePicker.axaml" />
         <ResourceInclude Source="/Controls/DependencyGraphCard.axaml" />
+        <ResourceInclude Source="/Controls/HiddenModCard.axaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

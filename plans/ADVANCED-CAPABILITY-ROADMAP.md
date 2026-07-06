@@ -126,7 +126,7 @@ public int DependentCount { get; }  // 入边数：多少个依赖它
 |--------|------|
 | NoteWidget | ✅ 完整 |
 | NetworkCheckerWidget | ✅ 完整 |
-| DeveloperToolboxWidget | ⚠️ 仅 DEBUG，JarInJar Scanner 是空壳（只枚举文件无扫描逻辑），Git Commit Comparer 只有按钮无 command |
+| DeveloperToolboxWidget | ⚠️ 仅 DEBUG（JarInJar Scanner 完成后解除），Git Commit Comparer 只有按钮无 command |
 
 **问题**
 
@@ -134,15 +134,11 @@ public int DependentCount { get; }  // 入边数：多少个依赖它
 
 **方案**
 
-### 第一步：补齐 JarInJar Scanner（已规划）
+### 第一步：补齐 JarInJar Scanner（独立蓝本：[JARINJAR-SCANNER.md](JARINJAR-SCANNER.md)）
 
-实现真正的嵌套 jar 枚举：递归扫描实例 mods 下所有 `.jar`，对每个 jar 检测其内部 `META-INF/jarjar/` 或 `fabric.loader` 声明的内嵌依赖，报告：
+扫描实例 mods 目录下所有 jar，钻取每个 jar-in-jar 嵌套的 mod（复用 `AssetModHelper` 的元数据解析），列出隐藏 mod 并追溯到宿主 mod，让整合包作者知道「游戏内多出来的 mod 是谁带来的、该移除谁」。支持按 modId/Name 搜索，并对重复（内嵌之间、内嵌 vs 顶层）高亮。
 
-- 哪些 mod 内嵌了哪些库
-- 内嵌库的版本冲突（同一个库被多个 mod 以不同版本内嵌）
-- 体积占比
-
-**价值**：排查「明明没装 X 却报 X 的类冲突」这类 JarInJar 引发的疑难杂症，这是当前任何启动器都不提供的诊断。
+**价值**：排查「游戏内 mod 菜单比 mods 目录多出几个 mod，其中某个导致报错」的场景——暴露 jar-in-jar 隐藏 mod 并追溯到宿主，这是当前任何启动器都不提供的诊断。
 
 ### 第二步：候选 Widget（待用户挑选）
 

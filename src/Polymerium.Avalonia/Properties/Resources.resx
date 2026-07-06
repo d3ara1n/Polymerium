@@ -3228,6 +3228,45 @@ Affected entries: {0}
     <data name="InstanceDependencyGraphModal_RequiredTagText" xml:space="preserve">
         <value>Required</value>
     </data>
+    <data name="JarInJarScannerModal_Title" xml:space="preserve">
+        <value>Jar In Jar Scanner</value>
+    </data>
+    <data name="JarInJarScannerModal_Description" xml:space="preserve">
+        <value>Scans mods already deployed to the instance's mods directory and lists mods hidden inside other mods (jar-in-jar), tracing each back to the mod that embeds it. If you changed packages without redeploying, the result reflects the last deployment.</value>
+    </data>
+    <data name="JarInJarScannerModal_ScanButton" xml:space="preserve">
+        <value>Scan</value>
+    </data>
+    <data name="JarInJarScannerModal_ScanningTitle" xml:space="preserve">
+        <value>Scanning jar files...</value>
+    </data>
+    <data name="JarInJarScannerModal_CancelButton" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="JarInJarScannerModal_EmptyTitle" xml:space="preserve">
+        <value>No hidden mods found</value>
+    </data>
+    <data name="JarInJarScannerModal_EmptyDescription" xml:space="preserve">
+        <value>No jar-in-jar mods were detected. The instance may not have been deployed yet, the mods directory may be empty, or no mods are embedding others.</value>
+    </data>
+    <data name="JarInJarScannerModal_RescanButton" xml:space="preserve">
+        <value>Rescan</value>
+    </data>
+    <data name="JarInJarScannerModal_JarFilesLabel" xml:space="preserve">
+        <value>jar files</value>
+    </data>
+    <data name="JarInJarScannerModal_HiddenModsLabel" xml:space="preserve">
+        <value>hidden mods</value>
+    </data>
+    <data name="JarInJarScannerModal_DuplicateLabel" xml:space="preserve">
+        <value>duplicates</value>
+    </data>
+    <data name="JarInJarScannerModal_SearchPlaceholder" xml:space="preserve">
+        <value>Search by mod id or name</value>
+    </data>
+    <data name="JarInJarScannerModal_EmbeddedInHeader" xml:space="preserve">
+        <value>Embedded in</value>
+    </data>
     <data name="InstanceDashboardPage_FilterInformationText" xml:space="preserve">
         <value>Info</value>
     </data>

@@ -24,9 +24,7 @@ public class WidgetHostService(PersistenceService persistenceService, IServicePr
         [
             typeof(NoteWidget),
             typeof(NetworkCheckerWidget),
-#if DEBUG
             typeof(DeveloperToolboxWidget)
-#endif
         ];
 
     public WidgetContext GetOrCreateContext(string key, string widgetId)

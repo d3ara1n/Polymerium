@@ -6417,6 +6417,84 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string JarInJarScannerModal_Title {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_Title", resourceCulture);
+            }
+        }
+        
+        public static string JarInJarScannerModal_Description {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_Description", resourceCulture);
+            }
+        }
+        
+        public static string JarInJarScannerModal_ScanButton {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_ScanButton", resourceCulture);
+            }
+        }
+        
+        public static string JarInJarScannerModal_ScanningTitle {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_ScanningTitle", resourceCulture);
+            }
+        }
+        
+        public static string JarInJarScannerModal_CancelButton {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_CancelButton", resourceCulture);
+            }
+        }
+        
+        public static string JarInJarScannerModal_EmptyTitle {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_EmptyTitle", resourceCulture);
+            }
+        }
+        
+        public static string JarInJarScannerModal_EmptyDescription {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_EmptyDescription", resourceCulture);
+            }
+        }
+        
+        public static string JarInJarScannerModal_RescanButton {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_RescanButton", resourceCulture);
+            }
+        }
+        
+        public static string JarInJarScannerModal_JarFilesLabel {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_JarFilesLabel", resourceCulture);
+            }
+        }
+        
+        public static string JarInJarScannerModal_HiddenModsLabel {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_HiddenModsLabel", resourceCulture);
+            }
+        }
+        
+        public static string JarInJarScannerModal_DuplicateLabel {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_DuplicateLabel", resourceCulture);
+            }
+        }
+        
+        public static string JarInJarScannerModal_SearchPlaceholder {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_SearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        public static string JarInJarScannerModal_EmbeddedInHeader {
+            get {
+                return ResourceManager.GetString("JarInJarScannerModal_EmbeddedInHeader", resourceCulture);
+            }
+        }
+        
         public static string InstanceDashboardPage_FilterInformationText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_FilterInformationText", resourceCulture);

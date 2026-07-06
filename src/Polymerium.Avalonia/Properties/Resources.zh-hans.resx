@@ -3219,6 +3219,45 @@
     <data name="InstanceDependencyGraphModal_RequiredTagText" xml:space="preserve">
         <value>必需</value>
     </data>
+    <data name="JarInJarScannerModal_Title" xml:space="preserve">
+        <value>Jar In Jar 扫描器</value>
+    </data>
+    <data name="JarInJarScannerModal_Description" xml:space="preserve">
+        <value>扫描已部署到实例 mods 目录的模组，列出藏在其他模组内部（jar-in-jar）的模组，并追溯到嵌入它的宿主模组。如果你改动了模组但未重新部署，结果反映的是上次部署的产物。</value>
+    </data>
+    <data name="JarInJarScannerModal_ScanButton" xml:space="preserve">
+        <value>扫描</value>
+    </data>
+    <data name="JarInJarScannerModal_ScanningTitle" xml:space="preserve">
+        <value>正在扫描 jar 文件...</value>
+    </data>
+    <data name="JarInJarScannerModal_CancelButton" xml:space="preserve">
+        <value>取消</value>
+    </data>
+    <data name="JarInJarScannerModal_EmptyTitle" xml:space="preserve">
+        <value>未发现隐藏模组</value>
+    </data>
+    <data name="JarInJarScannerModal_EmptyDescription" xml:space="preserve">
+        <value>未检测到 jar-in-jar 模组。实例可能尚未部署、mods 目录可能为空，或没有模组内嵌了其他模组。</value>
+    </data>
+    <data name="JarInJarScannerModal_RescanButton" xml:space="preserve">
+        <value>重新扫描</value>
+    </data>
+    <data name="JarInJarScannerModal_JarFilesLabel" xml:space="preserve">
+        <value>个 jar 文件</value>
+    </data>
+    <data name="JarInJarScannerModal_HiddenModsLabel" xml:space="preserve">
+        <value>个隐藏模组</value>
+    </data>
+    <data name="JarInJarScannerModal_DuplicateLabel" xml:space="preserve">
+        <value>个重复</value>
+    </data>
+    <data name="JarInJarScannerModal_SearchPlaceholder" xml:space="preserve">
+        <value>按模组 id 或名称搜索</value>
+    </data>
+    <data name="JarInJarScannerModal_EmbeddedInHeader" xml:space="preserve">
+        <value>嵌入于</value>
+    </data>
     <data name="InstanceDashboardPage_FilterInformationText" xml:space="preserve">
         <value>信息</value>
     </data>
