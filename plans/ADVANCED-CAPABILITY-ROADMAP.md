@@ -32,8 +32,8 @@
 
 | 编号 | 项目 | 优先级 | 工作量 | 状态 |
 |------|------|--------|--------|------|
-| **A1** | 依赖图增强：缺失依赖可视化 + 前置/被依赖 + 节点计数 | 🔴 P0 立即 | M | 待实施 |
-| **A3** | Widget 开发者工具箱（补齐空壳 + 新增） | 🟠 P1 | M | 待定内容 |
+| **A1** | 依赖图增强：缺失依赖可视化 + 前置/被依赖 + 节点计数 | 🔴 P0 立即 | M | ✅ 已完成 |
+| **A3** | Widget 开发者工具箱（补齐空壳 + 新增） | 🟠 P1 | M | 第一步已完成（JarInJar）；第二步经评估撚置（价值/ROI 低） |
 | **B3** | 版本元数据源可配置 | 🟠 P1 立即 | S | 待实施 |
 | **A2** | 查询语法升级为真正的查询引擎 | 🟡 P2 | L | 已确认方向 |
 | **B1** | GitHub 整合包源（packwiz 仓库拉取/更新） | 🟡 P2 战略 | L | 待讨论 |
@@ -126,7 +126,7 @@ public int DependentCount { get; }  // 入边数：多少个依赖它
 |--------|------|
 | NoteWidget | ✅ 完整 |
 | NetworkCheckerWidget | ✅ 完整 |
-| DeveloperToolboxWidget | ⚠️ 仅 DEBUG（JarInJar Scanner 完成后解除），Git Commit Comparer 只有按钮无 command |
+| DeveloperToolboxWidget | ✅ JarInJar Scanner 已完成、DEBUG 限制已解除；Git Commit Comparer 仍只有按钮无 command |
 
 **问题**
 
@@ -134,7 +134,7 @@ public int DependentCount { get; }  // 入边数：多少个依赖它
 
 **方案**
 
-### 第一步：补齐 JarInJar Scanner（独立蓝本：[JARINJAR-SCANNER.md](JARINJAR-SCANNER.md)）
+### 第一步：补齐 JarInJar Scanner ✅ 已完成并归档（蓝本：[archived/JARINJAR-SCANNER.md](archived/JARINJAR-SCANNER.md)）
 
 扫描实例 mods 目录下所有 jar，钻取每个 jar-in-jar 嵌套的 mod（复用 `AssetModHelper` 的元数据解析），列出隐藏 mod 并追溯到宿主 mod，让整合包作者知道「游戏内多出来的 mod 是谁带来的、该移除谁」。支持按 modId/Name 搜索，并对重复（内嵌之间、内嵌 vs 顶层）高亮。
 
@@ -146,16 +146,21 @@ public int DependentCount { get; }  // 入边数：多少个依赖它
 
 | 候选 | 价值 | 说明 |
 |------|------|------|
-| **启动耗时分析** | 高 | 记录每次启动各阶段（resolve/deploy/download/launch）耗时，趋势可视化。定位「为什么我的整合包启动要 3 分钟」 |
+| 启动耗时分析 | 低（已撚置） | 评估后不实施：数据需引擎插桩（非现成）、ROI 低、语义属统计板块（详见决策点） |
 | **配置差异对比** | 高 | 对比两个实例的 Profile（包清单/规则/loader），高亮差异。维护多版本整合包时刚需 |
 | **Crash 日志分析** | 中 | 解析 crash report / latestlog，识别报错的 mod 并关联到已安装包 |
 | **模组加载顺序导出** | 中 | 解析游戏输出的实际 mod 加载顺序，与预期对比 |
 | **运行时资源监控** | 中 | 游戏运行时的内存/CPU/线程数采样 |
 | **依赖图快捷入口** | 低 | 把 A1 的依赖图作为可固定 widget 而非 modal |
 
-**决策点**
+**决策点（已评估 · 2026-07-06：撚置）**
 
-请勾选第二步中真正想要的 widget（JarInJar 是确定的，其余需用户确认）。建议优先「启动耗时分析」——它对整合包作者的反馈最直接，且数据源（启动流程已有 progress 回调）现成。
+「启动耗时分析」经详细调研后**不实施**：
+1. **数据非现成**——此前判断「启动流程已有 progress 回调」有误；现有 `Activity` 表只记游戏会话时长（launch 起 → 进程退出，不含 deploy），要拿启动耗时必须在 Trident.Net 的 `DeployCoreAsync` / `LaunchCoreAsync` 插桩记阶段时间戳。
+2. **ROI 低**——即便做出趋势，定位出的信息（下载慢 vs JVM 慢）对多数用户意义有限，不值得引擎侧插桩 + 新实体 + 图表库的投入。
+3. **归属错位**——它语义上属「实例统计/活动」板块，而非开发者工具箱。
+
+其余候选（配置差异对比、Crash 日志分析、模组加载顺序、运行时资源监控、依赖图快捷入口）暂无明确需求，整体撚置。DeveloperToolboxWidget 当前仅留 JarInJar 一个实用工具 + 半成品 Git Commit Comparer。
 
 ---
 
