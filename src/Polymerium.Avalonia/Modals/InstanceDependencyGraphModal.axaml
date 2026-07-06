@@ -102,9 +102,17 @@
                                     Height="32"
                                     VerticalAlignment="Center"
                                     CornerRadius="{StaticResource SmallCornerRadius}">
-                                    <Image
-                                        Source="{Binding Thumbnail}"
-                                        Stretch="UniformToFill" />
+                                    <Panel>
+                                        <Image
+                                            Source="{Binding Thumbnail}"
+                                            Stretch="UniformToFill"
+                                            IsVisible="{Binding !IsMissing}" />
+                                        <fi:SymbolIcon
+                                            Symbol="Warning"
+                                            FontSize="16"
+                                            Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                            IsVisible="{Binding IsMissing}" />
+                                    </Panel>
                                 </Border>
                                 <StackPanel
                                     Grid.Column="1"
