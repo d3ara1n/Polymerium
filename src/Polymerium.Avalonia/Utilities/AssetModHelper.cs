@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -11,60 +12,52 @@ using Tomlyn.Model;
 namespace Polymerium.Avalonia.Utilities;
 
 /// <summary>
-///     Mod 元数据解析器，支持 Fabric、Forge 和 NeoForge
+///     Mod 元数据解析器，支持 Fabric、Quilt、Forge、NeoForge 与旧版 Forge (mcmod.info)
 /// </summary>
 public static class AssetModHelper
 {
-    /// <summary>
-    ///     从 jar 文件中解析 Mod 元数据
-    /// </summary>
     public static AssetModeMetadataModel ParseMetadata(string jarFilePath)
     {
         try
         {
             using var archive = ZipFile.OpenRead(jarFilePath);
+            return ParseMetadata(archive);
+        }
+        catch
+        {
+            return new();
+        }
+    }
 
-            // 尝试解析 Fabric Mod (fabric.mod.json)
+    public static AssetModeMetadataModel ParseMetadata(ZipArchive archive)
+    {
+        try
+        {
             var fabricEntry = archive.GetEntry("fabric.mod.json");
             if (fabricEntry != null)
-            {
                 return ParseFabricMetadata(fabricEntry);
-            }
 
-            // 尝试解析 Quilt Mod (quilt.mod.json)
             var quiltEntry = archive.GetEntry("quilt.mod.json");
             if (quiltEntry != null)
-            {
                 return ParseQuiltMetadata(quiltEntry);
-            }
 
-            // 尝试解析 Forge Mod (mods.toml 或 META-INF/mods.toml)
             var forgeEntry =
                 archive.GetEntry("META-INF/mods.toml") ?? archive.GetEntry("mods.toml");
             if (forgeEntry != null)
-            {
                 return ParseForgeMetadata(forgeEntry);
-            }
 
-            // 尝试解析 NeoForge Mod (neoforge.mods.toml 或 META-INF/neoforge.mods.toml)
             var neoforgeEntry =
                 archive.GetEntry("META-INF/neoforge.mods.toml")
                 ?? archive.GetEntry("neoforge.mods.toml");
             if (neoforgeEntry != null)
-            {
                 return ParseForgeMetadata(neoforgeEntry, ModLoaderKind.NeoForge);
-            }
 
-            // 尝试解析旧版 Forge (mcmod.info)
             var legacyForgeEntry = archive.GetEntry("mcmod.info");
             if (legacyForgeEntry != null)
-            {
                 return ParseLegacyForgeMetadata(legacyForgeEntry);
-            }
         }
         catch
         {
-            // 解析失败，返回空元数据
         }
 
         return new();
@@ -77,6 +70,91 @@ public static class AssetModHelper
     {
         return AssetArchiveHelper.ExtractIcon(jarFilePath, logoFile);
     }
+
+    #region 内嵌 jar 枚举
+
+    public static IReadOnlyList<ZipArchiveEntry> EnumerateEmbeddedJars(ZipArchive archive)
+    {
+        var paths = new HashSet<string>(StringComparer.Ordinal);
+
+        if (archive.GetEntry("META-INF/jarjar/metadata.json") is { } jarJarEntry)
+            paths.UnionWith(ReadTopLevelJars(jarJarEntry, "path"));
+
+        if (archive.GetEntry("fabric.mod.json") is { } fabricEntry)
+            paths.UnionWith(ReadTopLevelJars(fabricEntry, "file"));
+
+        if (archive.GetEntry("quilt.mod.json") is { } quiltEntry)
+            paths.UnionWith(ReadQuiltJars(quiltEntry));
+
+        var result = new List<ZipArchiveEntry>(paths.Count);
+        foreach (var path in paths)
+        {
+            if (archive.GetEntry(path) is { } entry)
+                result.Add(entry);
+        }
+        return result;
+    }
+
+    // { "jars": [{ "<fieldKey>": "..." }] }
+    private static List<string> ReadTopLevelJars(ZipArchiveEntry entry, string fieldKey)
+    {
+        var result = new List<string>();
+        using var stream = entry.Open();
+        using var reader = new StreamReader(stream);
+        var json = reader.ReadToEnd();
+        try
+        {
+            var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.TryGetProperty("jars", out var jars)
+                && jars.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var item in jars.EnumerateArray())
+                {
+                    if (item.TryGetProperty(fieldKey, out var fieldProp)
+                        && fieldProp.ValueKind == JsonValueKind.String
+                        && fieldProp.GetString() is { } value
+                        && value.Length > 0)
+                        result.Add(value);
+                }
+            }
+        }
+        catch
+        {
+        }
+        return result;
+    }
+
+    // quilt.mod.json: { "quilt_loader": { "jars": [{ "file": "..." }] } }
+    private static List<string> ReadQuiltJars(ZipArchiveEntry entry)
+    {
+        var result = new List<string>();
+        using var stream = entry.Open();
+        using var reader = new StreamReader(stream);
+        var json = reader.ReadToEnd();
+        try
+        {
+            var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.TryGetProperty("quilt_loader", out var loader)
+                && loader.TryGetProperty("jars", out var jars)
+                && jars.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var item in jars.EnumerateArray())
+                {
+                    if (item.TryGetProperty("file", out var fileProp)
+                        && fileProp.ValueKind == JsonValueKind.String
+                        && fileProp.GetString() is { } value
+                        && value.Length > 0)
+                        result.Add(value);
+                }
+            }
+        }
+        catch
+        {
+        }
+        return result;
+    }
+
+    #endregion
 
     #region Fabric Mod 解析
 

@@ -1,0 +1,52 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium">
+    <ControlTheme
+        x:Key="{x:Type app:HiddenModCard}"
+        TargetType="app:HiddenModCard">
+        <Setter Property="Background" Value="{StaticResource CardBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource TransparentBrush}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    x:Name="Frame"
+                    Padding="{TemplateBinding Padding}"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}">
+                    <Border.Transitions>
+                        <Transitions>
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="BorderBrush"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="Background"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                        </Transitions>
+                    </Border.Transitions>
+                    <ContentPresenter
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:duplicate-inner /template/ Border#Frame">
+            <Setter Property="Background" Value="{StaticResource ControlWarningTranslucentFullBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlWarningBorderBrush}" />
+        </Style>
+        <Style Selector="^:duplicate-toplevel /template/ Border#Frame">
+            <Setter Property="Background" Value="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlDangerBorderBrush}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>
