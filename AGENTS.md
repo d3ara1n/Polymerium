@@ -116,6 +116,7 @@ Version-numbering convention: **`minor` increments mark milestones, not individu
 - **Choose by semantic ownership, not by visibility or who references it.** The question is whether the type is that other type's own concept — not whether it is public or used elsewhere.
   - **Nested type (类中类)** when it is dedicated to an outer class, even if that class exposes it through its public API (e.g. as a parameter or return type). The fact that callers must supply/pass values of that type does **not** make it independent. Example: `SkinView` nests inside `AccountHelper` because it exists only to describe `AccountHelper`'s body-render URLs.
   - **Own file** when it is a shared model — a type with its own data/properties that View, ViewModel, and Services may all consume is a standalone entity and gets its own file (under `Models/` for models). Example: `SkinFrame` is a model the view binds to and view models build, so it lives in `Models/SkinFrame.cs`, not tucked inside the control.
+- **静态工具类用 `Helper` 后缀、放 `Utilities`。** 无状态工具类是 `public static class XxxHelper`（不可实例化），归属 `<Project>.Utilities` 命名空间；扩展方法类另用 `XxxExtensions` 后缀、放 `Extensions/`，两者不混。
 
 ## Comments
 
