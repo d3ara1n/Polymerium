@@ -69,28 +69,28 @@ public static class AccountHelper
     public static string ToRaw(IAccount account) => JsonSerializer.Serialize(account, account.GetType());
 
     /// <summary>
-    ///     构造本地渲染的 <c>poly://skin</c> URI。<paramref name="src" /> 由
+    ///     构造本地渲染的 <c>skin://</c> URI。<paramref name="src" /> 由
     ///     <see cref="BuildSkinSource" /> 按账户类型产生，由
     ///     <see cref="Services.SkinRenderService" /> 解析路由后离线渲染。
     /// </summary>
     public static Uri GetFaceUrl(string src) =>
-        new($"poly://skin?type=face&src={Uri.EscapeDataString(src)}", UriKind.Absolute);
+        new(InternalUriHelper.Skin($"?type=face&src={Uri.EscapeDataString(src)}"), UriKind.Absolute);
 
     public static Uri GetBodyUrl(string src) =>
-        new($"poly://skin?type=body&src={Uri.EscapeDataString(src)}", UriKind.Absolute);
+        new(InternalUriHelper.Skin($"?type=body&src={Uri.EscapeDataString(src)}"), UriKind.Absolute);
 
     /// <summary>
     ///     构造半身像（Cover）的本地渲染 URI：与 <see cref="GetBodyUrl" /> 共用全身缩放，
     ///     头顶贴顶、画布截取上半身，适合方形卡片预览。
     /// </summary>
     public static Uri GetCoverUrl(string src) =>
-        new($"poly://skin?type=cover&src={Uri.EscapeDataString(src)}", UriKind.Absolute);
+        new(InternalUriHelper.Skin($"?type=cover&src={Uri.EscapeDataString(src)}"), UriKind.Absolute);
 
     public static IReadOnlyList<Uri> GetBodyViewUrls(string src) =>
     [
-        new($"poly://skin?type=front&src={Uri.EscapeDataString(src)}", UriKind.Absolute),
-        new($"poly://skin?type=right&src={Uri.EscapeDataString(src)}", UriKind.Absolute),
-        new($"poly://skin?type=back&src={Uri.EscapeDataString(src)}", UriKind.Absolute),
-        new($"poly://skin?type=left&src={Uri.EscapeDataString(src)}", UriKind.Absolute),
+        new(InternalUriHelper.Skin($"?type=front&src={Uri.EscapeDataString(src)}"), UriKind.Absolute),
+        new(InternalUriHelper.Skin($"?type=right&src={Uri.EscapeDataString(src)}"), UriKind.Absolute),
+        new(InternalUriHelper.Skin($"?type=back&src={Uri.EscapeDataString(src)}"), UriKind.Absolute),
+        new(InternalUriHelper.Skin($"?type=left&src={Uri.EscapeDataString(src)}"), UriKind.Absolute),
     ];
 }

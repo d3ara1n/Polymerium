@@ -7,12 +7,13 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Microsoft.Extensions.Logging;
 using Polymerium.Avalonia.Rendering;
+using Polymerium.Avalonia.Utilities;
 using SkiaSharp;
 
 namespace Polymerium.Avalonia.Services;
 
 /// <summary>
-///     解析 <c>poly://skin?type=&amp;src=</c> 形态的 URI，按数据源路由取得原始皮肤 PNG，
+///     解析 <c>skin://?type=&amp;src=</c> 形态的 URI，按数据源路由取得原始皮肤 PNG，
 ///     交由 <see cref="SkinRenderer" /> 本地离线渲染后产出 Avalonia <see cref="Bitmap" />。
 ///     <para>
 ///         数据源三路：<c>mojang:{uuid}</c>（经第三方皮肤镜像下载原始皮肤 PNG）、
@@ -20,7 +21,7 @@ namespace Polymerium.Avalonia.Services;
 ///         任一来源失败一律回落内置 Steve，保证视觉不空缺。
 ///     </para>
 ///     <para>
-///         渲染结果由 <see cref="AppImageLoader" /> 以完整 poly:// URL 为 key 写入 MemoryCache，
+///         渲染结果由 <see cref="AppImageLoader" /> 以完整 skin:// URL 为 key 写入 MemoryCache，
 ///         30 分钟滑动过期内同 URL 不重复请求，天然缓解上游服务的速率限制；
 ///         加载失败同样写入负缓存（3 分钟绝对过期），避免网络不可达时反复重试刷屏。
 ///     </para>
@@ -30,7 +31,6 @@ public sealed class SkinRenderService(
     SkinRenderer renderer,
     ILogger<SkinRenderService> logger)
 {
-    private const string Scheme = "poly://";
     private const string SteveAssetUri = "avares://Polymerium/Assets/Images/Skins/Steve.png";
     private const string AlexAssetUri = "avares://Polymerium/Assets/Images/Skins/Alex.png";
     private const string HerobrineAssetUri = "avares://Polymerium/Assets/Images/Skins/Herobrine.png";
@@ -42,11 +42,11 @@ public sealed class SkinRenderService(
     private const string SkinMirrorBase = "https://api.mineatar.io/skin/";
 
     /// <summary>
-    ///     渲染入口：仅处理 <c>poly://</c> URI，其余返回 null 交由上层走默认网络加载。
+    ///     渲染入口：仅处理 <c>skin://</c> URI，其余返回 null 交由上层走默认网络加载。
     /// </summary>
     public async Task<Bitmap?> RenderAsync(string url)
     {
-        if (!url.StartsWith(Scheme, StringComparison.Ordinal))
+        if (!InternalUriHelper.IsKind(url, "skin"))
             return null;
 
         try
