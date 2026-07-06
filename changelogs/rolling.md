@@ -3,6 +3,7 @@
 ### ✨ Highlights ✨
 
 - Add a Jar-in-Jar scanner to the developer toolbox that exposes mods hidden inside other mods and traces them to their host mods
+- Rework the instance version lock so unrelated changes no longer silently upgrade mods to their latest versions
 
 ### Fixed
 
@@ -14,7 +15,7 @@
 
 ### Changed
 
--
+- Rework the instance version lock so unrelated changes no longer silently upgrade mods to their latest versions (#POLY-116)
 
 ### Removed
 

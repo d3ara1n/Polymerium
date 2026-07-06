@@ -3,8 +3,8 @@
 > 制定日期：2026-06-29
 > 定位：UI 层任务，是 Recipe 系统的前置条件，让整合包/recipe/手动三类包在界面上可区分、可整组操作。
 > 当前状态：**未实施**。本文档是未来实施的蓝本，据此编码不需重新调研。
-> Jira：[POLY-118](https://d3ara1n.atlassian.net/browse/POLY-118)
-> 依赖：[POLY-117](SOURCE-REFERENCE-SEMANTICS.md)（分组依据语义）。
+> Jira：[POLY-119](https://d3ara1n.atlassian.net/browse/POLY-119)
+> 依赖：[POLY-118](SOURCE-REFERENCE-SEMANTICS.md)（分组依据语义）。
 
 ---
 

@@ -46,7 +46,7 @@ Recipe 系统建立在 5 个前置任务之上，本任务**消费**它们的成
 
 | 前置任务 | Recipe 如何消费 |
 |----------|----------------|
-| [LOCKDATA-MODERNIZATION](LOCKDATA-MODERNIZATION.md) | recipe 导入即锁定，其 mod 版本不漂移 |
+| [LOCKDATA-MODERNIZATION](https://d3ara1n.atlassian.net/browse/POLY-116) | recipe 导入即锁定，其 mod 版本不漂移 |
 | [URL-SCHEME-UNIFICATION](URL-SCHEME-UNIFICATION.md) | recipe 用 `recipe://<id>` 作 `Entry.Source` 标识 |
 | [SOURCE-REFERENCE-SEMANTICS](SOURCE-REFERENCE-SEMANTICS.md) | recipe 包 `Source != null` 即锁定；与整合包/手动三类共存 |
 | [PACKAGE-GROUPING-UI](PACKAGE-GROUPING-UI.md) | recipe 包按 `Source` 自动成组，组级操作天然可用 |
