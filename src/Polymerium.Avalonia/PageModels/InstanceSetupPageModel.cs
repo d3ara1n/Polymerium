@@ -133,7 +133,7 @@ public partial class InstanceSetupPageModel(
             _stageSource.Remove(toRemove);
             var persistentIndex = _stageSource.Count;
             var toAdd = lookup
-                       .Select(x => new InstancePackageModel(x, x.Source is not null && x.Source == Basic.Source)
+                       .Select(x => new InstancePackageModel(x, PackageSourceHelper.CanUpdate(x.Source, Basic.Source))
                        {
                            PersistentIndex = persistentIndex++,
                        })
@@ -199,7 +199,7 @@ public partial class InstanceSetupPageModel(
             {
                 foreach (var model in _stageSource.Items)
                 {
-                    model.IsLocked = false;
+                    model.CanUpdate = true;
                 }
             }
         }
@@ -512,7 +512,7 @@ public partial class InstanceSetupPageModel(
     private static Func<InstancePackageModel, bool> BuildLockilityFilter(FilterModel? lockility) =>
         x => lockility?.Value switch
         {
-            bool it => x.IsLocked == it,
+            bool it => x.CanRemove != it,
             _ => true,
         };
 
@@ -800,7 +800,7 @@ public partial class InstanceSetupPageModel(
                     }
 
                     await semaphore.WaitAsync(handle.Token);
-                    if (!entry.IsLocked && PackageHelper.TryParse(entry.Entry.Purl, out var result))
+                    if (entry.CanUpdate && PackageHelper.TryParse(entry.Entry.Purl, out var result))
                     {
                         if (result.Vid is not null)
                         {
