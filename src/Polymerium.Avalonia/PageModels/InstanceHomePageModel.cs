@@ -163,11 +163,11 @@ public partial class InstanceHomePageModel(
     private string GetStageTitle(DeployStage stage) =>
         stage switch
         {
-            DeployStage.CheckArtifact => Resources.DeployStage_CheckArtifact,
+            DeployStage.LoadLock => Resources.DeployStage_LoadLock,
             DeployStage.InstallVanilla => Resources.DeployStage_InstallVanilla,
             DeployStage.ProcessLoader => Resources.DeployStage_ProcessLoader,
             DeployStage.ResolvePackage => Resources.DeployStage_ResolvePackage,
-            DeployStage.BuildArtifact => Resources.DeployStage_BuildArtifact,
+            DeployStage.PersistLock => Resources.DeployStage_PersistLock,
             DeployStage.EnsureRuntime => Resources.DeployStage_EnsureRuntime,
             DeployStage.GenerateManifest => Resources.DeployStage_GenerateManifest,
             DeployStage.SolidifyManifest => Resources.DeployStage_SolidifyManifest,

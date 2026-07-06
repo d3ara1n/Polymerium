@@ -2151,9 +2151,9 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string DeployStage_CheckArtifact {
+        public static string DeployStage_LoadLock {
             get {
-                return ResourceManager.GetString("DeployStage_CheckArtifact", resourceCulture);
+                return ResourceManager.GetString("DeployStage_LoadLock", resourceCulture);
             }
         }
         
@@ -2175,9 +2175,9 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string DeployStage_BuildArtifact {
+        public static string DeployStage_PersistLock {
             get {
-                return ResourceManager.GetString("DeployStage_BuildArtifact", resourceCulture);
+                return ResourceManager.GetString("DeployStage_PersistLock", resourceCulture);
             }
         }
         

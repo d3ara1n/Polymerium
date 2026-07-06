@@ -1077,8 +1077,8 @@
     <data name="SettingsPage_TitleBarVisibilityLabelText" xml:space="preserve">
         <value>Title Bar Visibility</value>
     </data>
-    <data name="DeployStage_CheckArtifact" xml:space="preserve">
-        <value>Checking artifacts...</value>
+    <data name="DeployStage_LoadLock" xml:space="preserve">
+        <value>Loading lock...</value>
     </data>
     <data name="DeployStage_InstallVanilla" xml:space="preserve">
         <value>Installing vanilla...</value>
@@ -1089,8 +1089,8 @@
     <data name="DeployStage_ResolvePackage" xml:space="preserve">
         <value>Resolving packages...</value>
     </data>
-    <data name="DeployStage_BuildArtifact" xml:space="preserve">
-        <value>Building artifacts...</value>
+    <data name="DeployStage_PersistLock" xml:space="preserve">
+        <value>Persisting lock...</value>
     </data>
     <data name="DeployStage_GenerateManifest" xml:space="preserve">
         <value>Generating manifest...</value>

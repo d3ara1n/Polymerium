@@ -2,9 +2,10 @@
 
 > 制定日期：2026-06-29
 > 定位：部署引擎任务，是 Recipe 系统的前置条件。允许同实例存在来源不同但目标冲突的包，按组优先级确定性解决冲突。
-> 当前状态：**未实施**。本文档是未来实施的蓝本，据此编码不需重新调研。
-> Jira：[POLY-119](https://d3ara1n.atlassian.net/browse/POLY-119)
-> 依赖：[POLY-116](LOCKDATA-MODERNIZATION.md)（冲突胜方的版本锁定）、[POLY-117](SOURCE-REFERENCE-SEMANTICS.md)（组归属判定）。
+> 当前状态：**草案**。来源优先级模型成立，但冲突解决如何接入 POLY-116 重构后的 lock 结构（PersistLock 先于 GenerateManifest 的顺序矛盾、Suppressed 在双对象模型下的迁移）尚未定，不可照此施工。前置 POLY-116/118 已完成，待设计补全后转蓝本。
+> Jira：[POLY-117](https://d3ara1n.atlassian.net/browse/POLY-117)
+> 依赖：[POLY-116](https://d3ara1n.atlassian.net/browse/POLY-116)（✅ 已完成，冲突胜方的版本锁定）、[POLY-118](SOURCE-REFERENCE-SEMANTICS.md)（✅ 已完成，组归属判定）。
+> NOTE: §3.3/§3.6/§4 的 lock 交互基于 POLY-116 重构前的结构（LockDataBuilder / LockedPackages 字典 / Parcel），实施时须按 notes/LockData.md 的新结构调整。关键矛盾：新 pipeline 中 PersistLock 在 GenerateManifest 之前，冲突解决（产出 Suppressed）须提前到 SyncPackages 与 PersistLock 之间新增 stage。
 
 ---
 

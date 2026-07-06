@@ -1068,11 +1068,11 @@
     <data name="SettingsPage_TitleBarVisibilityLabelText" xml:space="preserve">
         <value>标题栏可见性</value>
     </data>
-    <data name="DeployStage_BuildArtifact" xml:space="preserve">
-        <value>构建版本锁...</value>
+    <data name="DeployStage_PersistLock" xml:space="preserve">
+        <value>保存版本锁...</value>
     </data>
-    <data name="DeployStage_CheckArtifact" xml:space="preserve">
-        <value>检查版本锁...</value>
+    <data name="DeployStage_LoadLock" xml:space="preserve">
+        <value>加载版本锁...</value>
     </data>
     <data name="DeployStage_GenerateManifest" xml:space="preserve">
         <value>生成文件清单...</value>
