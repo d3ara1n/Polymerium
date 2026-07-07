@@ -2169,9 +2169,15 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string DeployStage_ResolvePackage {
+        public static string DeployStage_SyncPackages {
             get {
-                return ResourceManager.GetString("DeployStage_ResolvePackage", resourceCulture);
+                return ResourceManager.GetString("DeployStage_SyncPackages", resourceCulture);
+            }
+        }
+        
+        public static string DeployStage_FlattenPackages {
+            get {
+                return ResourceManager.GetString("DeployStage_FlattenPackages", resourceCulture);
             }
         }
         

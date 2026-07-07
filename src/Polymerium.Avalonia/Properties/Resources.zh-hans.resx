@@ -1083,8 +1083,11 @@
     <data name="DeployStage_ProcessLoader" xml:space="preserve">
         <value>处理加载器...</value>
     </data>
-    <data name="DeployStage_ResolvePackage" xml:space="preserve">
-        <value>解析包版本...</value>
+    <data name="DeployStage_SyncPackages" xml:space="preserve">
+        <value>同步包...</value>
+    </data>
+    <data name="DeployStage_FlattenPackages" xml:space="preserve">
+        <value>解决包冲突...</value>
     </data>
     <data name="DeployStage_SolidifyManifest" xml:space="preserve">
         <value>固实文件...</value>
