@@ -1086,8 +1086,11 @@
     <data name="DeployStage_ProcessLoader" xml:space="preserve">
         <value>Processing loader...</value>
     </data>
-    <data name="DeployStage_ResolvePackage" xml:space="preserve">
-        <value>Resolving packages...</value>
+    <data name="DeployStage_SyncPackages" xml:space="preserve">
+        <value>Synchronizing packages...</value>
+    </data>
+    <data name="DeployStage_FlattenPackages" xml:space="preserve">
+        <value>Resolving conflicts...</value>
     </data>
     <data name="DeployStage_PersistLock" xml:space="preserve">
         <value>Persisting lock...</value>
