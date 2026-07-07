@@ -109,6 +109,93 @@
                 Icon="{fie:SymbolIcon Symbol=Delete,
                                       FontSize={StaticResource MediumFontSize}}" />
         </MenuFlyout>
+        <app:PackageListItemTemplateSelector x:Key="PackageListItemTemplate">
+            <app:PackageListItemTemplateSelector.HeaderTemplate>
+                <DataTemplate x:DataType="app:PackageListItemBase+Header">
+                    <Grid
+                        Margin="0,8,0,4"
+                        ColumnDefinitions="Auto,*,Auto"
+                        ColumnSpacing="8">
+                        <Button
+                            Grid.Column="0"
+                            Padding="4"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewGroupDetailsCommand, FallbackValue={x:Null}}"
+                            CommandParameter="{Binding Group}"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
+                            <ContentControl
+                                Content="{Binding Group}"
+                                ContentTemplate="{StaticResource ModpackGroupContentTemplate}" />
+                        </Button>
+                        <Button
+                            Grid.Column="2"
+                            Padding="8"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ToggleGroupExpandedCommand, FallbackValue={x:Null}}"
+                            CommandParameter="{Binding Group}"
+                            CornerRadius="{StaticResource FullCornerRadius}">
+                            <Panel>
+                                <fi:SymbolIcon Symbol="ChevronDown" IsVisible="{Binding Group.IsExpanded}" />
+                                <fi:SymbolIcon Symbol="ChevronRight" IsVisible="{Binding !Group.IsExpanded}" />
+                            </Panel>
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </app:PackageListItemTemplateSelector.HeaderTemplate>
+            <app:PackageListItemTemplateSelector.EntryTemplate>
+                <DataTemplate x:DataType="app:PackageListItemBase+Entry">
+                    <Grid ColumnDefinitions="24,*">
+                        <Border
+                            Grid.Column="0"
+                            Width="2"
+                            HorizontalAlignment="Center"
+                            Background="{StaticResource ControlSecondaryForegroundBrush}"
+                            IsVisible="{Binding Group.RequireGuideLine}" />
+                        <app:InstancePackageButton
+                            Grid.Column="1"
+                            Margin="0,3"
+                            Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
+                            CommandParameter="{Binding}"
+                            ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
+                            DataContext="{Binding Package}"
+                            EditCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).EditRawCommand, FallbackValue={x:Null}}"
+                            RefreshCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RefreshPackagesCommand, FallbackValue={x:Null}}"
+                            RemoveCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RemovePackageCommand, FallbackValue={x:Null}}"
+                            Theme="{StaticResource ListPackageEntryButtonTheme}">
+                            <app:InstancePackageButton.IsEnabled>
+                                <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                                    <Binding Path="IsLoaded" />
+                                    <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="Info" />
+                                </MultiBinding>
+                            </app:InstancePackageButton.IsEnabled>
+                        </app:InstancePackageButton>
+                    </Grid>
+                </DataTemplate>
+            </app:PackageListItemTemplateSelector.EntryTemplate>
+        </app:PackageListItemTemplateSelector>
+        <DataTemplate
+            x:Key="ModpackGroupContentTemplate"
+            x:DataType="app:ModpackGroupModel">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Border
+                    Width="32"
+                    Height="32"
+                    CornerRadius="{StaticResource SmallCornerRadius}">
+                    <Border.Background>
+                        <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+                    </Border.Background>
+                </Border>
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    FontSize="{StaticResource MediumFontSize}"
+                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                    Text="{Binding Name, FallbackValue=Modpack}"
+                    TextTrimming="CharacterEllipsis" />
+            </Grid>
+        </DataTemplate>
     </app:Subpage.Resources>
     <husk:BusyContainer>
         <husk:BusyContainer.IsBusy>
@@ -557,7 +644,7 @@
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{x:Static lang:Resources.InstanceSetupPage_ResultCountLabelText}" />
                         <LineBreak />
-                        <Run Text="{Binding StageView.Count, Mode=OneWay, FallbackValue=0}" />
+                        <Run Text="{Binding FilteredCount, Mode=OneWay, FallbackValue=0}" />
                         <Run
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="/" />
@@ -602,92 +689,6 @@
                                 </Button>
                             </StackPanel>
                         </Border>
-                        <TabStrip
-                            Name="LayoutSelector"
-                            SelectedIndex="{Binding ViewState?.LayoutIndex, Mode=TwoWay}"
-                            Theme="{StaticResource SegmentedTabStripTheme}">
-                            <TabStrip.ItemsSource>
-                                <generic:List x:TypeArguments="app:ListTemplateCombinationModel">
-                                    <app:ListTemplateCombinationModel Icon="List">
-                                        <app:ListTemplateCombinationModel.ItemTemplate>
-                                            <DataTemplate x:DataType="app:InstancePackageModel">
-                                                <app:InstancePackageButton
-                                                    Margin="0,3"
-                                                    Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
-                                                    CommandParameter="{Binding}"
-                                                    ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
-                                                    EditCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).EditRawCommand, FallbackValue={x:Null}}"
-                                                    RefreshCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RefreshPackagesCommand, FallbackValue={x:Null}}"
-                                                    RemoveCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RemovePackageCommand, FallbackValue={x:Null}}"
-                                                    Theme="{StaticResource ListPackageEntryButtonTheme}">
-                                                    <app:InstancePackageButton.IsEnabled>
-                                                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                                            <Binding Path="IsLoaded" />
-                                                            <Binding
-                                                                Converter="{x:Static ObjectConverters.IsNotNull}"
-                                                                Path="Info" />
-                                                        </MultiBinding>
-                                                    </app:InstancePackageButton.IsEnabled>
-                                                </app:InstancePackageButton>
-                                            </DataTemplate>
-                                        </app:ListTemplateCombinationModel.ItemTemplate>
-                                        <app:ListTemplateCombinationModel.ItemsPanelTemplate>
-                                            <ItemsPanelTemplate>
-                                                <VirtualizingStackPanel />
-                                            </ItemsPanelTemplate>
-                                        </app:ListTemplateCombinationModel.ItemsPanelTemplate>
-                                    </app:ListTemplateCombinationModel>
-                                    <app:ListTemplateCombinationModel Icon="Grid">
-                                        <app:ListTemplateCombinationModel.ItemTemplate>
-                                            <DataTemplate x:DataType="app:InstancePackageModel">
-                                                <app:InstancePackageButton
-                                                    Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
-                                                    CommandParameter="{Binding}"
-                                                    ContextFlyout="{StaticResource InstancePackageButtonFlyout}"
-                                                    EditCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).EditRawCommand, FallbackValue={x:Null}}"
-                                                    RefreshCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RefreshPackagesCommand, FallbackValue={x:Null}}"
-                                                    RemoveCommand="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RemovePackageCommand, FallbackValue={x:Null}}"
-                                                    Theme="{StaticResource GridPackageEntryButtonTheme}"
-                                                    ToolTip.Tip="{Binding Info.ProjectName, FallbackValue=Name}">
-                                                    <app:InstancePackageButton.IsEnabled>
-                                                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                                                            <Binding Path="IsLoaded" />
-                                                            <Binding
-                                                                Converter="{x:Static ObjectConverters.IsNotNull}"
-                                                                Path="Info" />
-                                                        </MultiBinding>
-                                                    </app:InstancePackageButton.IsEnabled>
-                                                </app:InstancePackageButton>
-                                            </DataTemplate>
-                                        </app:ListTemplateCombinationModel.ItemTemplate>
-                                        <app:ListTemplateCombinationModel.ItemsPanelTemplate>
-                                            <ItemsPanelTemplate>
-                                                <husk:FlexWrapPanel
-                                                    ColumnSpacing="6"
-                                                    RowSpacing="6" />
-                                            </ItemsPanelTemplate>
-                                        </app:ListTemplateCombinationModel.ItemsPanelTemplate>
-                                        <app:ListTemplateCombinationModel.ItemContainerTheme>
-                                            <ControlTheme TargetType="ContentPresenter">
-                                                <Setter Property="MaxWidth" Value="144" />
-                                                <Setter Property="MinWidth" Value="90" />
-                                                <Setter Property="MaxHeight" Value="144" />
-                                                <Setter Property="MinHeight" Value="90" />
-                                            </ControlTheme>
-                                        </app:ListTemplateCombinationModel.ItemContainerTheme>
-                                    </app:ListTemplateCombinationModel>
-                                </generic:List>
-                            </TabStrip.ItemsSource>
-                            <TabStrip.ItemTemplate>
-                                <DataTemplate x:DataType="app:ListTemplateCombinationModel">
-                                    <fi:SymbolIcon
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontSize="{StaticResource MediumFontSize}"
-                                        Symbol="{Binding Icon}" />
-                                </DataTemplate>
-                            </TabStrip.ItemTemplate>
-                        </TabStrip>
                         <SplitButton
                             Classes="Primary"
                             Command="{Binding GotoPackageExplorerPageCommand}">
@@ -732,7 +733,7 @@
                     Grid.Column="0">
                     <StackPanel
                         VerticalAlignment="Center"
-                        IsVisible="{Binding StageView.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
+                        IsVisible="{Binding FlatView.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                         Spacing="8">
                         <fi:SymbolIcon
                             HorizontalAlignment="Center"
@@ -748,10 +749,14 @@
                     <ScrollViewer>
                         <ItemsControl
                             Margin="{StaticResource PageToplessContentMargin}"
-                            ItemContainerTheme="{Binding #LayoutSelector.((app:ListTemplateCombinationModel)SelectedItem).ItemContainerTheme, FallbackValue={x:Null}}"
-                            ItemTemplate="{Binding #LayoutSelector.((app:ListTemplateCombinationModel)SelectedItem).ItemTemplate, FallbackValue={x:Null}}"
-                            ItemsPanel="{Binding #LayoutSelector.((app:ListTemplateCombinationModel)SelectedItem).ItemsPanelTemplate, FallbackValue={x:Null}}"
-                            ItemsSource="{Binding StageView}" />
+                            ItemTemplate="{StaticResource PackageListItemTemplate}"
+                            ItemsSource="{Binding FlatView}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
                     </ScrollViewer>
                 </Panel>
             </Grid>

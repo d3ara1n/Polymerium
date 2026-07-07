@@ -151,6 +151,19 @@ public partial class InstanceSetupPageModel(
             {
                 _ = RefreshPackagesAsync(toModify, token.Value);
             }
+
+            // 同阶段加载组信息（与包信息并行，幂等：IsInfoLoaded 守卫）
+            var modpackSources = profile.Setup.Packages
+                                        .Select(e => e.Source)
+                                        .Where(s => s is not null
+                                                 && PackageSourceHelper.Classify(s) == PackageSourceHelper.Kind.Modpack)
+                                        .Select(s => s!)
+                                        .Distinct()
+                                        .ToList();
+            if (modpackSources.Count > 0)
+            {
+                _ = RefreshGroupsAsync(modpackSources, token.Value);
+            }
         }
     }
 
@@ -341,6 +354,51 @@ public partial class InstanceSetupPageModel(
         }
     }
 
+    private async Task RefreshGroupsAsync(IReadOnlyList<string> sources, CancellationToken token)
+    {
+        var pending = sources
+           .Select(EnsureModpackGroup)
+           .Where(g => !g.IsInfoLoaded)
+           .ToList();
+        if (pending.Count == 0)
+            return;
+
+        foreach (var g in pending)
+            g.IsInfoLoaded = true;
+
+        var identifiable = new List<(ModpackGroupModel Group, PackageIdentifier Id)>();
+        foreach (var g in pending)
+        {
+            if (g.Source is not null && PackageHelper.TryParse(g.Source, out var r))
+                identifiable.Add((g, new PackageIdentifier(r.Label, r.Namespace, r.Pid, r.Vid)));
+        }
+
+        if (identifiable.Count == 0)
+            return;
+
+        token.ThrowIfCancellationRequested();
+        try
+        {
+            var byId = identifiable.ToDictionary(x => x.Id, x => x.Group);
+            var packages = await dataService.ResolvePackagesAsync(
+                identifiable.Select(x => x.Id),
+                Filter.None with { Kind = ResourceKind.Modpack });
+            foreach (var (id, package) in packages)
+            {
+                if (byId.TryGetValue(id, out var g))
+                {
+                    g.Name = package.ProjectName;
+                    g.Thumbnail = package.Thumbnail;
+                }
+            }
+        }
+        catch (OperationCanceledException) { }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Failed to load modpack group info");
+        }
+    }
+
     private Uri GetNotificationThumbnail(Uri? preferred = null) =>
         preferred
      ?? (Reference?.Value is InstanceReferenceModel { Thumbnail: { } thumbnail }
@@ -356,6 +414,8 @@ public partial class InstanceSetupPageModel(
     private readonly SourceCache<InstancePackageModel, Profile.Rice.Entry> _stageSource = new(x => x.Entry);
     private IDisposable? _updatingSubscription;
     private readonly CompositeDisposable _subscriptions = new();
+    private readonly Dictionary<(PackageSourceHelper.Kind Kind, string? Source), GroupModelBase> _groupModels = new();
+    private readonly LooseGroupModel _loose = new() { Kind = PackageSourceHelper.Kind.Manual, Source = null };
 
     #endregion
 
@@ -416,18 +476,46 @@ public partial class InstanceSetupPageModel(
         var lockility = this.WhenValueChanged(x => x.FilterLockility).Select(BuildLockilityFilter);
         var kind = this.WhenValueChanged(x => x.FilterKind).Select(BuildKindFilter);
         var tags = filterTags.ToObservableChangeSet().Select(_ => BuildTagFilter(filterTags));
-        _stageSource
+
+        IList<string> sourceOrders = ProfileManager.TryGetImmutable(Basic.Key, out var profileForOrders)
+            ? profileForOrders.Setup.SourceOrders
+            : Array.Empty<string>();
+        var comparer = new PackageListItemComparer(sourceOrders);
+
+        // 过滤后的包流：entries/headers 各自派生，散装增删靠 entries 的 Transform 天然跟随
+        var filtered = _stageSource
            .Connect()
            .Filter(enability)
            .Filter(lockility)
            .Filter(kind)
            .Filter(tags)
-           .Filter(text)
-           .SortBy(x => x.PersistentIndex)
-           .Bind(out var view)
+           .Filter(text);
+
+        filtered.QueryWhenChanged(items => items.Count)
+           .Subscribe(c => FilteredCount = c)
+           .DisposeWith(_subscriptions);
+
+        var entries = filtered
+           .Transform(pkg => (PackageListItemBase)new PackageListItemBase.Entry { Group = GroupModelOf(pkg), Package = pkg })
+           .RemoveKey();
+
+        // 组级增删（组生灭）由 GroupOn 跟踪；先排除散装，故无散装头
+        var headers = filtered
+           .RemoveKey()
+           .Filter(pkg => pkg.Entry.Source is not null)
+           .GroupOn(GetGroupKey)
+           .Transform(group => (PackageListItemBase)new PackageListItemBase.Header { Group = GroupModelOf(group.GroupKey) });
+
+        // 折叠：直接订阅共享 GroupModel 的 IsExpanded（INPC），变化即重判，无需手动 signal
+        entries
+           .Or(headers)
+           .AutoRefreshOnObservable(item => item.Group.WhenPropertyChanged(g => g.IsExpanded))
+           .Filter(item => item is PackageListItemBase.Header || item.Group.IsExpanded)
+           .Sort(comparer)
+           .Bind(out var flatView)
            .Subscribe()
            .DisposeWith(_subscriptions);
-        StageView = view;
+        FlatView = flatView;
 
         filterTags
            .ToObservableChangeSet()
@@ -1277,6 +1365,84 @@ public partial class InstanceSetupPageModel(
         }
     }
 
+    [RelayCommand]
+    private void ToggleGroupExpanded(GroupModelBase? group)
+    {
+        if (group is null)
+            return;
+        group.IsExpanded = !group.IsExpanded;
+    }
+
+    [RelayCommand]
+    private async Task ViewGroupDetailsAsync(GroupModelBase? group)
+    {
+        if (group is ModpackGroupModel && group.Source is not null
+            && PackageHelper.TryParse(group.Source, out var source))
+        {
+            try
+            {
+                var project = await dataService.QueryProjectAsync(source.Label, source.Namespace, source.Pid);
+                var model = new ExhibitModpackModel(project.Label,
+                                                    project.Namespace,
+                                                    project.ProjectId,
+                                                    project.ProjectName,
+                                                    project.Author,
+                                                    project.Reference,
+                                                    project.Thumbnail ?? AssetUriIndex.DirtImage,
+                                                    project.Tags,
+                                                    project.DownloadCount,
+                                                    project.Summary,
+                                                    project.UpdatedAt,
+                                                    [.. project.Gallery.Select(x => x.Url)]);
+                overlayService.PopToast(new ExhibitModpackToast
+                {
+                    DataService = dataService,
+                    PersistenceService = persistenceService,
+                    DataContext = model,
+                    InstallCommand = InstallVersionCommand,
+                });
+            }
+            catch (OperationCanceledException) { }
+            catch (Exception ex)
+            {
+                notificationService.PopMessage(ex,
+                                               Resources
+                                                  .InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
+                                               GrowlLevel.Warning,
+                                               thumbnail: GetNotificationThumbnail());
+            }
+        }
+    }
+
+    private static (PackageSourceHelper.Kind Kind, string? Source) GetGroupKey(InstancePackageModel pkg) =>
+        (PackageSourceHelper.Classify(pkg.Entry.Source), pkg.Entry.Source);
+
+    private GroupModelBase GroupModelOf(InstancePackageModel pkg) => GroupModelOf(GetGroupKey(pkg));
+
+    private GroupModelBase GroupModelOf((PackageSourceHelper.Kind Kind, string? Source) key)
+    {
+        if (key.Kind == PackageSourceHelper.Kind.Manual)
+            return _loose;
+
+        // NOTE: RecipeGroupModel 未设计，Recipe 系统落地后再实现（当前数据无 recipe:// source）
+        if (key.Kind == PackageSourceHelper.Kind.Recipe)
+            throw new NotImplementedException("Recipe group is not implemented yet.");
+
+        return EnsureModpackGroup(key.Source!);
+    }
+
+    // 管道与 Merge-Load 共用 _groupModels：谁先碰谁建，另一边直接取
+    private ModpackGroupModel EnsureModpackGroup(string source)
+    {
+        if (!_groupModels.TryGetValue((PackageSourceHelper.Kind.Modpack, source), out var model))
+        {
+            model = new ModpackGroupModel { Kind = PackageSourceHelper.Kind.Modpack, Source = source };
+            _groupModels[(PackageSourceHelper.Kind.Modpack, source)] = model;
+        }
+
+        return (ModpackGroupModel)model;
+    }
+
     #endregion
 
     #region Reactive
@@ -1291,6 +1457,9 @@ public partial class InstanceSetupPageModel(
     public partial int StageCount { get; set; }
 
     [ObservableProperty]
+    public partial int FilteredCount { get; set; }
+
+    [ObservableProperty]
     public partial double UpdatingProgress { get; set; }
 
     [ObservableProperty]
@@ -1300,7 +1469,7 @@ public partial class InstanceSetupPageModel(
     public partial bool IsRefreshing { get; set; } = false;
 
     [ObservableProperty]
-    public partial ReadOnlyObservableCollection<InstancePackageModel>? StageView { get; set; }
+    public partial ReadOnlyObservableCollection<PackageListItemBase>? FlatView { get; set; }
 
     [ObservableProperty]
     public partial ReadOnlyObservableCollection<InstancePackageFilterTagModel>? TagsView { get; set; }
