@@ -146,13 +146,16 @@
             </app:PackageListItemTemplateSelector.HeaderTemplate>
             <app:PackageListItemTemplateSelector.EntryTemplate>
                 <DataTemplate x:DataType="app:PackageListItemBase+Entry">
-                    <Grid ColumnDefinitions="24,*">
-                        <Border
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Panel
                             Grid.Column="0"
-                            Width="2"
-                            HorizontalAlignment="Center"
-                            Background="{StaticResource ControlSecondaryForegroundBrush}"
-                            IsVisible="{Binding Group.RequireGuideLine}" />
+                            Width="24"
+                            IsVisible="{Binding Group.RequireGuideLine}">
+                            <Border
+                                Width="2"
+                                HorizontalAlignment="Center"
+                                Background="{StaticResource ControlSecondaryForegroundBrush}" />
+                        </Panel>
                         <app:InstancePackageButton
                             Grid.Column="1"
                             Margin="0,3"
