@@ -105,65 +105,67 @@ public partial class InstanceSetupPageModel(
 
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
-            // 计算 profile.Setup.Packages 与 _stageSource.Keys 的差异
+            // Entry 是 class，按地址比较；仍存在的包不动其 Entry 项（实例稳定），
+            // 信息是否陈旧由 RefreshMetadataAsync 现场重判，这里不预判
             var lookup = profile.Setup.Packages.ToHashSet();
-            var toRemove = new List<Profile.Rice.Entry>();
-            var toUpdate = new List<InstancePackageModel>();
-            foreach (var entry in _stageSource.Keys)
+            var toRemove = new List<PackageListKey>();
+            var entryCount = 0;
+            foreach (var item in _flat.Items.OfType<PackageListItemBase.Entry>())
             {
-                // actualValue 必定是同一个，因为 Entry 是 class，基于地址比较
-                if (lookup.TryGetValue(entry, out _))
+                entryCount++;
+                if (!lookup.Remove(item.Package.Entry))
                 {
-                    var old = _stageSource.Lookup(entry).Value;
-                    // old.Info is null 是考虑到有些上次加载还没完成就被打断，这次就继续加载
-                    if (old.OldPurlCache != entry.Purl || old.Info is null)
-                    {
-                        toUpdate.Add(old);
-                    }
-
-                    lookup.Remove(entry);
-                }
-                else
-                {
-                    toRemove.Add(entry);
+                    toRemove.Add(item.Key);
                 }
             }
 
-            StageCount = _stageSource.Count;
-            _stageSource.Remove(toRemove);
-            var persistentIndex = _stageSource.Count;
+            StageCount = entryCount;
+            _flat.Remove(toRemove);
+            var persistentIndex = entryCount - toRemove.Count;
             var toAdd = lookup
-                       .Select(x => new InstancePackageModel(x, PackageSourceHelper.CanUpdate(x.Source, Basic.Source))
-                       {
-                           PersistentIndex = persistentIndex++,
-                       })
+                       .Select(x =>
+                        {
+                            var pkg = new InstancePackageModel(x,
+                                                               PackageSourceHelper.CanUpdate(x.Source, Basic.Source))
+                            {
+                                PersistentIndex = persistentIndex++,
+                            };
+                            return new PackageListItemBase.Entry
+                            {
+                                Key = new PackageListKey.Entry(x),
+                                Group = GroupModelOf(pkg),
+                                Package = pkg,
+                            };
+                        })
                        .ToList();
-            _stageSource.AddOrUpdate(toAdd);
+            _flat.AddOrUpdate(toAdd);
+            // _flat 是合并期的唯一写入对象，无外部并发修改，StageCount 与 profile 严格一致
+
+            // 同步组头：为每个有成员的非散装组确保恰好一个 Header，移除空组的 Header。
+            var presentGroups = _flat.Items
+                                     .OfType<PackageListItemBase.Entry>()
+                                     .Select(i => i.Group)
+                                     .Where(g => g is not LooseGroupModel)
+                                     .Distinct()
+                                     .ToList();
+
+            var bySource = presentGroups.ToDictionary(g => g.Source!, g => g);
+            var desiredKeys = bySource.Keys.Select(s => new PackageListKey.Header(s)).ToHashSet();
+            var currentKeys = _flat.Keys.OfType<PackageListKey.Header>().ToHashSet();
+            _flat.Remove(currentKeys.Except(desiredKeys).Cast<PackageListKey>().ToList());
+            foreach (var key in desiredKeys.Except(currentKeys))
+            {
+                _flat.AddOrUpdate(new PackageListItemBase.Header { Key = key, Group = bySource[key.Source] });
+            }
+
             StageCount += toAdd.Count - toRemove.Count;
             if (StageCount != profile.Setup.Packages.Count)
             {
-                // NOTE: 通过即时给 StageCount 赋值，以容忍两次 Merge 期间外部对 _stageSource 的修改
                 throw new UnreachableException("使用相对数量更新总数是很大胆冒险的，但能很好验证差异计算是否正确。能触发这个异常就是差异计算出现错误了");
             }
 
-            var toModify = toAdd.Concat(toUpdate).ToList();
-            if (toModify.Count > 0)
-            {
-                _ = RefreshPackagesAsync(toModify, token.Value);
-            }
-
-            // 同阶段加载组信息（与包信息并行，幂等：IsInfoLoaded 守卫）
-            var modpackSources = profile.Setup.Packages
-                                        .Select(e => e.Source)
-                                        .Where(s => s is not null
-                                                 && PackageSourceHelper.Classify(s) == PackageSourceHelper.Kind.Modpack)
-                                        .Select(s => s!)
-                                        .Distinct()
-                                        .ToList();
-            if (modpackSources.Count > 0)
-            {
-                _ = RefreshGroupsAsync(modpackSources, token.Value);
-            }
+            // 统一入口：包与组的信息加载排成一队，RefreshMetadataAsync 现场重判待加载项、统一管 IsRefreshing
+            _metadataTask = RefreshMetadataAsync(_metadataTask, token.Value);
         }
     }
 
@@ -210,7 +212,7 @@ public partial class InstanceSetupPageModel(
             }
             else
             {
-                foreach (var model in _stageSource.Items)
+                foreach (var model in _flat.Items.OfType<PackageListItemBase.Entry>().Select(i => i.Package))
                 {
                     model.CanUpdate = true;
                 }
@@ -218,9 +220,52 @@ public partial class InstanceSetupPageModel(
         }
     }
 
-    private async Task RefreshPackagesAsync(IReadOnlyList<InstancePackageModel> packages, CancellationToken token)
+    // 包与组信息加载的统一入口：排队执行（不取消），现场重判待加载项；统一管理 IsRefreshing 与异常。
+    private async Task RefreshMetadataAsync(Task previous, CancellationToken token)
     {
+        // 排队：等上一个完成；吞掉其异常，避免 faulted 任务卡死整条队列
+        try
+        {
+            await previous;
+        }
+        catch
+        {
+        }
+
+        token.ThrowIfCancellationRequested();
+
+        // 现场重判：排到时若前一个已把事情做完，这里为空，直接 no-op 完成
+        var pendingPackages = _flat.Items
+                                  .OfType<PackageListItemBase.Entry>()
+                                  .Select(i => i.Package)
+                                  .Where(p => p.Info is null || p.OldPurlCache != p.Entry.Purl)
+                                  .ToList();
+        var pendingGroups = _flat.Items
+                                 .OfType<PackageListItemBase.Entry>()
+                                 .Select(i => i.Group)
+                                 .OfType<ModpackGroupModel>()
+                                 .Distinct()
+                                 .Where(g => !g.IsInfoLoaded)
+                                 .ToList();
+        if (pendingPackages.Count == 0 && pendingGroups.Count == 0)
+        {
+            return;
+        }
+
         IsRefreshing = true;
+        try
+        {
+            await Task.WhenAll(RefreshPackageInfoAsync(pendingPackages, token),
+                               RefreshModpackGroupInfoAsync(pendingGroups, token));
+        }
+        finally
+        {
+            IsRefreshing = false;
+        }
+    }
+
+    private async Task RefreshPackageInfoAsync(IReadOnlyList<InstancePackageModel> packages, CancellationToken token)
+    {
         try
         {
             token.ThrowIfCancellationRequested();
@@ -348,26 +393,15 @@ public partial class InstanceSetupPageModel(
                                                thumbnail: GetNotificationThumbnail());
             });
         }
-        finally
-        {
-            IsRefreshing = false;
-        }
     }
 
-    private async Task RefreshGroupsAsync(IReadOnlyList<string> sources, CancellationToken token)
+    private async Task RefreshModpackGroupInfoAsync(IReadOnlyList<ModpackGroupModel> groups, CancellationToken token)
     {
-        var pending = sources
-           .Select(EnsureModpackGroup)
-           .Where(g => !g.IsInfoLoaded)
-           .ToList();
-        if (pending.Count == 0)
-            return;
-
-        foreach (var g in pending)
+        foreach (var g in groups)
             g.IsInfoLoaded = true;
 
         var identifiable = new List<(ModpackGroupModel Group, PackageIdentifier Id)>();
-        foreach (var g in pending)
+        foreach (var g in groups)
         {
             if (g.Source is not null && PackageHelper.TryParse(g.Source, out var r))
                 identifiable.Add((g, new PackageIdentifier(r.Label, r.Namespace, r.Pid, r.Vid)));
@@ -376,9 +410,9 @@ public partial class InstanceSetupPageModel(
         if (identifiable.Count == 0)
             return;
 
-        token.ThrowIfCancellationRequested();
         try
         {
+            token.ThrowIfCancellationRequested();
             var byId = identifiable.ToDictionary(x => x.Id, x => x.Group);
             var packages = await dataService.ResolvePackagesAsync(
                 identifiable.Select(x => x.Id),
@@ -411,7 +445,8 @@ public partial class InstanceSetupPageModel(
 
     private CancellationToken? _lifetimeToken;
     private CancellationTokenSource? _pageCancellationTokenSource;
-    private readonly SourceCache<InstancePackageModel, Profile.Rice.Entry> _stageSource = new(x => x.Entry);
+    private readonly SourceCache<PackageListItemBase, PackageListKey> _flat = new(x => x.Key);
+    private Task _metadataTask = Task.CompletedTask;
     private IDisposable? _updatingSubscription;
     private readonly CompositeDisposable _subscriptions = new();
     private readonly Dictionary<(PackageSourceHelper.Kind Kind, string? Source), GroupModelBase> _groupModels = new();
@@ -451,8 +486,13 @@ public partial class InstanceSetupPageModel(
         _lifetimeToken = token;
         _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
 
-        _stageSource
+        // 包变更流（tags 与计数共用）：从拍平源取 Entry 项解包成 InstancePackageModel
+        var packages = _flat
            .Connect()
+           .Filter(item => item is PackageListItemBase.Entry)
+           .Transform(item => ((PackageListItemBase.Entry)item).Package);
+
+        packages
            .MergeManyChangeSets(x => x.Tags.ToObservableChangeSet())
            .GroupOn(x => x)
            .Transform(group => new InstancePackageFilterTagModel(group.GroupKey) { RefCount = group.List.Count, })
@@ -482,33 +522,26 @@ public partial class InstanceSetupPageModel(
             : Array.Empty<string>();
         var comparer = new PackageListItemComparer(sourceOrders);
 
-        // 过滤后的包流：entries/headers 各自派生，散装增删靠 entries 的 Transform 天然跟随
-        var filtered = _stageSource
-           .Connect()
-           .Filter(enability)
-           .Filter(lockility)
-           .Filter(kind)
-           .Filter(tags)
-           .Filter(text);
+        var packageFilter = enability
+           .CombineLatest(lockility, (a, b) => (Func<InstancePackageModel, bool>)(x => a(x) && b(x)))
+           .CombineLatest(kind, (ab, c) => (Func<InstancePackageModel, bool>)(x => ab(x) && c(x)))
+           .CombineLatest(tags, (abc, d) => (Func<InstancePackageModel, bool>)(x => abc(x) && d(x)))
+           .CombineLatest(text, (abcd, e) => (Func<InstancePackageModel, bool>)(x => abcd(x) && e(x)));
 
-        filtered.QueryWhenChanged(items => items.Count)
+        // 计数：只数通过过滤的包，不受折叠与组头影响
+        packages
+           .Filter(packageFilter)
+           .QueryWhenChanged(items => items.Count)
            .Subscribe(c => FilteredCount = c)
            .DisposeWith(_subscriptions);
 
-        var entries = filtered
-           .Transform(pkg => (PackageListItemBase)new PackageListItemBase.Entry { Group = GroupModelOf(pkg), Package = pkg })
-           .RemoveKey();
+        // 列表：组头永远放行（独立于过滤），Entry 才套包过滤；折叠只藏 Entry 不藏组头
+        var itemFilter = packageFilter.Select(pf => (Func<PackageListItemBase, bool>)(item =>
+             item is PackageListItemBase.Header || item is PackageListItemBase.Entry e && pf(e.Package)));
 
-        // 组级增删（组生灭）由 GroupOn 跟踪；先排除散装，故无散装头
-        var headers = filtered
-           .RemoveKey()
-           .Filter(pkg => pkg.Entry.Source is not null)
-           .GroupOn(GetGroupKey)
-           .Transform(group => (PackageListItemBase)new PackageListItemBase.Header { Group = GroupModelOf(group.GroupKey) });
-
-        // 折叠：直接订阅共享 GroupModel 的 IsExpanded（INPC），变化即重判，无需手动 signal
-        entries
-           .Or(headers)
+        _flat
+           .Connect()
+           .Filter(itemFilter)
            .AutoRefreshOnObservable(item => item.Group.WhenPropertyChanged(g => g.IsExpanded))
            .Filter(item => item is PackageListItemBase.Header || item.Group.IsExpanded)
            .Sort(comparer)
@@ -707,7 +740,7 @@ public partial class InstanceSetupPageModel(
             overlayService.PopModal(new ProfileRulesModal
             {
                 Rules = Rules,
-                Packages = _stageSource.Items,
+                Packages = _flat.Items.OfType<PackageListItemBase.Entry>().Select(i => i.Package).ToList(),
                 OverlayService = overlayService,
             });
         }
@@ -726,7 +759,7 @@ public partial class InstanceSetupPageModel(
                 OverlayService = overlayService,
                 PersistenceService = persistenceService,
                 PackageMaterializer = packageMaterializer,
-                Collection = _stageSource,
+                Collection = _flat,
                 NotificationService = notificationService,
                 PackagePlanner = serviceProvider.GetRequiredService<PackagePlanner>(),
                 Filter = new(Kind: model.Info.Kind,
@@ -808,8 +841,10 @@ public partial class InstanceSetupPageModel(
                  IsEnabledOnly: var enabledOnly, TagPolicy: var tagPolicy, Tags: var tags
              })
             {
-                var staging = _stageSource
-                             .Items.Where(x => !enabledOnly || x.IsEnabled)
+                var staging = _flat
+                             .Items.OfType<PackageListItemBase.Entry>()
+                             .Select(i => i.Package)
+                             .Where(x => !enabledOnly || x.IsEnabled)
                              .Where(x => tagPolicy switch
                               {
                                   PackageBulkUpdatePreviewerTagPolicy.Include => tags.Any(y => x.Tags.Contains(y)),
@@ -939,7 +974,7 @@ public partial class InstanceSetupPageModel(
                     Dispatcher.UIThread.Post(() =>
                     {
                         handle.Report(Math.Min(100d,
-                                               100d * (_stageSource.Items.Count - total) / _stageSource.Items.Count));
+                                               100d * (StageCount - total) / StageCount));
                         handle.Report(Resources
                                      .InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage
                                      .Replace("{0}", updates.Count.ToString())
@@ -1075,12 +1110,12 @@ public partial class InstanceSetupPageModel(
                                             // HACK: 由于触发更新并不会同步 Tags，
                                             //  在 Entry 中修改也不会同步，
                                             //  所以需要推送到 InstancePackageModel 中
-                                            var model = _stageSource.Lookup(existingEntry);
-                                            if (model.HasValue)
+                                            var item = _flat.Lookup(new PackageListKey.Entry(existingEntry));
+                                            if (item.HasValue)
                                             {
                                                 foreach (var tag in toAdd)
                                                 {
-                                                    model.Value.Tags.Add(tag);
+                                                    ((PackageListItemBase.Entry)item.Value).Package.Tags.Add(tag);
                                                 }
                                             }
                                         }
@@ -1431,7 +1466,6 @@ public partial class InstanceSetupPageModel(
         return EnsureModpackGroup(key.Source!);
     }
 
-    // 管道与 Merge-Load 共用 _groupModels：谁先碰谁建，另一边直接取
     private ModpackGroupModel EnsureModpackGroup(string source)
     {
         if (!_groupModels.TryGetValue((PackageSourceHelper.Kind.Modpack, source), out var model))

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -100,7 +101,12 @@ public partial class InstancePackageModal : Modal
     public required PersistenceService PersistenceService { get; init; }
     public required PackageMaterializer PackageMaterializer { get; init; }
     public required NotificationService NotificationService { get; init; }
-    public required SourceCache<InstancePackageModel, Profile.Rice.Entry> Collection { get; init; }
+    public required SourceCache<PackageListItemBase, PackageListKey> Collection { get; init; }
+
+    private IDisposable? _dependencySubscription;
+
+    private IEnumerable<InstancePackageModel> Packages =>
+        Collection.Items.OfType<PackageListItemBase.Entry>().Select(i => i.Package);
 
     public LazyObject? LazyDependencies
     {
@@ -161,7 +167,7 @@ public partial class InstancePackageModal : Modal
             var tasks = package
                        .Dependencies.Select(async x =>
                         {
-                            var count = (uint)Collection.Items.Count(y => y.Info is
+                            var count = (uint)Packages.Count(y => y.Info is
                             {
                                 Version: InstancePackageVersionModel
                                                                                   version
@@ -170,7 +176,7 @@ public partial class InstancePackageModal : Modal
                                                                               z.Label == x.Label
                                                                            && z.Namespace == x.Namespace
                                                                            && z.ProjectId == x.ProjectId));
-                            var found = Collection.Items.FirstOrDefault(y => y.Info?.Label == x.Label
+                            var found = Packages.FirstOrDefault(y => y.Info?.Label == x.Label
                                                                           && y.Info?.Namespace == x.Namespace
                                                                           && y.Info?.ProjectId == x.ProjectId);
                             if (found is not null)
@@ -209,6 +215,37 @@ public partial class InstancePackageModal : Modal
         return lazy;
     }
 
+    // 依赖安装状态反应式：包源成员变化时按 purl 重判每个依赖的 Installed。
+    // 用 purl（而非 Info）匹配是为了在刚安装、Info 尚未加载时就能标上；
+    // 初始列表（ConstructDependencies）按 Info 匹配，因为已安装项的展示数据要取自 Info。
+    private void SetupDependencyWatcher()
+    {
+        _dependencySubscription?.Dispose();
+        _dependencySubscription = Collection.Connect()
+            .Filter(i => i is PackageListItemBase.Entry)
+            .Transform(i => ((PackageListItemBase.Entry)i).Package)
+            .QueryWhenChanged()
+            .Subscribe(query =>
+            {
+                if (LazyDependencies?.Value is InstancePackageDependencyCollection deps)
+                {
+                    var packages = query.Items;
+                    foreach (var dep in deps)
+                    {
+                        var installed = packages.FirstOrDefault(p => MatchesDependency(dep, p));
+                        if (!ReferenceEquals(dep.Installed, installed))
+                            dep.Installed = installed;
+                    }
+                }
+            });
+    }
+
+    private static bool MatchesDependency(InstancePackageDependencyModel dep, InstancePackageModel package) =>
+        PackageHelper.TryParse(package.Entry.Purl, out var r)
+        && r.Label == dep.Label
+        && r.Namespace == dep.Namespace
+        && r.Pid == dep.ProjectId;
+
     private LazyObject ConstructDependants()
     {
         var lazy = new LazyObject(async t =>
@@ -218,8 +255,7 @@ public partial class InstancePackageModal : Modal
                 return null;
             }
 
-            var dependants = await DataService.ResolvePackagesAsync(Collection
-                                                                   .Items
+            var dependants = await DataService.ResolvePackagesAsync(Packages
                                                                    .Where(x => x.Info is
                                                                    {
                                                                        Version:
@@ -243,11 +279,11 @@ public partial class InstancePackageModal : Modal
                        .Select(async x =>
                         {
                             var count = (uint)
-                                Collection.Items.Count(y => y.Info!.Version is InstancePackageVersionModel version
+                                Packages.Count(y => y.Info!.Version is InstancePackageVersionModel version
                                                          && version.Dependencies.Any(z => z.Label == x.Item2.Label
                                                              && z.Namespace == x.Item2.Namespace
                                                              && z.ProjectId == x.Item2.ProjectId));
-                            var found = Collection.Items.FirstOrDefault(y => y.Info?.Label == x.Item2.Label
+                            var found = Packages.FirstOrDefault(y => y.Info?.Label == x.Item2.Label
                                                                           && y.Info?.Namespace == x.Item2.Namespace
                                                                           && y.Info?.ProjectId == x.Item2.ProjectId);
                             var thumbnail = x.Item2.Thumbnail is not null
@@ -488,6 +524,7 @@ public partial class InstancePackageModal : Modal
         _old = Model.Owner.Entry.Purl;
         IsFilterEnabled = true;
         LazyDependencies = ConstructDependencies();
+        SetupDependencyWatcher();
         LazyDependants = ConstructDependants();
         LazyHistory = ConstructHistory();
         LazyRules = ConstructRules();
@@ -518,6 +555,7 @@ public partial class InstancePackageModal : Modal
         }
 
         RemoveHandler(OverlayHost.DismissRequestedEvent, DismissRequestedHandler);
+        _dependencySubscription?.Dispose();
         await Guard.DisposeAsync();
     }
 
@@ -543,25 +581,6 @@ public partial class InstancePackageModal : Modal
         }
     }
 
-    #region Other
-
-    private void OnDependencyInstalled(InstancePackageModel newPackage)
-    {
-        // 当依赖安装完成后，更新对应的 InstancePackageDependencyModel.Installed
-        // 由于 LazyDependencies 已经加载完成，我们需要找到对应的依赖并更新其 Installed 属性
-        if (LazyDependencies?.Value is InstancePackageDependencyCollection dependencies)
-        {
-            var dependency =
-                dependencies.FirstOrDefault(x => PackageHelper.IsMatched(newPackage.Entry.Purl,
-                                                                         x.Label,
-                                                                         x.Namespace,
-                                                                         x.ProjectId));
-            dependency?.Installed = newPackage;
-        }
-    }
-
-    #endregion
-
 
     #region Commands
 
@@ -576,8 +595,8 @@ public partial class InstancePackageModal : Modal
     private async Task AddTag()
     {
         // 收集所有现有标签（去重，排除当前包已有的标签）
-        var existingTags = Collection
-                          .Items.SelectMany(x => x.Tags)
+        var existingTags = Packages
+                          .SelectMany(x => x.Tags)
                           .Distinct()
                           .Where(t => !Model.Owner.Tags.Contains(t))
                           .OrderBy(t => t)
@@ -647,7 +666,6 @@ public partial class InstancePackageModal : Modal
                 PersistenceService = PersistenceService,
                 Collection = Collection,
                 Filter = Filter,
-                OnPackageInstalledCallback = OnDependencyInstalled,
             });
         }
     }
