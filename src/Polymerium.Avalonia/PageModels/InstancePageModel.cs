@@ -142,7 +142,7 @@ public partial class InstancePageModel : ViewModelBase,
                             if (
                                 !guard.Value.Setup.Packages.Any(x =>
                                     PackageHelper.IsMatched(
-                                        x.Purl,
+                                        x.Pref,
                                         package.Package.Label,
                                         package.Package.Namespace,
                                         package.Package.ProjectId
@@ -150,7 +150,7 @@ public partial class InstancePageModel : ViewModelBase,
                                 )
                             )
                             {
-                                var purl = PackageHelper.ToPurl(
+                                var pref = PackageHelper.ToPref(
                                     package.Package.Label,
                                     package.Package.Namespace,
                                     package.Package.ProjectId,
@@ -159,7 +159,7 @@ public partial class InstancePageModel : ViewModelBase,
                                 guard.Value.Setup.Packages.Add(
                                     new()
                                     {
-                                        Purl = purl,
+                                        Pref = pref,
                                         Enabled = true,
                                         Source = null,
                                     }
@@ -169,7 +169,7 @@ public partial class InstancePageModel : ViewModelBase,
                                     {
                                         Key = Basic.Key,
                                         Kind = PersistenceService.ActionKind.EditPackage,
-                                        New = purl,
+                                        New = pref,
                                     }
                                 );
                                 _notificationService.PopMessage(

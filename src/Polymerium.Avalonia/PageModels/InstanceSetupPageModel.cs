@@ -44,7 +44,7 @@ using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Engines.Deploying;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
-using TridentCore.Purl;
+using TridentCore.Pref;
 using RelayCommand = CommunityToolkit.Mvvm.Input.RelayCommand;
 
 namespace Polymerium.Avalonia.PageModels;
@@ -68,7 +68,7 @@ public partial class InstanceSetupPageModel(
     #region Nested type: ExportedEntry
 
     private record ExportedEntry(
-        string Purl,
+        string Pref,
         string? Label,
         string? Namespace,
         string? ProjectId,
@@ -184,7 +184,7 @@ public partial class InstanceSetupPageModel(
             {
                 if (Reference is null
                  || (Reference is { Value: InstanceReferenceModel { } reference }
-                  && reference.Purl != profile.Setup.Source))
+                  && reference.Pref != profile.Setup.Source))
                 {
                     if (PackageHelper.TryParse(profile.Setup.Source, out var r))
                     {
@@ -238,7 +238,7 @@ public partial class InstanceSetupPageModel(
         var pendingPackages = _flat.Items
                                   .OfType<PackageListItemBase.Entry>()
                                   .Select(i => i.Package)
-                                  .Where(p => p.Info is null || p.OldPurlCache != p.Entry.Purl)
+                                  .Where(p => p.Info is null || p.OldPrefCache != p.Entry.Pref)
                                   .ToList();
         var pendingGroups = _flat.Items
                                  .OfType<PackageListItemBase.Entry>()
@@ -275,14 +275,14 @@ public partial class InstanceSetupPageModel(
                 package.IsLoaded = false;
             }
 
-            var purls = packages
-                       .Select(x => PackageHelper.TryParse(x.Entry.Purl, out var purl)
+            var prefs = packages
+                       .Select(x => PackageHelper.TryParse(x.Entry.Pref, out var pref)
                                         ? (Model: x,
-                                           Purl: new PackageIdentifier(purl.Label, purl.Namespace, purl.Pid, purl.Vid))
-                                        : throw new FormatException($"Failed to parse purl: {x.Entry.Purl}"))
-                       .ToDictionary(x => x.Purl, x => new RefreshIntermediateData(x.Model));
-            var knownVids = purls.Where(x => x.Key.Version is not null).ToArray();
-            var unknownVids = purls.Where(x => x.Key.Version is null).ToArray();
+                                           Pref: new PackageIdentifier(pref.Label, pref.Namespace, pref.Pid, pref.Vid))
+                                        : throw new FormatException($"Failed to parse pref: {x.Entry.Pref}"))
+                       .ToDictionary(x => x.Pref, x => new RefreshIntermediateData(x.Model));
+            var knownVids = prefs.Where(x => x.Key.Version is not null).ToArray();
+            var unknownVids = prefs.Where(x => x.Key.Version is null).ToArray();
 
             token.ThrowIfCancellationRequested();
 
@@ -297,13 +297,13 @@ public partial class InstanceSetupPageModel(
             token.ThrowIfCancellationRequested();
 
             var thumbnailsTasks = knownPackages
-                                 .Select(async x => (Purl: x.Item1,
+                                 .Select(async x => (Pref: x.Item1,
                                                      Thumbnail: x.Item2.Thumbnail is not null
                                                                     ? await dataService
                                                                          .GetBitmapAsync(x.Item2.Thumbnail)
                                                                     : AssetUriIndex.DirtImageBitmap))
                                  .Concat(unknownProjects.Select(async x =>
-                                                                    (Purl: new PackageIdentifier(x.Label,
+                                                                    (Pref: new PackageIdentifier(x.Label,
                                                                          x.Namespace,
                                                                          x.ProjectId,
                                                                          null),
@@ -318,20 +318,20 @@ public partial class InstanceSetupPageModel(
 
             foreach (var (id, package) in knownPackages)
             {
-                purls[id].Package = package;
+                prefs[id].Package = package;
             }
 
             foreach (var project in unknownProjects)
             {
-                purls[new(project.Label, project.Namespace, project.ProjectId, null)].Project = project;
+                prefs[new(project.Label, project.Namespace, project.ProjectId, null)].Project = project;
             }
 
             foreach (var thumbnailsTask in thumbnailsTasks)
             {
-                purls[thumbnailsTask.Result.Purl].Thumbnail = thumbnailsTask.Result.Thumbnail;
+                prefs[thumbnailsTask.Result.Pref].Thumbnail = thumbnailsTask.Result.Thumbnail;
             }
 
-            foreach (var x in purls.Values)
+            foreach (var x in prefs.Values)
             {
                 InstancePackageInfoModel? info = x switch
                 {
@@ -377,7 +377,7 @@ public partial class InstanceSetupPageModel(
                     _ => null,
                 };
 
-                x.Model.OldPurlCache = x.Model.Entry.Purl;
+                x.Model.OldPrefCache = x.Model.Entry.Pref;
                 x.Model.Info = info;
                 x.Model.IsLoaded = true;
             }
@@ -388,7 +388,7 @@ public partial class InstanceSetupPageModel(
             Dispatcher.UIThread.Post(() =>
             {
                 notificationService.PopMessage(ex.Message,
-                                               Resources.InstanceSetupPage_ParsePurlDangerNotificationTitle,
+                                               Resources.InstanceSetupPage_ParsePrefDangerNotificationTitle,
                                                GrowlLevel.Danger,
                                                thumbnail: GetNotificationThumbnail());
             });
@@ -923,7 +923,7 @@ public partial class InstanceSetupPageModel(
                     }
 
                     await semaphore.WaitAsync(handle.Token);
-                    if (entry.CanUpdate && PackageHelper.TryParse(entry.Entry.Purl, out var result))
+                    if (entry.CanUpdate && PackageHelper.TryParse(entry.Entry.Pref, out var result))
                     {
                         if (result.Vid is not null)
                         {
@@ -961,7 +961,7 @@ public partial class InstanceSetupPageModel(
                             catch (Exception ex)
                             {
                                 notificationService.PopMessage(ex,
-                                                               entry.Info?.ProjectName ?? entry.Entry.Purl,
+                                                               entry.Info?.ProjectName ?? entry.Entry.Pref,
                                                                GrowlLevel.Warning,
                                                                thumbnail: GetNotificationThumbnail());
                             }
@@ -1006,7 +1006,7 @@ public partial class InstanceSetupPageModel(
                     {
                         foreach (var model in results.Where(x => x.IsChecked))
                         {
-                            var old = model.Model.Entry.Purl;
+                            var old = model.Model.Entry.Pref;
                             model.Model.Info?.Version = new InstancePackageVersionModel(model.NewVersionId,
                                 model.NewVersionName,
                                 string.Join(",",
@@ -1016,13 +1016,13 @@ public partial class InstanceSetupPageModel(
                                 model.NewVersionTimeRaw,
                                 model.Package.ReleaseType,
                                 model.Package.Dependencies);
-                            // 设置 Version 会同步到 Entry.Purl
+                            // 设置 Version 会同步到 Entry.Pref
                             persistenceService.AppendAction(new()
                             {
                                 Key = Basic.Key,
                                 Kind = PersistenceService.ActionKind.EditPackage,
                                 Old = old,
-                                New = model.Model.Entry.Purl,
+                                New = model.Model.Entry.Pref,
                             });
                         }
                     }
@@ -1074,7 +1074,7 @@ public partial class InstanceSetupPageModel(
                             {
                                 try
                                 {
-                                    if (string.IsNullOrEmpty(importedEntry.Purl))
+                                    if (string.IsNullOrEmpty(importedEntry.Pref))
                                     {
                                         failedCount++;
                                         continue;
@@ -1082,21 +1082,21 @@ public partial class InstanceSetupPageModel(
 
                                     // 查找是否已存在相同的包（基于 Label, Namespace, ProjectId）
                                     Profile.Rice.Entry? existingEntry = null;
-                                    if (PackageHelper.TryParse(importedEntry.Purl, out var importedPurl))
+                                    if (PackageHelper.TryParse(importedEntry.Pref, out var importedPref))
                                     {
                                         existingEntry =
                                             guard.Value.Setup.Packages.FirstOrDefault(x =>
-                                                PackageHelper.IsMatched(x.Purl,
-                                                                        importedPurl.Label,
-                                                                        importedPurl.Namespace,
-                                                                        importedPurl.Pid));
+                                                PackageHelper.IsMatched(x.Pref,
+                                                                        importedPref.Label,
+                                                                        importedPref.Namespace,
+                                                                        importedPref.Pid));
                                     }
 
                                     if (existingEntry != null)
                                     {
                                         // 更新现有包的版本
-                                        var oldPurl = existingEntry.Purl;
-                                        existingEntry.Purl = importedEntry.Purl;
+                                        var oldPref = existingEntry.Pref;
+                                        existingEntry.Pref = importedEntry.Pref;
                                         existingEntry.Enabled = importedEntry.Enabled;
 
                                         var tags = importedEntry
@@ -1120,15 +1120,15 @@ public partial class InstanceSetupPageModel(
                                             }
                                         }
 
-                                        if (oldPurl != importedEntry.Purl)
+                                        if (oldPref != importedEntry.Pref)
                                         {
                                             persistenceService.AppendAction(new()
                                             {
                                                 Key = Basic.Key,
                                                 Kind = PersistenceService.ActionKind
                                                                          .EditPackage,
-                                                Old = oldPurl,
-                                                New = importedEntry.Purl,
+                                                Old = oldPref,
+                                                New = importedEntry.Pref,
                                             });
                                         }
 
@@ -1140,7 +1140,7 @@ public partial class InstanceSetupPageModel(
                                         var newEntry = new Profile.Rice.Entry
                                         {
                                             Enabled = importedEntry.Enabled,
-                                            Purl = importedEntry.Purl,
+                                            Pref = importedEntry.Pref,
                                             Source = importedEntry.Source,
                                         };
                                         guard.Value.Setup.Packages.Add(newEntry);
@@ -1149,14 +1149,14 @@ public partial class InstanceSetupPageModel(
                                             Key = Basic.Key,
                                             Kind = PersistenceService.ActionKind
                                                                      .EditPackage,
-                                            New = importedEntry.Purl,
+                                            New = importedEntry.Pref,
                                         });
                                         addedCount++;
                                     }
                                 }
                                 catch (Exception ex)
                                 {
-                                    logger.LogError(ex, "Failed to import package: {purl}", importedEntry.Purl);
+                                    logger.LogError(ex, "Failed to import package: {pref}", importedEntry.Pref);
                                     failedCount++;
                                 }
                             }
@@ -1199,7 +1199,7 @@ public partial class InstanceSetupPageModel(
             var list = new Dictionary<PackageIdentifier, Profile.Rice.Entry>();
             foreach (var entry in profile.Setup.Packages)
             {
-                if (PackageHelper.TryParse(entry.Purl, out var result))
+                if (PackageHelper.TryParse(entry.Pref, out var result))
                 {
                     list.Add(new(result.Label, result.Namespace, result.Pid, result.Vid), entry);
                 }
@@ -1212,7 +1212,7 @@ public partial class InstanceSetupPageModel(
                 foreach (var (id, pkg) in res)
                 {
                     var entry = list[id];
-                    output.Add(new(entry.Purl,
+                    output.Add(new(entry.Pref,
                                    pkg.Label,
                                    pkg.Namespace,
                                    pkg.ProjectId,
@@ -1272,7 +1272,7 @@ public partial class InstanceSetupPageModel(
     private async Task CheckUpdateAsync()
     {
         if (Reference is { Value: InstanceReferenceModel reference }
-         && PackageHelper.TryParse(reference.Purl, out var result))
+         && PackageHelper.TryParse(reference.Pref, out var result))
         {
             try
             {
@@ -1305,14 +1305,14 @@ public partial class InstanceSetupPageModel(
             }
             catch (ApiException ex)
             {
-                logger.LogError(ex, "Failed to check update: {}", reference.Purl);
+                logger.LogError(ex, "Failed to check update: {}", reference.Pref);
                 notificationService.PopMessage(ex,
                                                Resources.InstanceSetupPage_CheckUpdateDangerNotificationTitle,
                                                thumbnail: GetNotificationThumbnail(reference.Thumbnail));
             }
             catch (HttpRequestException ex)
             {
-                logger.LogError(ex, "Failed to check update: {}", reference.Purl);
+                logger.LogError(ex, "Failed to check update: {}", reference.Pref);
                 notificationService.PopMessage(ex,
                                                Resources.InstanceSetupPage_CheckUpdateDangerNotificationTitle,
                                                thumbnail: GetNotificationThumbnail(reference.Thumbnail));
@@ -1372,7 +1372,7 @@ public partial class InstanceSetupPageModel(
                 {
                     Key = Basic.Key,
                     Kind = PersistenceService.ActionKind.EditPackage,
-                    Old = model.Entry.Purl,
+                    Old = model.Entry.Pref,
                 });
             }
         }
@@ -1392,10 +1392,10 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        var res = await overlayService.RequestInputAsync(placeholder: model.Entry.Purl);
+        var res = await overlayService.RequestInputAsync(placeholder: model.Entry.Pref);
         if (res != null)
         {
-            model.Entry.Purl = res;
+            model.Entry.Pref = res;
             TriggerPackageMerge();
         }
     }

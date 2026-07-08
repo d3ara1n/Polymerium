@@ -118,7 +118,7 @@ public partial class ProfileRuleModal : Modal
             && dialog.Result is InstancePackageModel package
         )
         {
-            Rule.Selector.Purl = package.Entry.Purl;
+            Rule.Selector.Pref = package.Entry.Pref;
         }
     }
 

@@ -2235,9 +2235,9 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string InstanceSetupPage_ParsePurlDangerNotificationTitle {
+        public static string InstanceSetupPage_ParsePrefDangerNotificationTitle {
             get {
-                return ResourceManager.GetString("InstanceSetupPage_ParsePurlDangerNotificationTitle", resourceCulture);
+                return ResourceManager.GetString("InstanceSetupPage_ParsePrefDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -4581,9 +4581,9 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string SelectorType_Purl {
+        public static string SelectorType_Pref {
             get {
-                return ResourceManager.GetString("SelectorType_Purl", resourceCulture);
+                return ResourceManager.GetString("SelectorType_Pref", resourceCulture);
             }
         }
         
@@ -6117,9 +6117,9 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string InstancePackageButton_EditPurlButtonText {
+        public static string InstancePackageButton_EditPrefButtonText {
             get {
-                return ResourceManager.GetString("InstancePackageButton_EditPurlButtonText", resourceCulture);
+                return ResourceManager.GetString("InstancePackageButton_EditPrefButtonText", resourceCulture);
             }
         }
         

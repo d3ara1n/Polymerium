@@ -1119,8 +1119,8 @@
     <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
         <value>Review</value>
     </data>
-    <data name="InstanceSetupPage_ParsePurlDangerNotificationTitle" xml:space="preserve">
-        <value>Failed to parse purl</value>
+    <data name="InstanceSetupPage_ParsePrefDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to parse pref</value>
     </data>
     <data name="InstanceSetupPage_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
         <value>Failed to load project information</value>
@@ -2305,8 +2305,8 @@
     <data name="SelectorType_Not" xml:space="preserve">
         <value>Not Set</value>
     </data>
-    <data name="SelectorType_Purl" xml:space="preserve">
-        <value>Package Identifier (Purl)</value>
+    <data name="SelectorType_Pref" xml:space="preserve">
+        <value>Package Identifier (Pref)</value>
     </data>
     <data name="SelectorType_Repository" xml:space="preserve">
         <value>Repository Label</value>
@@ -3078,8 +3078,8 @@ Affected entries: {0}
     <data name="InstancePackageButton_RetryButtonText" xml:space="preserve">
         <value>Retry</value>
     </data>
-    <data name="InstancePackageButton_EditPurlButtonText" xml:space="preserve">
-        <value>Edit Purl</value>
+    <data name="InstancePackageButton_EditPrefButtonText" xml:space="preserve">
+        <value>Edit Pref</value>
     </data>
     <data name="InstancePackageButton_RemoveEntryButtonText" xml:space="preserve">
         <value>Remove</value>

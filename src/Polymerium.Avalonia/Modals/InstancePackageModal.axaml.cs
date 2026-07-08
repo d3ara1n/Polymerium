@@ -22,7 +22,7 @@ using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Engines.Deploying;
 using TridentCore.Core.Services.Profiles;
 using TridentCore.Core.Utilities;
-using TridentCore.Purl;
+using TridentCore.Pref;
 using AppResources = Polymerium.Avalonia.Properties.Resources;
 using Version = TridentCore.Abstractions.Repositories.Resources.Version;
 
@@ -215,8 +215,8 @@ public partial class InstancePackageModal : Modal
         return lazy;
     }
 
-    // 依赖安装状态反应式：包源成员变化时按 purl 重判每个依赖的 Installed。
-    // 用 purl（而非 Info）匹配是为了在刚安装、Info 尚未加载时就能标上；
+    // 依赖安装状态反应式：包源成员变化时按 pref 重判每个依赖的 Installed。
+    // 用 pref（而非 Info）匹配是为了在刚安装、Info 尚未加载时就能标上；
     // 初始列表（ConstructDependencies）按 Info 匹配，因为已安装项的展示数据要取自 Info。
     private void SetupDependencyWatcher()
     {
@@ -241,7 +241,7 @@ public partial class InstancePackageModal : Modal
     }
 
     private static bool MatchesDependency(InstancePackageDependencyModel dep, InstancePackageModel package) =>
-        PackageHelper.TryParse(package.Entry.Purl, out var r)
+        PackageHelper.TryParse(package.Entry.Pref, out var r)
         && r.Label == dep.Label
         && r.Namespace == dep.Namespace
         && r.Pid == dep.ProjectId;
@@ -521,7 +521,7 @@ public partial class InstancePackageModal : Modal
             return;
         }
 
-        _old = Model.Owner.Entry.Purl;
+        _old = Model.Owner.Entry.Pref;
         IsFilterEnabled = true;
         LazyDependencies = ConstructDependencies();
         SetupDependencyWatcher();
@@ -543,14 +543,14 @@ public partial class InstancePackageModal : Modal
     protected override async void OnUnloaded(RoutedEventArgs e)
     {
         base.OnUnloaded(e);
-        if (Model.Owner.Entry.Purl != _old)
+        if (Model.Owner.Entry.Pref != _old)
         {
             PersistenceService.AppendAction(new()
             {
                 Key = Guard.Key,
                 Kind = PersistenceService.ActionKind.EditPackage,
                 Old = _old,
-                New = Model.Owner.Entry.Purl,
+                New = Model.Owner.Entry.Pref,
             });
         }
 

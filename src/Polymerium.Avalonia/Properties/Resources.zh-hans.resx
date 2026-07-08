@@ -1110,8 +1110,8 @@
     <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
         <value>查看</value>
     </data>
-    <data name="InstanceSetupPage_ParsePurlDangerNotificationTitle" xml:space="preserve">
-        <value>解析 purl 失败</value>
+    <data name="InstanceSetupPage_ParsePrefDangerNotificationTitle" xml:space="preserve">
+        <value>解析 pref 失败</value>
     </data>
     <data name="InstanceSetupPage_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
         <value>加载项目信息失败</value>
@@ -2299,8 +2299,8 @@
     <data name="SelectorType_Or" xml:space="preserve">
         <value>或集合</value>
     </data>
-    <data name="SelectorType_Purl" xml:space="preserve">
-        <value>包匹配符（Purl）</value>
+    <data name="SelectorType_Pref" xml:space="preserve">
+        <value>包匹配符（Pref）</value>
     </data>
     <data name="SelectorType_Repository" xml:space="preserve">
         <value>仓库</value>
@@ -3069,8 +3069,8 @@
     <data name="InstancePackageButton_RetryButtonText" xml:space="preserve">
         <value>重试</value>
     </data>
-    <data name="InstancePackageButton_EditPurlButtonText" xml:space="preserve">
-        <value>编辑 Purl</value>
+    <data name="InstancePackageButton_EditPrefButtonText" xml:space="preserve">
+        <value>编辑 Pref</value>
     </data>
     <data name="InstancePackageButton_RemoveEntryButtonText" xml:space="preserve">
         <value>移除条目</value>

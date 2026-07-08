@@ -18,7 +18,7 @@ using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Services;
-using TridentCore.Purl;
+using TridentCore.Pref;
 
 namespace Polymerium.Avalonia.ModalModels;
 
@@ -189,10 +189,10 @@ public partial class InstanceDependencyGraphModalModel(
         var layer = new List<PackageIdentifier>();
         foreach (var entry in profile.Setup.Packages)
         {
-            if (PackageHelper.TryParse(entry.Purl, out var purl))
+            if (PackageHelper.TryParse(entry.Pref, out var pref))
             {
-                layer.Add(new(purl.Label, purl.Namespace, purl.Pid, purl.Vid));
-                installedKeys.Add(NodeKey(purl.Label, purl.Namespace, purl.Pid));
+                layer.Add(new(pref.Label, pref.Namespace, pref.Pid, pref.Vid));
+                installedKeys.Add(NodeKey(pref.Label, pref.Namespace, pref.Pid));
             }
         }
 

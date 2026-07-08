@@ -70,7 +70,7 @@
                                                     FontSize="{StaticResource LargeFontSize}"
                                                     Symbol="CircleOff" />
                                             </husk:SwitchCase>
-                                            <husk:SwitchCase Value="Purl">
+                                            <husk:SwitchCase Value="Pref">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource LargeFontSize}"
                                                     Symbol="Link" />
@@ -153,19 +153,19 @@
                                                     </TextBlock>
                                                 </StackPanel>
                                             </husk:SwitchCase>
-                                            <husk:SwitchCase Value="Purl">
+                                            <husk:SwitchCase Value="Pref">
                                                 <StackPanel
                                                     Orientation="Horizontal"
                                                     Spacing="6">
                                                     <TextBlock
                                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="{x:Static lang:Resources.SelectorType_Purl}" />
+                                                        Text="{x:Static lang:Resources.SelectorType_Pref}" />
                                                     <husk:Divider
                                                         Margin="0,4"
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Purl}"
+                                                        Text="{Binding Pref}"
                                                         TextTrimming="CharacterEllipsis" />
                                                 </StackPanel>
                                             </husk:SwitchCase>

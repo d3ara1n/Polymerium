@@ -36,12 +36,12 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <husk:SwitchContainer Value="{Binding $parent[app:ProfileRuleSelectorModal].Selector.Type, FallbackValue={x:Null}, Mode=OneWay}">
-                        <husk:SwitchCase Value="Purl">
+                        <husk:SwitchCase Value="Pref">
                             <StackPanel Spacing="6">
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.SelectorType_Purl}" />
-                                <TextBox Text="{Binding $parent[app:ProfileRuleSelectorModal].Selector.Purl, Mode=TwoWay}">
+                                    Text="{x:Static lang:Resources.SelectorType_Pref}" />
+                                <TextBox Text="{Binding $parent[app:ProfileRuleSelectorModal].Selector.Pref, Mode=TwoWay}">
                                     <TextBox.InnerLeftContent>
                                         <StackPanel Orientation="Horizontal">
                                             <fi:SymbolIcon

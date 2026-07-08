@@ -99,8 +99,8 @@ public static class LocalizedEnumConverters
                         Profile.Rice.Rule.RuleSelector.SelectorType.Or => Resources.SelectorType_Or,
                         Profile.Rice.Rule.RuleSelector.SelectorType.Not =>
                             Resources.SelectorType_Not,
-                        Profile.Rice.Rule.RuleSelector.SelectorType.Purl =>
-                            Resources.SelectorType_Purl,
+                        Profile.Rice.Rule.RuleSelector.SelectorType.Pref =>
+                            Resources.SelectorType_Pref,
                         Profile.Rice.Rule.RuleSelector.SelectorType.Repository =>
                             Resources.SelectorType_Repository,
                         Profile.Rice.Rule.RuleSelector.SelectorType.Tag =>

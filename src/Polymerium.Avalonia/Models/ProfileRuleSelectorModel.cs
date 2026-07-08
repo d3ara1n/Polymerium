@@ -51,10 +51,10 @@ public partial class ProfileRuleSelectorModel(Profile.Rice.Rule.RuleSelector own
         owner.Children is not null ? new(owner.Children, x => new(x), x => x.Owner) : null;
 
     [ObservableProperty]
-    public partial string Purl { get; set; } = owner.Purl ?? string.Empty;
+    public partial string Pref { get; set; } = owner.Pref ?? string.Empty;
 
-    partial void OnPurlChanged(string value) =>
-        owner.Purl = !string.IsNullOrWhiteSpace(value) ? value : null;
+    partial void OnPrefChanged(string value) =>
+        owner.Pref = !string.IsNullOrWhiteSpace(value) ? value : null;
 
     [ObservableProperty]
     public partial string Repository { get; set; } = owner.Repository ?? string.Empty;

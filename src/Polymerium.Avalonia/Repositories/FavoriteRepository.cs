@@ -10,7 +10,7 @@ using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Repositories;
 using TridentCore.Core.Services;
-using TridentCore.Purl;
+using TridentCore.Pref;
 using Version = TridentCore.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Avalonia.Repositories;

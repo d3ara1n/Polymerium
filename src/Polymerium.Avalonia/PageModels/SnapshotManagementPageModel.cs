@@ -277,15 +277,15 @@ public partial class SnapshotManagementPageModel : ViewModelBase
         var currentPaths = new HashSet<string>(currentRefs.Select(x => x.RelativePath), StringComparer.OrdinalIgnoreCase);
         var previousPaths = new HashSet<string>(previousRefs.Select(x => x.RelativePath), StringComparer.OrdinalIgnoreCase);
 
-        var currentPurls = new HashSet<string>(current.Metadata.Packages.Select(x => x.Purl), StringComparer.OrdinalIgnoreCase);
-        var previousPurls = new HashSet<string>(previous.Metadata.Packages.Select(x => x.Purl), StringComparer.OrdinalIgnoreCase);
+        var currentPrefs = new HashSet<string>(current.Metadata.Packages.Select(x => x.Pref), StringComparer.OrdinalIgnoreCase);
+        var previousPrefs = new HashSet<string>(previous.Metadata.Packages.Select(x => x.Pref), StringComparer.OrdinalIgnoreCase);
 
         return new()
         {
             FilesAdded = currentPaths.Count - currentPaths.Intersect(previousPaths).Count(),
             FilesRemoved = previousPaths.Count - previousPaths.Intersect(currentPaths).Count(),
-            PackagesAdded = currentPurls.Count - currentPurls.Intersect(previousPurls).Count(),
-            PackagesRemoved = previousPurls.Count - previousPurls.Intersect(currentPurls).Count(),
+            PackagesAdded = currentPrefs.Count - currentPrefs.Intersect(previousPrefs).Count(),
+            PackagesRemoved = previousPrefs.Count - previousPrefs.Intersect(currentPrefs).Count(),
         };
     }
 

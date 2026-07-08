@@ -379,7 +379,7 @@ public partial class ExhibitPackageModal : Modal
                         x.PublishedAt,
                         x.DownloadCount,
                         x.ReleaseType,
-                        PackageHelper.ToPurl(x.Label, x.Namespace, x.ProjectId, x.VersionId)
+                        PackageHelper.ToPref(x.Label, x.Namespace, x.ProjectId, x.VersionId)
                     )),
                 ]);
                 return rv;

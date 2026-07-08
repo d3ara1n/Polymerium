@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using TridentCore.Abstractions.Utilities;
 
 namespace Polymerium.Avalonia.Utilities;
 
@@ -18,7 +20,7 @@ public static class PackageSourceHelper
         /// <summary>用户手动添加（<c>Source == null</c>），自由包。</summary>
         Manual,
 
-        /// <summary>整合包带来（<c>Source</c> 非 null 且非 <c>recipe://</c>），含当前绑定与已解绑两种。</summary>
+        /// <summary>整合包带来（<c>Source</c> 为 <c>pref://</c> 或旧格式 Purl），含当前绑定与已解绑两种。</summary>
         Modpack,
 
         /// <summary>recipe 带来（<c>Source</c> 为 <c>recipe://</c>），锁组但不占版本。</summary>
@@ -26,15 +28,22 @@ public static class PackageSourceHelper
     }
 
     /// <summary>
-    ///     把 <paramref name="source" /> 归入三种归属之一。recipe 判定前置——<c>recipe://</c> source 本就
-    ///     不等于当前整合包引用，须先于 Modpack 兜底。
+    ///     把 <paramref name="source" /> 归入三种归属之一，经 <see cref="InternalUriHelper.IsKind" />
+    ///     按 scheme 显式判定而非 else 兜底：<c>recipe://</c>→Recipe，<c>pref://</c>→Modpack；
+    ///     旧格式 Purl（无 scheme，如 <c>curseforge:...</c>）仍算 Modpack（兼容改名前的存量 Source）。
+    ///     既非 null / recipe / 包标识的值视为非法，直接抛异常。
     /// </summary>
     public static Kind Classify(string? source) =>
-        source is null
-            ? Kind.Manual
-            : InternalUriHelper.IsKind(source, "recipe")
-                ? Kind.Recipe
-                : Kind.Modpack;
+        source switch
+        {
+            null => Kind.Manual,
+            _ when InternalUriHelper.IsKind(source, "recipe") => Kind.Recipe,
+            _ when InternalUriHelper.IsKind(source, "pref") => Kind.Modpack,
+            // COMPAT: legacy Purl-format Source from pre-rename modpacks; remove once on-disk
+            // profiles no longer carry old-format Source values.
+            _ when PackageHelper.TryParse(source, out _) => Kind.Modpack,
+            _ => throw new UnreachableException($"Unrecognized Entry.Source: {source}"),
+        };
 
     /// <summary>单包能否删除：只有手动包（不属任何组）可删。不依赖 <paramref name="current" />。</summary>
     public static bool CanRemove(string? source, string? current) => source is null;

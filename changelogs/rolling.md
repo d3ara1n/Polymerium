@@ -2,6 +2,7 @@
 
 ### ✨ Highlights ✨
 
+- Update the package identifier concept from Purl to Pref, persisting instance profiles in the pref key with pref:// values while loading older purl-formatted entries automatically
 - Introduce collapsible modpack groupings on the instance package list that gather each modpack's mods under a header showing its icon and name, with manually added mods placed loose at the bottom
 
 ### Fixed
@@ -14,7 +15,7 @@
 
 ### Changed
 
--
+- Update the package identifier concept from Purl to Pref, persisting instance profiles in the pref key with pref:// values while loading older purl-formatted entries automatically (#POLY-123)
 
 ### Removed
 

@@ -3,19 +3,16 @@ using System;
 namespace Polymerium.Avalonia.Utilities;
 
 /// <summary>
-///     Polymerium 内部资源 URI 的判定与构造工具，统一 <c>&lt;kind&gt;://&lt;identifier&gt;</c> 命名规范
-///     （<see cref="System.Uri" /> 形态，如 <c>skin://?type=...</c>、<c>recipe://qol-pack</c>）。
+///     Polymerium 内部资源 URI 的构造与按 scheme 判定工具，统一 <c>&lt;kind&gt;://&lt;identifier&gt;</c>
+///     命名规范（如 <c>skin://?type=...</c>、<c>recipe://qol-pack</c>）。
 ///     <para>
-///         与 Trident 的 Purl（<c>label:ns/pid@vid</c>，不含 <c>://</c>）天然不重叠：<c>://</c> 是内外分水岭，
-///         详见 <c>plans/URL-SCHEME-UNIFICATION.md</c> §3.5。任何"这个 Source 是 recipe 还是整合包"的判断
-///         用 <see cref="IsKind" />，不要用 <c>PackageHelper.TryParse</c>。
+///         注意：Trident 的包标识 Pref 同样是 <c>://</c> 形态（<c>pref://repository/...</c>），
+///         与内部资源同形不同 scheme。因此"这个 Source 是 recipe 还是包"必须用 <see cref="IsKind" />
+///         按具体 scheme 区分（recipe / pref），不能用"是否含 <c>://</c>"一刀切。
 ///     </para>
 /// </summary>
 public static class InternalUriHelper
 {
-    public static bool IsInternal(string? s) =>
-        s is not null && s.Contains("://", StringComparison.Ordinal);
-
     public static bool IsKind(string? s, string kind)
     {
         if (s is null)
