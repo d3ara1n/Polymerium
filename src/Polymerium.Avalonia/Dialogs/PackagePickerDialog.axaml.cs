@@ -28,7 +28,7 @@ public partial class PackagePickerDialog : Dialog
             (o, v) => o.FilterText = v
         );
 
-    private readonly SourceCache<InstancePackageModel, string> _packages = new(x => x.Entry.Purl);
+    private readonly SourceCache<InstancePackageModel, string> _packages = new(x => x.Entry.Pref);
 
     private readonly IDisposable _subscription;
 
@@ -84,5 +84,5 @@ public partial class PackagePickerDialog : Dialog
                 x.Info?.Label?.Contains(filter, StringComparison.InvariantCultureIgnoreCase)
                 ?? false
             )
-            || x.Entry.Purl.Contains(filter, StringComparison.InvariantCultureIgnoreCase);
+            || x.Entry.Pref.Contains(filter, StringComparison.InvariantCultureIgnoreCase);
 }

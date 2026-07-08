@@ -18,7 +18,7 @@ public class ExhibitVersionModel(
     DateTimeOffset publishedAt,
     ulong downloadCount,
     ReleaseType type,
-    string purl
+    string pref
 ) : ModelBase
 {
     #region Direct
@@ -36,7 +36,7 @@ public class ExhibitVersionModel(
     public string PublishedAt => publishedAt.Humanize();
     public ulong DownloadCount => downloadCount;
     public ReleaseType TypeRaw => type;
-    public string Purl => purl;
+    public string Pref => pref;
 
     #endregion
 }

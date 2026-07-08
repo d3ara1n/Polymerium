@@ -182,10 +182,10 @@ public partial class InstancePackageDependencyModal : Modal
         // 创建新的 Entry 并添加到 Profile
         // 如果是自动版本，则不指定版本号（传 null）
         var versionId = IsAutoVersion ? null : SelectedVersion?.Id;
-        var purl = PackageHelper.ToPurl(Model.Label, Model.Namespace, Model.ProjectId, versionId);
+        var pref = PackageHelper.ToPref(Model.Label, Model.Namespace, Model.ProjectId, versionId);
         var entry = new Profile.Rice.Entry()
         {
-            Purl = purl,
+            Pref = pref,
             Enabled = true,
             Source = null,
         };
@@ -201,7 +201,7 @@ public partial class InstancePackageDependencyModal : Modal
                 Key = Guard.Key,
                 Kind = PersistenceService.ActionKind.EditPackage,
                 Old = null,
-                New = purl,
+                New = pref,
             }
         );
 

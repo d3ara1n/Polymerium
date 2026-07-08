@@ -4,7 +4,7 @@ using Polymerium.Avalonia.Facilities;
 namespace Polymerium.Avalonia.Models;
 
 public class InstanceReferenceModel(
-    string purl,
+    string pref,
     string label,
     string projectName,
     string versionId,
@@ -15,7 +15,7 @@ public class InstanceReferenceModel(
 {
     #region Direct
 
-    public string Purl => purl;
+    public string Pref => pref;
     public string Label => label;
     public string ProjectName => projectName;
     public string VersionId => versionId;

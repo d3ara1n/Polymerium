@@ -179,7 +179,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
             IsFavorite = _persistenceService.IsFavoriteProject(project.Label, project.Namespace, project.ProjectId),
         };
         var installed =
-            profile.Setup.Packages.FirstOrDefault(y => PackageHelper.IsMatched(y.Purl,
+            profile.Setup.Packages.FirstOrDefault(y => PackageHelper.IsMatched(y.Pref,
                                                                                project.Label,
                                                                                project.Namespace,
                                                                                project.ProjectId));
@@ -190,7 +190,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                               : ExhibitState.Locked;
             model.Installed = installed;
             // HACK: 为了优化性能，这里不获取 VersionName，而是在为 ExhibitPackageModal 弹出前加载数据时一并获取
-            if (PackageHelper.TryParse(installed.Purl, out var parsed))
+            if (PackageHelper.TryParse(installed.Pref, out var parsed))
             {
                 model.InstalledVersionId = parsed.Vid;
             }
@@ -356,7 +356,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                         IsFavorite = _persistenceService.IsFavoriteProject(x.Label, x.Namespace, x.Pid),
                                     };
                                     var installed =
-                                        profile.Setup.Packages.FirstOrDefault(y => PackageHelper.IsMatched(y.Purl,
+                                        profile.Setup.Packages.FirstOrDefault(y => PackageHelper.IsMatched(y.Pref,
                                                                                   x.Label,
                                                                                   x.Namespace,
                                                                                   x.Pid));
@@ -367,7 +367,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                                           : ExhibitState.Locked;
                                         model.Installed = installed;
                                         // HACK: 为了优化性能，这里不获取 VersionName，而是在为 ExhibitPackageModal 弹出前加载数据时一并获取
-                                        if (PackageHelper.TryParse(installed.Purl, out var parsed))
+                                        if (PackageHelper.TryParse(installed.Pref, out var parsed))
                                         {
                                             model.InstalledVersionId = parsed.Vid;
                                         }
@@ -554,7 +554,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                             var entry = new Profile.Rice.Entry
                             {
                                 Enabled = true,
-                                Purl = PackageHelper.ToPurl(model.Label,
+                                Pref = PackageHelper.ToPref(model.Label,
                                                             model.Namespace,
                                                             model.ProjectId,
                                                             model.PendingVersionId),
@@ -564,7 +564,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                             {
                                 Key = Basic.Key,
                                 Kind = PersistenceService.ActionKind.EditPackage,
-                                New = entry.Purl,
+                                New = entry.Pref,
                             });
                             guard.Value.Setup.Packages.Add(entry);
                             model.State = ExhibitState.Editable;
@@ -575,7 +575,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                         }
                     case { State: ExhibitState.Removing, Installed: not null }:
                         {
-                            var exist = guard.Value.Setup.Packages.FirstOrDefault(x => x.Purl == model.Installed.Purl);
+                            var exist = guard.Value.Setup.Packages.FirstOrDefault(x => x.Pref == model.Installed.Pref);
                             if (exist != null)
                             {
                                 guard.Value.Setup.Packages.Remove(exist);
@@ -585,7 +585,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                             {
                                 Key = Basic.Key,
                                 Kind = PersistenceService.ActionKind.EditPackage,
-                                Old = model.Installed.Purl,
+                                Old = model.Installed.Pref,
                             });
                             model.State = null;
                             model.Installed = null;
@@ -595,8 +595,8 @@ public partial class PackageExplorerPageModel : ViewModelBase
                         }
                     case { State: ExhibitState.Modifying, Installed: not null }:
                         {
-                            var old = model.Installed.Purl;
-                            model.Installed.Purl = PackageHelper.ToPurl(model.Label,
+                            var old = model.Installed.Pref;
+                            model.Installed.Pref = PackageHelper.ToPref(model.Label,
                                                                         model.Namespace,
                                                                         model.ProjectId,
                                                                         model.PendingVersionId);
@@ -605,7 +605,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                 Key = Basic.Key,
                                 Kind = PersistenceService.ActionKind.EditPackage,
                                 Old = old,
-                                New = model.Installed.Purl,
+                                New = model.Installed.Pref,
                             });
                             model.State = ExhibitState.Editable;
                             model.InstalledVersionName = model.PendingVersionName;

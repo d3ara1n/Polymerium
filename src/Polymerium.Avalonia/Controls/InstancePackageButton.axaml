@@ -229,7 +229,7 @@
                                             </StackPanel>
                                             <TextBlock
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{Binding Entry.Purl}" />
+                                                Text="{Binding Entry.Pref}" />
                                         </StackPanel>
                                         <Grid
                                             Grid.Column="2"
@@ -257,7 +257,7 @@
                                                 Theme="{StaticResource GhostButtonTheme}">
                                                 <husk:IconLabel
                                                     Icon="Edit"
-                                                    Text="{x:Static lang:Resources.InstancePackageButton_EditPurlButtonText}" />
+                                                    Text="{x:Static lang:Resources.InstancePackageButton_EditPrefButtonText}" />
                                             </Button>
                                             <Button
                                                 Grid.Row="1"
@@ -364,7 +364,7 @@
                                         Theme="{StaticResource GhostButtonTheme}">
                                         <husk:IconLabel
                                             Icon="Edit"
-                                            Text="{x:Static lang:Resources.InstancePackageButton_EditPurlButtonText}" />
+                                            Text="{x:Static lang:Resources.InstancePackageButton_EditPrefButtonText}" />
                                     </Button>
                                     <Button
                                         Classes="Small Danger"

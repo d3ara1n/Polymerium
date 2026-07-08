@@ -135,7 +135,7 @@ public partial class ExhibitModpackToast : Toast
                     x.PublishedAt,
                     x.DownloadCount,
                     x.ReleaseType,
-                    PackageHelper.ToPurl(x.Label, x.Namespace, x.ProjectId, x.VersionId)
+                    PackageHelper.ToPref(x.Label, x.Namespace, x.ProjectId, x.VersionId)
                 ))
                 .ToList();
             SelectedVersion = rv.FirstOrDefault();

@@ -17,7 +17,7 @@ using TridentCore.Core.Models.MojangLauncherApi;
 using TridentCore.Core.Models.PrismLauncherApi;
 using TridentCore.Core.Services;
 using TridentCore.Core.Utilities;
-using TridentCore.Purl;
+using TridentCore.Pref;
 using Version = TridentCore.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Avalonia.Services;
