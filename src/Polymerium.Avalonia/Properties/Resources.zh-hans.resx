@@ -2378,7 +2378,7 @@
         <value>编辑</value>
     </data>
     <data name="InstanceSetupPage_RuleCountLabelText" xml:space="preserve">
-        <value>部署规则条数：</value>
+        <value>规则数：</value>
     </data>
     <data name="Shared_Yes" xml:space="preserve">
         <value>是</value>

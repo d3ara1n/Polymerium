@@ -2,7 +2,7 @@
 
 > 制定日期：2026-07-08
 > 定位：Instance 管理的补完任务。Phase C 的筛选 Flyout 是最小占位——固有 facet（加载器 / 版本 / 来源）已放置但缺少聚合数据（每个 facet 值有多少实例）。
-> 当前状态：草案
+> 当前状态：✅ 已实施（不作）
 > 关联：[POLY-23](https://d3ara1n.atlassian.net/browse/POLY-23)
 
 ## 背景与动机
@@ -115,21 +115,8 @@ filtered
 
 每个 facet 值显示 `标签 (N)`，`N` 随复合过滤条件实时联动。
 
-## 改动面
+## 方案
 
-| 文件 | 改动 |
-|------|------|
-| `PageModels/InstancesPageModel.cs` | 新增 facet 聚合计算管道；facet 选择状态与现有 filter 复合 |
-| `Pages/InstancesPage.axaml` | Flyout 内 facet 区绑定聚合数据 + 计数显示；现有 Reset/Apply 按钮补全 |
-| `Models/FacetAggregation.cs`（新增） | FacetAggregation / FacetValue 数据模型 |
-| `Properties/Resources.{resx,zh-hans.resx,Designer.cs}` | 无变化（复用已有 key） |
+### 决策：不作
 
-## 验收标准
-
-| 场景 | 期望 |
-|------|------|
-| 打开筛选 flyout | 每个 facet 值旁显示计数 |
-| 选中一个 facet 值 | 其他 facet 的计数联动更新 |
-| 搜索框输入文本 | flyout 内 facet 计数联动更新（与文本过滤复合） |
-| 重置筛选 | 所有 facet 取消选中，计数恢复全量 |
-| 实例数 200+ | 打开 flyout 无明显延迟 (<100ms) |
+Facet 计数需要每个 MultiSelectInstanceFilter 拿到"排除自身的其他 filter 复合流"来做按值分组计数，涉及给每个 filter 单独拼 others 谓词并喂背景源。当前 Flyout 内的 ToggleButton 列表功能完整、交互直接，筛选后结果即时反映在卡片网格中——用户点 Fabric 后立即看到剩下的卡片，计数只是锦上添花。实例数通常在几十级别，筛选反馈本身已足够快。不作。

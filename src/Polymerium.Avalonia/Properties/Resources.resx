@@ -2387,7 +2387,7 @@
         <value>Edit</value>
     </data>
     <data name="InstanceSetupPage_RuleCountLabelText" xml:space="preserve">
-        <value>Deployment Rule Count:</value>
+        <value>Rules: </value>
     </data>
     <data name="Shared_Yes" xml:space="preserve">
         <value>Yes</value>
