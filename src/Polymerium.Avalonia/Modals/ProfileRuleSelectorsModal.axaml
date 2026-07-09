@@ -11,6 +11,7 @@
     Padding="0"
     d:DesignHeight="600"
     d:DesignWidth="450"
+    Classes="Frosted"
     mc:Ignorable="d">
     <Grid
         RowDefinitions="Auto,*,Auto"

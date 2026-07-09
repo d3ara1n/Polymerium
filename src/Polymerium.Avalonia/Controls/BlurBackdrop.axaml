@@ -1,0 +1,33 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium">
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+            <!--  70% 白  -->
+            <Color x:Key="BlurBackdropTintColor">#B3FFFFFF</Color>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <!--  70% 黑  -->
+            <Color x:Key="BlurBackdropTintColor">#B31E1E1E</Color>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+    <ControlTheme
+        x:Key="{x:Type app:BlurBackdrop}"
+        TargetType="app:BlurBackdrop">
+        <Setter Property="BlurRadius" Value="16" />
+        <Setter Property="TintColor" Value="{DynamicResource BlurBackdropTintColor}" />
+        <Setter Property="TintOpacity" Value="1" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter Name="PART_ContentPresenter" Padding="{TemplateBinding Padding}"
+                                  Content="{TemplateBinding Content}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

@@ -12,6 +12,7 @@
     MaxHeight="600"
     d:DesignHeight="560"
     d:DesignWidth="520"
+    Classes="Frosted"
     mc:Ignorable="d">
     <DockPanel>
         <!--  Close Button  -->
