@@ -34,7 +34,7 @@
 |------|------|--------|--------|------|
 | **A1** | 依赖图增强：缺失依赖可视化 + 前置/被依赖 + 节点计数 | 🔴 P0 立即 | M | ✅ 已完成 |
 | **A3** | Widget 开发者工具箱（补齐空壳 + 新增） | 🟠 P1 | M | 第一步已完成（JarInJar）；第二步经评估撚置（价值/ROI 低） |
-| **B3** | 版本元数据源可配置 | 🟠 P1 立即 | S | 待实施 |
+| **B3** | 版本元数据源可配置 | 🟠 P1 立即 | S | 已驳回（仅有一个可用端点，可配置无意义，且用户误改会导致元数据不可用） |
 | **A2** | 查询语法升级为真正的查询引擎 | 🟡 P2 | L | 已确认方向 |
 | **B1** | GitHub 整合包源（packwiz 仓库拉取/更新） | 🟡 P2 战略 | L | 待讨论 |
 | **B2** | 实例即工作流（配置即代码） | 🔵 P3 战略 | XL | 待讨论 |
@@ -164,40 +164,9 @@ public int DependentCount { get; }  // 入边数：多少个依赖它
 
 ---
 
-## 🟠 B3 — 版本元数据源可配置
+## 🟠 B3 — 版本元数据源可配置（已驳回）
 
-**现状**
-
-`submodules/Trident.Net/.../PrismLauncherService.cs` 硬编码：
-
-```csharp
-public const string ENDPOINT = "https://meta.prismlauncher.org";
-```
-
-用户确认当前用的就是 Prism 的 meta 源。但它是**硬编码常量**，无法切换。
-
-**目标**
-
-把元数据源端点变成可配置项，默认仍为 `meta.prismlauncher.org`，允许用户填入镜像（如国内 BMCLAPI 兼容源、自建内网 meta）或社区维护的同类服务。
-
-**方案**
-
-1. `Configuration` 增加配置项 `ApplicationMetadataEndpoint`，默认 `https://meta.prismlauncher.org`
-2. `PrismLauncherService` 把 `ENDPOINT` 常量改为从 `IOptions<Configuration>` 读取（submodule 改动，AGENTS.md 允许自由改 submodule）
-3. 设置页「网络」或新增「数据源」分组加一个 Endpoint 输入框，带「重启生效」提示（参考现有代理设置的 `RestartRequiredLabelText`）
-
-**涉及文件**
-
-- `submodules/Trident.Net/.../PrismLauncherService.cs`
-- `submodules/Trident.Net/.../ServiceCollectionExtensions.cs`（注入配置）
-- `Configuration.cs` + `Properties/Resources.*`
-- `Pages/SettingsPage.axaml` + `PageModels/SettingsPageModel.cs`
-
-**决策点**
-
-小。主要确认配置项放「网络」分组还是独立「数据源」分组。
-
----
+**决策**：驳回。当前仅 `meta.prismlauncher.org` 一个可用端点，开放配置无实际价值，且用户误改会导致版本/加载器数据完全不可用。
 
 ## 🟡 A2 — 查询语法升级为查询引擎（已确认方向）
 
@@ -321,7 +290,6 @@ public const string ENDPOINT = "https://meta.prismlauncher.org";
 ## 实施建议顺序
 
 1. **A1 依赖图增强** ← 现在，需求明确、风险低、最能立刻体现「专业工具」定位
-2. **B3 元数据源可配置** ← 顺手，S 级工作量
-3. **A3 Widget** ← 用户勾选内容后启动，JarInJar 可先行
-4. **B1 GitHub 整合包源** ← 战略级，专门讨论后立项
-5. **A2 查询引擎 / B2 实例即工作流** ← B1 落地后自然演化
+2. **A3 Widget** ← 用户勾选内容后启动，JarInJar 可先行
+3. **B1 GitHub 整合包源** ← 战略级，专门讨论后立项
+4. **A2 查询引擎 / B2 实例即工作流** ← B1 落地后自然演化
