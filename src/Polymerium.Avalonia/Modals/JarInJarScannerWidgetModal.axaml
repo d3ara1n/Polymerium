@@ -14,7 +14,6 @@
     d:DesignHeight="520"
     d:DesignWidth="720"
     x:DataType="modalModels:JarInJarScannerWidgetModalModel"
-    Classes="Frosted"
     mc:Ignorable="d">
     <husk:Modal.Resources>
         <DataTemplate

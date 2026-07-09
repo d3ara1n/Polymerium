@@ -1,0 +1,41 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
+
+    <ControlTheme
+        x:Key="{x:Type husk:Sidebar}"
+        BasedOn="{StaticResource {x:Type husk:Sidebar}}"
+        TargetType="husk:Sidebar">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Margin="4"
+                    Background="{TemplateBinding Background}"
+                    BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    BoxShadow="{DynamicResource SidebarBoxShadow}"
+                    ClipToBounds="True"
+                    CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid>
+                        <app:BlurBackdrop
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            IsVisible="{Binding (app:BlurBackdrop.UseBlur), RelativeSource={RelativeSource TemplatedParent}}" />
+                        <ContentPresenter
+                            Name="PART_ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^[(app|BlurBackdrop.UseBlur)=False]">
+            <Setter Property="Background" Value="{StaticResource FlyoutBackgroundBrush}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

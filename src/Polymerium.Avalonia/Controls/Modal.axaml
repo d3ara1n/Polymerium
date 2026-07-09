@@ -8,26 +8,34 @@
         x:Key="{x:Type husk:Modal}"
         BasedOn="{StaticResource {x:Type husk:Modal}}"
         TargetType="husk:Modal">
-        <Style Selector="^.Frosted">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Template">
-                <ControlTemplate>
-                    <Border
-                        Margin="4"
-                        Background="Transparent"
-                        BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        BoxShadow="{StaticResource ModalBoxShadow}"
-                        ClipToBounds="True"
-                        CornerRadius="{TemplateBinding CornerRadius}">
+        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Margin="4"
+                    Background="{TemplateBinding Background}"
+                    BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    BoxShadow="{DynamicResource ModalBoxShadow}"
+                    ClipToBounds="True"
+                    CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid>
                         <app:BlurBackdrop
                             CornerRadius="{TemplateBinding CornerRadius}"
-                            Padding="{TemplateBinding Padding}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}">
-                        </app:BlurBackdrop>
-                    </Border>
-                </ControlTemplate>
-            </Setter>
+                            IsVisible="{Binding (app:BlurBackdrop.UseBlur), RelativeSource={RelativeSource TemplatedParent}}" />
+                        <ContentPresenter
+                            Name="PART_ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^[(app|BlurBackdrop.UseBlur)=False]">
+            <Setter Property="Background" Value="{StaticResource FlyoutBackgroundBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

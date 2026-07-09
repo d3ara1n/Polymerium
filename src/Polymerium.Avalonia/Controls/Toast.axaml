@@ -1,0 +1,89 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
+
+    <ControlTheme
+        x:Key="{x:Type husk:Toast}"
+        BasedOn="{StaticResource {x:Type husk:Toast}}"
+        TargetType="husk:Toast">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Background="{TemplateBinding Background}"
+                    BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    ClipToBounds="{TemplateBinding ClipToBounds}"
+                    CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid>
+                        <app:BlurBackdrop
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            IsVisible="{Binding (app:BlurBackdrop.UseBlur), RelativeSource={RelativeSource TemplatedParent}}" />
+                        <Panel>
+                            <ScrollViewer
+                                Name="ScrollViewer"
+                                HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                                VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+                                <ContentPresenter
+                                    Padding="{TemplateBinding Padding}"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            </ScrollViewer>
+                            <Border
+                                Name="HeaderBackground"
+                                VerticalAlignment="Top"
+                                IsVisible="{TemplateBinding IsHeaderVisible}"
+                                CornerRadius="{TemplateBinding CornerRadius,
+                                                               Converter={x:Static husk:CornerRadiusConverters.Top}}">
+                                <DockPanel Margin="{StaticResource ToastHeaderlessContentMargin}">
+                                    <Button
+                                        DockPanel.Dock="Right"
+                                        Padding="8"
+                                        VerticalAlignment="Top"
+                                        Command="{Binding Dismiss, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                        CornerRadius="{StaticResource FullCornerRadius}"
+                                        IsCancel="True"
+                                        Theme="{StaticResource OutlineButtonTheme}">
+                                        <fi:SymbolIcon
+                                            Width="{StaticResource LargeFontSize}"
+                                            Height="{StaticResource LargeFontSize}"
+                                            Symbol="Dismiss" />
+                                    </Button>
+                                    <ContentPresenter
+                                        IsVisible="{TemplateBinding IsHeaderVisible}"
+                                        Content="{TemplateBinding Header}"
+                                        ContentTemplate="{TemplateBinding HeaderTemplate}">
+                                        <ContentPresenter.Opacity>
+                                            <MultiBinding Converter="{x:Static app:InternalConverters.OffsetToOpacity}">
+                                                <Binding
+                                                    ElementName="ScrollViewer"
+                                                    Path="Offset" />
+                                                <Binding
+                                                    ElementName="HeaderBackground"
+                                                    Path="Bounds.Height" />
+                                            </MultiBinding>
+                                        </ContentPresenter.Opacity>
+                                        <ContentPresenter.Styles>
+                                            <Style Selector="ContentPresenter &gt; TextBlock">
+                                                <Setter Property="FontSize" Value="{StaticResource ExtraLargeFontSize}" />
+                                                <Setter Property="FontWeight" Value="{StaticResource ControlStrongFontWeight}" />
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                            </Style>
+                                        </ContentPresenter.Styles>
+                                    </ContentPresenter>
+                                </DockPanel>
+                            </Border>
+                        </Panel>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^[(app|BlurBackdrop.UseBlur)=False]">
+            <Setter Property="Background" Value="{StaticResource FlyoutBackgroundBrush}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

@@ -1,0 +1,88 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
+
+    <ControlTheme
+        x:Key="{x:Type husk:Dialog}"
+        BasedOn="{StaticResource {x:Type husk:Dialog}}"
+        TargetType="husk:Dialog">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Background="{TemplateBinding Background}"
+                    BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    ClipToBounds="True"
+                    CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid>
+                        <app:BlurBackdrop
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            IsVisible="{Binding (app:BlurBackdrop.UseBlur), RelativeSource={RelativeSource TemplatedParent}}" />
+                        <Grid RowDefinitions="Auto,Auto,*,Auto">
+                            <ContentPresenter
+                                Name="PART_HeaderPresenter"
+                                Grid.Row="0"
+                                Content="{TemplateBinding Header}"
+                                ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                            <StackPanel
+                                Grid.Row="1"
+                                Margin="18,18,18,0"
+                                Spacing="4">
+                                <TextBlock
+                                    IsVisible="{Binding Title, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{TemplateBinding Title}" />
+                                <TextBlock
+                                    MaxWidth="{Binding #PART_ContentPresenter.Bounds.Width}"
+                                    IsVisible="{Binding Message, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{TemplateBinding Message}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </StackPanel>
+                            <ScrollViewer
+                                Grid.Row="2"
+                                AllowAutoHide="{TemplateBinding ScrollViewer.AllowAutoHide}"
+                                BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
+                                HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                <ContentPresenter
+                                    Name="PART_ContentPresenter"
+                                    Margin="18,18,18,0"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    Foreground="{TemplateBinding Foreground}" />
+                            </ScrollViewer>
+                            <husk:ModalActionPanel
+                                Grid.Row="3"
+                                Margin="18"
+                                Layout="Stretch"
+                                Spacing="8">
+                                <Button
+                                    Classes="Primary"
+                                    IsVisible="{TemplateBinding IsPrimaryButtonVisible}"
+                                    Command="{Binding PrimaryCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    IsDefault="True">
+                                    <TextBlock Text="{TemplateBinding PrimaryText}" />
+                                </Button>
+                                <Button
+                                    Command="{Binding SecondaryCommand, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    IsCancel="True">
+                                    <TextBlock Text="{TemplateBinding SecondaryText}" />
+                                </Button>
+                            </husk:ModalActionPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^[(app|BlurBackdrop.UseBlur)=False]">
+            <Setter Property="Background" Value="{StaticResource FlyoutBackgroundBrush}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

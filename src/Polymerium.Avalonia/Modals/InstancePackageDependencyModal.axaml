@@ -15,7 +15,6 @@
     d:DesignHeight="500"
     d:DesignWidth="360"
     x:DataType="m:InstancePackageDependencyModel"
-    Classes="Frosted"
     mc:Ignorable="d">
     <husk:ConstrainedBox AspectRatio="0.75">
         <Grid

@@ -25,6 +25,7 @@
                 <ContentPresenter Name="PART_ContentPresenter" Padding="{TemplateBinding Padding}"
                                   Content="{TemplateBinding Content}"
                                   BorderBrush="{TemplateBinding BorderBrush}"
+                                  CornerRadius="{TemplateBinding CornerRadius}"
                                   BorderThickness="{TemplateBinding BorderThickness}"
                                   ContentTemplate="{TemplateBinding ContentTemplate}" />
             </ControlTemplate>

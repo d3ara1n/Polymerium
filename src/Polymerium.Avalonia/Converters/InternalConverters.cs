@@ -32,6 +32,17 @@ public static class InternalConverters
         return 0.0d;
     });
 
+    public static IMultiValueConverter OffsetToOpacity { get; } =
+        new RelayMultiConverter((v, _, _) =>
+        {
+            if (v is [Vector offset, double max])
+            {
+                return 1.0 - Math.Min(offset.Y, max) / max;
+            }
+
+            return v;
+        });
+
     public static IValueConverter RatioToPercent { get; } = new RelayConverter(v => v switch
     {
         double d => d * 100d,
