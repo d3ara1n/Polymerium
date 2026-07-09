@@ -282,7 +282,7 @@ public class BlurBackdrop : ContentControl
         }
 
         using (var ctx = _scratch.CreateDrawingContext())
-            BackdropVisualRenderer.Render(ctx, topLevel, captureRect, new HashSet<Visual> { this });
+            BackdropVisualRenderer.Render(ctx, topLevel, this, captureRect);
 
         const int bpp = 4;
         var cw = pixel.Width;
@@ -426,7 +426,9 @@ public class BlurBackdrop : ContentControl
 
     private static class BackdropVisualRenderer
     {
-        public static void Render(DrawingContext context, Visual visual, Rect clipRect, ISet<Visual> excluded)
+        // NOTE: 只捕获绘制顺序在 target 之前（其"背后"）的内容；target 自身及之后（之上）的兄弟/子树
+        //       一律跳过——否则 overlay 自己的前景内容会进捕获、随滚动改变 hash，导致每帧重模糊。
+        public static void Render(DrawingContext context, Visual root, Visual target, Rect clipRect)
         {
             if (clipRect.Width <= 0 || clipRect.Height <= 0)
                 return;
@@ -436,7 +438,7 @@ public class BlurBackdrop : ContentControl
             //       visualBounds.Intersects(clipRect) 跳过，超出画布的绘制由 RenderTargetBitmap 丢弃。
             using (context.PushTransform(Matrix.CreateTranslation(-clipRect.X, -clipRect.Y)))
             {
-                Render(context, visual, new(visual.Bounds.Size), Matrix.Identity, clipRect, excluded);
+                Render(context, root, target, new(root.Bounds.Size), Matrix.Identity, clipRect);
             }
         }
 
@@ -451,19 +453,23 @@ public class BlurBackdrop : ContentControl
             return visual.GetValue(ExcludeFromCaptureProperty);
         }
 
-        private static void Render(
+        // 返回 true 表示已命中 target：调用方据此停止遍历后续兄弟（绘制顺序在 target 之上，不进捕获）。
+        private static bool Render(
             DrawingContext context,
             Visual visual,
+            Visual target,
             Rect bounds,
             Matrix parentTransform,
-            Rect clipRect,
-            ISet<Visual> excluded)
+            Rect clipRect)
         {
-            if (excluded.Contains(visual) || ShouldExclude(visual))
-                return;
+            if (visual == target)
+                return true;
+
+            if (ShouldExclude(visual))
+                return false;
 
             if (!visual.IsVisible || visual.Opacity <= 0)
-                return;
+                return false;
 
             Rect rect = new(bounds.Size);
             Matrix transform;
@@ -503,7 +509,11 @@ public class BlurBackdrop : ContentControl
                 }
 
                 foreach (var child in children)
-                    Render(context, child, child.Bounds, childParent, childClip, excluded);
+                {
+                    if (Render(context, child, target, child.Bounds, childParent, childClip))
+                        return true;
+                }
+                return false;
             }
         }
 

@@ -6,7 +6,7 @@
 
 ### Fixed
 
--
+- Fix frosted blur backdrop stuttering while scrolling overlay content
 
 ### Added
 
