@@ -13,6 +13,7 @@
 
 - Add support for pipe table and grid table rendering in markdown (Huskui.Avalonia)
 - Introduce collapsible modpack groupings on the instance package list that gather each modpack's mods under a header showing its icon and name, with manually added mods placed loose at the bottom (#POLY-119)
+- Add a sparkle badge to recently added instances and a subtle background highlight to active instances in the sidebar for at-a-glance status identification (#POLY-23)
 
 ### Changed
 

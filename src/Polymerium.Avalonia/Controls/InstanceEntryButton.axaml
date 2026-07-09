@@ -168,20 +168,34 @@
                                 </StackPanel>
                             </WrapPanel>
                         </StackPanel>
-                        <Border
-                            Name="PinnedBadge"
+                        <StackPanel
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Margin="8"
-                            Padding="4"
-                            Background="{StaticResource ControlAccentBackgroundBrush}"
-                            CornerRadius="{StaticResource SmallCornerRadius}"
-                            IsVisible="{Binding IsPinned}">
-                            <fi:SymbolIcon
-                                FontSize="{StaticResource SmallFontSize}"
-                                Foreground="White"
-                                Symbol="Pin" />
-                        </Border>
+                            Spacing="4">
+                            <Border
+                                Name="PinnedBadge"
+                                Padding="4"
+                                Background="{StaticResource ControlAccentBackgroundBrush}"
+                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                IsVisible="{Binding IsPinned}">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="White"
+                                    Symbol="Pin" />
+                            </Border>
+                            <Border
+                                Name="RecentBadge"
+                                Padding="4"
+                                Background="{StaticResource ControlSuccessBackgroundBrush}"
+                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                IsVisible="{Binding RecentOrder, Converter={x:Static husk:ObjectConverters.IsNotNull}}">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="White"
+                                    Symbol="Sparkle" />
+                            </Border>
+                        </StackPanel>
                         <Border
                             Name="Border"
                             BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
@@ -224,6 +238,7 @@
         </Style>
 
         <Style Selector="^[State=Installing]">
+            <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
                 <Setter Property="IsVisible" Value="True" />
             </Style>
@@ -249,6 +264,7 @@
         </Style>
 
         <Style Selector="^[State=Updating]">
+            <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
@@ -274,6 +290,7 @@
         </Style>
 
         <Style Selector="^[State=Deploying]">
+            <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
@@ -292,6 +309,7 @@
         </Style>
 
         <Style Selector="^[State=Running]">
+            <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
             <Style Selector="^ /template/ husk|Tag#InstallingTag">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
