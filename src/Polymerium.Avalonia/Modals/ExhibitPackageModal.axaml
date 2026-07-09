@@ -10,6 +10,7 @@
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:trident="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions"
+    app:BlurBackdrop.UseBlur="False"
     MinHeight="360"
     Margin="64"
     Padding="0"

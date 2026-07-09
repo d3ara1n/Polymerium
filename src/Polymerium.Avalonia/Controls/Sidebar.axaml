@@ -5,10 +5,10 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
 
     <ControlTheme
-        x:Key="{x:Type husk:Modal}"
-        BasedOn="{StaticResource {x:Type husk:Modal}}"
-        TargetType="husk:Modal">
-        <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+        x:Key="{x:Type husk:Sidebar}"
+        BasedOn="{StaticResource {x:Type husk:Sidebar}}"
+        TargetType="husk:Sidebar">
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border
@@ -17,7 +17,7 @@
                     BackgroundSizing="{TemplateBinding BackgroundSizing}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    BoxShadow="{DynamicResource ModalBoxShadow}"
+                    BoxShadow="{DynamicResource SidebarBoxShadow}"
                     ClipToBounds="True"
                     CornerRadius="{TemplateBinding CornerRadius}">
                     <Grid>

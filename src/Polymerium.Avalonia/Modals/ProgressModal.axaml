@@ -10,7 +10,6 @@
     Width="360"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    Classes="Frosted"
     mc:Ignorable="d">
     <Border
         Padding="24"

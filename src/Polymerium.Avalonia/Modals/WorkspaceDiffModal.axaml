@@ -12,7 +12,6 @@
     d:DesignHeight="600"
     d:DesignWidth="900"
     x:DataType="app:WorkspaceDiffModalModel"
-    Classes="Frosted"
     mc:Ignorable="d">
     <DockPanel VerticalSpacing="12">
         <StackPanel

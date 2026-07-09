@@ -12,7 +12,6 @@
     Width="540"
     x:DataType="app:AccountModel"
     Background="Transparent"
-    Classes="Frosted"
     Padding="0"
     mc:Ignorable="d">
     <Grid ColumnDefinitions="Auto,*">

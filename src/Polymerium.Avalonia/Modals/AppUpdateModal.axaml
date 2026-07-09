@@ -12,7 +12,6 @@
     MaxHeight="600"
     d:DesignHeight="500"
     d:DesignWidth="600"
-    Classes="Frosted"
     mc:Ignorable="d">
     <DockPanel>
         <!--  Header  -->

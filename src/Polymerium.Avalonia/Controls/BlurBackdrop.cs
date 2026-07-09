@@ -40,6 +40,15 @@ public class BlurBackdrop : ContentControl
             "ExcludeFromCapture",
             defaultValue: false);
 
+    /// <summary>
+    ///     挂在内置 BlurBackdrop 背景层的 overlay（Modal/Dialog/Sidebar/Toast）上，关闭其默认毛玻璃并恢复不透明底色。
+    ///     异型控件设为 False 后可在自身内容里手动放置 BlurBackdrop 自定义模糊区域。
+    /// </summary>
+    public static readonly AttachedProperty<bool> UseBlurProperty =
+        AvaloniaProperty.RegisterAttached<BlurBackdrop, Control, bool>(
+            "UseBlur",
+            defaultValue: true);
+
     // 重绘频率上限（15fps）。SceneInvalidated 频率远高于此，这里只做上限节流。
     private static readonly long MIN_INTERVAL_TICKS = TimeSpan.FromMilliseconds(66).Ticks;
 
@@ -86,6 +95,10 @@ public class BlurBackdrop : ContentControl
 
     public static void SetExcludeFromCapture(Visual element, bool value) =>
         element.SetValue(ExcludeFromCaptureProperty, value);
+
+    public static bool GetUseBlur(Control element) => element.GetValue(UseBlurProperty);
+
+    public static void SetUseBlur(Control element, bool value) => element.SetValue(UseBlurProperty, value);
 
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
