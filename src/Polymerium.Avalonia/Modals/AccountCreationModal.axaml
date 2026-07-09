@@ -9,6 +9,7 @@
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="300"
+    Classes="Frosted"
     mc:Ignorable="d">
     <DockPanel VerticalSpacing="24">
         <Grid

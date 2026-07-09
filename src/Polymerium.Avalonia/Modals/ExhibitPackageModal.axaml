@@ -160,10 +160,9 @@
     <Grid
         ColumnDefinitions="*,Auto"
         ColumnSpacing="12">
-        <Border
+        <app:BlurBackdrop
             Grid.Column="1"
             Width="300"
-            Background="{StaticResource FlyoutBackgroundBrush}"
             BorderBrush="{StaticResource ControlBorderBrush}"
             BorderThickness="1"
             CornerRadius="{StaticResource MediumCornerRadius}">
@@ -699,14 +698,13 @@
                     </husk:SwitchContainer>
                 </Grid>
             </Grid>
-        </Border>
+        </app:BlurBackdrop>
         <!--  即使这个面板没有打开也会触发懒加载，因为 IsEffectivelyVisible 不是依赖属性也没法跟踪值  -->
         <husk:ConstrainedBox
             Grid.Column="0"
             IsVisible="{Binding $parent[app:ExhibitPackageModal].IsDetailPanelVisible, Mode=OneWay}"
             AspectRatio="0.8">
-            <Border
-                Background="{StaticResource FlyoutBackgroundBrush}"
+            <app:BlurBackdrop
                 BorderBrush="{StaticResource ControlBorderBrush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource MediumCornerRadius}">
@@ -1181,7 +1179,7 @@
                         </husk:LazyContainer>
                     </TabItem>
                 </TabControl>
-            </Border>
+            </app:BlurBackdrop>
         </husk:ConstrainedBox>
     </Grid>
 </husk:Modal>
