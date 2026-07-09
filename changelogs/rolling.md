@@ -15,6 +15,7 @@
 
 ### Changed
 
+- Update modals with a frosted blur backdrop
 - Update the package identifier concept from Purl to Pref, persisting instance profiles in the pref key with pref:// values while loading older purl-formatted entries automatically (#POLY-123)
 
 ### Removed

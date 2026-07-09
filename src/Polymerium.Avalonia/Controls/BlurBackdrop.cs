@@ -1,5 +1,7 @@
 using System;
+using System.Buffers;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -30,9 +32,6 @@ public class BlurBackdrop : ContentControl
     public static readonly StyledProperty<double> TintOpacityProperty =
         AvaloniaProperty.Register<BlurBackdrop, double>(nameof(TintOpacity), 1.0);
 
-    public static readonly StyledProperty<CornerRadius> CornerRadiusProperty =
-        AvaloniaProperty.Register<BlurBackdrop, CornerRadius>(nameof(CornerRadius));
-
     /// <summary>
     ///     挂在任何 Visual 上，使其（及子树）不参与后方内容捕获。用于排除会污染 tint 的半透明遮罩等。
     /// </summary>
@@ -42,17 +41,22 @@ public class BlurBackdrop : ContentControl
             defaultValue: false);
 
     // 重绘频率上限（15fps）。SceneInvalidated 频率远高于此，这里只做上限节流。
-    private static readonly long s_minIntervalTicks = TimeSpan.FromMilliseconds(66).Ticks;
+    private static readonly long MIN_INTERVAL_TICKS = TimeSpan.FromMilliseconds(66).Ticks;
 
-    private static PropertyInfo? s_topLevelRendererProperty;
+    private static PropertyInfo? _topLevelRendererProperty;
 
     private RenderTargetBitmap? _scratch;
-    private SKImage? _backdrop;
+    // NOTE: _backdrop 被 Capture 写、Render 读。当前 RAF/SceneInvalidated 与控件 Render 实测同线程，加 volatile
+    //       保证可见性；彻底的跨线程模型待阶段二随 GPU 重构一并确认。
+    private volatile SKImage? _backdrop;
     private Vector _controlOffsetPx;
     private Vector _controlSizePx;
     private ulong _lastHash;
     private long _lastCaptureTicksUtc;
     private bool _captureQueued;
+    private bool _detached;
+    private bool _polling;
+    private TopLevel? _topLevel;
 
     private object? _renderer;
     private EventInfo? _sceneInvalidatedEvent;
@@ -78,12 +82,6 @@ public class BlurBackdrop : ContentControl
         set => SetValue(TintOpacityProperty, value);
     }
 
-    public CornerRadius CornerRadius
-    {
-        get => GetValue(CornerRadiusProperty);
-        set => SetValue(CornerRadiusProperty, value);
-    }
-
     public static bool GetExcludeFromCapture(Visual element) => element.GetValue(ExcludeFromCaptureProperty);
 
     public static void SetExcludeFromCapture(Visual element, bool value) =>
@@ -92,36 +90,39 @@ public class BlurBackdrop : ContentControl
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
         base.OnAttachedToVisualTree(e);
+        _detached = false;
         EnsureRendererSubscription();
         QueueCapture();
     }
 
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
+        _detached = true;
         DetachRendererSubscription();
-        _backdrop?.Dispose();
-        _backdrop = null;
         _scratch?.Dispose();
         _scratch = null;
+        // NOTE: 不主动 dispose _backdrop——detach 与最后一次 Render（渲染线程）存在交错窗口，主动释放可能让
+        //       Render 读到已 dispose 的 SKImage。置 null 让 Render 安全 short-circuit，native 资源交 GC 兜底。
+        _backdrop = null;
         base.OnDetachedFromVisualTree(e);
     }
 
     public override void Render(DrawingContext context)
     {
-        SKImage? backdrop = _backdrop;
+        var backdrop = _backdrop;
         if (backdrop is null || Bounds.Width <= 0 || Bounds.Height <= 0)
             return;
 
         // 只裁剪毛玻璃背景层；内容（模板的 ContentPresenter）由框架独立渲染，不受此 clip 影响。
-        CornerRadius corner = CornerRadius;
-        bool rounded = corner != default;
-        DrawingContext.PushedState clip = rounded
-            ? context.PushClip(new RoundedRect(new Rect(Bounds.Size), corner))
-            : default;
+        var corner = CornerRadius;
+        var rounded = corner != default;
+        var clip = rounded
+                       ? context.PushClip(new RoundedRect(new(Bounds.Size), corner))
+                       : default;
         try
         {
             context.Custom(new BackdropDrawOperation(
-                new Rect(Bounds.Size),
+                new(Bounds.Size),
                 backdrop,
                 _controlOffsetPx,
                 _controlSizePx,
@@ -135,47 +136,81 @@ public class BlurBackdrop : ContentControl
         }
     }
 
-    // NOTE: SceneInvalidated 是 Avalonia 未公开的渲染失效信号（内容变化才触发），反射订阅以避免恒定
-    // 轮询。订阅是一次性反射，事件触发走正常委托调用，无运行时反射开销。
+    // NOTE: SceneInvalidated 是 Avalonia 渲染器的 internal 信号（IRenderer 整个接口标 [PrivateApi]），无公开
+    //       等价物——Avalonia 自身也用它更新 ToolTip。反射订阅拿"内容真变化"的精确触发；若跨大版本改名导致
+    //       反射失败，自动回退 RequestAnimationFrame 轮询：精度和功耗变差，但控件仍工作，不会变成死灰块。
+    //       升级 Avalonia 大版本时重点回归这一处。
     private void EnsureRendererSubscription()
     {
-        if (_sceneInvalidatedHandler is not null)
+        if (_sceneInvalidatedHandler is not null || _polling)
             return;
 
-        TopLevel? topLevel = TopLevel.GetTopLevel(this);
+        var topLevel = TopLevel.GetTopLevel(this);
         if (topLevel is null)
             return;
+        _topLevel = topLevel;
 
-        object? renderer = GetRenderer(topLevel);
-        if (renderer is null)
+        if (TrySubscribeSceneInvalidated(topLevel))
             return;
 
-        EventInfo? evt = renderer.GetType().GetEvent(
-            "SceneInvalidated",
-            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-        if (evt is null)
-            return;
+        _polling = true;
+        topLevel.RequestAnimationFrame(OnAnimationFrame);
+    }
 
-        EventHandler<SceneInvalidatedEventArgs> handler = OnSceneInvalidated;
-        evt.AddEventHandler(renderer, handler);
-        _renderer = renderer;
-        _sceneInvalidatedEvent = evt;
-        _sceneInvalidatedHandler = handler;
+    private bool TrySubscribeSceneInvalidated(TopLevel topLevel)
+    {
+        try
+        {
+            var renderer = GetRenderer(topLevel);
+            if (renderer is null)
+                return false;
+
+            var evt = renderer.GetType().GetEvent(
+                                                  "SceneInvalidated",
+                                                  BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (evt is null)
+                return false;
+
+            EventHandler<SceneInvalidatedEventArgs> handler = OnSceneInvalidated;
+            evt.AddEventHandler(renderer, handler);
+            _renderer = renderer;
+            _sceneInvalidatedEvent = evt;
+            _sceneInvalidatedHandler = handler;
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private void OnAnimationFrame(TimeSpan _)
+    {
+        ConsiderCapture();
+        if (_polling && !_detached && _topLevel is not null)
+            _topLevel.RequestAnimationFrame(OnAnimationFrame);
     }
 
     private void DetachRendererSubscription()
     {
+        _polling = false;
         if (_renderer is not null && _sceneInvalidatedEvent is not null && _sceneInvalidatedHandler is not null)
             _sceneInvalidatedEvent.RemoveEventHandler(_renderer, _sceneInvalidatedHandler);
 
         _renderer = null;
         _sceneInvalidatedEvent = null;
         _sceneInvalidatedHandler = null;
+        _topLevel = null;
     }
 
-    private void OnSceneInvalidated(object? sender, SceneInvalidatedEventArgs e)
+    private void OnSceneInvalidated(object? sender, SceneInvalidatedEventArgs e) => ConsiderCapture();
+
+    private void ConsiderCapture()
     {
-        if (DateTime.UtcNow.Ticks - _lastCaptureTicksUtc < s_minIntervalTicks)
+        if (_detached)
+            return;
+
+        if (DateTime.UtcNow.Ticks - _lastCaptureTicksUtc < MIN_INTERVAL_TICKS)
             return;
 
         QueueCapture();
@@ -183,7 +218,7 @@ public class BlurBackdrop : ContentControl
 
     private void QueueCapture()
     {
-        TopLevel? topLevel = TopLevel.GetTopLevel(this);
+        var topLevel = TopLevel.GetTopLevel(this);
         if (topLevel is null || _captureQueued)
             return;
 
@@ -191,119 +226,132 @@ public class BlurBackdrop : ContentControl
         topLevel.RequestAnimationFrame(_ =>
         {
             _captureQueued = false;
+            if (_detached)
+                return;
             try
             {
                 Capture();
             }
-            catch
+            catch (Exception ex)
             {
+                Debug.WriteLine($"BlurBackdrop capture failed: {ex.Message}");
             }
         });
     }
 
     private void Capture()
     {
-        TopLevel? topLevel = TopLevel.GetTopLevel(this);
+        if (_detached)
+            return;
+
+        var topLevel = TopLevel.GetTopLevel(this);
         if (topLevel is null || Bounds.Width <= 0 || Bounds.Height <= 0)
             return;
 
         if (this.TransformToVisual(topLevel) is not { } toTopLevel)
             return;
 
-        Rect controlInTop = new Rect(Bounds.Size).TransformToAABB(toTopLevel);
-        double scaling = topLevel.RenderScaling;
-        double blurMargin = Math.Max(8.0, BlurRadius * 3.0);
-        Rect captureRect = controlInTop.Inflate(blurMargin).Intersect(new Rect(topLevel.ClientSize));
+        var controlInTop = new Rect(Bounds.Size).TransformToAABB(toTopLevel);
+        var scaling = topLevel.RenderScaling;
+        var blurMargin = Math.Max(8.0, BlurRadius * 3.0);
+        var captureRect = controlInTop.Inflate(blurMargin).Intersect(new(topLevel.ClientSize));
         if (captureRect.Width <= 0 || captureRect.Height <= 0)
             return;
 
-        // HACK: 直接用 captureRect 作 clip 重渲到小尺寸 bitmap 会丢失右侧内容（疑似 RenderTargetBitmap
-        //       软件渲染 + Window + 负平移 PushTransform 的交互）。重渲整个 topLevel（已验证完整）再
-        //       裁出控件区域。根因待查；移入 Huskui 前应确认是否仍需此绕行。
-        PixelSize fullPixel = new(
-            (int)Math.Ceiling(topLevel.ClientSize.Width * scaling),
-            (int)Math.Ceiling(topLevel.ClientSize.Height * scaling));
-        if (_scratch is null || _scratch.PixelSize != fullPixel)
+        // 只渲染控件区域（含 blurMargin），bitmap 尺寸 = captureRect 像素尺寸，省去整窗软件渲染。
+        PixelSize pixel = new(
+            (int)Math.Ceiling(captureRect.Width * scaling),
+            (int)Math.Ceiling(captureRect.Height * scaling));
+        if (_scratch is null || _scratch.PixelSize != pixel)
         {
             _scratch?.Dispose();
-            _scratch = new RenderTargetBitmap(fullPixel, new Vector(96.0 * scaling, 96.0 * scaling));
+            _scratch = new(pixel, new(96.0 * scaling, 96.0 * scaling));
         }
 
-        using (DrawingContext ctx = _scratch.CreateDrawingContext())
-            BackdropVisualRenderer.Render(ctx, topLevel, new Rect(topLevel.ClientSize), new HashSet<Visual> { this });
-
-        int cx = Math.Max(0, (int)Math.Floor(captureRect.X * scaling));
-        int cy = Math.Max(0, (int)Math.Floor(captureRect.Y * scaling));
-        int cw = Math.Min(fullPixel.Width - cx, (int)Math.Ceiling(captureRect.Width * scaling));
-        int ch = Math.Min(fullPixel.Height - cy, (int)Math.Ceiling(captureRect.Height * scaling));
-        if (cw <= 0 || ch <= 0)
-            return;
+        using (var ctx = _scratch.CreateDrawingContext())
+            BackdropVisualRenderer.Render(ctx, topLevel, captureRect, new HashSet<Visual> { this });
 
         const int bpp = 4;
-        int rowBytes = cw * bpp;
-        int length = rowBytes * ch;
-        byte[] pixels = new byte[length];
-        GCHandle handle = GCHandle.Alloc(pixels, GCHandleType.Pinned);
+        var cw = pixel.Width;
+        var ch = pixel.Height;
+        var rowBytes = cw * bpp;
+        var length = rowBytes * ch;
+        // 复用 ArrayPool，避免每帧分配捕获区像素。Rent 返回的 buffer 可能长于 length，后续访问全部用
+        // cw/ch/rowBytes 限定，不触碰多余尾部。
+        var pixels = ArrayPool<byte>.Shared.Rent(length);
         try
         {
-            _scratch.CopyPixels(new PixelRect(cx, cy, cw, ch), handle.AddrOfPinnedObject(), length, rowBytes);
+            var handle = GCHandle.Alloc(pixels, GCHandleType.Pinned);
+            try
+            {
+                _scratch.CopyPixels(new(0, 0, cw, ch), handle.AddrOfPinnedObject(), length, rowBytes);
+            }
+            finally
+            {
+                handle.Free();
+            }
+
+            var hash = HashPixels(pixels, cw, ch, rowBytes);
+            _lastCaptureTicksUtc = DateTime.UtcNow.Ticks;
+
+            if (_backdrop is not null && hash == _lastHash)
+                return;
+            _lastHash = hash;
+
+            _controlOffsetPx = new(
+                                   (controlInTop.X - captureRect.X) * scaling,
+                                   (controlInTop.Y - captureRect.Y) * scaling);
+            _controlSizePx = new(controlInTop.Width * scaling, controlInTop.Height * scaling);
+
+            // CPU 离屏模糊整张捕获图（含 margin，边缘不衰减），Render 只需直接画这张成品图。
+            // NOTE: color type 必须用 PlatformColorType——RenderTargetBitmap 在 macOS/Linux 输出 Rgba8888、
+            //       Windows 输出 Bgra8888，硬编码任一都会在另一个平台 R/B 反色。
+            var sigmaPx = (float)(BlurRadius * scaling);
+            SKImageInfo info = new(cw, ch, SKImageInfo.PlatformColorType, SKAlphaType.Premul);
+            // raw 拷贝自 pixels，此后 pixels 不再被引用，finally 可安全归还池。
+            using var raw = SKImage.FromPixelCopy(info, pixels, rowBytes);
+            SKImage blurred;
+            using (var surface = SKSurface.Create(info))
+            {
+                var off = surface.Canvas;
+                off.Clear(SKColors.Transparent);
+                using var blur = SKImageFilter.CreateBlur(sigmaPx, sigmaPx, SKShaderTileMode.Clamp, null);
+                using SKPaint paint = new();
+                paint.ImageFilter = blur;
+                paint.BlendMode = SKBlendMode.Src;
+                off.DrawImage(raw, 0, 0, new(SKFilterMode.Linear), paint);
+                off.Flush();
+                blurred = surface.Snapshot();
+            }
+
+            _backdrop?.Dispose();
+            _backdrop = blurred;
+            InvalidateVisual();
         }
         finally
         {
-            handle.Free();
+            ArrayPool<byte>.Shared.Return(pixels);
         }
-
-        ulong hash = HashPixels(pixels, cw, ch, rowBytes);
-        _lastCaptureTicksUtc = DateTime.UtcNow.Ticks;
-
-        if (_backdrop is not null && hash == _lastHash)
-            return;
-        _lastHash = hash;
-
-        _controlOffsetPx = new Vector(
-            (controlInTop.X - captureRect.X) * scaling,
-            (controlInTop.Y - captureRect.Y) * scaling);
-        _controlSizePx = new Vector(controlInTop.Width * scaling, controlInTop.Height * scaling);
-
-        // CPU 离屏模糊整张裁出图（含 margin，边缘不衰减），Render 只需直接画这张成品图。
-        float sigmaPx = (float)(BlurRadius * scaling);
-        SKImageInfo info = new(cw, ch, SKColorType.Bgra8888, SKAlphaType.Premul);
-        using SKImage raw = SKImage.FromPixelCopy(info, pixels, rowBytes);
-        SKImage blurred;
-        using (SKSurface surface = SKSurface.Create(info))
-        {
-            SKCanvas off = surface.Canvas;
-            off.Clear(SKColors.Transparent);
-            using SKImageFilter blur = SKImageFilter.CreateBlur(sigmaPx, sigmaPx, SKShaderTileMode.Clamp, null);
-            using SKPaint paint = new() { ImageFilter = blur, BlendMode = SKBlendMode.Src };
-            off.DrawImage(raw, 0, 0, paint);
-            off.Flush();
-            blurred = surface.Snapshot();
-        }
-
-        _backdrop?.Dispose();
-        _backdrop = blurred;
-        InvalidateVisual();
     }
 
     private static ulong HashPixels(byte[] pixels, int width, int height, int rowBytes)
     {
         const ulong fnvOffset = 14695981039346656037UL;
         const ulong fnvPrime = 1099511628211UL;
-        ulong hash = fnvOffset;
+        var hash = fnvOffset;
         const int samples = 8;
-        int maxX = Math.Max(1, width) - 1;
-        int maxY = Math.Max(1, height) - 1;
+        var maxX = Math.Max(1, width) - 1;
+        var maxY = Math.Max(1, height) - 1;
 
-        for (int sy = 0; sy < samples; sy++)
+        for (var sy = 0; sy < samples; sy++)
         {
-            int y = (int)((long)sy * maxY / (samples - 1));
-            int rowOff = y * rowBytes;
-            for (int sx = 0; sx < samples; sx++)
+            var y = (int)((long)sy * maxY / (samples - 1));
+            var rowOff = y * rowBytes;
+            for (var sx = 0; sx < samples; sx++)
             {
-                int x = (int)((long)sx * maxX / (samples - 1));
-                int off = rowOff + x * 4;
-                for (int i = 0; i < 4; i++)
+                var x = (int)((long)sx * maxX / (samples - 1));
+                var off = rowOff + x * 4;
+                for (var i = 0; i < 4; i++)
                     hash = (hash ^ pixels[off + i]) * fnvPrime;
             }
         }
@@ -315,37 +363,20 @@ public class BlurBackdrop : ContentControl
 
     private static object? GetRenderer(TopLevel topLevel)
     {
-        s_topLevelRendererProperty ??= typeof(TopLevel).GetProperty(
+        _topLevelRendererProperty ??= typeof(TopLevel).GetProperty(
             "Renderer", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-        return s_topLevelRendererProperty?.GetValue(topLevel);
+        return _topLevelRendererProperty?.GetValue(topLevel);
     }
 
-    private sealed class BackdropDrawOperation : ICustomDrawOperation
+    private sealed class BackdropDrawOperation(
+        Rect bounds,
+        SKImage backdrop,
+        Vector controlOffsetPx,
+        Vector controlSizePx,
+        Color tint,
+        float tintOpacity) : ICustomDrawOperation
     {
-        private readonly Rect _bounds;
-        private readonly SKImage _backdrop;
-        private readonly Vector _controlOffsetPx;
-        private readonly Vector _controlSizePx;
-        private readonly Color _tint;
-        private readonly float _tintOpacity;
-
-        public BackdropDrawOperation(
-            Rect bounds,
-            SKImage backdrop,
-            Vector controlOffsetPx,
-            Vector controlSizePx,
-            Color tint,
-            float tintOpacity)
-        {
-            _bounds = bounds;
-            _backdrop = backdrop;
-            _controlOffsetPx = controlOffsetPx;
-            _controlSizePx = controlSizePx;
-            _tint = tint;
-            _tintOpacity = tintOpacity;
-        }
-
-        public Rect Bounds => _bounds;
+        public Rect Bounds => bounds;
 
         public bool HitTest(Point p) => false;
 
@@ -355,26 +386,27 @@ public class BlurBackdrop : ContentControl
 
         public void Render(ImmediateDrawingContext context)
         {
-            ISkiaSharpApiLeaseFeature? leaseFeature = context.TryGetFeature<ISkiaSharpApiLeaseFeature>();
+            var leaseFeature = context.TryGetFeature<ISkiaSharpApiLeaseFeature>();
             if (leaseFeature is null)
                 return;
 
-            using ISkiaSharpApiLease lease = leaseFeature.Lease();
-            SKCanvas canvas = lease.SkCanvas;
+            using var lease = leaseFeature.Lease();
+            var canvas = lease.SkCanvas;
 
             SKRect src = new(
-                (float)_controlOffsetPx.X,
-                (float)_controlOffsetPx.Y,
-                (float)(_controlOffsetPx.X + _controlSizePx.X),
-                (float)(_controlOffsetPx.Y + _controlSizePx.Y));
-            SKRect dst = new(0f, 0f, (float)_bounds.Width, (float)_bounds.Height);
+                (float)controlOffsetPx.X,
+                (float)controlOffsetPx.Y,
+                (float)(controlOffsetPx.X + controlSizePx.X),
+                (float)(controlOffsetPx.Y + controlSizePx.Y));
+            SKRect dst = new(0f, 0f, (float)bounds.Width, (float)bounds.Height);
             if (src.Width <= 0 || src.Height <= 0)
                 return;
 
-            canvas.DrawImage(_backdrop, src, dst, new SKSamplingOptions(SKFilterMode.Linear));
+            canvas.DrawImage(backdrop, src, dst, new SKSamplingOptions(SKFilterMode.Linear));
 
-            byte a = (byte)Math.Clamp(_tint.A * _tintOpacity, 0, 255);
-            using SKPaint tintPaint = new() { Color = new SKColor(_tint.R, _tint.G, _tint.B, a) };
+            var a = (byte)Math.Clamp(tint.A * tintOpacity, 0, 255);
+            using SKPaint tintPaint = new();
+            tintPaint.Color = new(tint.R, tint.G, tint.B, a);
             canvas.DrawRect(dst, tintPaint);
         }
     }
@@ -386,10 +418,12 @@ public class BlurBackdrop : ContentControl
             if (clipRect.Width <= 0 || clipRect.Height <= 0)
                 return;
 
+            // NOTE: 不加 PushClip——RenderTargetBitmap 自身画布边界已是天然 clip，额外的 PushClip 在
+            //       software rendering + 负平移组合下会把右侧裁掉（实测）。captureRect 外的子树靠下面
+            //       visualBounds.Intersects(clipRect) 跳过，超出画布的绘制由 RenderTargetBitmap 丢弃。
             using (context.PushTransform(Matrix.CreateTranslation(-clipRect.X, -clipRect.Y)))
-            using (context.PushClip(new Rect(clipRect.Size)))
             {
-                Render(context, visual, new Rect(visual.Bounds.Size), Matrix.Identity, clipRect, excluded);
+                Render(context, visual, new(visual.Bounds.Size), Matrix.Identity, clipRect, excluded);
             }
         }
 
@@ -422,8 +456,8 @@ public class BlurBackdrop : ContentControl
             Matrix transform;
             if (visual.RenderTransform?.Value is { } rt)
             {
-                Point origin = visual.RenderTransformOrigin.ToPixels(visual.Bounds.Size);
-                Matrix offset = Matrix.CreateTranslation(origin);
+                var origin = visual.RenderTransformOrigin.ToPixels(visual.Bounds.Size);
+                var offset = Matrix.CreateTranslation(origin);
                 transform = -offset * rt * offset * Matrix.CreateTranslation(bounds.Position);
             }
             else
@@ -439,61 +473,43 @@ public class BlurBackdrop : ContentControl
                 ? context.PushOpacityMask(opacityMask, rect)
                 : default(DrawingContext.PushedState?))
             {
-                Matrix totalTransform = transform * parentTransform;
-                Rect visualBounds = rect.TransformToAABB(totalTransform);
+                var totalTransform = transform * parentTransform;
+                var visualBounds = rect.TransformToAABB(totalTransform);
 
                 if (visualBounds.Intersects(clipRect))
                     visual.Render(context);
 
-                IReadOnlyList<Visual> children = GetOrderedChildren(visual);
+                var children = GetOrderedChildren(visual);
 
-                Rect childClip = clipRect;
-                Matrix childParent = totalTransform;
+                var childClip = clipRect;
+                var childParent = totalTransform;
                 if (visual.ClipToBounds)
                 {
                     childParent = Matrix.Identity;
                     childClip = rect;
                 }
 
-                foreach (Visual? child in children)
+                foreach (var child in children)
                     Render(context, child, child.Bounds, childParent, childClip, excluded);
             }
         }
 
+        // NOTE: 不复现后方元素的圆角裁剪——模糊后圆角与直角肉眼不可分辨，省掉一处 internal 反射
+        //       (Visual.ClipToBoundsRadius 经 IVisualWithRoundRectClip 暴露，接口非公开)。
         private static DrawingContext.PushedState? PushClipToBounds(DrawingContext context, Visual visual, Rect rect)
         {
-            if (!visual.ClipToBounds)
-                return default;
-
-            if (TryGetClipToBoundsRadius(visual, out CornerRadius radius))
-                return context.PushClip(new RoundedRect(rect, radius));
-
-            return context.PushClip(rect);
-        }
-
-        private static bool TryGetClipToBoundsRadius(Visual visual, out CornerRadius radius)
-        {
-            radius = default;
-            PropertyInfo? prop = visual.GetType().GetProperty(
-                "ClipToBoundsRadius",
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            if (prop?.PropertyType != typeof(CornerRadius))
-                return false;
-            if (prop.GetValue(visual) is not CornerRadius value || value == default)
-                return false;
-            radius = value;
-            return true;
+            return visual.ClipToBounds ? context.PushClip(rect) : default;
         }
 
         private static IReadOnlyList<Visual> GetOrderedChildren(Visual visual)
         {
             List<Visual>? list = null;
             int? firstZIndex = null;
-            bool hasNonUniformZIndex = false;
+            var hasNonUniformZIndex = false;
 
-            foreach (Visual? child in visual.GetVisualChildren())
+            foreach (var child in visual.GetVisualChildren())
             {
-                list ??= new List<Visual>();
+                list ??= [];
                 list.Add(child);
                 if (firstZIndex is null)
                     firstZIndex = child.ZIndex;
@@ -502,7 +518,7 @@ public class BlurBackdrop : ContentControl
             }
 
             if (list is null || list.Count == 0)
-                return Array.Empty<Visual>();
+                return [];
 
             return hasNonUniformZIndex ? list.OrderBy(x => x.ZIndex).ToArray() : list;
         }
