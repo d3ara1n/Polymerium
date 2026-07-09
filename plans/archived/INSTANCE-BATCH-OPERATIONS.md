@@ -2,7 +2,7 @@
 
 > 制定日期：2026-07-08
 > 定位：Instance 管理的补完任务。Phase C 只实现了单实例右键操作，缺多选后的批量操作能力。
-> 当前状态：草案
+> 当前状态：✅ 已实施（不作）
 > 关联：[POLY-23](https://d3ara1n.atlassian.net/browse/POLY-23)
 
 ## 背景与动机
@@ -115,27 +115,8 @@ partial void OnIsMultiSelectModeChanged(bool value)
 }
 ```
 
-## 改动面
+## 方案
 
-| 文件 | 改动 |
-|------|------|
-| `PageModels/InstancesPageModel.cs` | 多选状态 + SelectedKeys + 批量命令（BatchExport/BatchDelete/BatchDeploy） |
-| `Pages/InstancesPage.axaml` | 卡片模板加 CheckBox（多选模式下可见）；顶栏批量操作栏 |
-| `Controls/InstanceCard.axaml(.cs)` | 支持 `IsSelected` 样式（边框高亮）+ `ShowCheckBox` 切换 |
-| `Services/InstanceService.cs` | 新增 BatchExportAsync / BatchDeleteAsync / BatchDeployAsync |
-| `Dialogs/BatchDeleteConfirmDialog.axaml(.cs)`（新增） | 批量删除确认对话框 |
-| `DialogModels/BatchDeleteConfirmDialogModel.cs`（新增） | 确认对话框 ViewModel |
-| `Properties/Resources.{resx,zh-hans.resx,Designer.cs}` | 批量操作相关文案 |
+### 决策：不作
 
-## 验收标准
-
-| 场景 | 期望 |
-|------|------|
-| Ctrl+点击第一张卡 | 卡片进入选择态，CheckBox 可见，操作栏出现"已选 1 个" |
-| Shift+点击第五张卡 | 第一至第五张全部选中 |
-| 已选中有运行中实例 | 批量删除/部署按钮禁用该实例（但不禁用整体按钮，跳过） |
-| 点击批量删除 | 确认对话框列出所有实例，确认后删除，通知结果 |
-| 点击批量导出 | 选目录 → 逐个导出到该目录 |
-| 点击批量部署 | 逐个部署，失败汇总通知 |
-| 点取消选择 | 退出多选模式，所有卡片恢复 |
-| 无选中时 | 多选模式不激活，操作栏不出现 |
+实例的创建和删除本身就是需要严肃对待的高成本操作——删除走层层验证、实例数据量大恢复困难，批量操作更适合文件管理器式的轻量资源管理，与实例管理的属性不匹配。导出/部署也各需用户确认路径和参数，批量反而增加误操作风险。

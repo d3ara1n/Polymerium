@@ -2,7 +2,7 @@
 
 > 制定日期：2026-07-08
 > 定位：Instance 管理的补完任务。Phase B/C 实现了功能性骨架，三处视觉细节未落地。
-> 当前状态：草案
+> 当前状态：✅ 已实施
 > 关联：[POLY-23](https://d3ara1n.atlassian.net/browse/POLY-23)
 
 ## 背景与动机
@@ -94,16 +94,31 @@ public IReadOnlyList<string> TagsDisplay
 
 超出部分数量计入 `+N`，hover 或点击 `+N` 药丸时可通过 ToolTip 显示完整标签列表。
 
-## 改动面
+## 方案
 
-| 文件 | 改动 |
-|------|------|
-| `Models/InstanceEntryModel.cs` | 新增 `[ObservableProperty] IsRecent`（从 RecentOrder > 0 派生） |
-| `MainWindow.axaml` | Active 行加 `:active` 伪类绑定；Recent 行加 ✨ 标记 |
-| `MainWindow.axaml.cs` 或主题 | Active 样式的 ControlTheme/Selector 定义 |
-| `Controls/InstanceCard.axaml` | 标签 ItemsControl 绑定 `TagsDisplay` |
-| `Models/InstanceCardModel.cs` | `TagsDisplay` 属性 + MaxVisibleTags 常量 |
-| `Properties/Resources.{resx,zh-hans.resx,Designer.cs}` | 可能新增 Recent 相关 ToolTip key |
+实施于 2026-07-09，实际改为全部在 `InstanceEntryButton.axaml` 内解决，不牵涉其他文件。
+
+### ① Active 淡底色 ✅
+
+在 InstanceEntryButton 已有的四个非 Idle 状态 selector 顶部分别加 `Background` setter，不引入新属性或伪类：
+
+```xml
+<Style Selector="^[State=Installing]">
+    <Setter Property="Background" Value="{StaticResource OverlayHalfBackgroundBrush}" />
+    ...
+</Style>
+<!-- Updating / Deploying / Running 同理 -->
+```
+
+通过 TemplateBinding 自动透传到 Container 的 Border 背景。
+
+### ② Recent ✨ 标记 ✅
+
+在模板右上角新增 `StackPanel` 包裹 `PinnedBadge` + `RecentBadge`，纵向排列不重叠。RecentBadge 用 FluentIcons `Sparkle` 图标，与 Pinned 的 `Pin` 同风格，显隐绑 `RecentOrder` 通过 `ObjectConverters.IsNotNull` 转换（不增加 `InstanceEntryModel.IsRecent` 属性）。
+
+### ③ 标签 `+N` 截断 🤚 不作
+
+现有 `WrapPanel` 自动换行已满足整洁需求。为实现溢出自适应截断 + `+N` 的干净方案需自研一个 `Avalonia.Controls.Panel`（内容感知的水平排列、测宽截断、搭配 ItemsControl 联动 `+N`），另立计划。
 
 ## 验收标准
 
@@ -113,6 +128,3 @@ public IReadOnlyList<string> TagsDisplay
 | 实例回到 Idle | 淡底色消失 |
 | 新建/导入实例（未 pin） | 主界面出现 ✨ 标记 |
 | 实例重启后 | Recent 清空，✨ 消失（Recent 纯进程内） |
-| 标签 ≤3 个 | 全部展示，无截断 |
-| 标签 >3 个 | 显示前 2 个 + 第 3 个为 `+N` |
-| hover `+N` 药丸 | ToolTip 显示完整标签列表 |
