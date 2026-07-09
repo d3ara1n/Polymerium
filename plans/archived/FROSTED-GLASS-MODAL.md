@@ -1,5 +1,13 @@
 # Modal 毛玻璃背景
 
+> 制定日期：2026-07-08
+> 定位：为 Modal 卡片增加 frosted glass 背景效果
+> 当前状态：✅ 已实施
+
+## 方案
+
+已实施。Modal 的 `Classes="Frosted"` 配合 `BlurBackdrop` 控件完成毛玻璃背景效果。
+
 ## 背景
 
 当前 Modal 的背景是两层纯色：OverlayHost 的半透明遮罩（`OverlaySmokeBackgroundBrush`）+ Modal 自身的实心 `FlyoutBackgroundBrush`。视觉上平淡，没有 macOS 风格毛玻璃的层次感和通透感。
