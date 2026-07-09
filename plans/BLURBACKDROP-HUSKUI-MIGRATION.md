@@ -22,7 +22,7 @@ Polymerium 内的 `BlurBackdrop`（`Controls/BlurBackdrop.cs` + `Controls/BlurBa
 
 ## 处理已知 HACK
 
-- [ ] `BlurBackdrop.cs` 里 `HACK` 注释处（重渲整个 topLevel 再裁出控件区域）：查清 `RenderTargetBitmap` 小 clip + 负平移丢右侧内容的根因。能修就修掉 full 重渲绕行（省一次整窗软件渲染的开销）；不能修就保留并更新注释
+- [x] 重渲整个 topLevel 再裁出控件区域的 HACK 已解决。根因：`BackdropVisualRenderer` 入口的 `PushClip(new Rect(clipRect.Size))` 在 software rendering + 前置负平移 `PushTransform(-clipRect.X)` 的组合下会把右侧裁掉；全窗模式因 `clipRect.X=0`、负平移为零而从未暴露。修复 = 去掉 `PushClip`，靠 `RenderTargetBitmap` 画布边界做天然 clip，captureRect 外的子树仍由递归里的 `visualBounds.Intersects(clipRect)` 跳过。Capture 同时改成只渲染 captureRect 区域（不再整窗软渲）。顺带修了 CopyPixels 字节序反色（`SKColorType.Bgra8888` → `SKImageInfo.PlatformColorType`）。迁移时直接搬这套已验证的实现。
 
 ## Polymerium 侧清理
 
