@@ -267,6 +267,8 @@ Polymerium 尊重您的隐私：
 - **API 提供商** - CurseForge 和 Modrinth 提供的公共 API
 - **贡献者** - 每一个帮助 Polymerium 变得更好的人
 
+---
+
 <div align="center">
 
 Polymerium —— 把实例当成一份配置，而不是一堆复制的文件。
