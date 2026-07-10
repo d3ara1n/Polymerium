@@ -286,14 +286,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **API Providers** - CurseForge and Modrinth for their public APIs
 - **Contributors** - Everyone who helps make Polymerium better
 
-## License (FOSSA)
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium.svg?type=large&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium?ref=badge_large&issueType=license)
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE.txt) file for details.
-
----
-
 <div align="center">
 
 Polymerium — treat your instance as a recipe, not a pile of copied files.

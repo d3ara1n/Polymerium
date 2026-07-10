@@ -69,7 +69,7 @@ Use `--json` for programmatic consumption:
 trident instance list --json
 
 # Search mods and pipe to jq
-trident package search "sodium" --json | jq '.[].purl'
+trident package search "sodium" --json | jq '.[].pref'
 ```
 
 ## CI/CD Example: GitHub Actions
