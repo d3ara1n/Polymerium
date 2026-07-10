@@ -35,8 +35,8 @@
 | **A1** | 依赖图增强：缺失依赖可视化 + 前置/被依赖 + 节点计数 | 🔴 P0 立即 | M | ✅ 已完成 |
 | **A3** | Widget 开发者工具箱（补齐空壳 + 新增） | 🟠 P1 | M | 第一步已完成（JarInJar）；第二步经评估撚置（价值/ROI 低） |
 | **B3** | 版本元数据源可配置 | 🟠 P1 立即 | S | 已驳回（仅有一个可用端点，可配置无意义，且用户误改会导致元数据不可用） |
-| **A2** | 查询语法升级为真正的查询引擎 | 🟡 P2 | L | 已确认方向 |
-| **B1** | GitHub 整合包源（packwiz 仓库拉取/更新） | 🟡 P2 战略 | L | 待讨论 |
+| **A2** | 查询语法升级为真正的查询引擎 | 🟡 P2 | L | 已驳回 |
+| **B1** | GitHub 整合包源（packwiz 仓库拉取/更新） | 🟡 P2 战略 | L | [PACKWIZ-REPOSITORY-IMPORT](PACKWIZ-REPOSITORY-IMPORT.md) |
 | **B2** | 实例即工作流（配置即代码） | 🔵 P3 战略 | XL | 待讨论 |
 
 ---
@@ -168,66 +168,24 @@ public int DependentCount { get; }  // 入边数：多少个依赖它
 
 **决策**：驳回。当前仅 `meta.prismlauncher.org` 一个可用端点，开放配置无实际价值，且用户误改会导致版本/加载器数据完全不可用。
 
-## 🟡 A2 — 查询语法升级为查询引擎（已确认方向）
+## 🟡 A2 — 查询语法升级为查询引擎（已驳回）
 
-**现状**
+**决策**：驳回。
 
-`InstanceSetupPageModel.cs` 的搜索是一个内联 switch（`@Author`/`#Summary`/`!Id`），仅 AND、无引号、无 OR/NOT、无独立解析器。与功能强大的规则引擎（`RuleHelper`）完全割裂——规则引擎能表达 `And(Or(Purl(a), Purl(b)), Not(Tag(client)))`，但搜索框连「或」都做不到。
-
-**目标**
-
-让搜索框和规则引擎**共享同一套选择器语义**，最终可「把当前查询另存为规则」，形成闭环。
-
-**方案方向（待细化）**
-
-1. 抽取独立 `QueryParser`：解析 `@author:foo #tag:client modname` 这类表达式为 AST
-2. 复用规则引擎的选择器（Tag/Kind/Repository/Purl）作为查询的 predicate
-3. 支持组合：括号、OR（`|`）、NOT（`-`）、引号短语
-4. 「另存为规则」：把当前查询一键转成 ProfileRule 注入规则引擎
-
-**价值**
-
-这是「高级用户会买单但当前启动器普遍缺失」的能力——PrismLauncher/Modrinth App 的搜索都只是朴素文本匹配。把声明式规则能力下放到搜索，是独占体验。
-
-**状态**：方向已确认（「太对了，记下来」），因属 L 级重构，单独迭代，不混入 A1。
+| 理由 | 说明 |
+|------|------|
+| 场景错位 | 搜索是即时筛选，规则是声明式配置，两套场景对语法的需求完全不同。强行统一要么冗余、要么用户门槛上升 |
+| 「另存为规则」伪需求 | 搜索时输入的临时条件存成规则没有意义——真要规则时用户直接在规则编辑器配就好了 |
+| 现有一套够用 | 现有 `@`/`#`/`!` 前缀 + 包名模糊匹配覆盖了 90% 搜包场景，ROI 不值得 L 级重构 |
+| 规则引擎与搜索各有其位 | 规则引擎有 And/Or/Not 组合能力，适合「写一次一直用」的声明式场景；搜索需要「打字即见结果」的即时性。两者不应对齐 |
 
 ---
 
 ## 🟡 B1 — GitHub 整合包源（packwiz 仓库拉取/更新）
 
-**现状**
+**决策**：方案已定稿，见 [PACKWIZ-REPOSITORY-IMPORT](PACKWIZ-REPOSITORY-IMPORT.md)。
 
-导入/导出已支持 4 格式，但**导入是一次性的**——把 zip 解压进实例就结束。没有「这个实例绑定一个远端源，能 pull 更新」的能力。
-
-用户愿景：**直接用 GitHub 当整合包源来更新**，典型场景是 packwiz 仓库（git-friendly TOML 元数据，社区整合包作者的事实标准）。
-
-**目标**
-
-实例可绑定一个 Git 仓库（packwiz 格式优先），支持：
-
-- **首次拉取**：输入仓库 URL → clone → 解析 packwiz 的 `pack.toml` + `index.toml` → 构建实例（包清单进 Profile，文件进 import/live）
-- **检查更新**：`git fetch` 比较 commit，提示「远端有新版本」
-- **拉取更新**：`git pull` + 重新解析 → 增量更新实例的包清单（保留本地规则覆盖）
-
-**为何这是战略级**
-
-- 整合包作者用 packwiz + GitHub 发布已是主流工作流，但 packwiz 是**纯 CLI**，玩家侧要么手动装 packwiz-installer，要么作者导出成 mrpack 失去「持续更新」能力
-- Polymerium 工作区（import/live + git 集成）+ 规则引擎在理念上**比 packwiz 更强大**（packwiz 没有规则引擎）。如果 Polymerium 能直接消费 packwiz 仓库，它就是「packwiz 整合包的最佳 GUI 前端」
-- 这条路打通后，整合包作者这个核心用户群会主动迁移
-
-**方案方向（待细化）**
-
-1. 复用现有 `ImporterAgent` 抽象，新增 `PackwizRepositoryImporter`：clone → 解析 TOML → 转 Profile
-2. 实例元数据增加「源仓库 URL + 当前 commit」字段
-3. 工作区 git 集成已具备 fetch/pull 基建（LibGit2Sharp），扩展为「源同步」语义
-4. 关键决策：packwiz 仓库的 mod 元数据（mod.pw.toml）描述的是「从哪下载」，需对接 `DataService` 下载实际 jar
-
-**决策点**
-
-- 是否同时支持「通用 Git 仓库（trident 格式）」与「packwiz 格式」，还是先只做 packwiz？
-- 本地修改与远端更新冲突时策略（工作区已有 stage/restore 可借鉴）
-
-**状态**：战略方向明确，需专门讨论细化方案后立项。
+核心思路：新增 `PackwizRepository`（隐藏 IRepository）和 `PackwizImporter`（IProfileImporter），以 `pref://packwiz/owner/repo@tag` 为 URI。仓库整体作为 modpack 处理，mod 仅通过 `.pw.toml` 的 `[update]` 块提取外部引用，由现有 DataService 链路 resolve。
 
 ---
 
@@ -292,4 +250,4 @@ public int DependentCount { get; }  // 入边数：多少个依赖它
 1. **A1 依赖图增强** ← 现在，需求明确、风险低、最能立刻体现「专业工具」定位
 2. **A3 Widget** ← 用户勾选内容后启动，JarInJar 可先行
 3. **B1 GitHub 整合包源** ← 战略级，专门讨论后立项
-4. **A2 查询引擎 / B2 实例即工作流** ← B1 落地后自然演化
+4. **B2 实例即工作流** ← B1 落地后自然演化
