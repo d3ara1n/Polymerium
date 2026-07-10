@@ -62,7 +62,7 @@ Not all modpack formats work the same way under the hood:
 
 - **MultiMC** format is **offline** — it bundles the actual mod files inside the archive. No internet resolution needed on import.
 
-- **Trident** is neither purely online nor offline. By default it stores online references (PURLs) and resolves mods at deploy time, but can optionally bundle mod files in offline mode. See the [Trident Portable Instance](#trident-portable-instance) section below for details.
+- **Trident** is neither purely online nor offline. By default it stores online references (Prefs) and resolves mods at deploy time, but can optionally bundle mod files in offline mode. See the [Trident Portable Instance](#trident-portable-instance) section below for details.
 
 Keep this in mind when choosing a format for publishing your modpack.
 
@@ -76,7 +76,7 @@ A Trident `.zip` archive contains:
 
 | File | Purpose |
 |------|---------|
-| `trident.index.json` | Full instance profile: mod list with PURLs, tags, rules, overrides, source tracking |
+| `trident.index.json` | Full instance profile: mod list with Prefs, tags, rules, overrides, source tracking |
 | `trident.options.json` | Export configuration (offline mode, excluded tags, included overrides) |
 | `icon.png` (or other format) | Instance icon — bundled automatically if present |
 | `README.md` | Instance readme |
@@ -100,7 +100,7 @@ This makes Trident the only format that can faithfully reproduce an instance's f
 
 Trident is a **hybrid** format:
 
-- **Online mode (default, recommended)**: Mods are stored as PURL references (e.g. `modrinth:fabric-api/P7uGFii0`). The actual `.jar` files are resolved and downloaded at deploy time. The archive stays small and can be version-controlled.
+- **Online mode (default, recommended)**: Mods are stored as Pref references (e.g. `pref://modrinth/fabric-api/P7uGFii0`). The actual `.jar` files are resolved and downloaded at deploy time. The archive stays small and can be version-controlled.
 - **Offline mode (optional)**: All enabled mod `.jar` files are bundled into the archive. Useful for archival or air-gapped environments.
 
 Online mode is recommended for everyday use: smaller archives, fresher mods on import, and the `trident.index.json` is human-readable and diff-friendly.

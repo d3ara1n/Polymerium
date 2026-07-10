@@ -69,7 +69,7 @@ trident instance build my-pack --no-interactive
 trident instance list --json
 
 # 搜索模组并通过管道传递给 jq
-trident package search "sodium" --json | jq '.[].purl'
+trident package search "sodium" --json | jq '.[].pref'
 ```
 
 ## CI/CD 示例：GitHub Actions

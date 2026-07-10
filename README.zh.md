@@ -267,14 +267,6 @@ Polymerium 尊重您的隐私：
 - **API 提供商** - CurseForge 和 Modrinth 提供的公共 API
 - **贡献者** - 每一个帮助 Polymerium 变得更好的人
 
-## 许可证 (FOSSA)
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium.svg?type=large&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fd3ara1n%2FPolymerium?ref=badge_large&issueType=license)
-
-本项目采用 **MIT 许可证** - 详情请参阅 [LICENSE](LICENSE.txt) 文件。
-
----
-
 <div align="center">
 
 Polymerium —— 把实例当成一份配置，而不是一堆复制的文件。

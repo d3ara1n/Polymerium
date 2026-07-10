@@ -26,7 +26,7 @@ Selectors are boolean expressions that match packages by their properties:
 
 | Selector | Matches By | Example |
 |----------|-----------|---------|
-| `Purl` | Package URL (exact or partial) | `modrinth:sodium` |
+| `Pref` | Package Reference (exact or partial) | `pref://modrinth/sodium` |
 | `Repository` | Source repository | `curseforge` |
 | `Tag` | Tag name | `server-only` |
 | `Kind` | Resource type | `mod`, `resourcepack`, `shaderpack`, `datapack` |
@@ -77,7 +77,7 @@ Resource pack files often include version numbers in their filenames — `Sapphi
 Normalize fixes this by renaming the file to a consistent name:
 
 ```
-Selector: Purl=modrinth:sapphire
+Selector: Pref=pref://modrinth/sapphire
 Action: Normalize → Sapphire.zip
 ```
 
