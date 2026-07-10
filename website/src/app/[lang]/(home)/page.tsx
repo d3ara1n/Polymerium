@@ -25,8 +25,7 @@ import {
 } from 'lucide-react';
 import { LinkButton } from '@/components/link-button';
 import { DownloadButton, type DownloadLabels } from '@/components/download-button';
-import { detectPlatform, getMirrorChyanUrl, getRelease } from '@/lib/releases';
-import { headers } from 'next/headers';
+import { getMirrorChyanUrl, getRelease } from '@/lib/releases';
 import {
   Accordion,
   AccordionContent,
@@ -51,10 +50,11 @@ function useDict(lang: string) {
       ctaViewDocs: '查看文档',
 
       // Download split button
-      downloadFor: (name: string) => `下载 ${name} 版`,
+      downloadForTemplate: '下载 {name} 版',
       platformName: { windows: 'Windows', macos: 'macOS', linux: 'Linux' },
       appleSilicon: '仅 Apple Silicon',
       allReleases: 'GitHub 全部版本',
+      allFilesTemplate: 'GitHub {version} 的全部文件',
       mirrorHint: '已有 Mirror酱 CDK？前往高速下载',
 
       // Tech badges
@@ -198,10 +198,11 @@ function useDict(lang: string) {
     ctaViewDocs: 'View Docs',
 
     // Download split button
-    downloadFor: (name: string) => `Download for ${name}`,
+    downloadForTemplate: 'Download for {name}',
     platformName: { windows: 'Windows', macos: 'macOS', linux: 'Linux' },
     appleSilicon: 'Apple Silicon only',
     allReleases: 'All releases on GitHub',
+    allFilesTemplate: 'All files in {version} on GitHub',
     mirrorHint: 'Already have a Mirror酱 CDK? Fast download',
 
     badgeCrossPlatform: 'Cross-platform',
@@ -375,18 +376,14 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
   const lang = params.lang;
   const d = useDict(lang);
 
-  const userAgent = (await headers()).get('user-agent') ?? '';
-  const platform = detectPlatform(userAgent);
   const release = await getRelease();
-  const detectedPlatformName = platform ? d.platformName[platform] : null;
   const downloadLabels: DownloadLabels = {
-    detectedDownloadLabel: detectedPlatformName
-      ? d.downloadFor(detectedPlatformName)
-      : d.ctaDownload,
     genericDownloadLabel: d.ctaDownload,
+    downloadForTemplate: d.downloadForTemplate,
     platformName: d.platformName,
     appleSilicon: d.appleSilicon,
     allReleases: d.allReleases,
+    allFilesTemplate: d.allFilesTemplate,
   };
 
   const faqSchema = {
@@ -473,7 +470,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
 
           {/* CTA buttons */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <DownloadButton release={release} platform={platform} labels={downloadLabels} />
+            <DownloadButton release={release} labels={downloadLabels} />
             <LinkButton href={`/${lang}/docs/advanced/cli`} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
                 <Terminal className="size-4" />
                 {d.ctaCli}
@@ -905,7 +902,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
           <h2 className="text-3xl font-bold text-foreground">{d.ctaTitle}</h2>
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{d.ctaSub}</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <DownloadButton release={release} platform={platform} labels={downloadLabels} />
+            <DownloadButton release={release} labels={downloadLabels} />
             <LinkButton href={`/${lang}/docs/advanced/cli`} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
                 <Terminal className="size-4" />
                 {d.ctaCli}
