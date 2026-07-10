@@ -49,6 +49,7 @@ async function fetchLatestRelease(): Promise<ReleaseInfo | null> {
       `https://api.github.com/repos/${gitConfig.user}/${gitConfig.repo}/releases/latest`,
       {
         headers: { Accept: 'application/vnd.github+json' },
+        cache: 'force-cache',
         // Unauthenticated GitHub API is rate-limited to 60 req/h per IP; ISR
         // keeps us well under that even under traffic spikes.
         next: { revalidate: 3600 },

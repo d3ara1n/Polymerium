@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Menu } from '@base-ui/react/menu';
 import {
   Apple,
@@ -15,15 +16,17 @@ import {
   type AssetInfo,
   type Platform,
   type ReleaseInfo,
+  detectPlatform,
   getReleasesUrl,
 } from '@/lib/releases';
 
 export interface DownloadLabels {
-  detectedDownloadLabel: string;
   genericDownloadLabel: string;
+  downloadForTemplate: string;
   platformName: Record<Platform, string>;
   appleSilicon: string;
   allReleases: string;
+  allFilesTemplate: string;
 }
 
 const PLATFORM_ICON: Record<Platform, typeof Monitor> = {
@@ -34,17 +37,20 @@ const PLATFORM_ICON: Record<Platform, typeof Monitor> = {
 
 interface DownloadButtonProps {
   release: ReleaseInfo | null;
-  platform: Platform | null;
   labels: DownloadLabels;
   className?: string;
 }
 
 export function DownloadButton({
   release,
-  platform,
   labels,
   className,
 }: DownloadButtonProps) {
+  const [platform, setPlatform] = useState<Platform | null>(null);
+  useEffect(() => {
+    setPlatform(detectPlatform(navigator.userAgent));
+  }, []);
+
   const detectedAsset =
     release && platform
       ? (release.assets.find((a) => a.platform === platform) ?? null)
@@ -52,7 +58,7 @@ export function DownloadButton({
 
   const mainHref = detectedAsset ? detectedAsset.url : (release?.htmlUrl ?? getReleasesUrl());
   const mainLabel = detectedAsset
-    ? labels.detectedDownloadLabel
+    ? labels.downloadForTemplate.replace('{name}', labels.platformName[platform!])
     : labels.genericDownloadLabel;
 
   return (
@@ -92,7 +98,9 @@ export function DownloadButton({
                 className="group flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-muted-foreground outline-none transition-colors data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground"
               >
                 <ExternalLink className="size-4 shrink-0 text-muted-foreground group-data-[highlighted]:text-accent-foreground" />
-                <span className="flex-1">{labels.allReleases}</span>
+                <span className="flex-1">
+                  {release ? labels.allFilesTemplate.replace('{version}', release.version) : labels.allReleases}
+                </span>
               </Menu.LinkItem>
             </Menu.Popup>
           </Menu.Positioner>
