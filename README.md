@@ -286,6 +286,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **API Providers** - CurseForge and Modrinth for their public APIs
 - **Contributors** - Everyone who helps make Polymerium better
 
+---
+
 <div align="center">
 
 Polymerium — treat your instance as a recipe, not a pile of copied files.
