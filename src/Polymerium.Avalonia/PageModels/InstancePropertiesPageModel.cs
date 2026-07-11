@@ -100,7 +100,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
             }
 
             using var stream = new MemoryStream();
-            ThumbnailOverwrite.Save(stream);
+            ThumbnailOverwrite.Save(stream, new PngBitmapEncoderOptions());
             stream.Position = 0;
             var extension = FileHelper.GuessBitmapExtension(stream);
             stream.Position = 0;

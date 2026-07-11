@@ -544,8 +544,7 @@ public partial class InstanceSetupPageModel(
            .Filter(itemFilter)
            .AutoRefreshOnObservable(item => item.Group.WhenPropertyChanged(g => g.IsExpanded))
            .Filter(item => item is PackageListItemBase.Header || item.Group.IsExpanded)
-           .Sort(comparer)
-           .Bind(out var flatView)
+           .SortAndBind(out var flatView, comparer)
            .Subscribe()
            .DisposeWith(_subscriptions);
         FlatView = flatView;
