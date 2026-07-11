@@ -141,7 +141,7 @@ public partial class NewInstancePageModel(
             try
             {
                 using var stream = new MemoryStream();
-                Thumbnail.Save(stream);
+                Thumbnail.Save(stream, new PngBitmapEncoderOptions());
                 stream.Position = 0;
                 var extension = FileHelper.GuessBitmapExtension(stream);
                 var iconPath = PathDef.Default.FileOfIcon(key.Key, extension);
