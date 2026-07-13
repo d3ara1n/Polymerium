@@ -2713,6 +2713,12 @@
   <data name="Shared_FailedToLaunchInstanceDangerNotificationTitle" xml:space="preserve">
     <value>Failed to launch instance</value>
   </data>
+  <data name="Shared_JavaRuntimeNotFoundDangerDialogTitle" xml:space="preserve">
+    <value>Java runtime not found</value>
+  </data>
+  <data name="Shared_JavaRuntimeNotFoundDangerDialogMessage" xml:space="preserve">
+    <value>Java {0} is required but not configured. If it is already installed, set its path in Settings → Java Presets; if not, click OK to download one.</value>
+  </data>
   <data name="Shared_FailedToDeployInstanceDangerNotificationTitle" xml:space="preserve">
     <value>Failed to deploy instance</value>
   </data>

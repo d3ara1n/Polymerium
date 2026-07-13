@@ -1,14 +1,13 @@
 using System;
-using System.Reactive.Linq;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Huskui.Avalonia.Models;
-using Polymerium.Avalonia.Facilities;
+using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Utilities;
-using TridentCore.Abstractions;
 using TridentCore.Abstractions.Tasks;
 using TridentCore.Core.Exceptions;
 using TridentCore.Core.Services.Instances;
@@ -22,8 +21,11 @@ namespace Polymerium.Avalonia.Services.Sinks;
 public class NotificationSink(
     InstanceStateAggregator aggregator,
     NotificationService notificationService,
-    NavigationService navigationService)
+    NavigationService navigationService,
+    OverlayService overlayService)
 {
+    private const string JAVA_DOWNLOAD_URL = "https://adoptium.net/temurin/releases/";
+
     public void Attach()
     {
         aggregator.StateChangeStream
@@ -155,6 +157,12 @@ public class NotificationSink(
                     return;
                 }
 
+                if (tracker.FailureReason is JavaNotFoundException javaNotFound)
+                {
+                    HandleJavaNotFound(javaNotFound);
+                    return;
+                }
+
                 // AccountException 或其他错误
                 notificationService.PopMessage(
                     tracker.FailureReason,
@@ -169,4 +177,28 @@ public class NotificationSink(
     {
         InnerException: ProcessFaultedException
     };
+
+    private void HandleJavaNotFound(JavaNotFoundException ex)
+    {
+        var message = string.Format(
+            Resources.Shared_JavaRuntimeNotFoundDangerDialogMessage,
+            ex.MajorVersion);
+        Dispatcher.UIThread.Post(async () =>
+        {
+            var dialog = new MessageDialog
+            {
+                Title = Resources.Shared_JavaRuntimeNotFoundDangerDialogTitle,
+                Message = message,
+                IsPrimaryButtonVisible = true,
+            };
+            if (await overlayService.PopDialogAsync(dialog))
+            {
+                await TopLevelHelper.LaunchUriAsync(
+                    TopLevelHelper.GetTopLevel(),
+                    new(JAVA_DOWNLOAD_URL),
+                    Resources.Shared_JavaRuntimeNotFoundDangerDialogTitle,
+                    notificationService);
+            }
+        });
+    }
 }

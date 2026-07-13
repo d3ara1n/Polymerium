@@ -404,7 +404,7 @@ public partial class InstanceSetupPageModel(
         foreach (var g in groups)
         {
             if (g.Source is not null && PackageHelper.TryParse(g.Source, out var r))
-                identifiable.Add((g, new PackageIdentifier(r.Label, r.Namespace, r.Pid, r.Vid)));
+                identifiable.Add((g, new(r.Label, r.Namespace, r.Pid, r.Vid)));
         }
 
         if (identifiable.Count == 0)

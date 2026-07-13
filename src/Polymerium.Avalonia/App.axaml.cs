@@ -11,7 +11,6 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Controls;
-using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.Avalonia.Pages;

@@ -12,7 +12,6 @@ using Polymerium.Avalonia.ModalModels;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Services;
 using TridentCore.Abstractions.Snapshots;
-using TridentCore.Core.Services;
 
 namespace Polymerium.Avalonia.PageModels;
 

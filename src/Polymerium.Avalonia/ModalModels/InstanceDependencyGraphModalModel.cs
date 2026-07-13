@@ -357,7 +357,7 @@ public partial class InstanceDependencyGraphModalModel(
         int Missing
     )
     {
-        public static GraphBuildResult Empty { get; } = new(new Graph(),
+        public static GraphBuildResult Empty { get; } = new(new(),
                                                              new Dictionary<string, Package>(),
                                                              new Dictionary<string, DependencyGraphNode>(),
                                                              new Dictionary<string, List<string>>(),

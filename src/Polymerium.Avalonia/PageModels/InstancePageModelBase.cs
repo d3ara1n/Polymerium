@@ -11,7 +11,6 @@ using Polymerium.Avalonia.Widgets;
 using TridentCore.Abstractions;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Tasks;
-using TridentCore.Core;
 using TridentCore.Core.Services;
 using Polymerium.Avalonia.Services;
 using TridentCore.Core.Services.Instances;

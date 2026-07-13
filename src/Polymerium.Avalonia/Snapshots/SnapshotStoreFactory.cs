@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using FreeSql;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using TridentCore.Abstractions;
 using TridentCore.Abstractions.Snapshots;
 

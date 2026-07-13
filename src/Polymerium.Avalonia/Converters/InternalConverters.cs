@@ -3,7 +3,6 @@ using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
-using Avalonia.Styling;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Converters;
 using Polymerium.Avalonia.Models;

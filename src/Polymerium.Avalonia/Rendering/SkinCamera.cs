@@ -73,7 +73,7 @@ public sealed class SkinCamera
         var ty = Alignment == VerticalAlign.Top
             ? maxy * scale
             : Height * 0.5f + cy * scale;
-        return (scale, new Vector2(tx, ty));
+        return (scale, new(tx, ty));
     }
 
     /// <summary>

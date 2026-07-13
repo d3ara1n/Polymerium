@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;

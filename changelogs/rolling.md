@@ -14,7 +14,7 @@
 
 ### Changed
 
--
+- Replace the notification shown when a required Java runtime is missing with a dialog that guides configuration or download
 
 ### Removed
 

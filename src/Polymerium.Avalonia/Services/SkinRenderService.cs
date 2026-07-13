@@ -84,7 +84,7 @@ public sealed class SkinRenderService(
         {
             using var data = image.Encode();
             using var stream = data.AsStream();
-            return new Bitmap(stream);
+            return new(stream);
         }
     }
 
@@ -131,7 +131,7 @@ public sealed class SkinRenderService(
     {
         try
         {
-            using var stream = AssetLoader.Open(new Uri(uri, UriKind.Absolute));
+            using var stream = AssetLoader.Open(new(uri, UriKind.Absolute));
             using var ms = new MemoryStream();
             stream.CopyTo(ms);
             return ms.ToArray();

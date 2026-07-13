@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using Polymerium.Avalonia.Models;
 using TridentCore.Abstractions;
 
 namespace Polymerium.Avalonia.Controls;
