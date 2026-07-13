@@ -5397,6 +5397,18 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string Shared_JavaRuntimeNotFoundDangerDialogTitle {
+            get {
+                return ResourceManager.GetString("Shared_JavaRuntimeNotFoundDangerDialogTitle", resourceCulture);
+            }
+        }
+        
+        public static string Shared_JavaRuntimeNotFoundDangerDialogMessage {
+            get {
+                return ResourceManager.GetString("Shared_JavaRuntimeNotFoundDangerDialogMessage", resourceCulture);
+            }
+        }
+        
         public static string Shared_FailedToDeployInstanceDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("Shared_FailedToDeployInstanceDangerNotificationTitle", resourceCulture);

@@ -1,4 +1,3 @@
-using System;
 using TridentCore.Abstractions.Snapshots;
 
 namespace Polymerium.Avalonia.Models;

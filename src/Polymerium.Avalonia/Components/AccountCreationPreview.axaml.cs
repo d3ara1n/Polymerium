@@ -4,7 +4,6 @@ using Polymerium.Avalonia.Controls;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Accounts;
-using TridentCore.Core.Services;
 
 namespace Polymerium.Avalonia.Components;
 

@@ -90,12 +90,12 @@ public partial class RotatingSkinView : UserControl
         if (Sources is { Count: > 0 })
         {
             foreach (var url in Sources)
-                Frames.Add(new SkinFrameModel(url));
+                Frames.Add(new(url));
         }
         else if (Fallback is not null)
         {
             // No directional renders available (e.g. offline); fall back to a single static image.
-            Frames.Add(new SkinFrameModel(Fallback));
+            Frames.Add(new(Fallback));
         }
 
         if (Frames.Count > 0)

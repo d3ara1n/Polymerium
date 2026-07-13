@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
-using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Utilities;
@@ -68,11 +67,11 @@ public class CrashDiagnosisSink(
             thumbnail: ThumbnailHelper.ForInstance(launcher.Key),
             actions:
             [
-                new GrowlAction(
+                new(
                     Resources.MainWindow_InstanceLaunchingDangerNotificationDiagnoseText,
                     new RelayCommand(() => Diagnose(launcher)),
                     null
-                ),
+                   ),
             ]);
     }
 

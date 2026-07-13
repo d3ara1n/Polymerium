@@ -6,7 +6,6 @@ using Huskui.Avalonia.Mvvm.Activation;
 using Huskui.Avalonia.Mvvm.Mixins;
 using Microsoft.Extensions.DependencyInjection;
 using Polymerium.Avalonia.ModalModels;
-using Polymerium.Avalonia.Pages;
 
 namespace Polymerium.Avalonia.Modals;
 

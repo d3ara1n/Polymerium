@@ -2704,6 +2704,12 @@
   <data name="Shared_FailedToLaunchInstanceDangerNotificationTitle" xml:space="preserve">
     <value>启动实例失败</value>
   </data>
+  <data name="Shared_JavaRuntimeNotFoundDangerDialogTitle" xml:space="preserve">
+    <value>未找到 Java 运行环境</value>
+  </data>
+  <data name="Shared_JavaRuntimeNotFoundDangerDialogMessage" xml:space="preserve">
+    <value>未配置此实例所需的 Java {0} 运行环境。若已安装，请在「设置 → Java 预设」中手动配置路径；若未安装，点击「确定」打开下载页获取。</value>
+  </data>
   <data name="Shared_FailedToDeployInstanceDangerNotificationTitle" xml:space="preserve">
     <value>部署实例失败</value>
   </data>

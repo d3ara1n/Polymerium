@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using FluentIcons.Common;
-using Huskui.Avalonia.Controls;
 
 namespace Polymerium.Avalonia.Pages;
 

@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Services;
 using TridentCore.Abstractions.Accounts;
 using TridentCore.Core.Accounts;
-using TridentCore.Core.Services;
 
 namespace Polymerium.Avalonia.Utilities;
 

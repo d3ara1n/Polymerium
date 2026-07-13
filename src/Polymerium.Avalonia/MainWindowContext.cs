@@ -2,42 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using DynamicData.Binding;
 using Huskui.Avalonia.Models;
-using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
-using Polymerium.Avalonia.PageModels;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
-using TridentCore.Abstractions.Extensions;
-using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Tasks;
-using TridentCore.Abstractions.Utilities;
-using TridentCore.Core.Igniters;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
-using TridentCore.Core.Utilities;
 using Velopack;
 using NotificationSidebar = Polymerium.Avalonia.Sidebars.NotificationSidebar;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
-using TridentCore.Abstractions.Reactive;
 
 namespace Polymerium.Avalonia;
 
@@ -318,7 +306,7 @@ public partial class MainWindowContext : ObservableObject
         );
         await TopLevelHelper.LaunchUriAsync(
             topLevel,
-            new Uri(Program.RepositoryUrl),
+            new(Program.RepositoryUrl),
             Resources.MainWindow_OpenGitHubDangerNotificationTitle
         );
     }

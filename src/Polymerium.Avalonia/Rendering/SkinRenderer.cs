@@ -124,10 +124,10 @@ public sealed class SkinRenderer
         {
             var r = Vector3.Transform(vs[i], view);
             depth += r.Z;
-            pts[i] = new SKPoint(r.X * scale + tr.X, tr.Y - r.Y * scale);
+            pts[i] = new(r.X * scale + tr.X, tr.Y - r.Y * scale);
         }
 
-        return new ProjectedFace(pts, depth * 0.25f, f.Overlay, f);
+        return new(pts, depth * 0.25f, f.Overlay, f);
     }
 
     private static void DrawFace(SKCanvas canvas, SKBitmap skin, SkinFace f, SKPoint[] pts, SKPaint paint)

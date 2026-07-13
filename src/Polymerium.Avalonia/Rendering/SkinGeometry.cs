@@ -109,23 +109,23 @@ public static class SkinGeometry
         var armTex = type == SkinType.Slim ? SlimArmTex : LegArmTex;
         var armHx = type == SkinType.Slim ? 0.1875f : 0.25f;
         var armPx = type == SkinType.Slim ? 0.6875f : 0.75f;
-        yield return new PartSpec(0.5f, 0.5f, 0.5f, new Vector3(0, 1.25f, 0), HeadTex, 0, 0, 32, 0, true);
-        yield return new PartSpec(0.5f, 0.75f, 0.25f, Vector3.Zero, BodyTex, 16, 16, 16, 32, true);
-        yield return new PartSpec(armHx, 0.75f, 0.25f, new Vector3(armPx, 0, 0), armTex, 32, 48, 48, 48, true);
-        yield return new PartSpec(armHx, 0.75f, 0.25f, new Vector3(-armPx, 0, 0), armTex, 40, 16, 40, 32, true);
-        yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(0.25f, -1.5f, 0), LegArmTex, 0, 16, 0, 48, true);
-        yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(-0.25f, -1.5f, 0), LegArmTex, 16, 48, 0, 32, true);
+        yield return new(0.5f, 0.5f, 0.5f, new(0, 1.25f, 0), HeadTex, 0, 0, 32, 0, true);
+        yield return new(0.5f, 0.75f, 0.25f, Vector3.Zero, BodyTex, 16, 16, 16, 32, true);
+        yield return new(armHx, 0.75f, 0.25f, new(armPx, 0, 0), armTex, 32, 48, 48, 48, true);
+        yield return new(armHx, 0.75f, 0.25f, new(-armPx, 0, 0), armTex, 40, 16, 40, 32, true);
+        yield return new(0.25f, 0.75f, 0.25f, new(0.25f, -1.5f, 0), LegArmTex, 0, 16, 0, 48, true);
+        yield return new(0.25f, 0.75f, 0.25f, new(-0.25f, -1.5f, 0), LegArmTex, 16, 48, 0, 32, true);
     }
 
     private static IEnumerable<PartSpec> LegacyParts()
     {
         // 旧版无外层（head 除外），左右肢体镜像复用右侧贴图区。
-        yield return new PartSpec(0.5f, 0.5f, 0.5f, new Vector3(0, 1.25f, 0), HeadTex, 0, 0, 32, 0, true);
-        yield return new PartSpec(0.5f, 0.75f, 0.25f, Vector3.Zero, BodyTex, 16, 16, 0, 0, false);
-        yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(0.75f, 0, 0), LegArmTex, 40, 16, 0, 0, false);
-        yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(-0.75f, 0, 0), LegArmTex, 40, 16, 0, 0, false);
-        yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(0.25f, -1.5f, 0), LegArmTex, 0, 16, 0, 0, false);
-        yield return new PartSpec(0.25f, 0.75f, 0.25f, new Vector3(-0.25f, -1.5f, 0), LegArmTex, 0, 16, 0, 0, false);
+        yield return new(0.5f, 0.5f, 0.5f, new(0, 1.25f, 0), HeadTex, 0, 0, 32, 0, true);
+        yield return new(0.5f, 0.75f, 0.25f, Vector3.Zero, BodyTex, 16, 16, 0, 0, false);
+        yield return new(0.25f, 0.75f, 0.25f, new(0.75f, 0, 0), LegArmTex, 40, 16, 0, 0, false);
+        yield return new(0.25f, 0.75f, 0.25f, new(-0.75f, 0, 0), LegArmTex, 40, 16, 0, 0, false);
+        yield return new(0.25f, 0.75f, 0.25f, new(0.25f, -1.5f, 0), LegArmTex, 0, 16, 0, 0, false);
+        yield return new(0.25f, 0.75f, 0.25f, new(-0.25f, -1.5f, 0), LegArmTex, 0, 16, 0, 0, false);
     }
 
     private static void AddPart(ICollection<SkinFace> faces, PartSpec p, bool overlay)
@@ -149,10 +149,10 @@ public static class SkinGeometry
                         CubeVerts[vi + 2] * hz)
                     + p.Pivot;
                 var ui = f * 8 + c * 2;
-                uvs[c] = new Vector2(p.Tex[ui] + offU, p.Tex[ui + 1] + offV);
+                uvs[c] = new(p.Tex[ui] + offU, p.Tex[ui + 1] + offV);
             }
 
-            faces.Add(new SkinFace(vs[0], vs[1], vs[2], vs[3], uvs[0], uvs[1], uvs[2], uvs[3], overlay));
+            faces.Add(new(vs[0], vs[1], vs[2], vs[3], uvs[0], uvs[1], uvs[2], uvs[3], overlay));
         }
     }
 
@@ -170,6 +170,6 @@ public static class SkinGeometry
                 max = Vector3.Max(max, v);
             }
 
-        return new BoundingBox(min, max);
+        return new(min, max);
     }
 }
