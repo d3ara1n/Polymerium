@@ -111,24 +111,6 @@ public partial class SettingsPageModel : ViewModelBase
     #region Commands
 
     [RelayCommand]
-    private async Task PickFile(TextBox? box)
-    {
-        if (box != null)
-        {
-            var path = await OverlayService.RequestFileAsync(Resources.InstancePropertiesPage_RequestJavaPrompt,
-                                                             Resources.InstancePropertiesPage_RequestJavaTitle);
-            if (path != null && File.Exists(path))
-            {
-                var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
-                if (dir != null)
-                {
-                    box.Text = dir;
-                }
-            }
-        }
-    }
-
-    [RelayCommand]
     private void Navigate(Type? view)
     {
         if (view != null)
