@@ -210,7 +210,7 @@ public partial class JavaHomeContainer : UserControl
                 Properties.Resources.JavaHomeContainer_RequestJavaPrompt,
                 Properties.Resources.JavaHomeContainer_ReqeustJavaTitle
             );
-            if (path != null && File.Exists(path))
+            if (path != null && File.Exists(path) && Directory.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
                 if (dir != null)

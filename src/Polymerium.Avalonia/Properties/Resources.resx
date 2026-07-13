@@ -754,7 +754,7 @@
         <value>File too big makes app crash</value>
     </data>
     <data name="FilePickerDialog_PathBarPlaceholder" xml:space="preserve">
-        <value>Chooooosen file path"</value>
+        <value>Chooooosen file path</value>
     </data>
     <data name="GameVersionPickerDialog_Title" xml:space="preserve">
         <value>Pick a game version</value>
