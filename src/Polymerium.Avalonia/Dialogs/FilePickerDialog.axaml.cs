@@ -15,7 +15,7 @@ public partial class FilePickerDialog : Dialog
     public string? SuggestedStartLocationPath { get; set; }
 
     protected override bool ValidateResult(object? result) =>
-        result is string filePath && File.Exists(filePath);
+        result is string filePath && (File.Exists(filePath) || Directory.Exists(filePath));
 
     private void DropZone_OnDragOver(object? sender, DropZone.DragOverEventArgs e)
     {
