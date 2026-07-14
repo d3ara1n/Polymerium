@@ -333,6 +333,8 @@ public class PersistenceService(IFreeSql freeSql)
     public void MarkDefaultAccount(string uuid) =>
         freeSql.Transaction(() =>
         {
+            // NOTE: FreeSql 对无 Where 的 Update 一律不执行（全表更新保护），清零所有账户的
+            //  默认标记必须显式带 Where，哪怕条件恒真。
             freeSql.Update<Account>().Where(x => true).Set(x => x.IsDefault, false).ExecuteAffrows();
             freeSql
                 .Update<Account>()
