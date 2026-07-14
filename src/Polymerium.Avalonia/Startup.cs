@@ -152,6 +152,7 @@ public static class Startup
                options.TrackStatistics = true;
            })
            .AddFusionCache()
+           .WithoutLogger()
            .WithDefaultEntryOptions(options =>
            {
                options.Duration = TimeSpan.FromDays(7);
