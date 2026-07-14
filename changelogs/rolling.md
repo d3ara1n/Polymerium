@@ -6,6 +6,7 @@
 
 ### Fixed
 
+- Fix corrupted files in the bundled Java runtime crashing the instance on launch with no log or automatic repair (#POLY-127)
 - Fix frosted blur backdrop stuttering while scrolling overlay content
 
 ### Added
