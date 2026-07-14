@@ -35,7 +35,7 @@ namespace Polymerium.Avalonia;
 
 public static class Startup
 {
-    private static SingleInstance? SINGLE_INSTANCE;
+    private static SingleInstance? _singleInstance;
     public static void ConfigureServices(IServiceCollection services, bool debug)
     {
         services
@@ -217,15 +217,15 @@ public static class Startup
 
     public static bool InitializeUnhostedServices()
     {
-        SINGLE_INSTANCE = new();
-        if (!SINGLE_INSTANCE.IsFirstInstance)
+        _singleInstance = new();
+        if (!_singleInstance.IsFirstInstance)
         {
-            SINGLE_INSTANCE.Dispose();
+            _singleInstance.Dispose();
             SingleInstance.Send(new());
             return false;
         }
-        SINGLE_INSTANCE.Received += OnIpcReceived;
-        SINGLE_INSTANCE.StartServer();
+        _singleInstance.Received += OnIpcReceived;
+        _singleInstance.StartServer();
 
         #region SentrySdk Init (only in Debug)
 
@@ -277,7 +277,7 @@ public static class Startup
         {
             SentrySdk.Close();
         }
-        SINGLE_INSTANCE?.Dispose();
+        _singleInstance?.Dispose();
     }
 
     private static void OnIpcReceived(SingleInstance.Message message)

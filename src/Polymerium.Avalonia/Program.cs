@@ -64,6 +64,9 @@ internal static class Program
         if (!Startup.InitializeUnhostedServices())
             return;
 
+        SQLitePCL.Batteries_V2.Init();
+        SQLitePCL.raw.FreezeProvider();
+
         var firstRunFile = Path.Combine(PathDef.Default.PrivateDataDirectory(), "first_run");
         if (!File.Exists(firstRunFile))
         {

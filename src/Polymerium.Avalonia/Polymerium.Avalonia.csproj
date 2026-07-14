@@ -57,6 +57,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.9" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.9" />
         <PackageReference Include="NeoSmart.Caching.Sqlite.AspNetCore" Version="9.0.1" />
+        <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.3" />
         <PackageReference Include="Semver" Version="3.0.0" />
         <PackageReference Include="SkiaSharp" Version="4.150.0" />
         <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="4.150.0" />
