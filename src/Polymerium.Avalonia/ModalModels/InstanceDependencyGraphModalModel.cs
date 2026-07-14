@@ -217,11 +217,11 @@ public partial class InstanceDependencyGraphModalModel(
                               .ResolvePackagesAsync(layer, Filter.None)
                               .ConfigureAwait(false);
 
-            foreach (var (_, pkg) in batch)
+            foreach (var (_, pkg) in batch.Successful)
                 resolved[NodeKey(pkg.Label, pkg.Namespace, pkg.ProjectId)] = pkg;
 
             var nextLayer = new List<PackageIdentifier>();
-            foreach (var (_, pkg) in batch)
+            foreach (var (_, pkg) in batch.Successful)
             {
                 var pkgKey = NodeKey(pkg.Label, pkg.Namespace, pkg.ProjectId);
                 foreach (var dep in pkg.Dependencies)

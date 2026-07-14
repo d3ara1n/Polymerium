@@ -213,8 +213,7 @@
                                             CornerRadius="{StaticResource SmallCornerRadius}" />
                                         <StackPanel
                                             Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            Spacing="8">
+                                            VerticalAlignment="Center">
                                             <StackPanel
                                                 Background="Transparent"
                                                 Orientation="Horizontal"

@@ -245,7 +245,7 @@ public partial class InstanceSetupPageModel(
                                  .Select(i => i.Group)
                                  .OfType<ModpackGroupModel>()
                                  .Distinct()
-                                 .Where(g => !g.IsInfoLoaded)
+                                 .Where(g => g.Info is null)
                                  .ToList();
         if (pendingPackages.Count == 0 && pendingGroups.Count == 0)
         {
@@ -271,68 +271,77 @@ public partial class InstanceSetupPageModel(
             token.ThrowIfCancellationRequested();
 
             foreach (var package in packages)
-            {
                 package.IsLoaded = false;
-            }
 
-            var prefs = packages
+            var items = packages
                        .Select(x => PackageHelper.TryParse(x.Entry.Pref, out var pref)
                                         ? (Model: x,
-                                           Pref: new PackageIdentifier(pref.Label, pref.Namespace, pref.Pid, pref.Vid))
+                                           Pref: new PackageIdentifier(pref.Label, pref.Namespace, pref.Pid, pref.Vid),
+                                           Data: new RefreshIntermediateData(x))
                                         : throw new FormatException($"Failed to parse pref: {x.Entry.Pref}"))
-                       .ToDictionary(x => x.Pref, x => new RefreshIntermediateData(x.Model));
-            var knownVids = prefs.Where(x => x.Key.Version is not null).ToArray();
-            var unknownVids = prefs.Where(x => x.Key.Version is null).ToArray();
+                       .ToList();
 
-            token.ThrowIfCancellationRequested();
-
-            // 固定 Vid 的不需要 Filter
-            var knownPackages = await dataService.ResolvePackagesAsync(knownVids.Select(x => x.Key), Filter.None);
-
-            token.ThrowIfCancellationRequested();
-
-            var unknownProjects =
-                await dataService.QueryProjectsAsync(unknownVids.Select(x => (x.Key.Repository, x.Key.Namespace,
-                                                                              x.Key.Identity)));
-            token.ThrowIfCancellationRequested();
-
-            var thumbnailsTasks = knownPackages
-                                 .Select(async x => (Pref: x.Item1,
-                                                     Thumbnail: x.Item2.Thumbnail is not null
-                                                                    ? await dataService
-                                                                         .GetBitmapAsync(x.Item2.Thumbnail)
-                                                                    : AssetUriIndex.DirtImageBitmap))
-                                 .Concat(unknownProjects.Select(async x =>
-                                                                    (Pref: new PackageIdentifier(x.Label,
-                                                                         x.Namespace,
-                                                                         x.ProjectId,
-                                                                         null),
-                                                                     Thumbnail: x.Thumbnail is not null
-                                                                         ? await dataService
-                                                                              .GetBitmapAsync(x.Thumbnail)
-                                                                         : AssetUriIndex.DirtImageBitmap)))
-                                 .ToList();
-            await Task.WhenAll(thumbnailsTasks);
-
-            token.ThrowIfCancellationRequested();
-
-            foreach (var (id, package) in knownPackages)
+            foreach (var sourceGroup in items.GroupBy(x => x.Model.Entry.Source))
             {
-                prefs[id].Package = package;
+                token.ThrowIfCancellationRequested();
+
+                var known = sourceGroup.Where(x => x.Pref.Version is not null).ToArray();
+                if (known.Length > 0)
+                {
+                    var resolved = await dataService.ResolvePackagesAsync(
+                        known.Select(x => x.Pref).Distinct(),
+                        Filter.None);
+                    foreach (var (id, package) in resolved.Successful)
+                    {
+                        foreach (var item in known.Where(x => x.Pref == id))
+                            item.Data.Package = package;
+                    }
+                }
+
+                var unknown = sourceGroup.Where(x => x.Pref.Version is null).ToArray();
+                if (unknown.Length > 0)
+                {
+                    var queried = await dataService.QueryProjectsAsync(
+                        unknown
+                           .Select(x => (x.Pref.Repository, x.Pref.Namespace, x.Pref.Identity))
+                           .Distinct());
+                    foreach (var ((label, ns, pid), project) in queried.Successful)
+                    {
+                        var id = new PackageIdentifier(label, ns, pid, null);
+                        foreach (var item in unknown.Where(x => x.Pref == id))
+                            item.Data.Project = project;
+                    }
+                }
             }
 
-            foreach (var project in unknownProjects)
+            await Task.WhenAll(items.Select(async item =>
             {
-                prefs[new(project.Label, project.Namespace, project.ProjectId, null)].Project = project;
-            }
+                var thumbnail = item.Data.Package?.Thumbnail ?? item.Data.Project?.Thumbnail;
+                if (thumbnail is null)
+                {
+                    item.Data.Thumbnail = AssetUriIndex.DirtImageBitmap;
+                    return;
+                }
 
-            foreach (var thumbnailsTask in thumbnailsTasks)
-            {
-                prefs[thumbnailsTask.Result.Pref].Thumbnail = thumbnailsTask.Result.Thumbnail;
-            }
+                try
+                {
+                    item.Data.Thumbnail = await dataService.GetBitmapAsync(thumbnail);
+                }
+                catch (OperationCanceledException)
+                {
+                    throw;
+                }
+                catch
+                {
+                    item.Data.Thumbnail = AssetUriIndex.DirtImageBitmap;
+                }
+            }));
 
-            foreach (var x in prefs.Values)
+            token.ThrowIfCancellationRequested();
+
+            foreach (var item in items)
             {
+                var x = item.Data;
                 InstancePackageInfoModel? info = x switch
                 {
                     { Package: not null, Thumbnail: not null } => new(x.Model,
@@ -398,7 +407,7 @@ public partial class InstanceSetupPageModel(
     private async Task RefreshModpackGroupInfoAsync(IReadOnlyList<ModpackGroupModel> groups, CancellationToken token)
     {
         foreach (var g in groups)
-            g.IsInfoLoaded = true;
+            g.IsLoaded = false;
 
         var identifiable = new List<(ModpackGroupModel Group, PackageIdentifier Id)>();
         foreach (var g in groups)
@@ -407,30 +416,33 @@ public partial class InstanceSetupPageModel(
                 identifiable.Add((g, new(r.Label, r.Namespace, r.Pid, r.Vid)));
         }
 
-        if (identifiable.Count == 0)
-            return;
-
         try
         {
             token.ThrowIfCancellationRequested();
-            var byId = identifiable.ToDictionary(x => x.Id, x => x.Group);
-            var packages = await dataService.ResolvePackagesAsync(
-                identifiable.Select(x => x.Id),
-                Filter.None with { Kind = ResourceKind.Modpack });
-            foreach (var (id, package) in packages)
+            if (identifiable.Count > 0)
             {
-                if (byId.TryGetValue(id, out var g))
+                var byId = identifiable.ToDictionary(x => x.Id, x => x.Group);
+                var packages = await dataService.ResolvePackagesAsync(
+                    identifiable.Select(x => x.Id),
+                    Filter.None with { Kind = ResourceKind.Modpack });
+                foreach (var (id, package) in packages.Successful)
                 {
-                    g.Name = package.ProjectName;
-                    g.Thumbnail = package.Thumbnail;
+                    if (byId.TryGetValue(id, out var g))
+                        g.Info = new(g, package.ProjectName, package.Thumbnail);
                 }
             }
         }
-        catch (OperationCanceledException) { }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
         catch (Exception ex)
         {
             logger.LogWarning(ex, "Failed to load modpack group info");
         }
+
+        foreach (var g in groups)
+            g.IsLoaded = true;
     }
 
     private Uri GetNotificationThumbnail(Uri? preferred = null) =>
@@ -1195,33 +1207,66 @@ public partial class InstanceSetupPageModel(
             var output = new List<ExportedEntry>();
             var progress = notificationService.PopProgress("Export package list to file",
                                                            thumbnail: GetNotificationThumbnail());
-            var list = new Dictionary<PackageIdentifier, Profile.Rice.Entry>();
-            foreach (var entry in profile.Setup.Packages)
-            {
-                if (PackageHelper.TryParse(entry.Pref, out var result))
-                {
-                    list.Add(new(result.Label, result.Namespace, result.Pid, result.Vid), entry);
-                }
-            }
-
+            var items = profile.Setup.Packages
+                               .Select(entry => PackageHelper.TryParse(entry.Pref, out var parsed)
+                                                    ? (Entry: entry,
+                                                       Id: new PackageIdentifier(parsed.Label,
+                                                           parsed.Namespace,
+                                                           parsed.Pid,
+                                                           parsed.Vid))
+                                                    : ((Profile.Rice.Entry Entry, PackageIdentifier Id)?)null)
+                               .Where(x => x is not null)
+                               .Select(x => x!.Value)
+                               .ToList();
 
             try
             {
-                var res = await Task.Run(async () => await dataService.ResolvePackagesAsync(list.Keys, Filter.None));
-                foreach (var (id, pkg) in res)
+                var successful = new Dictionary<(PackageIdentifier Id, string? Source), Package>();
+                var failed = new Dictionary<(PackageIdentifier Id, string? Source), Exception>();
+
+                foreach (var sourceGroup in items.GroupBy(x => x.Entry.Source))
                 {
-                    var entry = list[id];
-                    output.Add(new(entry.Pref,
+                    var result = await dataService.ResolvePackagesAsync(
+                        sourceGroup.Select(x => x.Id).Distinct(),
+                        Filter.None);
+                    foreach (var (id, package) in result.Successful)
+                        successful[(id, sourceGroup.Key)] = package;
+                    foreach (var (id, error) in result.Failed)
+                        failed[(id, sourceGroup.Key)] = error;
+                }
+
+                new BatchResolveResult<(PackageIdentifier Id, string? Source), Package>(successful, failed)
+                   .ThrowIfFailures();
+
+                foreach (var item in items)
+                {
+                    var pkg = successful[(item.Id, item.Entry.Source)];
+                    output.Add(new(item.Entry.Pref,
                                    pkg.Label,
                                    pkg.Namespace,
                                    pkg.ProjectId,
                                    pkg.VersionId,
-                                   entry.Enabled,
-                                   entry.Source,
+                                   item.Entry.Enabled,
+                                   item.Entry.Source,
                                    pkg.ProjectName,
-                                   id.Version is not null ? pkg.VersionName : null,
-                                   string.Join("|", entry.Tags)));
+                                   item.Id.Version is not null ? pkg.VersionName : null,
+                                   string.Join("|", item.Entry.Tags)));
                 }
+            }
+            catch (BatchResolveException<(PackageIdentifier Id, string? Source)> ex)
+            {
+                var failed = ex.Failures.Keys
+                              .SelectMany(key => items
+                                                .Where(x => x.Id == key.Id && x.Entry.Source == key.Source)
+                                                .Select(x => x.Entry.Pref))
+                              .Distinct()
+                              .ToArray();
+                notificationService.PopMessage(string.Join(Environment.NewLine, failed),
+                                               Resources.InstanceSetupPage_FetchingInformationDangerNotificationTitle,
+                                               GrowlLevel.Warning,
+                                               thumbnail: GetNotificationThumbnail());
+                progress.Dispose();
+                return;
             }
             catch (Exception ex)
             {
@@ -1230,6 +1275,8 @@ public partial class InstanceSetupPageModel(
                                                Resources.InstanceSetupPage_FetchingInformationDangerNotificationTitle,
                                                GrowlLevel.Warning,
                                                thumbnail: GetNotificationThumbnail());
+                progress.Dispose();
+                return;
             }
 
             progress.Dispose();

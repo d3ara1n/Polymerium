@@ -254,59 +254,44 @@ public partial class InstancePackageModal : Modal
                 return null;
             }
 
-            var dependants = await DataService.ResolvePackagesAsync(Packages
-                                                                   .Where(x => x.Info is
-                                                                   {
-                                                                       Version:
-                                                                                   InstancePackageVersionModel
-                                                                                   version
-                                                                   }
-                                                                            && version.Dependencies.Any(y => y.Label
-                                                                                == Model.Label
-                                                                                && y.Namespace
-                                                                                == Model.Namespace
-                                                                                && y.ProjectId
-                                                                                == Model.ProjectId))
-                                                                   .Select(x => new PackageIdentifier(x.Info!.Label,
-                                                                               x.Info!.Namespace,
-                                                                               x.Info!.ProjectId,
-                                                                               (string?)
-                                                                               ((InstancePackageVersionModel)
-                                                                                   x.Info!.Version).Id)),
-                                                                    Filter.None);
-            var tasks = dependants
-                       .Select(async x =>
-                        {
-                            var count = (uint)
-                                Packages.Count(y => y.Info!.Version is InstancePackageVersionModel version
-                                                         && version.Dependencies.Any(z => z.Label == x.Item2.Label
-                                                             && z.Namespace == x.Item2.Namespace
-                                                             && z.ProjectId == x.Item2.ProjectId));
-                            var found = Packages.FirstOrDefault(y => y.Info?.Label == x.Item2.Label
-                                                                          && y.Info?.Namespace == x.Item2.Namespace
-                                                                          && y.Info?.ProjectId == x.Item2.ProjectId);
-                            var thumbnail = x.Item2.Thumbnail is not null
-                                                ? await DataService.GetBitmapAsync(x.Item2.Thumbnail)
-                                                : AssetUriIndex.DirtImageBitmap;
-                            return new InstancePackageDependencyModel(x.Item2.Label,
-                                                                      x.Item2.Namespace,
-                                                                      x.Item2.ProjectId,
-                                                                      x.Item2.VersionId,
-                                                                      x.Item2.ProjectName,
-                                                                      thumbnail,
-                                                                      x.Item2.Reference,
-                                                                      count,
-                                                                      x.Item2.Dependencies
-                                                                       .FirstOrDefault(y => y.Label == Model.Label
-                                                                         && y.Namespace == Model.Namespace
-                                                                         && y.ProjectId == Model.ProjectId)
-                                                                      ?.IsRequired
-                                                                   ?? false)
-                            { Installed = found, };
-                        })
-                       .ToArray();
-            await Task.WhenAll(tasks);
-            return new InstancePackageDependencyCollection([.. tasks.Select(x => x.Result)]);
+            // dependants 的展示数据全部可由本地已加载的 Info 构造，无需再次网络解析
+            var models = Packages
+                        .Where(x => x.Info is { Version: InstancePackageVersionModel version }
+                                 && version.Dependencies.Any(y => y.Label == Model.Label
+                                                                  && y.Namespace == Model.Namespace
+                                                                  && y.ProjectId == Model.ProjectId))
+                        .Select(x =>
+                         {
+                             var info = x.Info!;
+                             var version = (InstancePackageVersionModel)info.Version;
+                             var count = (uint)Packages.Count(y => y.Info!.Version is InstancePackageVersionModel v
+                                                                  && v.Dependencies.Any(z => z.Label == info.Label
+                                                                      && z.Namespace == info.Namespace
+                                                                      && z.ProjectId == info.ProjectId));
+                             var found = Packages.FirstOrDefault(y => y.Info?.Label == info.Label
+                                                                       && y.Info?.Namespace == info.Namespace
+                                                                       && y.Info?.ProjectId == info.ProjectId);
+                             return new InstancePackageDependencyModel(info.Label,
+                                                                       info.Namespace,
+                                                                       info.ProjectId,
+                                                                       version.Id,
+                                                                       info.ProjectName,
+                                                                       info.Thumbnail,
+                                                                       info.Reference,
+                                                                       count,
+                                                                       version.Dependencies
+                                                                              .FirstOrDefault(y => y.Label == Model.Label
+                                                                                && y.Namespace == Model.Namespace
+                                                                                && y.ProjectId == Model.ProjectId)
+                                                                             ?.IsRequired
+                                                                          ?? false)
+                             {
+                                 Installed = found,
+                             };
+                         })
+                        .ToArray();
+
+            return new InstancePackageDependencyCollection(models);
         });
 
         return lazy;
