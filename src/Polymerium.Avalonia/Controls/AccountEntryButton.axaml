@@ -61,7 +61,7 @@
                                         Text="{Binding TypeName, FallbackValue=Type}" />
                                     <fi:SymbolIcon
                                         Grid.Column="1"
-                                        IsVisible="{Binding IsDefault, Mode=OneWay, FallbackValue=True}"
+                                        IsVisible="{Binding IsDefault, Mode=OneWay, FallbackValue=False}"
                                         FontSize="{StaticResource MediumFontSize}"
                                         IconVariant="Color"
                                         Symbol="CheckmarkCircle" />

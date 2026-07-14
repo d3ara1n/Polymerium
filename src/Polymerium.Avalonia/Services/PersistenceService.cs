@@ -333,7 +333,7 @@ public class PersistenceService(IFreeSql freeSql)
     public void MarkDefaultAccount(string uuid) =>
         freeSql.Transaction(() =>
         {
-            freeSql.Update<Account>().Set(x => x.IsDefault, false).ExecuteAffrows();
+            freeSql.Update<Account>().Where(x => true).Set(x => x.IsDefault, false).ExecuteAffrows();
             freeSql
                 .Update<Account>()
                 .Where(x => x.Uuid == uuid)
