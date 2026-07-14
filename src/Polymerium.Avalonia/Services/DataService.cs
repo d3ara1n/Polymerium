@@ -43,7 +43,8 @@ public class DataService(
         await agent.IdentityAsync(filePath);
 
     // Package / Project / Description / Changelog / Status 的缓存统一由
-    // RepositoryAgent 的分布式缓存(SQLite)管理，此处直接委托。
+    // Trident 仓库缓存层管理，此处直接委托。DataService 只缓存 UI hot data
+    // 和经过应用层加工的数据。
     public Task<Package> ResolvePackageAsync(
         string label,
         string? ns,
