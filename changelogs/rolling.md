@@ -18,6 +18,7 @@
 ### Changed
 
 - Replace the notification shown when a required Java runtime is missing with a dialog that guides configuration or download
+- Improve package information loading so a single failing item no longer drags down the rest and failed entries can be retried
 
 ### Removed
 
