@@ -84,13 +84,15 @@ public class FavoriteRepository(
 
     public Task<Project> QueryAsync(string? ns, string pid) => throw new NotImplementedException();
 
-    public Task<IReadOnlyList<Project>> QueryBatchAsync(IEnumerable<(string?, string pid)> batch) =>
+    public Task<BatchResolveResult<(string?, string pid), Project>> QueryBatchAsync(
+        IEnumerable<(string?, string pid)> batch
+    ) =>
         throw new NotImplementedException();
 
     public Task<Package> ResolveAsync(string? ns, string pid, string? vid, Filter filter) =>
         throw new NotImplementedException();
 
-    public Task<IReadOnlyList<(ScopedPackageIdentifier, Package)>> ResolveBatchAsync(
+    public Task<BatchResolveResult<ScopedPackageIdentifier, Package>> ResolveBatchAsync(
         IEnumerable<ScopedPackageIdentifier> batch,
         Filter filter) =>
         throw new NotImplementedException();

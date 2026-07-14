@@ -8,7 +8,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
-    xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -116,18 +115,10 @@
                         Margin="0,8,0,4"
                         ColumnDefinitions="Auto,*,Auto"
                         ColumnSpacing="8">
-                        <Button
+                        <ContentControl
                             Grid.Column="0"
-                            Padding="4"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewGroupDetailsCommand, FallbackValue={x:Null}}"
-                            CommandParameter="{Binding Group}"
-                            CornerRadius="{StaticResource SmallCornerRadius}">
-                            <ContentControl
-                                Content="{Binding Group}"
-                                ContentTemplate="{StaticResource ModpackGroupContentTemplate}" />
-                        </Button>
+                            Content="{Binding Group}"
+                            ContentTemplate="{StaticResource ModpackGroupContentTemplate}" />
                         <Button
                             Grid.Column="2"
                             Padding="8"
@@ -181,23 +172,58 @@
         <DataTemplate
             x:Key="ModpackGroupContentTemplate"
             x:DataType="app:ModpackGroupModel">
-            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Border
-                    Width="32"
-                    Height="32"
-                    CornerRadius="{StaticResource SmallCornerRadius}">
-                    <Border.Background>
-                        <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" Stretch="UniformToFill" />
-                    </Border.Background>
-                </Border>
-                <TextBlock
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    FontSize="{StaticResource MediumFontSize}"
-                    FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{Binding Name, FallbackValue=Modpack}"
-                    TextTrimming="CharacterEllipsis" />
-            </Grid>
+            <husk:PlaceholderContainer Source="{Binding Info}">
+                <husk:PlaceholderContainer.SourceTemplate>
+                    <DataTemplate x:DataType="app:ModpackGroupInfoModel">
+                        <Button
+                            Padding="4"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewGroupDetailsCommand, FallbackValue={x:Null}}"
+                            CommandParameter="{Binding Owner}"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                <Border
+                                    Width="32"
+                                    Height="32"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <Border.Background>
+                                        <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+                                    </Border.Background>
+                                </Border>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{Binding Name, FallbackValue=Modpack}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </husk:PlaceholderContainer.SourceTemplate>
+                <husk:PlaceholderContainer.Placeholder>
+                    <husk:SkeletonContainer
+                        CornerRadius="{StaticResource SmallCornerRadius}"
+                        IsLoading="{Binding !IsLoaded}">
+                        <Button
+                            Padding="4"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RefreshPackagesCommand, FallbackValue={x:Null}}"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="6">
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{x:Static lang:Resources.InstancePackageButton_LoadFailedTitleText}" />
+                                <fi:SymbolIcon Symbol="ArrowCounterclockwise" />
+                            </StackPanel>
+                        </Button>
+                    </husk:SkeletonContainer>
+                </husk:PlaceholderContainer.Placeholder>
+            </husk:PlaceholderContainer>
         </DataTemplate>
     </app:Subpage.Resources>
     <husk:BusyContainer>

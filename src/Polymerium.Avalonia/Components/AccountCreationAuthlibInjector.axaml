@@ -6,7 +6,6 @@
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Header="{x:Static lang:Resources.AccountCreationAuthlib_Title}">
     <StackPanel Spacing="12">
         <husk:DropZone

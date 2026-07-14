@@ -53,7 +53,7 @@ public class DataService(
         bool cachedEnabled = true
     ) => agent.ResolveAsync(label, ns, pid, vid, filter, cachedEnabled);
 
-    public Task<IReadOnlyList<(PackageIdentifier, Package)>> ResolvePackagesAsync(
+    public Task<BatchResolveResult<PackageIdentifier, Package>> ResolvePackagesAsync(
         IEnumerable<PackageIdentifier> batch,
         Filter filter
     ) => agent.ResolveBatchAsync(batch, filter);
@@ -61,7 +61,7 @@ public class DataService(
     public Task<Project> QueryProjectAsync(string label, string? ns, string pid) =>
         agent.QueryAsync(label, ns, pid);
 
-    public Task<IReadOnlyList<Project>> QueryProjectsAsync(
+    public Task<BatchResolveResult<(string label, string? ns, string pid), Project>> QueryProjectsAsync(
         IEnumerable<(string label, string? ns, string pid)> batch
     ) => agent.QueryBatchAsync(batch);
 
