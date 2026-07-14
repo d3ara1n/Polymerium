@@ -30,6 +30,7 @@ using TridentCore.Core.Extensions;
 using TridentCore.Core.Importers;
 using TridentCore.Core.Services;
 using VelopackExtension.MirrorChyan;
+using ZiggyCreatures.Caching.Fusion;
 
 namespace Polymerium.Avalonia;
 
@@ -149,7 +150,19 @@ public static class Startup
            {
                options.ExpirationScanFrequency = TimeSpan.FromMinutes(10);
                options.TrackStatistics = true;
-           });
+           })
+           .AddFusionCache()
+           .WithDefaultEntryOptions(options =>
+           {
+               options.Duration = TimeSpan.FromDays(7);
+               options.IsFailSafeEnabled = true;
+               options.FailSafeMaxDuration = TimeSpan.FromDays(14);
+               options.FailSafeThrottleDuration = TimeSpan.FromMinutes(5);
+               options.FactorySoftTimeout = TimeSpan.FromSeconds(10);
+               options.FactoryHardTimeout = TimeSpan.FromSeconds(30);
+           })
+           .WithNeueccMessagePackSerializer()
+           .WithRegisteredDistributedCache();
 
         // Trident
         // NOTE: AddAccountConfigurers depends on AddMicrosoft, AddXboxLive, AddMinecraft,
