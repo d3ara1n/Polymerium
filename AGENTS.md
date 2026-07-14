@@ -172,6 +172,24 @@ public const string CLASS_Selected = ":selected";
 
 Then use `PseudoClasses.Set(CLASS_Error, true)` instead of `PseudoClasses.Set(":error", true)`. Pseudo-class selectors in `.axaml` are still written as bare `:error`/`:selected` in style selectors — the constant is only for code-behind references.
 
+## External Tracking (Jira / GitHub)
+
+固定参数，调用 MCP 时直接复用，不要每次重新发现：
+
+- **Atlassian site**: https://d3ara1n.atlassian.net
+- **cloudId**: `88eb6a79-a7aa-49eb-8e71-5fffb7d4896b`
+- **Jira project key**: `POLY`
+- **Issue types**（`issueTypeName` 传中文名即可）: 故障=`10070`, 任务=`10001`, 长篇故事=`10002`, 子任务=`10003`
+- **GitHub**: owner=`d3ara1n`, repo=`Polymerium`
+
+双向链接约定（把 GitHub issue 转录到 Jira 时遵循）：
+
+- Jira issue 描述内嵌 GitHub issue URL；
+- GitHub issue 评论附 `[POLY-XX](https://d3ara1n.atlassian.net/browse/POLY-XX)` 指回 Jira；
+- 修复 commit 首行以 `POLY-XX: type(scope): ...` 关联（见下文 Git Commit）。
+
+NOTE: site URL / cloudId / project key 本身不私密——没有 API token 任何人都调不动 Jira API，真正敏感的 token 由 MCP 层保管，不写进本文件。Jira 站点默认私有，外部 GitHub 用户无权访问，进度需同步回 GitHub issue 评论才能被 reporter 看见。
+
 ## Git Commit
 
 - **Do not commit on your own initiative.** Make all the edits you need, then stop and wait for the user to explicitly tell you to commit (e.g. "提交"). Never auto-commit after editing without being asked.
