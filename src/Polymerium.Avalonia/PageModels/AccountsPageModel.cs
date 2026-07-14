@@ -46,11 +46,15 @@ public partial class AccountsPageModel(
             return false;
         }
 
-        var isDefault = !Accounts.Any(x => x.IsDefault);
+        var isDefault = persistenceService.GetDefaultAccount() == null;
         var enrolledAt = DateTimeOffset.Now;
         var raw = AccountHelper.ToRaw(account, enrolledAt, null, isDefault);
         persistenceService.AppendAccount(raw);
-        Accounts.Add(AccountHelper.CreateModelFromAccount(account, enrolledAt));
+        if (isDefault)
+            persistenceService.MarkDefaultAccount(account.Uuid);
+        var model = AccountHelper.CreateModelFromAccount(account, enrolledAt);
+        model.IsDefault = isDefault;
+        Accounts.Add(model);
         return true;
     }
 
