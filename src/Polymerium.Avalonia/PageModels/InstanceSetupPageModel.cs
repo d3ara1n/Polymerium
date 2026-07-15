@@ -394,13 +394,10 @@ public partial class InstanceSetupPageModel(
         catch (OperationCanceledException) { }
         catch (Exception ex)
         {
-            Dispatcher.UIThread.Post(() =>
-            {
-                notificationService.PopMessage(ex.Message,
-                                               Resources.InstanceSetupPage_ParsePrefDangerNotificationTitle,
-                                               GrowlLevel.Danger,
-                                               thumbnail: GetNotificationThumbnail());
-            });
+            notificationService.PopMessage(ex.Message,
+                                           Resources.InstanceSetupPage_ParsePrefDangerNotificationTitle,
+                                           GrowlLevel.Danger,
+                                           thumbnail: GetNotificationThumbnail());
         }
     }
 
@@ -1053,6 +1050,7 @@ public partial class InstanceSetupPageModel(
                 var addedCount = 0;
                 var updatedCount = 0;
                 var failedCount = 0;
+                var pendingTagUpdates = new List<(Profile.Rice.Entry Entry, List<string> ToAdd)>();
                 await Task.Run(async () =>
                 {
                     var importedEntries = new List<ExportedEntry>();
@@ -1118,17 +1116,7 @@ public partial class InstanceSetupPageModel(
 
                                         if (toAdd.Count > 0)
                                         {
-                                            // HACK: 由于触发更新并不会同步 Tags，
-                                            //  在 Entry 中修改也不会同步，
-                                            //  所以需要推送到 InstancePackageModel 中
-                                            var item = _flat.Lookup(new PackageListKey.Entry(existingEntry));
-                                            if (item.HasValue)
-                                            {
-                                                foreach (var tag in toAdd)
-                                                {
-                                                    ((PackageListItemBase.Entry)item.Value).Package.Tags.Add(tag);
-                                                }
-                                            }
+                                            pendingTagUpdates.Add((existingEntry, toAdd));
                                         }
 
                                         if (oldPref != importedEntry.Pref)
@@ -1174,6 +1162,20 @@ public partial class InstanceSetupPageModel(
                         }
                     }
                 });
+
+                // HACK: 触发更新与 Entry 修改都不会同步 Tags，需要手动推送到 InstancePackageModel；
+                //  Tags 是 UI 绑定的 ObservableCollection，必须在 UI 线程修改
+                foreach (var (entry, toAdd) in pendingTagUpdates)
+                {
+                    var item = _flat.Lookup(new PackageListKey.Entry(entry));
+                    if (item.HasValue)
+                    {
+                        foreach (var tag in toAdd)
+                        {
+                            ((PackageListItemBase.Entry)item.Value).Package.Tags.Add(tag);
+                        }
+                    }
+                }
 
                 // 显示结果通知
                 var resultMessage = Resources
@@ -1283,17 +1285,18 @@ public partial class InstanceSetupPageModel(
 
             try
             {
-                var dir = Path.GetDirectoryName(path);
-                if (dir != null && !Directory.Exists(dir))
+                await Task.Run(() =>
                 {
-                    Directory.CreateDirectory(dir);
-                }
+                    var dir = Path.GetDirectoryName(path);
+                    if (dir != null && !Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
 
-                await using (var writer = new StreamWriter(path))
-                await using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))
-                {
-                    await csv.WriteRecordsAsync(output);
-                }
+                    using var writer = new StreamWriter(path);
+                    using var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture));
+                    csv.WriteRecords(output);
+                });
 
                 notificationService.PopMessage(Resources.InstanceSetupPage_ExportListSuccessNotificationMessage
                                                         .Replace("{0}", path),
