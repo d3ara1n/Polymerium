@@ -4,12 +4,13 @@ using Polymerium.Avalonia.Facilities;
 
 namespace Polymerium.Avalonia.Models;
 
-public class MinecraftReleasePatchModel(
+public class MinecraftNewsModel(
     Uri cover,
     string category,
     string title,
     string description,
-    DateTimeOffset publishedAt
+    Uri readMoreLink,
+    DateOnly publishedAt
 ) : ModelBase
 {
     #region Direct
@@ -18,8 +19,9 @@ public class MinecraftReleasePatchModel(
     public string Description => description;
     public Uri Cover => cover;
     public string Category => category;
-    public DateTimeOffset PublishedAtRaw => publishedAt;
-    public string PublishedAt => publishedAt.Humanize();
+    public Uri ReadMoreLink => readMoreLink;
+    public DateOnly PublishedAtRaw => publishedAt;
+    public string PublishedAt => publishedAt.ToDateTime(TimeOnly.MinValue).Humanize();
 
     #endregion
 }

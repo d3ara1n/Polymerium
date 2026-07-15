@@ -1599,8 +1599,11 @@
     <data name="LandingPage_RecentPlayButtonText" xml:space="preserve">
         <value>Play</value>
     </data>
-    <data name="LandingPage_RecentReleasesLabelText" xml:space="preserve">
-        <value>Recent Releases</value>
+    <data name="LandingPage_MinecraftNewsLabelText" xml:space="preserve">
+        <value>Minecraft News</value>
+    </data>
+    <data name="LandingPage_ReadMinecraftNewsButtonText" xml:space="preserve">
+        <value>Read more</value>
     </data>
     <data name="LandingPage_StatisticsActiveDaysLabelText" xml:space="preserve">
         <value>Active Days</value>
