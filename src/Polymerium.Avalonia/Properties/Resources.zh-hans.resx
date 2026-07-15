@@ -1590,8 +1590,11 @@
     <data name="LandingPage_RecentPlayButtonText" xml:space="preserve">
         <value>开始</value>
     </data>
-    <data name="LandingPage_RecentReleasesLabelText" xml:space="preserve">
-        <value>近期发版</value>
+    <data name="LandingPage_MinecraftNewsLabelText" xml:space="preserve">
+        <value>Minecraft 新闻</value>
+    </data>
+    <data name="LandingPage_ReadMinecraftNewsButtonText" xml:space="preserve">
+        <value>阅读更多</value>
     </data>
     <data name="LandingPage_StatisticsActiveDaysLabelText" xml:space="preserve">
         <value>活跃日</value>

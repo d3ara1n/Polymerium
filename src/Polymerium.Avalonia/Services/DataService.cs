@@ -185,7 +185,7 @@ public class DataService(
             () => prismLauncherService.GetMinecraftVersionsAsync(CancellationToken.None)
         );
 
-    public ValueTask<MinecraftReleasePatchesResponse> GetMinecraftReleasePatchesAsync() =>
+    public ValueTask<MinecraftNewsResponse> GetMinecraftNewsAsync() =>
         GetOrCreate("minecraft:news", mojangService.GetMinecraftNewsAsync);
 
     public ValueTask<IEnumerable<Exhibit>> GetFeaturedModpacksAsync() =>

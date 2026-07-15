@@ -3195,9 +3195,15 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string LandingPage_RecentReleasesLabelText {
+        public static string LandingPage_MinecraftNewsLabelText {
             get {
-                return ResourceManager.GetString("LandingPage_RecentReleasesLabelText", resourceCulture);
+                return ResourceManager.GetString("LandingPage_MinecraftNewsLabelText", resourceCulture);
+            }
+        }
+        
+        public static string LandingPage_ReadMinecraftNewsButtonText {
+            get {
+                return ResourceManager.GetString("LandingPage_ReadMinecraftNewsButtonText", resourceCulture);
             }
         }
         

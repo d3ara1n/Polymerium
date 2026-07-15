@@ -130,19 +130,20 @@ public partial class LandingPageModel(
     private void LoadMinecraftNews() =>
         MinecraftNews = new(async _ =>
         {
-            var news = await dataService.GetMinecraftReleasePatchesAsync();
+            var news = await dataService.GetMinecraftNewsAsync();
             var models = news
                 .Entries.Take(24)
                 .Select(
-                    (x, i) =>
+                    x =>
                     {
-                        var url = mojangServuce.GetAbsoluteImageUrl(x.Image.Url);
+                        var url = mojangServuce.GetAbsoluteImageUrl(x.NewsPageImage.Url);
 
-                        return new MinecraftReleasePatchModel(
+                        return new MinecraftNewsModel(
                             url,
-                            x.Type,
+                            x.Category,
                             x.Title,
-                            x.ShortText,
+                            x.Text,
+                            x.ReadMoreLink,
                             x.Date
                         );
                     }

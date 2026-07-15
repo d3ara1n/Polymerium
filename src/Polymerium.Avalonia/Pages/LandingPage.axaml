@@ -452,7 +452,7 @@
                 DockPanel.Dock="Top"
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.LandingPage_RecentReleasesLabelText}" />
+                Text="{x:Static lang:Resources.LandingPage_MinecraftNewsLabelText}" />
             <husk:LazyContainer
                 MinHeight="220"
                 Source="{Binding MinecraftNews}">
@@ -465,7 +465,7 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="app:MinecraftReleasePatchModel">
+                                <DataTemplate DataType="app:MinecraftNewsModel">
                                     <husk:Card>
                                         <Grid
                                             RowDefinitions="Auto,*"
@@ -492,12 +492,17 @@
                                                 <TextBlock
                                                     Text="{Binding Description}"
                                                     TextWrapping="Wrap" />
+                                                <husk:Tag
+                                                    Classes="Small"
+                                                    HorizontalAlignment="Left">
+                                                    <TextBlock Text="{Binding Category}" />
+                                                </husk:Tag>
                                                 <DockPanel HorizontalSpacing="8">
-                                                    <husk:Tag
+                                                    <HyperlinkButton
                                                         DockPanel.Dock="Right"
-                                                        Classes="Small">
-                                                        <TextBlock Text="{Binding Category}" />
-                                                    </husk:Tag>
+                                                        Padding="0"
+                                                        Content="{x:Static lang:Resources.LandingPage_ReadMinecraftNewsButtonText}"
+                                                        NavigateUri="{Binding ReadMoreLink}" />
                                                     <husk:IconLabel
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
