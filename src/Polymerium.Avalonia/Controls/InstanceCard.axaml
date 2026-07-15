@@ -177,7 +177,7 @@
 
         <Style Selector="^:pointerover /template/ Border#Border">
             <Setter Property="Opacity" Value="1" />
-            <Setter Property="RenderTransform" Value="scale(1.04)" />
+            <Setter Property="RenderTransform" Value="scale(1.04,1.05)" />
         </Style>
         <Style Selector="^:pressed /template/ Border#Border">
             <Setter Property="RenderTransform" Value="scale(1.01)" />

@@ -485,6 +485,11 @@
                                                 Grid.Row="1"
                                                 Spacing="4">
                                                 <TextBlock
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding Category}"
+                                                    TextTrimming="CharacterEllipsis" />
+                                                <TextBlock
                                                     FontSize="{StaticResource LargeFontSize}"
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
                                                     Text="{Binding Title}"
@@ -492,11 +497,6 @@
                                                 <TextBlock
                                                     Text="{Binding Description}"
                                                     TextWrapping="Wrap" />
-                                                <husk:Tag
-                                                    Classes="Small"
-                                                    HorizontalAlignment="Left">
-                                                    <TextBlock Text="{Binding Category}" />
-                                                </husk:Tag>
                                                 <DockPanel HorizontalSpacing="8">
                                                     <HyperlinkButton
                                                         DockPanel.Dock="Right"
