@@ -172,7 +172,7 @@ public const string CLASS_Selected = ":selected";
 
 Then use `PseudoClasses.Set(CLASS_Error, true)` instead of `PseudoClasses.Set(":error", true)`. Pseudo-class selectors in `.axaml` are still written as bare `:error`/`:selected` in style selectors — the constant is only for code-behind references.
 
-## External Tracking (Jira / GitHub)
+## External Tracking (Jira / GitHub / Sentry)
 
 固定参数，调用 MCP 时直接复用，不要每次重新发现：
 
@@ -181,6 +181,9 @@ Then use `PseudoClasses.Set(CLASS_Error, true)` instead of `PseudoClasses.Set(":
 - **Jira project key**: `POLY`
 - **Issue types**（`issueTypeName` 传中文名即可）: 故障=`10070`, 任务=`10001`, 长篇故事=`10002`, 子任务=`10003`
 - **GitHub**: owner=`d3ara1n`, repo=`Polymerium`
+- **Sentry**: organizationSlug=`gravitylab`, regionUrl=`https://us.sentry.io`, projectSlug=`polymerium`
+  - Issue search uses `projectSlugOrId="polymerium"`.
+  - Event search uses `projectSlug="polymerium"`.
 
 双向链接约定（把 GitHub issue 转录到 Jira 时遵循）：
 
