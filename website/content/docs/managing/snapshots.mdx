@@ -8,9 +8,9 @@ description: Save, restore, and compare your entire game state. Experiment freel
 A snapshot records everything about your instance that affects the build result:
 
 - **Profile setup** — the metadata (Minecraft version, loader, mod list, settings)
-- **Directory contents** — everything in `import/`, `live/`, and `persist/`
+- **Directory contents** — everything in `import/` and `persist/`, plus the import working copy under `build/` (real files projected from `import/`, not the whole game tree)
 
-Snapshots don't directly touch `build/`. Instead, they capture the inputs so you can reproduce an exact game state later. When you restore a snapshot, your metadata and directory contents are restored — and the next deploy rebuilds `build/` from that state.
+Snapshots do not capture package symlinks, logs, or other unmanaged paths under `build/`. They record the inputs and the import working-copy state so you can reproduce the instance later. Restoring puts metadata and those files back; the rest of `build/` is filled in by the next deploy where needed.
 
 ## When to Use Snapshots
 
@@ -25,7 +25,7 @@ Snapshots don't directly touch `build/`. Instead, they capture the inputs so you
 3. Click **Create Snapshot**.
 4. Give it a name and optional description.
 
-Polymerium records the current profile setup and the contents of `persist/`, `import/`, and `live/`.
+Polymerium records the current profile setup, the contents of `persist/` and `import/`, and the import working-copy files under `build/`.
 
 ## Restoring a Snapshot
 
@@ -42,7 +42,7 @@ Polymerium restores the profile metadata and directory contents to the state the
 You can compare two snapshots to see exactly what changed between them:
 
 - **Metadata changes** — different mods, version, or loader settings
-- **Added files** — new files in `persist/`, `import/`, or `live/`
+- **Added files** — new files in `persist/`, `import/`, or the import working copy under `build/`
 - **Removed files** — files that existed in the earlier snapshot but not the later one
 - **Modified files** — same path but different contents
 

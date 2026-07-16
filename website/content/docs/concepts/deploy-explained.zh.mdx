@@ -21,7 +21,7 @@ description: 当你点击"部署"时发生了什么——Polymerium 如何将你
 
 Polymerium 不会将模组文件复制到每个实例中，而是从共享缓存创建符号链接到你的 `build/` 目录。如果你有五个实例都使用 Sodium，你的磁盘上只有一份 Sodium 副本——每个实例只是链接到它。
 
-来自你的 `import/`、`live/` 和 `persist/` 目录的文件也会按优先级顺序分层到 `build/` 中。参见[四层目录 →](/docs/concepts/four-layers) 了解其工作原理。
+来自你的 `import/` 与 `persist/` 目录的文件也会按优先级分层到 `build/`——import 为实体文件，persist 为软链接。对导入内容的运行时修改留在 `build/` 中作为工作副本。参见[实例目录模型 →](/docs/concepts/four-layers) 了解其工作原理。
 
 ## 快速部署
 
@@ -39,4 +39,4 @@ Polymerium 不会将模组文件复制到每个实例中，而是从共享缓存
 ## 了解更多
 
 - [元数据驱动的实例 →](/docs/concepts/metadata-driven) —— 为什么实例是描述而不是文件夹副本
-- [四层目录 →](/docs/concepts/four-layers) —— 文件如何分层到游戏目录中
+- [实例目录模型 →](/docs/concepts/four-layers) —— 文件如何分层到游戏目录中

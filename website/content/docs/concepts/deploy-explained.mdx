@@ -21,7 +21,7 @@ All of these are stored in a **shared cache** on your disk. Once downloaded, the
 
 Instead of copying mod files into each instance, Polymerium creates symbolic links from the shared cache into your `build/` directory. If you have five instances all using Sodium, there's only one copy of Sodium on your disk — every instance just links to it.
 
-Files from your `import/`, `live/`, and `persist/` directories are also layered into `build/` in priority order. See [Four-Layer Directories →](/docs/concepts/four-layers) for how that works.
+Files from your `import/` and `persist/` directories are also layered into `build/` in priority order — import as real files, persist as symlinks. Runtime edits to imported content stay in `build/` as the working copy. See [Instance Directory Model →](/docs/concepts/four-layers) for how that works.
 
 ## Fast Deploys
 
@@ -39,4 +39,4 @@ The shared cache means your other instances benefit too. If Instance A has alrea
 ## Learn More
 
 - [Metadata-Driven Instances →](/docs/concepts/metadata-driven) — why instances are descriptions, not folder copies
-- [Four-Layer Directories →](/docs/concepts/four-layers) — how files are layered into the game directory
+- [Instance Directory Model →](/docs/concepts/four-layers) — how files are layered into the game directory

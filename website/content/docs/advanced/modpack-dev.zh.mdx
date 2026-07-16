@@ -9,7 +9,7 @@ Polymerium 实例在设计上天然适配 Git：
 
 - `profile.json` 是整合包的定义文件——纯 JSON，方便 diff 比较
 - `import/` 包含可分发的文件——配置、资源、自定义内容
-- `build/`、`live/`、`persist/` 是运行时产物，不应纳入版本控制
+- `build/` 与 `persist/` 是运行时产物，不应纳入版本控制
 
 这意味着你可以将实例纳入 Git 管理，获得有意义的差异比较、分支管理和协作能力。
 
@@ -26,7 +26,6 @@ git init
 
 ```plaintext
 build/
-live/
 persist/
 data.lock.json
 ```
@@ -46,7 +45,6 @@ git commit -m "Initial modpack"
 | `import/` | ✅ | 可分发文件（配置、资源） |
 | 图标 / README / CHANGELOG | ✅ | 整合包元数据 |
 | `build/` | ❌ | 构建产物，可复现 |
-| `live/` | ❌ | 工作副本，个人使用 |
 | `persist/` | ❌ | 玩家数据（存档、截图） |
 | `data.lock.json` | ❌ | 部署缓存，自动生成 |
 
@@ -55,7 +53,7 @@ git commit -m "Initial modpack"
 ### 迭代配置
 
 1. 启动游戏并在游戏内修改设置。
-2. 修改保存在 `live/` 中。
+2. 修改保存在 `build/` 中的工作副本（import 投影）上。
 3. 打开[工作区](/docs/advanced/workspace)查看差异。
 4. 将确认的修改同步到 `import/`。
 5. 提交：
@@ -95,7 +93,7 @@ git checkout main  # 回到稳定版本
 
 1. 将仓库推送到共享远程仓库（GitHub、GitLab 等）。
 2. 合著者将仓库克隆到他们的 `instances/` 目录中。
-3. 每个人的 `live/` 和 `persist/` 都是本地的且不被跟踪。
+3. 每个人的 `build/` 工作副本和 `persist/` 都是本地的且不被跟踪。
 4. 通过常规 Git 工作流在 `profile.json` 和 `import/` 上协作。
 
 ### 发布发行版
@@ -137,4 +135,4 @@ steps:
 
 - **在执行 Git 操作前关闭 Polymerium**——Polymerium 可能正在监视 `profile.json` 的变化。退出后执行 Git 操作，然后再重新打开。
 - **不要手动编辑 `profile.json` 来更改版本**——更安全的做法是创建新实例并迁移包。
-- **使用工作区**作为你的暂存区——它专为 `live/` → `import/` 流程而设计。
+- **使用工作区**作为你的暂存区——它专为把工作副本提升到 `import/` 而设计。

@@ -49,7 +49,7 @@ This is the most important step. Your saves, resource packs, screenshots, and se
 | `options.txt` | `options.txt` | Game settings (FOV, render distance, etc.) |
 | `servers.dat` | `servers.dat` | Saved multiplayer servers |
 
-> **Important:** For each **directory** you copy (like `saves/`), create a `.keep` file inside it (e.g., `persist/saves/.keep`). This tells Polymerium to link that directory into the game on deploy. Files placed directly in `persist/` (like `options.txt`) are linked automatically. See [Four-Layer Directories →](/docs/concepts/four-layers#persist---user-managed-persistence) for details.
+> **Important:** For each **directory** you copy (like `saves/`), create a `.keep` file inside it (e.g., `persist/saves/.keep`). This tells Polymerium to link that directory into the game on deploy. Files placed directly in `persist/` (like `options.txt`) are linked automatically. See [Instance Directory Model →](/docs/concepts/four-layers#persist---user-managed-persistence) for details.
 
 ### Step 5: Deploy and Play
 
@@ -109,7 +109,7 @@ If you want to keep your saves and screenshots:
 
 1. Find Prism's instance directory (usually `~/.local/share/PrismLauncher/instances/`).
 2. Copy `saves/`, `screenshots/`, `resourcepacks/`, and `options.txt` from the Prism instance.
-3. Paste them into your Polymerium instance's `persist/` directory. For directories like `saves/`, create a `.keep` file inside (`persist/saves/.keep`) so they get linked into the game. See [Four-Layer Directories →](/docs/concepts/four-layers#persist---user-managed-persistence) for details.
+3. Paste them into your Polymerium instance's `persist/` directory. For directories like `saves/`, create a `.keep` file inside (`persist/saves/.keep`) so they get linked into the game. See [Instance Directory Model →](/docs/concepts/four-layers#persist---user-managed-persistence) for details.
 4. Deploy — the files will be projected into the game directory.
 
 ## Things to Know
