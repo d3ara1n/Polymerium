@@ -223,7 +223,7 @@
         <value>重置实例</value>
     </data>
     <data name="InstancePropertiesPage_ResetConfirmationMessage" xml:space="preserve">
-        <value>所有本地改动都将被丢弃，实例重置为打包时的状态，存档和配置会被清空。</value>
+        <value>运行目录会被清空，仅保存在其中的改动将被丢弃；导入和持久化数据会被保留。</value>
     </data>
     <data name="InstancePropertiesPage_DeleteConfirmationTitle" xml:space="preserve">
         <value>删除实例</value>
@@ -1047,8 +1047,14 @@
     <data name="MainWindow_InstanceUpdatingSuccessNotificationOpenText" xml:space="preserve">
         <value>打开</value>
     </data>
-    <data name="MainWindow_InstanceDeployingNotificationTitle" xml:space="preserve">
+    <data name="MainWindow_InstanceDeployingDangerNotificationTitle" xml:space="preserve">
         <value>部署 {0} 失败</value>
+    </data>
+    <data name="MainWindow_InstanceDeployingBuildArtifactConflictDangerNotificationMessage" xml:space="preserve">
+        <value>运行目录中存在旧版导入投影或本地改动留下的文件，阻止了部署所需的链接创建。请重置实例后重新部署。重置会清空运行目录并丢弃仅保存在其中的改动，但会保留导入和持久化数据。</value>
+    </data>
+    <data name="MainWindow_InstanceDeployingBuildArtifactConflictResetActionText" xml:space="preserve">
+        <value>重置实例</value>
     </data>
     <data name="MainWindow_InstanceDeployingSuccessNotificationMessage" xml:space="preserve">
         <value>实例部署完成</value>
@@ -2712,9 +2718,6 @@
   </data>
   <data name="Shared_JavaRuntimeNotFoundDangerDialogMessage" xml:space="preserve">
     <value>未配置此实例所需的 Java {0} 运行环境。若已安装，请在「设置 → Java 预设」中手动配置路径；若未安装，点击「确定」打开下载页获取。</value>
-  </data>
-  <data name="Shared_FailedToDeployInstanceDangerNotificationTitle" xml:space="preserve">
-    <value>部署实例失败</value>
   </data>
   <data name="Shared_ZipArchiveFileTypeText" xml:space="preserve">
     <value>Zip 压缩包</value>

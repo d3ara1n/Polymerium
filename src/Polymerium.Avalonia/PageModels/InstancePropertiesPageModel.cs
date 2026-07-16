@@ -222,43 +222,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     private void CheckIntegrity() => _instanceService.Deploy(Basic.Key, false, BehaviorResolveDependency, true);
 
     [RelayCommand]
-    private async Task ResetInstanceAsync()
-    {
-        if (!await _overlayService.RequestStrongConfirmationAsync(
-                Resources.InstancePropertiesPage_ResetConfirmationMessage,
-                Resources.InstancePropertiesPage_ResetConfirmationTitle))
-        {
-            return;
-        }
-
-        if (!InstanceManager.IsInUse(Basic.Key))
-        {
-            var build = PathDef.Default.DirectoryOfBuild(Basic.Key);
-            var file = PathDef.Default.FileOfLockData(Basic.Key);
-            try
-            {
-                if (Directory.Exists(build))
-                {
-                    Directory.Delete(build, true);
-                }
-
-                if (File.Exists(file))
-                {
-                    File.Delete(file);
-                }
-
-                _persistenceService.AppendAction(new() { Key = Basic.Key, Kind = PersistenceService.ActionKind.Reset });
-                _notificationService.PopMessage("Instance reset",
-                                                Basic.Key,
-                                                GrowlLevel.Success,
-                                                thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
-            }
-            catch (Exception ex)
-            {
-                _notificationService.PopMessage(ex, thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
-            }
-        }
-    }
+    private Task ResetInstanceAsync() => _instanceService.ResetAsync(Basic.Key);
 
     [RelayCommand]
     private async Task DeleteInstanceAsync()

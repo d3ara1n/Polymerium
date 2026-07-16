@@ -205,9 +205,51 @@ public class InstanceService
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex,
-                                            Resources.Shared_FailedToDeployInstanceDangerNotificationTitle,
-                                            thumbnail: ThumbnailHelper.ForInstance(key));
+            _notificationService.PopMessage(
+                ex,
+                Resources.MainWindow_InstanceDeployingDangerNotificationTitle.Replace("{0}", key),
+                thumbnail: ThumbnailHelper.ForInstance(key));
+        }
+    }
+
+    public async Task ResetAsync(string key)
+    {
+        if (!await _overlayService.RequestStrongConfirmationAsync(
+                Resources.InstancePropertiesPage_ResetConfirmationMessage,
+                Resources.InstancePropertiesPage_ResetConfirmationTitle))
+        {
+            return;
+        }
+
+        if (_instanceManager.IsInUse(key))
+        {
+            return;
+        }
+
+        var build = PathDef.Default.DirectoryOfBuild(key);
+        var file = PathDef.Default.FileOfLockData(key);
+        try
+        {
+            if (Directory.Exists(build))
+            {
+                Directory.Delete(build, true);
+            }
+
+            if (File.Exists(file))
+            {
+                File.Delete(file);
+            }
+
+            _persistenceService.AppendAction(new() { Key = key, Kind = PersistenceService.ActionKind.Reset });
+            _notificationService.PopMessage(
+                "Instance reset",
+                key,
+                GrowlLevel.Success,
+                thumbnail: ThumbnailHelper.ForInstance(key));
+        }
+        catch (Exception ex)
+        {
+            _notificationService.PopMessage(ex, thumbnail: ThumbnailHelper.ForInstance(key));
         }
     }
 

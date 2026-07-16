@@ -2109,9 +2109,21 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string MainWindow_InstanceDeployingNotificationTitle {
+        public static string MainWindow_InstanceDeployingDangerNotificationTitle {
             get {
-                return ResourceManager.GetString("MainWindow_InstanceDeployingNotificationTitle", resourceCulture);
+                return ResourceManager.GetString("MainWindow_InstanceDeployingDangerNotificationTitle", resourceCulture);
+            }
+        }
+
+        public static string MainWindow_InstanceDeployingBuildArtifactConflictDangerNotificationMessage {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceDeployingBuildArtifactConflictDangerNotificationMessage", resourceCulture);
+            }
+        }
+
+        public static string MainWindow_InstanceDeployingBuildArtifactConflictResetActionText {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceDeployingBuildArtifactConflictResetActionText", resourceCulture);
             }
         }
         
@@ -5412,12 +5424,6 @@ namespace Polymerium.Avalonia.Properties {
         public static string Shared_JavaRuntimeNotFoundDangerDialogMessage {
             get {
                 return ResourceManager.GetString("Shared_JavaRuntimeNotFoundDangerDialogMessage", resourceCulture);
-            }
-        }
-        
-        public static string Shared_FailedToDeployInstanceDangerNotificationTitle {
-            get {
-                return ResourceManager.GetString("Shared_FailedToDeployInstanceDangerNotificationTitle", resourceCulture);
             }
         }
         
