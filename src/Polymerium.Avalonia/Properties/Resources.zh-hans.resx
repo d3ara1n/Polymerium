@@ -1056,6 +1056,24 @@
     <data name="MainWindow_InstanceDeployingBuildArtifactConflictResetActionText" xml:space="preserve">
         <value>重置实例</value>
     </data>
+    <data name="MainWindow_JavaRuntimeNotFoundDangerNotificationTitle" xml:space="preserve">
+        <value>未找到 {0} 所需的 Java 运行环境</value>
+    </data>
+    <data name="MainWindow_JavaRuntimeNotFoundDangerNotificationMessage" xml:space="preserve">
+        <value>启动此实例需要 Java {0}，但当前未配置。请下载安装后重试。</value>
+    </data>
+    <data name="MainWindow_JavaRuntimeNotFoundDangerNotificationDownloadText" xml:space="preserve">
+        <value>下载 Java</value>
+    </data>
+    <data name="MainWindow_JavaRuntimeDownloadDangerNotificationTitle" xml:space="preserve">
+        <value>打开 Java 下载页面失败</value>
+    </data>
+    <data name="MainWindow_InstanceLaunchingDangerNotificationTitle" xml:space="preserve">
+        <value>启动 {0} 失败</value>
+    </data>
+    <data name="LandingPage_InstanceLaunchingDangerNotificationTitle" xml:space="preserve">
+        <value>启动 {0} 失败</value>
+    </data>
     <data name="MainWindow_InstanceDeployingSuccessNotificationMessage" xml:space="preserve">
         <value>实例部署完成</value>
     </data>
@@ -1791,7 +1809,7 @@
     <data name="AppUpdateModal_NoReleaseNotesLabelText" xml:space="preserve">
         <value>暂无更新说明</value>
     </data>
-    <data name="MainWindow_InstanceLaunchingDangerNotificationTitle" xml:space="preserve">
+    <data name="MainWindow_InstanceCrashedDangerNotificationTitle" xml:space="preserve">
         <value>坠毁！</value>
     </data>
     <data name="ProxySettingsDialog_Title" xml:space="preserve">
@@ -1863,7 +1881,7 @@
     <data name="ProxySettingsDialog_TestFailedLabelText" xml:space="preserve">
         <value>连接失败</value>
     </data>
-    <data name="MainWindow_InstanceLaunchingDangerNotificationMessage" xml:space="preserve">
+    <data name="MainWindow_InstanceCrashedDangerNotificationMessage" xml:space="preserve">
         <value>{0} 非正常退出。点击链接查看具体信息。</value>
     </data>
     <data name="InstanceActivitiesPage_CrashCountLabelText" xml:space="preserve">
@@ -2704,20 +2722,8 @@
   <data name="Shared_FailedToOpenFolderDangerNotificationTitle" xml:space="preserve">
     <value>打开文件夹失败</value>
   </data>
-  <data name="Shared_FailedToOpenInstanceFolderDangerNotificationTitle" xml:space="preserve">
-    <value>打开实例文件夹失败</value>
-  </data>
   <data name="Shared_FailedToOpenLogFileDangerNotificationTitle" xml:space="preserve">
     <value>打开日志文件失败</value>
-  </data>
-  <data name="Shared_FailedToLaunchInstanceDangerNotificationTitle" xml:space="preserve">
-    <value>启动实例失败</value>
-  </data>
-  <data name="Shared_JavaRuntimeNotFoundDangerDialogTitle" xml:space="preserve">
-    <value>未找到 Java 运行环境</value>
-  </data>
-  <data name="Shared_JavaRuntimeNotFoundDangerDialogMessage" xml:space="preserve">
-    <value>未配置此实例所需的 Java {0} 运行环境。若已安装，请在「设置 → Java 预设」中手动配置路径；若未安装，点击「确定」打开下载页获取。</value>
   </data>
   <data name="Shared_ZipArchiveFileTypeText" xml:space="preserve">
     <value>Zip 压缩包</value>

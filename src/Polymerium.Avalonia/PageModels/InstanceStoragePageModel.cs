@@ -170,7 +170,7 @@ public partial class InstanceStoragePageModel(
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevelHelper.GetTopLevel(),
                 new(dir),
-                Resources.Shared_FailedToOpenInstanceFolderDangerNotificationTitle
+                Resources.Shared_FailedToOpenFolderDangerNotificationTitle
             );
         }
 

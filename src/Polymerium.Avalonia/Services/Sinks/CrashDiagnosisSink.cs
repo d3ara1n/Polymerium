@@ -60,9 +60,9 @@ public class CrashDiagnosisSink(
         }
 
         notificationService.PopMessage(
-            Resources.MainWindow_InstanceLaunchingDangerNotificationMessage
+            Resources.MainWindow_InstanceCrashedDangerNotificationMessage
                      .Replace("{0}", launcher.Key),
-            Resources.MainWindow_InstanceLaunchingDangerNotificationTitle,
+            Resources.MainWindow_InstanceCrashedDangerNotificationTitle,
             GrowlLevel.Danger,
             thumbnail: ThumbnailHelper.ForInstance(launcher.Key),
             actions:

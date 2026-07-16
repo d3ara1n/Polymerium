@@ -1065,6 +1065,24 @@
     <data name="MainWindow_InstanceDeployingBuildArtifactConflictResetActionText" xml:space="preserve">
         <value>Reset instance</value>
     </data>
+    <data name="MainWindow_JavaRuntimeNotFoundDangerNotificationTitle" xml:space="preserve">
+        <value>Java runtime required by {0} was not found</value>
+    </data>
+    <data name="MainWindow_JavaRuntimeNotFoundDangerNotificationMessage" xml:space="preserve">
+        <value>Java {0} is required to start this instance but is not configured. Download and install it, then try again.</value>
+    </data>
+    <data name="MainWindow_JavaRuntimeNotFoundDangerNotificationDownloadText" xml:space="preserve">
+        <value>Download Java</value>
+    </data>
+    <data name="MainWindow_JavaRuntimeDownloadDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to open the Java download page</value>
+    </data>
+    <data name="MainWindow_InstanceLaunchingDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to launch {0}</value>
+    </data>
+    <data name="LandingPage_InstanceLaunchingDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to launch {0}</value>
+    </data>
     <data name="MainWindow_InstanceDeployingSuccessNotificationMessage" xml:space="preserve">
         <value>The instance has been deployed</value>
     </data>
@@ -1803,10 +1821,10 @@
     <data name="AppUpdateModal_NoReleaseNotesLabelText" xml:space="preserve">
         <value>No release notes available</value>
     </data>
-    <data name="MainWindow_InstanceLaunchingDangerNotificationTitle" xml:space="preserve">
+    <data name="MainWindow_InstanceCrashedDangerNotificationTitle" xml:space="preserve">
         <value>Crashed!</value>
     </data>
-    <data name="MainWindow_InstanceLaunchingDangerNotificationMessage" xml:space="preserve">
+    <data name="MainWindow_InstanceCrashedDangerNotificationMessage" xml:space="preserve">
         <value>{0} exit unexpectedly. Click the link for more details.</value>
     </data>
     <data name="ProxySettingsDialog_Title" xml:space="preserve">
@@ -2713,20 +2731,8 @@
   <data name="Shared_FailedToOpenFolderDangerNotificationTitle" xml:space="preserve">
     <value>Failed to open folder</value>
   </data>
-  <data name="Shared_FailedToOpenInstanceFolderDangerNotificationTitle" xml:space="preserve">
-    <value>Failed to open instance folder</value>
-  </data>
   <data name="Shared_FailedToOpenLogFileDangerNotificationTitle" xml:space="preserve">
     <value>Failed to open log file</value>
-  </data>
-  <data name="Shared_FailedToLaunchInstanceDangerNotificationTitle" xml:space="preserve">
-    <value>Failed to launch instance</value>
-  </data>
-  <data name="Shared_JavaRuntimeNotFoundDangerDialogTitle" xml:space="preserve">
-    <value>Java runtime not found</value>
-  </data>
-  <data name="Shared_JavaRuntimeNotFoundDangerDialogMessage" xml:space="preserve">
-    <value>Java {0} is required but not configured. If it is already installed, set its path in Settings → Java Presets; if not, click OK to download one.</value>
   </data>
   <data name="Shared_ZipArchiveFileTypeText" xml:space="preserve">
     <value>Zip Archive</value>

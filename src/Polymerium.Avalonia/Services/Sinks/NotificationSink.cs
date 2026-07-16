@@ -1,9 +1,7 @@
 using System;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Huskui.Avalonia.Models;
-using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Properties;
@@ -22,7 +20,6 @@ public class NotificationSink(
     InstanceStateAggregator aggregator,
     NotificationService notificationService,
     NavigationService navigationService,
-    OverlayService overlayService,
     InstanceService instanceService)
 {
     private const string JAVA_DOWNLOAD_URL = "https://adoptium.net/temurin/releases/";
@@ -175,7 +172,7 @@ public class NotificationSink(
 
                 if (tracker.FailureReason is JavaNotFoundException javaNotFound)
                 {
-                    HandleJavaNotFound(javaNotFound);
+                    HandleJavaNotFound(tracker.Key, javaNotFound);
                     return;
                 }
 
@@ -217,27 +214,22 @@ public class NotificationSink(
         InnerException: ProcessFaultedException
     };
 
-    private void HandleJavaNotFound(JavaNotFoundException ex)
+    private void HandleJavaNotFound(string key, JavaNotFoundException exception)
     {
-        var message = string.Format(
-            Resources.Shared_JavaRuntimeNotFoundDangerDialogMessage,
-            ex.MajorVersion);
-        Dispatcher.UIThread.Post(async () =>
-        {
-            var dialog = new MessageDialog
-            {
-                Title = Resources.Shared_JavaRuntimeNotFoundDangerDialogTitle,
-                Message = message,
-                IsPrimaryButtonVisible = true,
-            };
-            if (await overlayService.PopDialogAsync(dialog))
-            {
-                await TopLevelHelper.LaunchUriAsync(
+        notificationService.PopMessage(
+            string.Format(
+                Resources.MainWindow_JavaRuntimeNotFoundDangerNotificationMessage,
+                exception.MajorVersion),
+            Resources.MainWindow_JavaRuntimeNotFoundDangerNotificationTitle.Replace("{0}", key),
+            GrowlLevel.Danger,
+            thumbnail: ThumbnailHelper.ForInstance(key),
+            actions: new GrowlAction(
+                Resources.MainWindow_JavaRuntimeNotFoundDangerNotificationDownloadText,
+                new AsyncRelayCommand(() => TopLevelHelper.LaunchUriAsync(
                     TopLevelHelper.GetTopLevel(),
                     new(JAVA_DOWNLOAD_URL),
-                    Resources.Shared_JavaRuntimeNotFoundDangerDialogTitle,
-                    notificationService);
-            }
-        });
+                    Resources.MainWindow_JavaRuntimeDownloadDangerNotificationTitle,
+                    notificationService)),
+                null));
     }
 }
