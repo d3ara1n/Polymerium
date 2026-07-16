@@ -363,6 +363,7 @@
                                     StrokeThickness="2" />
                                 <StackPanel
                                     Margin="24,18"
+                                    VerticalAlignment="Center"
                                     Opacity="{StaticResource Overlay1Opacity}"
                                     Spacing="12">
                                     <fi:SymbolIcon
