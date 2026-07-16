@@ -1,6 +1,6 @@
 > 制定日期：2026-07-15
 > 定位：把整合包声明内容（import）的部署投影从软链接改为实体文件以让游戏直接读取目录型资源，同时把工作副本层从独立的 live 目录重定义为「import 在 build 上的虚拟投影」，并相应改造快照、workspace 与整合包更新流程
-> 当前状态：未实施
+> 当前状态：✅ 已实施
 
 ## 计划
 
@@ -92,3 +92,27 @@
 ### 关联计划
 
 部署管线的分阶段重构（投影收集/应用通道、与软链接对账器平行的实体投影机制、遗留检测报错点）由 `DEPLOYMENT-PROJECTION-REWORK.md` 落实。本计划只固定投影模型与各受影响层的边界，不规定管线内部实现。
+
+## 方案
+
+> 落于分支 `import-entity-projection`（主仓 + submodules/Trident.Net 同名分支）。
+
+### 投影模型
+
+- **import 实体直投 build**：`GenerateManifestStage` 的 `PopulatePersistent` 由三段（import→live 复制、live→build 软链接、persist→build 软链接）收敛为两段——import 以 `IsPhantom=false` 实体复制直投 build，persist 维持 `IsPhantom=true` 软链接。复用既有 `PersistentFile` 的 phantom=false 复制路径（「无则复制有则不管」），不另起通道。
+- **优先级仲裁**：`SolidifyManifestStage.GetProjectionPriority` 去掉 `!persistent.IsPhantom` 短路，使 import 的 phantom=false 复制件也进 `UpsertProjection` 仲裁；枚举 `Live(1)` 改名 `Import(1)`，顺序 `Persist > Import > Package` 不变。此为关键修正——原短路会让 import 与 persist 同路径时双放。
+- **live 退役**：删除 `PathDef.DirectoryOfLive` 及全部引用，不再有独立 live 目录。live 作为概念保留（= import 在 build 上的工作副本投影），仅见于 UI 文案与 workspace 语义。
+- **遗留检测**：`SolidifyManifestStage` 放置 import 实体前以 `IsSymbolicLink` 判定目标，遇软链接即抛错引导重置（reset 兜底，不做迁移）。
+
+### 各受影响层
+
+- **整合包更新**：`InstanceManager.UpdateCoreAsync` 改替换式——新增 `ClearImportProjection`，按旧 import 清单清除 build 中 import 拥有的实体（跳过软链接），再换新 import + 重新部署；不再删 live。**更新前快照为手动**（用户自行在快照管理创建），引擎不自动介入。
+- **快照**：`SnapshotManager` Take/Restore 由 live+import+persist 改为 import+persist 全量 + build 的 import 投影子集（`EnumerateImportProjection`，跳过软链接）；Restore 先还原 import、再以其为清单界定 build 删除范围，不碰包链接/日志/assets。
+- **workspace**：`InstanceWorkspacePageModel` 的 diff 改为以 import 为清单、去 build 查差异；stage/restore 路径自动指向 build（`LivePath` 语义保留）。
+- **reset**：app 与 CLI 的 reset 去掉删 live。
+- **导出**：读 import，未改。
+
+### 实施中的修正
+
+- **`.keep` 是 persist 专属、import 无此机制**：初版误在 `ClearImportProjection`/`EnumerateImportProjection` 加了 `.keep` 整树处理，已移除——import 仅普通文件递归。
+- **DEPLOYMENT-PROJECTION-REWORK 驳回**：其「按交付语义切分通道 + import 独立对账式交付」机制被证明不必要——复用既有 phantom=false 复制路径即满足对账语义，其目标（优先级仲裁、遗留检测）已由本计划的最小化实施覆盖。该计划已归档。
