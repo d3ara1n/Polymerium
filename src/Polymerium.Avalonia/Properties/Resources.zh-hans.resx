@@ -2997,10 +2997,10 @@
   <data name="SnapshotPortalPage_Subtitle" xml:space="preserve">
     <value>保存和恢复实例在任意时间点的状态</value>
   </data>
-  <data name="SnapshotPortalPage_CreateTitleText" xml:space="preserve">
+  <data name="SnapshotPortalPage_CreateTitle" xml:space="preserve">
     <value>新建快照</value>
   </data>
-  <data name="SnapshotPortalPage_CreateDescriptionText" xml:space="preserve">
+  <data name="SnapshotPortalPage_CreateDescription" xml:space="preserve">
     <value>将当前实例状态保存为可恢复的快照</value>
   </data>
   <data name="SnapshotPortalPage_CreateLastTimeLabelText" xml:space="preserve">
@@ -3009,16 +3009,16 @@
   <data name="SnapshotPortalPage_CreateNeverText" xml:space="preserve">
     <value>从未</value>
   </data>
-  <data name="SnapshotPortalPage_ViewTitleText" xml:space="preserve">
+  <data name="SnapshotPortalPage_ViewTitle" xml:space="preserve">
     <value>查看快照</value>
   </data>
-  <data name="SnapshotPortalPage_ViewDescriptionText" xml:space="preserve">
+  <data name="SnapshotPortalPage_ViewDescription" xml:space="preserve">
     <value>浏览和管理此实例的现有快照</value>
   </data>
   <data name="SnapshotPortalPage_ViewCountLabelText" xml:space="preserve">
     <value>快照数量</value>
   </data>
-    <data name="SnapshotPortalPage_HintText" xml:space="preserve">
+    <data name="SnapshotPortalPage_Hint" xml:space="preserve">
         <value>快照会捕获实例在特定时间点的可还原状态，包括构建运行时产物以外的所有数据。</value>
     </data>
     <data name="SnapshotManagementPage_Title" xml:space="preserve">
@@ -3419,5 +3419,77 @@
     </data>
     <data name="InstancesPage_EditTagsMenuText" xml:space="preserve">
         <value>编辑标签</value>
+    </data>
+    <data name="Snapshot_UntitledLabelText" xml:space="preserve">
+        <value>未命名</value>
+    </data>
+    <data name="SnapshotPortalPage_LatestLabelText" xml:space="preserve">
+        <value>最新</value>
+    </data>
+    <data name="SnapshotPortalPage_LoadInfoDangerNotificationTitle" xml:space="preserve">
+        <value>加载快照信息失败</value>
+    </data>
+    <data name="SnapshotsModal_OpenDatabaseDangerNotificationTitle" xml:space="preserve">
+        <value>打开快照数据库失败</value>
+    </data>
+    <data name="SnapshotCreationPage_Title" xml:space="preserve">
+        <value>创建快照</value>
+    </data>
+    <data name="SnapshotCreationPage_FileCountLabelText" xml:space="preserve">
+        <value>文件数</value>
+    </data>
+    <data name="SnapshotCreationPage_TotalSizeLabelText" xml:space="preserve">
+        <value>总大小</value>
+    </data>
+    <data name="SnapshotCreationPage_FilesUnitText" xml:space="preserve">
+        <value>个文件</value>
+    </data>
+    <data name="SnapshotCreationPage_PackageCountLabelText" xml:space="preserve">
+        <value>包数量</value>
+    </data>
+    <data name="SnapshotCreationPage_NotTakenLabelText" xml:space="preserve">
+        <value>快照未拍摄</value>
+    </data>
+    <data name="SnapshotCreationPage_TakeButtonText" xml:space="preserve">
+        <value>拍摄</value>
+    </data>
+    <data name="SnapshotCreationPage_CreateButtonText" xml:space="preserve">
+        <value>保存快照</value>
+    </data>
+    <data name="SnapshotCreationPage_CommittingPrefixText" xml:space="preserve">
+        <value>提交文件 (</value>
+    </data>
+    <data name="SnapshotCreationPage_CommittingSuffixText" xml:space="preserve">
+        <value>)</value>
+    </data>
+    <data name="SnapshotCreationPage_LabelPlaceholder" xml:space="preserve">
+        <value>用于提示快照的创建目的</value>
+    </data>
+    <data name="SnapshotCreationPage_RemarkPlaceholder" xml:space="preserve">
+        <value>标签要是不够写这里还能再写点提示性的文字</value>
+    </data>
+    <data name="SnapshotCreationPage_TakeDangerNotificationTitle" xml:space="preserve">
+        <value>拍摄快照失败</value>
+    </data>
+    <data name="SnapshotCreationPage_CreateDangerNotificationTitle" xml:space="preserve">
+        <value>创建快照失败</value>
+    </data>
+    <data name="SnapshotCreationPage_CreateSuccessNotificationTitle" xml:space="preserve">
+        <value>快照已创建</value>
+    </data>
+    <data name="SnapshotCreationPage_CreateSuccessNotificationMessage" xml:space="preserve">
+        <value>{0} 已保存。</value>
+    </data>
+    <data name="AssetKind_Texture" xml:space="preserve">
+        <value>纹理</value>
+    </data>
+    <data name="AssetKind_Library" xml:space="preserve">
+        <value>库</value>
+    </data>
+    <data name="AssetKind_Version" xml:space="preserve">
+        <value>版本</value>
+    </data>
+    <data name="AssetKind_Asset" xml:space="preserve">
+        <value>资产</value>
     </data>
 </root>

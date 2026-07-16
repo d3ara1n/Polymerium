@@ -10,6 +10,7 @@ using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.ModalModels;
 using Polymerium.Avalonia.Models;
+using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using TridentCore.Abstractions.Snapshots;
 
@@ -21,30 +22,32 @@ public partial class SnapshotCreationPageModel(
 {
     #region Constants
 
-    private static readonly FrozenDictionary<string, string> SecondaryAliases = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-    {
-        ["mods"] = "模组",
-        ["resourcepacks"] = "资源包",
-        ["shaderpacks"] = "光影包",
-        ["saves"] = "存档",
-        ["world"] = "存档",
-        ["config"] = "配置",
-        ["logs"] = "日志",
-        ["crash-reports"] = "崩溃报告",
-        ["screenshots"] = "截图",
-        ["textures"] = "纹理文件",
-        ["libraries"] = "依赖库",
-        ["versions"] = "版本文件",
-        ["assets"] = "资源文件",
-    }.ToFrozenDictionary();
+    private static readonly FrozenDictionary<string, Func<string>> SecondaryAliases =
+        new Dictionary<string, Func<string>>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["mods"] = () => Resources.AssetKind_Mod,
+            ["resourcepacks"] = () => Resources.AssetKind_ResourcePack,
+            ["shaderpacks"] = () => Resources.AssetKind_ShaderPack,
+            ["saves"] = () => Resources.AssetKind_Save,
+            ["world"] = () => Resources.AssetKind_Save,
+            ["config"] = () => Resources.AssetKind_Config,
+            ["logs"] = () => Resources.AssetKind_Log,
+            ["crash-reports"] = () => Resources.AssetKind_CrashReport,
+            ["screenshots"] = () => Resources.AssetKind_Screenshot,
+            ["textures"] = () => Resources.AssetKind_Texture,
+            ["libraries"] = () => Resources.AssetKind_Library,
+            ["versions"] = () => Resources.AssetKind_Version,
+            ["assets"] = () => Resources.AssetKind_Asset,
+        }.ToFrozenDictionary();
 
     // NOTE: live 概念保留——运行副本现在是 import 在 build 上的投影，快照引用以 build/ 前缀落地。
-    private static readonly FrozenDictionary<string, string> PrimaryAliases = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-    {
-        ["build"] = "运行副本",
-        ["import"] = "整合包源",
-        ["persist"] = "个人数据",
-    }.ToFrozenDictionary();
+    private static readonly FrozenDictionary<string, Func<string>> PrimaryAliases =
+        new Dictionary<string, Func<string>>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["build"] = () => Resources.InstanceStoragePage_BuildFolderLinkText,
+            ["import"] = () => Resources.InstanceStoragePage_ImportFolderLinkText,
+            ["persist"] = () => Resources.InstanceStoragePage_PersistFolderLinkText,
+        }.ToFrozenDictionary();
 
     private static readonly string[] PrimaryOrder = ["build", "import", "persist"];
 
@@ -102,7 +105,7 @@ public partial class SnapshotCreationPageModel(
         catch (OperationCanceledException) { }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, "Take snapshot failed");
+            notificationService.PopMessage(ex, Resources.SnapshotCreationPage_TakeDangerNotificationTitle);
         }
         finally
         {
@@ -121,7 +124,11 @@ public partial class SnapshotCreationPageModel(
         }
 
         var (snapshot, references) = model.Metadata;
-        snapshot = snapshot with { Label = !string.IsNullOrEmpty(Label) ? Label : "Untitled", Remark = Remark };
+        snapshot = snapshot with
+        {
+            Label = !string.IsNullOrEmpty(Label) ? Label : Resources.Snapshot_UntitledLabelText,
+            Remark = Remark,
+        };
 
         var committed = new Progress<int>(x =>
         {
@@ -133,13 +140,16 @@ public partial class SnapshotCreationPageModel(
             IsCreating = true;
             TotalCommitted = 0;
             await Context.Handle.CommitAsync(snapshot, references, committed);
-            notificationService.PopMessage($"{snapshot.Label} has been saved.", "Snapshot created", GrowlLevel.Success);
+            notificationService.PopMessage(
+                Resources.SnapshotCreationPage_CreateSuccessNotificationMessage.Replace("{0}", snapshot.Label),
+                Resources.SnapshotCreationPage_CreateSuccessNotificationTitle,
+                GrowlLevel.Success);
             Context.BackHandler.Invoke();
         }
         catch (OperationCanceledException) { }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, "Create snapshot failed");
+            notificationService.PopMessage(ex, Resources.SnapshotCreationPage_CreateDangerNotificationTitle);
         }
         finally
         {
@@ -192,6 +202,7 @@ public partial class SnapshotCreationPageModel(
         var primaryOtherCount = 0;
         var primaryOtherSize = 0L;
         var primaryOtherCategories = new List<FileCategoryEntryModel>();
+        var otherLabel = Resources.InstanceStoragePage_OtherLabelText;
 
         foreach (var primary in PrimaryOrder)
         {
@@ -210,7 +221,7 @@ public partial class SnapshotCreationPageModel(
                 totalSize += size;
                 if (SecondaryAliases.TryGetValue(key, out var alias))
                 {
-                    categories.Add(new(alias, count, size));
+                    categories.Add(new(alias(), count, size));
                 }
                 else
                 {
@@ -220,9 +231,11 @@ public partial class SnapshotCreationPageModel(
             }
 
             if (otherCount > 0)
-                categories.Add(new("其他", otherCount, otherSize));
+                categories.Add(new(otherLabel, otherCount, otherSize));
 
-            var primaryLabel = PrimaryAliases.GetValueOrDefault(primary, primary);
+            var primaryLabel = PrimaryAliases.TryGetValue(primary, out var primaryAlias)
+                ? primaryAlias()
+                : primary;
             result.Add(new(primaryLabel, totalCount, totalSize, categories));
         }
 
@@ -243,7 +256,7 @@ public partial class SnapshotCreationPageModel(
                 totalSize += size;
                 if (SecondaryAliases.TryGetValue(key, out var alias))
                 {
-                    categories.Add(new(alias, count, size));
+                    categories.Add(new(alias(), count, size));
                 }
                 else
                 {
@@ -253,7 +266,7 @@ public partial class SnapshotCreationPageModel(
             }
 
             if (otherSecondaryCount > 0)
-                categories.Add(new("其他", otherSecondaryCount, otherSecondarySize));
+                categories.Add(new(otherLabel, otherSecondaryCount, otherSecondarySize));
 
             primaryOtherCount += totalCount;
             primaryOtherSize += totalSize;
@@ -261,7 +274,7 @@ public partial class SnapshotCreationPageModel(
         }
 
         if (primaryOtherCount > 0)
-            result.Add(new("其他", primaryOtherCount, primaryOtherSize, primaryOtherCategories));
+            result.Add(new(otherLabel, primaryOtherCount, primaryOtherSize, primaryOtherCategories));
 
         return result;
     }

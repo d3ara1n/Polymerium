@@ -7,6 +7,7 @@ using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.ModalModels;
 using Polymerium.Avalonia.Services;
+using Resources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.PageModels;
 
@@ -44,7 +45,7 @@ public partial class SnapshotPortalPageModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, "Failed to load snapshot info");
+            notificationService.PopMessage(ex, Resources.SnapshotPortalPage_LoadInfoDangerNotificationTitle);
         }
 
         return Task.CompletedTask;

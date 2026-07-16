@@ -5,11 +5,12 @@
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:SnapshotCreationPageModel"
-    Header="创建快照"
+    Header="{x:Static lang:Resources.SnapshotCreationPage_Title}"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <Grid
@@ -59,7 +60,7 @@
                                         <TextBlock
                                             HorizontalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="文件数" />
+                                            Text="{x:Static lang:Resources.SnapshotCreationPage_FileCountLabelText}" />
                                     </StackPanel>
                                 </Border>
                                 <Border
@@ -87,7 +88,7 @@
                                         <TextBlock
                                             HorizontalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="总大小" />
+                                            Text="{x:Static lang:Resources.SnapshotCreationPage_TotalSizeLabelText}" />
                                     </StackPanel>
                                 </Border>
                             </Grid>
@@ -107,7 +108,8 @@
                                                     <Run Text="{Binding Label}" />
                                                     <Run Text="·" />
                                                     <Run Text="{Binding Count}" />
-                                                    <Run Text="个文件" />
+                                                    <Run Text=" " />
+                                                    <Run Text="{x:Static lang:Resources.SnapshotCreationPage_FilesUnitText}" />
                                                     <Run Text="·" />
                                                     <Run Text="{Binding Size, Converter={x:Static app:HumanizerConverters.ByteSize}}" />
                                                 </TextBlock>
@@ -173,13 +175,13 @@
                                     Spacing="4">
                                     <TextBlock
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="游戏版本" />
+                                        Text="{x:Static lang:Resources.SnapshotManagementPage_GameVersionLabelText}" />
                                     <TextBlock
                                         FontSize="{StaticResource LargeFontSize}"
                                         Text="{Binding VersionLabel}" />
                                     <TextBlock
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="加载器" />
+                                        Text="{x:Static lang:Resources.SnapshotManagementPage_LoaderLabelText}" />
                                     <TextBlock
                                         FontSize="{StaticResource LargeFontSize}"
                                         Text="{Binding LoaderLabel}" />
@@ -190,7 +192,7 @@
                                     <TextBlock
                                         DockPanel.Dock="Top"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="包数量" />
+                                        Text="{x:Static lang:Resources.SnapshotCreationPage_PackageCountLabelText}" />
                                     <Border
                                         Background="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}"
                                         CornerRadius="{StaticResource MediumCornerRadius}">
@@ -219,14 +221,14 @@
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource LargeFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="快照未拍摄" />
+                            Text="{x:Static lang:Resources.SnapshotCreationPage_NotTakenLabelText}" />
                         <Button
                             Classes="Success"
                             HorizontalAlignment="Center"
                             Command="{Binding TakeCommand}">
                             <husk:IconLabel
                                 Icon="Camera"
-                                Text="拍摄" />
+                                Text="{x:Static lang:Resources.SnapshotCreationPage_TakeButtonText}" />
                         </Button>
                     </StackPanel>
                 </husk:SwitchCase>
@@ -260,7 +262,7 @@
                         TargetType="x:Boolean"
                         Value="{Binding IsCreating}">
                         <husk:SwitchCase Value="{x:False}">
-                            <TextBlock Text="创建并插入数据库" />
+                            <TextBlock Text="{x:Static lang:Resources.SnapshotCreationPage_CreateButtonText}" />
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="{x:True}">
                             <StackPanel
@@ -272,11 +274,11 @@
                                     IsIndeterminate="{Binding IsCreating}"
                                     Theme="{StaticResource SolidProgressRingTheme}" />
                                 <TextBlock>
-                                    <Run Text="提交文件 (" />
+                                    <Run Text="{x:Static lang:Resources.SnapshotCreationPage_CommittingPrefixText}" />
                                     <Run Text="{Binding TotalCommitted}" />
                                     <Run Text="/" />
                                     <Run Text="{Binding SnapshotTaken?.FileCount, FallbackValue=N/A}" />
-                                    <Run Text=")" />
+                                    <Run Text="{x:Static lang:Resources.SnapshotCreationPage_CommittingSuffixText}" />
                                 </TextBlock>
                             </StackPanel>
                         </husk:SwitchCase>
@@ -286,17 +288,17 @@
             <StackPanel Spacing="4">
                 <TextBlock
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="标签" />
+                    Text="{x:Static lang:Resources.SnapshotManagementPage_LabelLabelText}" />
                 <TextBox
-                    PlaceholderText="用于提示快照的创建目的"
+                    PlaceholderText="{x:Static lang:Resources.SnapshotCreationPage_LabelPlaceholder}"
                     Text="{Binding Label, Mode=TwoWay}" />
                 <TextBlock
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="备注" />
+                    Text="{x:Static lang:Resources.SnapshotManagementPage_RemarkLabelText}" />
                 <TextBox
                     MinHeight="128"
                     AcceptsReturn="True"
-                    PlaceholderText="标签要是不够写这里还能再写点提示性的文字"
+                    PlaceholderText="{x:Static lang:Resources.SnapshotCreationPage_RemarkPlaceholder}"
                     Text="{Binding Remark, Mode=TwoWay}"
                     TextWrapping="Wrap" />
             </StackPanel>

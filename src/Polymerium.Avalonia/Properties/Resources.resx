@@ -3006,10 +3006,10 @@ Affected entries: {0}
     <data name="SnapshotPortalPage_Subtitle" xml:space="preserve">
         <value>Save and restore instance states at any point in time.</value>
     </data>
-  <data name="SnapshotPortalPage_CreateTitleText" xml:space="preserve">
+  <data name="SnapshotPortalPage_CreateTitle" xml:space="preserve">
     <value>Create Snapshot</value>
   </data>
-  <data name="SnapshotPortalPage_CreateDescriptionText" xml:space="preserve">
+  <data name="SnapshotPortalPage_CreateDescription" xml:space="preserve">
     <value>Save the current instance state as a recoverable snapshot</value>
   </data>
   <data name="SnapshotPortalPage_CreateLastTimeLabelText" xml:space="preserve">
@@ -3018,16 +3018,16 @@ Affected entries: {0}
   <data name="SnapshotPortalPage_CreateNeverText" xml:space="preserve">
     <value>Never</value>
   </data>
-  <data name="SnapshotPortalPage_ViewTitleText" xml:space="preserve">
+  <data name="SnapshotPortalPage_ViewTitle" xml:space="preserve">
     <value>View Snapshots</value>
   </data>
-  <data name="SnapshotPortalPage_ViewDescriptionText" xml:space="preserve">
+  <data name="SnapshotPortalPage_ViewDescription" xml:space="preserve">
     <value>Browse and manage existing snapshots of this instance</value>
   </data>
   <data name="SnapshotPortalPage_ViewCountLabelText" xml:space="preserve">
     <value>Snapshots</value>
   </data>
-    <data name="SnapshotPortalPage_HintText" xml:space="preserve">
+    <data name="SnapshotPortalPage_Hint" xml:space="preserve">
         <value>Snapshots capture the restorable state of your instance at a specific point in time, including all the data except build artifacts.</value>
     </data>
     <data name="SnapshotManagementPage_Title" xml:space="preserve">
@@ -3428,5 +3428,77 @@ Affected entries: {0}
     </data>
     <data name="InstancesPage_EditTagsMenuText" xml:space="preserve">
         <value>Edit Tags</value>
+    </data>
+    <data name="Snapshot_UntitledLabelText" xml:space="preserve">
+        <value>Untitled</value>
+    </data>
+    <data name="SnapshotPortalPage_LatestLabelText" xml:space="preserve">
+        <value>Latest</value>
+    </data>
+    <data name="SnapshotPortalPage_LoadInfoDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to load snapshot info</value>
+    </data>
+    <data name="SnapshotsModal_OpenDatabaseDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to open snapshots database</value>
+    </data>
+    <data name="SnapshotCreationPage_Title" xml:space="preserve">
+        <value>Create Snapshot</value>
+    </data>
+    <data name="SnapshotCreationPage_FileCountLabelText" xml:space="preserve">
+        <value>Files</value>
+    </data>
+    <data name="SnapshotCreationPage_TotalSizeLabelText" xml:space="preserve">
+        <value>Total Size</value>
+    </data>
+    <data name="SnapshotCreationPage_FilesUnitText" xml:space="preserve">
+        <value>files</value>
+    </data>
+    <data name="SnapshotCreationPage_PackageCountLabelText" xml:space="preserve">
+        <value>Packages</value>
+    </data>
+    <data name="SnapshotCreationPage_NotTakenLabelText" xml:space="preserve">
+        <value>No snapshot captured</value>
+    </data>
+    <data name="SnapshotCreationPage_TakeButtonText" xml:space="preserve">
+        <value>Capture</value>
+    </data>
+    <data name="SnapshotCreationPage_CreateButtonText" xml:space="preserve">
+        <value>Save Snapshot</value>
+    </data>
+    <data name="SnapshotCreationPage_CommittingPrefixText" xml:space="preserve">
+        <value>Committing files (</value>
+    </data>
+    <data name="SnapshotCreationPage_CommittingSuffixText" xml:space="preserve">
+        <value>)</value>
+    </data>
+    <data name="SnapshotCreationPage_LabelPlaceholder" xml:space="preserve">
+        <value>Describe the purpose of this snapshot</value>
+    </data>
+    <data name="SnapshotCreationPage_RemarkPlaceholder" xml:space="preserve">
+        <value>Optional notes if the label is not enough</value>
+    </data>
+    <data name="SnapshotCreationPage_TakeDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to capture snapshot</value>
+    </data>
+    <data name="SnapshotCreationPage_CreateDangerNotificationTitle" xml:space="preserve">
+        <value>Failed to create snapshot</value>
+    </data>
+    <data name="SnapshotCreationPage_CreateSuccessNotificationTitle" xml:space="preserve">
+        <value>Snapshot created</value>
+    </data>
+    <data name="SnapshotCreationPage_CreateSuccessNotificationMessage" xml:space="preserve">
+        <value>{0} has been saved.</value>
+    </data>
+    <data name="AssetKind_Texture" xml:space="preserve">
+        <value>Textures</value>
+    </data>
+    <data name="AssetKind_Library" xml:space="preserve">
+        <value>Libraries</value>
+    </data>
+    <data name="AssetKind_Version" xml:space="preserve">
+        <value>Versions</value>
+    </data>
+    <data name="AssetKind_Asset" xml:space="preserve">
+        <value>Assets</value>
     </data>
 </root>
