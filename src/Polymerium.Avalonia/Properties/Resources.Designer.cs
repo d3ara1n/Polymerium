@@ -5973,15 +5973,15 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string SnapshotPortalPage_CreateTitleText {
+        public static string SnapshotPortalPage_CreateTitle {
             get {
-                return ResourceManager.GetString("SnapshotPortalPage_CreateTitleText", resourceCulture);
+                return ResourceManager.GetString("SnapshotPortalPage_CreateTitle", resourceCulture);
             }
         }
         
-        public static string SnapshotPortalPage_CreateDescriptionText {
+        public static string SnapshotPortalPage_CreateDescription {
             get {
-                return ResourceManager.GetString("SnapshotPortalPage_CreateDescriptionText", resourceCulture);
+                return ResourceManager.GetString("SnapshotPortalPage_CreateDescription", resourceCulture);
             }
         }
         
@@ -5997,15 +5997,15 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string SnapshotPortalPage_ViewTitleText {
+        public static string SnapshotPortalPage_ViewTitle {
             get {
-                return ResourceManager.GetString("SnapshotPortalPage_ViewTitleText", resourceCulture);
+                return ResourceManager.GetString("SnapshotPortalPage_ViewTitle", resourceCulture);
             }
         }
         
-        public static string SnapshotPortalPage_ViewDescriptionText {
+        public static string SnapshotPortalPage_ViewDescription {
             get {
-                return ResourceManager.GetString("SnapshotPortalPage_ViewDescriptionText", resourceCulture);
+                return ResourceManager.GetString("SnapshotPortalPage_ViewDescription", resourceCulture);
             }
         }
         
@@ -6015,9 +6015,9 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string SnapshotPortalPage_HintText {
+        public static string SnapshotPortalPage_Hint {
             get {
-                return ResourceManager.GetString("SnapshotPortalPage_HintText", resourceCulture);
+                return ResourceManager.GetString("SnapshotPortalPage_Hint", resourceCulture);
             }
         }
         
@@ -6816,6 +6816,128 @@ namespace Polymerium.Avalonia.Properties {
         public static string InstancesPage_EditTagsMenuText {
             get {
                 return ResourceManager.GetString("InstancesPage_EditTagsMenuText", resourceCulture);
+            }
+        }
+
+        public static string Snapshot_UntitledLabelText {
+            get {
+                return ResourceManager.GetString("Snapshot_UntitledLabelText", resourceCulture);
+            }
+        }
+        public static string SnapshotPortalPage_LatestLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotPortalPage_LatestLabelText", resourceCulture);
+            }
+        }
+        public static string SnapshotPortalPage_LoadInfoDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotPortalPage_LoadInfoDangerNotificationTitle", resourceCulture);
+            }
+        }
+        public static string SnapshotsModal_OpenDatabaseDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotsModal_OpenDatabaseDangerNotificationTitle", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_Title {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_Title", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_FileCountLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_FileCountLabelText", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_TotalSizeLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_TotalSizeLabelText", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_FilesUnitText {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_FilesUnitText", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_PackageCountLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_PackageCountLabelText", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_NotTakenLabelText {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_NotTakenLabelText", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_TakeButtonText {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_TakeButtonText", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_CreateButtonText {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_CreateButtonText", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_CommittingPrefixText {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_CommittingPrefixText", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_CommittingSuffixText {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_CommittingSuffixText", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_LabelPlaceholder {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_LabelPlaceholder", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_RemarkPlaceholder {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_RemarkPlaceholder", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_TakeDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_TakeDangerNotificationTitle", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_CreateDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_CreateDangerNotificationTitle", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_CreateSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_CreateSuccessNotificationTitle", resourceCulture);
+            }
+        }
+        public static string SnapshotCreationPage_CreateSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("SnapshotCreationPage_CreateSuccessNotificationMessage", resourceCulture);
+            }
+        }
+
+        public static string AssetKind_Texture {
+            get {
+                return ResourceManager.GetString("AssetKind_Texture", resourceCulture);
+            }
+        }
+        public static string AssetKind_Library {
+            get {
+                return ResourceManager.GetString("AssetKind_Library", resourceCulture);
+            }
+        }
+        public static string AssetKind_Version {
+            get {
+                return ResourceManager.GetString("AssetKind_Version", resourceCulture);
+            }
+        }
+        public static string AssetKind_Asset {
+            get {
+                return ResourceManager.GetString("AssetKind_Asset", resourceCulture);
             }
         }
     }

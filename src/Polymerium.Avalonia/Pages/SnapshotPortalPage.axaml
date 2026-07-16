@@ -6,10 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:SnapshotPortalPageModel"
+    Header="{x:Static lang:Resources.SnapshotPortalPage_Title}"
     IsHeaderVisible="False"
     mc:Ignorable="d">
     <Grid
@@ -21,10 +23,10 @@
             <TextBlock
                 FontSize="{StaticResource ExtraLargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="快照管理" />
+                Text="{x:Static lang:Resources.SnapshotPortalPage_Title}" />
             <TextBlock
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="为实例创建、管理和还原快照" />
+                Text="{x:Static lang:Resources.SnapshotPortalPage_Subtitle}" />
         </StackPanel>
 
         <Grid
@@ -51,11 +53,11 @@
                         Grid.Row="1"
                         FontSize="{StaticResource LargeFontSize}"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="创建快照" />
+                        Text="{x:Static lang:Resources.SnapshotPortalPage_CreateTitle}" />
                     <TextBlock
                         Grid.Row="2"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="保存当前实例的文件布局状态"
+                        Text="{x:Static lang:Resources.SnapshotPortalPage_CreateDescription}"
                         TextWrapping="Wrap" />
                     <husk:Divider Grid.Row="3" />
                     <StackPanel
@@ -64,10 +66,10 @@
                         Spacing="6">
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="上次创建:" />
+                            Text="{x:Static lang:Resources.SnapshotPortalPage_CreateLastTimeLabelText}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{Binding LatestTimeText, FallbackValue=暂无}" />
+                            Text="{Binding LatestTimeText, TargetNullValue={x:Static lang:Resources.SnapshotPortalPage_CreateNeverText}}" />
                     </StackPanel>
                 </Grid>
             </Button>
@@ -92,11 +94,11 @@
                         Grid.Row="1"
                         FontSize="{StaticResource LargeFontSize}"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="快照列表" />
+                        Text="{x:Static lang:Resources.SnapshotPortalPage_ViewTitle}" />
                     <TextBlock
                         Grid.Row="2"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="查看已保存的所有快照记录"
+                        Text="{x:Static lang:Resources.SnapshotPortalPage_ViewDescription}"
                         TextWrapping="Wrap" />
                     <husk:Divider Grid.Row="3" />
                     <StackPanel
@@ -105,13 +107,10 @@
                         Spacing="6">
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="共" />
+                            Text="{x:Static lang:Resources.SnapshotPortalPage_ViewCountLabelText}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding SnapshotCount, FallbackValue=0}" />
-                        <TextBlock
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="个快照" />
                     </StackPanel>
                     <StackPanel
                         Grid.Row="5"
@@ -120,7 +119,7 @@
                         Spacing="6">
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="最新:" />
+                            Text="{x:Static lang:Resources.SnapshotPortalPage_LatestLabelText}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding LatestTimeText}" />
@@ -142,7 +141,7 @@
                 <TextBlock
                     FontStyle="Italic"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="快照记录实例当前的【托管文件】的状态和布局，使快照的构建结果可复现。"
+                    Text="{x:Static lang:Resources.SnapshotPortalPage_Hint}"
                     TextWrapping="Wrap" />
             </StackPanel>
         </StackPanel>
