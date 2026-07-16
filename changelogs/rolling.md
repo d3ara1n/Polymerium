@@ -12,6 +12,7 @@
 ### Added
 
 - Provide clear recovery guidance and a confirmed reset action for deployment conflicts caused by stale run folder files (#POLY-132)
+- Provide a non-blocking Java runtime notification with a download action when an instance cannot start
 
 ### Changed
 
@@ -21,4 +22,4 @@
 
 ### Removed
 
--
+- Remove the blocking Java runtime download dialog when an instance cannot start

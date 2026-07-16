@@ -190,9 +190,10 @@ public class InstanceService
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex,
-                                            Resources.Shared_FailedToLaunchInstanceDangerNotificationTitle,
-                                            thumbnail: ThumbnailHelper.ForInstance(key));
+            _notificationService.PopMessage(
+                ex,
+                Resources.MainWindow_InstanceLaunchingDangerNotificationTitle.Replace("{0}", key),
+                thumbnail: ThumbnailHelper.ForInstance(key));
         }
     }
 
@@ -260,8 +261,7 @@ public class InstanceService
             var dir = PathDef.Default.DirectoryOfHome(key);
             return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
                                                            new(dir),
-                                                           Resources
-                                                              .Shared_FailedToOpenInstanceFolderDangerNotificationTitle,
+                                                           Resources.Shared_FailedToOpenFolderDangerNotificationTitle,
                                                            _notificationService,
                                                            thumbnail: ThumbnailHelper.ForInstance(key));
         }

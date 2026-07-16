@@ -2126,6 +2126,42 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("MainWindow_InstanceDeployingBuildArtifactConflictResetActionText", resourceCulture);
             }
         }
+
+        public static string MainWindow_JavaRuntimeNotFoundDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_JavaRuntimeNotFoundDangerNotificationTitle", resourceCulture);
+            }
+        }
+
+        public static string MainWindow_JavaRuntimeNotFoundDangerNotificationMessage {
+            get {
+                return ResourceManager.GetString("MainWindow_JavaRuntimeNotFoundDangerNotificationMessage", resourceCulture);
+            }
+        }
+
+        public static string MainWindow_JavaRuntimeNotFoundDangerNotificationDownloadText {
+            get {
+                return ResourceManager.GetString("MainWindow_JavaRuntimeNotFoundDangerNotificationDownloadText", resourceCulture);
+            }
+        }
+
+        public static string MainWindow_JavaRuntimeDownloadDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_JavaRuntimeDownloadDangerNotificationTitle", resourceCulture);
+            }
+        }
+
+        public static string MainWindow_InstanceLaunchingDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationTitle", resourceCulture);
+            }
+        }
+
+        public static string LandingPage_InstanceLaunchingDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("LandingPage_InstanceLaunchingDangerNotificationTitle", resourceCulture);
+            }
+        }
         
         public static string MainWindow_InstanceDeployingSuccessNotificationMessage {
             get {
@@ -3603,15 +3639,15 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string MainWindow_InstanceLaunchingDangerNotificationTitle {
+        public static string MainWindow_InstanceCrashedDangerNotificationTitle {
             get {
-                return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationTitle", resourceCulture);
+                return ResourceManager.GetString("MainWindow_InstanceCrashedDangerNotificationTitle", resourceCulture);
             }
         }
         
-        public static string MainWindow_InstanceLaunchingDangerNotificationMessage {
+        public static string MainWindow_InstanceCrashedDangerNotificationMessage {
             get {
-                return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationMessage", resourceCulture);
+                return ResourceManager.GetString("MainWindow_InstanceCrashedDangerNotificationMessage", resourceCulture);
             }
         }
         
@@ -5397,33 +5433,9 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string Shared_FailedToOpenInstanceFolderDangerNotificationTitle {
-            get {
-                return ResourceManager.GetString("Shared_FailedToOpenInstanceFolderDangerNotificationTitle", resourceCulture);
-            }
-        }
-        
         public static string Shared_FailedToOpenLogFileDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("Shared_FailedToOpenLogFileDangerNotificationTitle", resourceCulture);
-            }
-        }
-        
-        public static string Shared_FailedToLaunchInstanceDangerNotificationTitle {
-            get {
-                return ResourceManager.GetString("Shared_FailedToLaunchInstanceDangerNotificationTitle", resourceCulture);
-            }
-        }
-        
-        public static string Shared_JavaRuntimeNotFoundDangerDialogTitle {
-            get {
-                return ResourceManager.GetString("Shared_JavaRuntimeNotFoundDangerDialogTitle", resourceCulture);
-            }
-        }
-        
-        public static string Shared_JavaRuntimeNotFoundDangerDialogMessage {
-            get {
-                return ResourceManager.GetString("Shared_JavaRuntimeNotFoundDangerDialogMessage", resourceCulture);
             }
         }
         

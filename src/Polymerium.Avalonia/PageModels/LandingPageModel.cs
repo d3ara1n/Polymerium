@@ -165,7 +165,7 @@ public partial class LandingPageModel(
             return TopLevelHelper.LaunchDirectoryInfoAsync(
                 TopLevelHelper.GetTopLevel(),
                 new(dir),
-                Resources.Shared_FailedToOpenInstanceFolderDangerNotificationTitle,
+                Resources.Shared_FailedToOpenFolderDangerNotificationTitle,
                 notificationService,
                 thumbnail: ThumbnailHelper.ForInstance(key)
             );
@@ -214,7 +214,7 @@ public partial class LandingPageModel(
         {
             notificationService.PopMessage(
                 ex,
-                Resources.Shared_FailedToLaunchInstanceDangerNotificationTitle,
+                Resources.LandingPage_InstanceLaunchingDangerNotificationTitle.Replace("{0}", key),
                 thumbnail: ThumbnailHelper.ForInstance(key)
             );
         }
