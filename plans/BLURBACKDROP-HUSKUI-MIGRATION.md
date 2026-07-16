@@ -1,3 +1,15 @@
+> 制定日期：2026-07-09
+> 定位：把 Polymerium 自研的 BlurBackdrop 毛玻璃控件迁回 Huskui.Avalonia 主题库
+> 当前状态：❌ 不予回迁（已废弃）
+
+## 结论
+
+**BlurBackdrop 毛玻璃效果不达标，决定不回迁 Huskui，此计划作废。** 实际验证下来视觉效果差（糊、发灰、噪点明显），不足以作为主题库的通用能力对外提供。Huskui 侧不引入 BlurBackdrop、不新增 Frosted 变体。Polymerium 侧现有的 `BlurBackdrop` / Frosted Modal 保持原样不动，用着就用着。
+
+留此文件作否决理由备案：后续若再有人提议把毛玻璃迁回 Huskui，先读这里的结论，避免重复讨论。
+
+---
+
 # BlurBackdrop 迁移到 Huskui — Checklist
 
 ## 前提
