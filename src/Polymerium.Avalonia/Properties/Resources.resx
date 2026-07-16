@@ -232,7 +232,7 @@
         <value>Reset Instance</value>
     </data>
     <data name="InstancePropertiesPage_ResetConfirmationMessage" xml:space="preserve">
-        <value>All local changes will be discarded and the instance reset to its packaged state. Saves and configs will be wiped.</value>
+        <value>The run folder will be cleared, discarding changes stored only there. Imported and persistent data will be preserved.</value>
     </data>
     <data name="InstancePropertiesPage_DeleteConfirmationTitle" xml:space="preserve">
         <value>Delete Instance</value>
@@ -1056,8 +1056,14 @@
     <data name="MainWindow_InstanceUpdatingSuccessNotificationOpenText" xml:space="preserve">
         <value>Open</value>
     </data>
-    <data name="MainWindow_InstanceDeployingNotificationTitle" xml:space="preserve">
+    <data name="MainWindow_InstanceDeployingDangerNotificationTitle" xml:space="preserve">
         <value>Failed to deploy {0}</value>
+    </data>
+    <data name="MainWindow_InstanceDeployingBuildArtifactConflictDangerNotificationMessage" xml:space="preserve">
+        <value>The run folder contains files left by an older import projection or local changes that block the links needed for deployment. Reset the instance, then deploy it again. Resetting clears the run folder and discards changes stored only there while preserving import and persistent data.</value>
+    </data>
+    <data name="MainWindow_InstanceDeployingBuildArtifactConflictResetActionText" xml:space="preserve">
+        <value>Reset instance</value>
     </data>
     <data name="MainWindow_InstanceDeployingSuccessNotificationMessage" xml:space="preserve">
         <value>The instance has been deployed</value>
@@ -2721,9 +2727,6 @@
   </data>
   <data name="Shared_JavaRuntimeNotFoundDangerDialogMessage" xml:space="preserve">
     <value>Java {0} is required but not configured. If it is already installed, set its path in Settings → Java Presets; if not, click OK to download one.</value>
-  </data>
-  <data name="Shared_FailedToDeployInstanceDangerNotificationTitle" xml:space="preserve">
-    <value>Failed to deploy instance</value>
   </data>
   <data name="Shared_ZipArchiveFileTypeText" xml:space="preserve">
     <value>Zip Archive</value>

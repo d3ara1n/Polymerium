@@ -22,7 +22,8 @@ public class NotificationSink(
     InstanceStateAggregator aggregator,
     NotificationService notificationService,
     NavigationService navigationService,
-    OverlayService overlayService)
+    OverlayService overlayService,
+    InstanceService instanceService)
 {
     private const string JAVA_DOWNLOAD_URL = "https://adoptium.net/temurin/releases/";
 
@@ -130,10 +131,25 @@ public class NotificationSink(
                     thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
             case TrackerState.Faulted when tracker.FailureReason is not OperationCanceledException:
+                var title = Resources.MainWindow_InstanceDeployingDangerNotificationTitle
+                                     .Replace("{0}", tracker.Key);
+                if (FindBuildArtifactConflict(tracker.FailureReason) is not null)
+                {
+                    notificationService.PopMessage(
+                        Resources.MainWindow_InstanceDeployingBuildArtifactConflictDangerNotificationMessage,
+                        title,
+                        GrowlLevel.Danger,
+                        thumbnail: ThumbnailHelper.ForInstance(tracker.Key),
+                        actions: new GrowlAction(
+                            Resources.MainWindow_InstanceDeployingBuildArtifactConflictResetActionText,
+                            new AsyncRelayCommand(() => instanceService.ResetAsync(tracker.Key)),
+                            null));
+                    break;
+                }
+
                 notificationService.PopMessage(
                     tracker.FailureReason,
-                    Resources.MainWindow_InstanceDeployingNotificationTitle
-                             .Replace("{0}", tracker.Key),
+                    title,
                     thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
         }
@@ -170,6 +186,29 @@ public class NotificationSink(
                     thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
         }
+    }
+
+    private static BuildArtifactConflictException? FindBuildArtifactConflict(Exception? exception)
+    {
+        if (exception is BuildArtifactConflictException conflict)
+        {
+            return conflict;
+        }
+
+        if (exception is AggregateException aggregate)
+        {
+            foreach (var inner in aggregate.InnerExceptions)
+            {
+                if (FindBuildArtifactConflict(inner) is { } found)
+                {
+                    return found;
+                }
+            }
+
+            return null;
+        }
+
+        return FindBuildArtifactConflict(exception?.InnerException);
     }
 
     private static bool IsProcessFaulted(Exception? ex) => ex is ProcessFaultedException
