@@ -2,7 +2,7 @@
   "title": "Core Concepts",
   "pages": [
     "metadata-driven",
-    "four-layers",
+    "directory-model",
     "deploy-explained"
   ]
 }
