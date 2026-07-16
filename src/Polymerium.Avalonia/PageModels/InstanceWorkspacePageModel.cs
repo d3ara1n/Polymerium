@@ -272,11 +272,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private async Task LoadChangeListAsync(CancellationToken token)
     {
-        // live / import 的变更
-        // 由于 import -> live 是全量文件复制，live 的文件只会比 import 多（但存在 .keep 映射了目录时，游戏会往目录里塞东西）
-        // 当 live 比 import 多时需要同步，但当 live 比 import 少（比如新增的没复制过来）就不需要在乎
-
-        var liveDir = PathDef.Default.DirectoryOfLive(Basic.Key);
+        // NOTE: 工作副本是 import 在 build 上的投影，不再有独立 live 目录。
+        // 以 import 为清单遍历、去 build 查差异；build 里非 import 路径的内容（包软链接/日志/assets）不在此范围。
+        var buildDir = PathDef.Default.DirectoryOfBuild(Basic.Key);
         var importDir = PathDef.Default.DirectoryOfImport(Basic.Key);
 
         await Dispatcher.UIThread.InvokeAsync(() =>
@@ -286,10 +284,15 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         });
 
         var batch = new List<WorkspaceChangeModel>(200);
-        foreach (var liveEntry in ScanFolder(liveDir, token))
+        foreach (var importEntry in ScanFolder(importDir, token))
         {
-            var livePath = Path.Combine(liveDir, liveEntry);
-            var importPath = Path.Combine(importDir, liveEntry);
+            var livePath = Path.Combine(buildDir, importEntry);
+            var importPath = Path.Combine(importDir, importEntry);
+            if (!File.Exists(livePath))
+            {
+                continue;
+            }
+
             var kind = Diff(livePath, importPath);
             if (kind != WorkspaceChangeKind.Same)
             {
@@ -297,7 +300,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                 var type = Path.GetExtension(livePath).TrimStart('.');
                 batch.Add(new()
                 {
-                    RelativePath = liveEntry,
+                    RelativePath = importEntry,
                     FileName = Path.GetFileName(livePath),
                     Kind = kind,
                     LivePath = livePath,
