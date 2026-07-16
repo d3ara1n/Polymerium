@@ -38,14 +38,15 @@ public partial class SnapshotCreationPageModel(
         ["assets"] = "资源文件",
     }.ToFrozenDictionary();
 
+    // NOTE: live 概念保留——运行副本现在是 import 在 build 上的投影，快照引用以 build/ 前缀落地。
     private static readonly FrozenDictionary<string, string> PrimaryAliases = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
     {
-        ["live"] = "运行副本",
+        ["build"] = "运行副本",
         ["import"] = "整合包源",
         ["persist"] = "个人数据",
     }.ToFrozenDictionary();
 
-    private static readonly string[] PrimaryOrder = ["live", "import", "persist"];
+    private static readonly string[] PrimaryOrder = ["build", "import", "persist"];
 
     #endregion
 
