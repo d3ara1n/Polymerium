@@ -53,7 +53,7 @@ git commit -m "Initial modpack"
 ### Iterating on Configs
 
 1. Launch the game and modify settings in-game.
-2. Changes land on the working copy in `build/` (import projection).
+2. Changes land in `build/`.
 3. Open the [Workspace](/docs/advanced/workspace) to review diffs.
 4. Sync confirmed changes to `import/`.
 5. Commit:
@@ -93,7 +93,7 @@ git checkout main  # Go back to stable
 
 1. Push the repo to a shared remote (GitHub, GitLab, etc.).
 2. Co-authors clone the repo into their `instances/` directory.
-3. Each person's `build/` working copy and `persist/` are local and untracked.
+3. Each person's `build/` and `persist/` are local and untracked.
 4. Collaborate on `profile.json` and `import/` via normal Git workflows.
 
 ### Publishing a Release
@@ -135,4 +135,4 @@ See the [headless server guide](/docs/guides/headless-server) for a full CI/CD e
 
 - **Close Polymerium before Git operations** — Polymerium may be watching `profile.json` for changes. Quit, do your Git work, then reopen.
 - **Don't edit `profile.json` manually for version changes** — it's safer to create a new instance and migrate packages.
-- **Use the workspace** as your staging area — it's purpose-built for promoting the working copy into `import/`.
+- **Use the workspace** as your staging area — it's purpose-built for promoting in-game changes from `build/` into `import/`.

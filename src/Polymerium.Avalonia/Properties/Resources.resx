@@ -1372,7 +1372,7 @@
         <value>Falls back to traditional mod.jar placement, losing Polymerium's file management benefits.</value>
     </data>
     <data name="AssetImporterDialog_AsAssetPrompt" xml:space="preserve">
-        <value>Files stored in persist stay local across redeploys. If "Export with modpack" is enabled, the file is stored in import instead, projected into the build working copy on deploy, and bundled when exporting a modpack.</value>
+        <value>Files stored in persist stay local across redeploys. If "Export with modpack" is enabled, the file is stored in import instead, included in the game directory on deploy, and bundled when exporting a modpack.</value>
     </data>
     <data name="AssetImporterDialog_Prompt" xml:space="preserve">
         <value>Physical asset files are not shown in the package list. View them in the File Explorer.</value>
@@ -2932,7 +2932,7 @@ Affected entries: {0}
     <value>Failed to copy text</value>
   </data>
     <data name="InstanceWorkspacePage_ChangesTabToolTip" xml:space="preserve">
-        <value>Shows how the working copy in build differs from the import pack source.</value>
+        <value>Shows how files in build differ from the import pack source.</value>
     </data>
     <data name="InstanceWorkspacePage_FilesTabText" xml:space="preserve">
         <value>Packed Files</value>

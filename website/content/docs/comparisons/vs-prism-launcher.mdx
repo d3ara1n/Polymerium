@@ -41,7 +41,7 @@ Polymerium and Prism Launcher are both open-source Minecraft launchers that supp
 | Feature | Polymerium | Prism Launcher |
 |---------|:----------:|:--------------:|
 | **Instance definition** | Single `profile.json` file | `instance.cfg` + full folder structure |
-| **File organization** | import / persist / build + virtual working copy | Single `.minecraft` folder |
+| **File organization** | import / persist / build | Single `.minecraft` folder |
 | **Reset/rebuild** | Clear `build/`, redeploy from metadata | Manual file deletion/reimport |
 | **Modpack updates** | In-place, `import/` replaced, `persist/` preserved | Import new copy (duplicates files) |
 
@@ -51,7 +51,7 @@ Polymerium and Prism Launcher are both open-source Minecraft launchers that supp
 instances/my-pack/
 ├── import/    ← Modpack source
 ├── persist/   ← User-preserved files (survives updates)
-└── build/     ← Final game directory; holds import working copy
+└── build/     ← Final game directory (disposable)
 ```
 
 This separation means:
@@ -234,7 +234,7 @@ Your instance source is clean: `profile.json` + `import/` + icon + README + CHAN
 | Disk space savings | 60–80% | None |
 | **Architecture** |||
 | Metadata-driven instances | ✅ | ❌ |
-| Directory model (import/persist/build) | ✅ | ❌ |
+| import / persist / build directories | ✅ | ❌ |
 | Compile-on-read deployment | ✅ | ❌ |
 | **Mod Loaders** |||
 | Fabric | ✅ | ✅ |

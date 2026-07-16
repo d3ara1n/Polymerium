@@ -77,9 +77,9 @@ git push
 ### Tuning Configs
 
 1. Launch the game and tweak settings in-game.
-2. Changes land on the working copy in `build/` (untracked).
+2. Changes land in `build/` (untracked).
 3. Open the **Workspace** tab to review diffs.
-4. Promote desired changes from the working copy → `import/`.
+4. Sync desired changes from `build/` → `import/`.
 5. Commit:
 
 ```bash
@@ -128,5 +128,5 @@ git push origin v1.0.0
 
 - **Use branches** for experiments — `git checkout -b experiment/new-mod`, test, merge or discard.
 - **Don't track `build/` or `persist/`** — these are personal and machine-specific.
-- **Use the workspace** for promoting working-copy changes to `import/` — it shows exactly what changed.
+- **Use the workspace** for promoting changes from `build/` to `import/` — it shows exactly what changed.
 - **Keep a `CHANGELOG.md`** in the instance directory — update it with each release.

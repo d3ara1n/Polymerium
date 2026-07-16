@@ -53,7 +53,7 @@ git commit -m "Initial modpack"
 ### 迭代配置
 
 1. 启动游戏并在游戏内修改设置。
-2. 修改保存在 `build/` 中的工作副本（import 投影）上。
+2. 修改保存在 `build/` 中。
 3. 打开[工作区](/docs/advanced/workspace)查看差异。
 4. 将确认的修改同步到 `import/`。
 5. 提交：
@@ -93,7 +93,7 @@ git checkout main  # 回到稳定版本
 
 1. 将仓库推送到共享远程仓库（GitHub、GitLab 等）。
 2. 合著者将仓库克隆到他们的 `instances/` 目录中。
-3. 每个人的 `build/` 工作副本和 `persist/` 都是本地的且不被跟踪。
+3. 每个人的 `build/` 和 `persist/` 都是本地的且不被跟踪。
 4. 通过常规 Git 工作流在 `profile.json` 和 `import/` 上协作。
 
 ### 发布发行版
@@ -135,4 +135,4 @@ steps:
 
 - **在执行 Git 操作前关闭 Polymerium**——Polymerium 可能正在监视 `profile.json` 的变化。退出后执行 Git 操作，然后再重新打开。
 - **不要手动编辑 `profile.json` 来更改版本**——更安全的做法是创建新实例并迁移包。
-- **使用工作区**作为你的暂存区——它专为把工作副本提升到 `import/` 而设计。
+- **使用工作区**作为你的暂存区——它专为把 `build/` 中的游戏内修改提升到 `import/` 而设计。

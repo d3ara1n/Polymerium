@@ -1363,7 +1363,7 @@
         <value>抛弃 Polymerium 的文件管理机制，使用传统的 mod.jar 放入 mods 模式。</value>
     </data>
     <data name="AssetImporterDialog_AsAssetPrompt" xml:space="preserve">
-        <value>保存在 persist 的文件会在重新部署后继续保留在当前实例中；若启用“随整合包导出”，文件会改存到 import，部署时投影到 build 中的工作副本，并在导出整合包时一起打包。</value>
+        <value>保存在 persist 的文件会在重新部署后继续保留在当前实例中；若启用“随整合包导出”，文件会改存到 import，部署时进入游戏目录，并在导出整合包时一起打包。</value>
     </data>
     <data name="AssetImporterDialog_Prompt" xml:space="preserve">
         <value>实体资源文件不会显示在包列表中, 请在 资源管理器 中查看。</value>
@@ -2923,7 +2923,7 @@
     <value>复制文本失败</value>
   </data>
     <data name="InstanceWorkspacePage_ChangesTabToolTip" xml:space="preserve">
-        <value>查看 build 中工作副本相对 import 整合包源的文件变化。</value>
+        <value>查看 build 相对 import 整合包源的文件变化。</value>
     </data>
     <data name="InstanceWorkspacePage_FilesTabText" xml:space="preserve">
         <value>包含的文件</value>

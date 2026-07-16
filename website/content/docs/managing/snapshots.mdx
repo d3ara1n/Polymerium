@@ -8,9 +8,11 @@ description: Save, restore, and compare your entire game state. Experiment freel
 A snapshot records everything about your instance that affects the build result:
 
 - **Profile setup** — the metadata (Minecraft version, loader, mod list, settings)
-- **Directory contents** — everything in `import/` and `persist/`, plus the import working copy under `build/` (real files projected from `import/`, not the whole game tree)
+- **Directory contents** — everything in `import/` and `persist/`, plus the **working copy** of import content under `build/`
 
-Snapshots do not capture package symlinks, logs, or other unmanaged paths under `build/`. They record the inputs and the import working-copy state so you can reproduce the instance later. Restoring puts metadata and those files back; the rest of `build/` is filled in by the next deploy where needed.
+The working copy is the runtime state of files that came from `import/` — configs and other pack files after you've played and changed them. It lives under `build/`. Snapshots capture that state so you can get those edits back later.
+
+When you restore a snapshot, metadata, `import/`, `persist/`, and the working copy under `build/` are restored. A later deploy fills in anything else the game still needs from packages and cache.
 
 ## When to Use Snapshots
 
@@ -25,7 +27,7 @@ Snapshots do not capture package symlinks, logs, or other unmanaged paths under 
 3. Click **Create Snapshot**.
 4. Give it a name and optional description.
 
-Polymerium records the current profile setup, the contents of `persist/` and `import/`, and the import working-copy files under `build/`.
+Polymerium records the current profile setup, the contents of `persist/` and `import/`, and the import working copy under `build/`.
 
 ## Restoring a Snapshot
 
@@ -33,16 +35,14 @@ Polymerium records the current profile setup, the contents of `persist/` and `im
 2. Select a snapshot from the list.
 3. Click **Restore**.
 
-Polymerium restores the profile metadata and directory contents to the state they were in when the snapshot was taken. Your game directory (`build/`) will be rebuilt on the next deploy to match that state.
-
-> Restoring a snapshot doesn't immediately modify `build/`. The next deploy will reproduce the snapshot's state.
+Polymerium restores the profile metadata, `import/`, `persist/`, and the working copy under `build/` to the state they were in when the snapshot was taken.
 
 ## Comparing Snapshots (Diff)
 
 You can compare two snapshots to see exactly what changed between them:
 
 - **Metadata changes** — different mods, version, or loader settings
-- **Added files** — new files in `persist/`, `import/`, or the import working copy under `build/`
+- **Added files** — new files in `persist/`, `import/`, or the working copy under `build/`
 - **Removed files** — files that existed in the earlier snapshot but not the later one
 - **Modified files** — same path but different contents
 
@@ -59,6 +59,6 @@ Snapshots store the actual profile setup data and directory file contents — no
 | What it stores | Profile metadata + directory contents | Complete file copies |
 | Disk usage | Compact (metadata + file contents) | Same as the instance itself |
 | Speed | Near-instant | Slow (copies everything) |
-| Restores | Restores metadata + dirs, then redeploy | Copies files back |
+| Restores | Restores metadata + dirs (including working copy) | Copies files back |
 
-Snapshots are lighter than a full backup and faster to create. They capture the inputs, not the entire deployed output — which is all you need, since `build/` can always be reconstructed.
+Snapshots are lighter than a full backup and faster to create. They capture the inputs and the import working copy — not every log, package link, or unmanaged file under `build/` — which is what you need to get back to a known state.
