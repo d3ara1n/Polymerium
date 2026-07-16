@@ -41,18 +41,17 @@ Polymerium and Prism Launcher are both open-source Minecraft launchers that supp
 | Feature | Polymerium | Prism Launcher |
 |---------|:----------:|:--------------:|
 | **Instance definition** | Single `profile.json` file | `instance.cfg` + full folder structure |
-| **File organization** | 4-layer model (import/live/persist/build) | Single `.minecraft` folder |
-| **Reset/rebuild** | Clear `build/` and `live/`, redeploy from metadata | Manual file deletion/reimport |
+| **File organization** | import / persist / build + virtual working copy | Single `.minecraft` folder |
+| **Reset/rebuild** | Clear `build/`, redeploy from metadata | Manual file deletion/reimport |
 | **Modpack updates** | In-place, `import/` replaced, `persist/` preserved | Import new copy (duplicates files) |
 
-**Polymerium's 4-layer model:**
+**Polymerium's directory model:**
 
 ```
 instances/my-pack/
-├── import/    ← Modpack source (read-only)
-├── live/      ← Working copy (in-game changes)
+├── import/    ← Modpack source
 ├── persist/   ← User-preserved files (survives updates)
-└── build/     ← Final game directory (disposable)
+└── build/     ← Final game directory; holds import working copy
 ```
 
 This separation means:
@@ -220,7 +219,7 @@ Save the entire game state before making changes, then restore or compare later.
 
 ### Git-Friendly Modpack Development
 
-Your instance source is clean: `profile.json` + `import/` + icon + README + CHANGELOG. Add a `.gitignore` to exclude `build/`, `live/`, `persist/`, and you have a version-controlled modpack ready for collaboration.
+Your instance source is clean: `profile.json` + `import/` + icon + README + CHANGELOG. Add a `.gitignore` to exclude `build/` and `persist/`, and you have a version-controlled modpack ready for collaboration.
 
 ---
 
@@ -235,7 +234,7 @@ Your instance source is clean: `profile.json` + `import/` + icon + README + CHAN
 | Disk space savings | 60–80% | None |
 | **Architecture** |||
 | Metadata-driven instances | ✅ | ❌ |
-| 4-layer file model | ✅ | ❌ |
+| Directory model (import/persist/build) | ✅ | ❌ |
 | Compile-on-read deployment | ✅ | ❌ |
 | **Mod Loaders** |||
 | Fabric | ✅ | ✅ |

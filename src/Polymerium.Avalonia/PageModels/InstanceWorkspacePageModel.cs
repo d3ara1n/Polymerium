@@ -288,7 +288,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         {
             var livePath = Path.Combine(buildDir, importEntry);
             var importPath = Path.Combine(importDir, importEntry);
-            if (!File.Exists(livePath))
+            // NOTE: persist/package 赢下的路径是软链接，不是 import 投影，不进工作副本变更。
+            if (!File.Exists(livePath) || File.ResolveLinkTarget(livePath, false) is not null)
             {
                 continue;
             }
@@ -567,9 +568,12 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
     }
 
+    private static bool IsImportProjectionEntity(string path) =>
+        File.Exists(path) && File.ResolveLinkTarget(path, false) is null;
+
     private WorkspaceChangeKind Diff(string live, string import)
     {
-        // 这里使用 mtime 而不是哈希，live 的文件是从 import 复制的，atime, ctime, mtime 都是相同的
+        // 这里使用 mtime 而不是哈希，工作副本是从 import 复制到 build 的实体，atime, ctime, mtime 都是相同的
         if (File.Exists(import))
         {
             var liveTime = File.GetLastWriteTimeUtc(live);
@@ -799,12 +803,13 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
     }
 
-    private bool CanStage(WorkspaceChangeModel? model) => !IsLocked && model is not null && File.Exists(model.LivePath);
+    private bool CanStage(WorkspaceChangeModel? model) =>
+        !IsLocked && model is not null && IsImportProjectionEntity(model.LivePath);
 
     [RelayCommand(CanExecute = nameof(CanStage))]
     private async Task Stage(WorkspaceChangeModel? model)
     {
-        if (model == null || !File.Exists(model.LivePath))
+        if (model == null || !IsImportProjectionEntity(model.LivePath))
         {
             return;
         }
@@ -865,7 +870,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
 
         var suc = false;
-        if (File.Exists(model.LivePath))
+        if (IsImportProjectionEntity(model.LivePath))
         {
             // Restore
             try

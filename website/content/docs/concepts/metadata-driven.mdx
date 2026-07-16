@@ -41,7 +41,7 @@ Because it's just JSON + a few configuration files, your entire instance can be 
 
 ### Nothing is Permanent
 
-The game directory (`build/`) is a build artifact. You can delete it and redeploy at any time. For files you can't afford to lose — like `options.txt` or your saves — move them into the `persist/` directory. Polymerium never touches `persist/` during resets or updates. See [Four-Layer Directories →](/docs/concepts/four-layers#persist---user-managed-persistence) for details.
+The game directory (`build/`) is a build artifact. You can delete it and redeploy at any time. For files you can't afford to lose — like `options.txt` or your saves — move them into the `persist/` directory. Polymerium never touches `persist/` during resets or updates. See [Instance Directory Model →](/docs/concepts/four-layers#persist---user-managed-persistence) for details.
 
 ## The Workflow
 
@@ -69,5 +69,5 @@ This is a compile-on-read model. Your metadata is the source of truth; the game 
 
 ## Where to Learn More
 
-- [Four-Layer Directories →](/docs/concepts/four-layers) — understand how files are organized inside an instance
+- [Instance Directory Model →](/docs/concepts/four-layers) — understand how files are organized inside an instance
 - [Deploy Pipeline →](/docs/concepts/deploy-explained) — see exactly what happens when you click "Deploy"

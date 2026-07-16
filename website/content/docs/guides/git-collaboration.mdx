@@ -24,7 +24,6 @@ git init
 
 ```plaintext
 build/
-live/
 persist/
 data.lock.json
 ```
@@ -78,9 +77,9 @@ git push
 ### Tuning Configs
 
 1. Launch the game and tweak settings in-game.
-2. Changes land in `live/` (untracked).
+2. Changes land on the working copy in `build/` (untracked).
 3. Open the **Workspace** tab to review diffs.
-4. Sync desired changes from `live/` → `import/`.
+4. Promote desired changes from the working copy → `import/`.
 5. Commit:
 
 ```bash
@@ -128,6 +127,6 @@ git push origin v1.0.0
 ## Tips
 
 - **Use branches** for experiments — `git checkout -b experiment/new-mod`, test, merge or discard.
-- **Don't track `live/` or `persist/`** — these are personal and machine-specific.
-- **Use the workspace** for promoting `live/` changes to `import/` — it shows exactly what changed.
+- **Don't track `build/` or `persist/`** — these are personal and machine-specific.
+- **Use the workspace** for promoting working-copy changes to `import/` — it shows exactly what changed.
 - **Keep a `CHANGELOG.md`** in the instance directory — update it with each release.
