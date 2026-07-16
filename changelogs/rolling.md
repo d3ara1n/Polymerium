@@ -6,6 +6,7 @@
 
 ### Fixed
 
+- Fix deleted instances reappearing as ghost entries on the instances page (#POLY-129)
 - Fix modpack-bundled sounds, music, and other resources not loading in-game (#75, #POLY-128)
 
 ### Added
