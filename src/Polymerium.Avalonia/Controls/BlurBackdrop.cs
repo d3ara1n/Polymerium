@@ -18,8 +18,11 @@ using SkiaSharp;
 namespace Polymerium.Avalonia.Controls;
 
 /// <summary>
-///     毛玻璃背景控件：截取后方可视树 → 高斯模糊 → 主题色叠加。内容静止时不重绘，变化时上限 15fps。
+///     毛玻璃背景控件：截取后方可视树 → 软件捕获 → GPU 高斯模糊 → 主题色叠加。捕获在 UI 线程做（软件
+///     光栅化），模糊在 render 线程的 GPU surface 上执行；脏区未触及后方时跳过捕获，变化时上限 60fps。
 /// </summary>
+// TODO: 开发机（弱 CPU）上效果马马虎虎——捕获的软件光栅化吃 UI 线程。GPU 模糊 + DirtyRect 跳过的实际
+//       收益需在游戏机（目标机器，CPU/GPU 强）上验证，只能等正式版本发布后由用户在那边测。
 public class BlurBackdrop : ContentControl
 {
     public static readonly StyledProperty<double> BlurRadiusProperty =
@@ -48,10 +51,11 @@ public class BlurBackdrop : ContentControl
             "UseBlur",
             defaultValue: true);
 
-    // 重绘频率上限（15fps）。SceneInvalidated 频率远高于此，这里只做上限节流。
-    private static readonly long MIN_INTERVAL_TICKS = TimeSpan.FromMilliseconds(66).Ticks;
+    // 重绘频率上限（60fps）。模糊在 DrawOperation 的 GPU surface 上执行，捕获是唯一 CPU 开销。
+    private static readonly long MIN_INTERVAL_TICKS = TimeSpan.FromMilliseconds(16).Ticks;
 
     private static PropertyInfo? _topLevelRendererProperty;
+    private static PropertyInfo? s_dirtyRectProperty;
 
     private RenderTargetBitmap? _scratch;
     // NOTE: _backdrop 被 Capture 写、Render 读。当前 RAF/SceneInvalidated 与控件 Render 实测同线程，加 volatile
@@ -59,6 +63,7 @@ public class BlurBackdrop : ContentControl
     private volatile SKImage? _backdrop;
     private Vector _controlOffsetPx;
     private Vector _controlSizePx;
+    private double _scaling;
     private ulong _lastHash;
     private long _lastCaptureTicksUtc;
     private bool _captureQueued;
@@ -138,6 +143,8 @@ public class BlurBackdrop : ContentControl
                 backdrop,
                 _controlOffsetPx,
                 _controlSizePx,
+                BlurRadius,
+                _scaling,
                 TintColor,
                 (float)TintOpacity));
         }
@@ -215,7 +222,41 @@ public class BlurBackdrop : ContentControl
         _topLevel = null;
     }
 
-    private void OnSceneInvalidated(object? sender, SceneInvalidatedEventArgs e) => ConsiderCapture();
+    private void OnSceneInvalidated(object? sender, SceneInvalidatedEventArgs e)
+    {
+        // DirtyRect 优化：这一帧重绘的区域若完全落在自身 bounds 内（典型是 Capture 末尾 InvalidateVisual
+        // 触发），说明只是自身重绘、后方内容没变 → 跳过捕获，省掉最贵的软件光栅化。脏区延伸到外部才捕获。
+        if (_backdrop is not null
+            && TryGetDirtyRect(e, out var dirtyRect)
+            && IsSelfOnlyDirtyRect(dirtyRect))
+            return;
+
+        ConsiderCapture();
+    }
+
+    private bool IsSelfOnlyDirtyRect(Rect dirtyRect)
+    {
+        if (TopLevel.GetTopLevel(this) is not { } topLevel
+            || this.TransformToVisual(topLevel) is not { } toTopLevel)
+            return false;
+
+        var selfInTop = new Rect(Bounds.Size).TransformToAABB(toTopLevel);
+        return selfInTop.Contains(dirtyRect);
+    }
+
+    private static bool TryGetDirtyRect(SceneInvalidatedEventArgs e, out Rect dirtyRect)
+    {
+        dirtyRect = default;
+        s_dirtyRectProperty ??= e.GetType().GetProperty(
+            "DirtyRect", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (s_dirtyRectProperty?.PropertyType != typeof(Rect))
+            return false;
+        if (s_dirtyRectProperty.GetValue(e) is not Rect value)
+            return false;
+
+        dirtyRect = value;
+        return true;
+    }
 
     private void ConsiderCapture()
     {
@@ -314,30 +355,15 @@ public class BlurBackdrop : ContentControl
                                    (controlInTop.X - captureRect.X) * scaling,
                                    (controlInTop.Y - captureRect.Y) * scaling);
             _controlSizePx = new(controlInTop.Width * scaling, controlInTop.Height * scaling);
+            _scaling = scaling;
 
-            // CPU 离屏模糊整张捕获图（含 margin，边缘不衰减），Render 只需直接画这张成品图。
-            // NOTE: color type 必须用 PlatformColorType——RenderTargetBitmap 在 macOS/Linux 输出 Rgba8888、
-            //       Windows 输出 Bgra8888，硬编码任一都会在另一个平台 R/B 反色。
-            var sigmaPx = (float)(BlurRadius * scaling);
+            // NOTE: 不在此处模糊——模糊挪到 DrawOperation 的 GPU surface 上执行（CPU 模糊吃 UI 线程）。
+            //       color type 必须用 PlatformColorType——跨平台 R/B 一致性。
             SKImageInfo info = new(cw, ch, SKImageInfo.PlatformColorType, SKAlphaType.Premul);
-            // raw 拷贝自 pixels，此后 pixels 不再被引用，finally 可安全归还池。
-            using var raw = SKImage.FromPixelCopy(info, pixels, rowBytes);
-            SKImage blurred;
-            using (var surface = SKSurface.Create(info))
-            {
-                var off = surface.Canvas;
-                off.Clear(SKColors.Transparent);
-                using var blur = SKImageFilter.CreateBlur(sigmaPx, sigmaPx, SKShaderTileMode.Clamp, null);
-                using SKPaint paint = new();
-                paint.ImageFilter = blur;
-                paint.BlendMode = SKBlendMode.Src;
-                off.DrawImage(raw, 0, 0, new(SKFilterMode.Linear), paint);
-                off.Flush();
-                blurred = surface.Snapshot();
-            }
+            var captured = SKImage.FromPixelCopy(info, pixels, rowBytes);
 
             _backdrop?.Dispose();
-            _backdrop = blurred;
+            _backdrop = captured;
             InvalidateVisual();
         }
         finally
@@ -385,6 +411,8 @@ public class BlurBackdrop : ContentControl
         SKImage backdrop,
         Vector controlOffsetPx,
         Vector controlSizePx,
+        double blurRadius,
+        double scaling,
         Color tint,
         float tintOpacity) : ICustomDrawOperation
     {
@@ -405,6 +433,20 @@ public class BlurBackdrop : ContentControl
             using var lease = leaseFeature.Lease();
             var canvas = lease.SkCanvas;
 
+            // GPU 模糊整张捕获图（含 margin，边缘不衰减）；无 GPU 上下文时回退 CPU surface。
+            var sigmaPx = (float)(blurRadius * scaling);
+            SKImageInfo info = new(backdrop.Width, backdrop.Height, backdrop.ColorType, backdrop.AlphaType);
+            using var surface = CreateBlurSurface(info, lease.GrContext);
+            var off = surface.Canvas;
+            off.Clear(SKColors.Transparent);
+            using (var blur = SKImageFilter.CreateBlur(sigmaPx, sigmaPx, SKShaderTileMode.Clamp, null))
+            using (var paint = new SKPaint { ImageFilter = blur, BlendMode = SKBlendMode.Src })
+            {
+                off.DrawImage(backdrop, 0, 0, new(SKFilterMode.Linear), paint);
+            }
+            off.Flush();
+            using var blurred = surface.Snapshot();
+
             SKRect src = new(
                 (float)controlOffsetPx.X,
                 (float)controlOffsetPx.Y,
@@ -414,12 +456,24 @@ public class BlurBackdrop : ContentControl
             if (src.Width <= 0 || src.Height <= 0)
                 return;
 
-            canvas.DrawImage(backdrop, src, dst, new SKSamplingOptions(SKFilterMode.Linear));
+            canvas.DrawImage(blurred, src, dst, new SKSamplingOptions(SKFilterMode.Linear));
 
             var a = (byte)Math.Clamp(tint.A * tintOpacity, 0, 255);
             using SKPaint tintPaint = new();
             tintPaint.Color = new(tint.R, tint.G, tint.B, a);
             canvas.DrawRect(dst, tintPaint);
+        }
+
+        private static SKSurface CreateBlurSurface(SKImageInfo info, GRContext? grContext)
+        {
+            if (grContext is not null)
+            {
+                var gpu = SKSurface.Create(grContext, false, info);
+                if (gpu is not null)
+                    return gpu;
+            }
+
+            return SKSurface.Create(info);
         }
     }
 
