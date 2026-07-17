@@ -60,57 +60,39 @@ public static class Startup
                                                                switch (proxyMode)
                                                                {
                                                                    case ProxyMode.Auto:
-                                                                       // Use system proxy (default behavior)
                                                                        handler.UseProxy = true;
-                                                                       handler.UseDefaultCredentials = true;
+                                                                       handler.DefaultProxyCredentials =
+                                                                           CredentialCache.DefaultCredentials;
                                                                        break;
 
                                                                    case ProxyMode.Manual:
-                                                                       // Use manually configured proxy
-                                                                       if (!string.IsNullOrEmpty(config
-                                                                              .NetworkProxyAddress))
-                                                                       {
-                                                                           var protocol = (ProxyProtocol)config
-                                                                              .NetworkProxyProtocol;
-                                                                           var proxyUri = protocol switch
-                                                                           {
-                                                                               ProxyProtocol.Socks4 =>
-                                                                                   new($"socks4://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
-                                                                               ProxyProtocol.Socks5 =>
-                                                                                   new($"socks5://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
-                                                                               _ => new
-                                                                                   Uri($"http://{config.NetworkProxyAddress}:{config.NetworkProxyPort}"),
-                                                                           };
+                                                                       var protocol = (ProxyProtocol)config
+                                                                          .NetworkProxyProtocol;
+                                                                       var proxy = new WebProxy(BuildProxyUri(
+                                                                           protocol,
+                                                                           config.NetworkProxyAddress,
+                                                                           config.NetworkProxyPort
+                                                                       )) { Credentials = !string.IsNullOrEmpty(config
+                                                                                             .NetworkProxyUsername)
+                                                                                              ? new NetworkCredential(config.NetworkProxyUsername,
+                                                                                                  config.NetworkProxyPassword)
+                                                                                              : null
+                                                                       };
 
-                                                                           var proxy = new WebProxy(proxyUri);
-
-                                                                           // Set credentials if username is provided
-                                                                           if (!string.IsNullOrEmpty(config
-                                                                                  .NetworkProxyUsername))
-                                                                           {
-                                                                               proxy.Credentials =
-                                                                                   new NetworkCredential(config
-                                                                                          .NetworkProxyUsername,
-                                                                                       config.NetworkProxyPassword);
-                                                                           }
-
-                                                                           handler.Proxy = proxy;
-                                                                           handler.UseProxy = true;
-                                                                       }
-
+                                                                       handler.Proxy = proxy;
+                                                                       handler.UseProxy = true;
                                                                        break;
 
                                                                    case ProxyMode.Disabled:
-                                                                       // Direct connection, no proxy
                                                                        handler.UseProxy = false;
                                                                        break;
                                                                }
                                                            }
                                                            else
                                                            {
-                                                               // Default: use system proxy
                                                                handler.UseProxy = true;
-                                                               handler.UseDefaultCredentials = true;
+                                                               handler.DefaultProxyCredentials =
+                                                                   CredentialCache.DefaultCredentials;
                                                            }
                                                        }
                                                        catch
@@ -228,6 +210,14 @@ public static class Startup
            .AddSingleton<SkinRenderer>()
            .AddSingleton<SkinRenderService>();
     }
+
+    private static Uri BuildProxyUri(ProxyProtocol protocol, string address, uint port) =>
+        protocol switch
+        {
+            ProxyProtocol.Socks4 => new($"socks4://{address}:{port}"),
+            ProxyProtocol.Socks5 => new($"socks5://{address}:{port}"),
+            _ => new($"http://{address}:{port}"),
+        };
 
     public static bool InitializeUnhostedServices()
     {
