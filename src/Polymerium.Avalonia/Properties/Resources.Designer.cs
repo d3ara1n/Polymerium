@@ -69,6 +69,30 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string MainWindow_UpdateFoundNotificationMessage {
+            get {
+                return ResourceManager.GetString("MainWindow_UpdateFoundNotificationMessage", resourceCulture);
+            }
+        }
+        
+        public static string MainWindow_UpdateFoundNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_UpdateFoundNotificationTitle", resourceCulture);
+            }
+        }
+        
+        public static string MainWindow_UpdateLatestNotificationMessage {
+            get {
+                return ResourceManager.GetString("MainWindow_UpdateLatestNotificationMessage", resourceCulture);
+            }
+        }
+        
+        public static string MainWindow_UpdateLatestNotificationTitle {
+            get {
+                return ResourceManager.GetString("MainWindow_UpdateLatestNotificationTitle", resourceCulture);
+            }
+        }
+        
         public static string MainWindow_InstanceFilterPlaceholder {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceFilterPlaceholder", resourceCulture);

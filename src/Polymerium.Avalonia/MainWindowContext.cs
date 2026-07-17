@@ -287,6 +287,23 @@ public partial class MainWindowContext : ObservableObject
         try
         {
             await _updateService.CheckUpdateAsync();
+            switch (_updateService.UpdateState)
+            {
+                case AppUpdateState.Found when _updateService.CurrentUpdate is { } update:
+                    _notificationService.PopMessage(
+                        string.Format(Resources.MainWindow_UpdateFoundNotificationMessage, update.Version),
+                        Resources.MainWindow_UpdateFoundNotificationTitle,
+                        GrowlLevel.Success
+                    );
+                    break;
+                case AppUpdateState.Latest:
+                    _notificationService.PopMessage(
+                        Resources.MainWindow_UpdateLatestNotificationMessage,
+                        Resources.MainWindow_UpdateLatestNotificationTitle,
+                        GrowlLevel.Information
+                    );
+                    break;
+            }
         }
         catch (Exception ex)
         {
