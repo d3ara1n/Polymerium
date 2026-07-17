@@ -224,6 +224,11 @@ public class InstanceService
 
         if (_instanceManager.IsInUse(key))
         {
+            _notificationService.PopMessage(
+                Resources.InstancePropertiesPage_ResetInUseWarningNotificationMessage,
+                Resources.InstancePropertiesPage_ResetInUseWarningNotificationTitle.Replace("{0}", key),
+                GrowlLevel.Warning,
+                thumbnail: ThumbnailHelper.ForInstance(key));
             return;
         }
 
@@ -243,7 +248,7 @@ public class InstanceService
 
             _persistenceService.AppendAction(new() { Key = key, Kind = PersistenceService.ActionKind.Reset });
             _notificationService.PopMessage(
-                "Instance reset",
+                Resources.InstancePropertiesPage_ResetSuccessNotificationMessage,
                 key,
                 GrowlLevel.Success,
                 thumbnail: ThumbnailHelper.ForInstance(key));

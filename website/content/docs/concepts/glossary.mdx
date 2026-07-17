@@ -1,0 +1,63 @@
+---
+title: Glossary
+description: Polymerium terms in plain language so deployment, directories, packages, and runtime behavior are easier to reason about.
+---
+
+Polymerium has a few terms that are specific to its metadata-driven model. This glossary keeps the product language consistent and explains what each term means in practice.
+
+## Core Terms
+
+| Term | Meaning |
+|------|---------|
+| **Instance** | A Minecraft environment managed by Polymerium, including its profile and managed directories. |
+| **Profile** | The metadata that defines an instance: Minecraft version, mod loader, packages, rules, and settings. |
+| **Modpack** | A distributable collection of packages, configuration, and source files. |
+| **Package** | A managed reference to content from a repository. Packages include mods, resource packs, shader packs, data packs, and worlds. |
+| **Asset** | A physical file managed by Polymerium, such as a config file, screenshot, log, library, or version file. |
+| **Resource repository** | A service or source that hosts packages and versions, such as Modrinth or CurseForge. |
+| **Pref** | A package reference, often written as a `pref://` URI, that identifies a repository package or version. |
+
+## Lifecycle
+
+| Term | Meaning |
+|------|---------|
+| **Deploy** | Prepare the runnable game directory from the instance profile, packages, Pack Source, and Local Data. Deployment prepares files; it does not start Minecraft. |
+| **Launch** | Start Minecraft. Launching may trigger deployment first, but launch and deploy are different operations. |
+| **Reset** | Clear the Run Directory and deployment lock so Polymerium can deploy it again. Reset can permanently delete saves, screenshots, logs, and game or mod configuration unless they were already moved to Local Data. |
+| **Snapshot** | A restorable state containing the instance profile and Polymerium-managed data. A snapshot is lighter than a full backup and does not automatically capture every unmanaged file in the Run Directory. |
+| **Shared Cache** | Reusable downloaded packages, Minecraft assets, libraries, and runtime files shared by instances. Cache entries are not user data. |
+
+## Directories
+
+Use the product name and the physical folder together on first mention.
+
+| Term | Folder | Meaning |
+|------|--------|---------|
+| **Pack Source** | `import/` | Authoritative files supplied by a modpack or prepared for export. Modpack updates may replace it; reset does not delete it. |
+| **Local Data** | `persist/` | User-managed data that survives reset and modpack updates. Data is protected only after you explicitly place it here. |
+| **Run Directory** | `build/` | The deployed game directory that Minecraft reads and writes. It may contain saves, screenshots, logs, and generated configuration. Reset clears it. |
+| **Working Copy** | part of `build/` | The runtime copy of files that came from Pack Source. Workspace compares this copy with Pack Source. |
+
+## Tools And Rules
+
+| Term | Meaning |
+|------|---------|
+| **Workspace** | A tool for comparing Pack Source with its Working Copy and synchronizing selected changes. |
+| **Sync to Import** | Move a selected Working Copy change into Pack Source so it becomes part of the modpack. |
+| **Deployment Rule** | A rule that changes how matching packages are deployed. |
+| **Selector** | The condition that chooses which packages a deployment rule applies to. |
+| **Rule Action** | The effect applied by a matched deployment rule, such as skipping or redirecting a package. |
+
+## Runtime And Accounts
+
+| Term | Meaning |
+|------|---------|
+| **Minecraft version** | The selected version of Minecraft itself. |
+| **Mod loader** | Fabric, Forge, NeoForge, Quilt, or another system that loads mods. |
+| **Loader libraries** | Files required by the mod loader. They are not the same as the Java runtime. |
+| **Java runtime** | The Java installation and executable used to start Minecraft. |
+| **Game account** | A Microsoft, offline, trial, or external-auth account used to launch the game. |
+
+## Data Safety Rule
+
+Reset is a repair operation, not harmless cleanup. Anything important that only exists in the Run Directory can be lost. Move saves, screenshots, custom options, and other personal data into Local Data before you reset or rebuild aggressively.

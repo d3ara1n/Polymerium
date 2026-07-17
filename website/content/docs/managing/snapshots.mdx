@@ -1,6 +1,6 @@
 ---
 title: Snapshots
-description: Save, restore, and compare your entire game state. Experiment freely — you can always go back.
+description: Save, restore, and compare Polymerium-managed instance state before risky changes.
 ---
 
 ## What Are Snapshots?
@@ -50,7 +50,7 @@ This is useful for understanding what a mod update or config change actually did
 
 ## Snapshot Storage
 
-Snapshots store the actual profile setup data and directory file contents — not references to a cache. This means snapshots are self-contained and can be restored even if the shared cache has been cleared.
+Snapshots store the actual profile setup data and managed directory file contents — not references to a cache. Restoring a snapshot does not require the shared cache for the captured metadata and directories, but a later deploy may still redownload packages, Minecraft assets, libraries, or runtime files that are no longer cached.
 
 ## Snapshots vs. Backups
 

@@ -61,7 +61,7 @@ trident --mcp
 | `instance_create` | 创建新实例 |
 | `instance_delete` | 删除实例 |
 | `instance_unlock` | 解除导入实例的源绑定 |
-| `instance_reset` | 重置构建（清除 build/） |
+| `instance_reset` | 清空运行目录（`build/`）；未放入本地保留（`persist/`）的数据会丢失 |
 | `instance_export` | 将实例导出为整合包 |
 | `instance_import` | 导入整合包文件 |
 
@@ -69,13 +69,13 @@ trident --mcp
 
 | 工具 | 说明 |
 |------|-------------|
-| `package_list` | 列出已安装的模组 |
-| `package_search` | 搜索 CurseForge / Modrinth |
-| `package_add` | 通过 pref 添加模组 |
-| `package_inspect` | 查看模组详情 |
-| `package_enable` / `package_disable` | 切换模组状态 |
-| `package_dependency_list` | 列出模组的依赖项 |
-| `package_dependent_list` | 列出依赖于指定模组的其他模组 |
+| `package_list` | 列出已安装的包 |
+| `package_search` | 在 CurseForge / Modrinth 搜索包 |
+| `package_add` | 通过 Pref 添加包 |
+| `package_inspect` | 查看包详情 |
+| `package_enable` / `package_disable` | 切换包状态 |
+| `package_dependency_list` | 列出包的依赖项 |
+| `package_dependent_list` | 列出依赖于指定包的其他包 |
 | `package_version_list` | 列出可用版本 |
 | `package_version_set` | 固定特定版本 |
 

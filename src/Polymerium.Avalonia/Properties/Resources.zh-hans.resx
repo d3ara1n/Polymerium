@@ -220,10 +220,19 @@
         <value>这些设置一旦应用无法恢复</value>
     </data>
     <data name="InstancePropertiesPage_ResetConfirmationTitle" xml:space="preserve">
-        <value>重置实例</value>
+        <value>重置实例并清空运行目录</value>
     </data>
     <data name="InstancePropertiesPage_ResetConfirmationMessage" xml:space="preserve">
-        <value>运行目录会被清空，仅保存在其中的改动将被丢弃；导入和持久化数据会被保留。</value>
+        <value>重置会永久删除运行目录（build）中的游戏数据，包括存档、截图、日志，以及 Minecraft 或模组生成的配置。只有已经放入“本地保留”（persist）的数据会保留下来；整合包源（import）不会被删除。继续前请先备份或移动要保留的内容。</value>
+    </data>
+    <data name="InstancePropertiesPage_ResetInUseWarningNotificationTitle" xml:space="preserve">
+        <value>无法重置 {0}</value>
+    </data>
+    <data name="InstancePropertiesPage_ResetInUseWarningNotificationMessage" xml:space="preserve">
+        <value>该实例正在运行或有其他操作进行中。停止后再重试。</value>
+    </data>
+    <data name="InstancePropertiesPage_ResetSuccessNotificationMessage" xml:space="preserve">
+        <value>运行目录已重置</value>
     </data>
     <data name="InstancePropertiesPage_DeleteConfirmationTitle" xml:space="preserve">
         <value>删除实例</value>
@@ -1051,10 +1060,10 @@
         <value>部署 {0} 失败</value>
     </data>
     <data name="MainWindow_InstanceDeployingBuildArtifactConflictDangerNotificationMessage" xml:space="preserve">
-        <value>运行目录中存在旧版导入投影或本地改动留下的文件，阻止了部署所需的链接创建。请重置实例后重新部署。重置会清空运行目录并丢弃仅保存在其中的改动，但会保留导入和持久化数据。</value>
+        <value>部署无法继续，因为运行目录（build）里已有 Polymerium 需要接管的文件。它们可能来自旧版本导入、手动修改，或上一次部署留下的工作副本。重置可以修复运行目录，但会永久删除其中的存档、游戏配置和其他数据。只有已经放入“本地保留”（persist）的数据会保留。</value>
     </data>
     <data name="MainWindow_InstanceDeployingBuildArtifactConflictResetActionText" xml:space="preserve">
-        <value>重置实例</value>
+        <value>重置...</value>
     </data>
     <data name="MainWindow_JavaRuntimeNotFoundDangerNotificationTitle" xml:space="preserve">
         <value>未找到 {0} 所需的 Java 运行环境</value>

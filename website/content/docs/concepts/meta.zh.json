@@ -3,6 +3,7 @@
   "pages": [
     "metadata-driven",
     "directory-model",
-    "deploy-explained"
+    "deploy-explained",
+    "glossary"
   ]
 }

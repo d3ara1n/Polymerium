@@ -229,10 +229,19 @@
         <value>These settings are applied instantly and can't be recovered</value>
     </data>
     <data name="InstancePropertiesPage_ResetConfirmationTitle" xml:space="preserve">
-        <value>Reset Instance</value>
+        <value>Reset instance and clear the run directory</value>
     </data>
     <data name="InstancePropertiesPage_ResetConfirmationMessage" xml:space="preserve">
-        <value>The run folder will be cleared, discarding changes stored only there. Imported and persistent data will be preserved.</value>
+        <value>Resetting permanently deletes game data in the run directory (build), including saves, screenshots, logs, and configuration created by Minecraft or mods. Only data already placed in Local Data (persist) is preserved; the Pack Source (import) is not deleted. Back up or move anything you want to keep before continuing.</value>
+    </data>
+    <data name="InstancePropertiesPage_ResetInUseWarningNotificationTitle" xml:space="preserve">
+        <value>Cannot reset {0}</value>
+    </data>
+    <data name="InstancePropertiesPage_ResetInUseWarningNotificationMessage" xml:space="preserve">
+        <value>The instance is running or another operation is in progress. Stop it and try again.</value>
+    </data>
+    <data name="InstancePropertiesPage_ResetSuccessNotificationMessage" xml:space="preserve">
+        <value>The run directory has been reset</value>
     </data>
     <data name="InstancePropertiesPage_DeleteConfirmationTitle" xml:space="preserve">
         <value>Delete Instance</value>
@@ -1060,10 +1069,10 @@
         <value>Failed to deploy {0}</value>
     </data>
     <data name="MainWindow_InstanceDeployingBuildArtifactConflictDangerNotificationMessage" xml:space="preserve">
-        <value>The run folder contains files left by an older import projection or local changes that block the links needed for deployment. Reset the instance, then deploy it again. Resetting clears the run folder and discards changes stored only there while preserving import and persistent data.</value>
+        <value>Deployment cannot continue because the run directory (build) contains files Polymerium needs to manage. They may come from an older import, manual changes, or a working copy left by a previous deployment. Resetting can repair the run directory, but it permanently deletes saves, game configuration, and other data stored there. Only data already placed in Local Data (persist) is preserved.</value>
     </data>
     <data name="MainWindow_InstanceDeployingBuildArtifactConflictResetActionText" xml:space="preserve">
-        <value>Reset instance</value>
+        <value>Reset...</value>
     </data>
     <data name="MainWindow_JavaRuntimeNotFoundDangerNotificationTitle" xml:space="preserve">
         <value>Java runtime required by {0} was not found</value>

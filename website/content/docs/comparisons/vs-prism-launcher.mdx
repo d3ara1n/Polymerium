@@ -41,23 +41,23 @@ Polymerium and Prism Launcher are both open-source Minecraft launchers that supp
 | Feature | Polymerium | Prism Launcher |
 |---------|:----------:|:--------------:|
 | **Instance definition** | Single `profile.json` file | `instance.cfg` + full folder structure |
-| **File organization** | import / persist / build | Single `.minecraft` folder |
-| **Reset/rebuild** | Clear `build/`, redeploy from metadata | Manual file deletion/reimport |
+| **File organization** | Pack Source (`import/`) / Local Data (`persist/`) / Run Directory (`build/`) | Single `.minecraft` folder |
+| **Reset/rebuild** | Clear the Run Directory, then redeploy from metadata | Manual file deletion/reimport |
 | **Modpack updates** | In-place, `import/` replaced, `persist/` preserved | Import new copy (duplicates files) |
 
 **Polymerium's directory model:**
 
 ```
 instances/my-pack/
-├── import/    ← Modpack source
-├── persist/   ← User-preserved files (survives updates)
-└── build/     ← Final game directory (disposable)
+├── import/    ← Pack Source
+├── persist/   ← Local Data you explicitly preserve
+└── build/     ← Run Directory Minecraft writes to
 ```
 
 This separation means:
-- Modpack updates don't overwrite your custom settings (`persist/`)
-- Resetting doesn't delete your world saves (`persist/saves/`)
-- The game directory (`build/`) is rebuildable from metadata
+- Modpack updates don't overwrite data you've placed in Local Data (`persist/`)
+- Resets can delete saves stored only in the Run Directory (`build/`), so worlds must be moved to `persist/saves/` before they are protected
+- Reproducible game files in the Run Directory can be rebuilt from metadata and cache
 
 ---
 
@@ -134,7 +134,7 @@ This redirects all CurseForge datapacks to a custom folder — useful for differ
 
 | Feature | Polymerium | Prism Launcher |
 |---------|:----------:|:--------------:|
-| **Snapshots** | ✅ Save/restore/diff entire game states | ❌ |
+| **Snapshots** | ✅ Save/restore/diff managed instance state | ❌ |
 | **CLI** | ✅ 30+ commands (`trident`) | ❌ |
 | **MCP Mode** | ✅ AI Agent integration (30+ tools) | ❌ |
 | **Crash diagnostics** | ✅ 3-stage error classification + AI analysis | ⚠️ Basic crash log |
@@ -210,7 +210,7 @@ Polymerium is the **only Minecraft launcher with built-in MCP support**. Run `tr
 
 ### Snapshots & Diff
 
-Save the entire game state before making changes, then restore or compare later. Great for:
+Save managed instance state before making changes, then restore or compare later. Great for:
 
 - Testing mod updates
 - Experimenting with configurations
