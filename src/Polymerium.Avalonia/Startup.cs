@@ -256,13 +256,11 @@ public static class Startup
                 {
                     options.Release = "In Dev";
                     options.Debug = true;
-                    options.ProfilesSampleRate = 1.0f;
                     options.TracesSampleRate = 1.0f;
                 }
                 else
                 {
                     options.Release = Program.Version;
-                    options.ProfilesSampleRate = 0.1f;
                     options.TracesSampleRate = 0.1f;
                 }
 
@@ -287,6 +285,13 @@ public static class Startup
     private static void OnIpcReceived(SingleInstance.Message message)
     {
         if (message.Action != "activate")
+            return;
+
+        // NOTE: ApplicationLifetime 在 StartWithClassicDesktopLifetime 内部才赋值。在那之前碰
+        //  Dispatcher.UIThread 会在当前 IPC 监听线程上懒构造 Dispatcher 并绑死 owner，随后
+        //  Win32Platform.Initialize 的 VerifyAccess 会因主线程≠监听线程而抛异常崩溃（POLYMERIUM-28）。
+        //  框架尚未就绪时丢弃这次激活即可——此时主窗口还没创建，无事可激活。
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime)
             return;
 
         Dispatcher.UIThread.Post(() =>
