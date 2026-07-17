@@ -5,15 +5,17 @@ description: What happens when you click "Deploy" — how Polymerium turns your 
 
 ## What Deploy Does
 
-Deploy turns your instance metadata — the Minecraft version, loader, and mod list — into a runnable game directory. Think of it as building your game from a recipe: the metadata is the recipe, and the deployed `build/` folder is the meal.
+Deploy turns your instance metadata — the Minecraft version, mod loader, and package list — into a runnable Run Directory (`build/`). Think of it as building your game from a recipe: the metadata is the recipe, and the deployed Run Directory is what Minecraft actually opens.
+
+See the [Glossary →](/docs/concepts/glossary) for Polymerium's terms like Pack Source, Local Data, Run Directory, and Working Copy.
 
 ## What Gets Downloaded
 
 On your first deploy, Polymerium downloads everything needed to run your game:
 
 - **Minecraft itself** — the version JAR and assets from Mojang's servers
-- **Loader libraries** — Fabric, Forge, NeoForge, or Quilt runtime files
-- **Mods** — resolved from CurseForge and Modrinth, including any dependencies
+- **Loader libraries** — Fabric, Forge, NeoForge, or Quilt files needed by the mod loader
+- **Packages** — mods and other package types resolved from CurseForge and Modrinth, including any dependencies
 
 All of these are stored in a **shared cache** on your disk. Once downloaded, they're never downloaded again — any instance can reuse them.
 
@@ -21,7 +23,7 @@ All of these are stored in a **shared cache** on your disk. Once downloaded, the
 
 Instead of copying mod files into each instance, Polymerium creates symbolic links from the shared cache into your `build/` directory. If you have five instances all using Sodium, there's only one copy of Sodium on your disk — every instance just links to it.
 
-Files from your `import/` and `persist/` directories are also layered into `build/` in priority order. See [Directory Model →](/docs/concepts/directory-model) for how that works.
+Files from your Pack Source (`import/`) and Local Data (`persist/`) directories are also layered into the Run Directory (`build/`) in priority order. See [Directory Model →](/docs/concepts/directory-model) for how that works.
 
 ## Fast Deploys
 

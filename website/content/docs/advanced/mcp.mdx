@@ -61,7 +61,7 @@ Any client that supports MCP over stdio can connect. The server speaks the stand
 | `instance_create` | Create a new instance |
 | `instance_delete` | Delete an instance |
 | `instance_unlock` | Unlock an imported instance's source binding |
-| `instance_reset` | Reset the build (clear build/) |
+| `instance_reset` | Clear the Run Directory (`build/`); data not already in Local Data (`persist/`) is lost |
 | `instance_export` | Export instance as a modpack |
 | `instance_import` | Import a modpack file |
 
@@ -69,13 +69,13 @@ Any client that supports MCP over stdio can connect. The server speaks the stand
 
 | Tool | Description |
 |------|-------------|
-| `package_list` | List installed mods |
-| `package_search` | Search CurseForge / Modrinth |
-| `package_add` | Add a mod by pref |
-| `package_inspect` | View mod details |
-| `package_enable` / `package_disable` | Toggle mods |
-| `package_dependency_list` | List a mod's dependencies |
-| `package_dependent_list` | List mods that depend on a given mod |
+| `package_list` | List installed packages |
+| `package_search` | Search CurseForge / Modrinth for packages |
+| `package_add` | Add a package by Pref |
+| `package_inspect` | View package details |
+| `package_enable` / `package_disable` | Toggle packages |
+| `package_dependency_list` | List a package's dependencies |
+| `package_dependent_list` | List packages that depend on a given package |
 | `package_version_list` | List available versions |
 | `package_version_set` | Pin a specific version |
 

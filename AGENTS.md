@@ -7,6 +7,9 @@
 - `submodules/Trident.Net` is a git submodule and is part of the solution build. Treat it as an integral part of this project: it participates in the same development workflow and should be edited freely alongside the main codebase. Do not treat submodule changes as out-of-scope — feel free to modify files under `submodules/Trident.Net` when the task requires it. `Huskui.Avalonia` is consumed as a NuGet package, not a submodule.
 - Fresh clones need submodules initialized: `git submodule update --init --recursive`.
 - `plans/` holds task blueprints — independent design docs written so a fresh session can pick up a task from the plan alone, without re-deriving the decisions or reconstructing progress from code. See `plans/README.md` for the writing conventions; treat `plans/archived/` as a graveyard (no reference value, do not read).
+- `GLOSSARY.md` defines canonical user-facing Polymerium terminology. Follow it when writing app strings, docs, changelog entries, issue text, or support messages.
+
+@GLOSSARY.md
 
 ## Documentation Website
 

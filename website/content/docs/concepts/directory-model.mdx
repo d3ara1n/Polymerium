@@ -9,12 +9,14 @@ Every instance in Polymerium has three directories. Each has a different job and
 
 ```
 instances/my-modpack/
-├── import/     ← Files that ship with the modpack (authoritative source)
-├── persist/    ← Files you choose to preserve across resets and updates
-└── build/      ← The deployed game directory (what Minecraft runs from)
+├── import/     ← Pack Source: files that ship with the modpack
+├── persist/    ← Local Data: files you explicitly choose to preserve
+└── build/      ← Run Directory: the game directory Minecraft writes to
 ```
 
-### `import/` — The Modpack Source
+These names appear throughout Polymerium. See the [Glossary →](/docs/concepts/glossary) for the full terminology.
+
+### `import/` — Pack Source
 
 This is what the modpack author intended. When you import a modpack, its files land here — configs, default options, custom resources, etc.
 
@@ -22,11 +24,11 @@ This is what the modpack author intended. When you import a modpack, its files l
 - **When it changes:** When you update or re-import the modpack
 - **What it's for:** The authoritative, distributable version of the modpack's files
 
-### `persist/` — User-Managed Persistence
+### `persist/` — Local Data
 
-This directory is **yours**. Polymerium doesn't write to it automatically — you decide what goes here.
+This directory is **yours**, but Polymerium does not automatically move personal data into it. You decide what goes here.
 
-The idea is simple: some files are too important to lose on reset or modpack update. Maybe your `options.txt` has sensitivity settings you spent an hour dialing in, or your `saves/` directory has a world you can't afford to lose. You move those files into `persist/` yourself.
+The important rule is simple: files survive reset and modpack updates only after they are placed in `persist/`. Your `saves/` directory, screenshots, options, and mod-generated configs usually start in `build/`, which means reset can delete them until you move the ones you care about into `persist/`.
 
 **How it works:**
 
@@ -37,15 +39,16 @@ The idea is simple: some files are too important to lose on reset or modpack upd
 - **Who writes it:** You
 - **When it changes:** When you decide to add or update files
 - **What it's for:** Files you want to survive resets, modpack updates, and rebuilds
+- **What it is not:** Automatic backup. Data only becomes protected after you put it here.
 
-### `build/` — The Deployed Game
+### `build/` — Run Directory
 
 This is the final game directory — what Minecraft sees as `.minecraft`. It's assembled from the other layers during deploy. When you play, the game reads and writes here.
 
 - **Who writes it:** Polymerium's deploy engine, and the game while you play
 - **When it changes:** Every deploy, and every play session
 - **What it's for:** The runnable game directory
-- **Can you delete it?** Yes — but anything that only exists in `build/` and isn't backed by `persist/` or `import/` will be lost. Files you've moved to `persist/` are always safe. Everything else gets rebuilt from the metadata and cache.
+- **Can you delete it?** Only with care. Reset clears `build/`, and anything that only exists there can be permanently lost, including saves, screenshots, logs, and game or mod configuration. Files you've moved to `persist/` are safe. Files from `import/`, packages, metadata, and cache can be rebuilt or relinked.
 
 ## How They Relate
 
@@ -58,8 +61,8 @@ persist/ ──────────→  build/
 During deploy, files are layered into `build/` in this order:
 
 1. **Cached files** — mods, libraries, assets (symlinked from cache)
-2. **`import/` files** — modpack source files
-3. **`persist/` files** — your preserved files (highest priority, always wins)
+2. **Pack Source (`import/`) files** — modpack source files
+3. **Local Data (`persist/`) files** — your preserved files (highest priority, always wins)
 
 If the same file exists in both `import/` and `persist/`, the `persist/` version takes precedence in `build/`.
 
@@ -67,18 +70,18 @@ If the same file exists in both `import/` and `persist/`, the `persist/` version
 
 | Operation | `import/` | `persist/` | `build/` |
 |-----------|:---------:|:----------:|:--------:|
-| **Deploy** | Read | Read | Rebuilt |
+| **Deploy** | Read | Read | Rebuilt or updated |
 | **Play game** | Unchanged | Unchanged | Modified |
-| **Reset** | Unchanged | Unchanged | Cleared |
-| **Modpack update** | Replaced | Unchanged | Partially cleared¹ |
+| **Reset** | Unchanged | Unchanged | Cleared; data stored only here is lost |
+| **Modpack update** | Replaced or updated | Unchanged | Import working copy refreshed¹ |
 
 ¹ Clears the import working copy under `build/`, not the whole game directory.
 
 ### Key Takeaways
 
-- **Reset** clears `build/`. Files you've placed in `persist/` are untouched.
-- **Modpack update** replaces `import/` and clears the import working copy under `build/`. `persist/` is preserved — that's the whole point.
-- **`build/`** is disposable as long as anything you care about is backed by `persist/`.
+- **Reset** clears `build/`. This can delete saves and game configuration unless you already moved them to `persist/`.
+- **Modpack update** replaces or updates `import/` and refreshes the import working copy under `build/`. `persist/` is preserved — that's the whole point.
+- **`build/`** is disposable only for data that is backed by `persist/`, `import/`, metadata, packages, or cache. Treat personal data stored only in `build/` as at risk.
 
 ## Why This Matters
 
@@ -88,7 +91,7 @@ This model solves a real tension in modded Minecraft:
 - **Players** want to keep their settings and saves across updates.
 - **Both** want modpack updates to work without losing important data.
 
-Polymerium's answer: separate these concerns into distinct directories with different lifecycles. You control what's preserved — move it to `persist/`, and Polymerium guarantees it survives.
+Polymerium's answer: separate these concerns into distinct directories with different lifecycles. You control what's preserved — move it to `persist/`, and Polymerium guarantees it survives reset and updates.
 
 ## Next Step
 

@@ -465,6 +465,24 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string InstancePropertiesPage_ResetInUseWarningNotificationTitle {
+            get {
+                return ResourceManager.GetString("InstancePropertiesPage_ResetInUseWarningNotificationTitle", resourceCulture);
+            }
+        }
+        
+        public static string InstancePropertiesPage_ResetInUseWarningNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstancePropertiesPage_ResetInUseWarningNotificationMessage", resourceCulture);
+            }
+        }
+        
+        public static string InstancePropertiesPage_ResetSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("InstancePropertiesPage_ResetSuccessNotificationMessage", resourceCulture);
+            }
+        }
+        
         public static string InstancePropertiesPage_DeleteConfirmationTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_DeleteConfirmationTitle", resourceCulture);
