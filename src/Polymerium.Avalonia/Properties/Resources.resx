@@ -36,6 +36,18 @@
     <data name="MainWindow_UpdateAvailableButtonText" xml:space="preserve">
         <value>Update</value>
     </data>
+    <data name="MainWindow_UpdateFoundNotificationMessage" xml:space="preserve">
+        <value>Version {0} is available.</value>
+    </data>
+    <data name="MainWindow_UpdateFoundNotificationTitle" xml:space="preserve">
+        <value>Update available</value>
+    </data>
+    <data name="MainWindow_UpdateLatestNotificationMessage" xml:space="preserve">
+        <value>You are using the latest version.</value>
+    </data>
+    <data name="MainWindow_UpdateLatestNotificationTitle" xml:space="preserve">
+        <value>Up to date</value>
+    </data>
     <data name="MainWindow_InstanceFilterPlaceholder" xml:space="preserve">
         <value>Filter entries by names...</value>
     </data>
