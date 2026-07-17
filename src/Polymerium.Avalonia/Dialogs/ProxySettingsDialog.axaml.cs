@@ -39,13 +39,12 @@ public partial class ProxySettingsDialog : Dialog
             _ => new Uri($"http://{ProxyAddress}:{port}"),
         };
 
-        var proxy = new WebProxy(proxyUri);
-
-        // Set credentials if provided
-        if (!string.IsNullOrEmpty(ProxyUsername))
+        var proxy = new WebProxy(proxyUri)
         {
-            proxy.Credentials = new NetworkCredential(ProxyUsername, ProxyPassword);
-        }
+            Credentials = !string.IsNullOrEmpty(ProxyUsername)
+                ? new NetworkCredential(ProxyUsername, ProxyPassword)
+                : null,
+        };
 
         handler.Proxy = proxy;
         handler.UseProxy = true;
