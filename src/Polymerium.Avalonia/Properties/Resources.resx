@@ -1687,13 +1687,13 @@
         <value>Open Folder</value>
     </data>
     <data name="InstanceStoragePage_BuildFolderLinkText" xml:space="preserve">
-        <value>Run Folder</value>
+        <value>build</value>
     </data>
     <data name="InstanceStoragePage_ImportFolderLinkText" xml:space="preserve">
-        <value>Pack Source</value>
+        <value>import</value>
     </data>
     <data name="InstanceStoragePage_PersistFolderLinkText" xml:space="preserve">
-        <value>Local Data</value>
+        <value>persist</value>
     </data>
     <data name="InstanceStoragePage_GotoExplorerButtonText" xml:space="preserve">
         <value>Go to Resource Explorer</value>
@@ -2962,7 +2962,7 @@ Affected entries: {0}
     <value>Failed to copy text</value>
   </data>
     <data name="InstanceWorkspacePage_ChangesTabToolTip" xml:space="preserve">
-        <value>Shows how files in build differ from the import pack source.</value>
+        <value>Shows how the Run Directory differs from the Pack Source.</value>
     </data>
     <data name="InstanceWorkspacePage_FilesTabText" xml:space="preserve">
         <value>Packed Files</value>

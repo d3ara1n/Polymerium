@@ -71,7 +71,8 @@ Use the product label followed by the physical directory on first mention, for e
 
 ## Writing Rules
 
-- Prefer the canonical product label over exposing only a physical directory name.
+- Use canonical product labels (Run Directory, Pack Source, Local Data) in user-facing UI and documentation. Code and internal identifiers keep the physical names `build`/`import`/`persist`.
+- Physical names may still appear in prose that describes where files actually live — e.g. "files in build", "from the import layer", "stored in persist" — since that states a physical fact rather than naming a concept.
 - Introduce unfamiliar Polymerium concepts with a short plain-language definition, then reuse the term consistently.
 - State data-loss boundaries explicitly. In particular, reset clears the Run Directory and can delete player saves and configuration; only data already in Local Data is guaranteed to survive.
 - Distinguish logical references from physical files: packages are references, assets are files, and mods are one package kind.

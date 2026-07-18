@@ -2953,7 +2953,7 @@
     <value>复制文本失败</value>
   </data>
     <data name="InstanceWorkspacePage_ChangesTabToolTip" xml:space="preserve">
-        <value>查看 build 相对 import 整合包源的文件变化。</value>
+        <value>查看运行目录与整合包源之间的文件差异。</value>
     </data>
     <data name="InstanceWorkspacePage_FilesTabText" xml:space="preserve">
         <value>包含的文件</value>
