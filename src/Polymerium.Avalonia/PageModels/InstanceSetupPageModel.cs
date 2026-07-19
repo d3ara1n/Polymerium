@@ -526,9 +526,9 @@ public partial class InstanceSetupPageModel(
         var kind = this.WhenValueChanged(x => x.FilterKind).Select(BuildKindFilter);
         var tags = filterTags.ToObservableChangeSet().Select(_ => BuildTagFilter(filterTags));
 
-        IList<string> sourceOrders = ProfileManager.TryGetImmutable(Basic.Key, out var profileForOrders)
-            ? profileForOrders.Setup.SourceOrders
-            : Array.Empty<string>();
+        var sourceOrders = ProfileManager.TryGetImmutable(Basic.Key, out var profileForOrders)
+                               ? profileForOrders.Setup.SourceOrders
+                               : Array.Empty<string>();
         var comparer = new PackageListItemComparer(sourceOrders);
 
         var packageFilter = enability

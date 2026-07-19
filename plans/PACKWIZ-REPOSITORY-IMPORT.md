@@ -1,7 +1,7 @@
-# Packwiz 仓库导入：以 Git 仓库为持续数据源
+# Packwiz 仓库导入：把 GitHub 上的 packwiz 仓库作为实例数据源
 
 > 制定日期：2026-07-10
-> 定位：战略级能力。将 packwiz 格式的 GitHub 仓库作为一等公民数据源，实例可绑定远端仓库并持续同步更新，消除「导入一次即结束」的断层。
+> 定位：把 packwiz 格式的 GitHub 仓库接入为一等数据源——实例绑定远端仓库后，可通过 HTTP 检查并拉取更新，消除「导入一次即结束」的断层。
 > 当前状态：未实施
 > Jira：[POLY-125](https://d3ara1n.atlassian.net/browse/POLY-125)
 
@@ -9,130 +9,122 @@
 
 ## 背景与动机
 
-### 现状
+当前导入流程是一次性的：用户拖入 `.mrpack` / `zip`，解压成实例，之后与源再无联系，更新只能靠作者重新发布包、用户重新导入。
 
-当前导入流程是**一次性的**——用户拖入 `.mrpack` / `zip`，解压实例包，之后与源再无联系。实例没有「绑定远端」的概念，更新只能靠作者重新发布 zip、用户重新导入。
+packwiz 是 Minecraft 整合包社区的事实标准格式，核心设计就是 **Git 友好的 TOML 文本目录**——作者在 GitHub 维护 `pack.toml` + `mods/*.pw.toml`，每个 `.pw.toml` 声明 mod 去哪下载、hash 是什么、更新源指向哪（Modrinth / CurseForge）。但 packwiz 本身是纯 CLI，玩家要么装 `packwiz-installer`，要么等作者导出 `.mrpack`——后者再次回到「一次导入」的老路。
 
-packwiz 是 Minecraft 整合包社区的事实标准格式，核心设计就是 **Git 友好的 TOML 文本目录**——作者在 GitHub 维护 `pack.toml` + `mods/*.pw.toml`，每个 `.pw.toml` 描述 mod 去哪下载、hash 是什么、更新源指向哪（Modrinth / CurseForge）。但 packwiz 本身是纯 CLI，玩家要么装 `packwiz-installer`，要么等作者导出 `.mrpack` 发布——后者再次回到「一次导入」的老路。
+打通这条路后，整合包作者可以用 Polymerium 作为 packwiz 仓库的 GUI 前端，实现「仓库 → 实例 → 持续更新」闭环。
 
-### 问题
+## 数据来源与传输方式
 
-- 整合包作者用 Git 维护整合包，但玩家侧的体验仍然是静态 zip
-- 更新流程断裂：作者改一行 `mods/*.pw.toml` 里的版本号 → 玩家不知道、收不到推送
-- Polymerium 已有工作区 git 集成（LibGit2Sharp）、规则引擎、4 种导入格式，唯独缺少「把 Git 仓库本身当数据源」的能力
+全程 **HTTP**，不涉及任何 Git 操作：
 
-### 机会
+- 读元数据（`pack.toml` / 目录结构）：GitHub Contents/Commits REST API
+- 检查更新：GitHub REST API 比对远端 commit/tag 与本地记录
+- 下载整合包快照：GitHub codeload archive（`/archive/{sha}.zip`）
 
-- packwiz 格式天然适合作为多游戏引擎的 modpack 元数据层——它不仅描述 mod 下载，还描述 loader、版本、侧（client/server）
-- 打通这条路后，整合包作者可以用 Polymerium 作为 packwiz 的 GUI 前端，实现「packwiz 仓库 → 实例 → 持续同步」闭环
-- 后续多游戏架构（Hytale/Mindustry）的 modpack 导入也可复用 packwiz 格式的目录结构约定，无需重新设计
+无 clone、无 fetch、无 libgit2 调用。
 
----
+## 目标
 
-## 目标 / 非目标 / 不做的事
+1. 在 `IRepository` 上新增 `IsHidden` 属性；`RepositoryAgent.Labels` 及派生它的搜索/选择器 UI 过滤掉 `IsHidden == true` 的仓库。隐藏仓库不进任何枚举列表，但 `Resolve`/`Query` 等正常生效。
+2. 新增 `PackwizRepository`（`IsHidden = true`）：把整个 packwiz 仓库解析为 `Kind = Modpack` 的 `Project` / `Package`，`Package.Download` 指向 GitHub archive zip。
+3. 新增 URI scheme `pref://packwiz/owner/repo[@ref]`，`@ref` 为 Git tag、分支名或 commit SHA；缺省时取默认分支的最新 commit。
+4. 新增 `PackwizImporter`（`IProfileImporter`，`IndexFileName = "pack.toml"`）：解析 `pack.toml` 得到 Minecraft 版本与 loader，扫描 `mods/`、`resourcepacks/`、`shaderpacks/` 下的 `*.pw.toml` 提取外部包引用，其余文件按相对路径复制到实例 import 目录。
+5. 实例 `Setup.Source` 记录 `pref://packwiz/owner/repo@{resolvedSha}`，作为实例来源标识与后续更新检查的依据。
 
-**目标**
+## 非目标
 
-1. 新增 URI scheme `pref://packwiz/owner/repo[@tag]`，作为 packwiz 仓库的统一标识
-2. 实现 `PackwizRepository`（隐藏 `IRepository`），只支持 `Resolve` 和 `Query`——将整个 packwiz 仓库解析为 `Kind=Modpack` 的 Project/Package，下载地址为 GitHub 对应 tag/commit 的 archive zip
-3. 实现 `PackwizImporter`（`IProfileImporter`），接收仓库 zip 后扫描 `mods/*.pw.toml` 等元数据文件，提取外部包引用（pref）列表供下游 resolve
-4. Importer 同时将非元数据文件（`config/`、`scripts/` 等）按相对路径复制到实例的正确位置
-5. 后续支持实例绑定远端仓库 URL，`git fetch/pull` 检查更新并重新导入
+- **不实现 packwiz 仓库的搜索与枚举。** 隐藏仓库不进列表，`SearchAsync` / `InspectAsync` / `Identify` / `ReadDescription` / `ReadChangelog` 全部抛 `NotSupportedException`（语义：本就不打算支持）。
+- **不在 importer 内下载 mod JAR。** importer 只产出 pref 引用列表（`pref://modrinth/...` / `pref://curseforge/...`），实际下载、版本筛选、hash 校验、缓存全部复用现有 DataService → ModrinthRepository / CurseForgeRepository 链路。
+- **不实现 packwiz 仓库的写入或反向导出。** 只消费标准格式。
+- **不替代表现有的 zip 导入流程。** 两者并行。
 
-**非目标**
+## 关键决策
 
-- 不实现 packwiz 仓库的搜索和枚举（`SearchAsync`/`InspectAsync` 等方法抛不支持）
-- 不实现 packwiz 仓库内单个 mod 的 resolve（mod 只通过 `[update]` 块的外部引用间接 resolve）
-- 不实现通用 Git 仓库支持——仅 packwiz 格式
-- 不实现 packwiz 仓库的写入/导出（从 Polymerium 反向导出为 packwiz 格式）
+### 决策 1：仓库解析为整合包，mod 只产引用
 
-**不做的事**
+`PackwizRepository` 的解析对象是**整个 modpack**（`Kind = Modpack`），不感知仓库内单个 mod。单个 mod 的解析由 `PackwizImporter` 扫描 `.pw.toml` 的 `[update]` 块后，把引用转交给现有仓库完成。
 
-- **不直接下载 mod JAR**——PackwizImporter 只提取引用，不自行下载。JAR 下载由现有的 DataService + ModrinthRepository / CurseForgeRepository 完成
-- **不修改 packwiz 规范**——消费标准格式，不引入 Polymerium 专有扩展字段
-- **不替代表现有的 zip 导入流程**——两者并行，packwiz 仓库是额外数据源，不是替代
+理由：mod 的版本/下载信息在 `.pw.toml` 的 `[update]` 块里已指向 Modrinth/CF，绕过它们在隐藏仓库内部重新聚合是冗余，且 packwiz 元数据不含聚合所需字段。
 
----
-
-## 关键决策与取舍
-
-### 决策 1：仓库作为 modpack，mod 只产引用
-
-PackwizRepository 不感知仓库内的单个 mod。它的 Resolve 对象是**整个 modpack**（Kind=Modpack），下载地址是 GitHub 对应 tag/commit 的 archive zip。单个 mod 的 resolve 由 PackwizImporter 扫描 `.pw.toml` 后提取的 `[update]` 块（Modrinth mod-id / CurseForge project-id）委托给现有仓库完成。
-
-**理由**：避免在 hidden IRepository 内部重复实现 mod 级信息聚合。packwiz 元数据缺少 Author/Summary/Thumbnail 等字段，硬填 Project/Package 记录反而制造残缺数据。
-
-### 决策 2：vid（版本标识）为 Git tag 或 commit SHA
+### 决策 2：vid 为 Git ref，解析为具体 commit SHA
 
 - `pref://packwiz/owner/repo@v1.0.0` → tag
+- `pref://packwiz/owner/repo@main` → 分支
 - `pref://packwiz/owner/repo@abc1234` → commit
-- 无 vid 时取默认分支最新 commit
+- 无 vid → 取默认分支最新 commit
 
-下载 URL 对应 GitHub archive API。
+Resolve/Query 时通过 GitHub Commits API（`GET /repos/{owner}/{repo}/commits/{ref}`）把任意 ref 解析为具体 commit SHA；`Package.Download` 始终用 `/archive/{sha}.zip`，指向不可变快照。记录进 `Setup.Source` 的也是这个解析后的 SHA，作为更新比对的基准。
 
-### 决策 3：PackwizRepository 为隐藏 IRepository
+### 决策 3：元数据经 Contents API 读取，不下载整个 archive
 
-不注册到仓库选择器/搜索列表。不实现 Search / Identify / ReadDescription / ReadChangelog / Inspect。仅 Resolve 和 Query 可正常工作。URI 的解析由 PackwizRepository 自行处理，用户通过显式的 `pref://packwiz/...` 引用触发。
+`QueryAsync` / `ResolveAsync` 只需 `pack.toml` 内容，通过 `GET /repos/{owner}/{repo}/contents/pack.toml?ref={ref}` 读取（返回 base64 内容），无需拉取整个 archive zip。仅在实例真正导入时才下载完整 archive 交给 importer。
 
-### 决策 4：从 packwiz 目录结构到实例文件的映射规则
+### 决策 4：pack.toml 字段映射
 
-| packwiz 目录内容 | 实例映射 |
-|------------------|----------|
-| `mods/*.pw.toml` | 不映射为文件——提取外部包引用，转给 DataService 下载 |
-| `resourcepacks/*.pw.toml` | 同上 |
-| `shaderpacks/*.pw.toml` | 同上 |
-| 其余文件（`config/`、`scripts/` 等） | 按相对路径直接复制到实例的 override 目录 |
+`pack.toml` 只保证 `name`、`author`、`version`、`[versions]`。`Summary`、`Thumbnail`、`Tags`、`DownloadCount`、`Gallery` 等 `Project`/`Package` 必填字段以空值/默认值填充（`Summary = ""`、`Tags = []`、`DownloadCount = 0`、`Gallery = []`）。这些记录只挂在实例来源字段上用于更新判断，不在任何浏览/搜索 UI 展示，空字段无害。
 
-### 决策 5：pack.toml 缺失字段的处理
+`[versions]` 键到 Polymerium loader 身份（`LoaderHelper`）的映射：
 
-`pack.toml` 只保证提供 name、author、version（可选）、versions（minecraft + loader）。Summary、Thumbnail、Tags、DownloadCount、Gallery 等 `Project` 所需字段**不存**。Resolve 结果中这些字段留空或填合理默认值。
+| packwiz `[versions]` 键 | loader 身份 | lurl 示例 |
+|---|---|---|
+| `fabric` | `net.fabricmc` | `net.fabricmc:0.16.9` |
+| `forge` | `net.minecraftforge` | `net.minecraftforge:47.3.0` |
+| `neoforge` | `net.neoforged` | `net.neoforged:20.4.237` |
+| `quilt` | `org.quiltmc` | `org.quiltmc:0.27.1` |
 
----
+`[versions].minecraft` → `Setup.Version`。`pack.toml` 顶层 `name` → `Profile.Name`。
+
+### 决策 5：`.pw.toml` 的 `[update]` 块映射为 pref
+
+| `.pw.toml` 子表 | 产出 pref |
+|---|---|
+| `[update.modrinth]` | `pref://modrinth/{mod-id}@{version}` |
+| `[update.curseforge]` | `pref://curseforge/{project-id}@{file-id}` |
+
+- 一个 `.pw.toml` 正常只含一个 `[update]` 子表；若同时含两个，优先取 modrinth。
+- 无 `[update]` 块（纯 `[download].url` 直链 mod）：跳过，不产出 pref——这类 mod Polymerium 无法追踪，由用户手动处理。
+- `side` 为 `server` 的条目排除（与 `.mrpack` 对 env 的处理一致），`both` / `client` 纳入。
+- CurseForge 的 `project-id` / `file-id` 在 TOML 中是整数，拼 pref 时需转字符串。
+
+### 决策 6：非元数据文件按相对路径复制
+
+`config/`、`scripts/`、`defaultconfigs/` 等非 `*.pw.toml` 文件，按其在仓库内的相对路径复制到实例 import 目录，与 `.mrpack` 的 `overrides/` 处理一致（剥去前缀后原样落盘）。不做 packwiz `index.toml` 的 hash 校验——archive 本身是自洽快照，无需复核。
+
+## 决策 7：派发层用最长公共前缀兼容 wrapper 目录
+
+GitHub codeload archive 永远把内容包进一层 `{repo}-{ref}/` 目录，下载下来的 zip 里是 `my-pack-abc123/pack.toml`，而非根级 `pack.toml`。而 `ImporterAgent` 现在按 `pack.FileNames.Contains(x.IndexFileName)` 字面匹配，根级 index 在带 wrapper 的 archive 里对不上，会识别失败。
+
+不在下载侧重打包，也不让 importer 各自处理（派发失败时 importer 拿不到控制权）。改为在派发层统一兼容：
+
+1. ImporterAgent 扫一遍 `pack.FileNames`，求所有条目的最长公共前缀字符串，再截到最近的 `/` 得到目录边界上的 `prefix`（flat archive 该值为空字符串）。
+2. 派发匹配改为 `pack.FileNames.Contains(prefix + x.IndexFileName)`——prefix 为空时退化为现有根级匹配，对现有 4 个 importer 完全向后兼容。
+3. `prefix` 由 ImporterAgent 在派发前算好，经 `CompressedProfilePack` 暴露给 importer（新增一个只读属性）。importer 构建 `ImportFileNames` 时 `Source` 仍用 zip 全名、`Target` 剥去 `prefix`——与 ModrinthImporter 剥 `overrides/` 同一套路。
+
+这是对「单层 wrapper 归档」的通用兼容，不只服务于 packwiz。
 
 ## 影响面
 
 | 领域 | 影响 |
-|------|------|
-| 包标识解析层（Pref） | 新增 `pref://packwiz/owner/repo[@tag]` 格式的解析与验证 |
-| 仓库抽象层（IRepository） | 新增 PackwizRepository 实现，隐藏不注册 |
-| 导入引擎（IProfileImporter / ImporterAgent） | 新增 PackwizImporter：接受 zip 目录而非压缩包，扫描 `.pw.toml` 提取引用 |
-| 实例元数据 | 增加「源仓库 URL + 当前 commit/tag」字段（后续更新检查用） |
+|---|---|
+| `IRepository` / `RepositoryAgent` | 新增 `IsHidden`；`Labels` 及派生 UI 过滤隐藏仓库 |
+| 仓库抽象 | 新增 `PackwizRepository`（隐藏） |
+| Pref 解析 | 复用现有 `pref://` 语法，无解析层改动；`packwiz` 只是一个新 label |
+| 导入引擎 | 新增 `PackwizImporter`（`IndexFileName = "pack.toml"`）；`ImporterAgent` 派发改为按最长公共前缀匹配 index 文件，兼容单层 wrapper 归档 |
+| 实例元数据 | `Setup.Source` 记录 packwiz pref |
 | 外部服务（DataService） | 无改动——mod 引用走现有 resolve 链路 |
-| 工作区 git 集成 | 后续可将 git fetch/pull 扩展为源同步语义 |
+| 依赖 | 无新增——`Tomlyn 2.10.1` 已在项目内 |
 
----
-
-## 验收标准
+## 验收
 
 | # | 场景 | 期望 |
-|---|------|------|
-| 1 | Resolve `pref://packwiz/comp500/packwiz-example-pack@v1.0.0` | 返回 Kind=Modpack 的 Package，ProjectName 来自 pack.toml name，Download 指向 GH archive zip |
-| 2 | Query 同一个 pref | 返回 Project，含 author、name、minecraft version、loader |
-| 3 | Search 同一个 pref | 抛出 NotSupportedException |
-| 4 | PackwizImporter 接收 GH archive zip | 扫描 mods/*.pw.toml，提取 `[update.modrinth]` / `[update.curseforge]` 为外部 package ref |
-| 5 | 非元数据文件复制 | zip 内的 `config/`、`scripts/` 等文件按相对路径复制到实例 override 目录 |
-| 6 | 无 `[update]` 块的 mod | 跳过，不产生 package ref（用户需手动添加该 mod） |
-| 7 | `pack.toml` 只含必填字段 | Resolve 正常，缺失字段填默认值 |
-| 8 | 实例绑定仓库后检查更新 | `git ls-remote` 比较远端 tag 与本地 commit，提示有新版本 |
-
----
-
-## 备选方案备案
-
-### A. 仓库即包源，而非中转站
-
-**备选**：PackwizRepository 直接 resolve 仓库内每个 `.pw.toml` 为 Package，不经过 importer。
-
-**否决理由**：packwiz 仓库是 modpack 级别的概念，不应承担 mod 级仓库的职责。mod 的下载/版本信息在 `.pw.toml` 的 `[update]` 块中已指向 Modrinth/CF，绕过它们去重新聚合是冗余。且 packwiz 元数据缺少 Project/Package 需要的多个字段，产出的记录残缺。
-
-### B. 同时支持通用 Git 仓库
-
-**备选**：不仅 packwiz，任何 Git 仓库都可作为实例源。
-
-**否决理由**：packwiz 有明确格式约定（`pack.toml` + `index.toml` + `mods/*.pw.toml`），通用 Git 仓库无此约定。先只做 packwiz，后续若有自定义格式需求再扩展。
-
-### C. Importer 内嵌 mod JAR 下载
-
-**备选**：PackwizImporter 直接根据 `.pw.toml` 的 `download.url` 下载 JAR，不经过 DataService 的 resolve 链路。
-
-**否决理由**：需要重复实现 Modrinth/CF API 的版本匹配逻辑（loader/游戏版本筛选），且错过现有缓存、hash 验证、重试等基础设施。不如产出一份 pref 列表，让 DataService 统一处理。
+|---|---|---|
+| 1 | Resolve `pref://packwiz/owner/repo@v1.0.0` | 经 Commits API 解析为 SHA；返回 `Kind = Modpack` 的 `Package`，`Download` 指向 `/archive/{sha}.zip` |
+| 2 | Query 同一 pref | 经 Contents API 读 `pack.toml`；返回 `Project`，含 `name`/`author`/Minecraft 版本/loader |
+| 3 | `SearchAsync` / `InspectAsync` / `Identify` 等 | 抛 `NotSupportedException` |
+| 4 | 隐藏仓库可见性 | `Labels` 与搜索/选择器 UI 不出现 `packwiz` |
+| 5 | `PackwizImporter` 处理 archive | 扫描 `mods/*.pw.toml` 等提取 `[update]` 块为 `Setup.Packages` 中的 pref；非元数据文件按相对路径复制到 import 目录 |
+| 6 | mod 无 `[update]` 块 | 跳过，不产出 pref |
+| 7 | `pack.toml` 仅含必填字段 | Resolve 正常，缺失字段填默认值 |
+| 8 | 实例来源更新检查 | 经 GitHub API 比对 `Setup.Source` 记录的 SHA 与远端当前 ref 的 SHA；不一致提示有更新 |
