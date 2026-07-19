@@ -17,6 +17,7 @@ using Polly;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Rendering;
+using Polymerium.Avalonia.Repositories;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Services.Sinks;
 using Polymerium.Avalonia.Snapshots;
@@ -168,6 +169,7 @@ public static class Startup
            .AddTransient<IProfileImporter, CurseForgeImporter>()
            .AddTransient<IProfileImporter, ModrinthImporter>()
            .AddTransient<IProfileImporter, MultiMcImporter>()
+           .AddTransient<IProfileImporter, PackwizImporter>()
            .AddTransient<IProfileExporter, TridentExporter>()
            .AddTransient<IProfileExporter, CurseForgeExporter>()
            .AddTransient<IProfileExporter, ModrinthExporter>()
