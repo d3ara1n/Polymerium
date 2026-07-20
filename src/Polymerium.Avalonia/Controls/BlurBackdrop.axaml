@@ -20,6 +20,7 @@
         <Setter Property="BlurRadius" Value="16" />
         <Setter Property="TintColor" Value="{DynamicResource BlurBackdropTintColor}" />
         <Setter Property="TintOpacity" Value="1" />
+        <Setter Property="FallbackBrush" Value="{StaticResource FlyoutBackgroundBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <ContentPresenter Name="PART_ContentPresenter" Padding="{TemplateBinding Padding}"
