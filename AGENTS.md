@@ -11,6 +11,15 @@
 
 @GLOSSARY.md
 
+## Trident And Polymerium
+
+This repo bundles two layers in one solution; knowing which is the core shapes every decision.
+
+- **Trident** (`submodules/Trident.Net`) is the **core engine** — the .NET implementation of a declarative Minecraft instance toolchain. It owns every piece of real logic: the data model (`profile.json`, the `build/` + `import/` + `persist/` layering, `pref://` package references), the deploy and run engine, package repositories (Modrinth, CurseForge), account authentication (Microsoft / Xbox Live / Mojang / offline), and modpack import/export (Trident, Modrinth, CurseForge, MultiMC, Packwiz). Core exposes this capability through five managers — `ProfileManager`, `InstanceManager`, `RepositoryAgent`, `ImporterAgent`, `ExporterAgent` — plus DI extensions such as `AddPrismLauncher` / `AddMicrosoft` / `AddMinecraft`. The same core also powers the standalone `trident` CLI and an MCP server (`--mcp`), so Trident is what both the CLI and Polymerium sit on. For the authoritative model and integration guide, read `submodules/Trident.Net/README.md` and `submodules/Trident.Net/AGENTS.md` before working inside the submodule.
+- **Polymerium** (`src/Polymerium.Avalonia`) is the **desktop shell** over Core — a peer to the `trident` CLI, not a re-implementation of Trident's logic. `Polymerium.Avalonia.csproj` references only `TridentCore.Core`, and `Startup.cs` re-registers the exact same Trident services and managers the CLI registers. Because Polymerium and the CLI wrap the same Core — same `profile.json`, same `.trident` data layout, same managers — an instance created or managed by one is directly readable and operable by the other; Polymerium is not a competing instance format, it is the desktop presentation of a Trident instance. Polymerium does **not** re-implement instance management, deployment, repositories, accounts, or import/export — it drives Trident's managers and layers a stylized desktop experience on top: the MVVM page/dialog/modal/toast UI, Huskui theming, local persistence (FreeSql), self-update (Velopack), crash reporting (Sentry), and HTTP caching.
+
+Rule of thumb: when a behavior spans both layers, the real logic almost certainly belongs in Trident, with Polymerium adapting to the new surface — not the other way around.
+
 ## Documentation Website
 
 - The project's public-facing docs site lives at `website/` — a Next.js app built with [Fumadocs](https://fumadocs.dev).
