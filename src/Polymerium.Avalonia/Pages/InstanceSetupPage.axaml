@@ -743,6 +743,23 @@
                                         Header="{x:Static lang:Resources.InstanceSetupPage_ExportListMenuText}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowExport,
                                                               FontSize={StaticResource MediumFontSize}}" />
+                                    <MenuItem Header="-" />
+                                    <MenuItem
+                                        Command="{Binding BatchEnableCommand}"
+                                        Header="{x:Static lang:Resources.InstanceSetupPage_BatchEnableMenuText}"
+                                        Icon="{fie:SymbolIcon Symbol=CheckmarkCircle,
+                                                              FontSize={StaticResource MediumFontSize}}" />
+                                    <MenuItem
+                                        Command="{Binding BatchDisableCommand}"
+                                        Header="{x:Static lang:Resources.InstanceSetupPage_BatchDisableMenuText}"
+                                        Icon="{fie:SymbolIcon Symbol=DismissCircle,
+                                                              FontSize={StaticResource MediumFontSize}}" />
+                                    <MenuItem
+                                        Command="{Binding BatchDeleteCommand}"
+                                        Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                        Header="{x:Static lang:Resources.InstanceSetupPage_BatchDeleteMenuText}"
+                                        Icon="{fie:SymbolIcon Symbol=Delete,
+                                                              FontSize={StaticResource MediumFontSize}}" />
                                 </MenuFlyout>
                             </SplitButton.Flyout>
                             <StackPanel

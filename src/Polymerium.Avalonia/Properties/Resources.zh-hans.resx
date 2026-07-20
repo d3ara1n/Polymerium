@@ -15,9 +15,6 @@
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
-    <data name="MainWindow_BackgroundText" xml:space="preserve">
-        <value>Ciallo～(∠・ω&lt; )⌒★</value>
-    </data>
     <data name="MainWindow_HomeButtonText" xml:space="preserve">
         <value>主页</value>
     </data>
@@ -38,9 +35,6 @@
     </data>
     <data name="MainWindow_UpdateLatestNotificationTitle" xml:space="preserve">
         <value>已是最新版本</value>
-    </data>
-    <data name="MainWindow_InstanceFilterPlaceholder" xml:space="preserve">
-        <value>过滤实例名...</value>
     </data>
     <data name="MainWindow_AccountButtonText" xml:space="preserve">
         <value>账号</value>
@@ -675,6 +669,42 @@
     <data name="InstanceSetupPage_BatchUpdateMenuText" xml:space="preserve">
         <value>批量升级</value>
     </data>
+    <data name="InstanceSetupPage_BatchDeleteMenuText" xml:space="preserve">
+        <value>批量删除</value>
+    </data>
+    <data name="InstanceSetupPage_BatchEnableMenuText" xml:space="preserve">
+        <value>批量启用</value>
+    </data>
+    <data name="InstanceSetupPage_BatchDisableMenuText" xml:space="preserve">
+        <value>批量停用</value>
+    </data>
+    <data name="InstanceSetupPage_BatchManagementNotificationTitle" xml:space="preserve">
+        <value>批量管理</value>
+    </data>
+    <data name="InstanceSetupPage_BatchRemoveConfirmTitle" xml:space="preserve">
+        <value>删除包</value>
+    </data>
+    <data name="InstanceSetupPage_BatchRemoveConfirmMessage" xml:space="preserve">
+        <value>输入验证码以确认从该实例删除 {0} 个包。</value>
+    </data>
+    <data name="InstanceSetupPage_BatchRemoveSucceededNotificationMessage" xml:space="preserve">
+        <value>已删除 {0} 个包。</value>
+    </data>
+    <data name="InstanceSetupPage_BatchEnableSucceededNotificationMessage" xml:space="preserve">
+        <value>已启用 {0} 个包。</value>
+    </data>
+    <data name="InstanceSetupPage_BatchDisableSucceededNotificationMessage" xml:space="preserve">
+        <value>已停用 {0} 个包。</value>
+    </data>
+    <data name="InstanceSetupPage_BatchRemoveNothingNotificationMessage" xml:space="preserve">
+        <value>没有可删除的包。</value>
+    </data>
+    <data name="InstanceSetupPage_BatchEnableNothingNotificationMessage" xml:space="preserve">
+        <value>没有可启用的包。</value>
+    </data>
+    <data name="InstanceSetupPage_BatchDisableNothingNotificationMessage" xml:space="preserve">
+        <value>没有可停用的包。</value>
+    </data>
     <data name="InstanceSetupPage_GetMoreButtonText" xml:space="preserve">
         <value>获取更多</value>
     </data>
@@ -830,6 +860,42 @@
     </data>
     <data name="PackagePickerDialog_SearchPlaceholder" xml:space="preserve">
         <value>搜索包...</value>
+    </data>
+    <data name="PackageSelectorDialog_RemoveTitle" xml:space="preserve">
+        <value>删除包</value>
+    </data>
+    <data name="PackageSelectorDialog_EnableTitle" xml:space="preserve">
+        <value>启用包</value>
+    </data>
+    <data name="PackageSelectorDialog_DisableTitle" xml:space="preserve">
+        <value>停用包</value>
+    </data>
+    <data name="PackageSelectorDialog_RemoveText" xml:space="preserve">
+        <value>删除</value>
+    </data>
+    <data name="PackageSelectorDialog_EnableText" xml:space="preserve">
+        <value>启用</value>
+    </data>
+    <data name="PackageSelectorDialog_DisableText" xml:space="preserve">
+        <value>停用</value>
+    </data>
+    <data name="PackageSelectorDialog_SearchPlaceholder" xml:space="preserve">
+        <value>搜索包...</value>
+    </data>
+    <data name="PackageSelectorDialog_SelectAllVisibleText" xml:space="preserve">
+        <value>全选可见</value>
+    </data>
+    <data name="PackageSelectorDialog_ClearVisibleText" xml:space="preserve">
+        <value>清除可见</value>
+    </data>
+    <data name="PackageSelectorDialog_ClearAllText" xml:space="preserve">
+        <value>清空全部</value>
+    </data>
+    <data name="PackageSelectorDialog_SelectedCountText" xml:space="preserve">
+        <value>已选 {0} / {1}</value>
+    </data>
+    <data name="PackageSelectorDialog_EmptyText" xml:space="preserve">
+        <value>没有可选的包</value>
     </data>
     <data name="AccountCreationModal_NextButtonText" xml:space="preserve">
         <value>继续</value>
@@ -1249,7 +1315,7 @@
         <value>强调色</value>
     </data>
     <data name="DeployStage_EnsureRuntime" xml:space="preserve">
-        <value>保底运行时...</value>
+        <value>确保运行时...</value>
     </data>
     <data name="MainWindow_PlayMenuText" xml:space="preserve">
         <value>开始</value>
@@ -1527,9 +1593,6 @@
     <data name="InstanceFilesPage_PlayersLabelText" xml:space="preserve">
         <value>玩家</value>
     </data>
-    <data name="InstanceFilesPage_ServerAddressLabelText" xml:space="preserve">
-        <value>地址：</value>
-    </data>
     <data name="InstanceFilesPage_ServerResourcePackPreferenceLabelText" xml:space="preserve">
         <value>服务器资源包：</value>
     </data>
@@ -1542,23 +1605,8 @@
     <data name="InstanceFilesPage_ServerResourcePackPromptText" xml:space="preserve">
         <value>每次询问</value>
     </data>
-    <data name="InstanceFilesPage_ServerLiveStatusLabelText" xml:space="preserve">
-        <value>实时状态</value>
-    </data>
     <data name="InstanceFilesPage_ServerCheckingText" xml:space="preserve">
         <value>正在检查服务器...</value>
-    </data>
-    <data name="InstanceFilesPage_ServerMotdLabelText" xml:space="preserve">
-        <value>消息：</value>
-    </data>
-    <data name="InstanceFilesPage_ServerVersionLabelText" xml:space="preserve">
-        <value>版本：</value>
-    </data>
-    <data name="InstanceFilesPage_ServerPlayersLabelText" xml:space="preserve">
-        <value>玩家：</value>
-    </data>
-    <data name="InstanceFilesPage_ServerLatencyLabelText" xml:space="preserve">
-        <value>延迟：</value>
     </data>
     <data name="InstanceFilesPage_ServerUnavailableText" xml:space="preserve">
         <value>服务器不可用</value>
@@ -1719,17 +1767,8 @@
     <data name="GameCrashReportModal_PlayTimeLabelText" xml:space="preserve">
         <value>运行时间</value>
     </data>
-    <data name="GameCrashReportModal_InstanceSectionTitle" xml:space="preserve">
-        <value>实例</value>
-    </data>
-    <data name="GameCrashReportModal_NameLabelText" xml:space="preserve">
-        <value>名称：</value>
-    </data>
     <data name="GameCrashReportModal_ModLoaderLabelText" xml:space="preserve">
         <value>模组加载器：</value>
-    </data>
-    <data name="GameCrashReportModal_InstalledModsLabelText" xml:space="preserve">
-        <value>已安装模组：</value>
     </data>
     <data name="GameCrashReportModal_SystemEnvironmentTitle" xml:space="preserve">
         <value>系统环境</value>
@@ -1748,9 +1787,6 @@
     </data>
     <data name="GameCrashReportModal_LastLogOutputTitle" xml:space="preserve">
         <value>最近日志输出</value>
-    </data>
-    <data name="GameCrashReportModal_QuickActionsTitle" xml:space="preserve">
-        <value>快捷操作</value>
     </data>
     <data name="GameCrashReportModal_OpenLatestLogButtonText" xml:space="preserve">
         <value>打开最新日志</value>
@@ -1899,9 +1935,6 @@
     <data name="ProxySettingsDialog_TestSuccessLabelText" xml:space="preserve">
         <value>连接成功</value>
     </data>
-    <data name="ProxySettingsDialog_TestFailedLabelText" xml:space="preserve">
-        <value>连接失败</value>
-    </data>
     <data name="MainWindow_InstanceCrashedDangerNotificationMessage" xml:space="preserve">
         <value>{0} 非正常退出。点击链接查看具体信息。</value>
     </data>
@@ -1943,33 +1976,6 @@
     </data>
     <data name="InstanceActivitiesPage_LastWeekLabelText" xml:space="preserve">
         <value>上周</value>
-    </data>
-    <data name="InstanceActivitiesPage_DataManagementTitle" xml:space="preserve">
-        <value>数据管理</value>
-    </data>
-    <data name="InstanceActivitiesPage_DataManagementSubtitle" xml:space="preserve">
-        <value>管理此实例的统计数据和操作记录</value>
-    </data>
-    <data name="InstanceActivitiesPage_ClearStatisticsButtonText" xml:space="preserve">
-        <value>清除统计</value>
-    </data>
-    <data name="InstanceActivitiesPage_ClearRecordsButtonText" xml:space="preserve">
-        <value>清除记录</value>
-    </data>
-    <data name="InstanceActivitiesPage_ClearStatisticsConfirmationTitle" xml:space="preserve">
-        <value>清除统计</value>
-    </data>
-    <data name="InstanceActivitiesPage_ClearStatisticsConfirmationMessage" xml:space="preserve">
-        <value>确定要清除此实例的所有统计数据吗？此操作不可撤销。</value>
-    </data>
-    <data name="InstanceActivitiesPage_ClearRecordsConfirmationTitle" xml:space="preserve">
-        <value>清除记录</value>
-    </data>
-    <data name="InstanceActivitiesPage_ClearRecordsConfirmationMessage" xml:space="preserve">
-        <value>确定要清除此实例的所有操作记录吗？此操作不可撤销。</value>
-    </data>
-    <data name="SettingsPage_DataManagementLabelText" xml:space="preserve">
-        <value>数据管理</value>
     </data>
     <data name="SettingsPage_ClearStatisticsButtonText" xml:space="preserve">
         <value>清除统计</value>
@@ -2102,9 +2108,6 @@
     <!-- Proxy Settings Dialog (additional for OOBE) -->
     <data name="ProxySettingsDialog_ProxyMode_Auto" xml:space="preserve">
         <value>自动</value>
-    </data>
-    <data name="ProxySettingsDialog_ProxyMode_Manual" xml:space="preserve">
-        <value>手动</value>
     </data>
     <data name="ProxySettingsDialog_ProxyMode_Disabled" xml:space="preserve">
         <value>禁用</value>
@@ -2257,12 +2260,6 @@
     <data name="MarketplaceSearchPage_Message" xml:space="preserve">
         <value>查看并下载来自各个资源提供方的整合包。如果需要更精确的搜索过滤选项，请在对应资源网站上完成整合包查找，然后在这里输入名字即可安装。</value>
     </data>
-    <data name="LandingPage_FeaturedModpacksLabelText" xml:space="preserve">
-        <value>热门整合包</value>
-    </data>
-    <data name="LandingPage_MoreButtonText" xml:space="preserve">
-        <value>更多</value>
-    </data>
     <data name="LandingPage_RandomPlayTitle" xml:space="preserve">
         <value>不知道玩什么？</value>
     </data>
@@ -2271,9 +2268,6 @@
     </data>
     <data name="LandingPage_RandomPlayButtonText" xml:space="preserve">
         <value>手气不错</value>
-    </data>
-    <data name="LandingPage_FeaturedModpacksErrorText" xml:space="preserve">
-        <value>加载热门整合包失败</value>
     </data>
     <data name="LandingPage_MinecraftNewsErrorText" xml:space="preserve">
         <value>加载 Minecraft 新闻失败</value>
@@ -2515,9 +2509,6 @@
     <data name="ModpackExporterDialog_ExcludedTagsDescriptionText" xml:space="preserve">
         <value>被选中的标签所对应的包将不会出现在导出结果中</value>
     </data>
-    <data name="ModpackExporterDialog_ExcludedTagsEmptyText" xml:space="preserve">
-        <value>暂无标签</value>
-    </data>
     <data name="InstanceDashboardPage_LiveLogLabelText" xml:space="preserve">
         <value>实时日志</value>
     </data>
@@ -2717,10 +2708,10 @@
         <value>行</value>
     </data>
     <data name="WorkspaceDiffModal_LiveTagText" xml:space="preserve">
-        <value>Live</value>
+        <value>工作副本</value>
     </data>
     <data name="WorkspaceDiffModal_ImportTagText" xml:space="preserve">
-        <value>Import</value>
+        <value>整合包源</value>
     </data>
   <data name="SettingsPage_CheckUpdatesDangerNotificationTitle" xml:space="preserve">
     <value>检查更新失败</value>
@@ -3054,22 +3045,13 @@
     <data name="SnapshotManagementPage_Title" xml:space="preserve">
         <value>快照管理</value>
     </data>
-  <data name="SnapshotManagementPage_EmptyListText" xml:space="preserve">
-    <value>暂无快照</value>
-  </data>
-  <data name="SnapshotManagementPage_DetailSelectHintText" xml:space="preserve">
-    <value>选择一个快照以查看详情</value>
-  </data>
-  <data name="SnapshotManagementPage_LabelLabelText" xml:space="preserve">
+    <data name="SnapshotManagementPage_LabelLabelText" xml:space="preserve">
     <value>标签</value>
   </data>
   <data name="SnapshotManagementPage_RemarkLabelText" xml:space="preserve">
     <value>备注</value>
   </data>
-  <data name="SnapshotManagementPage_CreatedAtLabelText" xml:space="preserve">
-    <value>创建时间</value>
-  </data>
-  <data name="SnapshotManagementPage_PackageCountLabelText" xml:space="preserve">
+    <data name="SnapshotManagementPage_PackageCountLabelText" xml:space="preserve">
     <value>模组/包数量</value>
   </data>
   <data name="SnapshotManagementPage_FileCountLabelText" xml:space="preserve">
@@ -3083,9 +3065,6 @@
   </data>
   <data name="SnapshotManagementPage_LoaderLabelText" xml:space="preserve">
     <value>加载器</value>
-  </data>
-  <data name="SnapshotManagementPage_NoRemarkText" xml:space="preserve">
-    <value>无备注</value>
   </data>
     <data name="SnapshotsModal_Title" xml:space="preserve">
         <value>快照</value>

@@ -1428,6 +1428,126 @@ public partial class InstanceSetupPageModel(
     }
 
     [RelayCommand]
+    private async Task BatchEnableAsync()
+    {
+        var candidates = _flat.Items.OfType<PackageListItemBase.Entry>()
+                              .Where(i => !i.Package.IsEnabled)
+                              .Select(i => new SelectablePackageModel(i.Package, i.Key))
+                              .ToList();
+        if (candidates.Count == 0)
+        {
+            notificationService.PopMessage(Resources.InstanceSetupPage_BatchEnableNothingNotificationMessage,
+                                           Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+                                           GrowlLevel.Warning,
+                                           thumbnail: GetNotificationThumbnail());
+            return;
+        }
+
+        var dialog = new PackageSelectorDialog { Intent = PackageSelectorDialog.SelectionIntent.Enable };
+        dialog.SetItems(candidates);
+        if (await overlayService.PopDialogAsync(dialog)
+         && dialog.Result is IReadOnlyList<SelectablePackageModel> { Count: > 0 } selected)
+        {
+            foreach (var item in selected)
+                item.Source.IsEnabled = true;
+
+            notificationService.PopMessage(
+                Resources.InstanceSetupPage_BatchEnableSucceededNotificationMessage.Replace("{0}", selected.Count.ToString()),
+                Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+                GrowlLevel.Success,
+                thumbnail: GetNotificationThumbnail());
+        }
+    }
+
+    [RelayCommand]
+    private async Task BatchDisableAsync()
+    {
+        var candidates = _flat.Items.OfType<PackageListItemBase.Entry>()
+                              .Where(i => i.Package.IsEnabled)
+                              .Select(i => new SelectablePackageModel(i.Package, i.Key))
+                              .ToList();
+        if (candidates.Count == 0)
+        {
+            notificationService.PopMessage(Resources.InstanceSetupPage_BatchDisableNothingNotificationMessage,
+                                           Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+                                           GrowlLevel.Warning,
+                                           thumbnail: GetNotificationThumbnail());
+            return;
+        }
+
+        var dialog = new PackageSelectorDialog { Intent = PackageSelectorDialog.SelectionIntent.Disable };
+        dialog.SetItems(candidates);
+        if (await overlayService.PopDialogAsync(dialog)
+         && dialog.Result is IReadOnlyList<SelectablePackageModel> { Count: > 0 } selected)
+        {
+            foreach (var item in selected)
+                item.Source.IsEnabled = false;
+
+            notificationService.PopMessage(
+                Resources.InstanceSetupPage_BatchDisableSucceededNotificationMessage.Replace("{0}", selected.Count.ToString()),
+                Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+                GrowlLevel.Success,
+                thumbnail: GetNotificationThumbnail());
+        }
+    }
+
+    [RelayCommand]
+    private async Task BatchDeleteAsync()
+    {
+        var candidates = _flat.Items.OfType<PackageListItemBase.Entry>()
+                              .Where(i => i.Package.CanRemove)
+                              .Select(i => new SelectablePackageModel(i.Package, i.Key))
+                              .ToList();
+        if (candidates.Count == 0)
+        {
+            notificationService.PopMessage(Resources.InstanceSetupPage_BatchRemoveNothingNotificationMessage,
+                                           Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+                                           GrowlLevel.Warning,
+                                           thumbnail: GetNotificationThumbnail());
+            return;
+        }
+
+        var dialog = new PackageSelectorDialog { Intent = PackageSelectorDialog.SelectionIntent.Remove };
+        dialog.SetItems(candidates);
+        if (await overlayService.PopDialogAsync(dialog)
+         && dialog.Result is IReadOnlyList<SelectablePackageModel> { Count: > 0 } selected)
+        {
+            if (!await overlayService.RequestStrongConfirmationAsync(
+                    Resources.InstanceSetupPage_BatchRemoveConfirmMessage.Replace("{0}", selected.Count.ToString()),
+                    Resources.InstanceSetupPage_BatchRemoveConfirmTitle))
+            {
+                return;
+            }
+
+            // NOTE: 直接改单例 Packages 并外科式同步 _flat，不开 guard、不落盘、不触发 merge
+            //  （落盘由页面生命周期负责，同 UpdateBatch.ReviewAsync）。
+            if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
+            {
+                var keys = new List<PackageListKey>();
+                foreach (var item in selected)
+                {
+                    profile.Setup.Packages.Remove(item.Source.Entry);
+                    keys.Add(item.Key);
+                    persistenceService.AppendAction(new()
+                    {
+                        Key = Basic.Key,
+                        Kind = PersistenceService.ActionKind.EditPackage,
+                        Old = item.Source.Entry.Pref,
+                    });
+                }
+                _flat.Remove(keys);
+                StageCount -= keys.Count;
+
+                notificationService.PopMessage(
+                    Resources.InstanceSetupPage_BatchRemoveSucceededNotificationMessage.Replace("{0}", selected.Count.ToString()),
+                    Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+                    GrowlLevel.Success,
+                    thumbnail: GetNotificationThumbnail());
+            }
+        }
+    }
+
+    [RelayCommand]
     private void RefreshPackages()
     {
         TriggerPackageMerge();

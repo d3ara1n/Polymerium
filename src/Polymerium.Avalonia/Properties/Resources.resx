@@ -24,9 +24,6 @@
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
-    <data name="MainWindow_BackgroundText" xml:space="preserve">
-        <value>B-b-b-bird, bird, bird, b-bird's the word...</value>
-    </data>
     <data name="MainWindow_HomeButtonText" xml:space="preserve">
         <value>Home</value>
     </data>
@@ -47,9 +44,6 @@
     </data>
     <data name="MainWindow_UpdateLatestNotificationTitle" xml:space="preserve">
         <value>Up to date</value>
-    </data>
-    <data name="MainWindow_InstanceFilterPlaceholder" xml:space="preserve">
-        <value>Filter entries by names...</value>
     </data>
     <data name="MainWindow_AccountButtonText" xml:space="preserve">
         <value>Accounts</value>
@@ -684,6 +678,42 @@
     <data name="InstanceSetupPage_BatchUpdateMenuText" xml:space="preserve">
         <value>Batch Update</value>
     </data>
+    <data name="InstanceSetupPage_BatchDeleteMenuText" xml:space="preserve">
+        <value>Batch Remove</value>
+    </data>
+    <data name="InstanceSetupPage_BatchEnableMenuText" xml:space="preserve">
+        <value>Batch Enable</value>
+    </data>
+    <data name="InstanceSetupPage_BatchDisableMenuText" xml:space="preserve">
+        <value>Batch Disable</value>
+    </data>
+    <data name="InstanceSetupPage_BatchManagementNotificationTitle" xml:space="preserve">
+        <value>Batch Management</value>
+    </data>
+    <data name="InstanceSetupPage_BatchRemoveConfirmTitle" xml:space="preserve">
+        <value>Remove Packages</value>
+    </data>
+    <data name="InstanceSetupPage_BatchRemoveConfirmMessage" xml:space="preserve">
+        <value>Type the code to confirm removing {0} package(s) from this instance.</value>
+    </data>
+    <data name="InstanceSetupPage_BatchRemoveSucceededNotificationMessage" xml:space="preserve">
+        <value>Removed {0} package(s).</value>
+    </data>
+    <data name="InstanceSetupPage_BatchEnableSucceededNotificationMessage" xml:space="preserve">
+        <value>Enabled {0} package(s).</value>
+    </data>
+    <data name="InstanceSetupPage_BatchDisableSucceededNotificationMessage" xml:space="preserve">
+        <value>Disabled {0} package(s).</value>
+    </data>
+    <data name="InstanceSetupPage_BatchRemoveNothingNotificationMessage" xml:space="preserve">
+        <value>No removable packages.</value>
+    </data>
+    <data name="InstanceSetupPage_BatchEnableNothingNotificationMessage" xml:space="preserve">
+        <value>No disabled packages to enable.</value>
+    </data>
+    <data name="InstanceSetupPage_BatchDisableNothingNotificationMessage" xml:space="preserve">
+        <value>No enabled packages to disable.</value>
+    </data>
     <data name="InstanceSetupPage_GetMoreButtonText" xml:space="preserve">
         <value>Get More</value>
     </data>
@@ -839,6 +869,42 @@
     </data>
     <data name="PackagePickerDialog_SearchPlaceholder" xml:space="preserve">
         <value>Search packages...</value>
+    </data>
+    <data name="PackageSelectorDialog_RemoveTitle" xml:space="preserve">
+        <value>Remove Packages</value>
+    </data>
+    <data name="PackageSelectorDialog_EnableTitle" xml:space="preserve">
+        <value>Enable Packages</value>
+    </data>
+    <data name="PackageSelectorDialog_DisableTitle" xml:space="preserve">
+        <value>Disable Packages</value>
+    </data>
+    <data name="PackageSelectorDialog_RemoveText" xml:space="preserve">
+        <value>Remove</value>
+    </data>
+    <data name="PackageSelectorDialog_EnableText" xml:space="preserve">
+        <value>Enable</value>
+    </data>
+    <data name="PackageSelectorDialog_DisableText" xml:space="preserve">
+        <value>Disable</value>
+    </data>
+    <data name="PackageSelectorDialog_SearchPlaceholder" xml:space="preserve">
+        <value>Search packages...</value>
+    </data>
+    <data name="PackageSelectorDialog_SelectAllVisibleText" xml:space="preserve">
+        <value>Select Visible</value>
+    </data>
+    <data name="PackageSelectorDialog_ClearVisibleText" xml:space="preserve">
+        <value>Clear Visible</value>
+    </data>
+    <data name="PackageSelectorDialog_ClearAllText" xml:space="preserve">
+        <value>Clear All</value>
+    </data>
+    <data name="PackageSelectorDialog_SelectedCountText" xml:space="preserve">
+        <value>Selected {0} / {1}</value>
+    </data>
+    <data name="PackageSelectorDialog_EmptyText" xml:space="preserve">
+        <value>No packages to select</value>
     </data>
     <data name="AccountCreationModal_NextButtonText" xml:space="preserve">
         <value>Next</value>
@@ -1536,9 +1602,6 @@
     <data name="InstanceFilesPage_PlayersLabelText" xml:space="preserve">
         <value>Players</value>
     </data>
-    <data name="InstanceFilesPage_ServerAddressLabelText" xml:space="preserve">
-        <value>Address:</value>
-    </data>
     <data name="InstanceFilesPage_ServerResourcePackPreferenceLabelText" xml:space="preserve">
         <value>Server Resource Packs:</value>
     </data>
@@ -1551,23 +1614,8 @@
     <data name="InstanceFilesPage_ServerResourcePackPromptText" xml:space="preserve">
         <value>Ask Every Time</value>
     </data>
-    <data name="InstanceFilesPage_ServerLiveStatusLabelText" xml:space="preserve">
-        <value>Live Status</value>
-    </data>
     <data name="InstanceFilesPage_ServerCheckingText" xml:space="preserve">
         <value>Checking server...</value>
-    </data>
-    <data name="InstanceFilesPage_ServerMotdLabelText" xml:space="preserve">
-        <value>Message:</value>
-    </data>
-    <data name="InstanceFilesPage_ServerVersionLabelText" xml:space="preserve">
-        <value>Version:</value>
-    </data>
-    <data name="InstanceFilesPage_ServerPlayersLabelText" xml:space="preserve">
-        <value>Players:</value>
-    </data>
-    <data name="InstanceFilesPage_ServerLatencyLabelText" xml:space="preserve">
-        <value>Latency:</value>
     </data>
     <data name="InstanceFilesPage_ServerUnavailableText" xml:space="preserve">
         <value>Server unavailable</value>
@@ -1731,17 +1779,8 @@
     <data name="GameCrashReportModal_PlayTimeLabelText" xml:space="preserve">
         <value>Play Time</value>
     </data>
-    <data name="GameCrashReportModal_InstanceSectionTitle" xml:space="preserve">
-        <value>Instance</value>
-    </data>
-    <data name="GameCrashReportModal_NameLabelText" xml:space="preserve">
-        <value>Name:</value>
-    </data>
     <data name="GameCrashReportModal_ModLoaderLabelText" xml:space="preserve">
         <value>Mod Loader:</value>
-    </data>
-    <data name="GameCrashReportModal_InstalledModsLabelText" xml:space="preserve">
-        <value>Installed Mods:</value>
     </data>
     <data name="GameCrashReportModal_SystemEnvironmentTitle" xml:space="preserve">
         <value>System Environment</value>
@@ -1760,9 +1799,6 @@
     </data>
     <data name="GameCrashReportModal_LastLogOutputTitle" xml:space="preserve">
         <value>Last Log Output</value>
-    </data>
-    <data name="GameCrashReportModal_QuickActionsTitle" xml:space="preserve">
-        <value>Quick Actions</value>
     </data>
     <data name="GameCrashReportModal_OpenLatestLogButtonText" xml:space="preserve">
         <value>Open Latest Log</value>
@@ -1914,9 +1950,6 @@
     <data name="ProxySettingsDialog_TestSuccessLabelText" xml:space="preserve">
         <value>Connected</value>
     </data>
-    <data name="ProxySettingsDialog_TestFailedLabelText" xml:space="preserve">
-        <value>Failed</value>
-    </data>
     <data name="InstanceActivitiesPage_PlaytimeTabText" xml:space="preserve">
         <value>Playtime</value>
     </data>
@@ -1955,33 +1988,6 @@
     </data>
     <data name="InstanceActivitiesPage_LastWeekLabelText" xml:space="preserve">
         <value>Last Week</value>
-    </data>
-    <data name="InstanceActivitiesPage_DataManagementTitle" xml:space="preserve">
-        <value>Data Management</value>
-    </data>
-    <data name="InstanceActivitiesPage_DataManagementSubtitle" xml:space="preserve">
-        <value>Manage statistics and action records for this instance</value>
-    </data>
-    <data name="InstanceActivitiesPage_ClearStatisticsButtonText" xml:space="preserve">
-        <value>Clear Statistics</value>
-    </data>
-    <data name="InstanceActivitiesPage_ClearRecordsButtonText" xml:space="preserve">
-        <value>Clear Records</value>
-    </data>
-    <data name="InstanceActivitiesPage_ClearStatisticsConfirmationTitle" xml:space="preserve">
-        <value>Clear Statistics</value>
-    </data>
-    <data name="InstanceActivitiesPage_ClearStatisticsConfirmationMessage" xml:space="preserve">
-        <value>Are you sure you want to clear all statistics for this instance? This action cannot be undone.</value>
-    </data>
-    <data name="InstanceActivitiesPage_ClearRecordsConfirmationTitle" xml:space="preserve">
-        <value>Clear Records</value>
-    </data>
-    <data name="InstanceActivitiesPage_ClearRecordsConfirmationMessage" xml:space="preserve">
-        <value>Are you sure you want to clear all action records for this instance? This action cannot be undone.</value>
-    </data>
-    <data name="SettingsPage_DataManagementLabelText" xml:space="preserve">
-        <value>Data Management</value>
     </data>
     <data name="SettingsPage_ClearStatisticsButtonText" xml:space="preserve">
         <value>Clear Statistics</value>
@@ -2114,9 +2120,6 @@
     <!-- Proxy Settings Dialog (additional for OOBE) -->
     <data name="ProxySettingsDialog_ProxyMode_Auto" xml:space="preserve">
         <value>Auto</value>
-    </data>
-    <data name="ProxySettingsDialog_ProxyMode_Manual" xml:space="preserve">
-        <value>Manual</value>
     </data>
     <data name="ProxySettingsDialog_ProxyMode_Disabled" xml:space="preserve">
         <value>Disabled</value>
@@ -2266,12 +2269,6 @@
     <data name="MarketplaceSearchPage_Message" xml:space="preserve">
         <value>View and download modpacks from various sources. If you need more precise search filters, please search for the modpack on the corresponding website and then enter the name here to install.</value>
     </data>
-    <data name="LandingPage_FeaturedModpacksLabelText" xml:space="preserve">
-        <value>Featured Modpacks</value>
-    </data>
-    <data name="LandingPage_MoreButtonText" xml:space="preserve">
-        <value>More</value>
-    </data>
     <data name="LandingPage_RandomPlayTitle" xml:space="preserve">
         <value>Don't know what to play?</value>
     </data>
@@ -2280,9 +2277,6 @@
     </data>
     <data name="LandingPage_RandomPlayButtonText" xml:space="preserve">
         <value>I'm Feeling Lucky</value>
-    </data>
-    <data name="LandingPage_FeaturedModpacksErrorText" xml:space="preserve">
-        <value>Failed to load featured modpacks</value>
     </data>
     <data name="LandingPage_MinecraftNewsErrorText" xml:space="preserve">
         <value>Failed to load Minecraft news</value>
@@ -2523,9 +2517,6 @@
     </data>
     <data name="ModpackExporterDialog_ExcludedTagsDescriptionText" xml:space="preserve">
         <value>Packages with selected tags will be excluded from export</value>
-    </data>
-    <data name="ModpackExporterDialog_ExcludedTagsEmptyText" xml:space="preserve">
-        <value>No tags available</value>
     </data>
     <data name="InstanceDashboardPage_LiveLogLabelText" xml:space="preserve">
         <value>Live Log</value>
@@ -3063,22 +3054,13 @@ Affected entries: {0}
     <data name="SnapshotManagementPage_Title" xml:space="preserve">
         <value>Snapshot Management</value>
     </data>
-  <data name="SnapshotManagementPage_EmptyListText" xml:space="preserve">
-    <value>No snapshots yet</value>
-  </data>
-  <data name="SnapshotManagementPage_DetailSelectHintText" xml:space="preserve">
-    <value>Select a snapshot to view details</value>
-  </data>
-  <data name="SnapshotManagementPage_LabelLabelText" xml:space="preserve">
+    <data name="SnapshotManagementPage_LabelLabelText" xml:space="preserve">
     <value>Label</value>
   </data>
   <data name="SnapshotManagementPage_RemarkLabelText" xml:space="preserve">
     <value>Remark</value>
   </data>
-  <data name="SnapshotManagementPage_CreatedAtLabelText" xml:space="preserve">
-    <value>Created At</value>
-  </data>
-  <data name="SnapshotManagementPage_PackageCountLabelText" xml:space="preserve">
+    <data name="SnapshotManagementPage_PackageCountLabelText" xml:space="preserve">
     <value>Packages</value>
   </data>
   <data name="SnapshotManagementPage_FileCountLabelText" xml:space="preserve">
@@ -3092,9 +3074,6 @@ Affected entries: {0}
   </data>
   <data name="SnapshotManagementPage_LoaderLabelText" xml:space="preserve">
     <value>Loader</value>
-  </data>
-  <data name="SnapshotManagementPage_NoRemarkText" xml:space="preserve">
-    <value>No remark</value>
   </data>
     <data name="SnapshotsModal_Title" xml:space="preserve">
         <value>Snapshots</value>
