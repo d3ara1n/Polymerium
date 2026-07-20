@@ -121,7 +121,6 @@ public partial class SnapshotManagementPageModel : ViewModelBase
     protected override Task OnDeinitializeAsync()
     {
         _subscriptions.Dispose();
-        _source.Dispose();
         return Task.CompletedTask;
     }
 

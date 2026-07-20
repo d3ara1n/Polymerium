@@ -2,6 +2,7 @@
 
 ### ✨ Highlights ✨
 
+- Introduce bulk selection to enable, disable or remove multiple packages at once in an instance's package list
 - Fix the instance page sidebar expand state being reset after every launcher update
 
 ### Fixed
@@ -11,7 +12,7 @@
 
 ### Added
 
--
+- Introduce bulk selection to enable, disable or remove multiple packages at once in an instance's package list (#POLY-134)
 
 ### Changed
 
