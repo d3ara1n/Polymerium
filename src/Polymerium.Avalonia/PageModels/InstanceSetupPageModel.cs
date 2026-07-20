@@ -616,9 +616,7 @@ public partial class InstanceSetupPageModel(
     {
         _updatingSubscription?.Dispose();
         _updatingSubscription = update
-                               .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
-                               .Where(x => x.Any())
-                               .Select(x => x.Last())
+                               .ProgressStream.Sample(TimeSpan.FromSeconds(1))
                                .Subscribe(x =>
                                 {
                                     UpdatingProgress = x ?? 0d;

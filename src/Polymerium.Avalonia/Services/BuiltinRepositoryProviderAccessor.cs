@@ -27,18 +27,20 @@ public class BuiltinRepositoryProviderAccessor(IServiceProvider serviceProvider)
                                                                        ModrinthHelper.OFFICIAL_ENDPOINT,
                                                                        null,
                                                                        null);
-        // var bbsmc = new IRepositoryProviderAccessor.ProviderProfile("bbsmc",
-        //                                                             IRepositoryProviderAccessor.ProviderProfile
-        //                                                                .DriverType.Modrinth,
-        //                                                             ModrinthHelper.FAKE_ENDPOINT,
-        //                                                             null,
-        //                                                             null);
         var packwiz = new IRepositoryProviderAccessor.ProviderProfile(PackwizHelper.LABEL,
                                                                      IRepositoryProviderAccessor.ProviderProfile
                                                                         .DriverType.Packwiz,
                                                                      "https://api.github.com/",
                                                                      null,
                                                                      null);
+
+
+        // var bbsmc = new IRepositoryProviderAccessor.ProviderProfile("bbsmc",
+        //                                                             IRepositoryProviderAccessor.ProviderProfile
+        //                                                                .DriverType.Modrinth,
+        //                                                             ModrinthHelper.FAKE_ENDPOINT,
+        //                                                             null,
+        //                                                             null);
 
         return [curseforge, modrinth, packwiz];
     }
