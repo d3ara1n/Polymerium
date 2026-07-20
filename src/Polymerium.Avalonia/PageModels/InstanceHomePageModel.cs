@@ -136,9 +136,7 @@ public partial class InstanceHomePageModel(
         _subscription = new();
         DeployingMessage = GetStageTitle(tracker.CurrentStage);
         tracker
-           .ProgressStream.Buffer(TimeSpan.FromSeconds(1))
-           .Where(x => x.Any())
-           .Select(x => x.Last())
+           .ProgressStream.Sample(TimeSpan.FromSeconds(1))
            .Subscribe(x =>
             {
                 DeployingProgress = (double)x.Current / x.Total;
