@@ -1,4 +1,4 @@
-<husk:Dialog
+﻿<husk:Dialog
     x:Class="Polymerium.Avalonia.Dialogs.PackageSelectorDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -20,7 +20,9 @@
         之上（含 chip、搜索、清空全部）= 全局；之下（全选可见、清除可见、列表）= 局部。
         搜索只是帮用户定位项，不是状态也不是结果。
     -->
-    <Grid RowDefinitions="Auto,Auto,Auto,*" RowSpacing="12">
+    <Grid
+        RowDefinitions="Auto,Auto,Auto,*"
+        RowSpacing="12">
 
         <!--  GLOBAL：按类型/作者/标签快捷勾选（作用于全集）  -->
         <ScrollViewer
@@ -32,8 +34,8 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="resources:ResourceKind">
                             <Button
-                                Padding="8,4"
                                 Classes="Small"
+                                Padding="8,4"
                                 Command="{Binding $parent[app:PackageSelectorDialog].SelectByTypeCommand}"
                                 CommandParameter="{Binding}"
                                 CornerRadius="{StaticResource FullCornerRadius}"
@@ -44,7 +46,9 @@
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel ItemSpacing="6" LineSpacing="6" />
+                            <WrapPanel
+                                ItemSpacing="6"
+                                LineSpacing="6" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
@@ -52,8 +56,8 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="x:String">
                             <Button
-                                Padding="8,4"
                                 Classes="Small"
+                                Padding="8,4"
                                 Command="{Binding $parent[app:PackageSelectorDialog].SelectByAuthorCommand}"
                                 CommandParameter="{Binding}"
                                 CornerRadius="{StaticResource FullCornerRadius}"
@@ -64,7 +68,9 @@
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel ItemSpacing="6" LineSpacing="6" />
+                            <WrapPanel
+                                ItemSpacing="6"
+                                LineSpacing="6" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
@@ -72,8 +78,8 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="x:String">
                             <Button
-                                Padding="8,4"
                                 Classes="Small"
+                                Padding="8,4"
                                 Command="{Binding $parent[app:PackageSelectorDialog].SelectByTagCommand}"
                                 CommandParameter="{Binding}"
                                 CornerRadius="{StaticResource FullCornerRadius}"
@@ -84,7 +90,9 @@
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel ItemSpacing="6" LineSpacing="6" />
+                            <WrapPanel
+                                ItemSpacing="6"
+                                LineSpacing="6" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
@@ -92,7 +100,10 @@
         </ScrollViewer>
 
         <!--  GLOBAL：搜索 + 计数 + 清空全部（全集）  -->
-        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12">
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="*,Auto,Auto"
+            ColumnSpacing="12">
             <TextBox
                 Grid.Column="0"
                 PlaceholderText="{x:Static lang:Resources.PackageSelectorDialog_SearchPlaceholder}"
@@ -141,16 +152,16 @@
             Spacing="8">
             <Button
                 Classes="Small"
-                Command="{Binding $parent[app:PackageSelectorDialog].SelectAllVisibleCommand}"
-                IsEnabled="{Binding $parent[app:PackageSelectorDialog].View.Count, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue=False}">
+                IsEnabled="{Binding $parent[app:PackageSelectorDialog].View.Count, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue=False}"
+                Command="{Binding $parent[app:PackageSelectorDialog].SelectAllVisibleCommand}">
                 <husk:IconLabel
                     Icon="CheckmarkSquare"
                     Text="{x:Static lang:Resources.PackageSelectorDialog_SelectAllVisibleText}" />
             </Button>
             <Button
                 Classes="Small"
-                Command="{Binding $parent[app:PackageSelectorDialog].ClearVisibleCommand}"
-                IsEnabled="{Binding $parent[app:PackageSelectorDialog].View.Count, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue=False}">
+                IsEnabled="{Binding $parent[app:PackageSelectorDialog].View.Count, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue=False}"
+                Command="{Binding $parent[app:PackageSelectorDialog].ClearVisibleCommand}">
                 <husk:IconLabel
                     Icon="Square"
                     Text="{x:Static lang:Resources.PackageSelectorDialog_ClearVisibleText}" />
@@ -191,7 +202,9 @@
                                 Padding="12,8"
                                 Background="{StaticResource LayerBackgroundBrush}"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="10">
+                                <Grid
+                                    ColumnDefinitions="Auto,Auto,*,Auto"
+                                    ColumnSpacing="10">
                                     <CheckBox
                                         Grid.Column="0"
                                         VerticalAlignment="Center"
@@ -210,9 +223,9 @@
                                             <fi:SymbolIcon
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
+                                                IsVisible="{Binding Thumbnail, Converter={x:Static ObjectConverters.IsNull}, FallbackValue=True}"
                                                 FontSize="20"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                IsVisible="{Binding Thumbnail, Converter={x:Static ObjectConverters.IsNull}, FallbackValue=True}"
                                                 Symbol="Box" />
                                         </Panel>
                                     </Border>
@@ -225,18 +238,18 @@
                                             Text="{Binding Label, FallbackValue=Package}"
                                             TextTrimming="CharacterEllipsis" />
                                         <TextBlock
+                                            IsVisible="{Binding Author, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
                                             FontSize="{StaticResource SmallFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            IsVisible="{Binding Author, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
                                             Text="{Binding Author, StringFormat=@{0}}"
                                             TextTrimming="CharacterEllipsis" />
                                     </StackPanel>
                                     <husk:Tag
                                         Grid.Column="3"
                                         VerticalAlignment="Center"
-                                        CornerRadius="{StaticResource SmallCornerRadius}"
                                         IsVisible="{Binding Kind, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
-                                        Content="{Binding Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                        Content="{Binding Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}"
+                                        CornerRadius="{StaticResource SmallCornerRadius}" />
                                 </Grid>
                             </Border>
                         </DataTemplate>

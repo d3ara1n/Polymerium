@@ -440,19 +440,19 @@
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem Header="-" />
                                                         <MenuItem
+                                                            IsVisible="{Binding !IsPinned}"
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).PinCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
                                                             Header="{x:Static lang:Resources.MainWindow_PinMenuText}"
                                                             Icon="{fie:SymbolIcon Symbol=Pin,
-                                                                                  FontSize={StaticResource MediumFontSize}}"
-                                                            IsVisible="{Binding !IsPinned}" />
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
+                                                            IsVisible="{Binding IsPinned}"
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).UnpinCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
                                                             Header="{x:Static lang:Resources.MainWindow_UnpinMenuText}"
                                                             Icon="{fie:SymbolIcon Symbol=PinOff,
-                                                                                  FontSize={StaticResource MediumFontSize}}"
-                                                            IsVisible="{Binding IsPinned}" />
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
                                                     </MenuFlyout>
                                                 </app:InstanceEntryButton.ContextFlyout>
                                             </app:InstanceEntryButton>

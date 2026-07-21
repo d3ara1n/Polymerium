@@ -73,7 +73,9 @@ public static class Startup
                                                                            protocol,
                                                                            config.NetworkProxyAddress,
                                                                            config.NetworkProxyPort
-                                                                       )) { Credentials = !string.IsNullOrEmpty(config
+                                                                       ))
+                                                                       {
+                                                                           Credentials = !string.IsNullOrEmpty(config
                                                                                              .NetworkProxyUsername)
                                                                                               ? new NetworkCredential(config.NetworkProxyUsername,
                                                                                                   config.NetworkProxyPassword)

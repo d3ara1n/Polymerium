@@ -1,4 +1,4 @@
-<ResourceDictionary
+﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
@@ -21,8 +21,8 @@
                     CornerRadius="{TemplateBinding CornerRadius}">
                     <Grid>
                         <app:BlurBackdrop
-                            CornerRadius="{TemplateBinding CornerRadius}"
-                            IsVisible="{Binding (app:BlurBackdrop.UseBlur), RelativeSource={RelativeSource TemplatedParent}}" />
+                            IsVisible="{Binding (app:BlurBackdrop.UseBlur), RelativeSource={RelativeSource TemplatedParent}}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
                         <Panel>
                             <ScrollViewer
                                 Name="ScrollViewer"

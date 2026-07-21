@@ -169,16 +169,16 @@
                             </WrapPanel>
                         </StackPanel>
                         <StackPanel
+                            Margin="8"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
-                            Margin="8"
                             Spacing="4">
                             <Border
                                 Name="PinnedBadge"
                                 Padding="4"
+                                IsVisible="{Binding IsPinned}"
                                 Background="{StaticResource ControlAccentBackgroundBrush}"
-                                CornerRadius="{StaticResource SmallCornerRadius}"
-                                IsVisible="{Binding IsPinned}">
+                                CornerRadius="{StaticResource SmallCornerRadius}">
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource SmallFontSize}"
                                     Foreground="White"
@@ -187,9 +187,9 @@
                             <Border
                                 Name="RecentBadge"
                                 Padding="4"
+                                IsVisible="{Binding RecentOrder, Converter={x:Static husk:ObjectConverters.IsNotNull}}"
                                 Background="{StaticResource ControlSuccessBackgroundBrush}"
-                                CornerRadius="{StaticResource SmallCornerRadius}"
-                                IsVisible="{Binding RecentOrder, Converter={x:Static husk:ObjectConverters.IsNotNull}}">
+                                CornerRadius="{StaticResource SmallCornerRadius}">
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource SmallFontSize}"
                                     Foreground="White"

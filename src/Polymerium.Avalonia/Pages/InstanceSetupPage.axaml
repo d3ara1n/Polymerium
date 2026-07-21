@@ -128,8 +128,12 @@
                             CommandParameter="{Binding Group}"
                             CornerRadius="{StaticResource FullCornerRadius}">
                             <Panel>
-                                <fi:SymbolIcon Symbol="ChevronDown" IsVisible="{Binding Group.IsExpanded}" />
-                                <fi:SymbolIcon Symbol="ChevronRight" IsVisible="{Binding !Group.IsExpanded}" />
+                                <fi:SymbolIcon
+                                    IsVisible="{Binding Group.IsExpanded}"
+                                    Symbol="ChevronDown" />
+                                <fi:SymbolIcon
+                                    IsVisible="{Binding !Group.IsExpanded}"
+                                    Symbol="ChevronRight" />
                             </Panel>
                         </Button>
                     </Grid>
@@ -161,7 +165,9 @@
                             <app:InstancePackageButton.IsEnabled>
                                 <MultiBinding Converter="{x:Static BoolConverters.Or}">
                                     <Binding Path="IsLoaded" />
-                                    <Binding Converter="{x:Static ObjectConverters.IsNotNull}" Path="Info" />
+                                    <Binding
+                                        Converter="{x:Static ObjectConverters.IsNotNull}"
+                                        Path="Info" />
                                 </MultiBinding>
                             </app:InstancePackageButton.IsEnabled>
                         </app:InstancePackageButton>
@@ -182,13 +188,17 @@
                             Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewGroupDetailsCommand, FallbackValue={x:Null}}"
                             CommandParameter="{Binding Owner}"
                             CornerRadius="{StaticResource SmallCornerRadius}">
-                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                            <Grid
+                                ColumnDefinitions="Auto,*"
+                                ColumnSpacing="8">
                                 <Border
                                     Width="32"
                                     Height="32"
                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                     <Border.Background>
-                                        <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+                                        <ImageBrush
+                                            async:ImageBrushLoader.Source="{Binding Thumbnail}"
+                                            Stretch="UniformToFill" />
                                     </Border.Background>
                                 </Border>
                                 <TextBlock

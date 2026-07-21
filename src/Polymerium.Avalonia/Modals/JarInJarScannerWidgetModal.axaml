@@ -1,4 +1,4 @@
-<husk:Modal
+﻿<husk:Modal
     x:Class="Polymerium.Avalonia.Modals.JarInJarScannerWidgetModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -24,7 +24,9 @@
                 Duplicate="{Binding Duplicate}">
                 <StackPanel Spacing="5">
                     <!--  主行：ModId + 徽标组  -->
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Grid
+                        ColumnDefinitions="*,Auto"
+                        ColumnSpacing="8">
                         <TextBlock
                             Grid.Column="0"
                             VerticalAlignment="Center"
@@ -102,9 +104,9 @@
             <!--  Idle 态  -->
             <husk:SwitchCase Value="Idle">
                 <StackPanel
+                    MaxWidth="440"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    MaxWidth="440"
                     Spacing="16">
                     <fi:SymbolIcon
                         HorizontalAlignment="Center"
@@ -129,9 +131,9 @@
             <!--  Scanning 态  -->
             <husk:SwitchCase Value="Scanning">
                 <StackPanel
+                    MaxWidth="520"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    MaxWidth="520"
                     Spacing="12">
                     <StackPanel
                         HorizontalAlignment="Center"
@@ -187,9 +189,9 @@
                         FontWeight="{StaticResource ControlStrongFontWeight}"
                         Text="{x:Static lang:Resources.JarInJarScannerModal_EmptyTitle}" />
                     <TextBlock
+                        MaxWidth="360"
                         HorizontalAlignment="Center"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        MaxWidth="360"
                         Text="{x:Static lang:Resources.JarInJarScannerModal_EmptyDescription}"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
@@ -209,22 +211,26 @@
                     <!--  汇总徽标 + Rescan  -->
                     <Grid
                         DockPanel.Dock="Top"
+                        Margin="0,0,0,8"
                         ColumnDefinitions="*,Auto"
-                        ColumnSpacing="8"
-                        Margin="0,0,0,8">
+                        ColumnSpacing="8">
                         <StackPanel
                             Grid.Column="0"
                             Orientation="Horizontal"
                             Spacing="8">
                             <husk:Tag>
-                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Spacing="4">
                                     <TextBlock Text="◇" />
                                     <TextBlock Text="{Binding JarFileCount}" />
                                     <TextBlock Text="{x:Static lang:Resources.JarInJarScannerModal_JarFilesLabel}" />
                                 </StackPanel>
                             </husk:Tag>
                             <husk:Tag>
-                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Spacing="4">
                                     <TextBlock Text="◆" />
                                     <TextBlock Text="{Binding HiddenModCount}" />
                                     <TextBlock Text="{x:Static lang:Resources.JarInJarScannerModal_HiddenModsLabel}" />
@@ -233,7 +239,9 @@
                             <husk:Tag
                                 Classes="Status Warning"
                                 IsVisible="{Binding HasDuplicates}">
-                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Spacing="4">
                                     <TextBlock Text="{Binding DuplicateCount}" />
                                     <TextBlock Text="{x:Static lang:Resources.JarInJarScannerModal_DuplicateLabel}" />
                                 </StackPanel>
@@ -254,8 +262,8 @@
                     <TextBox
                         DockPanel.Dock="Top"
                         Margin="0,0,0,8"
-                        Text="{Binding SearchText}"
-                        PlaceholderText="{x:Static lang:Resources.JarInJarScannerModal_SearchPlaceholder}" />
+                        PlaceholderText="{x:Static lang:Resources.JarInJarScannerModal_SearchPlaceholder}"
+                        Text="{Binding SearchText}" />
 
                     <!--  清单  -->
                     <ScrollViewer>

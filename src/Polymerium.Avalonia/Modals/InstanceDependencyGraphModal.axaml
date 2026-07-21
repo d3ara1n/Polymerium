@@ -104,14 +104,14 @@
                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                     <Panel>
                                         <Image
+                                            IsVisible="{Binding !IsMissing}"
                                             Source="{Binding Thumbnail}"
-                                            Stretch="UniformToFill"
-                                            IsVisible="{Binding !IsMissing}" />
+                                            Stretch="UniformToFill" />
                                         <fi:SymbolIcon
-                                            Symbol="Warning"
+                                            IsVisible="{Binding IsMissing}"
                                             FontSize="16"
                                             Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                            IsVisible="{Binding IsMissing}" />
+                                            Symbol="Warning" />
                                     </Panel>
                                 </Border>
                                 <StackPanel
