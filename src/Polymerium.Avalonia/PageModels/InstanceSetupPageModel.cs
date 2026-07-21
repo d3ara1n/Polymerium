@@ -190,17 +190,14 @@ public partial class InstanceSetupPageModel(
                     {
                         Reference = new(async _ =>
                         {
-                            var package = await dataService.ResolvePackageAsync(r.Label,
-                                                                                    r.Namespace,
-                                                                                    r.Pid,
-                                                                                    r.Vid,
+                            var package = await dataService.ResolvePackageAsync(r,
                                                                                     Filter.None with
                                                                                     {
                                                                                         Kind = ResourceKind.Modpack,
                                                                                     });
 
                             return new InstanceReferenceModel(profile.Setup.Source,
-                                                              r.Label,
+                                                              r.Repository,
                                                               package.ProjectName,
                                                               package.VersionId,
                                                               package.VersionName,
@@ -276,7 +273,7 @@ public partial class InstanceSetupPageModel(
             var items = packages
                        .Select(x => PackageHelper.TryParse(x.Entry.Pref, out var pref)
                                         ? (Model: x,
-                                           Pref: new PackageIdentifier(pref.Label, pref.Namespace, pref.Pid, pref.Vid),
+                                           Pref: pref,
                                            Data: new RefreshIntermediateData(x))
                                         : throw new FormatException($"Failed to parse pref: {x.Entry.Pref}"))
                        .ToList();
@@ -303,11 +300,11 @@ public partial class InstanceSetupPageModel(
                 {
                     var queried = await dataService.QueryProjectsAsync(
                         unknown
-                           .Select(x => (x.Pref.Repository, x.Pref.Namespace, x.Pref.Identity))
+                           .Select(x => x.Pref.ToProjectIdentifier())
                            .Distinct());
-                    foreach (var ((label, ns, pid), project) in queried.Successful)
+                    foreach (var (projectKey, project) in queried.Successful)
                     {
-                        var id = new PackageIdentifier(label, ns, pid, null);
+                        var id = projectKey.ToPackageIdentifier();
                         foreach (var item in unknown.Where(x => x.Pref == id))
                             item.Data.Project = project;
                     }
@@ -406,11 +403,11 @@ public partial class InstanceSetupPageModel(
         foreach (var g in groups)
             g.IsLoaded = false;
 
-        var identifiable = new List<(ModpackGroupModel Group, (string Label, string? Namespace, string Pid) Id)>();
+        var identifiable = new List<(ModpackGroupModel Group, ProjectIdentifier Id)>();
         foreach (var g in groups)
         {
             if (g.Source is not null && PackageHelper.TryParse(g.Source, out var r))
-                identifiable.Add((g, (r.Label, r.Namespace, r.Pid)));
+                identifiable.Add((g, r.ToProjectIdentifier()));
         }
 
         try
@@ -785,7 +782,7 @@ public partial class InstanceSetupPageModel(
         {
             try
             {
-                var project = await dataService.QueryProjectAsync(source.Label, source.Namespace, source.Pid);
+                var project = await dataService.QueryProjectAsync(source.ToProjectIdentifier());
                 var model = new ExhibitModpackModel(project.Label,
                                                     project.Namespace,
                                                     project.ProjectId,
@@ -929,26 +926,19 @@ public partial class InstanceSetupPageModel(
                     await semaphore.WaitAsync(handle.Token);
                     if (entry.CanUpdate && PackageHelper.TryParse(entry.Entry.Pref, out var result))
                     {
-                        if (result.Vid is not null)
+                        if (result.Version is not null)
                         {
                             try
                             {
                                 var resolved = await dataService
-                                                    .ResolvePackageAsync(result.Label,
-                                                                         result.Namespace,
-                                                                         result.Pid,
-                                                                         null,
+                                                    .ResolvePackageAsync(new PackageIdentifier(result.Repository, result.Namespace, result.Identity, null),
                                                                          filter,
                                                                          false)
                                                     .ConfigureAwait(false);
-                                if (resolved.VersionId != result.Vid)
+                                if (resolved.VersionId != result.Version)
                                 {
                                     var package = await dataService
-                                                       .ResolvePackageAsync(result.Label,
-                                                                            result.Namespace,
-                                                                            result.Pid,
-                                                                            result.Vid,
-                                                                            Filter.None)
+                                                       .ResolvePackageAsync(result, Filter.None)
                                                        .ConfigureAwait(false);
                                     var model = new PackageBulkUpdateReviewerModel(entry,
                                         package,
@@ -1092,9 +1082,9 @@ public partial class InstanceSetupPageModel(
                                         existingEntry =
                                             guard.Value.Setup.Packages.FirstOrDefault(x =>
                                                 PackageHelper.IsMatched(x.Pref,
-                                                                        importedPref.Label,
+                                                                        importedPref.Repository,
                                                                         importedPref.Namespace,
-                                                                        importedPref.Pid));
+                                                                        importedPref.Identity));
                                     }
 
                                     if (existingEntry != null)
@@ -1208,10 +1198,7 @@ public partial class InstanceSetupPageModel(
             var items = profile.Setup.Packages
                                .Select(entry => PackageHelper.TryParse(entry.Pref, out var parsed)
                                                     ? (Entry: entry,
-                                                       Id: new PackageIdentifier(parsed.Label,
-                                                           parsed.Namespace,
-                                                           parsed.Pid,
-                                                           parsed.Vid))
+                                                       Id: parsed)
                                                     : ((Profile.Rice.Entry Entry, PackageIdentifier Id)?)null)
                                .Where(x => x is not null)
                                .Select(x => x!.Value)
@@ -1321,9 +1308,9 @@ public partial class InstanceSetupPageModel(
         {
             try
             {
-                var page = await dataService.InspectVersionsAsync(result.Label,
+                var page = await dataService.InspectVersionsAsync(result.Repository,
                                                                   result.Namespace,
-                                                                  result.Pid,
+                                                                  result.Identity,
                                                                   Filter.None with
                                                                   {
                                                                       Kind = ResourceKind.Modpack,
@@ -1581,7 +1568,7 @@ public partial class InstanceSetupPageModel(
         {
             try
             {
-                var project = await dataService.QueryProjectAsync(source.Label, source.Namespace, source.Pid);
+                var project = await dataService.QueryProjectAsync(source.ToProjectIdentifier());
                 var model = new ExhibitModpackModel(project.Label,
                                                     project.Namespace,
                                                     project.ProjectId,

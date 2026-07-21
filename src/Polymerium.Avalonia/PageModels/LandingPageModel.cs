@@ -1,3 +1,4 @@
+using TridentCore.Pref;
 using System;
 using System.Linq;
 using System.Threading;
@@ -227,11 +228,7 @@ public partial class LandingPageModel(
         {
             try
             {
-                var project = await dataService.QueryProjectAsync(
-                    modpack.Label,
-                    modpack.Namespace,
-                    modpack.ProjectId
-                );
+                var project = await dataService.QueryProjectAsync(new ProjectIdentifier(modpack.Label, modpack.Namespace, modpack.ProjectId));
                 var model = new ExhibitModpackModel(
                     project.Label,
                     project.Namespace,

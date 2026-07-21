@@ -1,3 +1,4 @@
+using TridentCore.Pref;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -285,7 +286,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
             return;
         }
 
-        var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Namespace, exhibit.ProjectId);
+        var project = await _dataService.QueryProjectAsync(new ProjectIdentifier(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
         _persistenceService.AddFavoriteProject(project);
         exhibit.IsFavorite = true;
     }
@@ -297,7 +298,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
         {
             try
             {
-                var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Namespace, exhibit.ProjectId);
+                var project = await _dataService.QueryProjectAsync(new ProjectIdentifier(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
                 var model = new ExhibitModpackModel(project.Label,
                                                     project.Namespace,
                                                     project.ProjectId,

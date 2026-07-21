@@ -191,8 +191,8 @@ public partial class InstanceDependencyGraphModalModel(
         {
             if (PackageHelper.TryParse(entry.Pref, out var pref))
             {
-                layer.Add(new(pref.Label, pref.Namespace, pref.Pid, pref.Vid));
-                installedKeys.Add(NodeKey(pref.Label, pref.Namespace, pref.Pid));
+                layer.Add(new(pref.Repository, pref.Namespace, pref.Identity, pref.Version));
+                installedKeys.Add(NodeKey(pref.Repository, pref.Namespace, pref.Identity));
             }
         }
 

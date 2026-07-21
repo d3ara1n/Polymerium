@@ -64,7 +64,7 @@ public partial class InstanceBasicModel : ModelBase
     {
         if (!string.IsNullOrEmpty(value) && PackageHelper.TryParse(value, out var result))
         {
-            SourceLabel = result.Label;
+            SourceLabel = result.Repository;
         }
     }
 

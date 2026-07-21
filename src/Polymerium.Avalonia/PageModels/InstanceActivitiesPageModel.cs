@@ -81,24 +81,12 @@ public partial class InstanceActivitiesPageModel(
                     Package? newPackage = null;
                     if (x.Old != null && PackageHelper.TryParse(x.Old, out var old))
                     {
-                        oldPackage = await dataService.ResolvePackageAsync(
-                            old.Label,
-                            old.Namespace,
-                            old.Pid,
-                            old.Vid,
-                            Filter.None
-                        );
+                        oldPackage = await dataService.ResolvePackageAsync(old, Filter.None);
                     }
 
                     if (x.New != null && PackageHelper.TryParse(x.New, out var @new))
                     {
-                        newPackage = await dataService.ResolvePackageAsync(
-                            @new.Label,
-                            @new.Namespace,
-                            @new.Pid,
-                            @new.Vid,
-                            Filter.None
-                        );
+                        newPackage = await dataService.ResolvePackageAsync(@new, Filter.None);
                     }
 
                     var thumbnail =

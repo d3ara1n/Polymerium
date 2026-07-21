@@ -1,3 +1,4 @@
+using TridentCore.Pref;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -192,7 +193,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
             // HACK: 为了优化性能，这里不获取 VersionName，而是在为 ExhibitPackageModal 弹出前加载数据时一并获取
             if (PackageHelper.TryParse(installed.Pref, out var parsed))
             {
-                model.InstalledVersionId = parsed.Vid;
+                model.InstalledVersionId = parsed.Version;
             }
         }
 
@@ -369,7 +370,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                         // HACK: 为了优化性能，这里不获取 VersionName，而是在为 ExhibitPackageModal 弹出前加载数据时一并获取
                                         if (PackageHelper.TryParse(installed.Pref, out var parsed))
                                         {
-                                            model.InstalledVersionId = parsed.Vid;
+                                            model.InstalledVersionId = parsed.Version;
                                         }
                                     }
 
@@ -412,16 +413,12 @@ public partial class PackageExplorerPageModel : ViewModelBase
         {
             try
             {
-                var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Namespace, exhibit.ProjectId);
+                var project = await _dataService.QueryProjectAsync(new ProjectIdentifier(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
 
                 // 非 Unspecific
                 if (exhibit.InstalledVersionId != null)
                 {
-                    var package = await _dataService.ResolvePackageAsync(exhibit.Label,
-                                                                         exhibit.Namespace,
-                                                                         exhibit.ProjectId,
-                                                                         exhibit.InstalledVersionId,
-                                                                         Filter.None);
+                    var package = await _dataService.ResolvePackageAsync(new PackageIdentifier(exhibit.Label, exhibit.Namespace, exhibit.ProjectId, exhibit.InstalledVersionId), Filter.None);
                     exhibit.InstalledVersionName = package.VersionName;
                 }
 
@@ -509,7 +506,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
             return;
         }
 
-        var project = await _dataService.QueryProjectAsync(exhibit.Label, exhibit.Namespace, exhibit.ProjectId);
+        var project = await _dataService.QueryProjectAsync(new ProjectIdentifier(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
         _persistenceService.AddFavoriteProject(project);
         exhibit.IsFavorite = true;
     }

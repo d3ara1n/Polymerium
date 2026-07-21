@@ -162,7 +162,7 @@ public partial class InstancePackageModal : Modal
 
             var vid = SelectedVersionProxy?.Id;
             var package =
-                await DataService.ResolvePackageAsync(Model.Label, Model.Namespace, Model.ProjectId, vid, Filter);
+                await DataService.ResolvePackageAsync(new PackageIdentifier(Model.Label, Model.Namespace, Model.ProjectId, vid), Filter);
             var tasks = package
                        .Dependencies.Select(async x =>
                         {
@@ -192,7 +192,7 @@ public partial class InstancePackageModal : Modal
                                 { Installed = found, };
                             }
 
-                            var project = await DataService.QueryProjectAsync(x.Label, x.Namespace, x.ProjectId);
+                            var project = await DataService.QueryProjectAsync(new ProjectIdentifier(x.Label, x.Namespace, x.ProjectId));
                             var thumbnail = project.Thumbnail is not null
                                                 ? await DataService.GetBitmapAsync(project.Thumbnail)
                                                 : AssetUriIndex.DirtImageBitmap;
@@ -241,9 +241,9 @@ public partial class InstancePackageModal : Modal
 
     private static bool MatchesDependency(InstancePackageDependencyModel dep, InstancePackageModel package) =>
         PackageHelper.TryParse(package.Entry.Pref, out var r)
-        && r.Label == dep.Label
+        && r.Repository == dep.Label
         && r.Namespace == dep.Namespace
-        && r.Pid == dep.ProjectId;
+        && r.Identity == dep.ProjectId;
 
     private LazyObject ConstructDependants()
     {
@@ -377,7 +377,7 @@ public partial class InstancePackageModal : Modal
                         {
                             if (x.New != null && PackageHelper.TryParse(x.New, out var result))
                             {
-                                if (result.Vid is null)
+                                if (result.Version is null)
                                 {
                                     if (x.Old is null)
                                     {
@@ -399,11 +399,7 @@ public partial class InstancePackageModal : Modal
                                     };
                                 }
 
-                                var package = await DataService.ResolvePackageAsync(result.Label,
-                                                  result.Namespace,
-                                                  result.Pid,
-                                                  result.Vid,
-                                                  Filter);
+                                var package = await DataService.ResolvePackageAsync(result, Filter);
                                 if (x.Old is null)
                                 {
                                     // null -> Package: Add
@@ -452,7 +448,7 @@ public partial class InstancePackageModal : Modal
 
             var vid = Model.Version is InstancePackageVersionModel v ? v.Id : null;
             var package =
-                await DataService.ResolvePackageAsync(Model.Label, Model.Namespace, Model.ProjectId, vid, Filter);
+                await DataService.ResolvePackageAsync(new PackageIdentifier(Model.Label, Model.Namespace, Model.ProjectId, vid), Filter);
             var enabledRules = Guard.Value.Setup.Rules.Where(x => x.Enabled).ToList();
             var result = RuleHelper.Evaluate(new RuleHelper.Input(Model.Owner.Entry, package), enabledRules);
             return new InstancePackageRuleResultModel(result);
