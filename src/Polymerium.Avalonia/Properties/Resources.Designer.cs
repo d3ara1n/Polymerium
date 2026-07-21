@@ -2715,48 +2715,6 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
 
-        public static string Week_Sunday {
-            get {
-                return ResourceManager.GetString("Week_Sunday", resourceCulture);
-            }
-        }
-
-        public static string Week_Monday {
-            get {
-                return ResourceManager.GetString("Week_Monday", resourceCulture);
-            }
-        }
-
-        public static string Week_Tuesday {
-            get {
-                return ResourceManager.GetString("Week_Tuesday", resourceCulture);
-            }
-        }
-
-        public static string Week_Wednesday {
-            get {
-                return ResourceManager.GetString("Week_Wednesday", resourceCulture);
-            }
-        }
-
-        public static string Week_Thursday {
-            get {
-                return ResourceManager.GetString("Week_Thursday", resourceCulture);
-            }
-        }
-
-        public static string Week_Friday {
-            get {
-                return ResourceManager.GetString("Week_Friday", resourceCulture);
-            }
-        }
-
-        public static string Week_Saturday {
-            get {
-                return ResourceManager.GetString("Week_Saturday", resourceCulture);
-            }
-        }
-
         public static string Enum_Hour {
             get {
                 return ResourceManager.GetString("Enum_Hour", resourceCulture);
