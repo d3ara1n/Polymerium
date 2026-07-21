@@ -187,25 +187,30 @@ public class NotificationSink(
 
     private static BuildArtifactConflictException? FindBuildArtifactConflict(Exception? exception)
     {
-        if (exception is BuildArtifactConflictException conflict)
+        while (exception is not null)
         {
-            return conflict;
-        }
-
-        if (exception is AggregateException aggregate)
-        {
-            foreach (var inner in aggregate.InnerExceptions)
+            if (exception is BuildArtifactConflictException conflict)
             {
-                if (FindBuildArtifactConflict(inner) is { } found)
-                {
-                    return found;
-                }
+                return conflict;
             }
 
-            return null;
+            if (exception is AggregateException aggregate)
+            {
+                foreach (var inner in aggregate.InnerExceptions)
+                {
+                    if (FindBuildArtifactConflict(inner) is { } found)
+                    {
+                        return found;
+                    }
+                }
+
+                return null;
+            }
+
+            exception = exception.InnerException;
         }
 
-        return FindBuildArtifactConflict(exception?.InnerException);
+        return null;
     }
 
     private static bool IsProcessFaulted(Exception? ex) => ex is ProcessFaultedException
