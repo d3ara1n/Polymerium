@@ -10,9 +10,9 @@
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="540"
+    Padding="0"
     x:DataType="app:AccountModel"
     Background="Transparent"
-    Padding="0"
     mc:Ignorable="d">
     <Grid ColumnDefinitions="Auto,*">
         <!--  Rotating skin preview on a gradient that echoes the account button  -->

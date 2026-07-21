@@ -1,4 +1,4 @@
-<ResourceDictionary
+﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium">
@@ -23,12 +23,14 @@
         <Setter Property="FallbackBrush" Value="{StaticResource FlyoutBackgroundBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <ContentPresenter Name="PART_ContentPresenter" Padding="{TemplateBinding Padding}"
-                                  Content="{TemplateBinding Content}"
-                                  BorderBrush="{TemplateBinding BorderBrush}"
-                                  CornerRadius="{TemplateBinding CornerRadius}"
-                                  BorderThickness="{TemplateBinding BorderThickness}"
-                                  ContentTemplate="{TemplateBinding ContentTemplate}" />
+                <ContentPresenter
+                    Name="PART_ContentPresenter"
+                    Padding="{TemplateBinding Padding}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Content="{TemplateBinding Content}"
+                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                    CornerRadius="{TemplateBinding CornerRadius}" />
             </ControlTemplate>
         </Setter>
     </ControlTheme>

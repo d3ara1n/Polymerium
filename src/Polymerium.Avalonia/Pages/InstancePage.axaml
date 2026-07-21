@@ -352,7 +352,9 @@
                                 CornerRadius="{StaticResource SmallCornerRadius}"
                                 ToolTip.Tip="{Binding Basic.Name}">
                                 <Border.Background>
-                                    <ImageBrush Source="{Binding Basic.Thumbnail}" Stretch="Uniform"/>
+                                    <ImageBrush
+                                        Source="{Binding Basic.Thumbnail}"
+                                        Stretch="Uniform" />
                                 </Border.Background>
                             </Border>
                             <TextBlock

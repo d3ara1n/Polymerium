@@ -45,28 +45,30 @@
                             Margin="{TemplateBinding Padding}"
                             HorizontalAlignment="Stretch"
                             Spacing="10">
-                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                                <Border Grid.Column="0"
-                                        Width="56"
-                                        Height="56"
-                                        CornerRadius="{StaticResource MediumCornerRadius}"
-                                        ClipToBounds="True">
+                            <Grid
+                                ColumnDefinitions="Auto,*"
+                                ColumnSpacing="10">
+                                <Border
+                                    Grid.Column="0"
+                                    Width="56"
+                                    Height="56"
+                                    ClipToBounds="True"
+                                    CornerRadius="{StaticResource MediumCornerRadius}">
                                     <Panel>
                                         <Rectangle>
                                             <Rectangle.Fill>
                                                 <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                                                    <GradientStop Offset="0"
-                                                                  Color="{DynamicResource CardBackdropStartColor}" />
-                                                    <GradientStop Offset="1"
-                                                                  Color="{DynamicResource CardBackdropEndColor}" />
+                                                    <GradientStop Offset="0" Color="{DynamicResource CardBackdropStartColor}" />
+                                                    <GradientStop Offset="1" Color="{DynamicResource CardBackdropEndColor}" />
                                                 </LinearGradientBrush>
                                             </Rectangle.Fill>
                                         </Rectangle>
-                                        <Border CornerRadius="{StaticResource SmallCornerRadius}"
+                                        <Border
                                             Width="36"
                                             Height="36"
                                             HorizontalAlignment="Center"
-                                            VerticalAlignment="Center">
+                                            VerticalAlignment="Center"
+                                            CornerRadius="{StaticResource SmallCornerRadius}">
                                             <Border.Background>
                                                 <ImageBrush
                                                     Source="{Binding Basic.Thumbnail, FallbackValue={x:Null}}"
@@ -75,12 +77,14 @@
                                         </Border>
                                     </Panel>
                                 </Border>
-                                <StackPanel Grid.Column="1" Spacing="2">
+                                <StackPanel
+                                    Grid.Column="1"
+                                    Spacing="2">
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                         MaxLines="1"
-                                        Text="{Binding Basic.SourceLabel,Converter={x:Static husk:StringConverters.ToUpper}, FallbackValue=LOCAL}"
+                                        Text="{Binding Basic.SourceLabel, Converter={x:Static husk:StringConverters.ToUpper}, FallbackValue=LOCAL}"
                                         TextTrimming="CharacterEllipsis" />
                                     <TextBlock
                                         FontSize="{StaticResource LargeFontSize}"
@@ -105,7 +109,9 @@
                                 ItemsSource="{Binding Tags}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <WrapPanel ItemSpacing="4" LineSpacing="4" />
+                                        <WrapPanel
+                                            ItemSpacing="4"
+                                            LineSpacing="4" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
@@ -143,9 +149,9 @@
                             Padding="4"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
+                            IsVisible="{Binding IsPinned}"
                             Background="{StaticResource ControlAccentBackgroundBrush}"
-                            CornerRadius="{StaticResource SmallCornerRadius}"
-                            IsVisible="{Binding IsPinned}">
+                            CornerRadius="{StaticResource SmallCornerRadius}">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="White"
