@@ -406,11 +406,11 @@ public partial class InstanceSetupPageModel(
         foreach (var g in groups)
             g.IsLoaded = false;
 
-        var identifiable = new List<(ModpackGroupModel Group, PackageIdentifier Id)>();
+        var identifiable = new List<(ModpackGroupModel Group, (string Label, string? Namespace, string Pid) Id)>();
         foreach (var g in groups)
         {
             if (g.Source is not null && PackageHelper.TryParse(g.Source, out var r))
-                identifiable.Add((g, new(r.Label, r.Namespace, r.Pid, r.Vid)));
+                identifiable.Add((g, (r.Label, r.Namespace, r.Pid)));
         }
 
         try
@@ -419,13 +419,11 @@ public partial class InstanceSetupPageModel(
             if (identifiable.Count > 0)
             {
                 var byId = identifiable.ToDictionary(x => x.Id, x => x.Group);
-                var packages = await dataService.ResolvePackagesAsync(
-                    identifiable.Select(x => x.Id),
-                    Filter.None with { Kind = ResourceKind.Modpack });
-                foreach (var (id, package) in packages.Successful)
+                var projects = await dataService.QueryProjectsAsync(identifiable.Select(x => x.Id));
+                foreach (var (id, project) in projects.Successful)
                 {
                     if (byId.TryGetValue(id, out var g))
-                        g.Info = new(g, package.ProjectName, package.Thumbnail);
+                        g.Info = new(g, project.ProjectName, project.Thumbnail);
                 }
             }
         }
