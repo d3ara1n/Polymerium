@@ -89,10 +89,12 @@ internal static class Program
         #region 1. 服务已构造，现在初始化这些服务
 
         var configurationService = Services.GetRequiredService<ConfigurationService>();
-        CultureInfo.CurrentUICulture = GetSafeCultureInfo(
-            configurationService.Value.ApplicationLanguage
-        );
-        Resources.Culture = CultureInfo.CurrentUICulture;
+        var culture = GetSafeCultureInfo(configurationService.Value.ApplicationLanguage);
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
+        Resources.Culture = culture;
         var loader = new AppImageLoader(
             Services.GetRequiredService<HttpClient>(),
             Services.GetRequiredService<SkinRenderService>(),
