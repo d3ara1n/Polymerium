@@ -1,3 +1,4 @@
+using TridentCore.Pref;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -145,11 +146,7 @@ public partial class ExhibitModpackToast : Toast
     private void LoadDescription() =>
         LazyDescription = new(async _ =>
         {
-            var description = await DataService.ReadDescriptionAsync(
-                Modpack.Label,
-                Modpack.Namespace,
-                Modpack.ProjectId
-            );
+            var description = await DataService.ReadDescriptionAsync(new ProjectIdentifier(Modpack.Label, Modpack.Namespace, Modpack.ProjectId));
             return description;
         });
 

@@ -82,14 +82,14 @@ public class FavoriteRepository(
 
     public Task<Package> IdentifyAsync(ReadOnlyMemory<byte> content) => throw new NotImplementedException();
 
-    public Task<Project> QueryAsync(string? ns, string pid) => throw new NotImplementedException();
+    public Task<Project> QueryAsync(ScopedProjectIdentifier id) => throw new NotImplementedException();
 
-    public Task<BatchResolveResult<(string?, string pid), Project>> QueryBatchAsync(
-        IEnumerable<(string?, string pid)> batch
+    public Task<BatchResolveResult<ScopedProjectIdentifier, Project>> QueryBatchAsync(
+        IEnumerable<ScopedProjectIdentifier> batch
     ) =>
         throw new NotImplementedException();
 
-    public Task<Package> ResolveAsync(string? ns, string pid, string? vid, Filter filter) =>
+    public Task<Package> ResolveAsync(ScopedPackageIdentifier id, Filter filter) =>
         throw new NotImplementedException();
 
     public Task<BatchResolveResult<ScopedPackageIdentifier, Package>> ResolveBatchAsync(
@@ -97,11 +97,11 @@ public class FavoriteRepository(
         Filter filter) =>
         throw new NotImplementedException();
 
-    public Task<string> ReadDescriptionAsync(string? ns, string pid) => throw new NotImplementedException();
+    public Task<string> ReadDescriptionAsync(ScopedProjectIdentifier id) => throw new NotImplementedException();
 
-    public Task<string> ReadChangelogAsync(string? ns, string pid, string vid) => throw new NotImplementedException();
+    public Task<string> ReadChangelogAsync(ScopedPackageIdentifier id) => throw new NotImplementedException();
 
-    public Task<IPaginationHandle<Version>> InspectAsync(string? ns, string pid, Filter filter) =>
+    public Task<IPaginationHandle<Version>> InspectAsync(ScopedProjectIdentifier id, Filter filter) =>
         throw new NotImplementedException();
 
     #endregion

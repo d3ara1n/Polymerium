@@ -46,31 +46,28 @@ public class DataService(
     // Trident 仓库缓存层管理，此处直接委托。DataService 只缓存 UI hot data
     // 和经过应用层加工的数据。
     public Task<Package> ResolvePackageAsync(
-        string label,
-        string? ns,
-        string pid,
-        string? vid,
+        PackageIdentifier id,
         Filter filter,
         bool cachedEnabled = true
-    ) => agent.ResolveAsync(label, ns, pid, vid, filter, cachedEnabled);
+    ) => agent.ResolveAsync(id, filter, cachedEnabled);
 
     public Task<BatchResolveResult<PackageIdentifier, Package>> ResolvePackagesAsync(
         IEnumerable<PackageIdentifier> batch,
         Filter filter
     ) => agent.ResolveBatchAsync(batch, filter);
 
-    public Task<Project> QueryProjectAsync(string label, string? ns, string pid) =>
-        agent.QueryAsync(label, ns, pid);
+    public Task<Project> QueryProjectAsync(ProjectIdentifier id) =>
+        agent.QueryAsync(id);
 
-    public Task<BatchResolveResult<(string label, string? ns, string pid), Project>> QueryProjectsAsync(
-        IEnumerable<(string label, string? ns, string pid)> batch
+    public Task<BatchResolveResult<ProjectIdentifier, Project>> QueryProjectsAsync(
+        IEnumerable<ProjectIdentifier> batch
     ) => agent.QueryBatchAsync(batch);
 
-    public Task<string> ReadDescriptionAsync(string label, string? ns, string pid) =>
-        agent.ReadDescriptionAsync(label, ns, pid);
+    public Task<string> ReadDescriptionAsync(ProjectIdentifier id) =>
+        agent.ReadDescriptionAsync(id);
 
-    public Task<string> ReadChangelogAsync(string label, string? ns, string pid, string vid) =>
-        agent.ReadChangelogAsync(label, ns, pid, vid);
+    public Task<string> ReadChangelogAsync(PackageIdentifier id) =>
+        agent.ReadChangelogAsync(id);
 
     public Task<RepositoryStatus> CheckStatusAsync(string label) =>
         agent.CheckStatusAsync(label);
@@ -139,7 +136,7 @@ public class DataService(
                 // 真的需要拉取全部版本的情况下只有需要版本匹配的时候都会再次级进行处理
                 // 此处进行限制避免遇到版本过多
                 const int LIMIT = 20;
-                var handle = await agent.InspectAsync(label, ns, pid, filter);
+                var handle = await agent.InspectAsync(new ProjectIdentifier(label, ns, pid), filter);
                 var rv = new List<Version>();
                 int lastCount;
                 var index = 0u;

@@ -1,3 +1,4 @@
+using TridentCore.Pref;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -257,11 +258,7 @@ public partial class ExhibitPackageModal : Modal
                 return null;
             }
 
-            var description = await DataService.ReadDescriptionAsync(
-                Package.Label,
-                Package.Namespace,
-                Package.ProjectId
-            );
+            var description = await DataService.ReadDescriptionAsync(new ProjectIdentifier(Package.Label, Package.Namespace, Package.ProjectId));
             return description;
         });
         return lazy;
@@ -282,12 +279,7 @@ public partial class ExhibitPackageModal : Modal
                 return null;
             }
 
-            var description = await DataService.ReadChangelogAsync(
-                Package.Label,
-                Package.Namespace,
-                Package.ProjectId,
-                vid
-            );
+            var description = await DataService.ReadChangelogAsync(new PackageIdentifier(Package.Label, Package.Namespace, Package.ProjectId, vid));
             return description;
         });
         return lazy;
@@ -303,21 +295,11 @@ public partial class ExhibitPackageModal : Modal
             }
 
             var vid = SelectedVersionMode == 0 ? SelectedVersion?.VersionId : null;
-            var package = await DataService.ResolvePackageAsync(
-                Package.Label,
-                Package.Namespace,
-                Package.ProjectId,
-                vid,
-                Filter
-            );
+            var package = await DataService.ResolvePackageAsync(new PackageIdentifier(Package.Label, Package.Namespace, Package.ProjectId, vid), Filter);
             var tasks = package
                 .Dependencies.Select(async x =>
                 {
-                    var dependency = await DataService.QueryProjectAsync(
-                        x.Label,
-                        x.Namespace,
-                        x.ProjectId
-                    );
+                    var dependency = await DataService.QueryProjectAsync(new ProjectIdentifier(x.Label, x.Namespace, x.ProjectId));
                     return new ExhibitDependencyModel(
                         LinkExhibitCallback(dependency),
                         x.Label,
@@ -464,7 +446,7 @@ public partial class ExhibitPackageModal : Modal
                 {
                     if (x.New != null && PackageHelper.TryParse(x.New, out var result))
                     {
-                        if (result.Vid is null)
+                        if (result.Version is null)
                         {
                             if (x.Old is null)
                             {
@@ -486,13 +468,7 @@ public partial class ExhibitPackageModal : Modal
                             };
                         }
 
-                        var package = await DataService.ResolvePackageAsync(
-                            result.Label,
-                            result.Namespace,
-                            result.Pid,
-                            result.Vid,
-                            Filter
-                        );
+                        var package = await DataService.ResolvePackageAsync(result, Filter);
                         if (x.Old is null)
                         {
                             // null -> Package: Add
