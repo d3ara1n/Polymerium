@@ -27,17 +27,15 @@ namespace Polymerium.Avalonia.Services;
 
 public class InstanceService
 {
-    private readonly InstanceManager _instanceManager;
-    private readonly ProfileManager _profileManager;
     private readonly ConfigurationService _configurationService;
-    private readonly PersistenceService _persistenceService;
-    private readonly OverlayService _overlayService;
-    private readonly NotificationService _notificationService;
     private readonly ExporterAgent _exporterAgent;
+    private readonly InstanceManager _instanceManager;
     private readonly NavigationService _navigationService;
+    private readonly NotificationService _notificationService;
+    private readonly OverlayService _overlayService;
+    private readonly PersistenceService _persistenceService;
     private readonly SourceCache<string, string> _pinnedKeys = new(k => k);
-
-    public IObservable<IChangeSet<string, string>> PinnedChangeStream => _pinnedKeys.Connect();
+    private readonly ProfileManager _profileManager;
 
     public InstanceService(
         InstanceManager instanceManager,
@@ -47,8 +45,7 @@ public class InstanceService
         OverlayService overlayService,
         NotificationService notificationService,
         ExporterAgent exporterAgent,
-        NavigationService navigationService
-    )
+        NavigationService navigationService)
     {
         _instanceManager = instanceManager;
         _profileManager = profileManager;
@@ -66,10 +63,10 @@ public class InstanceService
         }
     }
 
-    private void OnAccountUpdated(object? sender, IAccount account)
-    {
+    public IObservable<IChangeSet<string, string>> PinnedChangeStream => _pinnedKeys.Connect();
+
+    private void OnAccountUpdated(object? sender, IAccount account) =>
         _persistenceService.UpdateAccount(account.Uuid, AccountHelper.ToRaw(account));
-    }
 
     public bool IsPinned(string key) => _pinnedKeys.Lookup(key).HasValue;
 
@@ -97,41 +94,28 @@ public class InstanceService
                 _persistenceService.UseAccount(account.Uuid);
                 var profile = _profileManager.GetImmutable(key);
                 var locator = CreateJavaLocator(profile, _configurationService.Value);
-                var deploy = new DeployOptions(
-                    profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false),
-                    profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false),
-                    false
-                );
-                var launch = new LaunchOptions(
-                    additionalArguments: profile.GetOverride(
-                        Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
-                        _configurationService.Value.GameJavaAdditionalArguments
-                    ),
-                    maxMemory: profile.GetOverride(
-                        Profile.OVERRIDE_JAVA_MAX_MEMORY,
-                        _configurationService.Value.GameJavaMaxMemory
-                    ),
-                    windowSize: (
-                        profile.GetOverride(
-                            Profile.OVERRIDE_WINDOW_WIDTH,
-                            _configurationService.Value.GameWindowInitialWidth
-                        ),
-                        profile.GetOverride(
-                            Profile.OVERRIDE_WINDOW_HEIGHT,
-                            _configurationService.Value.GameWindowInitialHeight
-                        )
-                    ),
-                    quickConnectAddress: profile.GetOverride<string>(
-                        Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER
-                    ),
-                    commandWrapperTemplate: profile.GetOverride(
-                        Profile.OVERRIDE_BEHAVIOR_COMMAND_WRAPPER,
-                        _configurationService.Value.GameCommandWrapper
-                    ),
-                    launchMode: mode,
-                    account: cooked,
-                    brand: Program.Brand
-                );
+                var deploy = new DeployOptions(profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false),
+                                               profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false),
+                                               false);
+                var launch =
+                    new LaunchOptions(additionalArguments:
+                                      profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
+                                                          _configurationService.Value.GameJavaAdditionalArguments),
+                                      maxMemory:
+                                      profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
+                                                          _configurationService.Value.GameJavaMaxMemory),
+                                      windowSize:
+                                      (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH, _configurationService.Value.GameWindowInitialWidth),
+                                       profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
+                                                           _configurationService.Value.GameWindowInitialHeight)),
+                                      quickConnectAddress:
+                                      profile.GetOverride<string>(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER),
+                                      commandWrapperTemplate:
+                                      profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_COMMAND_WRAPPER,
+                                                          _configurationService.Value.GameCommandWrapper),
+                                      launchMode: mode,
+                                      account: cooked,
+                                      brand: Program.Brand);
                 _instanceManager.DeployAndLaunch(key, deploy, launch, locator);
             }
         }
@@ -141,46 +125,30 @@ public class InstanceService
         }
     }
 
-    public void Deploy(
-        string key,
-        bool? fastMode = null,
-        bool? resolveDependency = null,
-        bool? fullCheckMode = null
-    )
+    public void Deploy(string key, bool? fastMode = null, bool? resolveDependency = null, bool? fullCheckMode = null)
     {
         var profile = _profileManager.GetImmutable(key);
         fastMode ??= profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false);
-        resolveDependency ??= profile.GetOverride(
-            Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY,
-            false
-        );
+        resolveDependency ??= profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false);
         fullCheckMode ??= false;
         var locator = CreateJavaLocator(profile, _configurationService.Value);
         _instanceManager.Deploy(key, new(fastMode, resolveDependency, fullCheckMode), locator);
     }
 
-    private static JavaHomeLocatorDelegate CreateJavaLocator(
-        Profile profile,
-        Configuration configuration
-    ) =>
-        JavaHelper.MakeLocator(major =>
-            profile.GetOverride(
-                Profile.OVERRIDE_JAVA_HOME,
-                major switch
-                {
-                    8 => configuration.RuntimeJavaHome8,
-                    11 => configuration.RuntimeJavaHome11,
-                    16 or 17 => configuration.RuntimeJavaHome17,
-                    21 => configuration.RuntimeJavaHome21,
-                    24 or 25 => configuration.RuntimeJavaHome25,
-                    _ => throw new ArgumentOutOfRangeException(
-                        nameof(major),
-                        major,
-                        $"Unsupported java version: {major}"
-                    ),
-                }
-            )
-        );
+    private static JavaHomeLocatorDelegate CreateJavaLocator(Profile profile, Configuration configuration) =>
+        JavaHelper.MakeLocator(major => profile.GetOverride(Profile.OVERRIDE_JAVA_HOME,
+                                                            major switch
+                                                            {
+                                                                8 => configuration.RuntimeJavaHome8,
+                                                                11 => configuration.RuntimeJavaHome11,
+                                                                16 or 17 => configuration.RuntimeJavaHome17,
+                                                                21 => configuration.RuntimeJavaHome21,
+                                                                24 or 25 => configuration.RuntimeJavaHome25,
+                                                                _ => throw new
+                                                                         ArgumentOutOfRangeException(nameof(major),
+                                                                             major,
+                                                                             $"Unsupported java version: {major}")
+                                                            }));
 
     public void Play(string key)
     {
@@ -190,10 +158,10 @@ public class InstanceService
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(
-                ex,
-                Resources.MainWindow_InstanceLaunchingDangerNotificationTitle.Replace("{0}", key),
-                thumbnail: ThumbnailHelper.ForInstance(key));
+            _notificationService.PopMessage(ex,
+                                            Resources.MainWindow_InstanceLaunchingDangerNotificationTitle
+                                                     .Replace("{0}", key),
+                                            thumbnail: ThumbnailHelper.ForInstance(key));
         }
     }
 
@@ -202,33 +170,34 @@ public class InstanceService
     {
         try
         {
-            Deploy(key, null, null, null);
+            Deploy(key, null);
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(
-                ex,
-                Resources.MainWindow_InstanceDeployingDangerNotificationTitle.Replace("{0}", key),
-                thumbnail: ThumbnailHelper.ForInstance(key));
+            _notificationService.PopMessage(ex,
+                                            Resources.MainWindow_InstanceDeployingDangerNotificationTitle
+                                                     .Replace("{0}", key),
+                                            thumbnail: ThumbnailHelper.ForInstance(key));
         }
     }
 
     public async Task ResetAsync(string key)
     {
-        if (!await _overlayService.RequestStrongConfirmationAsync(
-                Resources.InstancePropertiesPage_ResetConfirmationMessage,
-                Resources.InstancePropertiesPage_ResetConfirmationTitle))
+        if (!await _overlayService.RequestStrongConfirmationAsync(Resources
+                                                                     .InstancePropertiesPage_ResetConfirmationMessage,
+                                                                  Resources
+                                                                     .InstancePropertiesPage_ResetConfirmationTitle))
         {
             return;
         }
 
         if (_instanceManager.IsInUse(key))
         {
-            _notificationService.PopMessage(
-                Resources.InstancePropertiesPage_ResetInUseWarningNotificationMessage,
-                Resources.InstancePropertiesPage_ResetInUseWarningNotificationTitle.Replace("{0}", key),
-                GrowlLevel.Warning,
-                thumbnail: ThumbnailHelper.ForInstance(key));
+            _notificationService.PopMessage(Resources.InstancePropertiesPage_ResetInUseWarningNotificationMessage,
+                                            Resources.InstancePropertiesPage_ResetInUseWarningNotificationTitle
+                                                     .Replace("{0}", key),
+                                            GrowlLevel.Warning,
+                                            thumbnail: ThumbnailHelper.ForInstance(key));
             return;
         }
 
@@ -247,11 +216,10 @@ public class InstanceService
             }
 
             _persistenceService.AppendAction(new() { Key = key, Kind = PersistenceService.ActionKind.Reset });
-            _notificationService.PopMessage(
-                Resources.InstancePropertiesPage_ResetSuccessNotificationMessage,
-                key,
-                GrowlLevel.Success,
-                thumbnail: ThumbnailHelper.ForInstance(key));
+            _notificationService.PopMessage(Resources.InstancePropertiesPage_ResetSuccessNotificationMessage,
+                                            key,
+                                            GrowlLevel.Success,
+                                            thumbnail: ThumbnailHelper.ForInstance(key));
         }
         catch (Exception ex)
         {
@@ -328,7 +296,7 @@ public class InstanceService
                 _notificationService.PopMessage(ex,
                                                 Resources.MainWindow_ReadPackConfigDangerNotificationTitle,
                                                 GrowlLevel.Warning,
-                                                thumbnail: ThumbnailHelper.ForInstance(key));
+                                                ThumbnailHelper.ForInstance(key));
             }
 
             pack ??= new();
@@ -345,7 +313,7 @@ public class InstanceService
                 PackageCount = profile.Setup.Packages.Count,
                 AuthorOriginal = !string.IsNullOrEmpty(overrideAuthor) ? overrideAuthor : user,
                 VersionOriginal = !string.IsNullOrEmpty(overrideVersion) ? overrideVersion : "1.0.0",
-                Result = new ModpackExporterModel(key),
+                Result = new ModpackExporterModel(key)
             };
 
             if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is ModpackExporterModel model)
@@ -367,17 +335,16 @@ public class InstanceService
                             await storage
                                .TryGetWellKnownFolderAsync(WellKnownFolder
                                                               .Downloads),
-                        SuggestedFileName =
-                            $"{name}.{version}",
+                        SuggestedFileName = $"{name}.{version}",
                         DefaultExtension = "zip",
                         FileTypeChoices =
                         [
                             new(Resources
-                                       .Shared_ZipArchiveFileTypeText)
-                                {
-                                    Patterns = ["*.zip"],
-                                },
-                            ],
+                                   .Shared_ZipArchiveFileTypeText)
+                            {
+                                Patterns = ["*.zip"]
+                            }
+                        ]
                     });
                     if (storageItem is not null)
                     {
@@ -385,18 +352,18 @@ public class InstanceService
                         profile.SetOverride(Profile.OVERRIDE_MODPACK_AUTHOR, author);
                         profile.SetOverride(Profile.OVERRIDE_MODPACK_VERSION, version);
                         var notification = _notificationService.PopProgress(name,
-                                                                                Resources
-                                                                                   .MainWindow_ExportModpackProgressingNotificationMessage,
-                                                                                thumbnail: ThumbnailHelper
-                                                                                   .ForInstance(key));
+                                                                            Resources
+                                                                               .MainWindow_ExportModpackProgressingNotificationMessage,
+                                                                            thumbnail: ThumbnailHelper
+                                                                               .ForInstance(key));
                         try
                         {
                             using var container = await Task.Run(async () => await _exporterAgent.ExportAsync(pack,
-                                                                     model.SelectedExporterLabel,
-                                                                     key,
-                                                                     name,
-                                                                     author,
-                                                                     version));
+                                                                                 model.SelectedExporterLabel,
+                                                                                 key,
+                                                                                 name,
+                                                                                 author,
+                                                                                 version));
                             notification.Report(50);
                             await using var stream = await storageItem.OpenWriteAsync();
                             await Task.Run(async () =>
@@ -407,15 +374,13 @@ public class InstanceService
                             await Task.Delay(TimeSpan.FromSeconds(1));
                             var path = storageItem.TryGetLocalPath();
                             _notificationService.PopMessage(path ?? Resources.Enum_Unknown,
-                                                            Resources
-                                                               .MainWindow_ExportModpackSuccessNotificationTitle,
+                                                            Resources.MainWindow_ExportModpackSuccessNotificationTitle,
                                                             thumbnail: ThumbnailHelper.ForInstance(key));
                         }
                         catch (Exception ex)
                         {
                             _notificationService.PopMessage(ex,
-                                                            Resources
-                                                               .MainWindow_ExportModpackDangerNotificationTitle,
+                                                            Resources.MainWindow_ExportModpackDangerNotificationTitle,
                                                             thumbnail: ThumbnailHelper.ForInstance(key));
                         }
                         finally
@@ -423,7 +388,6 @@ public class InstanceService
                             notification.Dispose();
                         }
                     }
-
                 }
             }
 

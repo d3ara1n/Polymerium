@@ -36,11 +36,7 @@ public partial class RotatingSkinView : UserControl
         FramesList.ItemsSource = Frames;
         Indicators.ItemsSource = Frames;
 
-        _timer = new(
-                     TimeSpan.FromMilliseconds(1200),
-                     DispatcherPriority.Normal,
-                     (_, _) => Advance(1)
-                    );
+        _timer = new(TimeSpan.FromMilliseconds(1200), DispatcherPriority.Normal, (_, _) => Advance(1));
         Loaded += (_, _) =>
         {
             _isLoaded = true;
@@ -80,7 +76,9 @@ public partial class RotatingSkinView : UserControl
     {
         base.OnPropertyChanged(change);
         if (change.Property == SourcesProperty)
+        {
             RebuildFrames();
+        }
     }
 
     private void RebuildFrames()
@@ -90,7 +88,9 @@ public partial class RotatingSkinView : UserControl
         if (Sources is { Count: > 0 })
         {
             foreach (var url in Sources)
+            {
                 Frames.Add(new(url));
+            }
         }
         else if (Fallback is not null)
         {
@@ -99,7 +99,9 @@ public partial class RotatingSkinView : UserControl
         }
 
         if (Frames.Count > 0)
+        {
             Frames[0].IsActive = true;
+        }
 
         var multi = Frames.Count > 1;
         PreviousButton.IsVisible = multi;
@@ -111,13 +113,18 @@ public partial class RotatingSkinView : UserControl
     {
         _timer.Stop();
         if (_isLoaded && Frames.Count > 1)
+        {
             _timer.Start();
+        }
     }
 
     private void Advance(int delta)
     {
         if (Frames.Count <= 1)
+        {
             return;
+        }
+
         Frames[_index].IsActive = false;
         _index = (_index + delta + Frames.Count) % Frames.Count;
         Frames[_index].IsActive = true;

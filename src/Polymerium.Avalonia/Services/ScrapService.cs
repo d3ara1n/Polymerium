@@ -25,10 +25,7 @@ public class ScrapService : ILifetimeService
 
     #endregion
 
-    public ScrapService(InstanceManager instanceManager)
-    {
-        _instanceManager = instanceManager;
-    }
+    public ScrapService(InstanceManager instanceManager) => _instanceManager = instanceManager;
 
     public ValueTask StartAsync(CancellationToken cancellationToken = default)
     {
@@ -50,24 +47,21 @@ public class ScrapService : ILifetimeService
             _buffers.Add(e.Key, buffer);
         }
 
-        e.ScrapStream.Subscribe(
-                x =>
-                {
-                    var appended = AppendToModel(x, buffer.LastOrDefault());
-                    buffer.AddLast(appended);
-                },
-                () =>
-                {
-                    _buffers.Remove(e.Key);
-                }
-            )
-            .DisposeWith(e);
+        e
+           .ScrapStream.Subscribe(x =>
+                                  {
+                                      var appended = AppendToModel(x, buffer.LastOrDefault());
+                                      buffer.AddLast(appended);
+                                  },
+                                  () =>
+                                  {
+                                      _buffers.Remove(e.Key);
+                                  })
+           .DisposeWith(e);
     }
 
-    public bool TryGetBuffer(
-        string key,
-        [MaybeNullWhen(false)] out ObservableFixedSizeRingBuffer<ScrapModel> buffer
-    ) => _buffers.TryGetValue(key, out buffer);
+    public bool TryGetBuffer(string key, [MaybeNullWhen(false)] out ObservableFixedSizeRingBuffer<ScrapModel> buffer) =>
+        _buffers.TryGetValue(key, out buffer);
 
     public static ScrapModel AppendToModel(Scrap item, ScrapModel? last)
     {
@@ -75,9 +69,7 @@ public class ScrapService : ILifetimeService
         {
             return new(item.Message, level, item.Date, item.Time, thread, sender);
         }
-        else
-        {
-            return new(item.Message, last?.Level ?? ScrapLevel.Information, null, null, null, null);
-        }
+
+        return new(item.Message, last?.Level ?? ScrapLevel.Information, null, null, null, null);
     }
 }

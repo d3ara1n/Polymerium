@@ -11,32 +11,26 @@ namespace Polymerium.Avalonia.Dialogs;
 public partial class TagsEditorDialog : Dialog
 {
     public static readonly DirectProperty<TagsEditorDialog, IReadOnlyList<string>?> InitialTagsProperty =
-        AvaloniaProperty.RegisterDirect<TagsEditorDialog, IReadOnlyList<string>?>(
-            nameof(InitialTags),
+        AvaloniaProperty.RegisterDirect<TagsEditorDialog, IReadOnlyList<string>?>(nameof(InitialTags),
             o => o.InitialTags,
-            (o, v) => o.InitialTags = v
-        );
+            (o, v) => o.InitialTags = v);
 
     public static readonly DirectProperty<TagsEditorDialog, IReadOnlyList<string>?> SuggestionsProperty =
-        AvaloniaProperty.RegisterDirect<TagsEditorDialog, IReadOnlyList<string>?>(
-            nameof(Suggestions),
+        AvaloniaProperty.RegisterDirect<TagsEditorDialog, IReadOnlyList<string>?>(nameof(Suggestions),
             o => o.Suggestions,
-            (o, v) => o.Suggestions = v
-        );
+            (o, v) => o.Suggestions = v);
 
     public static readonly DirectProperty<TagsEditorDialog, string> InputTextProperty =
-        AvaloniaProperty.RegisterDirect<TagsEditorDialog, string>(
-            nameof(InputText),
-            o => o.InputText,
-            (o, v) => o.InputText = v
-        );
+        AvaloniaProperty.RegisterDirect<TagsEditorDialog, string>(nameof(InputText),
+                                                                  o => o.InputText,
+                                                                  (o, v) => o.InputText = v);
 
     public static readonly DirectProperty<TagsEditorDialog, bool> HasTagsProperty =
         AvaloniaProperty.RegisterDirect<TagsEditorDialog, bool>(nameof(HasTags), o => o.HasTags);
 
     private IReadOnlyList<string>? _initialTags;
-    private IReadOnlyList<string>? _suggestions;
     private string _inputText = string.Empty;
+    private IReadOnlyList<string>? _suggestions;
 
     public TagsEditorDialog()
     {

@@ -36,7 +36,7 @@ public partial class AccountCreationModal : StepWizardModalBase
             XboxLiveService = XboxLiveService,
             MinecraftService = MinecraftService,
             NotificationService = NotificationService,
-            YggdrasilService = YggdrasilService,
+            YggdrasilService = YggdrasilService
         };
     }
 

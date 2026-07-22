@@ -4,12 +4,12 @@ using TridentCore.Core.Utilities;
 
 namespace Polymerium.Avalonia.Models;
 
-public class RuntimePickerDialogCandidateCollection(
-    IReadOnlyList<JavaHelper.JavaRuntimeCandidate> candidates
-)
+public class RuntimePickerDialogCandidateCollection(IReadOnlyList<JavaHelper.JavaRuntimeCandidate> candidates)
 {
     public IReadOnlyList<RuntimePickerDialogCandidateModel> Items { get; } =
-    [.. candidates.Select(x => new RuntimePickerDialogCandidateModel(x))];
+    [
+        .. candidates.Select(x => new RuntimePickerDialogCandidateModel(x))
+    ];
 
     public int Count => Items.Count;
 }

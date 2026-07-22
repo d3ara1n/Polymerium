@@ -31,21 +31,20 @@ public static class InternalConverters
         return 0.0d;
     });
 
-    public static IMultiValueConverter OffsetToOpacity { get; } =
-        new RelayMultiConverter((v, _, _) =>
+    public static IMultiValueConverter OffsetToOpacity { get; } = new RelayMultiConverter((v, _, _) =>
+    {
+        if (v is [Vector offset, double max])
         {
-            if (v is [Vector offset, double max])
-            {
-                return 1.0 - Math.Min(offset.Y, max) / max;
-            }
+            return 1.0 - Math.Min(offset.Y, max) / max;
+        }
 
-            return v;
-        });
+        return v;
+    });
 
     public static IValueConverter RatioToPercent { get; } = new RelayConverter(v => v switch
     {
         double d => d * 100d,
-        _ => v,
+        _ => v
     });
 
     public static IValueConverter EnumTypeToList { get; } = new RelayConverter((v, _) =>
@@ -61,13 +60,13 @@ public static class InternalConverters
     public static IValueConverter UnsignedLongToMiBDoubleConverter { get; } = new RelayConverter(v => v switch
     {
         ulong l => (double)l / 1024 / 1024,
-        _ => v,
+        _ => v
     });
 
     public static IValueConverter UnsignedLongToGiBDoubleConverter { get; } = new RelayConverter(v => v switch
     {
         ulong l => (double)l / 1024 / 1024 / 1024,
-        _ => v,
+        _ => v
     });
 
     public static IValueConverter AccentColorToBrush { get; } = new RelayConverter((v, _) => v is AccentColor accent
@@ -99,7 +98,7 @@ public static class InternalConverters
             AccentColor.Lime => Color.FromRgb(0xBD, 0xEE, 0x63),
             AccentColor.Mint => Color.FromRgb(0x7D, 0xE0, 0xCB),
             AccentColor.Sky => Color.FromRgb(0x7C, 0xE2, 0xFE),
-            _ => Colors.Transparent,
+            _ => Colors.Transparent
         })
         : AvaloniaProperty.UnsetValue);
 
@@ -125,9 +124,9 @@ public static class InternalConverters
                     _ => Application.Current?.TryGetResource("ControlWarningBackgroundBrush", null, out var resource)
                       == true
                              ? resource as SolidColorBrush
-                             : Brushes.Orange,
+                             : Brushes.Orange
                 },
-                _ => Brushes.Gray,
+                _ => Brushes.Gray
             };
         }
 
@@ -146,7 +145,8 @@ public static class InternalConverters
                            ? resource as SolidColorBrush
                            : Brushes.Red;
             }
-            else if (percent > 0.8)
+
+            if (percent > 0.8)
             {
                 return Application.Current?.TryGetResource("ControlWarningBackgroundBrush", null, out var resource)
                     == true
@@ -168,7 +168,8 @@ public static class InternalConverters
         return v;
     });
 
-    public static IValueConverter SidebarExpandedToWidth { get; } = new RelayConverter((v, _) => v is true ? 160d : 64d);
+    public static IValueConverter SidebarExpandedToWidth { get; } =
+        new RelayConverter((v, _) => v is true ? 160d : 64d);
 
     public static IValueConverter TagToBrush { get; } = new RelayConverter((v, _) =>
     {
@@ -182,7 +183,7 @@ public static class InternalConverters
             Color.FromRgb(0x83, 0x47, 0xB9), // Purple
             Color.FromRgb(0xEF, 0x5F, 0x00), // Orange
             Color.FromRgb(0x0D, 0x9B, 0x8A), // Teal
-            Color.FromRgb(0xAB, 0x4A, 0xBA), // Plum
+            Color.FromRgb(0xAB, 0x4A, 0xBA) // Plum
         ];
         var index = Math.Abs(name.GetHashCode()) % palette.Length;
         return new SolidColorBrush(palette[index]);

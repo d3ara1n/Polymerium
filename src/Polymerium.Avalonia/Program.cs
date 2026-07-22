@@ -12,6 +12,7 @@ using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Services.Sinks;
 using Sentry;
+using SQLitePCL;
 using TridentCore.Abstractions;
 using TridentCore.Core.Lifetimes;
 using Velopack;
@@ -34,8 +35,7 @@ internal static class Program
 
     public static readonly string IssuesUrl = "https://github.com/d3ara1n/Polymerium/issues";
 
-    public static readonly string LicenseUrl =
-        "https://github.com/d3ara1n/Polymerium/blob/main/LICENSE.txt";
+    public static readonly string LicenseUrl = "https://github.com/d3ara1n/Polymerium/blob/main/LICENSE.txt";
 
     public static readonly string MagicWords = "say u say me";
 
@@ -62,10 +62,12 @@ internal static class Program
 
         PathDef.BrandNames = new("polymerium", "Polymerium", "dev.dearain.Polymerium");
         if (!Startup.InitializeUnhostedServices())
+        {
             return;
+        }
 
-        SQLitePCL.Batteries_V2.Init();
-        SQLitePCL.raw.FreezeProvider();
+        Batteries_V2.Init();
+        raw.FreezeProvider();
 
         var firstRunFile = Path.Combine(PathDef.Default.PrivateDataDirectory(), "first_run");
         if (!File.Exists(firstRunFile))
@@ -95,11 +97,9 @@ internal static class Program
         CultureInfo.DefaultThreadCurrentCulture = culture;
         CultureInfo.DefaultThreadCurrentUICulture = culture;
         Resources.Culture = culture;
-        var loader = new AppImageLoader(
-            Services.GetRequiredService<HttpClient>(),
-            Services.GetRequiredService<SkinRenderService>(),
-            Services.GetRequiredService<ILogger<AppImageLoader>>()
-        );
+        var loader = new AppImageLoader(Services.GetRequiredService<HttpClient>(),
+                                        Services.GetRequiredService<SkinRenderService>(),
+                                        Services.GetRequiredService<ILogger<AppImageLoader>>());
         ImageLoader.AsyncImageLoader = loader;
         ImageBrushLoader.AsyncImageLoader = loader;
 
@@ -157,16 +157,12 @@ internal static class Program
 
         if (stopException is not null)
         {
-            ErrorReporter.Report(
-                stopException,
-                new(
-                    ErrorReporter.ErrorReportSource.LifetimeShutdown,
-                    Phase: "shutdown",
-                    Critical: true,
-                    Terminating: true,
-                    Level: SentryLevel.Error
-                )
-            );
+            ErrorReporter.Report(stopException,
+                                 new(ErrorReporter.ErrorReportSource.LifetimeShutdown,
+                                     "shutdown",
+                                     true,
+                                     true,
+                                     SentryLevel.Error));
         }
 
         #endregion
@@ -183,10 +179,7 @@ internal static class Program
     public static void Terminate(Action? beforeDie)
     {
         exitAction = beforeDie;
-        if (
-            Application.Current?.ApplicationLifetime
-            is IClassicDesktopStyleApplicationLifetime desktop
-        )
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.Shutdown();
         }
@@ -212,15 +205,15 @@ internal static class Program
     public static AppBuilder BuildAvaloniaApp()
     {
         var builder = AppBuilder
-            .Configure<App>()
+                     .Configure<App>()
 #if DEBUG
-            .WithDeveloperTools()
-            .LogToTextWriter(Console.Out)
+                     .WithDeveloperTools()
+                     .LogToTextWriter(Console.Out)
 #else
         .LogToTrace()
 #endif
-            .UsePlatformDetect()
-            .WithFontSetup();
+                     .UsePlatformDetect()
+                     .WithFontSetup();
 
         return builder;
     }

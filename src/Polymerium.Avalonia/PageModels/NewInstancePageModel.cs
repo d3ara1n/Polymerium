@@ -133,7 +133,7 @@ public partial class NewInstancePageModel(
         }
         else
         {
-            profile = new() { Name = display, Setup = new() { Loader = null, Version = VersionName, Source = null, }, };
+            profile = new() { Name = display, Setup = new() { Loader = null, Version = VersionName, Source = null } };
         }
 
         if (Thumbnail != null)
@@ -170,7 +170,7 @@ public partial class NewInstancePageModel(
         {
             Key = key.Key,
             Kind = PersistenceService.ActionKind.Install,
-            New = ImportedPack?.Path,
+            New = ImportedPack?.Path
         });
 
         navigationService.Navigate<InstancePage>(key.Key);

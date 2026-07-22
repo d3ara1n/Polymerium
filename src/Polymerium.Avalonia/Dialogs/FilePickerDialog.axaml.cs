@@ -14,8 +14,7 @@ public partial class FilePickerDialog : Dialog
 
     public string? SuggestedStartLocationPath { get; set; }
 
-    protected override bool ValidateResult(object? result) =>
-        result is string filePath && File.Exists(filePath);
+    protected override bool ValidateResult(object? result) => result is string filePath && File.Exists(filePath);
 
     private void DropZone_OnDragOver(object? sender, DropZone.DragOverEventArgs e)
     {
@@ -46,24 +45,20 @@ public partial class FilePickerDialog : Dialog
             if (storage.CanOpen)
             {
                 IStorageFolder? startLocation = null;
-                if (
-                    !string.IsNullOrWhiteSpace(SuggestedStartLocationPath)
-                    && Directory.Exists(SuggestedStartLocationPath)
-                )
+                if (!string.IsNullOrWhiteSpace(SuggestedStartLocationPath)
+                 && Directory.Exists(SuggestedStartLocationPath))
                 {
-                    startLocation = await storage.TryGetFolderFromPathAsync(
-                        SuggestedStartLocationPath
-                    );
+                    startLocation = await storage.TryGetFolderFromPathAsync(SuggestedStartLocationPath);
                 }
 
-                var files = await storage.OpenFilePickerAsync(
-                    new()
-                    {
-                        SuggestedStartLocation =
-                            startLocation
-                            ?? await storage.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads),
-                    }
-                );
+                var files = await storage.OpenFilePickerAsync(new()
+                {
+                    SuggestedStartLocation =
+                        startLocation
+                     ?? await storage
+                           .TryGetWellKnownFolderAsync(WellKnownFolder
+                                                          .Downloads)
+                });
                 var file = files.FirstOrDefault();
                 if (file != null)
                 {

@@ -9,7 +9,7 @@ public partial class PackDataModel : ModelBase
 {
     private readonly PackData _pack;
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public PackDataModel(PackData pack)
     {
         _pack = pack;
@@ -42,8 +42,7 @@ public partial class PackDataModel : ModelBase
     [ObservableProperty]
     public partial bool JavaMaxMemory { get; set; }
 
-    partial void OnJavaMaxMemoryChanged(bool value) =>
-        SetEntry(Profile.OVERRIDE_JAVA_MAX_MEMORY, value);
+    partial void OnJavaMaxMemoryChanged(bool value) => SetEntry(Profile.OVERRIDE_JAVA_MAX_MEMORY, value);
 
     [ObservableProperty]
     public partial bool JavaAdditionalArguments { get; set; }
@@ -54,8 +53,7 @@ public partial class PackDataModel : ModelBase
     [ObservableProperty]
     public partial bool ConnectServer { get; set; }
 
-    partial void OnConnectServerChanged(bool value) =>
-        SetEntry(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, value);
+    partial void OnConnectServerChanged(bool value) => SetEntry(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, value);
 
     public MappingCollection<string, string> ExcludedTags { get; }
 
@@ -63,10 +61,7 @@ public partial class PackDataModel : ModelBase
 
     #region Other
 
-    private bool GetEntry(string key)
-    {
-        return _pack.IncludedOverrides.Any(x => x.Key == key && x.Enabled);
-    }
+    private bool GetEntry(string key) => _pack.IncludedOverrides.Any(x => x.Key == key && x.Enabled);
 
     private void SetEntry(string key, bool value)
     {

@@ -9,11 +9,10 @@ using VelopackExtension.MirrorChyan.Sources;
 
 namespace Polymerium.Avalonia.Services;
 
-public partial class UpdateService(
+public class UpdateService(
     ConfigurationService configurationService,
     UpdateManager updateManager,
-    IOptions<MirrorChyanSourceOptions> mirrorChyanSourceOptions
-) : ILifetimeService
+    IOptions<MirrorChyanSourceOptions> mirrorChyanSourceOptions) : ILifetimeService
 {
     private Action<AppUpdateModel?>? _handler;
 
@@ -21,16 +20,34 @@ public partial class UpdateService(
 
     public bool CanCheckUpdate => IsAvailable && !IsChecking;
 
-    public AppUpdateState UpdateState { get; private set; } =
-        updateManager.IsInstalled || Program.IsDebug
-            ? AppUpdateState.Idle
-            : AppUpdateState.Unavailable;
+    public AppUpdateState UpdateState { get; private set; } = updateManager.IsInstalled || Program.IsDebug
+                                                                  ? AppUpdateState.Idle
+                                                                  : AppUpdateState.Unavailable;
 
     public AppUpdateModel? CurrentUpdate { get; private set; }
 
     public bool IsUpdateChecked { get; private set; }
 
     public bool IsChecking { get; private set; }
+
+    public async ValueTask StartAsync(CancellationToken cancellationToken = default)
+    {
+        if (!configurationService.Value.UpdateAutoCheck)
+        {
+            return;
+        }
+
+        try
+        {
+            await CheckUpdateAsync();
+        }
+        catch (Exception)
+        {
+            // slient
+        }
+    }
+
+    public ValueTask StopAsync(CancellationToken cancellationToken = default) => ValueTask.CompletedTask;
 
     public void SetHandler(Action<AppUpdateModel?>? handler) => _handler = handler;
 
@@ -77,6 +94,7 @@ public partial class UpdateService(
             {
                 UpdateState = AppUpdateState.Idle;
             }
+
             throw;
         }
         finally
@@ -88,28 +106,6 @@ public partial class UpdateService(
     private void ApplySourceConfiguration()
     {
         var cdk = configurationService.Value.UpdateMirrorChyanCdk;
-        mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(cdk)
-            ? cdk
-            : Program.MirrorChyanCdk;
+        mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(cdk) ? cdk : Program.MirrorChyanCdk;
     }
-
-    public async ValueTask StartAsync(CancellationToken cancellationToken = default)
-    {
-        if (!configurationService.Value.UpdateAutoCheck)
-        {
-            return;
-        }
-
-        try
-        {
-            await CheckUpdateAsync();
-        }
-        catch (Exception)
-        {
-            // slient
-        }
-    }
-
-    public ValueTask StopAsync(CancellationToken cancellationToken = default) =>
-        ValueTask.CompletedTask;
 }

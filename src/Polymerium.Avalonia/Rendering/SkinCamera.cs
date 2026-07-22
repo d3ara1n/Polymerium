@@ -9,6 +9,16 @@ namespace Polymerium.Avalonia.Rendering;
 /// </summary>
 public sealed class SkinCamera
 {
+    /// <summary>模型在画布中的垂直对齐方式。</summary>
+    public enum VerticalAlign
+    {
+        /// <summary>垂直居中（默认），全身视图用。</summary>
+        Center,
+
+        /// <summary>头顶贴画布顶边，配合画布截断用于半身像（Cover）。</summary>
+        Top
+    }
+
     private const float Deg = MathF.PI / 180f;
 
     /// <summary>绕 Y 轴旋转角度（度）。0° 看到正面，正值顺时针。</summary>
@@ -29,19 +39,8 @@ public sealed class SkinCamera
     /// <summary>模型在画布中的垂直对齐方式，影响 <see cref="Fit" /> 的垂直平移。</summary>
     public VerticalAlign Alignment { get; set; } = VerticalAlign.Center;
 
-    /// <summary>模型在画布中的垂直对齐方式。</summary>
-    public enum VerticalAlign
-    {
-        /// <summary>垂直居中（默认），全身视图用。</summary>
-        Center,
-
-        /// <summary>头顶贴画布顶边，配合画布截断用于半身像（Cover）。</summary>
-        Top,
-    }
-
     /// <summary>视图矩阵：先绕 Y 再绕 X 旋转（row-vector 约定下点先经 Y 再经 X）。</summary>
-    public Matrix4x4 BuildView() =>
-        Matrix4x4.CreateRotationY(YawDeg * Deg) * Matrix4x4.CreateRotationX(PitchDeg * Deg);
+    public Matrix4x4 BuildView() => Matrix4x4.CreateRotationY(YawDeg * Deg) * Matrix4x4.CreateRotationX(PitchDeg * Deg);
 
     /// <summary>
     ///     旋转包围盒后计算等比缩放与平移，使模型居中并翻转 Y（屏幕 Y 向下）。
@@ -70,9 +69,7 @@ public sealed class SkinCamera
         var tx = Width * 0.5f - cx * scale;
         // 屏幕坐标 Y 向下：screenY = trY - rY*scale。
         // Center：模型中心(cy)对齐画布中心；Top：旋转后最高点(maxy)贴画布顶边(0)。
-        var ty = Alignment == VerticalAlign.Top
-            ? maxy * scale
-            : Height * 0.5f + cy * scale;
+        var ty = Alignment == VerticalAlign.Top ? maxy * scale : Height * 0.5f + cy * scale;
         return (scale, new(tx, ty));
     }
 

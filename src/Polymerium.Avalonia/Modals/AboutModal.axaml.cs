@@ -22,8 +22,7 @@ public partial class AboutModal : Modal
 
     public string Runtime => RuntimeInformation.FrameworkDescription;
 
-    public string Platform =>
-        $"{RuntimeInformation.OSDescription} ({RuntimeInformation.OSArchitecture})";
+    public string Platform => $"{RuntimeInformation.OSDescription} ({RuntimeInformation.OSArchitecture})";
 
     #endregion
 
@@ -39,11 +38,9 @@ public partial class AboutModal : Modal
     {
         if (!string.IsNullOrEmpty(url) && Uri.TryCreate(url, UriKind.Absolute, out var uri))
         {
-            return TopLevelHelper.LaunchUriAsync(
-                TopLevel.GetTopLevel(this),
-                uri,
-                Properties.Resources.AboutModal_OpenLinkDangerNotificationTitle
-            );
+            return TopLevelHelper.LaunchUriAsync(TopLevel.GetTopLevel(this),
+                                                 uri,
+                                                 Properties.Resources.AboutModal_OpenLinkDangerNotificationTitle);
         }
 
         return Task.CompletedTask;

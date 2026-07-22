@@ -28,14 +28,7 @@ namespace Polymerium.Avalonia.PageModels;
 
 public partial class InstanceWorkspacePageModel : InstancePageModelBase
 {
-    #region Injected
-
-    private readonly NotificationService _notificationService;
-    private readonly OverlayService _overlayService;
-
-    #endregion
-
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public InstanceWorkspacePageModel(
         IViewContext<InstanceContextParameter> context,
         InstanceStateAggregator aggregator,
@@ -52,17 +45,24 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         ChangesView = view;
     }
 
+    #region Direct
+
+    public bool IsLocked => Basic.Source is not null;
+
+    #endregion
+
+    #region Injected
+
+    private readonly NotificationService _notificationService;
+    private readonly OverlayService _overlayService;
+
+    #endregion
+
     #region Fields
 
     private readonly CompositeDisposable _subscriptions = new();
     private CancellationToken? _initToken;
     private readonly SourceCache<WorkspaceChangeModel, string> _changesSource = new(x => x.RelativePath);
-
-    #endregion
-
-    #region Direct
-
-    public bool IsLocked => Basic.Source is not null;
 
     #endregion
 
@@ -194,7 +194,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         for (var i = 0; i < segments.Length; i++)
         {
             current = string.IsNullOrEmpty(current) ? segments[i] : Path.Combine(current, segments[i]);
-            result.Add(new() { Label = segments[i], RelativePath = current, IsCurrent = i == segments.Length - 1, });
+            result.Add(new() { Label = segments[i], RelativePath = current, IsCurrent = i == segments.Length - 1 });
         }
 
         return result;
@@ -233,7 +233,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                                                  Resources.InstanceWorkspacePage_FileFileTypeText
                                                  : Path.GetExtension(path).TrimStart('.').ToUpperInvariant(),
                               FileSizeRaw = info is FileInfo file ? file.Length : 0,
-                              FileLastModifiedRaw = info.LastWriteTime,
+                              FileLastModifiedRaw = info.LastWriteTime
                           };
                       })
                      .OrderByDescending(entry => entry.IsDirectory)
@@ -308,7 +308,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                     ImportPath = importPath,
                     FileType = type,
                     FileSizeRaw = file.Length,
-                    FileLastModifiedRaw = file.LastWriteTime,
+                    FileLastModifiedRaw = file.LastWriteTime
                 });
                 if (batch.Count >= 100)
                 {
@@ -547,10 +547,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
     }
 
-    private static string BuildRestoreConfirmationMessage(int unstagedCount)
-    {
-        return Resources.InstanceWorkspacePage_GitRestoreConfirmationMessage.Replace("{0}", unstagedCount.ToString());
-    }
+    private static string BuildRestoreConfirmationMessage(int unstagedCount) =>
+        Resources.InstanceWorkspacePage_GitRestoreConfirmationMessage.Replace("{0}", unstagedCount.ToString());
 
     private IEnumerable<string> ScanFolder(string folder, CancellationToken token)
     {
@@ -563,7 +561,10 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         foreach (var file in root.EnumerateFiles("*", SearchOption.AllDirectories))
         {
             if (token.IsCancellationRequested)
+            {
                 yield break;
+            }
+
             yield return Path.GetRelativePath(folder, file.FullName);
         }
     }
@@ -583,14 +584,13 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             {
                 return WorkspaceChangeKind.Updated;
             }
-            else if (liveTime < importTime)
+
+            if (liveTime < importTime)
             {
                 return WorkspaceChangeKind.Outdated;
             }
-            else
-            {
-                return WorkspaceChangeKind.Same;
-            }
+
+            return WorkspaceChangeKind.Same;
         }
 
         return WorkspaceChangeKind.Deleted;
@@ -902,8 +902,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     private bool CanCommitGit() => IsGitRepository && !GitIsBusy && !GitIsDetachedHead && GitChangedCount > 0;
 
     [RelayCommand(CanExecute = nameof(CanCommitGit))]
-    private async Task CommitGit()
-    {
+    private async Task CommitGit() =>
         await RunGitOperationAsync(Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle,
                                    async repository =>
                                    {
@@ -970,7 +969,6 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                                                                           .InstanceWorkspacePage_GitCommitSuccessNotificationTitle,
                                                                        GrowlLevel.Success);
                                    });
-    }
 
     private bool CanRestoreGitChanges() => IsGitRepository && !GitIsBusy && GitStagedCount == 0 && GitUnstagedCount > 0;
 

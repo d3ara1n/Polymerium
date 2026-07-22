@@ -8,6 +8,9 @@ namespace Polymerium.Avalonia.Rendering;
 /// </summary>
 public static class SkinGeometry
 {
+    /// <summary>外层相对本体的放大系数（1/8）。</summary>
+    private const float OverlayScale = 1.125f;
+
     /// <summary>
     ///     标准 cube 顶点（±1），面序 <c>back, front, left, right, top, bottom</c>，每面 4 顶点。
     ///     顶点顺序与下方 UV 模板一一对应（已对照 Coloryr/MinecraftSkinRender 验证）。
@@ -15,66 +18,293 @@ public static class SkinGeometry
     private static readonly float[] CubeVerts =
     [
         // back (z-)
-        1, 1, -1, 1, -1, -1, -1, -1, -1, -1, 1, -1,
+        1,
+        1,
+        -1,
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        1,
+        -1,
         // front (z+)
-        -1, 1, 1, -1, -1, 1, 1, -1, 1, 1, 1, 1,
+        -1,
+        1,
+        1,
+        -1,
+        -1,
+        1,
+        1,
+        -1,
+        1,
+        1,
+        1,
+        1,
         // left (x-)
-        -1, 1, -1, -1, -1, -1, -1, -1, 1, -1, 1, 1,
+        -1,
+        1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        1,
+        -1,
+        1,
+        1,
         // right (x+)
-        1, 1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1,
+        1,
+        1,
+        1,
+        1,
+        -1,
+        1,
+        1,
+        -1,
+        -1,
+        1,
+        1,
+        -1,
         // top (y+)
-        -1, 1, -1, -1, 1, 1, 1, 1, 1, 1, 1, -1,
+        -1,
+        1,
+        -1,
+        -1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        -1,
         // bottom (y-)
-        1, -1, -1, 1, -1, 1, -1, -1, 1, -1, -1, -1,
+        1,
+        -1,
+        -1,
+        1,
+        -1,
+        1,
+        -1,
+        -1,
+        1,
+        -1,
+        -1,
+        -1
     ];
 
     // UV 模板（像素坐标，64×64 基准），面序与 CubeVerts 相同。
     private static readonly float[] HeadTex =
     [
-        32, 8, 32, 16, 24, 16, 24, 8,
-        8, 8, 8, 16, 16, 16, 16, 8,
-        0, 8, 0, 16, 8, 16, 8, 8,
-        16, 8, 16, 16, 24, 16, 24, 8,
-        8, 0, 8, 8, 16, 8, 16, 0,
-        24, 0, 24, 8, 16, 8, 16, 0,
+        32,
+        8,
+        32,
+        16,
+        24,
+        16,
+        24,
+        8,
+        8,
+        8,
+        8,
+        16,
+        16,
+        16,
+        16,
+        8,
+        0,
+        8,
+        0,
+        16,
+        8,
+        16,
+        8,
+        8,
+        16,
+        8,
+        16,
+        16,
+        24,
+        16,
+        24,
+        8,
+        8,
+        0,
+        8,
+        8,
+        16,
+        8,
+        16,
+        0,
+        24,
+        0,
+        24,
+        8,
+        16,
+        8,
+        16,
+        0
     ];
 
     private static readonly float[] BodyTex =
     [
-        24, 4, 24, 16, 16, 16, 16, 4,
-        4, 4, 4, 16, 12, 16, 12, 4,
-        0, 4, 0, 16, 4, 16, 4, 4,
-        12, 4, 12, 16, 16, 16, 16, 4,
-        4, 0, 4, 4, 12, 4, 12, 0,
-        20, 0, 20, 4, 12, 4, 12, 0,
+        24,
+        4,
+        24,
+        16,
+        16,
+        16,
+        16,
+        4,
+        4,
+        4,
+        4,
+        16,
+        12,
+        16,
+        12,
+        4,
+        0,
+        4,
+        0,
+        16,
+        4,
+        16,
+        4,
+        4,
+        12,
+        4,
+        12,
+        16,
+        16,
+        16,
+        16,
+        4,
+        4,
+        0,
+        4,
+        4,
+        12,
+        4,
+        12,
+        0,
+        20,
+        0,
+        20,
+        4,
+        12,
+        4,
+        12,
+        0
     ];
 
     private static readonly float[] LegArmTex =
     [
-        12, 4, 12, 16, 16, 16, 16, 4,
-        4, 4, 4, 16, 8, 16, 8, 4,
-        0, 4, 0, 16, 4, 16, 4, 4,
-        8, 4, 8, 16, 12, 16, 12, 4,
-        4, 0, 4, 4, 8, 4, 8, 0,
-        12, 0, 12, 4, 8, 4, 8, 0,
+        12,
+        4,
+        12,
+        16,
+        16,
+        16,
+        16,
+        4,
+        4,
+        4,
+        4,
+        16,
+        8,
+        16,
+        8,
+        4,
+        0,
+        4,
+        0,
+        16,
+        4,
+        16,
+        4,
+        4,
+        8,
+        4,
+        8,
+        16,
+        12,
+        16,
+        12,
+        4,
+        4,
+        0,
+        4,
+        4,
+        8,
+        4,
+        8,
+        0,
+        12,
+        0,
+        12,
+        4,
+        8,
+        4,
+        8,
+        0
     ];
 
     private static readonly float[] SlimArmTex =
     [
-        11, 4, 11, 16, 14, 16, 14, 4,
-        4, 4, 4, 16, 7, 16, 7, 4,
-        0, 4, 0, 16, 4, 16, 4, 4,
-        7, 4, 7, 16, 11, 16, 11, 4,
-        4, 0, 4, 4, 7, 4, 7, 0,
-        10, 0, 10, 4, 7, 4, 7, 0,
+        11,
+        4,
+        11,
+        16,
+        14,
+        16,
+        14,
+        4,
+        4,
+        4,
+        4,
+        16,
+        7,
+        16,
+        7,
+        4,
+        0,
+        4,
+        0,
+        16,
+        4,
+        16,
+        4,
+        4,
+        7,
+        4,
+        7,
+        16,
+        11,
+        16,
+        11,
+        4,
+        4,
+        0,
+        4,
+        4,
+        7,
+        4,
+        7,
+        0,
+        10,
+        0,
+        10,
+        4,
+        7,
+        4,
+        7,
+        0
     ];
-
-    /// <summary>外层相对本体的放大系数（1/8）。</summary>
-    private const float OverlayScale = 1.125f;
-
-    private readonly record struct PartSpec(
-        float Hx, float Hy, float Hz, Vector3 Pivot,
-        float[] Tex, float BaseU, float BaseV, float OverU, float OverV, bool HasOverlay);
 
     /// <summary>
     ///     构建头像网格（仅 head，本体 + 外层），box 中心置于原点便于单独投影。
@@ -97,10 +327,18 @@ public static class SkinGeometry
         var parts = type == SkinType.Legacy ? LegacyParts() : NewParts(type);
         var faces = new List<SkinFace>();
         foreach (var p in parts)
+        {
             AddPart(faces, p, false);
+        }
+
         foreach (var p in parts)
+        {
             if (p.HasOverlay)
+            {
                 AddPart(faces, p, true);
+            }
+        }
+
         return faces;
     }
 
@@ -143,11 +381,7 @@ public static class SkinGeometry
             for (var c = 0; c < 4; c++)
             {
                 var vi = f * 12 + c * 3;
-                vs[c] = new Vector3(
-                        CubeVerts[vi] * hx,
-                        CubeVerts[vi + 1] * hy,
-                        CubeVerts[vi + 2] * hz)
-                    + p.Pivot;
+                vs[c] = new Vector3(CubeVerts[vi] * hx, CubeVerts[vi + 1] * hy, CubeVerts[vi + 2] * hz) + p.Pivot;
                 var ui = f * 8 + c * 2;
                 uvs[c] = new(p.Tex[ui] + offU, p.Tex[ui + 1] + offV);
             }
@@ -164,12 +398,26 @@ public static class SkinGeometry
         var min = new Vector3(float.MaxValue);
         var max = new Vector3(float.MinValue);
         foreach (var f in faces)
+        {
             foreach (var v in new[] { f.V0, f.V1, f.V2, f.V3 })
             {
                 min = Vector3.Min(min, v);
                 max = Vector3.Max(max, v);
             }
+        }
 
         return new(min, max);
     }
+
+    private readonly record struct PartSpec(
+        float Hx,
+        float Hy,
+        float Hz,
+        Vector3 Pivot,
+        float[] Tex,
+        float BaseU,
+        float BaseV,
+        float OverU,
+        float OverV,
+        bool HasOverlay);
 }

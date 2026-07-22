@@ -3,13 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Polymerium.Avalonia.Models;
 
-public enum ConnectionTestStatus
-{
-    Pending,
-    Testing,
-    Success,
-    Failed,
-}
+public enum ConnectionTestStatus { Pending, Testing, Success, Failed }
 
 public partial class ConnectionTestSiteModel(string display, Uri endpoint) : ObservableObject
 {

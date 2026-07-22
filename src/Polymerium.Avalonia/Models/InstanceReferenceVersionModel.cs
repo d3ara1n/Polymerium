@@ -13,8 +13,7 @@ public partial class InstanceReferenceVersionModel(
     string vid,
     string display,
     ReleaseType releaseType,
-    DateTimeOffset updatedAt
-) : ModelBase
+    DateTimeOffset updatedAt) : ModelBase
 {
     #region Reactive Properties
 

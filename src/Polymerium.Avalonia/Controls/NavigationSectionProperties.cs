@@ -8,13 +8,13 @@ namespace Polymerium.Avalonia.Controls;
 // (which already exposes its own Title/Icon) — e.g. the About panel.
 public sealed class NavigationSectionProperties
 {
-    private NavigationSectionProperties() { }
-
     public static readonly AttachedProperty<string?> TitleProperty =
         AvaloniaProperty.RegisterAttached<NavigationSectionProperties, Control, string?>("Title");
 
     public static readonly AttachedProperty<Symbol> IconProperty =
         AvaloniaProperty.RegisterAttached<NavigationSectionProperties, Control, Symbol>("Icon");
+
+    private NavigationSectionProperties() { }
 
     public static string? GetTitle(Control element) => element.GetValue(TitleProperty);
 

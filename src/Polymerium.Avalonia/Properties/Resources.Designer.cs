@@ -9,21 +9,21 @@
 
 namespace Polymerium.Avalonia.Properties {
     using System;
-
-
+    
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
-
+        
         private static System.Resources.ResourceManager resourceMan;
-
+        
         private static System.Globalization.CultureInfo resourceCulture;
-
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-
+        
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public static System.Resources.ResourceManager ResourceManager {
             get {
@@ -34,7 +34,7 @@ namespace Polymerium.Avalonia.Properties {
                 return resourceMan;
             }
         }
-
+        
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public static System.Globalization.CultureInfo Culture {
             get {
@@ -44,1741 +44,1771 @@ namespace Polymerium.Avalonia.Properties {
                 resourceCulture = value;
             }
         }
-
+        
         public static string MainWindow_HomeButtonText {
             get {
                 return ResourceManager.GetString("MainWindow_HomeButtonText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_MarketplaceButtonText {
             get {
                 return ResourceManager.GetString("MainWindow_MarketplaceButtonText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_UpdateAvailableButtonText {
             get {
                 return ResourceManager.GetString("MainWindow_UpdateAvailableButtonText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_UpdateFoundNotificationMessage {
             get {
                 return ResourceManager.GetString("MainWindow_UpdateFoundNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_UpdateFoundNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_UpdateFoundNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_UpdateLatestNotificationMessage {
             get {
                 return ResourceManager.GetString("MainWindow_UpdateLatestNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_UpdateLatestNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_UpdateLatestNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_AccountButtonText {
             get {
                 return ResourceManager.GetString("MainWindow_AccountButtonText", resourceCulture);
             }
         }
-
+        
         public static string AccountsPage_AddAccountButtonText {
             get {
                 return ResourceManager.GetString("AccountsPage_AddAccountButtonText", resourceCulture);
             }
         }
-
+        
         public static string AccountsPage_Title {
             get {
                 return ResourceManager.GetString("AccountsPage_Title", resourceCulture);
             }
         }
-
+        
         public static string Shared_EmptyListLabelText {
             get {
                 return ResourceManager.GetString("Shared_EmptyListLabelText", resourceCulture);
             }
         }
-
+        
         public static string AccountsPage_MarkAsDefaultMenuText {
             get {
                 return ResourceManager.GetString("AccountsPage_MarkAsDefaultMenuText", resourceCulture);
             }
         }
-
+        
         public static string AccountsPage_RemoveMenuText {
             get {
                 return ResourceManager.GetString("AccountsPage_RemoveMenuText", resourceCulture);
             }
         }
-
+        
         public static string ExceptionPage_Title {
             get {
                 return ResourceManager.GetString("ExceptionPage_Title", resourceCulture);
             }
         }
-
+        
         public static string ExceptionPage_Subtitle {
             get {
                 return ResourceManager.GetString("ExceptionPage_Subtitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_OverviewTitle {
             get {
                 return ResourceManager.GetString("InstanceHomePage_OverviewTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_PackageCountText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_PackageCountText", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_SetupTitle {
             get {
                 return ResourceManager.GetString("InstanceHomePage_SetupTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_SetupTypeText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_SetupTypeText", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_SetupVersionText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_SetupVersionText", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_ActivitiesTitle {
             get {
                 return ResourceManager.GetString("InstanceHomePage_ActivitiesTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_HourCountText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_HourCountText", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_WidgetsTitle {
             get {
                 return ResourceManager.GetString("InstanceHomePage_WidgetsTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_LaunchPadTitle {
             get {
                 return ResourceManager.GetString("InstanceHomePage_LaunchPadTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_SeeMoreButtonText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_SeeMoreButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_SetupEditButtonText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_SetupEditButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_ReadyLabelText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_ReadyLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_NoAccountLabelText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_NoAccountLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_LaunchButtonText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_LaunchButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_AccountButtonTitle {
             get {
                 return ResourceManager.GetString("InstanceHomePage_AccountButtonTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_AccountButtonSubtitle {
             get {
                 return ResourceManager.GetString("InstanceHomePage_AccountButtonSubtitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_AbortButtonText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_AbortButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_KillButtonText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_KillButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_DetachButtonText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_DetachButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_DashboardButtonTitle {
             get {
                 return ResourceManager.GetString("InstanceHomePage_DashboardButtonTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_DashboardButtonSubtitle {
             get {
                 return ResourceManager.GetString("InstanceHomePage_DashboardButtonSubtitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_HomePageText {
             get {
                 return ResourceManager.GetString("InstancePage_HomePageText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_DashboardPageText {
             get {
                 return ResourceManager.GetString("InstancePage_DashboardPageText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_SetupPageText {
             get {
                 return ResourceManager.GetString("InstancePage_SetupPageText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_FilesPageText {
             get {
                 return ResourceManager.GetString("InstancePage_FilesPageText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_WorkspacePageText {
             get {
                 return ResourceManager.GetString("InstancePage_WorkspacePageText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_WidgetsPageText {
             get {
                 return ResourceManager.GetString("InstancePage_WidgetsPageText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_StatisticsPageText {
             get {
                 return ResourceManager.GetString("InstancePage_StatisticsPageText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_StoragePageText {
             get {
                 return ResourceManager.GetString("InstancePage_StoragePageText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_PropertiesPageText {
             get {
                 return ResourceManager.GetString("InstancePage_PropertiesPageText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_TitleTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_TitleTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_TitleSubtitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_TitleSubtitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_DisplayNameLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_DisplayNameLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_RenameButtonText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_RenameButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_SelectButtonText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_SelectButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_RemoveButtonText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_RemoveButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_OverridesTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_OverridesTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_OverridesSubtitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_OverridesSubtitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_NavigateToGlobalButtonTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_NavigateToGlobalButtonTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_NavigateToGlobalButtonSubtitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_NavigateToGlobalButtonSubtitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_JavaHomeLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_JavaHomeLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_JavaMaxMemoryLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_JavaMaxMemoryLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_JavaMaxMemoryUnitText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_JavaMaxMemoryUnitText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_JavaAdditionalArgumentsLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_JavaAdditionalArgumentsLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_CommandWrapperLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_CommandWrapperLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_CommandWrapperDescriptionText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_CommandWrapperDescriptionText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_WindowInitialSizeLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_WindowInitialSizeLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_WindowWidthLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_WindowWidthLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_WindowHeightLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_WindowHeightLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_BehaviorsTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_BehaviorsTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_BehaviorsSubtitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_BehaviorsSubtitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_FastLaunchLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_FastLaunchLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_FastLaunchPrompt {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_FastLaunchPrompt", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_DangerZoneTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_DangerZoneTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_DangerZoneSubtitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_DangerZoneSubtitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_ResetConfirmationTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_ResetConfirmationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_ResetConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_ResetConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_ResetInUseWarningNotificationTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_ResetInUseWarningNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_ResetInUseWarningNotificationMessage {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_ResetInUseWarningNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_ResetSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_ResetSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_DeleteConfirmationTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_DeleteConfirmationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_DeleteConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_DeleteConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_UnlockConfirmationTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_UnlockConfirmationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_UnlockConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_UnlockConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_SacrificeLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_SacrificeLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_UnlockButtonText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_UnlockButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_ResetButtonText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_ResetButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_DeleteButtonText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_DeleteButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_LinkerLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_LinkerLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_LinkerPrompt {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_LinkerPrompt", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_InoperableLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_InoperableLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_InoperableLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_InoperableLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_VersionLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_VersionLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_LoaderLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_LoaderLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ReferenceUnavailableLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ReferenceUnavailableLabelText", resourceCulture);
             }
         }
-
+        
         public static string Shared_ExternalLinkLabelText {
             get {
                 return ResourceManager.GetString("Shared_ExternalLinkLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_SwitchVersionButtonText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_SwitchVersionButtonText", resourceCulture);
             }
         }
-
+        
         public static string MarketplacePortalPage_Title {
             get {
                 return ResourceManager.GetString("MarketplacePortalPage_Title", resourceCulture);
             }
         }
-
+        
         public static string MarketplacePortalPage_DiscoveryCenterTitle {
             get {
                 return ResourceManager.GetString("MarketplacePortalPage_DiscoveryCenterTitle", resourceCulture);
             }
         }
-
+        
         public static string MarketplacePortalPage_DiscoveryCenterSubtitle {
             get {
                 return ResourceManager.GetString("MarketplacePortalPage_DiscoveryCenterSubtitle", resourceCulture);
             }
         }
-
+        
         public static string MarketplacePortalPage_SearchButtonText {
             get {
                 return ResourceManager.GetString("MarketplacePortalPage_SearchButtonText", resourceCulture);
             }
         }
-
+        
         public static string MarketplaceSearchPage_Title {
             get {
                 return ResourceManager.GetString("MarketplaceSearchPage_Title", resourceCulture);
             }
         }
-
+        
         public static string MarketplaceSearchPage_SearchBarPlaceholder {
             get {
                 return ResourceManager.GetString("MarketplaceSearchPage_SearchBarPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string MarketplaceSearchPage_SearchButtonText {
             get {
                 return ResourceManager.GetString("MarketplaceSearchPage_SearchButtonText", resourceCulture);
             }
         }
-
+        
         public static string Shared_FetchingLabelText {
             get {
                 return ResourceManager.GetString("Shared_FetchingLabelText", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_CreateButtonText {
             get {
                 return ResourceManager.GetString("NewInstancePage_CreateButtonText", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_Title {
             get {
                 return ResourceManager.GetString("NewInstancePage_Title", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_NameLabelText {
             get {
                 return ResourceManager.GetString("NewInstancePage_NameLabelText", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_VersionLabelText {
             get {
                 return ResourceManager.GetString("NewInstancePage_VersionLabelText", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_PackageCountLabelText {
             get {
                 return ResourceManager.GetString("NewInstancePage_PackageCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_ModLoaderLabelText {
             get {
                 return ResourceManager.GetString("NewInstancePage_ModLoaderLabelText", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_SeparatorLabelText {
             get {
                 return ResourceManager.GetString("NewInstancePage_SeparatorLabelText", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_ImportButtonText {
             get {
                 return ResourceManager.GetString("NewInstancePage_ImportButtonText", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_DownloadButtonText {
             get {
                 return ResourceManager.GetString("NewInstancePage_DownloadButtonText", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_PendingLabelText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_PendingLabelText", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_AddLabelText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_AddLabelText", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_ModifyLabelText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_ModifyLabelText", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_RemoveLabelText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_RemoveLabelText", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_EmptyLabelText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_EmptyLabelText", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_CollectButtonText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_CollectButtonText", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_SearchBarPlaceholder {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_SearchBarPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_SearchButtonText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_SearchButtonText", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_InstallMenuText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_InstallMenuText", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_FavoriteMenuText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_FavoriteMenuText", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_RepositoryMenuText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_RepositoryMenuText", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_NamespaceMenuText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_NamespaceMenuText", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_RemoveFromPendingMenuText {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_RemoveFromPendingMenuText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_Title {
             get {
                 return ResourceManager.GetString("SettingsPage_Title", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_SuperPowerTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_SuperPowerTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_SuperPowerSubtitle {
             get {
                 return ResourceManager.GetString("SettingsPage_SuperPowerSubtitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_SuperPowerLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_SuperPowerLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_DisplayTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_DisplayTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_DisplaySubtitle {
             get {
                 return ResourceManager.GetString("SettingsPage_DisplaySubtitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_SidebarPlacementLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_SidebarPlacementLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_SidebarPlacementLeftText {
             get {
                 return ResourceManager.GetString("SettingsPage_SidebarPlacementLeftText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_SidebarPlacementRightText {
             get {
                 return ResourceManager.GetString("SettingsPage_SidebarPlacementRightText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ThemeVariantLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_ThemeVariantLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ThemeVariantSystemText {
             get {
                 return ResourceManager.GetString("SettingsPage_ThemeVariantSystemText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ThemeVariantLightText {
             get {
                 return ResourceManager.GetString("SettingsPage_ThemeVariantLightText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ThemeVariantDarkText {
             get {
                 return ResourceManager.GetString("SettingsPage_ThemeVariantDarkText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_BackgroundStyleLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_BackgroundStyleLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_BackgroundStyleAutoText {
             get {
                 return ResourceManager.GetString("SettingsPage_BackgroundStyleAutoText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_BackgroundStyleMicaText {
             get {
                 return ResourceManager.GetString("SettingsPage_BackgroundStyleMicaText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_BackgroundStyleAcrylicText {
             get {
                 return ResourceManager.GetString("SettingsPage_BackgroundStyleAcrylicText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_BackgroundStyleBlurText {
             get {
                 return ResourceManager.GetString("SettingsPage_BackgroundStyleBlurText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_BackgroundStyleNoneText {
             get {
                 return ResourceManager.GetString("SettingsPage_BackgroundStyleNoneText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_LanguageLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_LanguageLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_FontLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_FontLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_JavaTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_JavaTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_JavaSubtitle {
             get {
                 return ResourceManager.GetString("SettingsPage_JavaSubtitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_Java8LabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_Java8LabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_Java11LabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_Java11LabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_Java17LabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_Java17LabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_Java21LabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_Java21LabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_GameDefaultsTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_GameDefaultsTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_GameDefaultsSubtitle {
             get {
                 return ResourceManager.GetString("SettingsPage_GameDefaultsSubtitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_JavaMaxMemoryLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_JavaMaxMemoryLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_JavaMaxMemoryPlaceholder {
             get {
                 return ResourceManager.GetString("SettingsPage_JavaMaxMemoryPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_JavaAdditionalArgumentsLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_JavaAdditionalArgumentsLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_JavaAdditionalArgumentsPlaceholder {
             get {
                 return ResourceManager.GetString("SettingsPage_JavaAdditionalArgumentsPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_CommandWrapperLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_CommandWrapperLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_CommandWrapperPlaceholder {
             get {
                 return ResourceManager.GetString("SettingsPage_CommandWrapperPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_CommandWrapperDescriptionText {
             get {
                 return ResourceManager.GetString("SettingsPage_CommandWrapperDescriptionText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_WindowInitialSizeLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_WindowInitialSizeLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_JavaMaxMemoryUnitText {
             get {
                 return ResourceManager.GetString("SettingsPage_JavaMaxMemoryUnitText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_WindowHeightLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_WindowHeightLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_WindowWidthLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_WindowWidthLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_NetworkTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_NetworkTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_NetworkSubtitle {
             get {
                 return ResourceManager.GetString("SettingsPage_NetworkSubtitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ProxyEnabledLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_ProxyEnabledLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_UsernamePlaceholder {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_UsernamePlaceholder", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ProxyPasswordPlaceholder {
             get {
                 return ResourceManager.GetString("SettingsPage_ProxyPasswordPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationMicrosoft_Title {
             get {
                 return ResourceManager.GetString("AccountCreationMicrosoft_Title", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationMicrosoft_UnavailableLabelText {
             get {
                 return ResourceManager.GetString("AccountCreationMicrosoft_UnavailableLabelText", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationMicrosoft_RetryButtonText {
             get {
                 return ResourceManager.GetString("AccountCreationMicrosoft_RetryButtonText", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationMicrosoft_DoneTitle {
             get {
                 return ResourceManager.GetString("AccountCreationMicrosoft_DoneTitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationMicrosoft_DoneSubtitle {
             get {
                 return ResourceManager.GetString("AccountCreationMicrosoft_DoneSubtitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationMicrosoft_OpenLinkButtonText {
             get {
                 return ResourceManager.GetString("AccountCreationMicrosoft_OpenLinkButtonText", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationMicrosoft_Prompt {
             get {
                 return ResourceManager.GetString("AccountCreationMicrosoft_Prompt", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationOffline_Title {
             get {
                 return ResourceManager.GetString("AccountCreationOffline_Title", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationOffline_NameLabelText {
             get {
                 return ResourceManager.GetString("AccountCreationOffline_NameLabelText", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationOffline_UuidLabelText {
             get {
                 return ResourceManager.GetString("AccountCreationOffline_UuidLabelText", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationOffline_Prompt {
             get {
                 return ResourceManager.GetString("AccountCreationOffline_Prompt", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationPortal_Title {
             get {
                 return ResourceManager.GetString("AccountCreationPortal_Title", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationPortal_MicrosoftTitle {
             get {
                 return ResourceManager.GetString("AccountCreationPortal_MicrosoftTitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationPortal_MicrosoftSubtitle {
             get {
                 return ResourceManager.GetString("AccountCreationPortal_MicrosoftSubtitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationPortal_TrialTitle {
             get {
                 return ResourceManager.GetString("AccountCreationPortal_TrialTitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationPortal_TrialSubtitle {
             get {
                 return ResourceManager.GetString("AccountCreationPortal_TrialSubtitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationPortal_OfflineTitle {
             get {
                 return ResourceManager.GetString("AccountCreationPortal_OfflineTitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationPortal_OfflineSubtitle {
             get {
                 return ResourceManager.GetString("AccountCreationPortal_OfflineSubtitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationPortal_AuthlibInjectorTitle {
             get {
                 return ResourceManager.GetString("AccountCreationPortal_AuthlibInjectorTitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationPortal_AuthlibInjectorSubtitle {
             get {
                 return ResourceManager.GetString("AccountCreationPortal_AuthlibInjectorSubtitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationPortal_Prompt {
             get {
                 return ResourceManager.GetString("AccountCreationPortal_Prompt", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationPreview_Title {
             get {
                 return ResourceManager.GetString("AccountCreationPreview_Title", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationPreview_Subtitle {
             get {
                 return ResourceManager.GetString("AccountCreationPreview_Subtitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationTrial_Title {
             get {
                 return ResourceManager.GetString("AccountCreationTrial_Title", resourceCulture);
             }
         }
-
+        
         public static string ExhibitStatePresenter_AddingTagText {
             get {
                 return ResourceManager.GetString("ExhibitStatePresenter_AddingTagText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitStatePresenter_EditableTagText {
             get {
                 return ResourceManager.GetString("ExhibitStatePresenter_EditableTagText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitStatePresenter_LockedTagText {
             get {
                 return ResourceManager.GetString("ExhibitStatePresenter_LockedTagText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitStatePresenter_RemovingTagText {
             get {
                 return ResourceManager.GetString("ExhibitStatePresenter_RemovingTagText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitStatePresenter_ModifyingTagText {
             get {
                 return ResourceManager.GetString("ExhibitStatePresenter_ModifyingTagText", resourceCulture);
             }
         }
-
+        
         public static string JavaHomeContainer_BrowseButtonText {
             get {
                 return ResourceManager.GetString("JavaHomeContainer_BrowseButtonText", resourceCulture);
             }
         }
-
+        
         public static string JavaHomeContainer_DetectButtonText {
             get {
                 return ResourceManager.GetString("JavaHomeContainer_DetectButtonText", resourceCulture);
             }
         }
-
+        
         public static string JavaHomeContainer_UnknownLabelText {
             get {
                 return ResourceManager.GetString("JavaHomeContainer_UnknownLabelText", resourceCulture);
             }
         }
-
+        
         public static string JavaHomeContainer_Prompt {
             get {
                 return ResourceManager.GetString("JavaHomeContainer_Prompt", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_FilterBarPlaceholder {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_FilterBarPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_FilterLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_FilterLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_TagFilterText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_TagFilterText", resourceCulture);
             }
         }
-
+        
         public static string ResourceKind_Modpack {
             get {
                 return ResourceManager.GetString("ResourceKind_Modpack", resourceCulture);
             }
         }
-
+        
         public static string ResourceKind_Mod {
             get {
                 return ResourceManager.GetString("ResourceKind_Mod", resourceCulture);
             }
         }
-
+        
         public static string ResourceKind_ResourcePack {
             get {
                 return ResourceManager.GetString("ResourceKind_ResourcePack", resourceCulture);
             }
         }
-
+        
         public static string ResourceKind_ShaderPack {
             get {
                 return ResourceManager.GetString("ResourceKind_ShaderPack", resourceCulture);
             }
         }
-
+        
         public static string ResourceKind_DataPack {
             get {
                 return ResourceManager.GetString("ResourceKind_DataPack", resourceCulture);
             }
         }
-
+        
         public static string Enum_All {
             get {
                 return ResourceManager.GetString("Enum_All", resourceCulture);
             }
         }
-
+        
         public static string Enum_None {
             get {
                 return ResourceManager.GetString("Enum_None", resourceCulture);
             }
         }
-
+        
         public static string Enum_Enabled {
             get {
                 return ResourceManager.GetString("Enum_Enabled", resourceCulture);
             }
         }
-
+        
         public static string Enum_Disabled {
             get {
                 return ResourceManager.GetString("Enum_Disabled", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_SourceImportText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_SourceImportText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_SourceLocalText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_SourceLocalText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_SourceFilterText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_SourceFilterText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_TypeFilterText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_TypeFilterText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ResultCountLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ResultCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchUpdateMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchUpdateMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchDeleteMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchDeleteMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchEnableMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchEnableMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchDisableMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchDisableMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchManagementNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchManagementNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchRemoveConfirmTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchRemoveConfirmTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchRemoveConfirmMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchRemoveConfirmMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchRemoveSucceededNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchRemoveSucceededNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchEnableSucceededNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchEnableSucceededNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchDisableSucceededNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchDisableSucceededNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchRemoveNothingNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchRemoveNothingNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchEnableNothingNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchEnableNothingNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_BatchDisableNothingNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_BatchDisableNothingNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_GetMoreButtonText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_GetMoreButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ExportListMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ExportListMenuText", resourceCulture);
             }
         }
-
+        
         public static string SafeLock_Title {
             get {
                 return ResourceManager.GetString("SafeLock_Title", resourceCulture);
             }
         }
-
+        
         public static string SafeLock_CodeLabelText {
             get {
                 return ResourceManager.GetString("SafeLock_CodeLabelText", resourceCulture);
             }
         }
-
+        
         public static string SafeLock_RepeatLabelText {
             get {
                 return ResourceManager.GetString("SafeLock_RepeatLabelText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitDependencyButton_RequiredTagText {
             get {
                 return ResourceManager.GetString("ExhibitDependencyButton_RequiredTagText", resourceCulture);
             }
         }
-
+        
         public static string MarketplaceSearchPage_OpenWebsiteMenuText {
             get {
                 return ResourceManager.GetString("MarketplaceSearchPage_OpenWebsiteMenuText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitModpackButton_InstallButtonText {
             get {
                 return ResourceManager.GetString("ExhibitModpackButton_InstallButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceEntryButton_InstallTagText {
             get {
                 return ResourceManager.GetString("InstanceEntryButton_InstallTagText", resourceCulture);
             }
         }
-
+        
         public static string InstanceEntryButton_PreparingTagText {
             get {
                 return ResourceManager.GetString("InstanceEntryButton_PreparingTagText", resourceCulture);
             }
         }
-
+        
         public static string InstanceEntryButton_UpdatingTagText {
             get {
                 return ResourceManager.GetString("InstanceEntryButton_UpdatingTagText", resourceCulture);
             }
         }
-
+        
         public static string InstanceEntryButton_RunningTagText {
             get {
                 return ResourceManager.GetString("InstanceEntryButton_RunningTagText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ActiveMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ActiveMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_OpenWebsiteMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_OpenWebsiteMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_RemoveMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_RemoveMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageButton_DisabledLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageButton_DisabledLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageButton_ImportTagText {
             get {
                 return ResourceManager.GetString("InstancePackageButton_ImportTagText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageButton_AutoVersionTagText {
             get {
                 return ResourceManager.GetString("InstancePackageButton_AutoVersionTagText", resourceCulture);
             }
         }
-
+        
         public static string AccountPickerDialog_Title {
             get {
                 return ResourceManager.GetString("AccountPickerDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string AccountPickerDialog_EmptyListPrompt {
             get {
                 return ResourceManager.GetString("AccountPickerDialog_EmptyListPrompt", resourceCulture);
             }
         }
-
+        
         public static string AccountPickerDialog_ManageAccountsButtonText {
             get {
                 return ResourceManager.GetString("AccountPickerDialog_ManageAccountsButtonText", resourceCulture);
             }
         }
-
+        
         public static string ExportPackageListDialog_Title {
             get {
                 return ResourceManager.GetString("ExportPackageListDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string ExportPackageListDialog_Prompt {
             get {
                 return ResourceManager.GetString("ExportPackageListDialog_Prompt", resourceCulture);
             }
         }
-
+        
         public static string ExportPackageListDialog_PackageCountLabelText {
             get {
                 return ResourceManager.GetString("ExportPackageListDialog_PackageCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string ExportPackageListDialog_PathLabelText {
             get {
                 return ResourceManager.GetString("ExportPackageListDialog_PathLabelText", resourceCulture);
             }
         }
-
+        
         public static string ExportPackageListDialog_PathBarPlaceholder {
             get {
                 return ResourceManager.GetString("ExportPackageListDialog_PathBarPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string FilePickerDialog_Title {
             get {
                 return ResourceManager.GetString("FilePickerDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string FilePickerDialog_DropZonePrompt {
             get {
                 return ResourceManager.GetString("FilePickerDialog_DropZonePrompt", resourceCulture);
             }
         }
-
+        
         public static string FilePickerDialog_BrowseButtonText {
             get {
                 return ResourceManager.GetString("FilePickerDialog_BrowseButtonText", resourceCulture);
             }
         }
-
+        
         public static string FilePickerDialog_AlertPrompt {
             get {
                 return ResourceManager.GetString("FilePickerDialog_AlertPrompt", resourceCulture);
             }
         }
-
+        
         public static string FilePickerDialog_PathBarPlaceholder {
             get {
                 return ResourceManager.GetString("FilePickerDialog_PathBarPlaceholder", resourceCulture);
             }
         }
-
+        
+        public static string ModpackImporterDialog_Title {
+            get {
+                return ResourceManager.GetString("ModpackImporterDialog_Title", resourceCulture);
+            }
+        }
+        
+        public static string ModpackImporterDialog_Prompt {
+            get {
+                return ResourceManager.GetString("ModpackImporterDialog_Prompt", resourceCulture);
+            }
+        }
+        
+        public static string ModpackImporterDialog_InputPlaceholder {
+            get {
+                return ResourceManager.GetString("ModpackImporterDialog_InputPlaceholder", resourceCulture);
+            }
+        }
+        
+        public static string ModpackImporterDialog_DropHint {
+            get {
+                return ResourceManager.GetString("ModpackImporterDialog_DropHint", resourceCulture);
+            }
+        }
+        
+        public static string ModpackImporterDialog_UnrecognizedHint {
+            get {
+                return ResourceManager.GetString("ModpackImporterDialog_UnrecognizedHint", resourceCulture);
+            }
+        }
+        
         public static string GameVersionPickerDialog_Title {
             get {
                 return ResourceManager.GetString("GameVersionPickerDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string GameVersionPickerDialog_VersionBarPlaceholder {
             get {
                 return ResourceManager.GetString("GameVersionPickerDialog_VersionBarPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string ReferenceVersionPickerDialog_Title {
             get {
                 return ResourceManager.GetString("ReferenceVersionPickerDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string ReferenceVersionPickerDialog_Prompt {
             get {
                 return ResourceManager.GetString("ReferenceVersionPickerDialog_Prompt", resourceCulture);
             }
         }
-
+        
         public static string ReleaseType_Release {
             get {
                 return ResourceManager.GetString("ReleaseType_Release", resourceCulture);
             }
         }
-
+        
         public static string ReleaseType_Beta {
             get {
                 return ResourceManager.GetString("ReleaseType_Beta", resourceCulture);
             }
         }
-
+        
         public static string ReleaseType_Alpha {
             get {
                 return ResourceManager.GetString("ReleaseType_Alpha", resourceCulture);
             }
         }
-
+        
         public static string UserInputDialog_Title {
             get {
                 return ResourceManager.GetString("UserInputDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string UserInputDialog_Prompt {
             get {
                 return ResourceManager.GetString("UserInputDialog_Prompt", resourceCulture);
             }
         }
-
+        
         public static string TagPickerDialog_Title {
             get {
                 return ResourceManager.GetString("TagPickerDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string TagPickerDialog_Prompt {
             get {
                 return ResourceManager.GetString("TagPickerDialog_Prompt", resourceCulture);
             }
         }
-
+        
         public static string TagPickerDialog_InputTextBoxPlaceholder {
             get {
                 return ResourceManager.GetString("TagPickerDialog_InputTextBoxPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string TagPickerDialog_ExistingTagsLabelText {
             get {
                 return ResourceManager.GetString("TagPickerDialog_ExistingTagsLabelText", resourceCulture);
             }
         }
-
+        
         public static string TagPickerDialog_NoExistingTagsLabelText {
             get {
                 return ResourceManager.GetString("TagPickerDialog_NoExistingTagsLabelText", resourceCulture);
             }
         }
-
+        
         public static string TagsEditorDialog_Title {
             get {
                 return ResourceManager.GetString("TagsEditorDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string TagsEditorDialog_Prompt {
             get {
                 return ResourceManager.GetString("TagsEditorDialog_Prompt", resourceCulture);
             }
         }
-
+        
         public static string TagsEditorDialog_InputPlaceholder {
             get {
                 return ResourceManager.GetString("TagsEditorDialog_InputPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string TagsEditorDialog_CurrentTagsLabel {
             get {
                 return ResourceManager.GetString("TagsEditorDialog_CurrentTagsLabel", resourceCulture);
             }
         }
-
+        
         public static string TagsEditorDialog_EmptyText {
             get {
                 return ResourceManager.GetString("TagsEditorDialog_EmptyText", resourceCulture);
             }
         }
-
+        
         public static string PackagePickerDialog_Title {
             get {
                 return ResourceManager.GetString("PackagePickerDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string PackagePickerDialog_SearchPlaceholder {
             get {
                 return ResourceManager.GetString("PackagePickerDialog_SearchPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string PackageSelectorDialog_RemoveTitle {
             get {
                 return ResourceManager.GetString("PackageSelectorDialog_RemoveTitle", resourceCulture);
             }
         }
-
+        
         public static string PackageSelectorDialog_EnableTitle {
             get {
                 return ResourceManager.GetString("PackageSelectorDialog_EnableTitle", resourceCulture);
             }
         }
-
+        
         public static string PackageSelectorDialog_DisableTitle {
             get {
                 return ResourceManager.GetString("PackageSelectorDialog_DisableTitle", resourceCulture);
             }
         }
-
+        
         public static string PackageSelectorDialog_RemoveText {
             get {
                 return ResourceManager.GetString("PackageSelectorDialog_RemoveText", resourceCulture);
             }
         }
-
+        
         public static string PackageSelectorDialog_EnableText {
             get {
                 return ResourceManager.GetString("PackageSelectorDialog_EnableText", resourceCulture);
             }
         }
-
+        
         public static string PackageSelectorDialog_DisableText {
             get {
                 return ResourceManager.GetString("PackageSelectorDialog_DisableText", resourceCulture);
             }
         }
-
+        
         public static string PackageSelectorDialog_SearchPlaceholder {
             get {
                 return ResourceManager.GetString("PackageSelectorDialog_SearchPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string PackageSelectorDialog_SelectAllVisibleText {
             get {
                 return ResourceManager.GetString("PackageSelectorDialog_SelectAllVisibleText", resourceCulture);
@@ -1796,5143 +1826,5143 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("PackageSelectorDialog_ClearAllText", resourceCulture);
             }
         }
-
+        
         public static string PackageSelectorDialog_SelectedCountText {
             get {
                 return ResourceManager.GetString("PackageSelectorDialog_SelectedCountText", resourceCulture);
             }
         }
-
+        
         public static string PackageSelectorDialog_EmptyText {
             get {
                 return ResourceManager.GetString("PackageSelectorDialog_EmptyText", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationModal_NextButtonText {
             get {
                 return ResourceManager.GetString("AccountCreationModal_NextButtonText", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationModal_FinishButtonText {
             get {
                 return ResourceManager.GetString("AccountCreationModal_FinishButtonText", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationModal_BackButtonText {
             get {
                 return ResourceManager.GetString("AccountCreationModal_BackButtonText", resourceCulture);
             }
         }
-
+        
         public static string AccountEntryModal_LastUsedLabelText {
             get {
                 return ResourceManager.GetString("AccountEntryModal_LastUsedLabelText", resourceCulture);
             }
         }
-
+        
         public static string AccountEntryModal_EnrolledLabelText {
             get {
                 return ResourceManager.GetString("AccountEntryModal_EnrolledLabelText", resourceCulture);
             }
         }
-
+        
         public static string AccountEntryModal_OfflinePrompt {
             get {
                 return ResourceManager.GetString("AccountEntryModal_OfflinePrompt", resourceCulture);
             }
         }
-
+        
         public static string AccountEntryModal_TrialPrompt {
             get {
                 return ResourceManager.GetString("AccountEntryModal_TrialPrompt", resourceCulture);
             }
         }
-
+        
         public static string AccountEntryModal_MicrosoftPrompt {
             get {
                 return ResourceManager.GetString("AccountEntryModal_MicrosoftPrompt", resourceCulture);
             }
         }
-
+        
         public static string AccountEntryModal_AuthlibServerUrlLabel {
             get {
                 return ResourceManager.GetString("AccountEntryModal_AuthlibServerUrlLabel", resourceCulture);
             }
         }
-
+        
         public static string AccountEntryModal_UuidLabelText {
             get {
                 return ResourceManager.GetString("AccountEntryModal_UuidLabelText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_FilterLabelText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_FilterLabelText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_VersionBoxPlaceholder {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_VersionBoxPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_VersionLabelText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_VersionLabelText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_AddButtonText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_AddButtonText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_InstalledVersionTagText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_InstalledVersionTagText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_UnspecifiedVersionTagText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_UnspecifiedVersionTagText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_ModifyButtonText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_ModifyButtonText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_LockedVersionLabelText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_LockedVersionLabelText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_AddingVersionTagText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_AddingVersionTagText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_ModifyingTagText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_ModifyingTagText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_RemovingTagText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_RemovingTagText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_RestoreButtonText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_RestoreButtonText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_AboutTabText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_AboutTabText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_DependenciesTabText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_DependenciesTabText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_DependenciesTabPrompt {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_DependenciesTabPrompt", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_ChangelogsTabText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_ChangelogsTabText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_ChangelogsTabPrompt {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_ChangelogsTabPrompt", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_EmptyListLabelText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_EmptyListLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_VersionsTabText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_VersionsTabText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_VersionBoxUnspecificTitle {
             get {
                 return ResourceManager.GetString("InstancePackageModal_VersionBoxUnspecificTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_VersionBoxUnspecificSubtitle {
             get {
                 return ResourceManager.GetString("InstancePackageModal_VersionBoxUnspecificSubtitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_VersionBoxLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_VersionBoxLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_LockedVersionLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_LockedVersionLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_FilterLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_FilterLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_TagsTabText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_TagsTabText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_AddTagButtonText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_AddTagButtonText", resourceCulture);
             }
         }
-
+        
         public static string DangerConfirmDialog_PromptText {
             get {
                 return ResourceManager.GetString("DangerConfirmDialog_PromptText", resourceCulture);
             }
         }
-
+        
         public static string DangerConfirmDialog_InputPlaceholderText {
             get {
                 return ResourceManager.GetString("DangerConfirmDialog_InputPlaceholderText", resourceCulture);
             }
         }
-
+        
         public static string Dialog_ConfirmButtonText {
             get {
                 return ResourceManager.GetString("Dialog_ConfirmButtonText", resourceCulture);
             }
         }
-
+        
         public static string Dialog_CancelButtonText {
             get {
                 return ResourceManager.GetString("Dialog_CancelButtonText", resourceCulture);
             }
         }
-
+        
         public static string Dialog_DismissButtonText {
             get {
                 return ResourceManager.GetString("Dialog_DismissButtonText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitModpackToast_InstallButtonText {
             get {
                 return ResourceManager.GetString("ExhibitModpackToast_InstallButtonText", resourceCulture);
             }
         }
-
+        
         public static string JavaHomeContainer_ReqeustJavaTitle {
             get {
                 return ResourceManager.GetString("JavaHomeContainer_ReqeustJavaTitle", resourceCulture);
             }
         }
-
+        
         public static string JavaHomeContainer_RequestJavaPrompt {
             get {
                 return ResourceManager.GetString("JavaHomeContainer_RequestJavaPrompt", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_RequestFileTitle {
             get {
                 return ResourceManager.GetString("NewInstancePage_RequestFileTitle", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_RequestFilePrompt {
             get {
                 return ResourceManager.GetString("NewInstancePage_RequestFilePrompt", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_ImportDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("NewInstancePage_ImportDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string NewInstancePage_IconSavingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("NewInstancePage_IconSavingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string AccountsPage_AccountAddingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("AccountsPage_AccountAddingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string AccountsPage_AccountAddingDangerNotificationMessage {
             get {
                 return ResourceManager.GetString("AccountsPage_AccountAddingDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_AccountAuthenticationDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceHomePage_AccountAuthenticationDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_DeployDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceHomePage_DeployDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_AccountNotFoundDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceHomePage_AccountNotFoundDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_AccountNotFoundDangerNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceHomePage_AccountNotFoundDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceHomePage_AccountNotFoundDangerNotificationSelectActionText {
             get {
                 return ResourceManager.GetString("InstanceHomePage_AccountNotFoundDangerNotificationSelectActionText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_ThumbnailSavingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_ThumbnailSavingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_RequestJavaTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_RequestJavaTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_RequestJavaPrompt {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_RequestJavaPrompt", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_UnlockingSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_UnlockingSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_RequestThumbnailTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_RequestThumbnailTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_RequestThumbnailPrompt {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_RequestThumbnailPrompt", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_ThumbnailSettingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_ThumbnailSettingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_ThumbnailSettingDangerNotificationMessage {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_ThumbnailSettingDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_RequestNameTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_RequestNameTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_RequestNamePrompt {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_RequestNamePrompt", resourceCulture);
             }
         }
-
+        
         public static string PackageBulkUpdaterModal_UpdateButtonText {
             get {
                 return ResourceManager.GetString("PackageBulkUpdaterModal_UpdateButtonText", resourceCulture);
             }
         }
-
+        
         public static string PackageBulkUpdaterModal_Title {
             get {
                 return ResourceManager.GetString("PackageBulkUpdaterModal_Title", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_DependencyGraphMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_DependencyGraphMenuText", resourceCulture);
             }
         }
-
+        
         public static string Enum_On {
             get {
                 return ResourceManager.GetString("Enum_On", resourceCulture);
             }
         }
-
+        
         public static string Enum_Off {
             get {
                 return ResourceManager.GetString("Enum_Off", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_FastLaunchOnText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_FastLaunchOnText", resourceCulture);
             }
         }
-
+        
         public static string Enum_Vanilla {
             get {
                 return ResourceManager.GetString("Enum_Vanilla", resourceCulture);
             }
         }
-
+        
         public static string Enum_Unknown {
             get {
                 return ResourceManager.GetString("Enum_Unknown", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceInstallingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceInstallingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceInstallingSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceInstallingSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceInstallingSuccessNotificationOpenText {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceInstallingSuccessNotificationOpenText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceUpdatingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceUpdatingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceUpdatingSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceUpdatingSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceUpdatingSuccessNotificationOpenText {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceUpdatingSuccessNotificationOpenText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceDeployingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceDeployingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceDeployingBuildArtifactConflictDangerNotificationMessage {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceDeployingBuildArtifactConflictDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceDeployingBuildArtifactConflictResetActionText {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceDeployingBuildArtifactConflictResetActionText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_JavaRuntimeNotFoundDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_JavaRuntimeNotFoundDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_JavaRuntimeNotFoundDangerNotificationMessage {
             get {
                 return ResourceManager.GetString("MainWindow_JavaRuntimeNotFoundDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_JavaRuntimeNotFoundDangerNotificationDownloadText {
             get {
                 return ResourceManager.GetString("MainWindow_JavaRuntimeNotFoundDangerNotificationDownloadText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_JavaRuntimeDownloadDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_JavaRuntimeDownloadDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceLaunchingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_InstanceLaunchingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("LandingPage_InstanceLaunchingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceDeployingSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceDeployingSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceLaunchingSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceLaunchingSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string LaunchMode_Managed {
             get {
                 return ResourceManager.GetString("LaunchMode_Managed", resourceCulture);
             }
         }
-
+        
         public static string LaunchMode_Debug {
             get {
                 return ResourceManager.GetString("LaunchMode_Debug", resourceCulture);
             }
         }
-
+        
         public static string LaunchMode_FireAndForget {
             get {
                 return ResourceManager.GetString("LaunchMode_FireAndForget", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_TitleBarVisibilityLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_TitleBarVisibilityLabelText", resourceCulture);
             }
         }
-
+        
         public static string DeployStage_LoadLock {
             get {
                 return ResourceManager.GetString("DeployStage_LoadLock", resourceCulture);
             }
         }
-
+        
         public static string DeployStage_InstallVanilla {
             get {
                 return ResourceManager.GetString("DeployStage_InstallVanilla", resourceCulture);
             }
         }
-
+        
         public static string DeployStage_ProcessLoader {
             get {
                 return ResourceManager.GetString("DeployStage_ProcessLoader", resourceCulture);
             }
         }
-
+        
         public static string DeployStage_SyncPackages {
             get {
                 return ResourceManager.GetString("DeployStage_SyncPackages", resourceCulture);
             }
         }
-
+        
         public static string DeployStage_FlattenPackages {
             get {
                 return ResourceManager.GetString("DeployStage_FlattenPackages", resourceCulture);
             }
         }
-
+        
         public static string DeployStage_PersistLock {
             get {
                 return ResourceManager.GetString("DeployStage_PersistLock", resourceCulture);
             }
         }
-
+        
         public static string DeployStage_GenerateManifest {
             get {
                 return ResourceManager.GetString("DeployStage_GenerateManifest", resourceCulture);
             }
         }
-
+        
         public static string DeployStage_SolidifyManifest {
             get {
                 return ResourceManager.GetString("DeployStage_SolidifyManifest", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ParsePrefDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ParsePrefDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_LoadProjectInformationDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_LoadProjectInformationDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ImportListNoPackagesWarningNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ImportListNoPackagesWarningNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ImportListWarningNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ImportListWarningNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ImportListSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ImportListSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ImportListSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ImportListSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ImportListDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ImportListDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_FetchingInformationDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_FetchingInformationDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ExportListSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ExportListSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ExportListSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ExportListSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ExportListDangerNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ExportListDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ExportListDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ExportListDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_CheckUpdateDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_CheckUpdateDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_UpdateDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_UpdateDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_InstallVersionNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_InstallVersionNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string MarketplaceSearchPage_ModpackInstallingNotificationMessage {
             get {
                 return ResourceManager.GetString("MarketplaceSearchPage_ModpackInstallingNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string MarketplaceSearchPage_ModpackLoadingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MarketplaceSearchPage_ModpackLoadingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string ResourceKind_World {
             get {
                 return ResourceManager.GetString("ResourceKind_World", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_StatusFilterText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_StatusFilterText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_ThumbnailLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_ThumbnailLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_DebugTitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_DebugTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_CheckIntegrityButtonText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_CheckIntegrityButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_DebugSubtitle {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_DebugSubtitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_CheckIntegrityLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_CheckIntegrityLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageDependencyButton_RequiredTagText {
             get {
                 return ResourceManager.GetString("InstancePackageDependencyButton_RequiredTagText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageDependencyButton_RefCountTagText {
             get {
                 return ResourceManager.GetString("InstancePackageDependencyButton_RefCountTagText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageDependencyModal_AutoVersionTitle {
             get {
                 return ResourceManager.GetString("InstancePackageDependencyModal_AutoVersionTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageDependencyModal_AutoVersionSubtitle {
             get {
                 return ResourceManager.GetString("InstancePackageDependencyModal_AutoVersionSubtitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_DependenciesTabText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_DependenciesTabText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_BasicsTabText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_BasicsTabText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_AccentColorLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_AccentColorLabelText", resourceCulture);
             }
         }
-
+        
         public static string DeployStage_EnsureRuntime {
             get {
                 return ResourceManager.GetString("DeployStage_EnsureRuntime", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_PlayMenuText {
             get {
                 return ResourceManager.GetString("MainWindow_PlayMenuText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_DeployMenuText {
             get {
                 return ResourceManager.GetString("MainWindow_DeployMenuText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_OpenFolderMenuText {
             get {
                 return ResourceManager.GetString("MainWindow_OpenFolderMenuText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_SetupMenuText {
             get {
                 return ResourceManager.GetString("MainWindow_SetupMenuText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_PropertiesMenuText {
             get {
                 return ResourceManager.GetString("MainWindow_PropertiesMenuText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_PinMenuText {
             get {
                 return ResourceManager.GetString("MainWindow_PinMenuText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_UnpinMenuText {
             get {
                 return ResourceManager.GetString("MainWindow_UnpinMenuText", resourceCulture);
             }
         }
-
+        
         public static string Enum_Day {
             get {
                 return ResourceManager.GetString("Enum_Day", resourceCulture);
             }
         }
-
+        
         public static string Enum_Week {
             get {
                 return ResourceManager.GetString("Enum_Week", resourceCulture);
             }
         }
-
+        
         public static string Enum_Month {
             get {
                 return ResourceManager.GetString("Enum_Month", resourceCulture);
             }
         }
-
+        
         public static string Enum_Year {
             get {
                 return ResourceManager.GetString("Enum_Year", resourceCulture);
             }
         }
-
+        
         public static string Enum_Hour {
             get {
                 return ResourceManager.GetString("Enum_Hour", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_CornerStyleLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_CornerStyleLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_KeyNotFoundExceptionMessage {
             get {
                 return ResourceManager.GetString("InstancePage_KeyNotFoundExceptionMessage", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_AboutTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_AboutTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_MaintenanceTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_MaintenanceTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_MaintenanceSubtitle {
             get {
                 return ResourceManager.GetString("SettingsPage_MaintenanceSubtitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ToolsGroupTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_ToolsGroupTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_DangerZoneDividerText {
             get {
                 return ResourceManager.GetString("SettingsPage_DangerZoneDividerText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_StorageManagementDescription {
             get {
                 return ResourceManager.GetString("SettingsPage_StorageManagementDescription", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_GarbageCollectDescription {
             get {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectDescription", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ClearStatisticsDescription {
             get {
                 return ResourceManager.GetString("SettingsPage_ClearStatisticsDescription", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ClearRecordsDescription {
             get {
                 return ResourceManager.GetString("SettingsPage_ClearRecordsDescription", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_StorageManagementLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_StorageManagementLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_StorageManagementButtonText {
             get {
                 return ResourceManager.GetString("SettingsPage_StorageManagementButtonText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_VersionLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_VersionLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_UpdatesViewButtonText {
             get {
                 return ResourceManager.GetString("SettingsPage_UpdatesViewButtonText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_UpdatesCheckButtonText {
             get {
                 return ResourceManager.GetString("SettingsPage_UpdatesCheckButtonText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_UpdatesUnavailableLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_UpdatesUnavailableLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_UpdatesNotFoundLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_UpdatesNotFoundLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_UpdatesFoundLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_UpdatesFoundLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_UpdateSourceGithubText {
             get {
                 return ResourceManager.GetString("SettingsPage_UpdateSourceGithubText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_UpdateSourceMirrorChyanText {
             get {
                 return ResourceManager.GetString("SettingsPage_UpdateSourceMirrorChyanText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_MirrorChyanCdkLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_MirrorChyanCdkLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_MirrorChyanCdkPlaceholder {
             get {
                 return ResourceManager.GetString("SettingsPage_MirrorChyanCdkPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_MirrorChyanCdkHint {
             get {
                 return ResourceManager.GetString("SettingsPage_MirrorChyanCdkHint", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_DependantsTabText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_DependantsTabText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_OverviewLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_OverviewLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_RefreshingLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_RefreshingLabelText", resourceCulture);
             }
         }
-
+        
         public static string AssetImporterDialog_Title {
             get {
                 return ResourceManager.GetString("AssetImporterDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string AssetImporterDialog_PackageNotFoundLabelText {
             get {
                 return ResourceManager.GetString("AssetImporterDialog_PackageNotFoundLabelText", resourceCulture);
             }
         }
-
+        
         public static string AssetImporterDialog_PortableLabelText {
             get {
                 return ResourceManager.GetString("AssetImporterDialog_PortableLabelText", resourceCulture);
             }
         }
-
+        
         public static string AssetImporterDialog_AsPackageLabelText {
             get {
                 return ResourceManager.GetString("AssetImporterDialog_AsPackageLabelText", resourceCulture);
             }
         }
-
+        
         public static string AssetImporterDialog_AsAssetLabelText {
             get {
                 return ResourceManager.GetString("AssetImporterDialog_AsAssetLabelText", resourceCulture);
             }
         }
-
+        
         public static string AssetImporterDialog_AsAssetDescription {
             get {
                 return ResourceManager.GetString("AssetImporterDialog_AsAssetDescription", resourceCulture);
             }
         }
-
+        
         public static string AssetImporterDialog_AsAssetPrompt {
             get {
                 return ResourceManager.GetString("AssetImporterDialog_AsAssetPrompt", resourceCulture);
             }
         }
-
+        
         public static string AssetImporterDialog_Prompt {
             get {
                 return ResourceManager.GetString("AssetImporterDialog_Prompt", resourceCulture);
             }
         }
-
+        
         public static string AssetImporterDialog_IdentifyingLabelText {
             get {
                 return ResourceManager.GetString("AssetImporterDialog_IdentifyingLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_QuickConnectLabelText {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_QuickConnectLabelText", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_Mod {
             get {
                 return ResourceManager.GetString("AssetKind_Mod", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_ResourcePack {
             get {
                 return ResourceManager.GetString("AssetKind_ResourcePack", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_Save {
             get {
                 return ResourceManager.GetString("AssetKind_Save", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_Screenshot {
             get {
                 return ResourceManager.GetString("AssetKind_Screenshot", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_Server {
             get {
                 return ResourceManager.GetString("AssetKind_Server", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_ExportModpackMenuText {
             get {
                 return ResourceManager.GetString("MainWindow_ExportModpackMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActionCard_AddText {
             get {
                 return ResourceManager.GetString("InstanceActionCard_AddText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActionCard_RemoveText {
             get {
                 return ResourceManager.GetString("InstanceActionCard_RemoveText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActionCard_UpdateText {
             get {
                 return ResourceManager.GetString("InstanceActionCard_UpdateText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActionCard_UnknownText {
             get {
                 return ResourceManager.GetString("InstanceActionCard_UnknownText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_TotalHoursLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_TotalHoursLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_SessionCountLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_SessionCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_ActiveDaysLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_ActiveDaysLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_TotalHoursRankLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_TotalHoursRankLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_ChangelogLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_ChangelogLabelText", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_DataPack {
             get {
                 return ResourceManager.GetString("AssetKind_DataPack", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_FilterLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_FilterLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_LoaderFilterText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_LoaderFilterText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_StatusFilterText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_StatusFilterText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_SourceFilterText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_SourceFilterText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_SourceLocalText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_SourceLocalText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_SourceImportText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_SourceImportText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_ModInfoBarTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_ModInfoBarTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_ModInfoBarText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_ModInfoBarText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_AssetFileNameLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_AssetFileNameLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_AssetModIdLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_AssetModIdLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_AssetLicenseLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_AssetLicenseLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_AssetFileSizeLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_AssetFileSizeLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_AssetLastModifiedLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_AssetLastModifiedLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_AssetStatusLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_AssetStatusLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_AssetVisitWebsiteButtonText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_AssetVisitWebsiteButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DetailsLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DetailsLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_AssetPackFormatLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_AssetPackFormatLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_AssetEmptyPrompt {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_AssetEmptyPrompt", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DataPacksLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DataPacksLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_PlayersLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_PlayersLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_ServerResourcePackPreferenceLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_ServerResourcePackPreferenceLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_ServerResourcePackAcceptText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_ServerResourcePackAcceptText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_ServerResourcePackRejectText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_ServerResourcePackRejectText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_ServerResourcePackPromptText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_ServerResourcePackPromptText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_ServerCheckingText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_ServerCheckingText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_ServerUnavailableText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_ServerUnavailableText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_NameLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_NameLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_AuthorLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_AuthorLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_Title {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_AttachmentsLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_AttachmentsLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_AttachmentsPrompt {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_AttachmentsPrompt", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_VersionLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_VersionLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_FormatLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_FormatLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_PackagesLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_PackagesLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_ModLoaderLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_ModLoaderLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_AdvancedOptionsLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_AdvancedOptionsLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_TridentOptionsInfoBarText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_TridentOptionsInfoBarText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_IncludingSourceLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_IncludingSourceLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_IncludingSourceToolTip {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_IncludingSourceToolTip", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_ConnectServerText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_ConnectServerText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_JavaMaxMemoryLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_JavaMaxMemoryLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_JavaAdditionalArgumentsLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_JavaAdditionalArgumentsLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_OfflineModeLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_OfflineModeLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_OfflineModeToolTip {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_OfflineModeToolTip", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DescriptionLabelText {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DescriptionLabelText", resourceCulture);
             }
         }
-
+        
         public static string Account_Microsoft {
             get {
                 return ResourceManager.GetString("Account_Microsoft", resourceCulture);
             }
         }
-
+        
         public static string Account_Offline {
             get {
                 return ResourceManager.GetString("Account_Offline", resourceCulture);
             }
         }
-
+        
         public static string Account_Trial {
             get {
                 return ResourceManager.GetString("Account_Trial", resourceCulture);
             }
         }
-
+        
         public static string Account_AuthlibInjector {
             get {
                 return ResourceManager.GetString("Account_AuthlibInjector", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_RecentPlayButtonText {
             get {
                 return ResourceManager.GetString("LandingPage_RecentPlayButtonText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_MinecraftNewsLabelText {
             get {
                 return ResourceManager.GetString("LandingPage_MinecraftNewsLabelText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_ReadMinecraftNewsButtonText {
             get {
                 return ResourceManager.GetString("LandingPage_ReadMinecraftNewsButtonText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_StatisticsActiveDaysLabelText {
             get {
                 return ResourceManager.GetString("LandingPage_StatisticsActiveDaysLabelText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_StatisticsSessionsLabelText {
             get {
                 return ResourceManager.GetString("LandingPage_StatisticsSessionsLabelText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_StatisticsHoursLabelText {
             get {
                 return ResourceManager.GetString("LandingPage_StatisticsHoursLabelText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_OverviewInstancesLabelText {
             get {
                 return ResourceManager.GetString("LandingPage_OverviewInstancesLabelText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_OverviewAccountsLabelText {
             get {
                 return ResourceManager.GetString("LandingPage_OverviewAccountsLabelText", resourceCulture);
             }
         }
-
+        
         public static string LoaderEditorDialog_VersionLabelText {
             get {
                 return ResourceManager.GetString("LoaderEditorDialog_VersionLabelText", resourceCulture);
             }
         }
-
+        
         public static string LoaderEditorDialog_NoLoaderText {
             get {
                 return ResourceManager.GetString("LoaderEditorDialog_NoLoaderText", resourceCulture);
             }
         }
-
+        
         public static string LoaderEditorDialog_NoLoaderPrompt {
             get {
                 return ResourceManager.GetString("LoaderEditorDialog_NoLoaderPrompt", resourceCulture);
             }
         }
-
+        
         public static string LoaderEditorDialog_AddLoaderButtonText {
             get {
                 return ResourceManager.GetString("LoaderEditorDialog_AddLoaderButtonText", resourceCulture);
             }
         }
-
+        
         public static string LoaderPickerDialog_Title {
             get {
                 return ResourceManager.GetString("LoaderPickerDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_RestartRequiredLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_RestartRequiredLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceStoragePage_OpenFolderButtonText {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_OpenFolderButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceStoragePage_BuildFolderLinkText {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_BuildFolderLinkText", resourceCulture);
             }
         }
-
+        
         public static string InstanceStoragePage_ImportFolderLinkText {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_ImportFolderLinkText", resourceCulture);
             }
         }
-
+        
         public static string InstanceStoragePage_PersistFolderLinkText {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_PersistFolderLinkText", resourceCulture);
             }
         }
-
+        
         public static string InstanceStoragePage_GotoExplorerButtonText {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_GotoExplorerButtonText", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_ShaderPack {
             get {
                 return ResourceManager.GetString("AssetKind_ShaderPack", resourceCulture);
             }
         }
-
+        
         public static string InstanceStoragePage_BreakdownLabelText {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_BreakdownLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceStoragePage_AdditionalLabelText {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_AdditionalLabelText", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_Log {
             get {
                 return ResourceManager.GetString("AssetKind_Log", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_CrashReport {
             get {
                 return ResourceManager.GetString("AssetKind_CrashReport", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_Config {
             get {
                 return ResourceManager.GetString("AssetKind_Config", resourceCulture);
             }
         }
-
+        
         public static string InstanceStoragePage_OtherLabelText {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_OtherLabelText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_Title {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_Title", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_ExitCodeLabelText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_ExitCodeLabelText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_MinecraftVersionLabelText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_MinecraftVersionLabelText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_PlayTimeLabelText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_PlayTimeLabelText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_ModLoaderLabelText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_ModLoaderLabelText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_SystemEnvironmentTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_SystemEnvironmentTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_OperatingSystemLabelText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_OperatingSystemLabelText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_JavaVersionLabelText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_JavaVersionLabelText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_JavaPathLabelText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_JavaPathLabelText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AllocatedMemoryLabelText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AllocatedMemoryLabelText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_LastLogOutputTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_LastLogOutputTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_OpenLatestLogButtonText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_OpenLatestLogButtonText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_OpenCrashReportButtonText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_OpenCrashReportButtonText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_OpenGameDirectoryButtonText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_OpenGameDirectoryButtonText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_ExportButtonText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_ExportButtonText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_ExportDiagnosticPackageMenuText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_ExportDiagnosticPackageMenuText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_ExportAnalysisPackageMenuText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_ExportAnalysisPackageMenuText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_CopyReportButtonText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_CopyReportButtonText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_CloseButtonText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_CloseButtonText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceLaunchingDangerNotificationDiagnoseText {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceLaunchingDangerNotificationDiagnoseText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_ExportDialogTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_ExportDialogTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AiExportDialogTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportDialogTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AiExportUploadingTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportUploadingTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AiExportUploadingMessage {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportUploadingMessage", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AiExportWritingTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportWritingTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AiExportWritingMessage {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportWritingMessage", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AiExportSuccessTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportSuccessTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AiExportSuccessMessage {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportSuccessMessage", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AiExportFailedTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportFailedTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AiExportUploadFailedTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportUploadFailedTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AiExportUploadFailedMessage {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportUploadFailedMessage", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AiExportLogUnavailableTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportLogUnavailableTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_AiExportLogUnavailableMessage {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_AiExportLogUnavailableMessage", resourceCulture);
             }
         }
-
+        
         public static string AppUpdateModal_Title {
             get {
                 return ResourceManager.GetString("AppUpdateModal_Title", resourceCulture);
             }
         }
-
+        
         public static string AppUpdateModal_CancelButtonText {
             get {
                 return ResourceManager.GetString("AppUpdateModal_CancelButtonText", resourceCulture);
             }
         }
-
+        
         public static string AppUpdateModal_ConfirmButtonText {
             get {
                 return ResourceManager.GetString("AppUpdateModal_ConfirmButtonText", resourceCulture);
             }
         }
-
+        
         public static string AppUpdateModal_NoReleaseNotesLabelText {
             get {
                 return ResourceManager.GetString("AppUpdateModal_NoReleaseNotesLabelText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceCrashedDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceCrashedDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstanceCrashedDangerNotificationMessage {
             get {
                 return ResourceManager.GetString("MainWindow_InstanceCrashedDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_Title {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_ModeAutoTitle {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_ModeAutoTitle", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_ModeManualTitle {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_ModeManualTitle", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_ModeDisabledTitle {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_ModeDisabledTitle", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_AutoDescription {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_AutoDescription", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_AutoSubtitle {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_AutoSubtitle", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_ProtocolLabelText {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_ProtocolLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_AddressLabelText {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_AddressLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_PortLabelText {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_PortLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_AuthenticationTitle {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_AuthenticationTitle", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_UsernameLabelText {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_UsernameLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_PasswordLabelText {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_PasswordLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_TestConnectionButtonText {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_TestConnectionButtonText", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_TestingLabelText {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_TestingLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_DisabledDescription {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_DisabledDescription", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_DisabledSubtitle {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_DisabledSubtitle", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_RestartRequiredLabelText {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_RestartRequiredLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ProxyCurrentStatusLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_ProxyCurrentStatusLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ProxyStatusAutoText {
             get {
                 return ResourceManager.GetString("SettingsPage_ProxyStatusAutoText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ProxyStatusDisabledText {
             get {
                 return ResourceManager.GetString("SettingsPage_ProxyStatusDisabledText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ProxyStatusManualText {
             get {
                 return ResourceManager.GetString("SettingsPage_ProxyStatusManualText", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_TestSuccessLabelText {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_TestSuccessLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_PlaytimeTabText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_PlaytimeTabText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_HealthTabText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_HealthTabText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_CrashCountLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_CrashCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_SuccessRateLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_SuccessRateLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_StatisticsTabText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_StatisticsTabText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_TrendsTabText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_TrendsTabText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_AverageSessionLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_AverageSessionLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_LongestSessionLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_LongestSessionLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_FirstPlayedLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_FirstPlayedLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_LastPlayedLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_LastPlayedLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_PlaytimePercentageLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_PlaytimePercentageLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_ThisWeekLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_ThisWeekLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceActivitiesPage_LastWeekLabelText {
             get {
                 return ResourceManager.GetString("InstanceActivitiesPage_LastWeekLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ClearStatisticsButtonText {
             get {
                 return ResourceManager.GetString("SettingsPage_ClearStatisticsButtonText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ClearRecordsButtonText {
             get {
                 return ResourceManager.GetString("SettingsPage_ClearRecordsButtonText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ClearStatisticsConfirmationTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_ClearStatisticsConfirmationTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ClearStatisticsConfirmationMessage {
             get {
                 return ResourceManager.GetString("SettingsPage_ClearStatisticsConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ClearRecordsConfirmationTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_ClearRecordsConfirmationTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_ClearRecordsConfirmationMessage {
             get {
                 return ResourceManager.GetString("SettingsPage_ClearRecordsConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string Shared_Copy {
             get {
                 return ResourceManager.GetString("Shared_Copy", resourceCulture);
             }
         }
-
+        
         public static string Shared_Cut {
             get {
                 return ResourceManager.GetString("Shared_Cut", resourceCulture);
             }
         }
-
+        
         public static string Shared_Paste {
             get {
                 return ResourceManager.GetString("Shared_Paste", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_UpdateSourceLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_UpdateSourceLabelText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_UpdateAutoCheckLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_UpdateAutoCheckLabelText", resourceCulture);
             }
         }
-
+        
         public static string OobeModal_BackButtonText {
             get {
                 return ResourceManager.GetString("OobeModal_BackButtonText", resourceCulture);
             }
         }
-
+        
         public static string OobeModal_NextButtonText {
             get {
                 return ResourceManager.GetString("OobeModal_NextButtonText", resourceCulture);
             }
         }
-
+        
         public static string OobeModal_FinishButtonText {
             get {
                 return ResourceManager.GetString("OobeModal_FinishButtonText", resourceCulture);
             }
         }
-
+        
         public static string OobeModal_SkipButtonText {
             get {
                 return ResourceManager.GetString("OobeModal_SkipButtonText", resourceCulture);
             }
         }
-
+        
         public static string OobeWelcome_Title {
             get {
                 return ResourceManager.GetString("OobeWelcome_Title", resourceCulture);
             }
         }
-
+        
         public static string OobeWelcome_Subtitle {
             get {
                 return ResourceManager.GetString("OobeWelcome_Subtitle", resourceCulture);
             }
         }
-
+        
         public static string OobeWelcome_Description {
             get {
                 return ResourceManager.GetString("OobeWelcome_Description", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_Title {
             get {
                 return ResourceManager.GetString("OobeFeatures_Title", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_Subtitle {
             get {
                 return ResourceManager.GetString("OobeFeatures_Subtitle", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_GitIntegration_Title {
             get {
                 return ResourceManager.GetString("OobeFeatures_GitIntegration_Title", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_GitIntegration_Description {
             get {
                 return ResourceManager.GetString("OobeFeatures_GitIntegration_Description", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_PortableMetadata_Title {
             get {
                 return ResourceManager.GetString("OobeFeatures_PortableMetadata_Title", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_PortableMetadata_Description {
             get {
                 return ResourceManager.GetString("OobeFeatures_PortableMetadata_Description", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_MultiRepository_Title {
             get {
                 return ResourceManager.GetString("OobeFeatures_MultiRepository_Title", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_MultiRepository_Description {
             get {
                 return ResourceManager.GetString("OobeFeatures_MultiRepository_Description", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_SmartResource_Title {
             get {
                 return ResourceManager.GetString("OobeFeatures_SmartResource_Title", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_SmartResource_Description {
             get {
                 return ResourceManager.GetString("OobeFeatures_SmartResource_Description", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_IntegrityCheck_Title {
             get {
                 return ResourceManager.GetString("OobeFeatures_IntegrityCheck_Title", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_IntegrityCheck_Description {
             get {
                 return ResourceManager.GetString("OobeFeatures_IntegrityCheck_Description", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_OneClick_Title {
             get {
                 return ResourceManager.GetString("OobeFeatures_OneClick_Title", resourceCulture);
             }
         }
-
+        
         public static string OobeFeatures_OneClick_Description {
             get {
                 return ResourceManager.GetString("OobeFeatures_OneClick_Description", resourceCulture);
             }
         }
-
+        
         public static string OobeQuickSetup_Title {
             get {
                 return ResourceManager.GetString("OobeQuickSetup_Title", resourceCulture);
             }
         }
-
+        
         public static string OobeQuickSetup_Subtitle {
             get {
                 return ResourceManager.GetString("OobeQuickSetup_Subtitle", resourceCulture);
             }
         }
-
+        
         public static string OobeQuickSetup_LanguageLabelText {
             get {
                 return ResourceManager.GetString("OobeQuickSetup_LanguageLabelText", resourceCulture);
             }
         }
-
+        
         public static string OobeQuickSetup_ThemeLabelText {
             get {
                 return ResourceManager.GetString("OobeQuickSetup_ThemeLabelText", resourceCulture);
             }
         }
-
+        
         public static string OobeQuickSetup_AccentColorLabelText {
             get {
                 return ResourceManager.GetString("OobeQuickSetup_AccentColorLabelText", resourceCulture);
             }
         }
-
+        
         public static string OobeQuickSetup_ProxyLabel {
             get {
                 return ResourceManager.GetString("OobeQuickSetup_ProxyLabel", resourceCulture);
             }
         }
-
+        
         public static string OobeFinish_Title {
             get {
                 return ResourceManager.GetString("OobeFinish_Title", resourceCulture);
             }
         }
-
+        
         public static string OobeFinish_Description {
             get {
                 return ResourceManager.GetString("OobeFinish_Description", resourceCulture);
             }
         }
-
+        
         public static string OobeFinish_Tip {
             get {
                 return ResourceManager.GetString("OobeFinish_Tip", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_ProxyMode_Auto {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_ProxyMode_Auto", resourceCulture);
             }
         }
-
+        
         public static string ProxySettingsDialog_ProxyMode_Disabled {
             get {
                 return ResourceManager.GetString("ProxySettingsDialog_ProxyMode_Disabled", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_Title {
             get {
                 return ResourceManager.GetString("OobePrivilege_Title", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_Subtitle {
             get {
                 return ResourceManager.GetString("OobePrivilege_Subtitle", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_InstructionsTitle {
             get {
                 return ResourceManager.GetString("OobePrivilege_InstructionsTitle", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_InstructionsDescription {
             get {
                 return ResourceManager.GetString("OobePrivilege_InstructionsDescription", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_OpenSettingsButtonText {
             get {
                 return ResourceManager.GetString("OobePrivilege_OpenSettingsButtonText", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_SafetyNote {
             get {
                 return ResourceManager.GetString("OobePrivilege_SafetyNote", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_SafetyDescription {
             get {
                 return ResourceManager.GetString("OobePrivilege_SafetyDescription", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_StatusGrantedTitle {
             get {
                 return ResourceManager.GetString("OobePrivilege_StatusGrantedTitle", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_StatusGrantedMessage {
             get {
                 return ResourceManager.GetString("OobePrivilege_StatusGrantedMessage", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_StatusRequiredTitle {
             get {
                 return ResourceManager.GetString("OobePrivilege_StatusRequiredTitle", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_StatusRequiredMessage {
             get {
                 return ResourceManager.GetString("OobePrivilege_StatusRequiredMessage", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_GrantedWhatTitle {
             get {
                 return ResourceManager.GetString("OobePrivilege_GrantedWhatTitle", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_GrantedWhatDescription {
             get {
                 return ResourceManager.GetString("OobePrivilege_GrantedWhatDescription", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_GrantedBenefitsTitle {
             get {
                 return ResourceManager.GetString("OobePrivilege_GrantedBenefitsTitle", resourceCulture);
             }
         }
-
+        
         public static string OobePrivacy_Title {
             get {
                 return ResourceManager.GetString("OobePrivacy_Title", resourceCulture);
             }
         }
-
+        
         public static string OobePrivacy_Subtitle {
             get {
                 return ResourceManager.GetString("OobePrivacy_Subtitle", resourceCulture);
             }
         }
-
+        
         public static string OobePrivacy_WhatWeCollectTitle {
             get {
                 return ResourceManager.GetString("OobePrivacy_WhatWeCollectTitle", resourceCulture);
             }
         }
-
+        
         public static string OobePrivacy_WhatWeCollectDescription {
             get {
                 return ResourceManager.GetString("OobePrivacy_WhatWeCollectDescription", resourceCulture);
             }
         }
-
+        
         public static string OobePrivacy_OurPromiseTitle {
             get {
                 return ResourceManager.GetString("OobePrivacy_OurPromiseTitle", resourceCulture);
             }
         }
-
+        
         public static string OobePrivacy_Promise1Title {
             get {
                 return ResourceManager.GetString("OobePrivacy_Promise1Title", resourceCulture);
             }
         }
-
+        
         public static string OobePrivacy_Promise1Description {
             get {
                 return ResourceManager.GetString("OobePrivacy_Promise1Description", resourceCulture);
             }
         }
-
+        
         public static string OobePrivacy_Promise2Title {
             get {
                 return ResourceManager.GetString("OobePrivacy_Promise2Title", resourceCulture);
             }
         }
-
+        
         public static string OobePrivacy_Promise2Description {
             get {
                 return ResourceManager.GetString("OobePrivacy_Promise2Description", resourceCulture);
             }
         }
-
+        
         public static string OobePrivacy_Promise3Title {
             get {
                 return ResourceManager.GetString("OobePrivacy_Promise3Title", resourceCulture);
             }
         }
-
+        
         public static string OobePrivacy_Promise3Description {
             get {
                 return ResourceManager.GetString("OobePrivacy_Promise3Description", resourceCulture);
             }
         }
-
+        
         public static string OobePrivacy_AgreementNote {
             get {
                 return ResourceManager.GetString("OobePrivacy_AgreementNote", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_Title {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_Title", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_TotalLabelText {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_TotalLabelText", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_CacheLabelText {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_CacheLabelText", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_InstancesLabelText {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_InstancesLabelText", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_CacheTitle {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_CacheTitle", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_PurgeButtonText {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_PurgeButtonText", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_PackagesLabelText {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_PackagesLabelText", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_LibrariesLabelText {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_LibrariesLabelText", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_AssetsLabelText {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_AssetsLabelText", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_RuntimesLabelText {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_RuntimesLabelText", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_InstancesTitle {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_InstancesTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_QuickConnectPlaceholder {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_QuickConnectPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_JavaHomePlaceholder {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_JavaHomePlaceholder", resourceCulture);
             }
         }
-
+        
         public static string InstancePropertiesPage_JavaAdditionalArgumentsPlaceholder {
             get {
                 return ResourceManager.GetString("InstancePropertiesPage_JavaAdditionalArgumentsPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_InstalledMemoryLabelText {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_InstalledMemoryLabelText", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_Subtitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_Subtitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_Java25LabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_Java25LabelText", resourceCulture);
             }
         }
-
+        
         public static string Error_BadNetwork {
             get {
                 return ResourceManager.GetString("Error_BadNetwork", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ImportListMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ImportListMenuText", resourceCulture);
             }
         }
-
+        
         public static string MarketplaceSearchPage_Message {
             get {
                 return ResourceManager.GetString("MarketplaceSearchPage_Message", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_RandomPlayTitle {
             get {
                 return ResourceManager.GetString("LandingPage_RandomPlayTitle", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_RandomPlaySubtitle {
             get {
                 return ResourceManager.GetString("LandingPage_RandomPlaySubtitle", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_RandomPlayButtonText {
             get {
                 return ResourceManager.GetString("LandingPage_RandomPlayButtonText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_MinecraftNewsErrorText {
             get {
                 return ResourceManager.GetString("LandingPage_MinecraftNewsErrorText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_RetryButtonText {
             get {
                 return ResourceManager.GetString("LandingPage_RetryButtonText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_RecentPlayPackagesText {
             get {
                 return ResourceManager.GetString("LandingPage_RecentPlayPackagesText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_RecentPlayPlayTimeText {
             get {
                 return ResourceManager.GetString("LandingPage_RecentPlayPlayTimeText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_RecentPlaySessionsText {
             get {
                 return ResourceManager.GetString("LandingPage_RecentPlaySessionsText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ProjectIdMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ProjectIdMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_VersionIdMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_VersionIdMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_ProjectNameMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ProjectNameMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_VersionNameMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_VersionNameMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_HistoryTabText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_HistoryTabText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_NowTagText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_NowTagText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_AddedLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_AddedLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_RemovedPackageText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_RemovedPackageText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_UpdatedToLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_UpdatedToLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_SetToLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_SetToLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_AutoVersionLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_AutoVersionLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_PastTagText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_PastTagText", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_NoRecentPlayLabelText {
             get {
                 return ResourceManager.GetString("LandingPage_NoRecentPlayLabelText", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_HistoryTabText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_HistoryTabText", resourceCulture);
             }
         }
-
+        
         public static string ResourceKind_Unknown {
             get {
                 return ResourceManager.GetString("ResourceKind_Unknown", resourceCulture);
             }
         }
-
+        
         public static string SelectorType_And {
             get {
                 return ResourceManager.GetString("SelectorType_And", resourceCulture);
             }
         }
-
+        
         public static string SelectorType_Or {
             get {
                 return ResourceManager.GetString("SelectorType_Or", resourceCulture);
             }
         }
-
+        
         public static string SelectorType_Not {
             get {
                 return ResourceManager.GetString("SelectorType_Not", resourceCulture);
             }
         }
-
+        
         public static string SelectorType_Pref {
             get {
                 return ResourceManager.GetString("SelectorType_Pref", resourceCulture);
             }
         }
-
+        
         public static string SelectorType_Repository {
             get {
                 return ResourceManager.GetString("SelectorType_Repository", resourceCulture);
             }
         }
-
+        
         public static string SelectorType_Tag {
             get {
                 return ResourceManager.GetString("SelectorType_Tag", resourceCulture);
             }
         }
-
+        
         public static string SelectorType_Kind {
             get {
                 return ResourceManager.GetString("SelectorType_Kind", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_ChildrenLabelText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_ChildrenLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_Title {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_Title", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_RuleTypeLabelText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_RuleTypeLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_SkippingLabelText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_SkippingLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_ChildrenEditButtonText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_ChildrenEditButtonText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_PresetsButtonText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_PresetsButtonText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_DataPackMenuText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_DataPackMenuText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_TaCZGunPackMenuText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_TaCZGunPackMenuText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_PointBlankGunPackMenuText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_PointBlankGunPackMenuText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_DestinationLabelText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_DestinationLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_DestinationPlaceholder {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_DestinationPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_PickButtonText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_PickButtonText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRulesModal_RuleCountLabelText {
             get {
                 return ResourceManager.GetString("ProfileRulesModal_RuleCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRulesModal_Title {
             get {
                 return ResourceManager.GetString("ProfileRulesModal_Title", resourceCulture);
             }
         }
-
+        
         public static string ProfileRulesModal_Message {
             get {
                 return ResourceManager.GetString("ProfileRulesModal_Message", resourceCulture);
             }
         }
-
+        
         public static string ProfileRulesModal_AddRuleButtonText {
             get {
                 return ResourceManager.GetString("ProfileRulesModal_AddRuleButtonText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleSelectorsModal_Title {
             get {
                 return ResourceManager.GetString("ProfileRuleSelectorsModal_Title", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleSelectorsModal_Message {
             get {
                 return ResourceManager.GetString("ProfileRuleSelectorsModal_Message", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleSelectorsModal_SelectorCountLabelText {
             get {
                 return ResourceManager.GetString("ProfileRuleSelectorsModal_SelectorCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleSelectorModal_Title {
             get {
                 return ResourceManager.GetString("ProfileRuleSelectorModal_Title", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleSelectorModal_SelectorTypeLabelText {
             get {
                 return ResourceManager.GetString("ProfileRuleSelectorModal_SelectorTypeLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleSelectorModal_PickButtonText {
             get {
                 return ResourceManager.GetString("ProfileRuleSelectorModal_PickButtonText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleSelectorModal_ChildrenEditButtonText {
             get {
                 return ResourceManager.GetString("ProfileRuleSelectorModal_ChildrenEditButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceSetupPage_RuleCountLabelText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_RuleCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string Shared_Yes {
             get {
                 return ResourceManager.GetString("Shared_Yes", resourceCulture);
             }
         }
-
+        
         public static string Shared_No {
             get {
                 return ResourceManager.GetString("Shared_No", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_AppliedRulesLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_AppliedRulesLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_NoRulesLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_NoRulesLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_OperationLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_OperationLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_BuiltStatusText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_BuiltStatusText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_NotBuiltStatusText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_NotBuiltStatusText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_BuildButtonText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_BuildButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_DeploymentStatusLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_DeploymentStatusLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_TargetPathLabelText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_TargetPathLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_BuildProgressTitle {
             get {
                 return ResourceManager.GetString("InstancePackageModal_BuildProgressTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_BuildProgressMessage {
             get {
                 return ResourceManager.GetString("InstancePackageModal_BuildProgressMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_BuildTargetOutsideBuildDirectoryError {
             get {
                 return ResourceManager.GetString("InstancePackageModal_BuildTargetOutsideBuildDirectoryError", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_BuildSuccessMessage {
             get {
                 return ResourceManager.GetString("InstancePackageModal_BuildSuccessMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_BuildSuccessTitle {
             get {
                 return ResourceManager.GetString("InstancePackageModal_BuildSuccessTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_BuildFailedTitle {
             get {
                 return ResourceManager.GetString("InstancePackageModal_BuildFailedTitle", resourceCulture);
             }
         }
-
+        
         public static string PackageBulkUpdatePreviewerTagPolicy_Ignore {
             get {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerTagPolicy_Ignore", resourceCulture);
             }
         }
-
+        
         public static string PackageBulkUpdatePreviewerTagPolicy_Include {
             get {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerTagPolicy_Include", resourceCulture);
             }
         }
-
+        
         public static string PackageBulkUpdatePreviewerTagPolicy_Exclude {
             get {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerTagPolicy_Exclude", resourceCulture);
             }
         }
-
+        
         public static string PackageBulkUpdatePreviewerDialog_TagPolicyLabelText {
             get {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerDialog_TagPolicyLabelText", resourceCulture);
             }
         }
-
+        
         public static string PackageBulkUpdatePreviewerDialog_EnabledOnlyLabelText {
             get {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerDialog_EnabledOnlyLabelText", resourceCulture);
             }
         }
-
+        
         public static string PackageBulkUpdatePreviewerDialog_Title {
             get {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string PackageBulkUpdatePreviewerDialog_AddTagButtonText {
             get {
                 return ResourceManager.GetString("PackageBulkUpdatePreviewerDialog_AddTagButtonText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_IncludingTagsLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_IncludingTagsLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceStoragePage_OpenWikiButtonText {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_OpenWikiButtonText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_OpenWikiButtonText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_OpenWikiButtonText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_TridentOptionsLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_TridentOptionsLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_ExcludedTagsLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_ExcludedTagsLabelText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_ExcludedTagsDescriptionText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_ExcludedTagsDescriptionText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_LiveLogLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_LiveLogLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_RunningLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_RunningLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_DeployingLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_DeployingLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_UpdatingLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_UpdatingLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_IdleLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_IdleLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_SessionCountLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_SessionCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_LogsButtonText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_LogsButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_CrashCountLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_CrashCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_CrashReportsButtonText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_CrashReportsButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_NoDataLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_NoDataLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_SuccessRateLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_SuccessRateLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_CpuUsageLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_CpuUsageLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_MemoryUsageLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_MemoryUsageLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_UptimeLabelText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_UptimeLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_SearchPlaceholder {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_SearchPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string NotificationSidebar_NotificationsLabelText {
             get {
                 return ResourceManager.GetString("NotificationSidebar_NotificationsLabelText", resourceCulture);
             }
         }
-
+        
         public static string NotificationSidebar_MarkAllAsReadButtonText {
             get {
                 return ResourceManager.GetString("NotificationSidebar_MarkAllAsReadButtonText", resourceCulture);
             }
         }
-
+        
         public static string NotificationSidebar_EmptyTitle {
             get {
                 return ResourceManager.GetString("NotificationSidebar_EmptyTitle", resourceCulture);
             }
         }
-
+        
         public static string NotificationSidebar_EmptyPrompt {
             get {
                 return ResourceManager.GetString("NotificationSidebar_EmptyPrompt", resourceCulture);
             }
         }
-
+        
         public static string NotificationSidebar_UnreadTagText {
             get {
                 return ResourceManager.GetString("NotificationSidebar_UnreadTagText", resourceCulture);
             }
         }
-
+        
         public static string NotificationSidebar_CancelledTagText {
             get {
                 return ResourceManager.GetString("NotificationSidebar_CancelledTagText", resourceCulture);
             }
         }
-
+        
         public static string NotificationSidebar_MarkAsReadMenuText {
             get {
                 return ResourceManager.GetString("NotificationSidebar_MarkAsReadMenuText", resourceCulture);
             }
         }
-
+        
         public static string NotificationSidebar_MarkAsUnreadMenuText {
             get {
                 return ResourceManager.GetString("NotificationSidebar_MarkAsUnreadMenuText", resourceCulture);
             }
         }
-
+        
         public static string NotificationSidebar_RemoveMenuText {
             get {
                 return ResourceManager.GetString("NotificationSidebar_RemoveMenuText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_NormalizingLabelText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_NormalizingLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleModal_ResourcePackMenuText {
             get {
                 return ResourceManager.GetString("ProfileRuleModal_ResourcePackMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_LockedInfoBarText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_LockedInfoBarText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_ChangesTabText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_ChangesTabText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_RefreshButtonText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_RefreshButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_SearchPlaceholder {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_SearchPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_SameTagText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_SameTagText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_OutdatedTagText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_OutdatedTagText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_OutdatedTagToolTip {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_OutdatedTagToolTip", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_UpdatedTagText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_UpdatedTagText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_UpdatedTagToolTip {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_UpdatedTagToolTip", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_DeletedTagText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_DeletedTagText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_DeletedTagToolTip {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_DeletedTagToolTip", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_QuickInfoTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_QuickInfoTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_FileTypeLabelText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_FileTypeLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_LastModifiedLabelText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_LastModifiedLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_FileSizeLabelText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_FileSizeLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_SuggestedActionsTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_SuggestedActionsTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_ViewDiffButtonText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_ViewDiffButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_ApplyButtonText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_ApplyButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_DiscardButtonText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_DiscardButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_OverwriteButtonText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_OverwriteButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_UpdateButtonText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_UpdateButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_OpenLocationButtonText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_OpenLocationButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_CopyPathButtonText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_CopyPathButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_SelectFileTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_SelectFileTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_SelectFilePrompt {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_SelectFilePrompt", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitBarTitleText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitBarTitleText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitBarSubtitleText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitBarSubtitleText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitCommitSectionText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitCommitSectionText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitWorkingTreeSectionText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitWorkingTreeSectionText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitStagedCountLabelText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitStagedCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitUnstagedCountLabelText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitUnstagedCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitSyncSectionText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitSyncSectionText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitCommitButtonText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitCommitButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitCommitButtonToolTip {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitCommitButtonToolTip", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitRestoreMenuText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreMenuText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitRestoreMenuToolTip {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreMenuToolTip", resourceCulture);
             }
         }
-
+        
         public static string WorkspaceDiffModal_DifferentTitle {
             get {
                 return ResourceManager.GetString("WorkspaceDiffModal_DifferentTitle", resourceCulture);
             }
         }
-
+        
         public static string WorkspaceDiffModal_ContentBasedPrompt {
             get {
                 return ResourceManager.GetString("WorkspaceDiffModal_ContentBasedPrompt", resourceCulture);
             }
         }
-
+        
         public static string WorkspaceDiffModal_IdenticalTitle {
             get {
                 return ResourceManager.GetString("WorkspaceDiffModal_IdenticalTitle", resourceCulture);
             }
         }
-
+        
         public static string WorkspaceDiffModal_LineCountSuffix {
             get {
                 return ResourceManager.GetString("WorkspaceDiffModal_LineCountSuffix", resourceCulture);
             }
         }
-
+        
         public static string WorkspaceDiffModal_LiveTagText {
             get {
                 return ResourceManager.GetString("WorkspaceDiffModal_LiveTagText", resourceCulture);
             }
         }
-
+        
         public static string WorkspaceDiffModal_ImportTagText {
             get {
                 return ResourceManager.GetString("WorkspaceDiffModal_ImportTagText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_CheckUpdatesDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_CheckUpdatesDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_PurgeCacheConfirmationMessage {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_PurgeCacheConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string MaintenanceStoragePage_PurgeCacheDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MaintenanceStoragePage_PurgeCacheDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_ReadLogDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_ReadLogDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_OpenLogsFolderDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_OpenLogsFolderDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_OpenCrashReportsFolderDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_OpenCrashReportsFolderDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string Shared_FailedToOpenFolderDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("Shared_FailedToOpenFolderDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string Shared_FailedToOpenLogFileDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("Shared_FailedToOpenLogFileDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string Shared_ZipArchiveFileTypeText {
             get {
                 return ResourceManager.GetString("Shared_ZipArchiveFileTypeText", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_OpenScreenshotDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_OpenScreenshotDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteScreenshotConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteScreenshotConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteScreenshotDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteScreenshotDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_ToggleModDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_ToggleModDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteModConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteModConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteModSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteModSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteModSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteModSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteModDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteModDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_ToggleResourcePackDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_ToggleResourcePackDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteResourcePackConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteResourcePackConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteResourcePackSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteResourcePackSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteResourcePackSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteResourcePackSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteResourcePackDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteResourcePackDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_ToggleDataPackDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_ToggleDataPackDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteDataPackConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteDataPackConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteDataPackSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteDataPackSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteDataPackSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteDataPackSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceFilesPage_DeleteDataPackDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceFilesPage_DeleteDataPackDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitErrorWarningNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitErrorWarningNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitRestoreConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_LargeDiffConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_LargeDiffConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_StageConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_StageConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_RestoreConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_RestoreConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_FileStagingDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_FileStagingDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitCommitDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitCommitDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitCommitNoIdentityWarningNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitCommitNoIdentityWarningNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitCommitPrompt {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitCommitPrompt", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitCommitPromptTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitCommitPromptTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitCommitDefaultMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitCommitDefaultMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitCommitEmptyWarningNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitCommitEmptyWarningNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitCommitSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitCommitSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitCommitSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitCommitSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitRestoreConfirmationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreConfirmationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitRestoreDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitRestoreSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_GitRestoreSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_GitRestoreSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string LandingPage_LoadModpackDetailsDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("LandingPage_LoadModpackDetailsDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string PackageExplorerPage_LoadProjectInformationDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("PackageExplorerPage_LoadProjectInformationDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MarketplaceSearchPage_OpenProjectWebsiteDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MarketplaceSearchPage_OpenProjectWebsiteDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_ImportPackageSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstancePage_ImportPackageSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage {
             get {
                 return ResourceManager.GetString("InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_ImportFileSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstancePage_ImportFileSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_ImportFileAlreadyExistsDangerNotificationMessage {
             get {
                 return ResourceManager.GetString("InstancePage_ImportFileAlreadyExistsDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_ImportFileAlreadyExistsDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstancePage_ImportFileAlreadyExistsDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceStoragePage_OpenFolderDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceStoragePage_OpenFolderDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string AppUpdateModal_DownloadUpdateDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("AppUpdateModal_DownloadUpdateDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string OobePrivilege_CreateSymlinkDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("OobePrivilege_CreateSymlinkDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_ReadPackConfigDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_ReadPackConfigDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_ExportModpackProgressingNotificationMessage {
             get {
                 return ResourceManager.GetString("MainWindow_ExportModpackProgressingNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_ExportModpackSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_ExportModpackSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_ExportModpackDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_ExportModpackDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_SavePackConfigDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_SavePackConfigDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_LogFileNotFoundWarningNotificationMessage {
             get {
                 return ResourceManager.GetString("MainWindow_LogFileNotFoundWarningNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string AssetImporterDialog_IdentifyFileDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("AssetImporterDialog_IdentifyFileDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_OpenImportFolderDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_OpenImportFolderDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string ExhibitModpackToast_OpenModpackLinkDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("ExhibitModpackToast_OpenModpackLinkDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string ExhibitPackageModal_OpenPackageLinkDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_OpenPackageLinkDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationMicrosoft_CopyCodeDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("AccountCreationMicrosoft_CopyCodeDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_CopyCrashReportDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_CopyCrashReportDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_OpenCrashReportDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_OpenCrashReportDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string GameCrashReportModal_OpenGameDirectoryDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("GameCrashReportModal_OpenGameDirectoryDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InternalCommands_OpenLinkDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InternalCommands_OpenLinkDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InternalCommands_CopyTextDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("InternalCommands_CopyTextDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_ChangesTabToolTip {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_ChangesTabToolTip", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_FilesTabText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_FilesTabText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_FilesTabToolTip {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_FilesTabToolTip", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_FolderFileTypeText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_FolderFileTypeText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_FileFileTypeText {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_FileFileTypeText", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_AddImportFilePrompt {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_AddImportFilePrompt", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_AddImportFileTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_AddImportFileOverwriteConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileOverwriteConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_AddImportFileOverwriteConfirmationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileOverwriteConfirmationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_AddImportFileSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_AddImportFileSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_AddImportFileSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_RemoveImportEntryConfirmationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_RemoveImportEntryConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_RemoveImportDirectoryConfirmationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_RemoveImportDirectoryConfirmationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_RemoveImportFileConfirmationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_RemoveImportFileConfirmationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_RemoveImportEntrySuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_RemoveImportEntrySuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string RuntimePickerDialog_LoadingText {
             get {
                 return ResourceManager.GetString("RuntimePickerDialog_LoadingText", resourceCulture);
             }
         }
-
+        
         public static string RuntimePickerDialog_Prompt {
             get {
                 return ResourceManager.GetString("RuntimePickerDialog_Prompt", resourceCulture);
             }
         }
-
+        
         public static string RuntimePickerDialog_RefreshButtonText {
             get {
                 return ResourceManager.GetString("RuntimePickerDialog_RefreshButtonText", resourceCulture);
             }
         }
-
+        
         public static string RuntimePickerDialog_Title {
             get {
                 return ResourceManager.GetString("RuntimePickerDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageModal_SkippedStatusText {
             get {
                 return ResourceManager.GetString("InstancePackageModal_SkippedStatusText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotPortalPage_Title {
             get {
                 return ResourceManager.GetString("SnapshotPortalPage_Title", resourceCulture);
             }
         }
-
+        
         public static string SnapshotPortalPage_Subtitle {
             get {
                 return ResourceManager.GetString("SnapshotPortalPage_Subtitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotPortalPage_CreateTitle {
             get {
                 return ResourceManager.GetString("SnapshotPortalPage_CreateTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotPortalPage_CreateDescription {
             get {
                 return ResourceManager.GetString("SnapshotPortalPage_CreateDescription", resourceCulture);
             }
         }
-
+        
         public static string SnapshotPortalPage_CreateLastTimeLabelText {
             get {
                 return ResourceManager.GetString("SnapshotPortalPage_CreateLastTimeLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotPortalPage_CreateNeverText {
             get {
                 return ResourceManager.GetString("SnapshotPortalPage_CreateNeverText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotPortalPage_ViewTitle {
             get {
                 return ResourceManager.GetString("SnapshotPortalPage_ViewTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotPortalPage_ViewDescription {
             get {
                 return ResourceManager.GetString("SnapshotPortalPage_ViewDescription", resourceCulture);
             }
         }
-
+        
         public static string SnapshotPortalPage_ViewCountLabelText {
             get {
                 return ResourceManager.GetString("SnapshotPortalPage_ViewCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotPortalPage_Hint {
             get {
                 return ResourceManager.GetString("SnapshotPortalPage_Hint", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_Title {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_Title", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_LabelLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_LabelLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_RemarkLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_RemarkLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_PackageCountLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_PackageCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_FileCountLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_FileCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_TotalSizeLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_TotalSizeLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_GameVersionLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_GameVersionLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_LoaderLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_LoaderLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotsModal_Title {
             get {
                 return ResourceManager.GetString("SnapshotsModal_Title", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_OnlineTagText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_OnlineTagText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_OfflineTagText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_OfflineTagText", resourceCulture);
             }
         }
-
+        
         public static string ModpackExporterDialog_TypeLabelText {
             get {
                 return ResourceManager.GetString("ModpackExporterDialog_TypeLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageButton_LoadFailedTitleText {
             get {
                 return ResourceManager.GetString("InstancePackageButton_LoadFailedTitleText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageButton_LoadFailedToolTipText {
             get {
                 return ResourceManager.GetString("InstancePackageButton_LoadFailedToolTipText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageButton_RetryButtonText {
             get {
                 return ResourceManager.GetString("InstancePackageButton_RetryButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageButton_EditPrefButtonText {
             get {
                 return ResourceManager.GetString("InstancePackageButton_EditPrefButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancePackageButton_RemoveEntryButtonText {
             get {
                 return ResourceManager.GetString("InstancePackageButton_RemoveEntryButtonText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_GarbageCollectButtonText {
             get {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectButtonText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_GarbageCollectConfirmationTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectConfirmationTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_GarbageCollectConfirmationMessage {
             get {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_GarbageCollectProgressTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectProgressTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_GarbageCollectProgressScanningText {
             get {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectProgressScanningText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_GarbageCollectProgressCleaningText {
             get {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectProgressCleaningText", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_GarbageCollectSuccessTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectSuccessTitle", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_GarbageCollectSuccessMessage {
             get {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectSuccessMessage", resourceCulture);
             }
         }
-
+        
         public static string SettingsPage_GarbageCollectDangerTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectDangerTitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationAuthlib_Title {
             get {
                 return ResourceManager.GetString("AccountCreationAuthlib_Title", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationAuthlib_ServerUrl {
             get {
                 return ResourceManager.GetString("AccountCreationAuthlib_ServerUrl", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationAuthlib_Username {
             get {
                 return ResourceManager.GetString("AccountCreationAuthlib_Username", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationAuthlib_Password {
             get {
                 return ResourceManager.GetString("AccountCreationAuthlib_Password", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationAuthlib_Login {
             get {
                 return ResourceManager.GetString("AccountCreationAuthlib_Login", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationAuthlib_DoneSubtitle {
             get {
                 return ResourceManager.GetString("AccountCreationAuthlib_DoneSubtitle", resourceCulture);
             }
         }
-
+        
         public static string AccountCreationAuthlib_DropHint {
             get {
                 return ResourceManager.GetString("AccountCreationAuthlib_DropHint", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_AboutText {
             get {
                 return ResourceManager.GetString("AppMenu_AboutText", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_SettingsText {
             get {
                 return ResourceManager.GetString("AppMenu_SettingsText", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_FileText {
             get {
                 return ResourceManager.GetString("AppMenu_FileText", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_NewInstanceText {
             get {
                 return ResourceManager.GetString("AppMenu_NewInstanceText", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_ViewText {
             get {
                 return ResourceManager.GetString("AppMenu_ViewText", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_HomeText {
             get {
                 return ResourceManager.GetString("AppMenu_HomeText", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_MarketplaceText {
             get {
                 return ResourceManager.GetString("AppMenu_MarketplaceText", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_AccountsText {
             get {
                 return ResourceManager.GetString("AppMenu_AccountsText", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_StorageText {
             get {
                 return ResourceManager.GetString("AppMenu_StorageText", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_FullScreenText {
             get {
                 return ResourceManager.GetString("AppMenu_FullScreenText", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_HelpText {
             get {
                 return ResourceManager.GetString("AppMenu_HelpText", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_CheckForUpdatesText {
             get {
                 return ResourceManager.GetString("AppMenu_CheckForUpdatesText", resourceCulture);
             }
         }
-
+        
         public static string AppMenu_FeedbackText {
             get {
                 return ResourceManager.GetString("AppMenu_FeedbackText", resourceCulture);
             }
         }
-
+        
         public static string AboutModal_Slogan {
             get {
                 return ResourceManager.GetString("AboutModal_Slogan", resourceCulture);
             }
         }
-
+        
         public static string AboutModal_CommitLabel {
             get {
                 return ResourceManager.GetString("AboutModal_CommitLabel", resourceCulture);
             }
         }
-
+        
         public static string AboutModal_RuntimeLabel {
             get {
                 return ResourceManager.GetString("AboutModal_RuntimeLabel", resourceCulture);
             }
         }
-
+        
         public static string AboutModal_PlatformLabel {
             get {
                 return ResourceManager.GetString("AboutModal_PlatformLabel", resourceCulture);
             }
         }
-
+        
         public static string AboutModal_RepositoryLabel {
             get {
                 return ResourceManager.GetString("AboutModal_RepositoryLabel", resourceCulture);
             }
         }
-
+        
         public static string AboutModal_DocumentationLabel {
             get {
                 return ResourceManager.GetString("AboutModal_DocumentationLabel", resourceCulture);
             }
         }
-
+        
         public static string AboutModal_IssuesLabel {
             get {
                 return ResourceManager.GetString("AboutModal_IssuesLabel", resourceCulture);
             }
         }
-
+        
         public static string AboutModal_LicenseLabel {
             get {
                 return ResourceManager.GetString("AboutModal_LicenseLabel", resourceCulture);
             }
         }
-
+        
         public static string AboutModal_OpenLinkDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("AboutModal_OpenLinkDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_OpenGitHubDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_OpenGitHubDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_CheckForUpdatesDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("MainWindow_CheckForUpdatesDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceDependencyGraphModal_TotalPackagesLabel {
             get {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_TotalPackagesLabel", resourceCulture);
             }
         }
-
+        
         public static string InstanceDependencyGraphModal_VisiblePackagesLabel {
             get {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_VisiblePackagesLabel", resourceCulture);
             }
         }
-
+        
         public static string InstanceDependencyGraphModal_HiddenPackagesLabel {
             get {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_HiddenPackagesLabel", resourceCulture);
             }
         }
-
+        
         public static string InstanceDependencyGraphModal_DependencyCountLabel {
             get {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_DependencyCountLabel", resourceCulture);
             }
         }
-
+        
         public static string InstanceDependencyGraphModal_DependenciesTitle {
             get {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_DependenciesTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceDependencyGraphModal_DependentsTitle {
             get {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_DependentsTitle", resourceCulture);
             }
         }
-
+        
         public static string InstanceDependencyGraphModal_MissingTagText {
             get {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_MissingTagText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDependencyGraphModal_MissingCountLabel {
             get {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_MissingCountLabel", resourceCulture);
             }
         }
-
+        
         public static string InstanceDependencyGraphModal_RequiredTagText {
             get {
                 return ResourceManager.GetString("InstanceDependencyGraphModal_RequiredTagText", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_Title {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_Title", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_Description {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_Description", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_ScanButton {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_ScanButton", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_ScanningTitle {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_ScanningTitle", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_CancelButton {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_CancelButton", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_EmptyTitle {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_EmptyTitle", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_EmptyDescription {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_EmptyDescription", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_RescanButton {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_RescanButton", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_JarFilesLabel {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_JarFilesLabel", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_HiddenModsLabel {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_HiddenModsLabel", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_DuplicateLabel {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_DuplicateLabel", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_SearchPlaceholder {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_SearchPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string JarInJarScannerModal_EmbeddedInHeader {
             get {
                 return ResourceManager.GetString("JarInJarScannerModal_EmbeddedInHeader", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_FilterInformationText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_FilterInformationText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_FilterWarningText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_FilterWarningText", resourceCulture);
             }
         }
-
+        
         public static string InstanceDashboardPage_FilterErrorText {
             get {
                 return ResourceManager.GetString("InstanceDashboardPage_FilterErrorText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_ImportAssetToolTipText {
             get {
                 return ResourceManager.GetString("InstancePage_ImportAssetToolTipText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_ExportModpackToolTipText {
             get {
                 return ResourceManager.GetString("InstancePage_ExportModpackToolTipText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_ManageSnapshotsToolTipText {
             get {
                 return ResourceManager.GetString("InstancePage_ManageSnapshotsToolTipText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_OpenFolderToolTipText {
             get {
                 return ResourceManager.GetString("InstancePage_OpenFolderToolTipText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_ImportAssetLabelText {
             get {
                 return ResourceManager.GetString("InstancePage_ImportAssetLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_ExportModpackLabelText {
             get {
                 return ResourceManager.GetString("InstancePage_ExportModpackLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_ManageSnapshotsLabelText {
             get {
                 return ResourceManager.GetString("InstancePage_ManageSnapshotsLabelText", resourceCulture);
             }
         }
-
+        
         public static string InstancePage_OpenFolderLabelText {
             get {
                 return ResourceManager.GetString("InstancePage_OpenFolderLabelText", resourceCulture);
             }
         }
-
+        
         public static string ProfileRuleSelectorsModal_AddSelectorButtonText {
             get {
                 return ResourceManager.GetString("ProfileRuleSelectorsModal_AddSelectorButtonText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_ComputeDiffDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_ComputeDiffDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_DeleteConfirmationMessage {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_DeleteConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_DeleteConfirmationTitle {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_DeleteConfirmationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_DeleteDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_DeleteDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_DeleteSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_DeleteSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_DeleteSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_DeleteSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_LoadSnapshotsDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_LoadSnapshotsDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_RestoreConfirmationMessage {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_RestoreConfirmationMessage", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_RestoreConfirmationTitle {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_RestoreConfirmationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_RestoreDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_RestoreDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_RestoreProgressStatusFormat {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_RestoreProgressStatusFormat", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_RestoreProgressTitle {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_RestoreProgressTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_RestoreSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_RestoreSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_RestoreSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_RestoreSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_SearchPlaceholder {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_SearchPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_EmptyListLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_EmptyListLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_DiffSectionLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_DiffSectionLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_FilesAddedLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_FilesAddedLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_FilesRemovedLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_FilesRemovedLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_PackagesAddedLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_PackagesAddedLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_PackagesRemovedLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_PackagesRemovedLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_ConfigInfoLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_ConfigInfoLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_RestoreButtonText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_RestoreButtonText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_DeleteButtonText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_DeleteButtonText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotManagementPage_SelectToViewLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_SelectToViewLabelText", resourceCulture);
             }
         }
-
+        
         public static string MainWindow_InstancesButtonText {
             get {
                 return ResourceManager.GetString("MainWindow_InstancesButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancesPage_Title {
             get {
                 return ResourceManager.GetString("InstancesPage_Title", resourceCulture);
             }
         }
-
+        
         public static string InstancesPage_SearchWatermark {
             get {
                 return ResourceManager.GetString("InstancesPage_SearchWatermark", resourceCulture);
             }
         }
-
+        
         public static string InstancesPage_NewInstanceButtonText {
             get {
                 return ResourceManager.GetString("InstancesPage_NewInstanceButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancesPage_SortByLastPlayed {
             get {
                 return ResourceManager.GetString("InstancesPage_SortByLastPlayed", resourceCulture);
             }
         }
-
+        
         public static string InstancesPage_SortByName {
             get {
                 return ResourceManager.GetString("InstancesPage_SortByName", resourceCulture);
             }
         }
-
+        
         public static string InstancesPage_FilterButtonText {
             get {
                 return ResourceManager.GetString("InstancesPage_FilterButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancesPage_FilterFlyoutHeader {
             get {
                 return ResourceManager.GetString("InstancesPage_FilterFlyoutHeader", resourceCulture);
             }
         }
-
+        
         public static string InstancesPage_FilterLoaderLabel {
             get {
                 return ResourceManager.GetString("InstancesPage_FilterLoaderLabel", resourceCulture);
             }
         }
-
+        
         public static string InstancesPage_FilterTagsLabel {
             get {
                 return ResourceManager.GetString("InstancesPage_FilterTagsLabel", resourceCulture);
             }
         }
-
+        
         public static string InstancesPage_FilterClearButtonText {
             get {
                 return ResourceManager.GetString("InstancesPage_FilterClearButtonText", resourceCulture);
             }
         }
-
+        
         public static string InstancesPage_FilterEmptyText {
             get {
                 return ResourceManager.GetString("InstancesPage_FilterEmptyText", resourceCulture);
             }
         }
-
+        
         public static string InstancesPage_EditTagsMenuText {
             get {
                 return ResourceManager.GetString("InstancesPage_EditTagsMenuText", resourceCulture);
             }
         }
-
+        
         public static string Snapshot_UntitledLabelText {
             get {
                 return ResourceManager.GetString("Snapshot_UntitledLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotPortalPage_LatestLabelText {
             get {
                 return ResourceManager.GetString("SnapshotPortalPage_LatestLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotPortalPage_LoadInfoDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("SnapshotPortalPage_LoadInfoDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotsModal_OpenDatabaseDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("SnapshotsModal_OpenDatabaseDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_Title {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_Title", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_FileCountLabelText {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_FileCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_TotalSizeLabelText {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_TotalSizeLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_FilesUnitText {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_FilesUnitText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_PackageCountLabelText {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_PackageCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_NotTakenLabelText {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_NotTakenLabelText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_TakeButtonText {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_TakeButtonText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_CreateButtonText {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_CreateButtonText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_CommittingPrefixText {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_CommittingPrefixText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_CommittingSuffixText {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_CommittingSuffixText", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_LabelPlaceholder {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_LabelPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_RemarkPlaceholder {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_RemarkPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_TakeDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_TakeDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_CreateDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_CreateDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_CreateSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_CreateSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string SnapshotCreationPage_CreateSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("SnapshotCreationPage_CreateSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_Texture {
             get {
                 return ResourceManager.GetString("AssetKind_Texture", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_Library {
             get {
                 return ResourceManager.GetString("AssetKind_Library", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_Version {
             get {
                 return ResourceManager.GetString("AssetKind_Version", resourceCulture);
             }
         }
-
+        
         public static string AssetKind_Asset {
             get {
                 return ResourceManager.GetString("AssetKind_Asset", resourceCulture);

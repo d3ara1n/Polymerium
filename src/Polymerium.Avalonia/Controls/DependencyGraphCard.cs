@@ -5,6 +5,9 @@ namespace Polymerium.Avalonia.Controls;
 
 public class DependencyGraphCard : Button
 {
+    private const string CLASS_SELECTED = ":selected";
+    private const string CLASS_MISSING = ":missing";
+
     public static readonly StyledProperty<bool> IsSelectedProperty =
         AvaloniaProperty.Register<DependencyGraphCard, bool>(nameof(IsSelected));
 
@@ -37,7 +40,4 @@ public class DependencyGraphCard : Button
             PseudoClasses.Set(CLASS_MISSING, change.GetNewValue<bool>());
         }
     }
-
-    private const string CLASS_SELECTED = ":selected";
-    private const string CLASS_MISSING = ":missing";
 }

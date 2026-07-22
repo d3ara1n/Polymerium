@@ -268,7 +268,8 @@
                                             <Binding Path="MemoryUsage" />
                                             <Binding Path="MemoryAssigned" />
                                         </MultiBinding>
-                                    </Run.Foreground></Run>
+                                    </Run.Foreground>
+                                </Run>
                                 <Run
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="/" />

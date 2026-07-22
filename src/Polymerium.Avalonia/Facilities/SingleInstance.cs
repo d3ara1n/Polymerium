@@ -21,97 +21,14 @@ internal sealed class SingleInstance : IDisposable
     private CancellationTokenSource? _cts;
     private Task? _serverTask;
 
-    public bool IsFirstInstance { get; }
-
-    public event Action<Message>? Received;
-
     public SingleInstance()
     {
-        _mutex = new(initiallyOwned: true, name: MUTEX_NAME, createdNew: out var createdNew);
+        _mutex = new(true, MUTEX_NAME, out var createdNew);
         _ownsMutex = createdNew;
         IsFirstInstance = createdNew;
     }
 
-    public void StartServer()
-    {
-        _cts = new();
-        _serverTask = Task.Run(() => RunServerAsync(_cts.Token));
-    }
-
-    private async Task RunServerAsync(CancellationToken token)
-    {
-        while (!token.IsCancellationRequested)
-        {
-            await using var server = new NamedPipeServerStream(
-                PIPE_NAME,
-                PipeDirection.In,
-                maxNumberOfServerInstances: 1,
-                PipeTransmissionMode.Byte,
-                PipeOptions.Asynchronous
-            );
-
-            try
-            {
-                await server.WaitForConnectionAsync(token);
-            }
-            catch (OperationCanceledException)
-            {
-                break;
-            }
-
-            if (!server.IsConnected)
-                continue;
-
-            string? line;
-            try
-            {
-                using var reader = new StreamReader(server, leaveOpen: true);
-                line = await reader.ReadLineAsync(token);
-            }
-            catch
-            {
-                continue;
-            }
-
-            if (string.IsNullOrEmpty(line))
-                continue;
-
-            Message? message;
-            try
-            {
-                message = JsonSerializer.Deserialize<Message>(line);
-            }
-            catch
-            {
-                continue;
-            }
-
-            if (message is not null)
-                Received?.Invoke(message);
-        }
-    }
-
-    public static void Send(Message message)
-    {
-        try
-        {
-            using var client = new NamedPipeClientStream(
-                serverName: ".",
-                PIPE_NAME,
-                PipeDirection.Out,
-                PipeOptions.Asynchronous
-            );
-            client.Connect(3000);
-            using var writer = new StreamWriter(client);
-            writer.WriteLine(JsonSerializer.Serialize(message));
-            writer.Flush();
-        }
-        catch
-        {
-            // Best effort: the second instance must never hang the user — if the first
-            // instance's server isn't reachable, just exit silently.
-        }
-    }
+    public bool IsFirstInstance { get; }
 
     public void Dispose()
     {
@@ -126,13 +43,98 @@ internal sealed class SingleInstance : IDisposable
             {
                 // Listener teardown raced with shutdown — nothing to act on.
             }
+
             _cts.Dispose();
         }
 
         if (_ownsMutex)
+        {
             _mutex.ReleaseMutex();
+        }
 
         _mutex.Dispose();
+    }
+
+    public event Action<Message>? Received;
+
+    public void StartServer()
+    {
+        _cts = new();
+        _serverTask = Task.Run(() => RunServerAsync(_cts.Token));
+    }
+
+    private async Task RunServerAsync(CancellationToken token)
+    {
+        while (!token.IsCancellationRequested)
+        {
+            await using var server = new NamedPipeServerStream(PIPE_NAME,
+                                                               PipeDirection.In,
+                                                               1,
+                                                               PipeTransmissionMode.Byte,
+                                                               PipeOptions.Asynchronous);
+
+            try
+            {
+                await server.WaitForConnectionAsync(token);
+            }
+            catch (OperationCanceledException)
+            {
+                break;
+            }
+
+            if (!server.IsConnected)
+            {
+                continue;
+            }
+
+            string? line;
+            try
+            {
+                using var reader = new StreamReader(server, leaveOpen: true);
+                line = await reader.ReadLineAsync(token);
+            }
+            catch
+            {
+                continue;
+            }
+
+            if (string.IsNullOrEmpty(line))
+            {
+                continue;
+            }
+
+            Message? message;
+            try
+            {
+                message = JsonSerializer.Deserialize<Message>(line);
+            }
+            catch
+            {
+                continue;
+            }
+
+            if (message is not null)
+            {
+                Received?.Invoke(message);
+            }
+        }
+    }
+
+    public static void Send(Message message)
+    {
+        try
+        {
+            using var client = new NamedPipeClientStream(".", PIPE_NAME, PipeDirection.Out, PipeOptions.Asynchronous);
+            client.Connect(3000);
+            using var writer = new StreamWriter(client);
+            writer.WriteLine(JsonSerializer.Serialize(message));
+            writer.Flush();
+        }
+        catch
+        {
+            // Best effort: the second instance must never hang the user — if the first
+            // instance's server isn't reachable, just exit silently.
+        }
     }
 
     public sealed class Message

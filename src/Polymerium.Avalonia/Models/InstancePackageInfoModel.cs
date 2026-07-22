@@ -18,8 +18,7 @@ public partial class InstancePackageInfoModel(
     string summary,
     Uri reference,
     Bitmap thumbnail,
-    ResourceKind kind
-) : ModelBase
+    ResourceKind kind) : ModelBase
 {
     #region Direct
 
@@ -44,12 +43,10 @@ public partial class InstancePackageInfoModel(
     partial void OnVersionChanged(InstancePackageVersionModelBase value)
     {
         // 这里 = new InstancePackageInfoModel 不会触发 OnVersionChanged
-        owner.Entry.Pref = PackageHelper.ToPref(
-            label,
-            @namespace,
-            projectId,
-            value is InstancePackageVersionModel v ? v.Id : null
-        );
+        owner.Entry.Pref = PackageHelper.ToPref(label,
+                                                @namespace,
+                                                projectId,
+                                                value is InstancePackageVersionModel v ? v.Id : null);
         owner.OldPrefCache = owner.Entry.Pref;
     }
 

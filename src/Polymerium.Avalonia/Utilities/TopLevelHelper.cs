@@ -21,14 +21,13 @@ public static class TopLevelHelper
     /// </summary>
     public static TopLevel GetTopLevel()
     {
-        if (
-            Application.Current?.ApplicationLifetime
-            is IClassicDesktopStyleApplicationLifetime { MainWindow: { } window })
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime
+            {
+                MainWindow: { } window
+            })
         {
             return TopLevel.GetTopLevel(window)
-                ?? throw new UnreachableException(
-                    "TopLevel is null for the active main window."
-                );
+                ?? throw new UnreachableException("TopLevel is null for the active main window.");
         }
 
         throw new UnreachableException("No active main window to resolve a TopLevel from.");
@@ -40,16 +39,13 @@ public static class TopLevelHelper
         string errorTitle,
         NotificationService? notificationService = null,
         GrowlLevel level = GrowlLevel.Warning,
-        Uri? thumbnail = null
-    ) =>
-        LaunchAsync(
-            topLevel,
-            launcher => launcher.LaunchUriAsync(uri),
-            errorTitle,
-            notificationService,
-            level,
-            thumbnail
-        );
+        Uri? thumbnail = null) =>
+        LaunchAsync(topLevel,
+                    launcher => launcher.LaunchUriAsync(uri),
+                    errorTitle,
+                    notificationService,
+                    level,
+                    thumbnail);
 
     public static Task LaunchFileInfoAsync(
         TopLevel? topLevel,
@@ -57,16 +53,13 @@ public static class TopLevelHelper
         string errorTitle,
         NotificationService? notificationService = null,
         GrowlLevel level = GrowlLevel.Warning,
-        Uri? thumbnail = null
-    ) =>
-        LaunchAsync(
-            topLevel,
-            launcher => launcher.LaunchFileInfoAsync(file),
-            errorTitle,
-            notificationService,
-            level,
-            thumbnail
-        );
+        Uri? thumbnail = null) =>
+        LaunchAsync(topLevel,
+                    launcher => launcher.LaunchFileInfoAsync(file),
+                    errorTitle,
+                    notificationService,
+                    level,
+                    thumbnail);
 
     public static Task LaunchDirectoryInfoAsync(
         TopLevel? topLevel,
@@ -74,16 +67,13 @@ public static class TopLevelHelper
         string errorTitle,
         NotificationService? notificationService = null,
         GrowlLevel level = GrowlLevel.Warning,
-        Uri? thumbnail = null
-    ) =>
-        LaunchAsync(
-            topLevel,
-            launcher => launcher.LaunchDirectoryInfoAsync(directory),
-            errorTitle,
-            notificationService,
-            level,
-            thumbnail
-        );
+        Uri? thumbnail = null) =>
+        LaunchAsync(topLevel,
+                    launcher => launcher.LaunchDirectoryInfoAsync(directory),
+                    errorTitle,
+                    notificationService,
+                    level,
+                    thumbnail);
 
     private static async Task LaunchAsync(
         TopLevel? topLevel,
@@ -91,20 +81,14 @@ public static class TopLevelHelper
         string errorTitle,
         NotificationService? notificationService,
         GrowlLevel level,
-        Uri? thumbnail
-    )
+        Uri? thumbnail)
     {
         var service = notificationService ?? Program.Services?.GetService<NotificationService>();
         var launcher = topLevel?.Launcher;
 
         if (launcher is null)
         {
-            service?.PopMessage(
-                "Launcher is unavailable.",
-                errorTitle,
-                level,
-                thumbnail: thumbnail
-            );
+            service?.PopMessage("Launcher is unavailable.", errorTitle, level, thumbnail: thumbnail);
             return;
         }
 
@@ -114,7 +98,7 @@ public static class TopLevelHelper
         }
         catch (Exception ex)
         {
-            service?.PopMessage(ex, errorTitle, level, thumbnail: thumbnail);
+            service?.PopMessage(ex, errorTitle, level, thumbnail);
         }
     }
 
@@ -124,20 +108,14 @@ public static class TopLevelHelper
         string errorTitle,
         NotificationService? notificationService = null,
         GrowlLevel level = GrowlLevel.Warning,
-        Uri? thumbnail = null
-    )
+        Uri? thumbnail = null)
     {
         var service = notificationService ?? Program.Services?.GetService<NotificationService>();
         var clipboard = topLevel?.Clipboard;
 
         if (clipboard is null)
         {
-            service?.PopMessage(
-                "Clipboard is unavailable.",
-                errorTitle,
-                level,
-                thumbnail: thumbnail
-            );
+            service?.PopMessage("Clipboard is unavailable.", errorTitle, level, thumbnail: thumbnail);
             return;
         }
 
@@ -147,7 +125,7 @@ public static class TopLevelHelper
         }
         catch (Exception ex)
         {
-            service?.PopMessage(ex, errorTitle, level, thumbnail: thumbnail);
+            service?.PopMessage(ex, errorTitle, level, thumbnail);
         }
     }
 }

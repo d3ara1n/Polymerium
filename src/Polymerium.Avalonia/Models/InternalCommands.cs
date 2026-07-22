@@ -10,68 +10,56 @@ namespace Polymerium.Avalonia.Models;
 
 public static class InternalCommands
 {
-    public static ICommand OpenUriCommand { get; } =
-        new AsyncRelayCommand<Uri>(uri =>
+    public static ICommand OpenUriCommand { get; } = new AsyncRelayCommand<Uri>(uri =>
+    {
+        if (uri != null && uri.IsAbsoluteUri)
         {
-            if (uri != null && uri.IsAbsoluteUri)
-            {
-                return TopLevelHelper.LaunchUriAsync(
-                    TopLevelHelper.GetTopLevel(),
-                    uri,
-                    Resources.InternalCommands_OpenLinkDangerNotificationTitle
-                );
-            }
+            return TopLevelHelper.LaunchUriAsync(TopLevelHelper.GetTopLevel(),
+                                                 uri,
+                                                 Resources.InternalCommands_OpenLinkDangerNotificationTitle);
+        }
 
-            return Task.CompletedTask;
-        });
+        return Task.CompletedTask;
+    });
 
-    public static ICommand OpenStringUriCommand { get; } =
-        new AsyncRelayCommand<string>(str =>
+    public static ICommand OpenStringUriCommand { get; } = new AsyncRelayCommand<string>(str =>
+    {
+        if (Uri.IsWellFormedUriString(str, UriKind.Absolute))
         {
-            if (Uri.IsWellFormedUriString(str, UriKind.Absolute))
-            {
-                return TopLevelHelper.LaunchUriAsync(
-                    TopLevelHelper.GetTopLevel(),
-                    new(str),
-                    Resources.InternalCommands_OpenLinkDangerNotificationTitle
-                );
-            }
+            return TopLevelHelper.LaunchUriAsync(TopLevelHelper.GetTopLevel(),
+                                                 new(str),
+                                                 Resources.InternalCommands_OpenLinkDangerNotificationTitle);
+        }
 
-            return Task.CompletedTask;
-        });
+        return Task.CompletedTask;
+    });
 
-    public static ICommand OpenFolderCommand { get; } =
-        new AsyncRelayCommand<string>(path =>
+    public static ICommand OpenFolderCommand { get; } = new AsyncRelayCommand<string>(path =>
+    {
+        if (File.Exists(path))
         {
-            if (File.Exists(path))
-            {
-                path = Path.GetDirectoryName(path);
-            }
+            path = Path.GetDirectoryName(path);
+        }
 
-            if (path != null && Directory.Exists(path))
-            {
-                return TopLevelHelper.LaunchDirectoryInfoAsync(
-                    TopLevelHelper.GetTopLevel(),
-                    new(path),
-                    Resources.Shared_FailedToOpenFolderDangerNotificationTitle
-                );
-            }
-
-            return Task.CompletedTask;
-        });
-
-    public static ICommand CopyToClipboardCommand { get; } =
-        new AsyncRelayCommand<string>(async text =>
+        if (path != null && Directory.Exists(path))
         {
-            if (string.IsNullOrEmpty(text))
-            {
-                return;
-            }
+            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
+                                                           new(path),
+                                                           Resources.Shared_FailedToOpenFolderDangerNotificationTitle);
+        }
 
-            await TopLevelHelper.CopyToClipboardAsync(
-                TopLevelHelper.GetTopLevel(),
-                text,
-                Resources.InternalCommands_CopyTextDangerNotificationTitle
-            );
-        });
+        return Task.CompletedTask;
+    });
+
+    public static ICommand CopyToClipboardCommand { get; } = new AsyncRelayCommand<string>(async text =>
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return;
+        }
+
+        await TopLevelHelper.CopyToClipboardAsync(TopLevelHelper.GetTopLevel(),
+                                                  text,
+                                                  Resources.InternalCommands_CopyTextDangerNotificationTitle);
+    });
 }

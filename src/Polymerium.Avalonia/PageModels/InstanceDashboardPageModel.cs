@@ -31,104 +31,8 @@ public partial class InstanceDashboardPageModel(
     ProfileManager profileManager,
     ScrapService scrapService,
     NotificationService notificationService,
-    PersistenceService persistenceService
-) : InstancePageModelBase(context, aggregator, instanceManager, profileManager)
+    PersistenceService persistenceService) : InstancePageModelBase(context, aggregator, instanceManager, profileManager)
 {
-    #region Reactive
-
-    public ObservableCollection<LogSourceModelBase> Sources { get; } = [];
-
-    [ObservableProperty]
-    public partial LogSourceModelBase? SelectedSource { get; set; }
-
-    partial void OnSelectedSourceChanged(LogSourceModelBase? value) => UpdateLogSource(value);
-
-    [ObservableProperty]
-    public partial string FilterText { get; set; } = string.Empty;
-
-    partial void OnFilterTextChanged(string value) => SetupView();
-
-    [ObservableProperty]
-    public partial bool IsFilterInformation { get; set; } = true;
-
-    partial void OnIsFilterInformationChanged(bool value) => SetupView();
-
-    [ObservableProperty]
-    public partial bool IsFilterWarning { get; set; } = true;
-
-    partial void OnIsFilterWarningChanged(bool value) => SetupView();
-
-    [ObservableProperty]
-    public partial bool IsFilterError { get; set; } = true;
-
-    partial void OnIsFilterErrorChanged(bool value) => SetupView();
-
-    [ObservableProperty]
-    public partial IList<ScrapModel>? LogCollection { get; set; }
-
-    [ObservableProperty]
-    public partial NotifyCollectionChangedSynchronizedViewList<ScrapModel>? FilteredLogCollection { get; set; }
-
-    [ObservableProperty]
-    public partial bool IsOnAir { get; set; }
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SuccessRate))]
-    public partial int SessionCount { get; set; }
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SuccessRate))]
-    public partial int CrashCount { get; set; }
-
-    public double SuccessRate =>
-        SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
-
-    [ObservableProperty]
-    public partial double CpuPercent { get; set; }
-
-    [ObservableProperty]
-    public partial uint MemoryUsage { get; set; }
-
-    [ObservableProperty]
-    public partial uint MemoryAssigned { get; set; }
-
-    [ObservableProperty]
-    public partial TimeSpan Uptime { get; set; }
-
-    #endregion
-
-    #region Fields
-
-    private ISynchronizedView<ScrapModel, ScrapModel>? _collectionView;
-
-    private CancellationTokenSource? _monitoringTokenSource;
-
-    private Action? _callbackCleanup;
-
-    #endregion
-
-    #region Overrides
-
-    protected override Task OnInitializeAsync(CancellationToken token)
-    {
-        InitializeLogSources();
-        SelectedSource = Sources?.FirstOrDefault();
-
-        SessionCount = persistenceService.GetSessionCount(Basic.Key);
-        CrashCount = persistenceService.GetCrashCount(Basic.Key);
-
-        return Task.CompletedTask;
-    }
-
-    protected override Task OnDeinitializeAsync()
-    {
-        CallCleanup();
-
-        return Task.CompletedTask;
-    }
-
-    #endregion
-
     #region Instance State
 
     protected override void OnInstanceLaunching(LaunchTracker tracker)
@@ -183,6 +87,100 @@ public partial class InstanceDashboardPageModel(
                 });
             }
         }
+    }
+
+    #endregion
+
+    #region Reactive
+
+    public ObservableCollection<LogSourceModelBase> Sources { get; } = [];
+
+    [ObservableProperty]
+    public partial LogSourceModelBase? SelectedSource { get; set; }
+
+    partial void OnSelectedSourceChanged(LogSourceModelBase? value) => UpdateLogSource(value);
+
+    [ObservableProperty]
+    public partial string FilterText { get; set; } = string.Empty;
+
+    partial void OnFilterTextChanged(string value) => SetupView();
+
+    [ObservableProperty]
+    public partial bool IsFilterInformation { get; set; } = true;
+
+    partial void OnIsFilterInformationChanged(bool value) => SetupView();
+
+    [ObservableProperty]
+    public partial bool IsFilterWarning { get; set; } = true;
+
+    partial void OnIsFilterWarningChanged(bool value) => SetupView();
+
+    [ObservableProperty]
+    public partial bool IsFilterError { get; set; } = true;
+
+    partial void OnIsFilterErrorChanged(bool value) => SetupView();
+
+    [ObservableProperty]
+    public partial IList<ScrapModel>? LogCollection { get; set; }
+
+    [ObservableProperty]
+    public partial NotifyCollectionChangedSynchronizedViewList<ScrapModel>? FilteredLogCollection { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsOnAir { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SuccessRate))]
+    public partial int SessionCount { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SuccessRate))]
+    public partial int CrashCount { get; set; }
+
+    public double SuccessRate => SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
+
+    [ObservableProperty]
+    public partial double CpuPercent { get; set; }
+
+    [ObservableProperty]
+    public partial uint MemoryUsage { get; set; }
+
+    [ObservableProperty]
+    public partial uint MemoryAssigned { get; set; }
+
+    [ObservableProperty]
+    public partial TimeSpan Uptime { get; set; }
+
+    #endregion
+
+    #region Fields
+
+    private ISynchronizedView<ScrapModel, ScrapModel>? _collectionView;
+
+    private CancellationTokenSource? _monitoringTokenSource;
+
+    private Action? _callbackCleanup;
+
+    #endregion
+
+    #region Overrides
+
+    protected override Task OnInitializeAsync(CancellationToken token)
+    {
+        InitializeLogSources();
+        SelectedSource = Sources?.FirstOrDefault();
+
+        SessionCount = persistenceService.GetSessionCount(Basic.Key);
+        CrashCount = persistenceService.GetCrashCount(Basic.Key);
+
+        return Task.CompletedTask;
+    }
+
+    protected override Task OnDeinitializeAsync()
+    {
+        CallCleanup();
+
+        return Task.CompletedTask;
     }
 
     #endregion
@@ -261,10 +259,9 @@ public partial class InstanceDashboardPageModel(
                         }
                         catch (Exception ex)
                         {
-                            notificationService.PopMessage(
-                                ex,
-                                Resources.InstanceDashboardPage_ReadLogDangerNotificationTitle
-                            );
+                            notificationService.PopMessage(ex,
+                                                           Resources
+                                                              .InstanceDashboardPage_ReadLogDangerNotificationTitle);
                         }
                     }
                 }
@@ -277,7 +274,9 @@ public partial class InstanceDashboardPageModel(
     private void SetupView()
     {
         if (_collectionView != null)
+        {
             SetupView(_collectionView);
+        }
     }
 
     private void SetupView(ISynchronizedView<ScrapModel, ScrapModel> view)
@@ -300,27 +299,33 @@ public partial class InstanceDashboardPageModel(
         var hasSearch = !string.IsNullOrWhiteSpace(FilterText);
 
         if (allLevels && !hasSearch)
+        {
             return null;
+        }
 
         return item =>
         {
             if (!IsFilterError && item.Level == ScrapLevel.Error)
+            {
                 return false;
+            }
+
             if (!IsFilterWarning && item.Level == ScrapLevel.Warning)
+            {
                 return false;
+            }
+
             if (!IsFilterInformation && item.Level == ScrapLevel.Information)
+            {
                 return false;
+            }
 
             if (hasSearch)
             {
                 var keyword = FilterText!;
-                return (
-                        item.Message?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false
-                    )
+                return (item.Message?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false)
                     || (item.Thread?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false)
-                    || (
-                        item.Sender?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false
-                    );
+                    || (item.Sender?.Contains(keyword, StringComparison.OrdinalIgnoreCase) ?? false);
             }
 
             return true;
@@ -351,7 +356,10 @@ public partial class InstanceDashboardPageModel(
         {
             _monitoringTokenSource = null;
             if (!cts.IsCancellationRequested)
+            {
                 cts.Cancel();
+            }
+
             cts.Dispose();
         }
     }
@@ -367,12 +375,7 @@ public partial class InstanceDashboardPageModel(
         {
             try
             {
-                (lastSampleTime, lastCpuTime) = await MonitorCoreAsync(
-                    process,
-                    lastSampleTime,
-                    lastCpuTime,
-                    cpuCount
-                );
+                (lastSampleTime, lastCpuTime) = await MonitorCoreAsync(process, lastSampleTime, lastCpuTime, cpuCount);
 
                 if (process.HasExited)
                 {
@@ -410,8 +413,7 @@ public partial class InstanceDashboardPageModel(
         Process process,
         DateTime lastSampleTime,
         TimeSpan? lastCpuTime,
-        int cpuCount
-    )
+        int cpuCount)
     {
         if (process.HasExited)
         {
@@ -454,12 +456,13 @@ public partial class InstanceDashboardPageModel(
     {
         var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "logs");
         if (Directory.Exists(dir))
-            return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevelHelper.GetTopLevel(),
-                new(dir),
-                Resources.InstanceDashboardPage_OpenLogsFolderDangerNotificationTitle,
-                notificationService
-            );
+        {
+            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
+                                                           new(dir),
+                                                           Resources
+                                                              .InstanceDashboardPage_OpenLogsFolderDangerNotificationTitle,
+                                                           notificationService);
+        }
 
         return Task.CompletedTask;
     }
@@ -469,12 +472,13 @@ public partial class InstanceDashboardPageModel(
     {
         var dir = Path.Combine(PathDef.Default.DirectoryOfBuild(Basic.Key), "crash-reports");
         if (Directory.Exists(dir))
-            return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevelHelper.GetTopLevel(),
-                new(dir),
-                Resources.InstanceDashboardPage_OpenCrashReportsFolderDangerNotificationTitle,
-                notificationService
-            );
+        {
+            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
+                                                           new(dir),
+                                                           Resources
+                                                              .InstanceDashboardPage_OpenCrashReportsFolderDangerNotificationTitle,
+                                                           notificationService);
+        }
 
         return Task.CompletedTask;
     }

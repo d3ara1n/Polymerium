@@ -20,8 +20,8 @@ using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
-using TridentCore.Abstractions.Snapshots;
 using TridentCore.Abstractions.Extensions;
+using TridentCore.Abstractions.Snapshots;
 using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Services;
 
@@ -29,6 +29,62 @@ namespace Polymerium.Avalonia.PageModels;
 
 public partial class SnapshotManagementPageModel : ViewModelBase
 {
+    #region Direct
+
+    public SnapshotsModalModel.SnapshotContext Context { get; }
+
+    #endregion
+
+    #region Bindings
+
+    public ReadOnlyObservableCollection<SnapshotItemModel> Snapshots { get; }
+
+    #endregion
+
+    #region Callbacks
+
+    partial void OnSelectedSnapshotChanged(SnapshotItemModel? value)
+    {
+        if (value != null)
+        {
+            var info = value.Source;
+
+            SnapshotDiffModel? diff = null;
+            if (value.Previous != null)
+            {
+                try
+                {
+                    diff = ComputeDiff(value.Source, value.Previous.Source);
+                }
+                catch (Exception ex)
+                {
+                    _notificationService.PopMessage(ex,
+                                                    Resources
+                                                       .SnapshotManagementPage_ComputeDiffDangerNotificationTitle);
+                }
+            }
+
+            Detail = new()
+            {
+                Label = info.Label,
+                Remark = info.Remark,
+                CreatedAt = info.CreatedAt,
+                GameVersion = info.Metadata.Version,
+                Loader = LoaderHelper.ToDisplayLabel(info.Metadata.Loader),
+                PackageCount = info.PackageCount,
+                FileCount = info.FileCount,
+                TotalSize = info.TotalSize,
+                Diff = diff
+            };
+        }
+        else
+        {
+            Detail = null;
+        }
+    }
+
+    #endregion
+
     #region Fields
 
     private readonly SourceCache<SnapshotItemModel, object> _source = new(x => x.Source.Id);
@@ -37,11 +93,12 @@ public partial class SnapshotManagementPageModel : ViewModelBase
     private readonly NotificationService _notificationService;
     private readonly ProfileManager _profileManager;
 
-    /// <inheritdoc/>
-    public SnapshotManagementPageModel(IViewContext<SnapshotsModalModel.SnapshotContext> context,
-                                       OverlayService overlayService,
-                                       NotificationService notificationService,
-                                       ProfileManager profileManager)
+    /// <inheritdoc />
+    public SnapshotManagementPageModel(
+        IViewContext<SnapshotsModalModel.SnapshotContext> context,
+        OverlayService overlayService,
+        NotificationService notificationService,
+        ProfileManager profileManager)
     {
         _overlayService = overlayService;
         _notificationService = notificationService;
@@ -49,24 +106,18 @@ public partial class SnapshotManagementPageModel : ViewModelBase
         Context = context.Parameter!;
 
 
-        var textFilter = this.WhenValueChanged(x => x.SearchText)
-                             .Select(BuildTextFilter);
+        var textFilter = this.WhenValueChanged(x => x.SearchText).Select(BuildTextFilter);
 
-        _source.Connect()
-               .Filter(textFilter)
-               .SortBy(x => x.Source.CreatedAt, SortDirection.Descending)
-               .Bind(out var view)
-               .Subscribe()
-               .DisposeWith(_subscriptions);
+        _source
+           .Connect()
+           .Filter(textFilter)
+           .SortBy(x => x.Source.CreatedAt, SortDirection.Descending)
+           .Bind(out var view)
+           .Subscribe()
+           .DisposeWith(_subscriptions);
 
         Snapshots = view;
     }
-
-    #endregion
-
-    #region Direct
-
-    public SnapshotsModalModel.SnapshotContext Context { get; }
 
     #endregion
 
@@ -85,17 +136,10 @@ public partial class SnapshotManagementPageModel : ViewModelBase
 
     #endregion
 
-    #region Bindings
-
-    public ReadOnlyObservableCollection<SnapshotItemModel> Snapshots { get; }
-
-    #endregion
-
     #region Overrides
 
     protected override Task OnInitializeAsync(CancellationToken token)
     {
-
         try
         {
             var snapshots = Context.Handle.List();
@@ -126,48 +170,6 @@ public partial class SnapshotManagementPageModel : ViewModelBase
 
     #endregion
 
-    #region Callbacks
-
-    partial void OnSelectedSnapshotChanged(SnapshotItemModel? value)
-    {
-        if (value != null)
-        {
-            var info = value.Source;
-
-            SnapshotDiffModel? diff = null;
-            if (value.Previous != null)
-            {
-                try
-                {
-                    diff = ComputeDiff(value.Source, value.Previous.Source);
-                }
-                catch (Exception ex)
-                {
-                    _notificationService.PopMessage(ex, Resources.SnapshotManagementPage_ComputeDiffDangerNotificationTitle);
-                }
-            }
-
-            Detail = new()
-            {
-                Label = info.Label,
-                Remark = info.Remark,
-                CreatedAt = info.CreatedAt,
-                GameVersion = info.Metadata.Version,
-                Loader = LoaderHelper.ToDisplayLabel(info.Metadata.Loader),
-                PackageCount = info.PackageCount,
-                FileCount = info.FileCount,
-                TotalSize = info.TotalSize,
-                Diff = diff,
-            };
-        }
-        else
-        {
-            Detail = null;
-        }
-    }
-
-    #endregion
-
     #region Commands
 
     private bool CanAct() => SelectedSnapshot != null;
@@ -176,14 +178,19 @@ public partial class SnapshotManagementPageModel : ViewModelBase
     private async Task DeleteAsync()
     {
         if (SelectedSnapshot is not { } target)
+        {
             return;
+        }
 
         var label = target.DisplayLabel;
-        var confirmed = await _overlayService.RequestConfirmationAsync(
-            Resources.SnapshotManagementPage_DeleteConfirmationMessage.Replace("{0}", label),
-            Resources.SnapshotManagementPage_DeleteConfirmationTitle);
+        var confirmed =
+            await _overlayService.RequestConfirmationAsync(Resources.SnapshotManagementPage_DeleteConfirmationMessage
+                                                                    .Replace("{0}", label),
+                                                           Resources.SnapshotManagementPage_DeleteConfirmationTitle);
         if (!confirmed)
+        {
             return;
+        }
 
         try
         {
@@ -195,9 +202,7 @@ public partial class SnapshotManagementPageModel : ViewModelBase
                 updater.Remove(target.Source.Id);
 
                 // Fix the chain: find items whose Previous was the deleted item
-                var needsFix = updater.Items
-                                      .Where(x => x.Previous == target)
-                                      .ToList();
+                var needsFix = updater.Items.Where(x => x.Previous == target).ToList();
                 foreach (var item in needsFix)
                 {
                     updater.AddOrUpdate(item.WithPrevious(deletedPrevious));
@@ -205,10 +210,10 @@ public partial class SnapshotManagementPageModel : ViewModelBase
             });
 
             SelectedSnapshot = null;
-            _notificationService.PopMessage(
-                Resources.SnapshotManagementPage_DeleteSuccessNotificationMessage.Replace("{0}", label),
-                Resources.SnapshotManagementPage_DeleteSuccessNotificationTitle,
-                GrowlLevel.Success);
+            _notificationService.PopMessage(Resources.SnapshotManagementPage_DeleteSuccessNotificationMessage
+                                                     .Replace("{0}", label),
+                                            Resources.SnapshotManagementPage_DeleteSuccessNotificationTitle,
+                                            GrowlLevel.Success);
         }
         catch (Exception ex)
         {
@@ -220,26 +225,34 @@ public partial class SnapshotManagementPageModel : ViewModelBase
     private async Task RestoreAsync()
     {
         if (SelectedSnapshot is not { } target)
+        {
             return;
+        }
 
         var label = target.DisplayLabel;
-        var confirmed = await _overlayService.RequestConfirmationAsync(
-            Resources.SnapshotManagementPage_RestoreConfirmationMessage.Replace("{0}", label),
-            Resources.SnapshotManagementPage_RestoreConfirmationTitle);
+        var confirmed =
+            await _overlayService.RequestConfirmationAsync(Resources.SnapshotManagementPage_RestoreConfirmationMessage
+                                                                    .Replace("{0}", label),
+                                                           Resources.SnapshotManagementPage_RestoreConfirmationTitle);
         if (!confirmed)
+        {
             return;
+        }
 
         var progress = new ProgressModal
         {
             Title = Resources.SnapshotManagementPage_RestoreProgressTitle,
-            IsIndeterminate = false,
+            IsIndeterminate = false
         };
         _overlayService.PopModal(progress);
 
         try
         {
-            var restored = new Progress<int>(x =>
-                Dispatcher.UIThread.Post(() => progress.StatusText = Resources.SnapshotManagementPage_RestoreProgressStatusFormat.Replace("{0}", x.ToString())));
+            var restored =
+                new Progress<int>(x => Dispatcher.UIThread.Post(() => progress.StatusText =
+                                                                          Resources
+                                                                             .SnapshotManagementPage_RestoreProgressStatusFormat
+                                                                             .Replace("{0}", x.ToString())));
             await Context.Handle.RestoreAsync(target.Source.Id, restored);
 
             if (_profileManager.TryGetMutable(Context.Basic.Key, out var guard))
@@ -248,10 +261,10 @@ public partial class SnapshotManagementPageModel : ViewModelBase
                 await guard.DisposeAsync();
             }
 
-            _notificationService.PopMessage(
-                Resources.SnapshotManagementPage_RestoreSuccessNotificationMessage.Replace("{0}", label),
-                Resources.SnapshotManagementPage_RestoreSuccessNotificationTitle,
-                GrowlLevel.Success);
+            _notificationService.PopMessage(Resources.SnapshotManagementPage_RestoreSuccessNotificationMessage
+                                                     .Replace("{0}", label),
+                                            Resources.SnapshotManagementPage_RestoreSuccessNotificationTitle,
+                                            GrowlLevel.Success);
         }
         catch (Exception ex)
         {
@@ -272,37 +285,44 @@ public partial class SnapshotManagementPageModel : ViewModelBase
         var currentRefs = Context.Handle.GetReferences(current.Id);
         var previousRefs = Context.Handle.GetReferences(previous.Id);
 
-        var currentPaths = new HashSet<string>(currentRefs.Select(x => x.RelativePath), StringComparer.OrdinalIgnoreCase);
-        var previousPaths = new HashSet<string>(previousRefs.Select(x => x.RelativePath), StringComparer.OrdinalIgnoreCase);
+        var currentPaths = new HashSet<string>(currentRefs.Select(x => x.RelativePath),
+                                               StringComparer.OrdinalIgnoreCase);
+        var previousPaths = new HashSet<string>(previousRefs.Select(x => x.RelativePath),
+                                                StringComparer.OrdinalIgnoreCase);
 
-        var currentPrefs = new HashSet<string>(current.Metadata.Packages.Select(x => x.Pref), StringComparer.OrdinalIgnoreCase);
-        var previousPrefs = new HashSet<string>(previous.Metadata.Packages.Select(x => x.Pref), StringComparer.OrdinalIgnoreCase);
+        var currentPrefs = new HashSet<string>(current.Metadata.Packages.Select(x => x.Pref),
+                                               StringComparer.OrdinalIgnoreCase);
+        var previousPrefs = new HashSet<string>(previous.Metadata.Packages.Select(x => x.Pref),
+                                                StringComparer.OrdinalIgnoreCase);
 
         return new()
         {
             FilesAdded = currentPaths.Count - currentPaths.Intersect(previousPaths).Count(),
             FilesRemoved = previousPaths.Count - previousPaths.Intersect(currentPaths).Count(),
             PackagesAdded = currentPrefs.Count - currentPrefs.Intersect(previousPrefs).Count(),
-            PackagesRemoved = previousPrefs.Count - previousPrefs.Intersect(currentPrefs).Count(),
+            PackagesRemoved = previousPrefs.Count - previousPrefs.Intersect(currentPrefs).Count()
         };
     }
 
     private static Func<SnapshotItemModel, bool> BuildTextFilter(string? text)
     {
         if (string.IsNullOrWhiteSpace(text))
+        {
             return _ => true;
+        }
 
         var lower = text.Trim();
         return x => (x.Source.Label ?? string.Empty).Contains(lower, StringComparison.OrdinalIgnoreCase)
                  || (x.Source.Remark ?? string.Empty).Contains(lower, StringComparison.OrdinalIgnoreCase);
     }
 
-    private static string FormatDiff(int delta) => delta switch
-    {
-        > 0 => $"+{delta}",
-        < 0 => delta.ToString(),
-        _ => "0"
-    };
+    private static string FormatDiff(int delta) =>
+        delta switch
+        {
+            > 0 => $"+{delta}",
+            < 0 => delta.ToString(),
+            _ => "0"
+        };
 
     #endregion
 }

@@ -21,6 +21,21 @@ public class FavoriteRepository(
 {
     private const uint PAGE_SIZE = 20;
 
+    private static Exhibit ToExhibit(PersistenceService.FavoriteProject favorite) =>
+        new(favorite.Label,
+            PersistenceService.NormalizeFavoriteNamespace(favorite.Namespace),
+            favorite.ProjectId,
+            favorite.ProjectName,
+            string.IsNullOrWhiteSpace(favorite.Thumbnail) ? null : new Uri(favorite.Thumbnail),
+            favorite.Author,
+            favorite.Summary,
+            favorite.Kind,
+            favorite.DownloadCount,
+            PersistenceService.DeserializeFavoriteTags(favorite.Tags),
+            new(favorite.Reference),
+            DateTimeHelper.FromPersistedLocalDateTime(favorite.CreatedAt),
+            DateTimeHelper.FromPersistedLocalDateTime(favorite.UpdatedAt));
+
     #region IRepository Members
 
     public async Task<RepositoryStatus> CheckStatusAsync()
@@ -30,7 +45,7 @@ public class FavoriteRepository(
             LoaderHelper.LOADERID_NEOFORGE,
             LoaderHelper.LOADERID_FORGE,
             LoaderHelper.LOADERID_FABRIC,
-            LoaderHelper.LOADERID_QUILT,
+            LoaderHelper.LOADERID_QUILT
         ];
 
         var index = await prismLauncherService.GetMinecraftVersionsAsync(CancellationToken.None).ConfigureAwait(false);
@@ -51,33 +66,25 @@ public class FavoriteRepository(
 
     public Task<IPaginationHandle<Exhibit>> SearchAsync(string query, Filter filter)
     {
-        var first = persistenceService.SearchFavoriteProjects(
-            query,
-            filter,
-            0,
-            PAGE_SIZE,
-            out var totalCount
-        );
+        var first = persistenceService.SearchFavoriteProjects(query, filter, 0, PAGE_SIZE, out var totalCount);
         var initial = first.Select(ToExhibit).ToList();
 
-        return Task.FromResult<IPaginationHandle<Exhibit>>(
-            new PaginationHandle<Exhibit>(
-                initial,
-                PAGE_SIZE,
-                (uint)totalCount,
-                (pageIndex, _) =>
-                {
-                    var favorites = persistenceService.SearchFavoriteProjects(
-                        query,
-                        filter,
-                        pageIndex,
-                        PAGE_SIZE,
-                        out var _
-                    );
-                    return Task.FromResult(favorites.Select(ToExhibit));
-                }
-            )
-        );
+        return Task.FromResult<IPaginationHandle<Exhibit>>(new PaginationHandle<Exhibit>(initial,
+                                                               PAGE_SIZE,
+                                                               (uint)totalCount,
+                                                               (pageIndex, _) =>
+                                                               {
+                                                                   var favorites =
+                                                                       persistenceService
+                                                                          .SearchFavoriteProjects(query,
+                                                                               filter,
+                                                                               pageIndex,
+                                                                               PAGE_SIZE,
+                                                                               out var _);
+                                                                   return
+                                                                       Task.FromResult(favorites
+                                                                          .Select(ToExhibit));
+                                                               }));
     }
 
     public Task<Package> IdentifyAsync(ReadOnlyMemory<byte> content) => throw new NotImplementedException();
@@ -85,12 +92,10 @@ public class FavoriteRepository(
     public Task<Project> QueryAsync(ScopedProjectIdentifier id) => throw new NotImplementedException();
 
     public Task<BatchResolveResult<ScopedProjectIdentifier, Project>> QueryBatchAsync(
-        IEnumerable<ScopedProjectIdentifier> batch
-    ) =>
+        IEnumerable<ScopedProjectIdentifier> batch) =>
         throw new NotImplementedException();
 
-    public Task<Package> ResolveAsync(ScopedPackageIdentifier id, Filter filter) =>
-        throw new NotImplementedException();
+    public Task<Package> ResolveAsync(ScopedPackageIdentifier id, Filter filter) => throw new NotImplementedException();
 
     public Task<BatchResolveResult<ScopedPackageIdentifier, Package>> ResolveBatchAsync(
         IEnumerable<ScopedPackageIdentifier> batch,
@@ -102,24 +107,10 @@ public class FavoriteRepository(
     public Task<string> ReadChangelogAsync(ScopedPackageIdentifier id) => throw new NotImplementedException();
 
     public Task<IPaginationHandle<Version>> InspectAsync(ScopedProjectIdentifier id, Filter filter) =>
+        throw new NotSupportedException();
+
+    public Task<PackageIdentifier> RecognizeAsync(Uri uri, CancellationToken cancellationToken = default) =>
         throw new NotImplementedException();
 
     #endregion
-
-    private static Exhibit ToExhibit(PersistenceService.FavoriteProject favorite) =>
-        new(
-            favorite.Label,
-            PersistenceService.NormalizeFavoriteNamespace(favorite.Namespace),
-            favorite.ProjectId,
-            favorite.ProjectName,
-            string.IsNullOrWhiteSpace(favorite.Thumbnail) ? null : new Uri(favorite.Thumbnail),
-            favorite.Author,
-            favorite.Summary,
-            favorite.Kind,
-            favorite.DownloadCount,
-            PersistenceService.DeserializeFavoriteTags(favorite.Tags),
-            new(favorite.Reference),
-            DateTimeHelper.FromPersistedLocalDateTime(favorite.CreatedAt),
-            DateTimeHelper.FromPersistedLocalDateTime(favorite.UpdatedAt)
-        );
 }

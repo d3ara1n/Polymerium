@@ -1,9 +1,3 @@
 namespace Polymerium.Avalonia.Models;
 
-public enum InstanceActionKind
-{
-    Unknown,
-    Add,
-    Remove,
-    Update,
-}
+public enum InstanceActionKind { Unknown, Add, Remove, Update }

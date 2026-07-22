@@ -26,7 +26,7 @@ public partial class RuntimePickerDialogModel : ViewModelBase
     private async Task RefreshAsync(CancellationToken cancellationToken)
     {
         Candidates = null;
-        await ScanAsync(cancellationToken, forceRefresh: true);
+        await ScanAsync(cancellationToken, true);
     }
 
     private async Task ScanAsync(CancellationToken cancellationToken, bool forceRefresh = false)

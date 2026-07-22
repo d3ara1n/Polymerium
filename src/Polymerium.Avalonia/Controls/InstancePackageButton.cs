@@ -11,27 +11,27 @@ public class InstancePackageButton : Button
                                                                           o => o.EditCommand,
                                                                           (o, v) => o.EditCommand = v);
 
+    public static readonly DirectProperty<InstancePackageButton, ICommand?> RemoveCommandProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageButton, ICommand?>(nameof(RemoveCommand),
+                                                                          o => o.RemoveCommand,
+                                                                          (o, v) => o.RemoveCommand = v);
+
+    public static readonly DirectProperty<InstancePackageButton, ICommand?> RefreshCommandProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageButton, ICommand?>(nameof(RefreshCommand),
+                                                                          o => o.RefreshCommand,
+                                                                          (o, v) => o.RefreshCommand = v);
+
     public ICommand? EditCommand
     {
         get;
         set => SetAndRaise(EditCommandProperty, ref field, value);
     }
 
-    public static readonly DirectProperty<InstancePackageButton, ICommand?> RemoveCommandProperty =
-        AvaloniaProperty.RegisterDirect<InstancePackageButton, ICommand?>(nameof(RemoveCommand),
-                                                                          o => o.RemoveCommand,
-                                                                          (o, v) => o.RemoveCommand = v);
-
     public ICommand? RemoveCommand
     {
         get;
         set => SetAndRaise(RemoveCommandProperty, ref field, value);
     }
-
-    public static readonly DirectProperty<InstancePackageButton, ICommand?> RefreshCommandProperty =
-        AvaloniaProperty.RegisterDirect<InstancePackageButton, ICommand?>(nameof(RefreshCommand),
-                                                                          o => o.RefreshCommand,
-                                                                          (o, v) => o.RefreshCommand = v);
 
     public ICommand? RefreshCommand
     {

@@ -7,13 +7,11 @@ namespace Polymerium.Avalonia.Dialogs;
 
 public partial class ReferenceVersionPickerDialog : Dialog
 {
-    public static readonly DirectProperty<
-        ReferenceVersionPickerDialog,
-        IReadOnlyList<InstanceReferenceVersionModel>?
-    > VersionsProperty = AvaloniaProperty.RegisterDirect<
-        ReferenceVersionPickerDialog,
-        IReadOnlyList<InstanceReferenceVersionModel>?
-    >(nameof(Versions), o => o.Versions, (o, v) => o.Versions = v);
+    public static readonly DirectProperty<ReferenceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>?>
+        VersionsProperty =
+            AvaloniaProperty
+               .RegisterDirect<ReferenceVersionPickerDialog, IReadOnlyList<InstanceReferenceVersionModel>
+                    ?>(nameof(Versions), o => o.Versions, (o, v) => o.Versions = v);
 
     public ReferenceVersionPickerDialog() => InitializeComponent();
 
@@ -23,6 +21,5 @@ public partial class ReferenceVersionPickerDialog : Dialog
         set => SetAndRaise(VersionsProperty, ref field, value);
     }
 
-    protected override bool ValidateResult(object? result) =>
-        result is InstanceReferenceVersionModel;
+    protected override bool ValidateResult(object? result) => result is InstanceReferenceVersionModel;
 }

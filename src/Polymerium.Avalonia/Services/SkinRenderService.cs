@@ -26,10 +26,7 @@ namespace Polymerium.Avalonia.Services;
 ///         加载失败同样写入负缓存（3 分钟绝对过期），避免网络不可达时反复重试刷屏。
 ///     </para>
 /// </summary>
-public sealed class SkinRenderService(
-    HttpClient httpClient,
-    SkinRenderer renderer,
-    ILogger<SkinRenderService> logger)
+public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer renderer, ILogger<SkinRenderService> logger)
 {
     private const string SteveAssetUri = "avares://Polymerium/Assets/Images/Skins/Steve.png";
     private const string AlexAssetUri = "avares://Polymerium/Assets/Images/Skins/Alex.png";
@@ -47,13 +44,17 @@ public sealed class SkinRenderService(
     public async Task<Bitmap?> RenderAsync(string url)
     {
         if (!InternalUriHelper.IsKind(url, "skin"))
+        {
             return null;
+        }
 
         try
         {
             var query = ParseQuery(url);
             if (!query.TryGetValue("type", out var type) || !query.TryGetValue("src", out var src))
+            {
                 return null;
+            }
 
             using var skin = await LoadSkinAsync(src).ConfigureAwait(false);
             return skin is null ? null : RenderToBitmap(type, skin);
@@ -74,9 +75,7 @@ public sealed class SkinRenderService(
             // 皮肤图很小，锁开销可忽略。
             // type 字符串直接对应 SkinViewType 枚举名（不区分大小写）；
             // 不识别时回落 Body（等距全身），与历史默认行为一致。
-            var view = Enum.TryParse<SkinViewType>(type, ignoreCase: true, out var v)
-                ? v
-                : SkinViewType.Body;
+            var view = Enum.TryParse<SkinViewType>(type, true, out var v) ? v : SkinViewType.Body;
             image = renderer.Render(skin, view);
         }
 
@@ -100,11 +99,16 @@ public sealed class SkinRenderService(
         try
         {
             if (src.StartsWith("mojang:", StringComparison.Ordinal))
-                return await httpClient.GetByteArrayAsync(SkinMirrorBase + src["mojang:".Length..])
-                    .ConfigureAwait(false);
+            {
+                return await httpClient
+                            .GetByteArrayAsync(SkinMirrorBase + src["mojang:".Length..])
+                            .ConfigureAwait(false);
+            }
 
             if (src.StartsWith("asset:", StringComparison.Ordinal))
+            {
                 return TryLoadAsset(ResolveAssetUri(src["asset:".Length..]));
+            }
 
             // 裸 http(s) URL：直接下载原始皮肤展开图（Authlib 账户的 SkinUrl）。
             return await httpClient.GetByteArrayAsync(src).ConfigureAwait(false);
@@ -120,12 +124,13 @@ public sealed class SkinRenderService(
     ///     解析 <c>asset:{key}</c> 的 key 为内置皮肤资源 URI：
     ///     <c>Steve</c>/<c>Alex</c>/<c>Herobrine</c>（不区分大小写）各自映射，其余一律回落 Steve。
     /// </summary>
-    private static string ResolveAssetUri(string key) => key.ToLowerInvariant() switch
-    {
-        "alex" => AlexAssetUri,
-        "herobrine" => HerobrineAssetUri,
-        _ => SteveAssetUri,
-    };
+    private static string ResolveAssetUri(string key) =>
+        key.ToLowerInvariant() switch
+        {
+            "alex" => AlexAssetUri,
+            "herobrine" => HerobrineAssetUri,
+            _ => SteveAssetUri
+        };
 
     private byte[]? TryLoadAsset(string uri)
     {
@@ -148,15 +153,19 @@ public sealed class SkinRenderService(
         var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         var q = url.IndexOf('?');
         if (q < 0)
+        {
             return result;
+        }
 
         foreach (var pair in url.Substring(q + 1).Split('&', StringSplitOptions.RemoveEmptyEntries))
         {
             var eq = pair.IndexOf('=');
             if (eq <= 0)
+            {
                 continue;
-            result[Uri.UnescapeDataString(pair[..eq])] =
-                Uri.UnescapeDataString(pair[(eq + 1)..]);
+            }
+
+            result[Uri.UnescapeDataString(pair[..eq])] = Uri.UnescapeDataString(pair[(eq + 1)..]);
         }
 
         return result;

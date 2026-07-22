@@ -20,8 +20,7 @@ public partial class MaintenanceStoragePageModel(
     ProfileManager profileManager,
     NavigationService navigationService,
     OverlayService overlayService,
-    NotificationService notificationService
-) : ViewModelBase
+    NotificationService notificationService) : ViewModelBase
 {
     #region Direct
 
@@ -29,16 +28,13 @@ public partial class MaintenanceStoragePageModel(
 
     #endregion
 
-    protected override async Task OnInitializeAsync(CancellationToken token) =>
-        await Task.Run(Calculate, token);
+    protected override async Task OnInitializeAsync(CancellationToken token) => await Task.Run(Calculate, token);
 
     #region Other
 
     private void Calculate()
     {
-        (PackageSize, PackageCount) = FileHelper.CalculateDirectorySize(
-            PathDef.Default.CachePackageDirectory
-        );
+        (PackageSize, PackageCount) = FileHelper.CalculateDirectorySize(PathDef.Default.CachePackageDirectory);
         (LibrarySize, _) = FileHelper.CalculateDirectorySize(PathDef.Default.CacheLibraryDirectory);
         (AssetSize, _) = FileHelper.CalculateDirectorySize(PathDef.Default.CacheAssetDirectory);
         (RuntimeSize, _) = FileHelper.CalculateDirectorySize(PathDef.Default.CacheRuntimeDirectory);
@@ -70,11 +66,8 @@ public partial class MaintenanceStoragePageModel(
     [RelayCommand]
     private async Task PurgeCache()
     {
-        if (
-            await overlayService.RequestConfirmationAsync(
-                Resources.MaintenanceStoragePage_PurgeCacheConfirmationMessage
-            )
-        )
+        if (await overlayService.RequestConfirmationAsync(Resources
+                                                             .MaintenanceStoragePage_PurgeCacheConfirmationMessage))
         {
             try
             {
@@ -82,10 +75,7 @@ public partial class MaintenanceStoragePageModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(
-                    ex,
-                    Resources.MaintenanceStoragePage_PurgeCacheDangerNotificationTitle
-                );
+                notificationService.PopMessage(ex, Resources.MaintenanceStoragePage_PurgeCacheDangerNotificationTitle);
             }
 
             Calculate();
@@ -97,9 +87,8 @@ public partial class MaintenanceStoragePageModel(
     {
         if (model != null)
         {
-            navigationService.Navigate<InstancePage>(
-                new InstancePageModel.CompositeParameter(model.Key, typeof(InstanceStoragePage))
-            );
+            navigationService.Navigate<InstancePage>(new InstancePageModel.CompositeParameter(model.Key,
+                                                         typeof(InstanceStoragePage)));
         }
     }
 

@@ -28,11 +28,11 @@ public class BuiltinRepositoryProviderAccessor(IServiceProvider serviceProvider)
                                                                        null,
                                                                        null);
         var packwiz = new IRepositoryProviderAccessor.ProviderProfile(PackwizHelper.LABEL,
-                                                                     IRepositoryProviderAccessor.ProviderProfile
-                                                                        .DriverType.Packwiz,
-                                                                     "https://api.github.com/",
-                                                                     null,
-                                                                     null);
+                                                                      IRepositoryProviderAccessor.ProviderProfile
+                                                                         .DriverType.Packwiz,
+                                                                      "https://api.github.com/",
+                                                                      null,
+                                                                      null);
 
 
         // var bbsmc = new IRepositoryProviderAccessor.ProviderProfile("bbsmc",

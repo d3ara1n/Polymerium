@@ -6,6 +6,13 @@ namespace Polymerium.Avalonia.Models;
 
 public partial class WorkspaceChangeModel : ModelBase
 {
+    #region Reactive
+
+    [ObservableProperty]
+    public partial WorkspaceChangeKind Kind { get; set; }
+
+    #endregion
+
     #region Direct
 
     public required string RelativePath { get; set; }
@@ -15,13 +22,6 @@ public partial class WorkspaceChangeModel : ModelBase
     public required string FileType { get; set; }
     public required long FileSizeRaw { get; set; }
     public required DateTime FileLastModifiedRaw { get; set; }
-
-    #endregion
-
-    #region Reactive
-
-    [ObservableProperty]
-    public partial WorkspaceChangeKind Kind { get; set; }
 
     #endregion
 }

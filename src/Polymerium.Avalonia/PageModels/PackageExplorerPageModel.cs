@@ -1,13 +1,12 @@
-using TridentCore.Pref;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using System.Threading;
-using System.Net.Http;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -177,7 +176,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                      project.DownloadCount,
                                      project.Reference)
         {
-            IsFavorite = _persistenceService.IsFavoriteProject(project.Label, project.Namespace, project.ProjectId),
+            IsFavorite = _persistenceService.IsFavoriteProject(project.Label, project.Namespace, project.ProjectId)
         };
         var installed =
             profile.Setup.Packages.FirstOrDefault(y => PackageHelper.IsMatched(y.Pref,
@@ -253,7 +252,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                 Loader = Basic.Loader != null && LoaderHelper.TryParse(Basic.Loader, out var loader)
                              ? loader.Identity
                              : null,
-                Version = Basic.Version,
+                Version = Basic.Version
             };
         }
         else
@@ -354,7 +353,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                                                  x.DownloadCount,
                                                                  x.Reference)
                                     {
-                                        IsFavorite = _persistenceService.IsFavoriteProject(x.Label, x.Namespace, x.Pid),
+                                        IsFavorite = _persistenceService.IsFavoriteProject(x.Label, x.Namespace, x.Pid)
                                     };
                                     var installed =
                                         profile.Setup.Packages.FirstOrDefault(y => PackageHelper.IsMatched(y.Pref,
@@ -413,12 +412,17 @@ public partial class PackageExplorerPageModel : ViewModelBase
         {
             try
             {
-                var project = await _dataService.QueryProjectAsync(new ProjectIdentifier(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
+                var project =
+                    await _dataService.QueryProjectAsync(new(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
 
                 // 非 Unspecific
                 if (exhibit.InstalledVersionId != null)
                 {
-                    var package = await _dataService.ResolvePackageAsync(new PackageIdentifier(exhibit.Label, exhibit.Namespace, exhibit.ProjectId, exhibit.InstalledVersionId), Filter.None);
+                    var package = await _dataService.ResolvePackageAsync(new(exhibit.Label,
+                                                                             exhibit.Namespace,
+                                                                             exhibit.ProjectId,
+                                                                             exhibit.InstalledVersionId),
+                                                                         Filter.None);
                     exhibit.InstalledVersionName = package.VersionName;
                 }
 
@@ -450,7 +454,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                  project.Kind),
                     ViewPackageCommand = ViewPackageCommand,
                     ModifyPendingCallback = ModifyPending,
-                    LinkExhibitCallback = LinkExhibit,
+                    LinkExhibitCallback = LinkExhibit
                 });
             }
             catch (OperationCanceledException) { }
@@ -460,7 +464,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                                 Resources
                                                    .PackageExplorerPage_LoadProjectInformationDangerNotificationTitle,
                                                 GrowlLevel.Warning,
-                                                thumbnail: exhibit.Thumbnail);
+                                                exhibit.Thumbnail);
             }
         }
     }
@@ -506,7 +510,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
             return;
         }
 
-        var project = await _dataService.QueryProjectAsync(new ProjectIdentifier(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
+        var project = await _dataService.QueryProjectAsync(new(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
         _persistenceService.AddFavoriteProject(project);
         exhibit.IsFavorite = true;
     }
@@ -555,13 +559,13 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                                             model.Namespace,
                                                             model.ProjectId,
                                                             model.PendingVersionId),
-                                Source = null,
+                                Source = null
                             };
                             _persistenceService.AppendAction(new()
                             {
                                 Key = Basic.Key,
                                 Kind = PersistenceService.ActionKind.EditPackage,
-                                New = entry.Pref,
+                                New = entry.Pref
                             });
                             guard.Value.Setup.Packages.Add(entry);
                             model.State = ExhibitState.Editable;
@@ -582,7 +586,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                             {
                                 Key = Basic.Key,
                                 Kind = PersistenceService.ActionKind.EditPackage,
-                                Old = model.Installed.Pref,
+                                Old = model.Installed.Pref
                             });
                             model.State = null;
                             model.Installed = null;
@@ -602,7 +606,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
                                 Key = Basic.Key,
                                 Kind = PersistenceService.ActionKind.EditPackage,
                                 Old = old,
-                                New = model.Installed.Pref,
+                                New = model.Installed.Pref
                             });
                             model.State = ExhibitState.Editable;
                             model.InstalledVersionName = model.PendingVersionName;

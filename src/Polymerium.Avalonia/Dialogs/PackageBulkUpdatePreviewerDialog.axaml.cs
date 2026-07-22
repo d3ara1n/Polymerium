@@ -14,37 +14,31 @@ namespace Polymerium.Avalonia.Dialogs;
 
 public partial class PackageBulkUpdatePreviewerDialog : Dialog
 {
-    public static readonly DirectProperty<
-        PackageBulkUpdatePreviewerDialog,
-        bool
-    > IsEnabledOnlyProperty = AvaloniaProperty.RegisterDirect<
-        PackageBulkUpdatePreviewerDialog,
-        bool
-    >(nameof(IsEnabledOnly), o => o.IsEnabledOnly, (o, v) => o.IsEnabledOnly = v);
+    public static readonly DirectProperty<PackageBulkUpdatePreviewerDialog, bool> IsEnabledOnlyProperty =
+        AvaloniaProperty.RegisterDirect<PackageBulkUpdatePreviewerDialog, bool>(nameof(IsEnabledOnly),
+                                                                                    o => o.IsEnabledOnly,
+                                                                                    (o, v) => o.IsEnabledOnly = v);
 
-    public static readonly DirectProperty<
-        PackageBulkUpdatePreviewerDialog,
-        ObservableCollection<string>?
-    > TagsProperty = AvaloniaProperty.RegisterDirect<
-        PackageBulkUpdatePreviewerDialog,
-        ObservableCollection<string>?
-    >(nameof(Tags), o => o.Tags, (o, v) => o.Tags = v);
+    public static readonly DirectProperty<PackageBulkUpdatePreviewerDialog, ObservableCollection<string>?>
+        TagsProperty =
+            AvaloniaProperty
+               .RegisterDirect<PackageBulkUpdatePreviewerDialog, ObservableCollection<string>?>(nameof(Tags),
+                    o => o.Tags,
+                    (o, v) => o.Tags = v);
 
-    public static readonly DirectProperty<
-        PackageBulkUpdatePreviewerDialog,
-        PackageBulkUpdatePreviewerTagPolicy
-    > TagPolicyProperty = AvaloniaProperty.RegisterDirect<
-        PackageBulkUpdatePreviewerDialog,
-        PackageBulkUpdatePreviewerTagPolicy
-    >(nameof(TagPolicy), o => o.TagPolicy, (o, v) => o.TagPolicy = v);
+    public static readonly DirectProperty<PackageBulkUpdatePreviewerDialog, PackageBulkUpdatePreviewerTagPolicy>
+        TagPolicyProperty =
+            AvaloniaProperty
+               .RegisterDirect<PackageBulkUpdatePreviewerDialog, PackageBulkUpdatePreviewerTagPolicy>(nameof(TagPolicy),
+                    o => o.TagPolicy,
+                    (o, v) => o.TagPolicy = v);
 
-    public static readonly DirectProperty<
-        PackageBulkUpdatePreviewerDialog,
-        InstanceSetupPageModel.StateView?
-    > ViewStateProperty = AvaloniaProperty.RegisterDirect<
-        PackageBulkUpdatePreviewerDialog,
-        InstanceSetupPageModel.StateView?
-    >(nameof(ViewState), o => o.ViewState, (o, v) => o.ViewState = v);
+    public static readonly DirectProperty<PackageBulkUpdatePreviewerDialog, InstanceSetupPageModel.StateView?>
+        ViewStateProperty =
+            AvaloniaProperty
+               .RegisterDirect<PackageBulkUpdatePreviewerDialog, InstanceSetupPageModel.StateView?>(nameof(ViewState),
+                    o => o.ViewState,
+                    (o, v) => o.ViewState = v);
 
     public PackageBulkUpdatePreviewerDialog()
     {
@@ -105,13 +99,9 @@ public partial class PackageBulkUpdatePreviewerDialog : Dialog
     {
         var dialog = new TagPickerDialog
         {
-            ExistingTags = ExistingTags.Where(x => !Tags?.Contains(x) ?? true).ToList(),
+            ExistingTags = ExistingTags.Where(x => !Tags?.Contains(x) ?? true).ToList()
         };
-        if (
-            await OverlayService.PopDialogAsync(dialog)
-            && dialog.Result is string tag
-            && !string.IsNullOrEmpty(tag)
-        )
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is string tag && !string.IsNullOrEmpty(tag))
         {
             Tags ??= [];
             if (!Tags.Contains(tag))
@@ -122,24 +112,24 @@ public partial class PackageBulkUpdatePreviewerDialog : Dialog
     }
 
     [RelayCommand]
-    private void RemoveTag(string tag)
-    {
-        Tags?.Remove(tag);
-    }
+    private void RemoveTag(string tag) => Tags?.Remove(tag);
 
     #endregion
 
     #region Event Handlers
+
     private void OnLoadedHandler(object? sender, RoutedEventArgs args)
     {
         if (ViewState?.LastChosenIsEnabledOnly is { } enabledOnly)
         {
             IsEnabledOnly = enabledOnly;
         }
+
         if (ViewState?.LastChosenTagPolicy is { } policy)
         {
             TagPolicy = policy;
         }
+
         if (ViewState?.LastChosenTags is { } tags)
         {
             Tags ??= [];
@@ -159,5 +149,6 @@ public partial class PackageBulkUpdatePreviewerDialog : Dialog
         ViewState?.LastChosenTagPolicy = TagPolicy;
         ViewState?.LastChosenTags = Tags;
     }
+
     #endregion
 }

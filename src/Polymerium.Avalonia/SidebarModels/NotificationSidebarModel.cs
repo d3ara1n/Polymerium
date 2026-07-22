@@ -20,15 +20,12 @@ public partial class NotificationSidebarModel : ViewModelBase
 {
     private readonly NotificationService _service;
 
+    public NotificationSidebarModel(NotificationService service) => _service = service;
+
     public ObservableCollection<NotificationModel> Notifications { get; } = [];
 
     [ObservableProperty]
     public partial int UnreadNotificationCount { get; set; }
-
-    public NotificationSidebarModel(NotificationService service)
-    {
-        _service = service;
-    }
 
     [RelayCommand]
     private void MarkAllAsRead() => _service.MarkAllAsRead();
@@ -41,6 +38,12 @@ public partial class NotificationSidebarModel : ViewModelBase
 
     [RelayCommand]
     private void RemoveNotification(NotificationModel? model) => _service.RemoveNotification(model);
+
+    private void OnAdded(NotificationModel model) => Notifications.Add(model);
+
+    private void OnRemoved(NotificationModel model) => Notifications.Remove(model);
+
+    private void OnUnreadCountChanged(int count) => UnreadNotificationCount = count;
 
     #region Overrides
 
@@ -70,10 +73,4 @@ public partial class NotificationSidebarModel : ViewModelBase
     }
 
     #endregion
-
-    private void OnAdded(NotificationModel model) => Notifications.Add(model);
-
-    private void OnRemoved(NotificationModel model) => Notifications.Remove(model);
-
-    private void OnUnreadCountChanged(int count) => UnreadNotificationCount = count;
 }

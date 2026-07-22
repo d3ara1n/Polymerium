@@ -26,52 +26,15 @@ public partial class InstanceDependencyGraphModalModel(
     IViewContext<InstanceBasicModel> context,
     ProfileManager profileManager,
     DataService dataService,
-    NotificationService notificationService
-) : ViewModelBase
+    NotificationService notificationService) : ViewModelBase
 {
-    private IReadOnlyDictionary<string, Package> _packages = new Dictionary<string, Package>();
-    private IReadOnlyDictionary<string, DependencyGraphNode> _nodes = new Dictionary<string, DependencyGraphNode>();
     private IReadOnlyDictionary<string, List<string>> _incoming = new Dictionary<string, List<string>>();
+    private IReadOnlyDictionary<string, DependencyGraphNode> _nodes = new Dictionary<string, DependencyGraphNode>();
+    private IReadOnlyDictionary<string, Package> _packages = new Dictionary<string, Package>();
 
     #region Direct
 
     public InstanceBasicModel Basic { get; } = context.GetRequiredParameter();
-
-    #endregion
-
-    #region Reactive
-
-    [ObservableProperty]
-    public partial Graph? DependencyGraph { get; private set; }
-
-    [ObservableProperty]
-    public partial bool IsLoading { get; private set; } = true;
-
-    [ObservableProperty]
-    public partial int TotalPackages { get; private set; }
-
-    [ObservableProperty]
-    public partial int VisiblePackages { get; private set; }
-
-    [ObservableProperty]
-    public partial int HiddenPackages { get; private set; }
-
-    [ObservableProperty]
-    public partial int EdgeCount { get; private set; }
-
-    [ObservableProperty]
-    public partial int MissingCount { get; private set; }
-
-    [ObservableProperty]
-    public partial DependencyGraphNode? SelectedNode { get; private set; }
-
-    [ObservableProperty]
-    public partial ObservableCollection<DependencyEntry> SelectedDependencies { get; private set; }
-        = [];
-
-    [ObservableProperty]
-    public partial ObservableCollection<DependencyEntry> SelectedDependents { get; private set; }
-        = [];
 
     #endregion
 
@@ -134,21 +97,21 @@ public partial class InstanceDependencyGraphModalModel(
 
         if (_packages.TryGetValue(node.Key, out var pkg))
         {
-            foreach (var entry in pkg.Dependencies
-                                     .Select(dep =>
-                                      {
-                                          var depKey = NodeKey(dep.Label, dep.Namespace, dep.ProjectId);
-                                          return _nodes.TryGetValue(depKey, out var depNode)
-                                              ? new DependencyEntry(depKey,
-                                                                    depNode.ProjectName,
-                                                                    dep.IsRequired,
-                                                                    depNode.IsMissing)
-                                              : null;
-                                      })
-                                     .Where(e => e is not null)
-                                     .Cast<DependencyEntry>()
-                                     .OrderByDescending(e => e.IsRequired)
-                                     .ThenBy(e => e.ProjectName, StringComparer.CurrentCultureIgnoreCase))
+            foreach (var entry in pkg
+                                 .Dependencies.Select(dep =>
+                                  {
+                                      var depKey = NodeKey(dep.Label, dep.Namespace, dep.ProjectId);
+                                      return _nodes.TryGetValue(depKey, out var depNode)
+                                                 ? new DependencyEntry(depKey,
+                                                                       depNode.ProjectName,
+                                                                       dep.IsRequired,
+                                                                       depNode.IsMissing)
+                                                 : null;
+                                  })
+                                 .Where(e => e is not null)
+                                 .Cast<DependencyEntry>()
+                                 .OrderByDescending(e => e.IsRequired)
+                                 .ThenBy(e => e.ProjectName, StringComparer.CurrentCultureIgnoreCase))
             {
                 SelectedDependencies.Add(entry);
             }
@@ -157,22 +120,28 @@ public partial class InstanceDependencyGraphModalModel(
         if (_incoming.TryGetValue(node.Key, out var dependents))
         {
             foreach (var entry in dependents
-                                   .Select(depKey =>
-                                    {
-                                        if (!_nodes.TryGetValue(depKey, out var depNode))
-                                            return null;
-                                        var isRequired = _packages.TryGetValue(depKey, out var depPkg)
-                                         && depPkg.Dependencies.Any(d =>
-                                            NodeKey(d.Label, d.Namespace, d.ProjectId) == node.Key && d.IsRequired);
-                                        return new DependencyEntry(depKey,
-                                                                   depNode.ProjectName,
-                                                                   isRequired,
-                                                                   depNode.IsMissing);
-                                    })
-                                   .Where(e => e is not null)
-                                   .Cast<DependencyEntry>()
-                                   .OrderByDescending(e => e.IsRequired)
-                                   .ThenBy(e => e.ProjectName, StringComparer.CurrentCultureIgnoreCase))
+                                 .Select(depKey =>
+                                  {
+                                      if (!_nodes.TryGetValue(depKey, out var depNode))
+                                      {
+                                          return null;
+                                      }
+
+                                      var isRequired = _packages.TryGetValue(depKey, out var depPkg)
+                                                    && depPkg.Dependencies.Any(d => NodeKey(d.Label,
+                                                                                       d.Namespace,
+                                                                                       d.ProjectId)
+                                                                                == node.Key
+                                                                                && d.IsRequired);
+                                      return new DependencyEntry(depKey,
+                                                                 depNode.ProjectName,
+                                                                 isRequired,
+                                                                 depNode.IsMissing);
+                                  })
+                                 .Where(e => e is not null)
+                                 .Cast<DependencyEntry>()
+                                 .OrderByDescending(e => e.IsRequired)
+                                 .ThenBy(e => e.ProjectName, StringComparer.CurrentCultureIgnoreCase))
             {
                 SelectedDependents.Add(entry);
             }
@@ -197,7 +166,9 @@ public partial class InstanceDependencyGraphModalModel(
         }
 
         if (layer.Count == 0)
+        {
             return GraphBuildResult.Empty;
+        }
 
         token.ThrowIfCancellationRequested();
 
@@ -208,17 +179,19 @@ public partial class InstanceDependencyGraphModalModel(
         var visited = new HashSet<string>(installedKeys);
 
         foreach (var id in layer)
+        {
             requested[NodeKey(id.Repository, id.Namespace, id.Identity)] = id;
+        }
 
         while (layer.Count > 0)
         {
             token.ThrowIfCancellationRequested();
-            var batch = await dataService
-                              .ResolvePackagesAsync(layer, Filter.None)
-                              .ConfigureAwait(false);
+            var batch = await dataService.ResolvePackagesAsync(layer, Filter.None).ConfigureAwait(false);
 
             foreach (var (_, pkg) in batch.Successful)
+            {
                 resolved[NodeKey(pkg.Label, pkg.Namespace, pkg.ProjectId)] = pkg;
+            }
 
             var nextLayer = new List<PackageIdentifier>();
             foreach (var (_, pkg) in batch.Successful)
@@ -227,10 +200,16 @@ public partial class InstanceDependencyGraphModalModel(
                 foreach (var dep in pkg.Dependencies)
                 {
                     if (!dep.IsRequired)
+                    {
                         continue;
+                    }
+
                     var depKey = NodeKey(dep.Label, dep.Namespace, dep.ProjectId);
                     if (depKey == pkgKey || !visited.Add(depKey))
+                    {
                         continue;
+                    }
+
                     var depId = new PackageIdentifier(dep.Label, dep.Namespace, dep.ProjectId, dep.VersionId);
                     requested[depKey] = depId;
                     nextLayer.Add(depId);
@@ -261,7 +240,10 @@ public partial class InstanceDependencyGraphModalModel(
         foreach (var (key, id) in requested)
         {
             if (nodes.ContainsKey(key))
+            {
                 continue;
+            }
+
             nodes[key] = new(key,
                              id.Repository,
                              id.Identity,
@@ -282,22 +264,35 @@ public partial class InstanceDependencyGraphModalModel(
         foreach (var (parentKey, pkg) in resolved)
         {
             if (!nodes.TryGetValue(parentKey, out var parent))
+            {
                 continue;
+            }
 
             foreach (var dep in pkg.Dependencies)
             {
                 var depKey = NodeKey(dep.Label, dep.Namespace, dep.ProjectId);
                 if (depKey == parentKey)
+                {
                     continue;
+                }
+
                 if (!nodes.TryGetValue(depKey, out var child))
+                {
                     continue;
+                }
 
                 graph.Edges.Add(new(parent, child));
                 outgoing[parentKey] = outgoing.GetValueOrDefault(parentKey) + 1;
                 if (!incoming.TryGetValue(depKey, out var list))
+                {
                     incoming[depKey] = list = new();
+                }
+
                 if (!list.Contains(parentKey))
+                {
                     list.Add(parentKey);
+                }
+
                 connected.Add(parentKey);
                 connected.Add(depKey);
             }
@@ -314,35 +309,34 @@ public partial class InstanceDependencyGraphModalModel(
                    resolved,
                    nodes,
                    incoming,
-                   Total: nodes.Count,
-                   Visible: connected.Count,
-                   Hidden: nodes.Count - connected.Count,
-                   Edges: graph.Edges.Count,
-                   Missing: missing);
+                   nodes.Count,
+                   connected.Count,
+                   nodes.Count - connected.Count,
+                   graph.Edges.Count,
+                   missing);
     }
 
     private async Task<Dictionary<string, Bitmap>> PrefetchThumbnailsAsync(
         Dictionary<string, Package> resolved,
-        CancellationToken token
-    )
+        CancellationToken token)
     {
         token.ThrowIfCancellationRequested();
         var results = await Task.WhenAll(resolved
-            .Where(kv => kv.Value.Thumbnail is not null)
-            .Select(async kv =>
-            {
-                try
-                {
-                    return (kv.Key, Bmp: (Bitmap?)await dataService.GetBitmapAsync(kv.Value.Thumbnail!));
-                }
-                catch
-                {
-                    return (kv.Key, Bmp: (Bitmap?)null);
-                }
-            }));
-        return results
-            .Where(x => x.Bmp is not null)
-            .ToDictionary(x => x.Key, x => x.Bmp!);
+                                        .Where(kv => kv.Value.Thumbnail is not null)
+                                        .Select(async kv =>
+                                         {
+                                             try
+                                             {
+                                                 return (kv.Key,
+                                                         Bmp: (Bitmap?)
+                                                         await dataService.GetBitmapAsync(kv.Value.Thumbnail!));
+                                             }
+                                             catch
+                                             {
+                                                 return (kv.Key, Bmp: null);
+                                             }
+                                         }));
+        return results.Where(x => x.Bmp is not null).ToDictionary(x => x.Key, x => x.Bmp!);
     }
 
     private record GraphBuildResult(
@@ -354,13 +348,50 @@ public partial class InstanceDependencyGraphModalModel(
         int Visible,
         int Hidden,
         int Edges,
-        int Missing
-    )
+        int Missing)
     {
         public static GraphBuildResult Empty { get; } = new(new(),
-                                                             new Dictionary<string, Package>(),
-                                                             new Dictionary<string, DependencyGraphNode>(),
-                                                             new Dictionary<string, List<string>>(),
-                                                             0, 0, 0, 0, 0);
+                                                            new Dictionary<string, Package>(),
+                                                            new Dictionary<string, DependencyGraphNode>(),
+                                                            new Dictionary<string, List<string>>(),
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0);
     }
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial Graph? DependencyGraph { get; private set; }
+
+    [ObservableProperty]
+    public partial bool IsLoading { get; private set; } = true;
+
+    [ObservableProperty]
+    public partial int TotalPackages { get; private set; }
+
+    [ObservableProperty]
+    public partial int VisiblePackages { get; private set; }
+
+    [ObservableProperty]
+    public partial int HiddenPackages { get; private set; }
+
+    [ObservableProperty]
+    public partial int EdgeCount { get; private set; }
+
+    [ObservableProperty]
+    public partial int MissingCount { get; private set; }
+
+    [ObservableProperty]
+    public partial DependencyGraphNode? SelectedNode { get; private set; }
+
+    [ObservableProperty]
+    public partial ObservableCollection<DependencyEntry> SelectedDependencies { get; private set; } = [];
+
+    [ObservableProperty]
+    public partial ObservableCollection<DependencyEntry> SelectedDependents { get; private set; } = [];
+
+    #endregion
 }

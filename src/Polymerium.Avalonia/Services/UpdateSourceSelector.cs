@@ -12,29 +12,8 @@ namespace Polymerium.Avalonia.Services;
 
 public class UpdateSourceSelector(
     IEnumerable<IUpdateSource> sources,
-    ConfigurationService configurationService
-) : IUpdateSource
+    ConfigurationService configurationService) : IUpdateSource
 {
-    #region IUpdateSource Members
-
-    public Task<VelopackAssetFeed> GetReleaseFeed(
-        IVelopackLogger logger,
-        string? appId,
-        string channel,
-        Guid? stagingId = null,
-        VelopackAsset? latestLocalRelease = null
-    ) => Select().GetReleaseFeed(logger, appId, channel, stagingId, latestLocalRelease);
-
-    public Task DownloadReleaseEntry(
-        IVelopackLogger logger,
-        VelopackAsset releaseEntry,
-        string localFile,
-        Action<int> progress,
-        CancellationToken cancelToken = new()
-    ) => Select().DownloadReleaseEntry(logger, releaseEntry, localFile, progress, cancelToken);
-
-    #endregion
-
     private IUpdateSource Select()
     {
         // 0 => Github
@@ -46,4 +25,24 @@ public class UpdateSourceSelector(
 
         return sources.OfType<MirrorChyanSource>().First();
     }
+
+    #region IUpdateSource Members
+
+    public Task<VelopackAssetFeed> GetReleaseFeed(
+        IVelopackLogger logger,
+        string? appId,
+        string channel,
+        Guid? stagingId = null,
+        VelopackAsset? latestLocalRelease = null) =>
+        Select().GetReleaseFeed(logger, appId, channel, stagingId, latestLocalRelease);
+
+    public Task DownloadReleaseEntry(
+        IVelopackLogger logger,
+        VelopackAsset releaseEntry,
+        string localFile,
+        Action<int> progress,
+        CancellationToken cancelToken = new()) =>
+        Select().DownloadReleaseEntry(logger, releaseEntry, localFile, progress, cancelToken);
+
+    #endregion
 }

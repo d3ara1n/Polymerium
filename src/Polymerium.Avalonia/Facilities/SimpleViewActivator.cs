@@ -49,38 +49,38 @@ public class SimpleViewActivator(IServiceProvider provider, IViewStateManager st
         {
             return ResolveViewModelType(view, nameof(Page));
         }
-        else if (view.IsAssignableTo(typeof(Dialog)))
+
+        if (view.IsAssignableTo(typeof(Dialog)))
         {
             return ResolveViewModelType(view, nameof(Dialog));
         }
-        else if (view.IsAssignableTo(typeof(Modal)))
+
+        if (view.IsAssignableTo(typeof(Modal)))
         {
             return ResolveViewModelType(view, nameof(Modal));
         }
-        else if (view.IsAssignableTo(typeof(Sidebar)))
+
+        if (view.IsAssignableTo(typeof(Sidebar)))
         {
             return ResolveViewModelType(view, nameof(Sidebar));
         }
-        else if (view.IsAssignableTo(typeof(Toast)))
+
+        if (view.IsAssignableTo(typeof(Toast)))
         {
             return ResolveViewModelType(view, nameof(Toast));
         }
 
-        throw new ArgumentOutOfRangeException(
-            nameof(view),
-            view,
-            "Parameter view must be derived from Page/Dialog/Sidebar/Toast"
-        );
+        throw new ArgumentOutOfRangeException(nameof(view),
+                                              view,
+                                              "Parameter view must be derived from Page/Dialog/Sidebar/Toast");
     }
 
     private static Type ResolveViewModelType(Type view, string suffix)
     {
         var pattern = $@"\.{suffix}s\.|(?<=\w){suffix}$";
-        var replaced = Regex.Replace(
-                                     view.FullName!,
+        var replaced = Regex.Replace(view.FullName!,
                                      pattern,
-                                     m => m.Value.StartsWith('.') ? $".{suffix}Models." : $"{suffix}Model"
-                                    );
+                                     m => m.Value.StartsWith('.') ? $".{suffix}Models." : $"{suffix}Model");
         return Type.GetType(replaced)!;
     }
 }

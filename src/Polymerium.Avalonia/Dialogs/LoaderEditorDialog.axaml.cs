@@ -17,38 +17,28 @@ public partial class LoaderEditorDialog : Dialog
         new(LoaderHelper.LOADERID_NEOFORGE, "NeoForge", AssetUriIndex.LoaderNeoforgeBitmap),
         new(LoaderHelper.LOADERID_FORGE, "Forge", AssetUriIndex.LoaderForgeBitmap),
         new(LoaderHelper.LOADERID_FABRIC, "Fabric", AssetUriIndex.LoaderFabricBitmap),
-        new(LoaderHelper.LOADERID_QUILT, "Quilt", AssetUriIndex.LoaderQuiltBitmap),
+        new(LoaderHelper.LOADERID_QUILT, "Quilt", AssetUriIndex.LoaderQuiltBitmap)
     ];
 
     public static readonly DirectProperty<LoaderEditorDialog, string?> SelectedLoaderProperty =
-        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, string?>(
-            nameof(SelectedLoader),
-            o => o.SelectedLoader,
-            (o, v) => o.SelectedLoader = v
-        );
+        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, string?>(nameof(SelectedLoader),
+                                                                     o => o.SelectedLoader,
+                                                                     (o, v) => o.SelectedLoader = v);
 
     public static readonly DirectProperty<LoaderEditorDialog, LazyObject?> LazyVersionsProperty =
-        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, LazyObject?>(
-            nameof(LazyVersions),
-            o => o.LazyVersions,
-            (o, v) => o.LazyVersions = v
-        );
+        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, LazyObject?>(nameof(LazyVersions),
+                                                                         o => o.LazyVersions,
+                                                                         (o, v) => o.LazyVersions = v);
 
     public static readonly DirectProperty<LoaderEditorDialog, string?> SelectedVersionProperty =
-        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, string?>(
-            nameof(SelectedVersion),
-            o => o.SelectedVersion,
-            (o, v) => o.SelectedVersion = v
-        );
+        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, string?>(nameof(SelectedVersion),
+                                                                     o => o.SelectedVersion,
+                                                                     (o, v) => o.SelectedVersion = v);
 
-    public static readonly DirectProperty<
-        LoaderEditorDialog,
-        LoaderCandidateModel?
-    > LoaderProperty = AvaloniaProperty.RegisterDirect<LoaderEditorDialog, LoaderCandidateModel?>(
-        nameof(Loader),
-        o => o.Loader,
-        (o, v) => o.Loader = v
-    );
+    public static readonly DirectProperty<LoaderEditorDialog, LoaderCandidateModel?> LoaderProperty =
+        AvaloniaProperty.RegisterDirect<LoaderEditorDialog, LoaderCandidateModel?>(nameof(Loader),
+            o => o.Loader,
+            (o, v) => o.Loader = v);
 
     public LoaderEditorDialog() => InitializeComponent();
 
@@ -91,14 +81,11 @@ public partial class LoaderEditorDialog : Dialog
                     return null;
                 }
 
-                var index = await DataService.GetComponentVersionsAsync(
-                    SelectedLoader,
-                    GameVersion
-                );
+                var index = await DataService.GetComponentVersionsAsync(SelectedLoader, GameVersion);
                 return new LoaderCandidateVersionCollectionModel([
                     .. index
-                        .OrderByDescending(x => x.ReleaseTime)
-                        .Select(x => new LoaderCandidateVersionModel(x.Version, x.Recommended)),
+                      .OrderByDescending(x => x.ReleaseTime)
+                      .Select(x => new LoaderCandidateVersionModel(x.Version, x.Recommended))
                 ]);
             });
             LazyVersions = lazy;
@@ -136,15 +123,12 @@ public partial class LoaderEditorDialog : Dialog
 
     protected override bool ValidateResult(object? result) =>
         result is LoaderCandidateSelectionModel
-        || (result is null && SelectedLoader == null && SelectedVersion == null);
+     || (result is null && SelectedLoader == null && SelectedVersion == null);
 
     private async void AddLoaderButton_OnClick(object? sender, RoutedEventArgs e)
     {
         var dialog = new LoaderPickerDialog { Candidates = Candidates };
-        if (
-            await OverlayService.PopDialogAsync(dialog)
-            && dialog.Result is LoaderCandidateModel model
-        )
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is LoaderCandidateModel model)
         {
             SelectedLoader = model.Id;
         }

@@ -9,11 +9,9 @@ namespace Polymerium.Avalonia.Components;
 public partial class AccountCreationPortal : AccountCreationStep
 {
     public static readonly DirectProperty<AccountCreationPortal, bool> IsOfflineAvailableProperty =
-        AvaloniaProperty.RegisterDirect<AccountCreationPortal, bool>(
-            nameof(IsOfflineAvailable),
-            o => o.IsOfflineAvailable,
-            (o, v) => o.IsOfflineAvailable = v
-        );
+        AvaloniaProperty.RegisterDirect<AccountCreationPortal, bool>(nameof(IsOfflineAvailable),
+                                                                     o => o.IsOfflineAvailable,
+                                                                     (o, v) => o.IsOfflineAvailable = v);
 
     public AccountCreationPortal() => InitializeComponent();
 
@@ -37,11 +35,11 @@ public partial class AccountCreationPortal : AccountCreationStep
                 MicrosoftService = MicrosoftService,
                 XboxLiveService = XboxLiveService,
                 MinecraftService = MinecraftService,
-                NotificationService = NotificationService,
+                NotificationService = NotificationService
             },
             1 => new AccountCreationAuthlibInjector { YggdrasilService = YggdrasilService },
             2 => new AccountCreationTrial(),
             3 => new AccountCreationOffline(),
-            _ => throw new ArgumentOutOfRangeException(),
+            _ => throw new ArgumentOutOfRangeException()
         };
 }

@@ -18,8 +18,7 @@ public class OverlayService(IViewActivator activator)
         Action<Toast> toastHandler,
         Action<Sidebar> drawerHandler,
         Action<Modal> modalHandler,
-        Action<Dialog> dialogHandler
-    )
+        Action<Dialog> dialogHandler)
     {
         _toastHandler = toastHandler;
         _drawerHandler = drawerHandler;
@@ -31,8 +30,7 @@ public class OverlayService(IViewActivator activator)
 
     public void PopToast(Toast toast) => _toastHandler?.Invoke(toast);
 
-    public void PopToast<TToast>(object? parameter = null)
-        where TToast : Toast
+    public void PopToast<TToast>(object? parameter = null) where TToast : Toast
     {
         var toast = (TToast)activator.Activate(typeof(TToast), parameter)!;
         PopToast(toast);
@@ -46,8 +44,7 @@ public class OverlayService(IViewActivator activator)
 
     // 与 PopModal<TModal> 对齐：通过 activator 激活 View（按命名约定配对 Model、注入 DI、挂 ViewModelMixin），
     // 享受 OverlayHost 加入/移除可视树时自动触发的 InitializeAsync/DeinitializeAsync 生命周期托管。
-    public void PopSidebar<TSidebar>(object? parameter = null)
-        where TSidebar : Sidebar
+    public void PopSidebar<TSidebar>(object? parameter = null) where TSidebar : Sidebar
     {
         var sidebar = (TSidebar)activator.Activate(typeof(TSidebar), parameter)!;
         PopSidebar(sidebar);
@@ -59,8 +56,7 @@ public class OverlayService(IViewActivator activator)
 
     public void PopModal(Modal modal) => _modalHandler?.Invoke(modal);
 
-    public void PopModal<TModal>(object? parameter = null)
-        where TModal : Modal
+    public void PopModal<TModal>(object? parameter = null) where TModal : Modal
     {
         var modal = (TModal)activator.Activate(typeof(TModal), parameter)!;
         PopModal(modal);
@@ -72,17 +68,12 @@ public class OverlayService(IViewActivator activator)
 
     public void PopDialog(Dialog dialog) => _dialogHandler?.Invoke(dialog);
 
-    public TDialog CreateDialog<TDialog>(object? parameter = null)
-        where TDialog : Dialog => (TDialog)activator.Activate(typeof(TDialog), parameter)!;
+    public TDialog CreateDialog<TDialog>(object? parameter = null) where TDialog : Dialog =>
+        (TDialog)activator.Activate(typeof(TDialog), parameter)!;
 
     public void PopMessage(string message, string title)
     {
-        var dialog = new MessageDialog
-        {
-            Title = title,
-            Message = message,
-            IsPrimaryButtonVisible = false,
-        };
+        var dialog = new MessageDialog { Title = title, Message = message, IsPrimaryButtonVisible = false };
         PopDialog(dialog);
     }
 
@@ -97,8 +88,7 @@ public class OverlayService(IViewActivator activator)
         string? message = null,
         string? title = null,
         string? placeholder = null,
-        bool multiLine = false
-    )
+        bool multiLine = false)
     {
         var dialog = new UserInputDialog();
         if (title != null)
@@ -162,13 +152,9 @@ public class OverlayService(IViewActivator activator)
     public async Task<string?> RequestFileAsync(
         string? message = null,
         string? title = null,
-        string? suggestedStartLocationPath = null
-    )
+        string? suggestedStartLocationPath = null)
     {
-        var dialog = new FilePickerDialog
-        {
-            SuggestedStartLocationPath = suggestedStartLocationPath,
-        };
+        var dialog = new FilePickerDialog { SuggestedStartLocationPath = suggestedStartLocationPath };
         if (title != null)
         {
             dialog.Title = title;

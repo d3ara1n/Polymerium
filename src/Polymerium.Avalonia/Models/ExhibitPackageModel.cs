@@ -18,8 +18,7 @@ public class ExhibitPackageModel(
     ulong downloadCount,
     string summary,
     DateTimeOffset updatedAt,
-    IReadOnlyList<Uri> gallery
-) : ModelBase
+    IReadOnlyList<Uri> gallery) : ModelBase
 {
     #region Direct
 

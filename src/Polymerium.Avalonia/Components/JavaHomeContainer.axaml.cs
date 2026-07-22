@@ -15,45 +15,29 @@ namespace Polymerium.Avalonia.Components;
 
 public partial class JavaHomeContainer : UserControl
 {
-    private CancellationTokenSource? _captureHomeCts;
-    private int _captureHomeVersion;
-
     public static readonly DirectProperty<JavaHomeContainer, string?> HomeProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(
-            nameof(Home),
-            o => o.Home,
-            (o, v) => o.Home = v
-        );
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Home), o => o.Home, (o, v) => o.Home = v);
 
-    public static readonly DirectProperty<
-        JavaHomeContainer,
-        OverlayService?
-    > OverlayServiceProperty = AvaloniaProperty.RegisterDirect<JavaHomeContainer, OverlayService?>(
-        nameof(OverlayService),
-        o => o.OverlayService,
-        (o, v) => o.OverlayService = v
-    );
+    public static readonly DirectProperty<JavaHomeContainer, OverlayService?> OverlayServiceProperty =
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, OverlayService?>(nameof(OverlayService),
+                                                                            o => o.OverlayService,
+                                                                            (o, v) => o.OverlayService = v);
 
     public static readonly DirectProperty<JavaHomeContainer, string?> VendorProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(
-            nameof(Vendor),
-            o => o.Vendor,
-            (o, v) => o.Vendor = v
-        );
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Vendor),
+                                                                    o => o.Vendor,
+                                                                    (o, v) => o.Vendor = v);
 
     public static readonly DirectProperty<JavaHomeContainer, string?> VersionProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(
-            nameof(Version),
-            o => o.Version,
-            (o, v) => o.Version = v
-        );
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, string?>(nameof(Version),
+                                                                    o => o.Version,
+                                                                    (o, v) => o.Version = v);
 
     public static readonly DirectProperty<JavaHomeContainer, int?> MajorProperty =
-        AvaloniaProperty.RegisterDirect<JavaHomeContainer, int?>(
-            nameof(Major),
-            o => o.Major,
-            (o, v) => o.Major = v
-        );
+        AvaloniaProperty.RegisterDirect<JavaHomeContainer, int?>(nameof(Major), o => o.Major, (o, v) => o.Major = v);
+
+    private CancellationTokenSource? _captureHomeCts;
+    private int _captureHomeVersion;
 
     public JavaHomeContainer() => InitializeComponent();
 
@@ -129,44 +113,36 @@ public partial class JavaHomeContainer : UserControl
         }
     }
 
-    private async Task CaptureHomeAsync(
-        string home,
-        int version,
-        CancellationToken cancellationToken
-    )
+    private async Task CaptureHomeAsync(string home, int version, CancellationToken cancellationToken)
     {
         var shouldCleanup = false;
 
         try
         {
             var info = await JavaHelper
-                .ProbeHomeAsync(home, cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                            .ProbeHomeAsync(home, cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
 
             if (!info.HasValue || cancellationToken.IsCancellationRequested)
             {
                 return;
             }
 
-            await Dispatcher.UIThread.InvokeAsync(
-                () =>
-                {
-                    if (
-                        cancellationToken.IsCancellationRequested
-                        || version != _captureHomeVersion
-                        || Home != home
-                    )
-                    {
-                        return;
-                    }
+            await Dispatcher.UIThread.InvokeAsync(() =>
+                                                  {
+                                                      if (cancellationToken.IsCancellationRequested
+                                                       || version != _captureHomeVersion
+                                                       || Home != home)
+                                                      {
+                                                          return;
+                                                      }
 
-                    Vendor = info.Value.Vendor;
-                    Version = info.Value.Version;
-                    Major = info.Value.Major;
-                },
-                DispatcherPriority.Normal,
-                cancellationToken
-            );
+                                                      Vendor = info.Value.Vendor;
+                                                      Version = info.Value.Version;
+                                                      Major = info.Value.Major;
+                                                  },
+                                                  DispatcherPriority.Normal,
+                                                  cancellationToken);
         }
         catch (OperationCanceledException) { }
         finally
@@ -206,10 +182,8 @@ public partial class JavaHomeContainer : UserControl
     {
         if (OverlayService != null)
         {
-            var path = await OverlayService.RequestFileAsync(
-                Properties.Resources.JavaHomeContainer_RequestJavaPrompt,
-                Properties.Resources.JavaHomeContainer_ReqeustJavaTitle
-            );
+            var path = await OverlayService.RequestFileAsync(Properties.Resources.JavaHomeContainer_RequestJavaPrompt,
+                                                             Properties.Resources.JavaHomeContainer_ReqeustJavaTitle);
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
@@ -230,10 +204,7 @@ public partial class JavaHomeContainer : UserControl
         }
 
         var dialog = OverlayService.CreateDialog<RuntimePickerDialog>();
-        if (
-            await OverlayService.PopDialogAsync(dialog)
-            && dialog.Result is RuntimePickerDialogCandidateModel runtime
-        )
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is RuntimePickerDialogCandidateModel runtime)
         {
             Home = runtime.Home;
         }

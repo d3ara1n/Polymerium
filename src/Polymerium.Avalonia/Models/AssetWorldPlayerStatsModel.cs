@@ -46,14 +46,12 @@ public class AssetWorldPlayerStatsModel
             new(Symbol.HeartBroken, "Damage Taken", ((int)DamageTaken).ToMetric()),
             new(Symbol.PersonRunning, "Distance Walked", FormatDistance(DistanceWalked)),
             new(Symbol.Flash, "Distance Sprinted", FormatDistance(DistanceSprinted)),
-            new(
-                Symbol.Timer,
+            new(Symbol.Timer,
                 "Time Since Death",
-                TimeSpan.FromSeconds(TimeSinceDeath / 20d).Humanize(maxUnit: TimeUnit.Hour)
-            ),
+                TimeSpan.FromSeconds(TimeSinceDeath / 20d).Humanize(maxUnit: TimeUnit.Hour)),
             new(Symbol.BroomSparkle, "Items Enchanted", ItemsEnchanted.ToString()),
             new(Symbol.AnimalRabbit, "Animals Bred", AnimalsBred.ToString()),
-            new(Symbol.FoodFish, "Fish Caught", FishCaught.ToString()),
+            new(Symbol.FoodFish, "Fish Caught", FishCaught.ToString())
         };
 
     private static string FormatDistance(long centimeters)

@@ -2,12 +2,15 @@ using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Polymerium.Avalonia.Controls;
+using Polymerium.Avalonia.Models;
+using Page = Huskui.Avalonia.Controls.Page;
 
 namespace Polymerium.Avalonia.Pages;
 
-public partial class SettingsPage : Huskui.Avalonia.Controls.Page
+public partial class SettingsPage : Page
 {
-    private readonly List<Models.SettingsSectionModel> _sections = [];
+    private readonly List<SettingsSectionModel> _sections = [];
     private bool _syncing;
 
     public SettingsPage()
@@ -22,7 +25,9 @@ public partial class SettingsPage : Huskui.Avalonia.Controls.Page
         BuildSections();
         NavList.ItemsSource = _sections;
         if (_sections.Count > 0)
+        {
             NavList.SelectedIndex = 0;
+        }
 
         AddHandler(ScrollViewer.ScrollChangedEvent, OnScrollChanged);
     }
@@ -35,31 +40,34 @@ public partial class SettingsPage : Huskui.Avalonia.Controls.Page
         _sections.Clear();
         foreach (var child in ContentRoot.Children)
         {
-            if (child is Controls.SettingsEntry entry && !string.IsNullOrEmpty(entry.Title))
-                _sections.Add(new()
-                {
-                    Title = entry.Title,
-                    Icon = entry.Icon,
-                    Target = entry
-                });
-            else if (Controls.NavigationSectionProperties.GetTitle(child) is { Length: > 0 } title)
+            if (child is SettingsEntry entry && !string.IsNullOrEmpty(entry.Title))
+            {
+                _sections.Add(new() { Title = entry.Title, Icon = entry.Icon, Target = entry });
+            }
+            else if (NavigationSectionProperties.GetTitle(child) is { Length: > 0 } title)
+            {
                 _sections.Add(new()
                 {
                     Title = title,
-                    Icon = Controls.NavigationSectionProperties.GetIcon(child),
+                    Icon = NavigationSectionProperties.GetIcon(child),
                     Target = child
                 });
+            }
         }
     }
 
     private void OnNavSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (_syncing)
+        {
             return;
+        }
 
         var index = NavList.SelectedIndex;
         if (index >= 0 && index < _sections.Count)
+        {
             AlignToTop(_sections[index].Target);
+        }
     }
 
     // Aligns the section header to the top of the viewport, matching macOS System
@@ -81,11 +89,7 @@ public partial class SettingsPage : Huskui.Avalonia.Controls.Page
     private void OnScrollChanged(object? sender, ScrollChangedEventArgs e)
     {
         const double anchor = 16d;
-        var index = _sections.Count == 0
-                        ? -1
-                        : AtBottom()
-                            ? _sections.Count - 1
-                            : IndexAtTop(anchor);
+        var index = _sections.Count == 0 ? -1 : AtBottom() ? _sections.Count - 1 : IndexAtTop(anchor);
 
         if (index >= 0 && index != NavList.SelectedIndex)
         {
@@ -101,23 +105,23 @@ public partial class SettingsPage : Huskui.Avalonia.Controls.Page
         for (var i = 0; i < _sections.Count; i++)
         {
             if (TopOf(_sections[i].Target) <= anchor)
+            {
                 last = i;
+            }
             else
+            {
                 break;
+            }
         }
 
         return last;
     }
 
-    private bool AtBottom() =>
-        Scroller.Viewport.Height > 0
-        && Scroller.Offset.Y >= Scroller.ScrollBarMaximum.Y - 0.5d;
+    private bool AtBottom() => Scroller.Viewport.Height > 0 && Scroller.Offset.Y >= Scroller.ScrollBarMaximum.Y - 0.5d;
 
     private double TopOf(Control target)
     {
         var transform = target.TransformToVisual(Scroller);
-        return transform is null
-            ? double.PositiveInfinity
-            : transform.Value.Transform(new(0, 0)).Y;
+        return transform is null ? double.PositiveInfinity : transform.Value.Transform(new(0, 0)).Y;
     }
 }

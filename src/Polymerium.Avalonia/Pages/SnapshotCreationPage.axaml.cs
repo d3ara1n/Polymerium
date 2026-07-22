@@ -4,9 +4,5 @@ namespace Polymerium.Avalonia.Pages;
 
 public partial class SnapshotCreationPage : Page
 {
-    public SnapshotCreationPage()
-    {
-        InitializeComponent();
-    }
+    public SnapshotCreationPage() => InitializeComponent();
 }
-

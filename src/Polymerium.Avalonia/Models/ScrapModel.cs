@@ -10,8 +10,7 @@ public partial class ScrapModel(
     string? date,
     string? time,
     string? thread,
-    string? sender
-) : ModelBase
+    string? sender) : ModelBase
 {
     #region Reactive
 

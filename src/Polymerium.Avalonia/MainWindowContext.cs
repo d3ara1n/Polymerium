@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Reactive.Disposables;
+using System.Reactive.Disposables.Fluent;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -24,23 +26,11 @@ using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
 using Velopack;
 using NotificationSidebar = Polymerium.Avalonia.Sidebars.NotificationSidebar;
-using System.Reactive.Disposables;
-using System.Reactive.Disposables.Fluent;
 
 namespace Polymerium.Avalonia;
 
 public partial class MainWindowContext : ObservableObject
 {
-
-    #region Fields
-
-    private readonly CompositeDisposable _disposables = new();
-    private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
-    private readonly List<string> _recent = [];
-    private int _recentCounter;
-
-    #endregion
-
     public MainWindowContext(
         ProfileManager profileManager,
         InstanceManager instanceManager,
@@ -74,20 +64,33 @@ public partial class MainWindowContext : ObservableObject
         _notificationService.UnreadCountChanged += OnUnreadCountChanged;
         UnreadNotificationCount = _notificationService.UnreadCount;
 
-        _instanceService.PinnedChangeStream
-                        .Subscribe(OnPinnedChanged)
-                        .DisposeWith(_disposables);
+        _instanceService.PinnedChangeStream.Subscribe(OnPinnedChanged).DisposeWith(_disposables);
 
         _ = _entries
            .Connect()
            .SortAndBind(out var view,
                         SortExpressionComparer<InstanceEntryModel>
-                            .Ascending(m => GetTier(m))
-                            .ThenByDescending(x => x.LastPlayedAtRaw ?? DateTimeOffset.MinValue))
+                           .Ascending(m => GetTier(m))
+                           .ThenByDescending(x => x.LastPlayedAtRaw ?? DateTimeOffset.MinValue))
            .Subscribe()
            .DisposeWith(_disposables);
         View = view;
     }
+
+    #region Other
+
+    public void Navigate(Type page, object? parameter) => _navigationService.Navigate(page, parameter);
+
+    #endregion
+
+    #region Fields
+
+    private readonly CompositeDisposable _disposables = new();
+    private readonly SourceCache<InstanceEntryModel, string> _entries = new(x => x.Basic.Key);
+    private readonly List<string> _recent = [];
+    private int _recentCounter;
+
+    #endregion
 
     #region Lifecycles
 
@@ -101,7 +104,7 @@ public partial class MainWindowContext : ObservableObject
             {
                 ConfigurationService = _configurationService,
                 OverlayService = _overlayService,
-                NotificationService = _notificationService,
+                NotificationService = _notificationService
             });
         }
     }
@@ -118,12 +121,6 @@ public partial class MainWindowContext : ObservableObject
         _profileManager.ProfileUpdated -= OnProfileUpdated;
         _profileManager.ProfileRemoved -= OnProfileRemoved;
     }
-
-    #endregion
-
-    #region Other
-
-    public void Navigate(Type page, object? parameter) => _navigationService.Navigate(page, parameter);
 
     #endregion
 
@@ -191,13 +188,11 @@ public partial class MainWindowContext : ObservableObject
                                                           _notificationService,
                                                           thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
             }
-            else
-            {
-                _notificationService.PopMessage(Resources.MainWindow_LogFileNotFoundWarningNotificationMessage,
-                                                Resources.Shared_FailedToOpenLogFileDangerNotificationTitle,
-                                                GrowlLevel.Warning,
-                                                thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
-            }
+
+            _notificationService.PopMessage(Resources.MainWindow_LogFileNotFoundWarningNotificationMessage,
+                                            Resources.Shared_FailedToOpenLogFileDangerNotificationTitle,
+                                            GrowlLevel.Warning,
+                                            thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
         }
 
         return Task.CompletedTask;
@@ -235,7 +230,7 @@ public partial class MainWindowContext : ObservableObject
         {
             Model = model,
             NotificationService = _notificationService,
-            UpdateManager = _updateManager,
+            UpdateManager = _updateManager
         });
     }
 
@@ -276,8 +271,8 @@ public partial class MainWindowContext : ObservableObject
             })
         {
             window.WindowState = window.WindowState == WindowState.FullScreen
-                ? WindowState.Normal
-                : WindowState.FullScreen;
+                                     ? WindowState.Normal
+                                     : WindowState.FullScreen;
         }
     }
 
@@ -290,18 +285,14 @@ public partial class MainWindowContext : ObservableObject
             switch (_updateService.UpdateState)
             {
                 case AppUpdateState.Found when _updateService.CurrentUpdate is { } update:
-                    _notificationService.PopMessage(
-                        string.Format(Resources.MainWindow_UpdateFoundNotificationMessage, update.Version),
-                        Resources.MainWindow_UpdateFoundNotificationTitle,
-                        GrowlLevel.Success
-                    );
+                    _notificationService.PopMessage(string.Format(Resources.MainWindow_UpdateFoundNotificationMessage,
+                                                                  update.Version),
+                                                    Resources.MainWindow_UpdateFoundNotificationTitle,
+                                                    GrowlLevel.Success);
                     break;
                 case AppUpdateState.Latest:
-                    _notificationService.PopMessage(
-                        Resources.MainWindow_UpdateLatestNotificationMessage,
-                        Resources.MainWindow_UpdateLatestNotificationTitle,
-                        GrowlLevel.Information
-                    );
+                    _notificationService.PopMessage(Resources.MainWindow_UpdateLatestNotificationMessage,
+                                                    Resources.MainWindow_UpdateLatestNotificationTitle);
                     break;
             }
         }
@@ -318,30 +309,22 @@ public partial class MainWindowContext : ObservableObject
     [RelayCommand]
     private async Task OpenGitHubAsync()
     {
-        var topLevel = TopLevel.GetTopLevel(
-            (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow
-        );
-        await TopLevelHelper.LaunchUriAsync(
-            topLevel,
-            new(Program.RepositoryUrl),
-            Resources.MainWindow_OpenGitHubDangerNotificationTitle
-        );
+        var topLevel =
+            TopLevel.GetTopLevel((Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)
+                               ?.MainWindow);
+        await TopLevelHelper.LaunchUriAsync(topLevel,
+                                            new(Program.RepositoryUrl),
+                                            Resources.MainWindow_OpenGitHubDangerNotificationTitle);
     }
 
     #endregion
 
     #region Other reactive
 
-    private void OnUpdateFound(AppUpdateModel? model)
-    {
-        Dispatcher.UIThread.Post(() => CurrentUpdate = model);
-    }
+    private void OnUpdateFound(AppUpdateModel? model) => Dispatcher.UIThread.Post(() => CurrentUpdate = model);
 
     // NotificationService 的事件假定在 UI 线程触发（见服务注释），此处直接赋值即可
-    private void OnUnreadCountChanged(int count)
-    {
-        UnreadNotificationCount = count;
-    }
+    private void OnUnreadCountChanged(int count) => UnreadNotificationCount = count;
 
     #endregion
 
@@ -361,23 +344,19 @@ public partial class MainWindowContext : ObservableObject
                 continue;
             }
 
-            list.Add(new(key,
-                         item.Name,
-                         item.Setup.Version,
-                         item.Setup.Loader,
-                         item.Setup.Source)
+            list.Add(new(key, item.Name, item.Setup.Version, item.Setup.Loader, item.Setup.Source)
             {
                 IsPinned = true,
                 LastPlayedAtRaw =
-                    DateTimeHelper.FromPersistedLocalDateTime(_persistenceService.GetLastActivity(key)?.End),
+                    DateTimeHelper.FromPersistedLocalDateTime(_persistenceService.GetLastActivity(key)
+                                                                ?.End)
             });
         }
 
         _entries.AddOrUpdate(list);
     }
 
-    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e)
-    {
+    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
         Dispatcher.UIThread.Post(() =>
         {
             InstanceEntryModel entry;
@@ -405,10 +384,8 @@ public partial class MainWindowContext : ObservableObject
                 _persistenceService.SetAccountSelector(e.Key, cooked.Uuid);
             }
         });
-    }
 
-    private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
-    {
+    private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
         Dispatcher.UIThread.Post(() =>
         {
             if (_entries.Lookup(e.Key) is { HasValue: true, Value: var model })
@@ -420,10 +397,8 @@ public partial class MainWindowContext : ObservableObject
                 model.Basic.UpdateIcon();
             }
         });
-    }
 
-    private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e)
-    {
+    private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
         Dispatcher.UIThread.Post(() =>
         {
             _recent.Remove(e.Key);
@@ -434,33 +409,30 @@ public partial class MainWindowContext : ObservableObject
 
             _entries.RemoveKey(e.Key);
         });
-    }
 
     #endregion
 
     #region Instance State
 
-    internal void SubscribeState(InstanceStateAggregator aggregator)
-    {
-        aggregator.StateChangeStream
-                  .Subscribe(change =>
-                  {
-                      foreach (var item in change)
-                      {
-                          switch (item.Reason)
-                          {
-                              case ChangeReason.Add:
-                              case ChangeReason.Update:
-                                  HandleSnapshotUpdate(item.Current);
-                                  break;
-                              case ChangeReason.Remove:
-                                  HandleSnapshotRemove(item.Current);
-                                  break;
-                          }
-                      }
-                  })
-                  .DisposeWith(_disposables);
-    }
+    internal void SubscribeState(InstanceStateAggregator aggregator) =>
+        aggregator
+           .StateChangeStream.Subscribe(change =>
+            {
+                foreach (var item in change)
+                {
+                    switch (item.Reason)
+                    {
+                        case ChangeReason.Add:
+                        case ChangeReason.Update:
+                            HandleSnapshotUpdate(item.Current);
+                            break;
+                        case ChangeReason.Remove:
+                            HandleSnapshotRemove(item.Current);
+                            break;
+                    }
+                }
+            })
+           .DisposeWith(_disposables);
 
     private void HandleSnapshotUpdate(InstanceStateSnapshot snapshot)
     {
@@ -477,8 +449,12 @@ public partial class MainWindowContext : ObservableObject
         {
             // 未 pin 非 recent 的实例从 InstancesPage 启动：状态必须可见，拉进 _entries
             InstanceEntryModel entry = _profileManager.TryGetImmutable(snapshot.Key, out var profile)
-                ? new(snapshot.Key, profile.Name, profile.Setup.Version, profile.Setup.Loader, profile.Setup.Source)
-                : new(snapshot.Key, snapshot.Key, "N/A", null, null);
+                                           ? new(snapshot.Key,
+                                                 profile.Name,
+                                                 profile.Setup.Version,
+                                                 profile.Setup.Loader,
+                                                 profile.Setup.Source)
+                                           : new(snapshot.Key, snapshot.Key, "N/A", null, null);
 
             Dispatcher.UIThread.Post(() =>
             {
@@ -507,8 +483,7 @@ public partial class MainWindowContext : ObservableObject
         }
     }
 
-    private void OnPinnedChanged(IChangeSet<string, string> change)
-    {
+    private void OnPinnedChanged(IChangeSet<string, string> change) =>
         Dispatcher.UIThread.Post(() =>
         {
             foreach (var item in change)
@@ -525,19 +500,20 @@ public partial class MainWindowContext : ObservableObject
                 else if (pinned && _profileManager.TryGetImmutable(item.Key, out var profile))
                 {
                     _entries.AddOrUpdate(new InstanceEntryModel(item.Key,
-                                             profile.Name,
-                                             profile.Setup.Version,
-                                             profile.Setup.Loader,
-                                             profile.Setup.Source)
+                                                                profile.Name,
+                                                                profile.Setup.Version,
+                                                                profile.Setup.Loader,
+                                                                profile.Setup.Source)
                     {
                         IsPinned = true,
                         LastPlayedAtRaw =
-                            DateTimeHelper.FromPersistedLocalDateTime(_persistenceService.GetLastActivity(item.Key)?.End),
+                            DateTimeHelper.FromPersistedLocalDateTime(_persistenceService
+                                                                     .GetLastActivity(item.Key)
+                                                                    ?.End)
                     });
                 }
             }
         });
-    }
 
     private void AddRecent(string key, InstanceEntryModel entry)
     {
@@ -563,9 +539,8 @@ public partial class MainWindowContext : ObservableObject
         }
     }
 
-    private static int GetTier(InstanceEntryModel m) => m.State == InstanceState.Idle
-        ? m.IsPinned ? 1 : (m.RecentOrder.HasValue ? 2 : 3)
-        : 0;
+    private static int GetTier(InstanceEntryModel m) =>
+        m.State == InstanceState.Idle ? m.IsPinned ? 1 : m.RecentOrder.HasValue ? 2 : 3 : 0;
 
     private static bool ShouldShow(InstanceEntryModel m) =>
         m.IsPinned || m.State != InstanceState.Idle || m.RecentOrder.HasValue;

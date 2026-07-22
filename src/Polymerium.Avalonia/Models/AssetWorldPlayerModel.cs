@@ -14,8 +14,7 @@ public partial class AssetWorldPlayerModel : ModelBase
         string userName,
         Uri faceUrl,
         AssetWorldPlayerStatsModel stats,
-        AssetWorldPlayerAdvancementsModel advancements
-    )
+        AssetWorldPlayerAdvancementsModel advancements)
     {
         Uuid = uuid;
         UserName = userName;

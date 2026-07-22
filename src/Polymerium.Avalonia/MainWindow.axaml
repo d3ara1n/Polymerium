@@ -33,14 +33,7 @@
                         x:Key="SidebarBorder"
                         Color="#14000000" />
                 </ResourceDictionary>
-                <ResourceDictionary x:Key="Dark">
-                    <SolidColorBrush
-                        x:Key="SidebarBackground"
-                        Color="#cc1e1e1e" />
-                    <SolidColorBrush
-                        x:Key="SidebarBorder"
-                        Color="#14FFFFFF" />
-                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark" />
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
     </husk:AppWindow.Resources>

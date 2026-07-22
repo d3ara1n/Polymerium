@@ -1,20 +1,20 @@
 <Solution>
     <Folder Name="/Changelogs/">
-        <File Path="changelogs/rolling.md" />
+        <File Path="changelogs/rolling.md"/>
     </Folder>
     <Folder Name="/Misc/">
-        <File Path="README.md" />
-        <File Path=".gitignore" />
-        <File Path=".editorconfig" />
-        <File Path="cliff.toml" />
-        <File Path="GitVersion.yml" />
-        <File Path="README.zh.md" />
+        <File Path="README.md"/>
+        <File Path=".gitignore"/>
+        <File Path=".editorconfig"/>
+        <File Path="cliff.toml"/>
+        <File Path="GitVersion.yml"/>
+        <File Path="README.zh.md"/>
     </Folder>
     <Folder Name="/Trident.Net/">
-        <Project Path="submodules\Trident.Net\src\TridentCore.Abstractions\TridentCore.Abstractions.csproj" />
-        <Project Path="submodules\Trident.Net\src\TridentCore.Cli\TridentCore.Cli.csproj" />
-        <Project Path="submodules\Trident.Net\src\TridentCore.Core\TridentCore.Core.csproj" />
-        <Project Path="submodules\Trident.Net\src\TridentCore.Pref\TridentCore.Pref.csproj" />
+        <Project Path="submodules\Trident.Net\src\TridentCore.Abstractions\TridentCore.Abstractions.csproj"/>
+        <Project Path="submodules\Trident.Net\src\TridentCore.Cli\TridentCore.Cli.csproj"/>
+        <Project Path="submodules\Trident.Net\src\TridentCore.Core\TridentCore.Core.csproj"/>
+        <Project Path="submodules\Trident.Net\src\TridentCore.Pref\TridentCore.Pref.csproj"/>
     </Folder>
-    <Project Path="src\Polymerium.Avalonia\Polymerium.Avalonia.csproj" />
+    <Project Path="src\Polymerium.Avalonia\Polymerium.Avalonia.csproj"/>
 </Solution>

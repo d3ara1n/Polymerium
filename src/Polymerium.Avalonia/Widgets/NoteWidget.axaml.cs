@@ -7,11 +7,9 @@ namespace Polymerium.Avalonia.Widgets;
 public class NoteWidget : WidgetBase
 {
     public static readonly DirectProperty<NoteWidget, string> NoteTextProperty =
-        AvaloniaProperty.RegisterDirect<NoteWidget, string>(
-            nameof(NoteText),
-            o => o.NoteText,
-            (o, v) => o.NoteText = v
-        );
+        AvaloniaProperty.RegisterDirect<NoteWidget, string>(nameof(NoteText),
+                                                            o => o.NoteText,
+                                                            (o, v) => o.NoteText = v);
 
     public NoteWidget() => AvaloniaXamlLoader.Load(this);
 

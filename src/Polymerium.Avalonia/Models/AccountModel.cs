@@ -19,8 +19,7 @@ public partial class AccountModel : ModelBase
         DateTimeOffset enrolledAt,
         DateTimeOffset? lastUsedAt,
         string? authlibServerUrl = null,
-        string? skinSource = null
-    )
+        string? skinSource = null)
     {
         UserName = userName;
         Uuid = uuid;

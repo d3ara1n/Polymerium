@@ -13,8 +13,7 @@ public partial class InstancePackageVersionModel(
     string compatibleVersions,
     DateTimeOffset publishedAt,
     ReleaseType releaseType,
-    IReadOnlyList<Dependency> dependencies
-) : InstancePackageVersionModelBase
+    IReadOnlyList<Dependency> dependencies) : InstancePackageVersionModelBase
 {
     #region Reactive
 

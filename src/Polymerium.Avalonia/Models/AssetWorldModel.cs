@@ -17,8 +17,7 @@ public partial class AssetWorldModel : ModelBase
         DirectoryInfo folder,
         Bitmap? icon,
         AssetWorldMetadataModel metadata,
-        DateTimeOffset lastPlayed
-    )
+        DateTimeOffset lastPlayed)
     {
         FolderName = folder.Name;
         WorldPath = folder.FullName;
@@ -54,7 +53,7 @@ public partial class AssetWorldModel : ModelBase
             1 => "Creative",
             2 => "Adventure",
             3 => "Spectator",
-            _ => Resources.Enum_Unknown,
+            _ => Resources.Enum_Unknown
         };
 
     public string Difficulty =>
@@ -64,7 +63,7 @@ public partial class AssetWorldModel : ModelBase
             1 => "Easy",
             2 => "Normal",
             3 => "Hard",
-            _ => Resources.Enum_Unknown,
+            _ => Resources.Enum_Unknown
         };
 
     public bool Hardcore => Metadata.Hardcore;

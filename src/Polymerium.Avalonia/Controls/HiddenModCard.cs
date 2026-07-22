@@ -6,6 +6,9 @@ namespace Polymerium.Avalonia.Controls;
 
 public class HiddenModCard : ContentControl
 {
+    public const string CLASS_InnerDuplicate = ":duplicate-inner";
+    public const string CLASS_TopLevelDuplicate = ":duplicate-toplevel";
+
     public static readonly StyledProperty<HiddenModEntry.DuplicateKind> DuplicateProperty =
         AvaloniaProperty.Register<HiddenModCard, HiddenModEntry.DuplicateKind>(nameof(Duplicate));
 
@@ -14,9 +17,6 @@ public class HiddenModCard : ContentControl
         get => GetValue(DuplicateProperty);
         set => SetValue(DuplicateProperty, value);
     }
-
-    public const string CLASS_InnerDuplicate = ":duplicate-inner";
-    public const string CLASS_TopLevelDuplicate = ":duplicate-toplevel";
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {

@@ -11,28 +11,23 @@ namespace Polymerium.Avalonia.Toasts;
 
 public partial class InstanceDashboardToast : Toast
 {
-    public static readonly DirectProperty<
-        InstanceDashboardToast,
-        NotifyCollectionChangedSynchronizedViewList<ScrapModel>?
-    > BindableProperty = AvaloniaProperty.RegisterDirect<
-        InstanceDashboardToast,
-        NotifyCollectionChangedSynchronizedViewList<ScrapModel>?
-    >(nameof(Bindable), o => o.Bindable, (o, v) => o.Bindable = v);
+    public static readonly
+        DirectProperty<InstanceDashboardToast, NotifyCollectionChangedSynchronizedViewList<ScrapModel>?>
+        BindableProperty =
+            AvaloniaProperty
+               .RegisterDirect<InstanceDashboardToast, NotifyCollectionChangedSynchronizedViewList<ScrapModel>
+                    ?>(nameof(Bindable), o => o.Bindable, (o, v) => o.Bindable = v);
 
     public static readonly DirectProperty<InstanceDashboardToast, string> FilterTextProperty =
-        AvaloniaProperty.RegisterDirect<InstanceDashboardToast, string>(
-            nameof(FilterText),
-            o => o.FilterText,
-            (o, v) => o.FilterText = v
-        );
+        AvaloniaProperty.RegisterDirect<InstanceDashboardToast, string>(nameof(FilterText),
+                                                                        o => o.FilterText,
+                                                                        (o, v) => o.FilterText = v);
 
     public static readonly DirectProperty<InstanceDashboardToast, bool> IsAutoScrollProperty =
-        AvaloniaProperty.RegisterDirect<InstanceDashboardToast, bool>(
-            nameof(IsAutoScroll),
-            o => o.IsAutoScroll,
-            (o, v) => o.IsAutoScroll = v,
-            true
-        );
+        AvaloniaProperty.RegisterDirect<InstanceDashboardToast, bool>(nameof(IsAutoScroll),
+                                                                      o => o.IsAutoScroll,
+                                                                      (o, v) => o.IsAutoScroll = v,
+                                                                      true);
 
     private int _debounce;
 

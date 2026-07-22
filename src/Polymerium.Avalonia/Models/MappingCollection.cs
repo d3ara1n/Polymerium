@@ -8,8 +8,7 @@ namespace Polymerium.Avalonia.Models;
 public class MappingCollection<TSource, TValue>(
     IList<TSource> from,
     Func<TSource, TValue> mapper,
-    Func<TValue, TSource> selector
-) : ObservableCollection<TValue>([.. from.Select(mapper)])
+    Func<TValue, TSource> selector) : ObservableCollection<TValue>([.. from.Select(mapper)])
 {
     protected override void ClearItems()
     {

@@ -37,13 +37,17 @@
 
 > An instance in Polymerium is a description, not a pile of copied files.
 
-Change the loader, swap mods in and out, update the whole pack — the description changes, Polymerium rebuilds the files on demand, and your saves and settings stay put.
+Change the loader, swap mods in and out, update the whole pack — the description changes, Polymerium rebuilds the files
+on demand, and your saves and settings stay put.
 
-- **Switch loaders without rebuilding.** Forge to NeoForge, Fabric to Quilt — change the loader, redeploy, keep your mods.
+- **Switch loaders without rebuilding.** Forge to NeoForge, Fabric to Quilt — change the loader, redeploy, keep your
+  mods.
 - **Update modpacks in place.** Drop in a new version; your saves, settings and worlds carry over.
-- **Roll back anything.** Every change can be snapshotted. Break something? One click restores it, with a diff of exactly what moved.
+- **Roll back anything.** Every change can be snapshotted. Break something? One click restores it, with a diff of
+  exactly what moved.
 
-Because files are linked instead of duplicated, ten modpacks sharing the same mods don't cost ten times the disk. Your whole setup fits in a tiny config file — version-control it, share it, move it between machines.
+Because files are linked instead of duplicated, ten modpacks sharing the same mods don't cost ten times the disk. Your
+whole setup fits in a tiny config file — version-control it, share it, move it between machines.
 
 ---
 
@@ -122,7 +126,8 @@ Before downloading, check the note for your platform:
 <details>
 <summary>🪟 <strong>Windows</strong> — enable Developer Mode (required for symlinks)</summary>
 
-Polymerium uses [symbolic links](https://www.wikiwand.com/en/Symbolic_link) for efficient file management. Enable Developer Mode to allow symlink creation without administrator privileges.
+Polymerium uses [symbolic links](https://www.wikiwand.com/en/Symbolic_link) for efficient file management. Enable
+Developer Mode to allow symlink creation without administrator privileges.
 
 **Windows 11**
 
@@ -147,7 +152,8 @@ Upgrade to Windows 10+ first 💥
 <details>
 <summary>🍎 <strong>macOS</strong> — "Installer is damaged" workaround</summary>
 
-The PKG installer is not signed with an Apple Developer certificate, so macOS Gatekeeper may block it with a "damaged" message.
+The PKG installer is not signed with an Apple Developer certificate, so macOS Gatekeeper may block it with a "damaged"
+message.
 
 1. Right-click the `.pkg` file and choose **Open**.
 2. If that doesn't work, remove the quarantine flag from Terminal:
@@ -160,10 +166,10 @@ The PKG installer is not signed with an Apple Developer certificate, so macOS Ga
 
 </details>
 
-| Platform | Package | Direct Download |
-| --- | --- | --- |
-| Windows x64 | Installer | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-win-Setup.exe) |
-| Linux x64 | AppImage | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium.AvaloniaImage) |
+| Platform            | Package       | Direct Download                                                                                     |
+|---------------------|---------------|-----------------------------------------------------------------------------------------------------|
+| Windows x64         | Installer     | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-win-Setup.exe) |
+| Linux x64           | AppImage      | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium.AvaloniaImage) |
 | macOS Apple Silicon | PKG installer | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-osx-Setup.pkg) |
 
 [已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=github-readme)
@@ -183,13 +189,13 @@ The PKG installer is not signed with an Apple Developer certificate, so macOS Ga
 
 ## Architecture
 
-| Technology | Purpose | Integration |
-| --- | --- | --- |
-| **.NET 10** | Runtime with C# preview features | Core platform |
-| **Avalonia 12** | Cross-platform XAML UI framework | Presentation |
-| **MVVM** | Separation of concerns | Architecture pattern |
-| **Dependency Injection** | Modular, testable services | Service management |
-| **Reactive Extensions** | Responsive data flow | Data flow |
+| Technology               | Purpose                          | Integration          |
+|--------------------------|----------------------------------|----------------------|
+| **.NET 10**              | Runtime with C# preview features | Core platform        |
+| **Avalonia 12**          | Cross-platform XAML UI framework | Presentation         |
+| **MVVM**                 | Separation of concerns           | Architecture pattern |
+| **Dependency Injection** | Modular, testable services       | Service management   |
+| **Reactive Extensions**  | Responsive data flow             | Data flow            |
 
 ### Project structure
 
@@ -209,11 +215,11 @@ Polymerium/
 
 ## Platform support
 
-| Platform                                                                                                   | Status         |
-|------------------------------------------------------------------------------------------------------------|----------------|
-| ![Windows](https://img.shields.io/badge/Windows-10+-0078D6?style=flat-square&logo=windows&logoColor=white) | ✅ **Stable**   |
-| ![Linux](https://img.shields.io/badge/Linux-AppImage-FCC624?style=flat-square&logo=linux&logoColor=black)  | ✅ **Stable**   |
-| ![macOS](https://img.shields.io/badge/macOS-ARM64-000000?style=flat-square&logo=apple&logoColor=white)     | ✅ **Stable**   |
+| Platform                                                                                                   | Status       |
+|------------------------------------------------------------------------------------------------------------|--------------|
+| ![Windows](https://img.shields.io/badge/Windows-10+-0078D6?style=flat-square&logo=windows&logoColor=white) | ✅ **Stable** |
+| ![Linux](https://img.shields.io/badge/Linux-AppImage-FCC624?style=flat-square&logo=linux&logoColor=black)  | ✅ **Stable** |
+| ![macOS](https://img.shields.io/badge/macOS-ARM64-000000?style=flat-square&logo=apple&logoColor=white)     | ✅ **Stable** |
 
 ---
 
@@ -223,15 +229,21 @@ These are upstream limitations in Avalonia and are not actionable within Polymer
 
 ### Rendering
 
-- **Gradient color banding** — Avalonia's brush gradient rendering produces visible color jumps in certain gradient transitions. The issue is rooted in the framework's gradient shader and affects all Avalonia applications, not just Polymerium.
+- **Gradient color banding** — Avalonia's brush gradient rendering produces visible color jumps in certain gradient
+  transitions. The issue is rooted in the framework's gradient shader and affects all Avalonia applications, not just
+  Polymerium.
 
 ### Window chrome
 
-- **Limited custom title bar support on macOS and Linux** — Avalonia's custom title bar chrome support is limited on macOS and Linux. Self-drawn title bars suffer from layout quirks and inconsistent styling that deviate from platform conventions, resulting in visually rough button placement and appearance compared to Windows.
+- **Limited custom title bar support on macOS and Linux** — Avalonia's custom title bar chrome support is limited on
+  macOS and Linux. Self-drawn title bars suffer from layout quirks and inconsistent styling that deviate from platform
+  conventions, resulting in visually rough button placement and appearance compared to Windows.
 
 ### Popups
 
-- **Poor shadow rendering on macOS** — Avalonia's Tooltip and Flyout popups on macOS cannot render with a truly transparent background, which breaks the platform's native drop shadow effect. The result is a harsh, boxy outline instead of the soft shadow expected on macOS.
+- **Poor shadow rendering on macOS** — Avalonia's Tooltip and Flyout popups on macOS cannot render with a truly
+  transparent background, which breaks the platform's native drop shadow effect. The result is a harsh, boxy outline
+  instead of the soft shadow expected on macOS.
 
 ---
 
@@ -248,11 +260,17 @@ Polymerium respects your privacy:
 
 ## On AI-assisted development
 
-Before 2026, Polymerium was built entirely by hand over several years — foundational libraries, custom UI controls, and the desktop application — with zero AI-generated code anywhere in the codebase.
+Before 2026, Polymerium was built entirely by hand over several years — foundational libraries, custom UI controls, and
+the desktop application — with zero AI-generated code anywhere in the codebase.
 
-With the arrival of capable coding models this year, AI agents have started to participate in the project's construction. In practice, however, current LLMs show critical gaps in software engineering and domain-specific knowledge (notably Avalonia), producing code with visible quality issues that demand human review and correction.
+With the arrival of capable coding models this year, AI agents have started to participate in the project's
+construction. In practice, however, current LLMs show critical gaps in software engineering and domain-specific
+knowledge (notably Avalonia), producing code with visible quality issues that demand human review and correction.
 
-Even so, agent assistance has measurably accelerated development: work that once spanned a month now ships within a week. The workflow remains unchanged in principle — AI proposes the plan and handles the labor-intensive initial implementation, then a human developer reviews, corrects, and completes the remainder, ensuring the codebase stays on course.
+Even so, agent assistance has measurably accelerated development: work that once spanned a month now ships within a
+week. The workflow remains unchanged in principle — AI proposes the plan and handles the labor-intensive initial
+implementation, then a human developer reviews, corrects, and completes the remainder, ensuring the codebase stays on
+course.
 
 ---
 

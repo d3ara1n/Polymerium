@@ -14,20 +14,17 @@ namespace Polymerium.Avalonia.Services.Sinks;
 /// </summary>
 public class ActivitySink(InstanceStateAggregator aggregator, PersistenceService persistenceService)
 {
-    public void Attach()
-    {
-        aggregator.StateChangeStream
-                  .Subscribe(change =>
-                  {
-                      foreach (var item in change)
-                      {
-                          if (item.Reason is ChangeReason.Remove)
-                          {
-                              HandleCompleted(item.Current);
-                          }
-                      }
-                  });
-    }
+    public void Attach() =>
+        aggregator.StateChangeStream.Subscribe(change =>
+        {
+            foreach (var item in change)
+            {
+                if (item.Reason is ChangeReason.Remove)
+                {
+                    HandleCompleted(item.Current);
+                }
+            }
+        });
 
     private void HandleCompleted(InstanceStateSnapshot snapshot)
     {
@@ -38,7 +35,7 @@ public class ActivitySink(InstanceStateAggregator aggregator, PersistenceService
                 {
                     Key = install.Key,
                     Kind = PersistenceService.ActionKind.Install,
-                    New = install.Reference,
+                    New = install.Reference
                 });
                 break;
             case UpdateTracker { State: TrackerState.Finished } update:
@@ -47,7 +44,7 @@ public class ActivitySink(InstanceStateAggregator aggregator, PersistenceService
                     Key = update.Key,
                     Kind = PersistenceService.ActionKind.Update,
                     Old = update.OldSource,
-                    New = update.NewSource,
+                    New = update.NewSource
                 });
                 break;
             case LaunchTracker launch:
@@ -56,8 +53,9 @@ public class ActivitySink(InstanceStateAggregator aggregator, PersistenceService
                     Key = launch.Key,
                     AccountId = launch.Options.Account?.Uuid ?? string.Empty,
                     DieInPeace = launch.State == TrackerState.Finished,
-                    Begin = DateTimeHelper.ToPersistedLocalDateTime(launch.StartedAt),
-                    End = DateTime.Now,
+                    Begin =
+                        DateTimeHelper.ToPersistedLocalDateTime(launch.StartedAt),
+                    End = DateTime.Now
                 });
                 break;
         }

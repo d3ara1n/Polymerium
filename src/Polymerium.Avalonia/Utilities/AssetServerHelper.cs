@@ -40,20 +40,18 @@ public static class AssetServerHelper
                     continue;
                 }
 
-                servers.Add(
-                    new()
+                servers.Add(new()
+                {
+                    Name = serverTag.Get<NbtString>("name")?.Value,
+                    Ip = serverTag.Get<NbtString>("ip")?.Value,
+                    IconBase64 = serverTag.Get<NbtString>("icon")?.Value,
+                    AcceptTextures = serverTag.Get<NbtByte>("acceptTextures")?.Value switch
                     {
-                        Name = serverTag.Get<NbtString>("name")?.Value,
-                        Ip = serverTag.Get<NbtString>("ip")?.Value,
-                        IconBase64 = serverTag.Get<NbtString>("icon")?.Value,
-                        AcceptTextures = serverTag.Get<NbtByte>("acceptTextures")?.Value switch
-                        {
-                            0 => false,
-                            1 => true,
-                            _ => null,
-                        },
+                        0 => false,
+                        1 => true,
+                        _ => null
                     }
-                );
+                });
             }
         }
         catch

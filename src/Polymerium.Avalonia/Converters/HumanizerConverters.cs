@@ -16,7 +16,7 @@ public static class HumanizerConverters
         _ => v
     });
 
-    public static IValueConverter ByteSize { get; } = new RelayConverter((v) => v switch
+    public static IValueConverter ByteSize { get; } = new RelayConverter(v => v switch
     {
         long l => Humanizer.ByteSize.FromBytes(l).Humanize(),
         int i => Humanizer.ByteSize.FromBytes(i).Humanize(),

@@ -16,9 +16,8 @@ public static class AccountHelper
             nameof(MicrosoftAccount) => JsonSerializer.Deserialize<MicrosoftAccount>(raw.Data),
             nameof(TrialAccount) => JsonSerializer.Deserialize<TrialAccount>(raw.Data),
             nameof(OfflineAccount) => JsonSerializer.Deserialize<OfflineAccount>(raw.Data),
-            nameof(AuthlibAccount) =>
-                JsonSerializer.Deserialize<AuthlibAccount>(raw.Data),
-            _ => JsonSerializer.Deserialize<OfflineAccount>(raw.Data),
+            nameof(AuthlibAccount) => JsonSerializer.Deserialize<AuthlibAccount>(raw.Data),
+            _ => JsonSerializer.Deserialize<OfflineAccount>(raw.Data)
         })
      ?? throw new FormatException("Failed to deserialize account from the raw data");
 
@@ -29,7 +28,13 @@ public static class AccountHelper
     {
         var serverUrl = account is AuthlibAccount authlib ? authlib.ServerUrl : null;
         var skinSource = BuildSkinSource(account);
-        return new(account.GetType(), account.Uuid, account.Username, enrolledAt ?? DateTimeOffset.Now, lastUsedAt, serverUrl, skinSource);
+        return new(account.GetType(),
+                   account.Uuid,
+                   account.Username,
+                   enrolledAt ?? DateTimeOffset.Now,
+                   lastUsedAt,
+                   serverUrl,
+                   skinSource);
     }
 
     /// <summary>
@@ -46,7 +51,7 @@ public static class AccountHelper
             MicrosoftAccount => $"mojang:{account.Uuid}",
             AuthlibAccount { SkinUrl: { } url } => url,
             TrialAccount trial => $"asset:{trial.Skin}",
-            _ => "asset:Steve",
+            _ => "asset:Steve"
         };
 
     public static PersistenceService.Account ToRaw(
@@ -61,7 +66,7 @@ public static class AccountHelper
             EnrolledAt = DateTimeHelper.ToPersistedLocalDateTime(enrolledAt),
             LastUsedAt = DateTimeHelper.ToPersistedLocalDateTime(lastUsedAt),
             Data = JsonSerializer.Serialize(account, account.GetType()),
-            Kind = account.GetType().Name,
+            Kind = account.GetType().Name
         };
 
     public static string ToRaw(IAccount account) => JsonSerializer.Serialize(account, account.GetType());
@@ -89,6 +94,6 @@ public static class AccountHelper
         new(InternalUriHelper.Skin($"?type=front&src={Uri.EscapeDataString(src)}"), UriKind.Absolute),
         new(InternalUriHelper.Skin($"?type=right&src={Uri.EscapeDataString(src)}"), UriKind.Absolute),
         new(InternalUriHelper.Skin($"?type=back&src={Uri.EscapeDataString(src)}"), UriKind.Absolute),
-        new(InternalUriHelper.Skin($"?type=left&src={Uri.EscapeDataString(src)}"), UriKind.Absolute),
+        new(InternalUriHelper.Skin($"?type=left&src={Uri.EscapeDataString(src)}"), UriKind.Absolute)
     ];
 }

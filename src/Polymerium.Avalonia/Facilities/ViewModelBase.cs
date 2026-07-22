@@ -7,15 +7,6 @@ namespace Polymerium.Avalonia.Facilities;
 
 public abstract class ViewModelBase : ObservableObject, IViewModel
 {
-    #region IViewModel Members
-
-    public virtual Task InitializeAsync(CancellationToken cancellationToken) =>
-        OnInitializeAsync(cancellationToken);
-
-    public virtual Task DeinitializeAsync() => OnDeinitializeAsync();
-
-    #endregion
-
     /// <summary>
     ///     该函数跑在 UI 线程 上，如果需要后台需要 <see cref="Task.Run" />
     /// </summary>
@@ -28,4 +19,12 @@ public abstract class ViewModelBase : ObservableObject, IViewModel
     protected virtual Task OnDeinitializeAsync() =>
         // Virtual function does nothing
         Task.CompletedTask;
+
+    #region IViewModel Members
+
+    public virtual Task InitializeAsync(CancellationToken cancellationToken) => OnInitializeAsync(cancellationToken);
+
+    public virtual Task DeinitializeAsync() => OnDeinitializeAsync();
+
+    #endregion
 }

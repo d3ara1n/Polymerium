@@ -20,6 +20,138 @@ public partial class SnapshotCreationPageModel(
     IViewContext<SnapshotsModalModel.SnapshotContext> context,
     NotificationService notificationService) : ViewModelBase
 {
+    #region Direct
+
+    public SnapshotsModalModel.SnapshotContext Context { get; } = context.Parameter!;
+
+    #endregion
+
+    #region Partition Building
+
+    private static IReadOnlyList<FilePartitionModel> BuildPartitions(IReadOnlyList<ReferenceInfo> references)
+    {
+        var buckets =
+            new Dictionary<string, Dictionary<string, (int count, long size)>>(StringComparer.OrdinalIgnoreCase);
+        var outerLookup = buckets.GetAlternateLookup<ReadOnlySpan<char>>();
+
+        foreach (var reference in references)
+        {
+            var span = reference.RelativePath.AsSpan();
+            var firstSlash = span.IndexOfAny('/', '\\');
+            var primarySpan = firstSlash >= 0 ? span[..firstSlash] : span;
+            var remainder = firstSlash >= 0 ? span[(firstSlash + 1)..] : [];
+
+            var secondarySlash = remainder.IndexOfAny('/', '\\');
+            var secondarySpan = secondarySlash >= 0 ? remainder[..secondarySlash] : remainder;
+
+            if (!outerLookup.TryGetValue(primarySpan, out var secondaries))
+            {
+                secondaries = new(StringComparer.OrdinalIgnoreCase);
+                outerLookup[primarySpan] = secondaries;
+            }
+
+            var innerLookup = secondaries.GetAlternateLookup<ReadOnlySpan<char>>();
+            if (innerLookup.TryGetValue(secondarySpan, out var existing))
+            {
+                innerLookup[secondarySpan] = (existing.count + 1, existing.size + reference.Size);
+            }
+            else
+            {
+                innerLookup[secondarySpan] = (1, reference.Size);
+            }
+        }
+
+        var result = new List<FilePartitionModel>();
+        var primaryOtherCount = 0;
+        var primaryOtherSize = 0L;
+        var primaryOtherCategories = new List<FileCategoryEntryModel>();
+        var otherLabel = Resources.InstanceStoragePage_OtherLabelText;
+
+        foreach (var primary in PrimaryOrder)
+        {
+            if (!buckets.TryGetValue(primary, out var secondaries))
+            {
+                continue;
+            }
+
+            var totalCount = 0;
+            var totalSize = 0L;
+            var categories = new List<FileCategoryEntryModel>();
+            var otherCount = 0;
+            var otherSize = 0L;
+
+            foreach (var (key, (count, size)) in secondaries.OrderByDescending(x => x.Value.size))
+            {
+                totalCount += count;
+                totalSize += size;
+                if (SecondaryAliases.TryGetValue(key, out var alias))
+                {
+                    categories.Add(new(alias(), count, size));
+                }
+                else
+                {
+                    otherCount += count;
+                    otherSize += size;
+                }
+            }
+
+            if (otherCount > 0)
+            {
+                categories.Add(new(otherLabel, otherCount, otherSize));
+            }
+
+            var primaryLabel = PrimaryAliases.TryGetValue(primary, out var primaryAlias) ? primaryAlias() : primary;
+            result.Add(new(primaryLabel, totalCount, totalSize, categories));
+        }
+
+        foreach (var (primary, secondaries) in buckets)
+        {
+            if (PrimaryOrder.Contains(primary, StringComparer.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            var totalCount = 0;
+            var totalSize = 0L;
+            var categories = new List<FileCategoryEntryModel>();
+            var otherSecondaryCount = 0;
+            var otherSecondarySize = 0L;
+
+            foreach (var (key, (count, size)) in secondaries.OrderByDescending(x => x.Value.size))
+            {
+                totalCount += count;
+                totalSize += size;
+                if (SecondaryAliases.TryGetValue(key, out var alias))
+                {
+                    categories.Add(new(alias(), count, size));
+                }
+                else
+                {
+                    otherSecondaryCount += count;
+                    otherSecondarySize += size;
+                }
+            }
+
+            if (otherSecondaryCount > 0)
+            {
+                categories.Add(new(otherLabel, otherSecondaryCount, otherSecondarySize));
+            }
+
+            primaryOtherCount += totalCount;
+            primaryOtherSize += totalSize;
+            primaryOtherCategories.AddRange(categories);
+        }
+
+        if (primaryOtherCount > 0)
+        {
+            result.Add(new(otherLabel, primaryOtherCount, primaryOtherSize, primaryOtherCategories));
+        }
+
+        return result;
+    }
+
+    #endregion
+
     #region Constants
 
     private static readonly FrozenDictionary<string, Func<string>> SecondaryAliases =
@@ -37,7 +169,7 @@ public partial class SnapshotCreationPageModel(
             ["textures"] = () => Resources.AssetKind_Texture,
             ["libraries"] = () => Resources.AssetKind_Library,
             ["versions"] = () => Resources.AssetKind_Version,
-            ["assets"] = () => Resources.AssetKind_Asset,
+            ["assets"] = () => Resources.AssetKind_Asset
         }.ToFrozenDictionary();
 
     // NOTE: live 概念保留——运行副本现在是 import 在 build 上的投影，快照引用以 build/ 前缀落地。
@@ -46,16 +178,10 @@ public partial class SnapshotCreationPageModel(
         {
             ["build"] = () => Resources.InstanceStoragePage_BuildFolderLinkText,
             ["import"] = () => Resources.InstanceStoragePage_ImportFolderLinkText,
-            ["persist"] = () => Resources.InstanceStoragePage_PersistFolderLinkText,
+            ["persist"] = () => Resources.InstanceStoragePage_PersistFolderLinkText
         }.ToFrozenDictionary();
 
     private static readonly string[] PrimaryOrder = ["build", "import", "persist"];
-
-    #endregion
-
-    #region Direct
-
-    public SnapshotsModalModel.SnapshotContext Context { get; } = context.Parameter!;
 
     #endregion
 
@@ -127,7 +253,7 @@ public partial class SnapshotCreationPageModel(
         snapshot = snapshot with
         {
             Label = !string.IsNullOrEmpty(Label) ? Label : Resources.Snapshot_UntitledLabelText,
-            Remark = Remark,
+            Remark = Remark
         };
 
         var committed = new Progress<int>(x =>
@@ -140,10 +266,10 @@ public partial class SnapshotCreationPageModel(
             IsCreating = true;
             TotalCommitted = 0;
             await Context.Handle.CommitAsync(snapshot, references, committed);
-            notificationService.PopMessage(
-                Resources.SnapshotCreationPage_CreateSuccessNotificationMessage.Replace("{0}", snapshot.Label),
-                Resources.SnapshotCreationPage_CreateSuccessNotificationTitle,
-                GrowlLevel.Success);
+            notificationService.PopMessage(Resources.SnapshotCreationPage_CreateSuccessNotificationMessage
+                                                    .Replace("{0}", snapshot.Label),
+                                           Resources.SnapshotCreationPage_CreateSuccessNotificationTitle,
+                                           GrowlLevel.Success);
             Context.BackHandler.Invoke();
         }
         catch (OperationCanceledException) { }
@@ -155,128 +281,6 @@ public partial class SnapshotCreationPageModel(
         {
             IsCreating = false;
         }
-    }
-
-    #endregion
-
-    #region Partition Building
-
-    private static IReadOnlyList<FilePartitionModel> BuildPartitions(
-        IReadOnlyList<ReferenceInfo> references)
-    {
-        var buckets = new Dictionary<string, Dictionary<string, (int count, long size)>>(
-            StringComparer.OrdinalIgnoreCase);
-        var outerLookup = buckets.GetAlternateLookup<ReadOnlySpan<char>>();
-
-        foreach (var reference in references)
-        {
-            var span = reference.RelativePath.AsSpan();
-            var firstSlash = span.IndexOfAny('/', '\\');
-            var primarySpan = firstSlash >= 0 ? span[..firstSlash] : span;
-            var remainder = firstSlash >= 0 ? span[(firstSlash + 1)..] : [];
-
-            var secondarySlash = remainder.IndexOfAny('/', '\\');
-            var secondarySpan = secondarySlash >= 0
-                ? remainder[..secondarySlash]
-                : remainder;
-
-            if (!outerLookup.TryGetValue(primarySpan, out var secondaries))
-            {
-                secondaries = new(
-                                  StringComparer.OrdinalIgnoreCase);
-                outerLookup[primarySpan] = secondaries;
-            }
-
-            var innerLookup = secondaries.GetAlternateLookup<ReadOnlySpan<char>>();
-            if (innerLookup.TryGetValue(secondarySpan, out var existing))
-            {
-                innerLookup[secondarySpan] = (existing.count + 1, existing.size + reference.Size);
-            }
-            else
-            {
-                innerLookup[secondarySpan] = (1, reference.Size);
-            }
-        }
-
-        var result = new List<FilePartitionModel>();
-        var primaryOtherCount = 0;
-        var primaryOtherSize = 0L;
-        var primaryOtherCategories = new List<FileCategoryEntryModel>();
-        var otherLabel = Resources.InstanceStoragePage_OtherLabelText;
-
-        foreach (var primary in PrimaryOrder)
-        {
-            if (!buckets.TryGetValue(primary, out var secondaries))
-                continue;
-
-            var totalCount = 0;
-            var totalSize = 0L;
-            var categories = new List<FileCategoryEntryModel>();
-            var otherCount = 0;
-            var otherSize = 0L;
-
-            foreach (var (key, (count, size)) in secondaries.OrderByDescending(x => x.Value.size))
-            {
-                totalCount += count;
-                totalSize += size;
-                if (SecondaryAliases.TryGetValue(key, out var alias))
-                {
-                    categories.Add(new(alias(), count, size));
-                }
-                else
-                {
-                    otherCount += count;
-                    otherSize += size;
-                }
-            }
-
-            if (otherCount > 0)
-                categories.Add(new(otherLabel, otherCount, otherSize));
-
-            var primaryLabel = PrimaryAliases.TryGetValue(primary, out var primaryAlias)
-                ? primaryAlias()
-                : primary;
-            result.Add(new(primaryLabel, totalCount, totalSize, categories));
-        }
-
-        foreach (var (primary, secondaries) in buckets)
-        {
-            if (PrimaryOrder.Contains(primary, StringComparer.OrdinalIgnoreCase))
-                continue;
-
-            var totalCount = 0;
-            var totalSize = 0L;
-            var categories = new List<FileCategoryEntryModel>();
-            var otherSecondaryCount = 0;
-            var otherSecondarySize = 0L;
-
-            foreach (var (key, (count, size)) in secondaries.OrderByDescending(x => x.Value.size))
-            {
-                totalCount += count;
-                totalSize += size;
-                if (SecondaryAliases.TryGetValue(key, out var alias))
-                {
-                    categories.Add(new(alias(), count, size));
-                }
-                else
-                {
-                    otherSecondaryCount += count;
-                    otherSecondarySize += size;
-                }
-            }
-
-            if (otherSecondaryCount > 0)
-                categories.Add(new(otherLabel, otherSecondaryCount, otherSecondarySize));
-
-            primaryOtherCount += totalCount;
-            primaryOtherSize += totalSize;
-            primaryOtherCategories.AddRange(categories);
-        }
-
-        if (primaryOtherCount > 0)
-            result.Add(new(otherLabel, primaryOtherCount, primaryOtherSize, primaryOtherCategories));
-
-        return result;
     }
 
     #endregion

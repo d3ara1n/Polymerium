@@ -16,22 +16,17 @@ namespace Polymerium.Avalonia;
 
 public partial class MainWindow : AppWindow
 {
-    public static readonly StyledProperty<bool> IsLeftPanelModeProperty = AvaloniaProperty.Register<
-        MainWindow,
-        bool
-    >(nameof(IsLeftPanelMode));
+    public static readonly StyledProperty<bool> IsLeftPanelModeProperty =
+        AvaloniaProperty.Register<MainWindow, bool>(nameof(IsLeftPanelMode));
 
     public static readonly DirectProperty<MainWindow, bool> IsTitleBarVisibleProperty =
-        AvaloniaProperty.RegisterDirect<MainWindow, bool>(
-            nameof(IsTitleBarVisible),
-            o => o.IsTitleBarVisible,
-            (o, v) => o.IsTitleBarVisible = v
-        );
+        AvaloniaProperty.RegisterDirect<MainWindow, bool>(nameof(IsTitleBarVisible),
+                                                          o => o.IsTitleBarVisible,
+                                                          (o, v) => o.IsTitleBarVisible = v);
 
-    public MainWindow()
-    {
-        InitializeComponent();
-    }
+    private ThemeService? _themeService;
+
+    public MainWindow() => InitializeComponent();
 
     public bool IsLeftPanelMode
     {
@@ -45,8 +40,7 @@ public partial class MainWindow : AppWindow
         set => SetAndRaise(IsTitleBarVisibleProperty, ref field, value);
     }
 
-    internal void SetFrameActivator(IViewActivator activator) =>
-        FrameActivationMixin.Install(Root, activator);
+    internal void SetFrameActivator(IViewActivator activator) => FrameActivationMixin.Install(Root, activator);
 
     internal void AttachTheme(ThemeService theme)
     {
@@ -64,8 +58,6 @@ public partial class MainWindow : AppWindow
         }
     }
 
-    private ThemeService? _themeService;
-
     private void OnThemeChanged(object? sender, EventArgs _) => ApplyTheme(_themeService!);
 
     private void ApplyTheme(ThemeService theme)
@@ -81,7 +73,7 @@ public partial class MainWindow : AppWindow
             0 => ThemeVariant.Default,
             1 => ThemeVariant.Light,
             2 => ThemeVariant.Dark,
-            _ => ThemeVariant.Default,
+            _ => ThemeVariant.Default
         };
 
         TransparencyLevelHint = theme.TransparencyIndex switch
@@ -91,12 +83,12 @@ public partial class MainWindow : AppWindow
                 WindowTransparencyLevel.Mica,
                 WindowTransparencyLevel.AcrylicBlur,
                 WindowTransparencyLevel.Blur,
-                WindowTransparencyLevel.None,
+                WindowTransparencyLevel.None
             ],
             1 => [WindowTransparencyLevel.Mica, WindowTransparencyLevel.None],
             2 => [WindowTransparencyLevel.AcrylicBlur, WindowTransparencyLevel.None],
             3 => [WindowTransparencyLevel.Blur, WindowTransparencyLevel.None],
-            _ => [WindowTransparencyLevel.None],
+            _ => [WindowTransparencyLevel.None]
         };
 
         IsTitleBarVisible = theme.TitleBarVisible;
@@ -221,7 +213,7 @@ public partial class MainWindow : AppWindow
 
     private void ApplySidebarPlacement(bool leftMode)
     {
-        if ((Sidebar.GetValue(Grid.ColumnProperty) == 0) == leftMode)
+        if (Sidebar.GetValue(Grid.ColumnProperty) == 0 == leftMode)
         {
             return;
         }

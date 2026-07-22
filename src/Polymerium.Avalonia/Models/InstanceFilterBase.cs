@@ -14,13 +14,13 @@ public abstract class InstanceFilterBase : ObservableObject, IDisposable
 
     public abstract bool IsActive { get; protected set; }
 
-    public abstract void Clear();
-
     public void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);
     }
+
+    public abstract void Clear();
 
     protected virtual void Dispose(bool disposing) { }
 }

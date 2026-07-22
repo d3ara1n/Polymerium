@@ -8,13 +8,8 @@ namespace Polymerium.Avalonia.Models;
 
 public partial class InstanceCardModel : ModelBase
 {
-    public InstanceCardModel(
-        string key,
-        string name,
-        string version,
-        string? loader,
-        string? source
-    ) => Basic = new(key, name, version, loader, source);
+    public InstanceCardModel(string key, string name, string version, string? loader, string? source) =>
+        Basic = new(key, name, version, loader, source);
 
     public InstanceBasicModel Basic { get; }
 

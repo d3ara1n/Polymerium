@@ -28,17 +28,12 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        AppDomain.CurrentDomain.UnhandledException += (_, e) =>
-            ErrorReporter.Report(
-                e.ExceptionObject,
-                new(
-                    ErrorReporter.ErrorReportSource.AppDomainUnhandled,
-                    Phase: "runtime",
-                    Critical: true,
-                    Terminating: e.IsTerminating,
-                    Level: e.IsTerminating ? SentryLevel.Fatal : SentryLevel.Error
-                )
-            );
+        AppDomain.CurrentDomain.UnhandledException += (_, e) => ErrorReporter.Report(e.ExceptionObject,
+            new(ErrorReporter.ErrorReportSource.AppDomainUnhandled,
+                "runtime",
+                true,
+                e.IsTerminating,
+                e.IsTerminating ? SentryLevel.Fatal : SentryLevel.Error));
         TaskScheduler.UnobservedTaskException += (_, e) =>
         {
             // 网络/传输层异常（代理、VPN/梯子、防火墙导致的 TLS 握手损坏等）
@@ -47,41 +42,28 @@ public class App : Application
             if (IsNetworkRelatedException(e.Exception))
             {
                 e.SetObserved();
-                ErrorReporter.Report(
-                    e.Exception,
-                    new(
-                        ErrorReporter.ErrorReportSource.NetworkUnobserved,
-                        Phase: "runtime",
-                        Critical: false,
-                        Terminating: false,
-                        Level: SentryLevel.Warning
-                    )
-                );
+                ErrorReporter.Report(e.Exception,
+                                     new(ErrorReporter.ErrorReportSource.NetworkUnobserved,
+                                         "runtime",
+                                         false,
+                                         false,
+                                         SentryLevel.Warning));
                 return;
             }
 
-            ErrorReporter.Report(
-                e.Exception,
-                new(
-                    ErrorReporter.ErrorReportSource.TaskUnobserved,
-                    Phase: "runtime",
-                    Critical: true,
-                    Terminating: false,
-                    Level: SentryLevel.Warning
-                )
-            );
+            ErrorReporter.Report(e.Exception,
+                                 new(ErrorReporter.ErrorReportSource.TaskUnobserved,
+                                     "runtime",
+                                     true,
+                                     false,
+                                     SentryLevel.Warning));
         };
-        Dispatcher.UIThread.UnhandledException += (_, e) =>
-            ErrorReporter.Report(
-                e.Exception,
-                new(
-                    ErrorReporter.ErrorReportSource.DispatcherUnhandled,
-                    Phase: "runtime",
-                    Critical: true,
-                    Terminating: !e.Handled,
-                    Level: !e.Handled ? SentryLevel.Fatal : SentryLevel.Error
-                )
-            );
+        Dispatcher.UIThread.UnhandledException += (_, e) => ErrorReporter.Report(e.Exception,
+            new(ErrorReporter.ErrorReportSource.DispatcherUnhandled,
+                "runtime",
+                true,
+                !e.Handled,
+                !e.Handled ? SentryLevel.Fatal : SentryLevel.Error));
 
         foreach (var styles in Styles)
         {
@@ -105,7 +87,7 @@ public class App : Application
         }
 
         // macOS: Dock 栏点击重新打开主窗口
-        if (Application.Current?.TryGetFeature<IActivatableLifetime>() is { } activatable)
+        if (Current?.TryGetFeature<IActivatableLifetime>() is { } activatable)
         {
             activatable.Activated += OnActivated;
         }
@@ -132,11 +114,7 @@ public class App : Application
 
             // HttpRequestException(含 SSL/认证失败)、SocketException、AuthenticationException 均视为传输层问题
             // 不纳入 IOException，避免本地文件系统异常（文件缺失/损坏等）被误判为网络问题而吞掉
-            if (
-                exception is HttpRequestException
-                or SocketException
-                or AuthenticationException
-            )
+            if (exception is HttpRequestException or SocketException or AuthenticationException)
             {
                 return true;
             }
@@ -159,9 +137,7 @@ public class App : Application
         return false;
     }
 
-    private static async Task StartLifetimeServicesAsync(
-        IClassicDesktopStyleApplicationLifetime desktop
-    )
+    private static async Task StartLifetimeServicesAsync(IClassicDesktopStyleApplicationLifetime desktop)
     {
         if (Program.Services?.GetService<LifetimeServiceRuntime>() is not { } runtime)
         {
@@ -174,16 +150,12 @@ public class App : Application
         }
         catch (Exception ex)
         {
-            ErrorReporter.Report(
-                ex,
-                new(
-                    ErrorReporter.ErrorReportSource.LifetimeStartup,
-                    Phase: "startup",
-                    Critical: true,
-                    Terminating: true,
-                    Level: SentryLevel.Fatal
-                )
-            );
+            ErrorReporter.Report(ex,
+                                 new(ErrorReporter.ErrorReportSource.LifetimeStartup,
+                                     "startup",
+                                     true,
+                                     true,
+                                     SentryLevel.Fatal));
             Dispatcher.UIThread.Post(() => desktop.Shutdown(-1));
         }
     }
@@ -195,14 +167,14 @@ public class App : Application
             return;
         }
 
-        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
+        if (Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
         {
             return;
         }
 
         // 已关闭的窗口引用仍留在 MainWindow 属性上，需要判断是否真正可用
         var window = desktop.MainWindow;
-        if (window is null || window.IsVisible == false)
+        if (window is null || !window.IsVisible)
         {
             window = ConstructWindow();
             desktop.MainWindow = window;
@@ -227,12 +199,7 @@ public class App : Application
         #region Wire
 
         var navigation = Program.Services.GetRequiredService<NavigationService>();
-        navigation.SetHandler(
-            window.Navigate,
-            window.GoBack,
-            window.CanGoBack,
-            window.ClearHistory
-        );
+        navigation.SetHandler(window.Navigate, window.GoBack, window.CanGoBack, window.ClearHistory);
 
         var activator = Program.Services.GetRequiredService<IViewActivator>();
         window.SetFrameActivator(activator);

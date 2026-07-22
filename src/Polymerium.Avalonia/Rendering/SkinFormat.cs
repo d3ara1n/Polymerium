@@ -13,10 +13,14 @@ public static class SkinFormat
     public static SkinType Detect(SKBitmap skin)
     {
         if (skin.Width >= 64 && skin.Height >= 64 && skin.Width == skin.Height)
+        {
             return IsSlim(skin) ? SkinType.Slim : SkinType.Classic;
+        }
 
         if (skin.Width == skin.Height * 2)
+        {
             return SkinType.Legacy;
+        }
 
         // 非标准尺寸按经典尽力渲染。
         return SkinType.Classic;
@@ -36,9 +40,16 @@ public static class SkinFormat
     private static bool IsBlank(SKBitmap skin, int x, int y, int w, int h)
     {
         for (var i = 0; i < w; i++)
+        {
             for (var j = 0; j < h; j++)
+            {
                 if (skin.GetPixel(x + i, y + j).Alpha != 0)
+                {
                     return false;
+                }
+            }
+        }
+
         return true;
     }
 }

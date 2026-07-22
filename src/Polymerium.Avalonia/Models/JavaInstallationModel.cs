@@ -2,8 +2,7 @@ using Polymerium.Avalonia.Facilities;
 
 namespace Polymerium.Avalonia.Models;
 
-public class JavaInstallationModel(string path, string? vendor, string? version, int? major)
-    : ModelBase
+public class JavaInstallationModel(string path, string? vendor, string? version, int? major) : ModelBase
 {
     #region Direct
 
