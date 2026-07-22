@@ -119,21 +119,20 @@ public partial class NewInstancePageModel(
     [RelayCommand]
     private async Task CreateAsync()
     {
-        var display = string.IsNullOrEmpty(DisplayName) ? VersionName : DisplayName;
-
-        var key = profileManager.RequestKey(display);
+        var key = profileManager.RequestKey(DisplayName);
 
         Profile profile;
         if (ImportedPack != null)
         {
             profile = ImportedPack.Container.Profile;
+            profile.Name = DisplayName;
             await Task.Run(async () => await importerAgent.ExtractFilesAsync(key.Key,
                                                                              ImportedPack.Container,
                                                                              ImportedPack.Pack));
         }
         else
         {
-            profile = new() { Name = display, Setup = new() { Loader = null, Version = VersionName, Source = null } };
+            profile = new() { Name = DisplayName, Setup = new() { Loader = null, Version = VersionName, Source = null } };
         }
 
         if (Thumbnail != null)
