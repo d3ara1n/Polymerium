@@ -14,7 +14,7 @@
 
 ### Changed
 
--
+- Update the wording of deployment stage labels to be clearer and more specific
 
 ### Removed
 

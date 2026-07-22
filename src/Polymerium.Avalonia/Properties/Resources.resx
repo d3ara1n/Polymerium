@@ -1204,13 +1204,13 @@
         <value>Title Bar Visibility</value>
     </data>
     <data name="DeployStage_LoadLock" xml:space="preserve">
-        <value>Loading lock...</value>
+        <value>Loading version lock...</value>
     </data>
     <data name="DeployStage_InstallVanilla" xml:space="preserve">
         <value>Installing vanilla...</value>
     </data>
     <data name="DeployStage_ProcessLoader" xml:space="preserve">
-        <value>Processing loader...</value>
+        <value>Installing mod loader...</value>
     </data>
     <data name="DeployStage_SyncPackages" xml:space="preserve">
         <value>Synchronizing packages...</value>
@@ -1219,7 +1219,7 @@
         <value>Resolving conflicts...</value>
     </data>
     <data name="DeployStage_PersistLock" xml:space="preserve">
-        <value>Persisting lock...</value>
+        <value>Saving version lock...</value>
     </data>
     <data name="DeployStage_GenerateManifest" xml:space="preserve">
         <value>Generating manifest...</value>
@@ -1339,7 +1339,7 @@
         <value>Accent Color</value>
     </data>
     <data name="DeployStage_EnsureRuntime" xml:space="preserve">
-        <value>Ensuring runtime...</value>
+        <value>Preparing Java runtime...</value>
     </data>
     <data name="MainWindow_PlayMenuText" xml:space="preserve">
         <value>Play</value>
