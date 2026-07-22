@@ -1216,7 +1216,7 @@
         <value>解决包冲突...</value>
     </data>
     <data name="DeployStage_SolidifyManifest" xml:space="preserve">
-        <value>固实文件...</value>
+        <value>准备文件...</value>
     </data>
     <data name="InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle" xml:space="preserve">
         <value>批量更新包版本</value>
