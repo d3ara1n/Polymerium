@@ -6,15 +6,11 @@ namespace Polymerium.Avalonia.Controls;
 
 public class EmptyContainer : ContentControl
 {
-    public static readonly StyledProperty<Symbol> IconProperty = AvaloniaProperty.Register<
-        EmptyContainer,
-        Symbol
-    >(nameof(Icon), Symbol.List);
+    public static readonly StyledProperty<Symbol> IconProperty =
+        AvaloniaProperty.Register<EmptyContainer, Symbol>(nameof(Icon), Symbol.List);
 
-    public static readonly StyledProperty<bool> IsEmptyProperty = AvaloniaProperty.Register<
-        EmptyContainer,
-        bool
-    >(nameof(IsEmpty));
+    public static readonly StyledProperty<bool> IsEmptyProperty =
+        AvaloniaProperty.Register<EmptyContainer, bool>(nameof(IsEmpty));
 
     public Symbol Icon
     {

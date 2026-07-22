@@ -47,9 +47,8 @@ public class Configuration
         { APPLICATION_STYLE_ACCENT, AccentColor.System },
         {
             APPLICATION_STYLE_CORNER,
-            OperatingSystem.IsMacOS()
-                ? CornerStyle.Large
-                : (OperatingSystem.IsLinux() ? CornerStyle.None : CornerStyle.Normal)
+            OperatingSystem.IsMacOS() ? CornerStyle.Large :
+            OperatingSystem.IsLinux() ? CornerStyle.None : CornerStyle.Normal
         },
         { APPLICATION_STYLE_BACKGROUND, 0 },
         { APPLICATION_STYLE_THEME_VARIANT, 0 },
@@ -75,7 +74,7 @@ public class Configuration
         { NETWORK_PROXY_PASSWORD, string.Empty },
         { UPDATE_AUTO_CHECK, !OperatingSystem.IsLinux() },
         { UPDATE_SOURCE, 1 },
-        { UPDATE_MIRRORCHYAN_CDK, string.Empty },
+        { UPDATE_MIRRORCHYAN_CDK, string.Empty }
     };
 
     public static string[] SupportedLanguages { get; } = ["en-US", "zh-Hans"];

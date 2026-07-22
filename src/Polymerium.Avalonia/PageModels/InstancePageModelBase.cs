@@ -7,12 +7,12 @@ using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.Avalonia.Exceptions;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
+using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Widgets;
 using TridentCore.Abstractions;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Tasks;
 using TridentCore.Core.Services;
-using Polymerium.Avalonia.Services;
 using TridentCore.Core.Services.Instances;
 
 namespace Polymerium.Avalonia.PageModels;
@@ -23,8 +23,7 @@ public abstract partial class InstancePageModelBase : ViewModelBase
         IViewContext<InstanceContextParameter> context,
         InstanceStateAggregator aggregator,
         InstanceManager instanceManager,
-        ProfileManager profileManager
-    )
+        ProfileManager profileManager)
     {
         _aggregator = aggregator;
         InstanceManager = instanceManager;
@@ -87,58 +86,60 @@ public abstract partial class InstancePageModelBase : ViewModelBase
     {
         ProfileManager.ProfileUpdated += OnProfileUpdated;
 
-        _aggregatorSubscription = _aggregator.Watch(Basic.Key).Subscribe(snapshot =>
-        {
-            if (snapshot is null)
-            {
-                var completed = _currentTracker;
-                _currentTracker = null;
-                Dispatcher.UIThread.Post(() =>
-                {
-                    State = InstanceState.Idle;
-                    switch (completed)
-                    {
-                        case UpdateTracker update:
-                            OnInstanceUpdated(update);
-                            break;
-                        case DeployTracker deploy:
-                            OnInstanceDeployed(deploy);
-                            break;
-                        case LaunchTracker launch:
-                            OnInstanceLaunched(launch);
-                            break;
-                    }
-                });
-            }
-            else
-            {
-                // 只在 tracker 变化时调 hook（避免每次 snapshot 更新重复调）
-                if (!ReferenceEquals(snapshot.Tracker, _currentTracker))
-                {
-                    _currentTracker = snapshot.Tracker;
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        State = snapshot.State;
-                        switch (snapshot.Tracker)
-                        {
-                            case UpdateTracker update:
-                                OnInstanceUpdating(update);
-                                break;
-                            case DeployTracker deploy:
-                                OnInstanceDeploying(deploy);
-                                break;
-                            case LaunchTracker launch:
-                                OnInstanceLaunching(launch);
-                                break;
-                        }
-                    });
-                }
-                else
-                {
-                    Dispatcher.UIThread.Post(() => State = snapshot.State);
-                }
-            }
-        });
+        _aggregatorSubscription = _aggregator
+                                 .Watch(Basic.Key)
+                                 .Subscribe(snapshot =>
+                                  {
+                                      if (snapshot is null)
+                                      {
+                                          var completed = _currentTracker;
+                                          _currentTracker = null;
+                                          Dispatcher.UIThread.Post(() =>
+                                          {
+                                              State = InstanceState.Idle;
+                                              switch (completed)
+                                              {
+                                                  case UpdateTracker update:
+                                                      OnInstanceUpdated(update);
+                                                      break;
+                                                  case DeployTracker deploy:
+                                                      OnInstanceDeployed(deploy);
+                                                      break;
+                                                  case LaunchTracker launch:
+                                                      OnInstanceLaunched(launch);
+                                                      break;
+                                              }
+                                          });
+                                      }
+                                      else
+                                      {
+                                          // 只在 tracker 变化时调 hook（避免每次 snapshot 更新重复调）
+                                          if (!ReferenceEquals(snapshot.Tracker, _currentTracker))
+                                          {
+                                              _currentTracker = snapshot.Tracker;
+                                              Dispatcher.UIThread.Post(() =>
+                                              {
+                                                  State = snapshot.State;
+                                                  switch (snapshot.Tracker)
+                                                  {
+                                                      case UpdateTracker update:
+                                                          OnInstanceUpdating(update);
+                                                          break;
+                                                      case DeployTracker deploy:
+                                                          OnInstanceDeploying(deploy);
+                                                          break;
+                                                      case LaunchTracker launch:
+                                                          OnInstanceLaunching(launch);
+                                                          break;
+                                                  }
+                                              });
+                                          }
+                                          else
+                                          {
+                                              Dispatcher.UIThread.Post(() => State = snapshot.State);
+                                          }
+                                      }
+                                  });
 
         OnModelUpdated(Basic.Key, ProfileManager.GetImmutable(Basic.Key));
 

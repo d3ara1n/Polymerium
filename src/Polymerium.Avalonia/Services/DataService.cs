@@ -33,44 +33,35 @@ public class DataService(
     RepositoryAgent agent,
     PrismLauncherService prismLauncherService,
     MojangService mojangService,
-    IHttpClientFactory httpClientFactory
-)
+    IHttpClientFactory httpClientFactory)
 {
     private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromHours(12);
     private static readonly TimeSpan ICON_FILE_EXPIRED_IN = TimeSpan.FromDays(30);
 
-    public async ValueTask<Package> IdentifyVersionAsync(string filePath) =>
-        await agent.IdentityAsync(filePath);
+    public async ValueTask<Package> IdentifyVersionAsync(string filePath) => await agent.IdentityAsync(filePath);
 
     // Package / Project / Description / Changelog / Status 的缓存统一由
     // Trident 仓库缓存层管理，此处直接委托。DataService 只缓存 UI hot data
     // 和经过应用层加工的数据。
-    public Task<Package> ResolvePackageAsync(
-        PackageIdentifier id,
-        Filter filter,
-        bool cachedEnabled = true
-    ) => agent.ResolveAsync(id, filter, cachedEnabled);
+    public Task<Package> ResolvePackageAsync(PackageIdentifier id, Filter filter, bool cachedEnabled = true) =>
+        agent.ResolveAsync(id, filter, cachedEnabled);
 
     public Task<BatchResolveResult<PackageIdentifier, Package>> ResolvePackagesAsync(
         IEnumerable<PackageIdentifier> batch,
-        Filter filter
-    ) => agent.ResolveBatchAsync(batch, filter);
+        Filter filter) =>
+        agent.ResolveBatchAsync(batch, filter);
 
-    public Task<Project> QueryProjectAsync(ProjectIdentifier id) =>
-        agent.QueryAsync(id);
+    public Task<Project> QueryProjectAsync(ProjectIdentifier id) => agent.QueryAsync(id);
 
     public Task<BatchResolveResult<ProjectIdentifier, Project>> QueryProjectsAsync(
-        IEnumerable<ProjectIdentifier> batch
-    ) => agent.QueryBatchAsync(batch);
+        IEnumerable<ProjectIdentifier> batch) =>
+        agent.QueryBatchAsync(batch);
 
-    public Task<string> ReadDescriptionAsync(ProjectIdentifier id) =>
-        agent.ReadDescriptionAsync(id);
+    public Task<string> ReadDescriptionAsync(ProjectIdentifier id) => agent.ReadDescriptionAsync(id);
 
-    public Task<string> ReadChangelogAsync(PackageIdentifier id) =>
-        agent.ReadChangelogAsync(id);
+    public Task<string> ReadChangelogAsync(PackageIdentifier id) => agent.ReadChangelogAsync(id);
 
-    public Task<RepositoryStatus> CheckStatusAsync(string label) =>
-        agent.CheckStatusAsync(label);
+    public Task<RepositoryStatus> CheckStatusAsync(string label) => agent.CheckStatusAsync(label);
 
     // 以下为 DataService 独有的内存缓存，数据源不在 RepositoryAgent 中
     // 或经过额外处理（如 Bitmap 解码、版本数量截断）
@@ -81,7 +72,9 @@ public class DataService(
 
         // 第一层：内存缓存（包括进行中的 Task，天然去重）
         if (cache.TryGetValue(key, out var cached) && cached is Task<Bitmap> task)
+        {
             return new(task);
+        }
 
         var rv = LoadOrDownloadBitmapAsync(url);
         var entry = cache.CreateEntry(key);
@@ -116,102 +109,70 @@ public class DataService(
             Directory.CreateDirectory(dir);
             var tmp = path + ".tmp";
             await File.WriteAllBytesAsync(tmp, bytes);
-            File.Move(tmp, path, overwrite: true);
+            File.Move(tmp, path, true);
         }
 
         return new(new MemoryStream(bytes));
     }
 
-    public ValueTask<IEnumerable<Version>> InspectVersionsAsync(
-        string label,
-        string? ns,
-        string pid,
-        Filter filter
-    ) =>
-        GetOrCreate(
-            $"versions:{label}:{PackageHelper.Identify(label, ns, pid, null, filter)}",
-            async () =>
-            {
-                // DataService 一半都是前端调用
-                // 真的需要拉取全部版本的情况下只有需要版本匹配的时候都会再次级进行处理
-                // 此处进行限制避免遇到版本过多
-                const int LIMIT = 20;
-                var handle = await agent.InspectAsync(new ProjectIdentifier(label, ns, pid), filter);
-                var rv = new List<Version>();
-                int lastCount;
-                var index = 0u;
-                do
-                {
-                    lastCount = rv.Count;
-                    handle.PageIndex = index;
-                    rv.AddRange(await handle.FetchAsync(CancellationToken.None));
-                    index++;
-                } while (rv.Count != lastCount && rv.Count < LIMIT);
+    public ValueTask<IEnumerable<Version>> InspectVersionsAsync(string label, string? ns, string pid, Filter filter) =>
+        GetOrCreate($"versions:{label}:{PackageHelper.Identify(label, ns, pid, null, filter)}",
+                    async () =>
+                    {
+                        // DataService 一半都是前端调用
+                        // 真的需要拉取全部版本的情况下只有需要版本匹配的时候都会再次级进行处理
+                        // 此处进行限制避免遇到版本过多
+                        const int LIMIT = 20;
+                        var handle = await agent.InspectAsync(new(label, ns, pid), filter);
+                        var rv = new List<Version>();
+                        int lastCount;
+                        var index = 0u;
+                        do
+                        {
+                            lastCount = rv.Count;
+                            handle.PageIndex = index;
+                            rv.AddRange(await handle.FetchAsync(CancellationToken.None));
+                            index++;
+                        } while (rv.Count != lastCount && rv.Count < LIMIT);
 
-                return rv.AsEnumerable();
-            }
-        );
+                        return rv.AsEnumerable();
+                    });
 
     public ValueTask<ComponentIndex> GetComponentAsync(string loaderId) =>
-        GetOrCreate(
-            $"loader:{loaderId}",
-            () =>
-                prismLauncherService.GetVersionsAsync(
-                    PrismLauncherService.UidMappings[loaderId],
-                    CancellationToken.None
-                )
-        );
+        GetOrCreate($"loader:{loaderId}",
+                    () => prismLauncherService.GetVersionsAsync(PrismLauncherService.UidMappings[loaderId],
+                                                                CancellationToken.None));
 
     public ValueTask<IReadOnlyList<ComponentIndex.ComponentVersion>> GetComponentVersionsAsync(
         string loaderId,
-        string gameVersion
-    ) =>
-        GetOrCreate(
-            $"loader:{loaderId}:{gameVersion}",
-            () =>
-                prismLauncherService.GetVersionsForMinecraftVersionAsync(
-                    PrismLauncherService.UidMappings[loaderId],
-                    gameVersion,
-                    CancellationToken.None
-                )
-        );
+        string gameVersion) =>
+        GetOrCreate($"loader:{loaderId}:{gameVersion}",
+                    () => prismLauncherService.GetVersionsForMinecraftVersionAsync(PrismLauncherService.UidMappings
+                            [loaderId],
+                        gameVersion,
+                        CancellationToken.None));
 
     public ValueTask<ComponentIndex> GetMinecraftVersionsAsync() =>
-        GetOrCreate(
-            "minecraft:versions",
-            () => prismLauncherService.GetMinecraftVersionsAsync(CancellationToken.None)
-        );
+        GetOrCreate("minecraft:versions", () => prismLauncherService.GetMinecraftVersionsAsync(CancellationToken.None));
 
     public ValueTask<MinecraftNewsResponse> GetMinecraftNewsAsync() =>
         GetOrCreate("minecraft:news", mojangService.GetMinecraftNewsAsync);
 
     public ValueTask<IEnumerable<Exhibit>> GetFeaturedModpacksAsync() =>
-        GetOrCreate(
-            "repository:featured",
-            async () =>
-            {
-                var handle = await agent.SearchAsync(
-                    CurseForgeHelper.LABEL,
-                    string.Empty,
-                    new(null, null, ResourceKind.Modpack)
-                );
-                var exhibits = await handle.FetchAsync(CancellationToken.None);
-                var models = exhibits.Take(5);
-                return models;
-            }
-        );
+        GetOrCreate("repository:featured",
+                    async () =>
+                    {
+                        var handle = await agent.SearchAsync(CurseForgeHelper.LABEL,
+                                                             string.Empty,
+                                                             new(null, null, ResourceKind.Modpack));
+                        var exhibits = await handle.FetchAsync(CancellationToken.None);
+                        var models = exhibits.Take(5);
+                        return models;
+                    });
 
-    private ValueTask<T> GetOrCreate<T>(
-        string key,
-        Func<Task<T>> factory,
-        bool cachedEnabled = true
-    )
+    private ValueTask<T> GetOrCreate<T>(string key, Func<Task<T>> factory, bool cachedEnabled = true)
     {
-        if (
-            cachedEnabled
-            && cache.TryGetValue(key, out var cached)
-            && cached is Task<T> task
-        )
+        if (cachedEnabled && cache.TryGetValue(key, out var cached) && cached is Task<T> task)
         {
             return new(task);
         }

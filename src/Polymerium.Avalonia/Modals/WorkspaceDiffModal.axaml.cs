@@ -4,8 +4,5 @@ namespace Polymerium.Avalonia.Modals;
 
 public partial class WorkspaceDiffModal : Modal
 {
-    public WorkspaceDiffModal()
-    {
-        InitializeComponent();
-    }
+    public WorkspaceDiffModal() => InitializeComponent();
 }

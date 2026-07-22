@@ -19,38 +19,27 @@ namespace Polymerium.Avalonia.Modals;
 
 public partial class InstancePackageDependencyModal : Modal
 {
-    public static readonly DirectProperty<
-        InstancePackageDependencyModal,
-        LazyObject?
-    > LazyVersionsProperty = AvaloniaProperty.RegisterDirect<
-        InstancePackageDependencyModal,
-        LazyObject?
-    >(nameof(LazyVersions), o => o.LazyVersions, (o, v) => o.LazyVersions = v);
+    public static readonly DirectProperty<InstancePackageDependencyModal, LazyObject?> LazyVersionsProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageDependencyModal, LazyObject?>(nameof(LazyVersions),
+            o => o.LazyVersions,
+            (o, v) => o.LazyVersions = v);
 
-    public static readonly DirectProperty<
-        InstancePackageDependencyModal,
-        bool
-    > IsFilterEnabledProperty = AvaloniaProperty.RegisterDirect<
-        InstancePackageDependencyModal,
-        bool
-    >(nameof(IsFilterEnabled), o => o.IsFilterEnabled, (o, v) => o.IsFilterEnabled = v);
+    public static readonly DirectProperty<InstancePackageDependencyModal, bool> IsFilterEnabledProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageDependencyModal, bool>(nameof(IsFilterEnabled),
+                                                                              o => o.IsFilterEnabled,
+                                                                              (o, v) => o.IsFilterEnabled = v);
 
-    public static readonly DirectProperty<
-        InstancePackageDependencyModal,
-        InstancePackageVersionModel?
-    > SelectedVersionProperty = AvaloniaProperty.RegisterDirect<
-        InstancePackageDependencyModal,
-        InstancePackageVersionModel?
-    >(nameof(SelectedVersion), o => o.SelectedVersion, (o, v) => o.SelectedVersion = v);
+    public static readonly DirectProperty<InstancePackageDependencyModal, InstancePackageVersionModel?>
+        SelectedVersionProperty =
+            AvaloniaProperty
+               .RegisterDirect<InstancePackageDependencyModal, InstancePackageVersionModel?>(nameof(SelectedVersion),
+                    o => o.SelectedVersion,
+                    (o, v) => o.SelectedVersion = v);
 
-    public static readonly DirectProperty<
-        InstancePackageDependencyModal,
-        bool
-    > IsAutoVersionProperty = AvaloniaProperty.RegisterDirect<InstancePackageDependencyModal, bool>(
-        nameof(IsAutoVersion),
-        o => o.IsAutoVersion,
-        (o, v) => o.IsAutoVersion = v
-    );
+    public static readonly DirectProperty<InstancePackageDependencyModal, bool> IsAutoVersionProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageDependencyModal, bool>(nameof(IsAutoVersion),
+                                                                              o => o.IsAutoVersion,
+                                                                              (o, v) => o.IsAutoVersion = v);
 
     public InstancePackageDependencyModal() => InitializeComponent();
 
@@ -91,49 +80,43 @@ public partial class InstancePackageDependencyModal : Modal
 
     private LazyObject ConstructVersions()
     {
-        var lazy = new LazyObject(
-            async t =>
-            {
-                if (t.IsCancellationRequested)
-                {
-                    return null;
-                }
+        var lazy = new LazyObject(async t =>
+                                  {
+                                      if (t.IsCancellationRequested)
+                                      {
+                                          return null;
+                                      }
 
-                var versions = await DataService.InspectVersionsAsync(
-                    Model.Label,
-                    Model.Namespace,
-                    Model.ProjectId,
-                    IsFilterEnabled ? Filter : Filter.None
-                );
-                return new InstancePackageVersionCollection([
-                    .. versions.Select(x => new InstancePackageVersionModel(
-                        x.VersionId,
-                        x.VersionName,
-                        string.Join(
-                            ",",
-                            x.Requirements.AnyOfLoaders.Select(LoaderHelper.ToDisplayName)
-                        ),
-                        string.Join(",", x.Requirements.AnyOfVersions),
-                        x.PublishedAt,
-                        x.ReleaseType,
-                        x.Dependencies
-                    )),
-                ]);
-            },
-            value =>
-            {
-                // Auto-select the first (best) version after loading
-                if (value is InstancePackageVersionCollection { Count: > 0 } versions)
-                {
-                    Dispatcher.UIThread.Post(() =>
-                    {
-                        SelectedVersion =
-                            versions.FirstOrDefault(x => x is InstancePackageVersionModel)
-                            as InstancePackageVersionModel;
-                    });
-                }
-            }
-        );
+                                      var versions = await DataService.InspectVersionsAsync(Model.Label,
+                                                         Model.Namespace,
+                                                         Model.ProjectId,
+                                                         IsFilterEnabled ? Filter : Filter.None);
+                                      return new InstancePackageVersionCollection([
+                                          .. versions.Select(x => new InstancePackageVersionModel(x.VersionId,
+                                                                 x.VersionName,
+                                                                 string.Join(",",
+                                                                             x.Requirements.AnyOfLoaders
+                                                                              .Select(LoaderHelper
+                                                                                  .ToDisplayName)),
+                                                                 string.Join(",", x.Requirements.AnyOfVersions),
+                                                                 x.PublishedAt,
+                                                                 x.ReleaseType,
+                                                                 x.Dependencies))
+                                      ]);
+                                  },
+                                  value =>
+                                  {
+                                      // Auto-select the first (best) version after loading
+                                      if (value is InstancePackageVersionCollection { Count: > 0 } versions)
+                                      {
+                                          Dispatcher.UIThread.Post(() =>
+                                          {
+                                              SelectedVersion =
+                                                  versions.FirstOrDefault(x => x is InstancePackageVersionModel) as
+                                                      InstancePackageVersionModel;
+                                          });
+                                      }
+                                  });
         return lazy;
     }
 
@@ -166,11 +149,9 @@ public partial class InstancePackageDependencyModal : Modal
     private async Task Install()
     {
         // 检查是否已安装
-        var existing = Packages.FirstOrDefault(x =>
-            x.Info?.Label == Model.Label
-            && x.Info?.Namespace == Model.Namespace
-            && x.Info?.ProjectId == Model.ProjectId
-        );
+        var existing = Packages.FirstOrDefault(x => x.Info?.Label == Model.Label
+                                                 && x.Info?.Namespace == Model.Namespace
+                                                 && x.Info?.ProjectId == Model.ProjectId);
         if (existing is not null)
         {
             // 已安装，直接关闭
@@ -182,27 +163,20 @@ public partial class InstancePackageDependencyModal : Modal
         // 如果是自动版本，则不指定版本号（传 null）
         var versionId = IsAutoVersion ? null : SelectedVersion?.Id;
         var pref = PackageHelper.ToPref(Model.Label, Model.Namespace, Model.ProjectId, versionId);
-        var entry = new Profile.Rice.Entry()
-        {
-            Pref = pref,
-            Enabled = true,
-            Source = null,
-        };
+        var entry = new Profile.Rice.Entry { Pref = pref, Enabled = true, Source = null };
 
         // 加入 Profile，由 InstanceSetupPage 的 merge 造 Entry item 与实例并加载 Info
         Guard.Value.Setup.Packages.Add(entry);
         Guard.NotifyChanged();
 
         // 记录操作
-        PersistenceService.AppendAction(
-            new()
-            {
-                Key = Guard.Key,
-                Kind = PersistenceService.ActionKind.EditPackage,
-                Old = null,
-                New = pref,
-            }
-        );
+        PersistenceService.AppendAction(new()
+        {
+            Key = Guard.Key,
+            Kind = PersistenceService.ActionKind.EditPackage,
+            Old = null,
+            New = pref
+        });
 
         Dismiss();
     }

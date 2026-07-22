@@ -8,35 +8,31 @@ namespace Polymerium.Avalonia.Controls;
 
 public class DateRangePicker : TemplatedControl
 {
-    public static readonly StyledProperty<DateTime?> StartProperty = AvaloniaProperty.Register<
-        DateRangePicker,
-        DateTime?
-    >(nameof(Start));
+    public static readonly StyledProperty<DateTime?> StartProperty =
+        AvaloniaProperty.Register<DateRangePicker, DateTime?>(nameof(Start));
 
-    public static readonly StyledProperty<DateTime?> EndProperty = AvaloniaProperty.Register<
-        DateRangePicker,
-        DateTime?
-    >(nameof(End));
+    public static readonly StyledProperty<DateTime?> EndProperty =
+        AvaloniaProperty.Register<DateRangePicker, DateTime?>(nameof(End));
 
-    public static readonly StyledProperty<string> StartPlaceholderTextProperty = AvaloniaProperty.Register<
-        DateRangePicker,
-        string
-    >(nameof(StartPlaceholderText), "Start");
+    public static readonly StyledProperty<string> StartPlaceholderTextProperty =
+        AvaloniaProperty.Register<DateRangePicker, string>(nameof(StartPlaceholderText), "Start");
 
-    public static readonly StyledProperty<string> EndPlaceholderTextProperty = AvaloniaProperty.Register<
-        DateRangePicker,
-        string
-    >(nameof(EndPlaceholderText), "End");
+    public static readonly StyledProperty<string> EndPlaceholderTextProperty =
+        AvaloniaProperty.Register<DateRangePicker, string>(nameof(EndPlaceholderText), "End");
 
-    public static readonly StyledProperty<DateTime> StartDisplayDateProperty = AvaloniaProperty.Register<
-        DateRangePicker,
-        DateTime
-    >(nameof(StartDisplayDate), DateTime.Today);
+    public static readonly StyledProperty<DateTime> StartDisplayDateProperty =
+        AvaloniaProperty.Register<DateRangePicker, DateTime>(nameof(StartDisplayDate), DateTime.Today);
 
-    public static readonly StyledProperty<DateTime> EndDisplayDateProperty = AvaloniaProperty.Register<
-        DateRangePicker,
-        DateTime
-    >(nameof(EndDisplayDate), DateTime.Today);
+    public static readonly StyledProperty<DateTime> EndDisplayDateProperty =
+        AvaloniaProperty.Register<DateRangePicker, DateTime>(nameof(EndDisplayDate), DateTime.Today);
+
+    private Button? _endButton;
+    private Calendar? _endCalendar;
+    private Popup? _endPopup;
+
+    private Button? _startButton;
+    private Calendar? _startCalendar;
+    private Popup? _startPopup;
 
     public DateTime? Start
     {
@@ -74,25 +70,29 @@ public class DateRangePicker : TemplatedControl
         private set => SetValue(EndDisplayDateProperty, value);
     }
 
-    private Button? _startButton;
-    private Button? _endButton;
-    private Popup? _startPopup;
-    private Popup? _endPopup;
-    private Calendar? _startCalendar;
-    private Calendar? _endCalendar;
-
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
 
         if (_startButton != null)
+        {
             _startButton.Click -= OnStartButtonClick;
+        }
+
         if (_endButton != null)
+        {
             _endButton.Click -= OnEndButtonClick;
+        }
+
         if (_startCalendar != null)
+        {
             _startCalendar.SelectedDatesChanged -= OnStartSelectedDatesChanged;
+        }
+
         if (_endCalendar != null)
+        {
             _endCalendar.SelectedDatesChanged -= OnEndSelectedDatesChanged;
+        }
 
         _startButton = e.NameScope.Find<Button>("PART_StartButton");
         _endButton = e.NameScope.Find<Button>("PART_EndButton");
@@ -102,13 +102,24 @@ public class DateRangePicker : TemplatedControl
         _endCalendar = e.NameScope.Find<Calendar>("PART_EndCalendar");
 
         if (_startButton != null)
+        {
             _startButton.Click += OnStartButtonClick;
+        }
+
         if (_endButton != null)
+        {
             _endButton.Click += OnEndButtonClick;
+        }
+
         if (_startCalendar != null)
+        {
             _startCalendar.SelectedDatesChanged += OnStartSelectedDatesChanged;
+        }
+
         if (_endCalendar != null)
+        {
             _endCalendar.SelectedDatesChanged += OnEndSelectedDatesChanged;
+        }
 
         UpdateDisplayDates();
         UpdateCalendars();
@@ -130,27 +141,35 @@ public class DateRangePicker : TemplatedControl
     private void OnStartButtonClick(object? sender, RoutedEventArgs e)
     {
         if (_startPopup != null)
+        {
             _startPopup.IsOpen = true;
+        }
     }
 
     private void OnEndButtonClick(object? sender, RoutedEventArgs e)
     {
         if (_endPopup != null)
+        {
             _endPopup.IsOpen = true;
+        }
     }
 
     private void OnStartSelectedDatesChanged(object? sender, SelectionChangedEventArgs e)
     {
         SetCurrentValue(StartProperty, _startCalendar?.SelectedDate);
         if (_startPopup != null)
+        {
             _startPopup.IsOpen = false;
+        }
     }
 
     private void OnEndSelectedDatesChanged(object? sender, SelectionChangedEventArgs e)
     {
         SetCurrentValue(EndProperty, _endCalendar?.SelectedDate);
         if (_endPopup != null)
+        {
             _endPopup.IsOpen = false;
+        }
     }
 
     private void UpdateCalendars()
@@ -160,6 +179,7 @@ public class DateRangePicker : TemplatedControl
             _startCalendar.DisplayDate = StartDisplayDate;
             _startCalendar.SelectedDate = Start;
         }
+
         if (_endCalendar != null && _endCalendar.SelectedDate != End)
         {
             _endCalendar.DisplayDate = EndDisplayDate;
@@ -173,8 +193,5 @@ public class DateRangePicker : TemplatedControl
         EndDisplayDate = End ?? Start ?? DateTime.Today;
     }
 
-    private void UpdateRangeState()
-    {
-        PseudoClasses.Set(":error", Start is { } start && End is { } end && start > end);
-    }
+    private void UpdateRangeState() => PseudoClasses.Set(":error", Start is { } start && End is { } end && start > end);
 }

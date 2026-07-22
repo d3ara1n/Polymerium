@@ -28,12 +28,8 @@ public abstract partial class FileAssetModel(FileInfo file, Bitmap icon, bool is
     public partial string FilePath { get; set; } = file.FullName;
 }
 
-public abstract class FileAssetModel<TMetadata>(
-    FileInfo file,
-    Bitmap icon,
-    TMetadata metadata,
-    bool isLocked
-) : FileAssetModel(file, icon, isLocked)
+public abstract class FileAssetModel<TMetadata>(FileInfo file, Bitmap icon, TMetadata metadata, bool isLocked)
+    : FileAssetModel(file, icon, isLocked)
 {
     public TMetadata Metadata { get; } = metadata;
 }

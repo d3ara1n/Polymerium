@@ -22,12 +22,9 @@ public partial class ProfileRuleSelectorModel(Profile.Rice.Rule.RuleSelector own
     {
         owner.Type = value;
 
-        if (
-            value
-            is Profile.Rice.Rule.RuleSelector.SelectorType.And
-                or Profile.Rice.Rule.RuleSelector.SelectorType.Or
-                or Profile.Rice.Rule.RuleSelector.SelectorType.Not
-        )
+        if (value is Profile.Rice.Rule.RuleSelector.SelectorType.And
+                  or Profile.Rice.Rule.RuleSelector.SelectorType.Or
+                  or Profile.Rice.Rule.RuleSelector.SelectorType.Not)
         {
             owner.Children ??= [];
             Children ??= new(owner.Children, x => new(x), x => x.Owner);
@@ -43,18 +40,16 @@ public partial class ProfileRuleSelectorModel(Profile.Rice.Rule.RuleSelector own
     }
 
     [ObservableProperty]
-    public partial MappingCollection<
-        Profile.Rice.Rule.RuleSelector,
-        ProfileRuleSelectorModel
-    >? Children
-    { get; private set; } =
-        owner.Children is not null ? new(owner.Children, x => new(x), x => x.Owner) : null;
+    public partial MappingCollection<Profile.Rice.Rule.RuleSelector, ProfileRuleSelectorModel>?
+        Children
+    { get; private set; } = owner.Children is not null
+                                             ? new(owner.Children, x => new(x), x => x.Owner)
+                                             : null;
 
     [ObservableProperty]
     public partial string Pref { get; set; } = owner.Pref ?? string.Empty;
 
-    partial void OnPrefChanged(string value) =>
-        owner.Pref = !string.IsNullOrWhiteSpace(value) ? value : null;
+    partial void OnPrefChanged(string value) => owner.Pref = !string.IsNullOrWhiteSpace(value) ? value : null;
 
     [ObservableProperty]
     public partial string Repository { get; set; } = owner.Repository ?? string.Empty;
@@ -65,14 +60,12 @@ public partial class ProfileRuleSelectorModel(Profile.Rice.Rule.RuleSelector own
     [ObservableProperty]
     public partial string Tag { get; set; } = owner.Tag ?? string.Empty;
 
-    partial void OnTagChanged(string value) =>
-        owner.Tag = !string.IsNullOrWhiteSpace(value) ? value : null;
+    partial void OnTagChanged(string value) => owner.Tag = !string.IsNullOrWhiteSpace(value) ? value : null;
 
     [ObservableProperty]
     public partial ResourceKind Kind { get; set; } = owner.Kind ?? ResourceKind.Unknown;
 
-    partial void OnKindChanged(ResourceKind value) =>
-        owner.Kind = value != ResourceKind.Unknown ? value : null;
+    partial void OnKindChanged(ResourceKind value) => owner.Kind = value != ResourceKind.Unknown ? value : null;
 
     #endregion
 }

@@ -11,8 +11,7 @@ public class FeaturedModpackModel(
     string projectName,
     string author,
     Uri thumbnail,
-    IReadOnlyList<string> tags
-) : ModelBase
+    IReadOnlyList<string> tags) : ModelBase
 {
     #region Direct
 

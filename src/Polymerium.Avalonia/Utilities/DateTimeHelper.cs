@@ -6,8 +6,7 @@ public static class DateTimeHelper
 {
     public static DateTime ToPersistedLocalDateTime(DateTimeOffset value) => value.LocalDateTime;
 
-    public static DateTime? ToPersistedLocalDateTime(DateTimeOffset? value) =>
-        value?.LocalDateTime;
+    public static DateTime? ToPersistedLocalDateTime(DateTimeOffset? value) => value?.LocalDateTime;
 
     public static DateTimeOffset FromPersistedLocalDateTime(DateTime value)
     {
@@ -15,7 +14,7 @@ public static class DateTimeHelper
         {
             DateTimeKind.Utc => value.ToLocalTime(),
             DateTimeKind.Local => value,
-            _ => DateTime.SpecifyKind(value, DateTimeKind.Local),
+            _ => DateTime.SpecifyKind(value, DateTimeKind.Local)
         };
         return new(local);
     }

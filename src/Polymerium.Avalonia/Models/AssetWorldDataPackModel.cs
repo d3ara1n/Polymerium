@@ -15,8 +15,7 @@ public class AssetWorldDataPackModel : ModelBase
         Bitmap icon,
         string? description,
         int? packFormat,
-        bool isEnabled
-    )
+        bool isEnabled)
     {
         Name = name;
         FileName = fileName;

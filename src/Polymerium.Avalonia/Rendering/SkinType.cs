@@ -12,5 +12,5 @@ public enum SkinType
     Slim,
 
     /// <summary>64×32 旧版（1.7 及更早），无外层、左右肢体镜像复用右侧贴图。</summary>
-    Legacy,
+    Legacy
 }

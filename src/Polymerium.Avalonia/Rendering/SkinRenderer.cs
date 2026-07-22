@@ -33,7 +33,12 @@ public sealed class SkinRenderer
     /// <param name="pitchDeg">绕 X 轴俯视角度，正值从上往下（俯视），默认 15°。</param>
     /// <param name="width">输出宽。</param>
     /// <param name="height">输出高。</param>
-    public SKImage RenderBody(SKBitmap skin, float yawDeg = 45f, float pitchDeg = 15f, int width = 210, int height = 420)
+    public SKImage RenderBody(
+        SKBitmap skin,
+        float yawDeg = 45f,
+        float pitchDeg = 15f,
+        int width = 210,
+        int height = 420)
     {
         var type = SkinFormat.Detect(skin);
         var faces = SkinGeometry.BuildBody(type);
@@ -47,7 +52,10 @@ public sealed class SkinRenderer
     {
         var result = new List<SKImage>(4);
         foreach (var yaw in new[] { 0f, 90f, 180f, 270f })
+        {
             result.Add(RenderBody(skin, yaw, 0f, width, height));
+        }
+
         return result;
     }
 
@@ -55,17 +63,18 @@ public sealed class SkinRenderer
     ///     按视图类型调度渲染：<see cref="SkinViewType.Body" /> 与 <see cref="SkinViewType.Cover" />
     ///     为等距侧身（右上俯视），Cover 经画布裁切为上半身特写；其余为 pitch=0 的 3D 正视图（保留立体厚度，不倾斜）。
     /// </summary>
-    public SKImage Render(SKBitmap skin, SkinViewType view) => view switch
-    {
-        SkinViewType.Face => RenderHead(skin, 0f, 0f),
-        SkinViewType.Body => RenderBody(skin, 45f, 15f),
-        SkinViewType.Cover => RenderCover(skin),
-        SkinViewType.Front => RenderBody(skin, 0f, 0f),
-        SkinViewType.Right => RenderBody(skin, 90f, 0f),
-        SkinViewType.Back => RenderBody(skin, 180f, 0f),
-        SkinViewType.Left => RenderBody(skin, 270f, 0f),
-        _ => throw new ArgumentOutOfRangeException(nameof(view)),
-    };
+    public SKImage Render(SKBitmap skin, SkinViewType view) =>
+        view switch
+        {
+            SkinViewType.Face => RenderHead(skin),
+            SkinViewType.Body => RenderBody(skin),
+            SkinViewType.Cover => RenderCover(skin),
+            SkinViewType.Front => RenderBody(skin, 0f, 0f),
+            SkinViewType.Right => RenderBody(skin, 90f, 0f),
+            SkinViewType.Back => RenderBody(skin, 180f, 0f),
+            SkinViewType.Left => RenderBody(skin, 270f, 0f),
+            _ => throw new ArgumentOutOfRangeException(nameof(view))
+        };
 
     /// <summary>
     ///     渲染半身像（Cover）：用全身几何与 <see cref="SkinViewType.Body" /> 相同的缩放，
@@ -82,8 +91,15 @@ public sealed class SkinRenderer
         return Draw(skin, faces, 45f, 15f, w, h, SkinCamera.VerticalAlign.Top, crop);
     }
 
-    private static SKImage Draw(SKBitmap skin, IList<SkinFace> faces, float yaw, float pitch, int w, int h,
-        SkinCamera.VerticalAlign valign = SkinCamera.VerticalAlign.Center, SKRectI? crop = null)
+    private static SKImage Draw(
+        SKBitmap skin,
+        IList<SkinFace> faces,
+        float yaw,
+        float pitch,
+        int w,
+        int h,
+        SkinCamera.VerticalAlign valign = SkinCamera.VerticalAlign.Center,
+        SKRectI? crop = null)
     {
         var cam = new SkinCamera { YawDeg = yaw, PitchDeg = pitch, Width = w, Height = h, Alignment = valign };
         var view = cam.BuildView();
@@ -99,18 +115,27 @@ public sealed class SkinRenderer
         {
             var pf = ProjectFace(f, view, scale, tr);
             if (SignedArea(pf.Pts) < 0f)
+            {
                 visible.Add(pf);
+            }
         }
 
         // 本体先画（远→近），外层后画（远→近，叠加在本体之上）。
         // Nearest 最近邻采样保留 Minecraft 像素艺术的锐利边缘；采样选项随 shader 而非 paint 传递。
-        using var shader = skin.ToShader(SKShaderTileMode.Clamp, SKShaderTileMode.Clamp, new SKSamplingOptions(SKFilterMode.Nearest));
+        using var shader = skin.ToShader(SKShaderTileMode.Clamp,
+                                         SKShaderTileMode.Clamp,
+                                         new SKSamplingOptions(SKFilterMode.Nearest));
         using var paint = new SKPaint { IsAntialias = true, Shader = shader };
 
         foreach (var pf in visible.Where(p => !p.Overlay).OrderBy(p => p.Depth))
+        {
             DrawFace(canvas, skin, pf.Face, pf.Pts, paint);
+        }
+
         foreach (var pf in visible.Where(p => p.Overlay).OrderBy(p => p.Depth))
+        {
             DrawFace(canvas, skin, pf.Face, pf.Pts, paint);
+        }
 
         return crop is { } rect ? surface.Snapshot(rect) : surface.Snapshot();
     }
@@ -138,7 +163,7 @@ public sealed class SkinRenderer
             new SKPoint(f.U0.X, f.U0.Y),
             new SKPoint(f.U1.X, f.U1.Y),
             new SKPoint(f.U2.X, f.U2.Y),
-            new SKPoint(f.U3.X, f.U3.Y),
+            new SKPoint(f.U3.X, f.U3.Y)
         };
         using var verts = SKVertices.CreateCopy(SKVertexMode.TriangleFan, pts, uvs, null);
         canvas.DrawVertices(verts, SKBlendMode.SrcOver, paint);

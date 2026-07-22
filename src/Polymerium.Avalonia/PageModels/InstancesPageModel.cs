@@ -32,8 +32,8 @@ public partial class InstancesPageModel(
     NavigationService navigationService,
     OverlayService overlayService) : ViewModelBase
 {
-    private readonly CompositeDisposable _disposables = new();
     private readonly SourceCache<InstanceCardModel, string> _cards = new(x => x.Basic.Key);
+    private readonly CompositeDisposable _disposables = new();
     private readonly List<InstanceFilterBase> _filters = [];
     private IDisposable? _pipeline;
 
@@ -71,16 +71,15 @@ public partial class InstancesPageModel(
         profileManager.ProfileUpdated += OnProfileUpdated;
         profileManager.ProfileRemoved += OnProfileRemoved;
 
-        instanceService.PinnedChangeStream
-                       .Subscribe(OnPinnedChanged)
-                       .DisposeWith(_disposables);
+        instanceService.PinnedChangeStream.Subscribe(OnPinnedChanged).DisposeWith(_disposables);
 
         SetupFilters();
 
-        Observable.CombineLatest(_filters.Select(f => f.WhenValueChanged(x => x.IsActive)).ToArray())
-                  .Select(xs => xs.Any(x => x))
-                  .Subscribe(x => AnyFilterActive = x)
-                  .DisposeWith(_disposables);
+        Observable
+           .CombineLatest(_filters.Select(f => f.WhenValueChanged(x => x.IsActive)).ToArray())
+           .Select(xs => xs.Any(x => x))
+           .Subscribe(x => AnyFilterActive = x)
+           .DisposeWith(_disposables);
 
         RebuildPipeline();
 
@@ -94,6 +93,7 @@ public partial class InstancesPageModel(
         {
             filter.Dispose();
         }
+
         _disposables.Dispose();
 
         profileManager.ProfileAdded -= OnProfileAdded;
@@ -111,22 +111,20 @@ public partial class InstancesPageModel(
 
     private void SetupFilters()
     {
-        _filters.Add(new MultiSelectInstanceFilter(
-            _cards.Connect(),
-            GetLoaderValues,
-            Resources.InstancesPage_FilterLoaderLabel));
+        _filters.Add(new MultiSelectInstanceFilter(_cards.Connect(),
+                                                   GetLoaderValues,
+                                                   Resources.InstancesPage_FilterLoaderLabel));
 
-        _filters.Add(new MultiSelectInstanceFilter(
-            _cards.Connect(),
-            card => card.Tags,
-            Resources.InstancesPage_FilterTagsLabel));
+        _filters.Add(new MultiSelectInstanceFilter(_cards.Connect(),
+                                                   card => card.Tags,
+                                                   Resources.InstancesPage_FilterTagsLabel));
     }
 
     private static IEnumerable<string> GetLoaderValues(InstanceCardModel card)
     {
         yield return LoaderHelper.TryParse(card.Basic.Loader, out var result)
-            ? LoaderHelper.ToDisplayName(result.Identity)
-            : Resources.Enum_Vanilla;
+                         ? LoaderHelper.ToDisplayName(result.Identity)
+                         : Resources.Enum_Vanilla;
     }
 
     private void RebuildPipeline()
@@ -134,15 +132,12 @@ public partial class InstancesPageModel(
         _pipeline?.Dispose();
         var text = this.WhenValueChanged(x => x.FilterText).Select(BuildTextFilter);
         var predicates = _filters.Select(f => f.Predicate).Append(text).ToArray();
-        var combined = Observable.CombineLatest(predicates)
-                                .Select(xs => xs.Aggregate(
-                                     new Func<InstanceCardModel, bool>(_ => true),
-                                     (acc, p) => x => acc(x) && p(x)));
+        var combined = Observable
+                      .CombineLatest(predicates)
+                      .Select(xs => xs.Aggregate(new Func<InstanceCardModel, bool>(_ => true),
+                                                 (acc, p) => x => acc(x) && p(x)));
 
-        _pipeline = _cards.Connect()
-                          .Filter(combined)
-                          .SortAndBind(out var view, BuildComparer(SortIndex))
-                          .Subscribe();
+        _pipeline = _cards.Connect().Filter(combined).SortAndBind(out var view, BuildComparer(SortIndex)).Subscribe();
         View = view;
     }
 
@@ -151,13 +146,12 @@ public partial class InstancesPageModel(
             ? _ => true
             : x => x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
 
-    private static IComparer<InstanceCardModel> BuildComparer(int sortIndex) => sortIndex switch
-    {
-        1 => SortExpressionComparer<InstanceCardModel>.Ascending(x => x.Basic.Name),
-        _ => SortExpressionComparer<InstanceCardModel>.Descending(
-            x => x.LastPlayedAtRaw ?? DateTimeOffset.MinValue
-        ),
-    };
+    private static IComparer<InstanceCardModel> BuildComparer(int sortIndex) =>
+        sortIndex switch
+        {
+            1 => SortExpressionComparer<InstanceCardModel>.Ascending(x => x.Basic.Name),
+            _ => SortExpressionComparer<InstanceCardModel>.Descending(x => x.LastPlayedAtRaw ?? DateTimeOffset.MinValue)
+        };
 
     #endregion
 
@@ -165,17 +159,11 @@ public partial class InstancesPageModel(
 
     private InstanceCardModel BuildCard(string key, Profile item)
     {
-        var model = new InstanceCardModel(
-            key,
-            item.Name,
-            item.Setup.Version,
-            item.Setup.Loader,
-            item.Setup.Source
-        )
+        var model = new InstanceCardModel(key, item.Name, item.Setup.Version, item.Setup.Loader, item.Setup.Source)
         {
             IsPinned = instanceService.IsPinned(key),
             LastPlayedAtRaw =
-                DateTimeHelper.FromPersistedLocalDateTime(persistenceService.GetLastActivity(key)?.End),
+                DateTimeHelper.FromPersistedLocalDateTime(persistenceService.GetLastActivity(key)?.End)
         };
         foreach (var tag in persistenceService.GetInstanceTags(key))
         {
@@ -185,13 +173,10 @@ public partial class InstancesPageModel(
         return model;
     }
 
-    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e)
-    {
+    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
         Dispatcher.UIThread.Post(() => _cards.AddOrUpdate(BuildCard(e.Key, e.Value)));
-    }
 
-    private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e)
-    {
+    private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
         Dispatcher.UIThread.Post(() =>
         {
             if (_cards.Lookup(e.Key) is { HasValue: true, Value: var existing })
@@ -207,15 +192,11 @@ public partial class InstancesPageModel(
                 _cards.AddOrUpdate(BuildCard(e.Key, e.Value));
             }
         });
-    }
 
-    private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e)
-    {
+    private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
         Dispatcher.UIThread.Post(() => _cards.RemoveKey(e.Key));
-    }
 
-    private void OnPinnedChanged(IChangeSet<string, string> change)
-    {
+    private void OnPinnedChanged(IChangeSet<string, string> change) =>
         Dispatcher.UIThread.Post(() =>
         {
             foreach (var item in change)
@@ -226,7 +207,6 @@ public partial class InstancesPageModel(
                 }
             }
         });
-    }
 
     #endregion
 
@@ -289,26 +269,22 @@ public partial class InstancesPageModel(
         }
 
         var original = card.Tags.ToArray();
-        var suggestions = _cards.Items
-                                .SelectMany(c => c.Tags)
-                                .Where(t => !card.Tags.Contains(t))
-                                .Distinct()
-                                .OrderBy(t => t)
-                                .ToList();
+        var suggestions = _cards
+                         .Items.SelectMany(c => c.Tags)
+                         .Where(t => !card.Tags.Contains(t))
+                         .Distinct()
+                         .OrderBy(t => t)
+                         .ToList();
 
-        var dialog = new TagsEditorDialog
-        {
-            InitialTags = original,
-            Suggestions = suggestions,
-        };
+        var dialog = new TagsEditorDialog { InitialTags = original, Suggestions = suggestions };
 
-        if (await overlayService.PopDialogAsync(dialog)
-            && dialog.Result is IReadOnlyList<string> updated)
+        if (await overlayService.PopDialogAsync(dialog) && dialog.Result is IReadOnlyList<string> updated)
         {
             foreach (var removed in original.Except(updated).ToList())
             {
                 card.Tags.Remove(removed);
             }
+
             foreach (var added in updated.Except(original).ToList())
             {
                 card.Tags.Add(added);

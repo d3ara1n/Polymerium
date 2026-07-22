@@ -1,4 +1,3 @@
-using TridentCore.Pref;
 using System;
 using System.Linq;
 using System.Threading;
@@ -32,8 +31,7 @@ public partial class LandingPageModel(
     InstanceService instanceService,
     OverlayService overlayService,
     NotificationService notificationService,
-    InstanceManager instanceManager
-) : ViewModelBase
+    InstanceManager instanceManager) : ViewModelBase
 {
     #region Reactive
 
@@ -94,8 +92,7 @@ public partial class LandingPageModel(
                 Name = profile.Name,
                 Version = profile.Setup.Version,
                 LoaderLabel =
-                    profile.Setup.Loader is not null
-                    && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
+                    profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
                         ? LoaderHelper.ToDisplayName(loader.Identity)
                         : Resources.Enum_Vanilla,
                 Thumbnail = icon,
@@ -103,7 +100,7 @@ public partial class LandingPageModel(
                 LastPlayTimeRaw = last.End - last.Begin,
                 PackageCount = profile.Setup.Packages.Count,
                 SessionCount = persistenceService.GetSessionCount(last.Key),
-                Screenshot = screenshot,
+                Screenshot = screenshot
             };
         }
 
@@ -122,34 +119,23 @@ public partial class LandingPageModel(
 
     #region Other
 
-    private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
-        InstanceCount--;
+    private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e) => InstanceCount--;
 
-    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
-        InstanceCount++;
+    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e) => InstanceCount++;
 
     private void LoadMinecraftNews() =>
         MinecraftNews = new(async _ =>
         {
             var news = await dataService.GetMinecraftNewsAsync();
             var models = news
-                .Entries.Take(24)
-                .Select(
-                    x =>
-                    {
-                        var url = mojangServuce.GetAbsoluteImageUrl(x.NewsPageImage.Url);
+                        .Entries.Take(24)
+                        .Select(x =>
+                         {
+                             var url = mojangServuce.GetAbsoluteImageUrl(x.NewsPageImage.Url);
 
-                        return new MinecraftNewsModel(
-                            url,
-                            x.Category,
-                            x.Title,
-                            x.Text,
-                            x.ReadMoreLink,
-                            x.Date
-                        );
-                    }
-                )
-                .ToList();
+                             return new MinecraftNewsModel(url, x.Category, x.Title, x.Text, x.ReadMoreLink, x.Date);
+                         })
+                        .ToList();
             return models;
         });
 
@@ -163,13 +149,11 @@ public partial class LandingPageModel(
         if (key != null)
         {
             var dir = PathDef.Default.DirectoryOfHome(key);
-            return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevelHelper.GetTopLevel(),
-                new(dir),
-                Resources.Shared_FailedToOpenFolderDangerNotificationTitle,
-                notificationService,
-                thumbnail: ThumbnailHelper.ForInstance(key)
-            );
+            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
+                                                           new(dir),
+                                                           Resources.Shared_FailedToOpenFolderDangerNotificationTitle,
+                                                           notificationService,
+                                                           thumbnail: ThumbnailHelper.ForInstance(key));
         }
 
         return Task.CompletedTask;
@@ -213,11 +197,10 @@ public partial class LandingPageModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(
-                ex,
-                Resources.LandingPage_InstanceLaunchingDangerNotificationTitle.Replace("{0}", key),
-                thumbnail: ThumbnailHelper.ForInstance(key)
-            );
+            notificationService.PopMessage(ex,
+                                           Resources.LandingPage_InstanceLaunchingDangerNotificationTitle
+                                                    .Replace("{0}", key),
+                                           thumbnail: ThumbnailHelper.ForInstance(key));
         }
     }
 
@@ -228,38 +211,33 @@ public partial class LandingPageModel(
         {
             try
             {
-                var project = await dataService.QueryProjectAsync(new ProjectIdentifier(modpack.Label, modpack.Namespace, modpack.ProjectId));
-                var model = new ExhibitModpackModel(
-                    project.Label,
-                    project.Namespace,
-                    project.ProjectId,
-                    project.ProjectName,
-                    project.Author,
-                    project.Reference,
-                    project.Thumbnail ?? modpack.Thumbnail,
-                    project.Tags,
-                    project.DownloadCount,
-                    project.Summary,
-                    project.UpdatedAt,
-                    [.. project.Gallery.Select(x => x.Url)]
-                );
-                overlayService.PopToast(
-                    new ExhibitModpackToast
-                    {
-                        DataService = dataService,
-                        PersistenceService = persistenceService,
-                        DataContext = model,
-                        InstallCommand = InstallVersionCommand,
-                    }
-                );
+                var project =
+                    await dataService.QueryProjectAsync(new(modpack.Label, modpack.Namespace, modpack.ProjectId));
+                var model = new ExhibitModpackModel(project.Label,
+                                                    project.Namespace,
+                                                    project.ProjectId,
+                                                    project.ProjectName,
+                                                    project.Author,
+                                                    project.Reference,
+                                                    project.Thumbnail ?? modpack.Thumbnail,
+                                                    project.Tags,
+                                                    project.DownloadCount,
+                                                    project.Summary,
+                                                    project.UpdatedAt,
+                                                    [.. project.Gallery.Select(x => x.Url)]);
+                overlayService.PopToast(new ExhibitModpackToast
+                {
+                    DataService = dataService,
+                    PersistenceService = persistenceService,
+                    DataContext = model,
+                    InstallCommand = InstallVersionCommand
+                });
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(
-                    ex,
-                    Resources.LandingPage_LoadModpackDetailsDangerNotificationTitle,
-                    thumbnail: modpack.Thumbnail
-                );
+                notificationService.PopMessage(ex,
+                                               Resources.LandingPage_LoadModpackDetailsDangerNotificationTitle,
+                                               thumbnail: modpack.Thumbnail);
             }
         }
     }
@@ -269,20 +247,14 @@ public partial class LandingPageModel(
     {
         if (version is not null)
         {
-            instanceManager.Install(
-                version.ProjectName,
-                version.Label,
-                version.Namespace,
-                version.ProjectId,
-                version.VersionId
-            );
-            notificationService.PopMessage(
-                Resources.MarketplaceSearchPage_ModpackInstallingNotificationMessage.Replace(
-                    "{0}",
-                    version.VersionName
-                ),
-                version.ProjectName
-            );
+            instanceManager.Install(version.ProjectName,
+                                    version.Label,
+                                    version.Namespace,
+                                    version.ProjectId,
+                                    version.VersionId);
+            notificationService.PopMessage(Resources.MarketplaceSearchPage_ModpackInstallingNotificationMessage
+                                                    .Replace("{0}", version.VersionName),
+                                           version.ProjectName);
         }
     }
 

@@ -1,9 +1,7 @@
 using System;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
@@ -152,7 +150,7 @@ public partial class SettingsPageModel : ViewModelBase
         {
             Model = model,
             UpdateManager = _updateManager,
-            NotificationService = _notificationService,
+            NotificationService = _notificationService
         });
     }
 
@@ -160,9 +158,10 @@ public partial class SettingsPageModel : ViewModelBase
     private async Task ClearStatisticsAsync()
     {
         var confirmed =
-            await OverlayService.RequestStrongConfirmationAsync(
-                Resources.SettingsPage_ClearStatisticsConfirmationMessage,
-                Resources.SettingsPage_ClearStatisticsConfirmationTitle);
+            await OverlayService.RequestStrongConfirmationAsync(Resources
+                                                                   .SettingsPage_ClearStatisticsConfirmationMessage,
+                                                                Resources
+                                                                   .SettingsPage_ClearStatisticsConfirmationTitle);
         if (confirmed)
         {
             _persistenceService.ClearAllActivities();
@@ -173,9 +172,8 @@ public partial class SettingsPageModel : ViewModelBase
     private async Task ClearRecordsAsync()
     {
         var confirmed =
-            await OverlayService.RequestStrongConfirmationAsync(
-                Resources.SettingsPage_ClearRecordsConfirmationMessage,
-                Resources.SettingsPage_ClearRecordsConfirmationTitle);
+            await OverlayService.RequestStrongConfirmationAsync(Resources.SettingsPage_ClearRecordsConfirmationMessage,
+                                                                Resources.SettingsPage_ClearRecordsConfirmationTitle);
         if (confirmed)
         {
             _persistenceService.ClearAllActions();
@@ -189,13 +187,15 @@ public partial class SettingsPageModel : ViewModelBase
             await OverlayService.RequestConfirmationAsync(Resources.SettingsPage_GarbageCollectConfirmationMessage,
                                                           Resources.SettingsPage_GarbageCollectConfirmationTitle);
         if (!confirmed)
+        {
             return;
+        }
 
         var progress = new ProgressModal
         {
             Title = Resources.SettingsPage_GarbageCollectProgressTitle,
             StatusText = Resources.SettingsPage_GarbageCollectProgressScanningText,
-            IsIndeterminate = true,
+            IsIndeterminate = true
         };
         OverlayService.PopModal(progress);
 
@@ -251,10 +251,7 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial string MirrorChyanCdk { get; set; }
 
-    partial void OnMirrorChyanCdkChanged(string value)
-    {
-        _configurationService.Value.UpdateMirrorChyanCdk = value;
-    }
+    partial void OnMirrorChyanCdkChanged(string value) => _configurationService.Value.UpdateMirrorChyanCdk = value;
 
     #endregion
 
@@ -272,10 +269,8 @@ public partial class SettingsPageModel : ViewModelBase
         {
             return (T)(object)value;
         }
-        else
-        {
-            return orDefault;
-        }
+
+        return orDefault;
     }
 
     #endregion
@@ -295,10 +290,7 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial bool TitleBarVisibility { get; set; }
 
-    partial void OnTitleBarVisibilityChanged(bool value)
-    {
-        _themeService.TitleBarVisible = value;
-    }
+    partial void OnTitleBarVisibilityChanged(bool value) => _themeService.TitleBarVisible = value;
 
     #endregion
 
@@ -320,10 +312,7 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial AccentColor AccentColor { get; set; }
 
-    partial void OnAccentColorChanged(AccentColor value)
-    {
-        _themeService.Accent = value;
-    }
+    partial void OnAccentColorChanged(AccentColor value) => _themeService.Accent = value;
 
     public AccentColor[] AccentColors { get; } = Enum.GetValues<AccentColor>();
 
@@ -334,10 +323,7 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial CornerStyle CornerStyle { get; set; }
 
-    partial void OnCornerStyleChanged(CornerStyle value)
-    {
-        _themeService.Corner = value;
-    }
+    partial void OnCornerStyleChanged(CornerStyle value) => _themeService.Corner = value;
 
     public CornerStyle[] CornerStyles { get; } = Enum.GetValues<CornerStyle>();
 
@@ -348,10 +334,7 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial BackgroundStyleModel BackgroundMode { get; set; }
 
-    partial void OnBackgroundModeChanged(BackgroundStyleModel value)
-    {
-        _themeService.TransparencyIndex = value.Index;
-    }
+    partial void OnBackgroundModeChanged(BackgroundStyleModel value) => _themeService.TransparencyIndex = value.Index;
 
     public BackgroundStyleModel[] BackgroundStyles { get; } =
     [
@@ -359,7 +342,7 @@ public partial class SettingsPageModel : ViewModelBase
         new(1, Resources.SettingsPage_BackgroundStyleMicaText, "Windows 11+"),
         new(2, Resources.SettingsPage_BackgroundStyleAcrylicText, "Windows 10+/macOS"),
         new(3, Resources.SettingsPage_BackgroundStyleBlurText, "Linux"),
-        new(4, Resources.SettingsPage_BackgroundStyleNoneText),
+        new(4, Resources.SettingsPage_BackgroundStyleNoneText)
     ];
 
     #endregion
@@ -369,10 +352,7 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial int DarkMode { get; set; }
 
-    partial void OnDarkModeChanged(int value)
-    {
-        _themeService.ThemeVariantIndex = value;
-    }
+    partial void OnDarkModeChanged(int value) => _themeService.ThemeVariantIndex = value;
 
     #endregion
 
@@ -380,7 +360,7 @@ public partial class SettingsPageModel : ViewModelBase
 
     public LanguageModel[] Languages { get; } =
     [
-        .. Configuration.SupportedLanguages.Select(CultureInfo.GetCultureInfo).Select(x => new LanguageModel(x)),
+        .. Configuration.SupportedLanguages.Select(CultureInfo.GetCultureInfo).Select(x => new LanguageModel(x))
     ];
 
     [ObservableProperty]
@@ -536,7 +516,7 @@ public partial class SettingsPageModel : ViewModelBase
                                .SettingsPage_ProxyStatusManualText.Replace("{0}", ProxyProtocol.ToString().ToLower())
                                .Replace("{1}", ProxyAddress)
                                .Replace("{2}", ProxyPort.ToString()),
-            _ => string.Empty,
+            _ => string.Empty
         };
 
     [RelayCommand]
@@ -549,7 +529,7 @@ public partial class SettingsPageModel : ViewModelBase
             Address = ProxyAddress,
             Port = ProxyPort,
             Username = ProxyUsername,
-            Password = ProxyPassword,
+            Password = ProxyPassword
         };
 
         var dialog = new ProxySettingsDialog();

@@ -7,8 +7,7 @@ public class LoaderCompoundModel(
     string loaderId,
     string displayName,
     IReadOnlyList<string> versions,
-    string? recommendedVersion
-) : ModelBase
+    string? recommendedVersion) : ModelBase
 {
     #region Direct
 

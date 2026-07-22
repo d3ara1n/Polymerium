@@ -4,12 +4,8 @@ using Resources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Models;
 
-public class AssetModModel(
-    FileInfo file,
-    Bitmap icon,
-    AssetModeMetadataModel metadata,
-    bool isLocked
-) : FileAssetModel<AssetModeMetadataModel>(file, icon, metadata, isLocked)
+public class AssetModModel(FileInfo file, Bitmap icon, AssetModeMetadataModel metadata, bool isLocked)
+    : FileAssetModel<AssetModeMetadataModel>(file, icon, metadata, isLocked)
 {
     public override string DisplayName => Metadata.Name ?? base.DisplayName;
 
@@ -17,7 +13,5 @@ public class AssetModModel(
     public string Description => Metadata.Description ?? Resources.Enum_Unknown;
 
     public string Author =>
-        Metadata.Authors is { Length: > 0 }
-            ? string.Join(", ", Metadata.Authors)
-            : Resources.Enum_Unknown;
+        Metadata.Authors is { Length: > 0 } ? string.Join(", ", Metadata.Authors) : Resources.Enum_Unknown;
 }

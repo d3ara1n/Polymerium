@@ -23,7 +23,7 @@ public static class PackageSourceHelper
         Modpack,
 
         /// <summary>recipe 带来（<c>Source</c> 为 <c>recipe://</c>），锁组但不占版本。</summary>
-        Recipe,
+        Recipe
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public static class PackageSourceHelper
             // COMPAT: legacy Purl-format Source from pre-rename modpacks; remove once on-disk
             // profiles no longer carry old-format Source values.
             _ when PackageHelper.TryParse(source, out _) => Kind.Modpack,
-            _ => throw new UnreachableException($"Unrecognized Entry.Source: {source}"),
+            _ => throw new UnreachableException($"Unrecognized Entry.Source: {source}")
         };
 
     /// <summary>单包能否删除：只有手动包（不属任何组）可删。不依赖 <paramref name="current" />。</summary>
@@ -51,10 +51,8 @@ public static class PackageSourceHelper
     ///     单包能否改版本：只有当前整合包占有版本（<c>source == current</c>），其余都可改。
     ///     边界：<c>current == null</c> 时手动包经 <c>source is null</c> 短路得 <c>true</c>，不误锁。
     /// </summary>
-    public static bool CanUpdate(string? source, string? current) =>
-        source is null || source != current;
+    public static bool CanUpdate(string? source, string? current) => source is null || source != current;
 
     /// <summary>整组能否解散（Ungroup）：当前整合包组不可（须先解绑降级），Recipe 可。</summary>
-    public static bool CanUngroup(string? source, string? current) =>
-        source is not null && source != current;
+    public static bool CanUngroup(string? source, string? current) => source is not null && source != current;
 }

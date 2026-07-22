@@ -9,8 +9,7 @@ namespace Polymerium.Avalonia.PageModels;
 public partial class MarketplacePortalPageModel(
     ConfigurationService configurationService,
     NavigationService navigationService,
-    OverlayService overlayService
-) : ViewModelBase
+    OverlayService overlayService) : ViewModelBase
 {
     #region Commands
 
@@ -32,9 +31,7 @@ public partial class MarketplacePortalPageModel(
             }
         }
 
-        navigationService.Navigate<MarketplaceSearchPage>(
-            new MarketplaceSearchPageModel.SearchArguments(query, null)
-        );
+        navigationService.Navigate<MarketplaceSearchPage>(new MarketplaceSearchPageModel.SearchArguments(query, null));
     }
 
     #endregion

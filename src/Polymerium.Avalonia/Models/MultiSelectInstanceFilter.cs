@@ -15,6 +15,30 @@ public class MultiSelectInstanceFilter : InstanceFilterBase
     private readonly CompositeDisposable _disposables = new();
     private readonly Func<InstanceCardModel, IEnumerable<string>> _valuesOf;
 
+    public MultiSelectInstanceFilter(
+        IObservable<IChangeSet<InstanceCardModel, string>> source,
+        Func<InstanceCardModel, IEnumerable<string>> valuesOf,
+        string label,
+        Func<string, string>? displayOf = null)
+    {
+        Label = label;
+        _valuesOf = valuesOf;
+
+        source
+           .TransformMany(valuesOf, v => v)
+           .Transform(v => new FilterOptionModel(v, displayOf?.Invoke(v)))
+           .SortAndBind(out var options, SortExpressionComparer<FilterOptionModel>.Ascending(o => o.Label))
+           .Subscribe()
+           .DisposeWith(_disposables);
+        Options = options;
+
+        Predicate = Options
+                   .ToObservableChangeSet()
+                   .AutoRefresh(o => o.IsSelected)
+                   .Do(_ => IsActive = Options.Any(o => o.IsSelected))
+                   .Select(_ => BuildPredicate());
+    }
+
     public override string Label { get; }
 
     public override ReadOnlyObservableCollection<FilterOptionModel> Options { get; }
@@ -25,28 +49,6 @@ public class MultiSelectInstanceFilter : InstanceFilterBase
     {
         get;
         protected set => SetProperty(ref field, value);
-    }
-
-    public MultiSelectInstanceFilter(
-        IObservable<IChangeSet<InstanceCardModel, string>> source,
-        Func<InstanceCardModel, IEnumerable<string>> valuesOf,
-        string label,
-        Func<string, string>? displayOf = null)
-    {
-        Label = label;
-        _valuesOf = valuesOf;
-
-        source.TransformMany(valuesOf, v => v)
-              .Transform(v => new FilterOptionModel(v, displayOf?.Invoke(v)))
-              .SortAndBind(out var options, SortExpressionComparer<FilterOptionModel>.Ascending(o => o.Label))
-              .Subscribe()
-              .DisposeWith(_disposables);
-        Options = options;
-
-        Predicate = Options.ToObservableChangeSet()
-                           .AutoRefresh(o => o.IsSelected)
-                           .Do(_ => IsActive = Options.Any(o => o.IsSelected))
-                           .Select(_ => BuildPredicate());
     }
 
     public override void Clear()
@@ -60,9 +62,7 @@ public class MultiSelectInstanceFilter : InstanceFilterBase
     private Func<InstanceCardModel, bool> BuildPredicate()
     {
         var selected = Options.Where(o => o.IsSelected).Select(o => o.Value).ToHashSet();
-        return selected.Count == 0
-            ? _ => true
-            : card => _valuesOf(card).Any(selected.Contains);
+        return selected.Count == 0 ? _ => true : card => _valuesOf(card).Any(selected.Contains);
     }
 
     protected override void Dispose(bool disposing)

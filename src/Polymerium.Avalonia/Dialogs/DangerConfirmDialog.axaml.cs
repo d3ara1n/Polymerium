@@ -15,21 +15,17 @@ public partial class DangerConfirmDialog : Dialog
     // The primary button only lights up once the typed code matches the challenge,
     // because Dialog.CanConfirm delegates to ValidateResult(Result) and TypedCode
     // pushes every keystroke into Result.
-    protected override bool ValidateResult(object? result) =>
-        result is string s && s == ChallengeCode;
+    protected override bool ValidateResult(object? result) => result is string s && s == ChallengeCode;
 
     #region Avalonia Properties
 
     public static readonly DirectProperty<DangerConfirmDialog, string> ChallengeCodeProperty =
-        AvaloniaProperty.RegisterDirect<DangerConfirmDialog, string>(
-            nameof(ChallengeCode),
-            o => o.ChallengeCode);
+        AvaloniaProperty.RegisterDirect<DangerConfirmDialog, string>(nameof(ChallengeCode), o => o.ChallengeCode);
 
     public static readonly DirectProperty<DangerConfirmDialog, string> TypedCodeProperty =
-        AvaloniaProperty.RegisterDirect<DangerConfirmDialog, string>(
-            nameof(TypedCode),
-            o => o.TypedCode,
-            (o, v) => o.TypedCode = v);
+        AvaloniaProperty.RegisterDirect<DangerConfirmDialog, string>(nameof(TypedCode),
+                                                                     o => o.TypedCode,
+                                                                     (o, v) => o.TypedCode = v);
 
     #endregion
 

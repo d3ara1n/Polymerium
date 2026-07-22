@@ -6,11 +6,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.Avalonia.Properties;
+using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
 using TridentCore.Core.Services;
 using TridentCore.Core.Utilities;
-using Polymerium.Avalonia.Services;
 
 namespace Polymerium.Avalonia.PageModels;
 
@@ -18,13 +18,11 @@ public partial class InstanceStoragePageModel(
     IViewContext<InstancePageModelBase.InstanceContextParameter> context,
     InstanceStateAggregator aggregator,
     InstanceManager instanceManager,
-    ProfileManager profileManager
-) : InstancePageModelBase(context, aggregator, instanceManager, profileManager)
+    ProfileManager profileManager) : InstancePageModelBase(context, aggregator, instanceManager, profileManager)
 {
     #region Overrides
 
-    protected override async Task OnInitializeAsync(CancellationToken token) =>
-        await Task.Run(Calculate, token);
+    protected override async Task OnInitializeAsync(CancellationToken token) => await Task.Run(Calculate, token);
 
     #endregion
 
@@ -111,32 +109,29 @@ public partial class InstanceStoragePageModel(
         (ConfigSize, ConfigCount) = CalculateDirectorySize("config");
 
         // Calculate total
-        var calculatedTotalSize =
-            ModsSize
-            + ResourcePacksSize
-            + ShaderPacksSize
-            + WorldsSize
-            + ScreenshotsSize
-            + LogsSize
-            + CrashReportsSize
-            + ConfigSize;
+        var calculatedTotalSize = ModsSize
+                                + ResourcePacksSize
+                                + ShaderPacksSize
+                                + WorldsSize
+                                + ScreenshotsSize
+                                + LogsSize
+                                + CrashReportsSize
+                                + ConfigSize;
 
-        var calculatedTotalCount =
-            ModsCount
-            + ResourcePacksCount
-            + ShaderPacksCount
-            + WorldsCount
-            + ScreenshotsCount
-            + LogsCount
-            + CrashReportsCount
-            + ConfigCount;
+        var calculatedTotalCount = ModsCount
+                                 + ResourcePacksCount
+                                 + ShaderPacksCount
+                                 + WorldsCount
+                                 + ScreenshotsCount
+                                 + LogsCount
+                                 + CrashReportsCount
+                                 + ConfigCount;
 
         // Calculate other files (total directory size minus calculated categories)
         var (totalDirSize, totalDirCount) = CalculateDirectorySize(homeDir);
         TotalSize = totalDirSize;
         OtherSize = totalDirSize > calculatedTotalSize ? totalDirSize - calculatedTotalSize : 0;
-        OtherCount =
-            totalDirCount > calculatedTotalCount ? totalDirCount - calculatedTotalCount : 0;
+        OtherCount = totalDirCount > calculatedTotalCount ? totalDirCount - calculatedTotalCount : 0;
 
         IsLoading = false;
     }
@@ -151,7 +146,7 @@ public partial class InstanceStoragePageModel(
         {
             FileHelper.CalculateDirectorySize(Path.Combine(buildDir, folderName)),
             FileHelper.CalculateDirectorySize(Path.Combine(importDir, folderName)),
-            FileHelper.CalculateDirectorySize(Path.Combine(persistDir, folderName)),
+            FileHelper.CalculateDirectorySize(Path.Combine(persistDir, folderName))
         };
 
         return agg.Aggregate((0ul, 0ul), (acc, t) => (acc.Item1 + t.Item1, acc.Item2 + t.Item2));
@@ -167,11 +162,9 @@ public partial class InstanceStoragePageModel(
         var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
         if (Directory.Exists(dir))
         {
-            return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevelHelper.GetTopLevel(),
-                new(dir),
-                Resources.Shared_FailedToOpenFolderDangerNotificationTitle
-            );
+            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
+                                                           new(dir),
+                                                           Resources.Shared_FailedToOpenFolderDangerNotificationTitle);
         }
 
         return Task.CompletedTask;
@@ -203,14 +196,11 @@ public partial class InstanceStoragePageModel(
         var dir = Path.Combine(rootPath, folderName);
         if (Directory.Exists(dir))
         {
-            return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevelHelper.GetTopLevel(),
-                new(dir),
-                Resources.InstanceStoragePage_OpenFolderDangerNotificationTitle.Replace(
-                    "{0}",
-                    folderName
-                )
-            );
+            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
+                                                           new(dir),
+                                                           Resources
+                                                              .InstanceStoragePage_OpenFolderDangerNotificationTitle
+                                                              .Replace("{0}", folderName));
         }
 
         return Task.CompletedTask;

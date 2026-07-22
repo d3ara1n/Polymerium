@@ -13,12 +13,32 @@ namespace Polymerium.Avalonia.ModalModels;
 
 public class SnapshotsModalModel : ViewModelBase
 {
-    public SnapshotsModalModel(IViewContext<InstanceBasicModel> context, SnapshotManager snapshotManager, NotificationService notificationService)
+    #region Fields
+
+    private SnapshotManager.InstanceSnapshots? _snapshots;
+
+    #endregion
+
+    public SnapshotsModalModel(
+        IViewContext<InstanceBasicModel> context,
+        SnapshotManager snapshotManager,
+        NotificationService notificationService)
     {
         _snapshotManager = snapshotManager;
         _notificationService = notificationService;
         Basic = context.Parameter!;
     }
+
+    #region Nested type: SnapshotContext
+
+    public class SnapshotContext
+    {
+        public required InstanceBasicModel Basic { get; init; }
+        public required SnapshotManager.InstanceSnapshots Handle { get; init; }
+        public required Action BackHandler { get; init; }
+    }
+
+    #endregion
 
     #region Overrides
 
@@ -34,12 +54,7 @@ public class SnapshotsModalModel : ViewModelBase
         {
             _snapshots = _snapshotManager.Open(Basic.Key);
 
-            Context = new()
-            {
-                Basic = Basic,
-                Handle = _snapshots,
-                BackHandler = _backHandler!,
-            };
+            Context = new() { Basic = Basic, Handle = _snapshots, BackHandler = _backHandler! };
         }
         catch (Exception ex)
         {
@@ -49,12 +64,6 @@ public class SnapshotsModalModel : ViewModelBase
         _navigateHandler!.Invoke(typeof(SnapshotPortalPage));
         return Task.CompletedTask;
     }
-
-    #endregion
-
-    #region Fields
-
-    private SnapshotManager.InstanceSnapshots? _snapshots;
 
     #endregion
 
@@ -72,17 +81,6 @@ public class SnapshotsModalModel : ViewModelBase
     public Action<Type>? _navigateHandler { get; internal set; }
     public Action? _backHandler { get; internal set; }
     public Action? _dismissHandler { get; internal set; }
-
-    #endregion
-
-    #region Nested type: SnapshotContext
-
-    public class SnapshotContext
-    {
-        public required InstanceBasicModel Basic { get; init; }
-        public required SnapshotManager.InstanceSnapshots Handle { get; init; }
-        public required Action BackHandler { get; init; }
-    }
 
     #endregion
 }

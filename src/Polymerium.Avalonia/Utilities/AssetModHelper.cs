@@ -35,30 +35,36 @@ public static class AssetModHelper
         {
             var fabricEntry = archive.GetEntry("fabric.mod.json");
             if (fabricEntry != null)
+            {
                 return ParseFabricMetadata(fabricEntry);
+            }
 
             var quiltEntry = archive.GetEntry("quilt.mod.json");
             if (quiltEntry != null)
+            {
                 return ParseQuiltMetadata(quiltEntry);
+            }
 
-            var forgeEntry =
-                archive.GetEntry("META-INF/mods.toml") ?? archive.GetEntry("mods.toml");
+            var forgeEntry = archive.GetEntry("META-INF/mods.toml") ?? archive.GetEntry("mods.toml");
             if (forgeEntry != null)
+            {
                 return ParseForgeMetadata(forgeEntry);
+            }
 
-            var neoforgeEntry =
-                archive.GetEntry("META-INF/neoforge.mods.toml")
-                ?? archive.GetEntry("neoforge.mods.toml");
+            var neoforgeEntry = archive.GetEntry("META-INF/neoforge.mods.toml")
+                             ?? archive.GetEntry("neoforge.mods.toml");
             if (neoforgeEntry != null)
+            {
                 return ParseForgeMetadata(neoforgeEntry, ModLoaderKind.NeoForge);
+            }
 
             var legacyForgeEntry = archive.GetEntry("mcmod.info");
             if (legacyForgeEntry != null)
+            {
                 return ParseLegacyForgeMetadata(legacyForgeEntry);
+            }
         }
-        catch
-        {
-        }
+        catch { }
 
         return new();
     }
@@ -66,95 +72,8 @@ public static class AssetModHelper
     /// <summary>
     ///     从 jar 文件中提取 Mod 图标
     /// </summary>
-    public static Bitmap? ExtractIcon(string jarFilePath, string? logoFile)
-    {
-        return AssetArchiveHelper.ExtractIcon(jarFilePath, logoFile);
-    }
-
-    #region 内嵌 jar 枚举
-
-    public static IReadOnlyList<ZipArchiveEntry> EnumerateEmbeddedJars(ZipArchive archive)
-    {
-        var paths = new HashSet<string>(StringComparer.Ordinal);
-
-        if (archive.GetEntry("META-INF/jarjar/metadata.json") is { } jarJarEntry)
-            paths.UnionWith(ReadTopLevelJars(jarJarEntry, "path"));
-
-        if (archive.GetEntry("fabric.mod.json") is { } fabricEntry)
-            paths.UnionWith(ReadTopLevelJars(fabricEntry, "file"));
-
-        if (archive.GetEntry("quilt.mod.json") is { } quiltEntry)
-            paths.UnionWith(ReadQuiltJars(quiltEntry));
-
-        var result = new List<ZipArchiveEntry>(paths.Count);
-        foreach (var path in paths)
-        {
-            if (archive.GetEntry(path) is { } entry)
-                result.Add(entry);
-        }
-        return result;
-    }
-
-    // { "jars": [{ "<fieldKey>": "..." }] }
-    private static List<string> ReadTopLevelJars(ZipArchiveEntry entry, string fieldKey)
-    {
-        var result = new List<string>();
-        using var stream = entry.Open();
-        using var reader = new StreamReader(stream);
-        var json = reader.ReadToEnd();
-        try
-        {
-            var doc = JsonDocument.Parse(json);
-            if (doc.RootElement.TryGetProperty("jars", out var jars)
-                && jars.ValueKind == JsonValueKind.Array)
-            {
-                foreach (var item in jars.EnumerateArray())
-                {
-                    if (item.TryGetProperty(fieldKey, out var fieldProp)
-                        && fieldProp.ValueKind == JsonValueKind.String
-                        && fieldProp.GetString() is { } value
-                        && value.Length > 0)
-                        result.Add(value);
-                }
-            }
-        }
-        catch
-        {
-        }
-        return result;
-    }
-
-    // quilt.mod.json: { "quilt_loader": { "jars": [{ "file": "..." }] } }
-    private static List<string> ReadQuiltJars(ZipArchiveEntry entry)
-    {
-        var result = new List<string>();
-        using var stream = entry.Open();
-        using var reader = new StreamReader(stream);
-        var json = reader.ReadToEnd();
-        try
-        {
-            var doc = JsonDocument.Parse(json);
-            if (doc.RootElement.TryGetProperty("quilt_loader", out var loader)
-                && loader.TryGetProperty("jars", out var jars)
-                && jars.ValueKind == JsonValueKind.Array)
-            {
-                foreach (var item in jars.EnumerateArray())
-                {
-                    if (item.TryGetProperty("file", out var fileProp)
-                        && fileProp.ValueKind == JsonValueKind.String
-                        && fileProp.GetString() is { } value
-                        && value.Length > 0)
-                        result.Add(value);
-                }
-            }
-        }
-        catch
-        {
-        }
-        return result;
-    }
-
-    #endregion
+    public static Bitmap? ExtractIcon(string jarFilePath, string? logoFile) =>
+        AssetArchiveHelper.ExtractIcon(jarFilePath, logoFile);
 
     #region Fabric Mod 解析
 
@@ -173,33 +92,29 @@ public static class AssetModHelper
             ModId = GetJsonString(root, "id"),
             Name = GetJsonString(root, "name"),
             Version = GetJsonString(root, "version"),
-            Description = GetJsonString(root, "description"),
+            Description = GetJsonString(root, "description")
         };
 
         // 解析作者
         if (root.TryGetProperty("authors", out var authorsElement))
         {
-            metadata.Authors =
-                authorsElement.ValueKind == JsonValueKind.Array
-                    ? authorsElement
-                        .EnumerateArray()
-                        .Select(x => x.GetString() ?? "")
-                        .Where(x => !string.IsNullOrEmpty(x))
-                        .ToArray()
-                    : [authorsElement.GetString() ?? ""];
+            metadata.Authors = authorsElement.ValueKind == JsonValueKind.Array
+                                   ? authorsElement
+                                    .EnumerateArray()
+                                    .Select(x => x.GetString() ?? "")
+                                    .Where(x => !string.IsNullOrEmpty(x))
+                                    .ToArray()
+                                   : [authorsElement.GetString() ?? ""];
         }
 
         // 解析联系信息
         if (root.TryGetProperty("contact", out var contactElement))
         {
-            var homepage =
-                GetJsonString(contactElement, "homepage")
-                ?? GetJsonString(contactElement, "sources");
+            var homepage = GetJsonString(contactElement, "homepage") ?? GetJsonString(contactElement, "sources");
             metadata.Homepage = homepage switch
             {
-                not null when homepage.StartsWith("http://") || homepage.StartsWith("https://") =>
-                    new(homepage),
-                _ => null,
+                not null when homepage.StartsWith("http://") || homepage.StartsWith("https://") => new(homepage),
+                _ => null
             };
         }
 
@@ -209,14 +124,11 @@ public static class AssetModHelper
         // 解析图标
         if (root.TryGetProperty("icon", out var iconElement))
         {
-            metadata.LogoFile =
-                iconElement.ValueKind == JsonValueKind.String ? iconElement.GetString()
-                : iconElement.ValueKind == JsonValueKind.Object
-                && iconElement.TryGetProperty("512", out var icon512)
-                    ? icon512.GetString()
-                : iconElement.TryGetProperty("256", out var icon256) ? icon256.GetString()
-                : iconElement.TryGetProperty("128", out var icon128) ? icon128.GetString()
-                : null;
+            metadata.LogoFile = iconElement.ValueKind == JsonValueKind.String ? iconElement.GetString() :
+                                iconElement.ValueKind == JsonValueKind.Object
+                             && iconElement.TryGetProperty("512", out var icon512) ? icon512.GetString() :
+                                iconElement.TryGetProperty("256", out var icon256) ? icon256.GetString() :
+                                iconElement.TryGetProperty("128", out var icon128) ? icon128.GetString() : null;
         }
 
         return metadata;
@@ -242,7 +154,7 @@ public static class AssetModHelper
             {
                 LoaderType = ModLoaderKind.Quilt,
                 ModId = GetJsonString(loaderElement, "id"),
-                Version = GetJsonString(loaderElement, "version"),
+                Version = GetJsonString(loaderElement, "version")
             };
 
             if (loaderElement.TryGetProperty("metadata", out var metadataElement))
@@ -253,33 +165,26 @@ public static class AssetModHelper
 
                 if (metadataElement.TryGetProperty("contributors", out var contributorsElement))
                 {
-                    metadata.Authors = contributorsElement
-                        .EnumerateObject()
-                        .Select(x => x.Name)
-                        .ToArray();
+                    metadata.Authors = contributorsElement.EnumerateObject().Select(x => x.Name).ToArray();
                 }
 
                 if (metadataElement.TryGetProperty("contact", out var contactElement))
                 {
-                    var homepage =
-                        GetJsonString(contactElement, "homepage")
-                        ?? GetJsonString(contactElement, "sources");
+                    var homepage = GetJsonString(contactElement, "homepage")
+                                ?? GetJsonString(contactElement, "sources");
                     metadata.Homepage = homepage switch
                     {
-                        not null
-                            when homepage.StartsWith("http://")
-                                || homepage.StartsWith("https://") => new(homepage),
-                        _ => null,
+                        not null when homepage.StartsWith("http://") || homepage.StartsWith("https://") =>
+                            new(homepage),
+                        _ => null
                     };
                 }
 
                 if (metadataElement.TryGetProperty("icon", out var iconElement))
                 {
-                    metadata.LogoFile =
-                        iconElement.ValueKind == JsonValueKind.String
-                            ? iconElement.GetString()
-                            : GetJsonString(iconElement, "512")
-                                ?? GetJsonString(iconElement, "256");
+                    metadata.LogoFile = iconElement.ValueKind == JsonValueKind.String
+                                            ? iconElement.GetString()
+                                            : GetJsonString(iconElement, "512") ?? GetJsonString(iconElement, "256");
                 }
             }
 
@@ -293,10 +198,7 @@ public static class AssetModHelper
 
     #region Forge/NeoForge Mod 解析 (TOML)
 
-    private static AssetModeMetadataModel ParseForgeMetadata(
-        ZipArchiveEntry entry,
-        ModLoaderKind? guessKind = null
-    )
+    private static AssetModeMetadataModel ParseForgeMetadata(ZipArchiveEntry entry, ModLoaderKind? guessKind = null)
     {
         using var stream = entry.Open();
         using var reader = new StreamReader(stream);
@@ -309,13 +211,8 @@ public static class AssetModHelper
             var metadata = new AssetModeMetadataModel { LoaderType = guessKind };
 
             // 检查是否为 NeoForge
-            if (
-                toml.ContainsKey("modLoader")
-                && toml["modLoader"]
-                    .ToString()
-                    ?.Contains("neoforge", StringComparison.OrdinalIgnoreCase)
-                    is true
-            )
+            if (toml.ContainsKey("modLoader")
+             && toml["modLoader"].ToString()?.Contains("neoforge", StringComparison.OrdinalIgnoreCase) is true)
             {
                 metadata.LoaderType ??= ModLoaderKind.NeoForge;
             }
@@ -323,10 +220,7 @@ public static class AssetModHelper
             metadata.LoaderType ??= ModLoaderKind.Forge;
 
             // 解析 mods 数组
-            if (
-                toml.ContainsKey("mods")
-                && toml["mods"] is TomlTableArray { Count: > 0 } and [{ } modInfo]
-            )
+            if (toml.ContainsKey("mods") && toml["mods"] is TomlTableArray { Count: > 0 } and [{ } modInfo])
             {
                 metadata.ModId = modInfo["modId"].ToString();
                 metadata.Name = modInfo["displayName"].ToString();
@@ -335,7 +229,7 @@ public static class AssetModHelper
                 metadata.Homepage = modInfo["displayURL"].ToString() switch
                 {
                     { } it when it.StartsWith("http://") || it.StartsWith("https://") => new(it),
-                    _ => null,
+                    _ => null
                 };
                 metadata.LogoFile = modInfo["logoFile"].ToString();
 
@@ -367,8 +261,7 @@ public static class AssetModHelper
             var root = doc.RootElement;
 
             // mcmod.info 可能是数组或对象
-            var modInfo =
-                root.ValueKind == JsonValueKind.Array && root.GetArrayLength() > 0 ? root[0] : root;
+            var modInfo = root.ValueKind == JsonValueKind.Array && root.GetArrayLength() > 0 ? root[0] : root;
 
             var homepage = GetJsonString(modInfo, "url");
             var metadata = new AssetModeMetadataModel
@@ -380,24 +273,20 @@ public static class AssetModHelper
                 Description = GetJsonString(modInfo, "description"),
                 Homepage = homepage switch
                 {
-                    not null
-                        when homepage.StartsWith("http://") || homepage.StartsWith("https://") =>
-                        new(homepage),
-                    _ => null,
+                    not null when homepage.StartsWith("http://") || homepage.StartsWith("https://") => new(homepage),
+                    _ => null
                 },
-                LogoFile = GetJsonString(modInfo, "logoFile"),
+                LogoFile = GetJsonString(modInfo, "logoFile")
             };
 
-            if (
-                modInfo.TryGetProperty("authorList", out var authorsElement)
-                && authorsElement.ValueKind == JsonValueKind.Array
-            )
+            if (modInfo.TryGetProperty("authorList", out var authorsElement)
+             && authorsElement.ValueKind == JsonValueKind.Array)
             {
                 metadata.Authors = authorsElement
-                    .EnumerateArray()
-                    .Select(x => x.GetString() ?? "")
-                    .Where(x => !string.IsNullOrEmpty(x))
-                    .ToArray();
+                                  .EnumerateArray()
+                                  .Select(x => x.GetString() ?? "")
+                                  .Where(x => !string.IsNullOrEmpty(x))
+                                  .ToArray();
             }
 
             return metadata;
@@ -416,6 +305,101 @@ public static class AssetModHelper
         element.TryGetProperty(propertyName, out var prop) && prop.ValueKind == JsonValueKind.String
             ? prop.GetString()
             : null;
+
+    #endregion
+
+    #region 内嵌 jar 枚举
+
+    public static IReadOnlyList<ZipArchiveEntry> EnumerateEmbeddedJars(ZipArchive archive)
+    {
+        var paths = new HashSet<string>(StringComparer.Ordinal);
+
+        if (archive.GetEntry("META-INF/jarjar/metadata.json") is { } jarJarEntry)
+        {
+            paths.UnionWith(ReadTopLevelJars(jarJarEntry, "path"));
+        }
+
+        if (archive.GetEntry("fabric.mod.json") is { } fabricEntry)
+        {
+            paths.UnionWith(ReadTopLevelJars(fabricEntry, "file"));
+        }
+
+        if (archive.GetEntry("quilt.mod.json") is { } quiltEntry)
+        {
+            paths.UnionWith(ReadQuiltJars(quiltEntry));
+        }
+
+        var result = new List<ZipArchiveEntry>(paths.Count);
+        foreach (var path in paths)
+        {
+            if (archive.GetEntry(path) is { } entry)
+            {
+                result.Add(entry);
+            }
+        }
+
+        return result;
+    }
+
+    // { "jars": [{ "<fieldKey>": "..." }] }
+    private static List<string> ReadTopLevelJars(ZipArchiveEntry entry, string fieldKey)
+    {
+        var result = new List<string>();
+        using var stream = entry.Open();
+        using var reader = new StreamReader(stream);
+        var json = reader.ReadToEnd();
+        try
+        {
+            var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.TryGetProperty("jars", out var jars) && jars.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var item in jars.EnumerateArray())
+                {
+                    if (item.TryGetProperty(fieldKey, out var fieldProp)
+                     && fieldProp.ValueKind == JsonValueKind.String
+                     && fieldProp.GetString() is { } value
+                     && value.Length > 0)
+                    {
+                        result.Add(value);
+                    }
+                }
+            }
+        }
+        catch { }
+
+        return result;
+    }
+
+    // quilt.mod.json: { "quilt_loader": { "jars": [{ "file": "..." }] } }
+    private static List<string> ReadQuiltJars(ZipArchiveEntry entry)
+    {
+        var result = new List<string>();
+        using var stream = entry.Open();
+        using var reader = new StreamReader(stream);
+        var json = reader.ReadToEnd();
+        try
+        {
+            var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.TryGetProperty("quilt_loader", out var loader)
+             && loader.TryGetProperty("jars", out var jars)
+             && jars.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var item in jars.EnumerateArray())
+                {
+                    if (item.TryGetProperty("file", out var fileProp)
+                     && fileProp.ValueKind == JsonValueKind.String
+                     && fileProp.GetString() is { } value
+                     && value.Length > 0)
+                    {
+                        result.Add(value);
+                    }
+                }
+            }
+        }
+        catch { }
+
+        return result;
+    }
 
     #endregion
 }

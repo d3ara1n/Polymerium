@@ -14,18 +14,10 @@ namespace Polymerium.Avalonia.Modals;
 public partial class OobeModal : StepWizardModalBase
 {
     public static readonly DirectProperty<OobeModal, int> StepIndexProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, int>(
-            nameof(StepIndex),
-            o => o.StepIndex,
-            (o, v) => o.StepIndex = v
-        );
+        AvaloniaProperty.RegisterDirect<OobeModal, int>(nameof(StepIndex), o => o.StepIndex, (o, v) => o.StepIndex = v);
 
     public static readonly DirectProperty<OobeModal, int> StepCountProperty =
-        AvaloniaProperty.RegisterDirect<OobeModal, int>(
-            nameof(StepCount),
-            o => o.StepCount,
-            (o, v) => o.StepCount = v
-        );
+        AvaloniaProperty.RegisterDirect<OobeModal, int>(nameof(StepCount), o => o.StepCount, (o, v) => o.StepCount = v);
 
     private readonly List<OobeStep> _steps = [];
 
@@ -62,14 +54,12 @@ public partial class OobeModal : StepWizardModalBase
             _steps.Add(new OobePrivilege { NotificationService = NotificationService });
         }
 
-        _steps.Add(
-            new OobeQuickSetup
-            {
-                ConfigurationService = ConfigurationService,
-                OverlayService = OverlayService,
-                ThemeService = Program.Services!.GetRequiredService<ThemeService>(),
-            }
-        );
+        _steps.Add(new OobeQuickSetup
+        {
+            ConfigurationService = ConfigurationService,
+            OverlayService = OverlayService,
+            ThemeService = Program.Services!.GetRequiredService<ThemeService>()
+        });
         _steps.Add(new OobePrivacy());
         _steps.Add(new OobeFinish());
 

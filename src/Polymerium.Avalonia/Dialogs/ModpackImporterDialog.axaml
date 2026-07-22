@@ -1,0 +1,75 @@
+﻿<husk:Dialog
+    x:Class="Polymerium.Avalonia.Dialogs.ModpackImporterDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{x:Static lang:Resources.ModpackImporterDialog_Title}"
+    Width="420"
+    x:DataType="app:ModpackImporterDialogModel"
+    IsPrimaryButtonVisible="True"
+    Message="{x:Static lang:Resources.ModpackImporterDialog_Prompt}"
+    Result="{Binding Result}"
+    mc:Ignorable="d">
+    <StackPanel Spacing="12">
+        <husk:DropZone
+            Padding="16"
+            DragOver="DropZone_OnDragOver"
+            Drop="DropZone_OnDrop"
+            Model="{Binding Input, Mode=OneWayToSource}">
+            <StackPanel HorizontalAlignment="Center">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="4">
+                    <fi:SymbolIcon
+                        IsHitTestVisible="False"
+                        FontSize="14"
+                        IconVariant="Filled"
+                        Symbol="Attach" />
+                    <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
+                        <Run Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}" />
+                        <HyperlinkButton
+                            Name="BrowseButton"
+                            Click="BrowseButton_OnClick"
+                            Content="{x:Static lang:Resources.FilePickerDialog_BrowseButtonText}"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Foreground="{StaticResource ControlAccentForegroundBrush}" />
+                    </TextBlock>
+                </StackPanel>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    IsHitTestVisible="False"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.ModpackImporterDialog_DropHint}" />
+            </StackPanel>
+        </husk:DropZone>
+        <DockPanel>
+            <Button
+                DockPanel.Dock="Right"
+                Classes="Small"
+                Margin="8,0,0,0"
+                Command="{Binding ValidateCommand}">
+                <fi:SymbolIcon
+                    FontSize="{StaticResource MediumFontSize}"
+                    Symbol="Checkmark" />
+            </Button>
+            <TextBox
+                PlaceholderText="{x:Static lang:Resources.ModpackImporterDialog_InputPlaceholder}"
+                Text="{Binding Input, Mode=TwoWay}" />
+        </DockPanel>
+        <TextBlock
+            IsVisible="{Binding ResolvedText, Converter={x:Static ObjectConverters.IsNotNull}}"
+            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+            Text="{Binding ResolvedText}"
+            TextWrapping="Wrap" />
+        <TextBlock
+            IsVisible="{Binding Hint, Converter={x:Static ObjectConverters.IsNotNull}}"
+            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+            Text="{Binding Hint}"
+            TextWrapping="Wrap" />
+    </StackPanel>
+</husk:Dialog>

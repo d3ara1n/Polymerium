@@ -160,11 +160,11 @@ Polymerium 使用[符号链接](https://www.wikiwand.com/en/Symbolic_link)进行
 
 </details>
 
-| 平台 | 包类型 | 直达下载 |
-| --- | --- | --- |
-| Windows x64 | 安装器 | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-win-Setup.exe) |
-| Linux x64 | AppImage | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium.AvaloniaImage) |
-| macOS Apple Silicon | PKG 安装器 | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-osx-Setup.pkg) |
+| 平台                  | 包类型      | 直达下载                                                                                          |
+|---------------------|----------|-----------------------------------------------------------------------------------------------|
+| Windows x64         | 安装器      | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-win-Setup.exe) |
+| Linux x64           | AppImage | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium.AvaloniaImage) |
+| macOS Apple Silicon | PKG 安装器  | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-osx-Setup.pkg) |
 
 [已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=github-readme)
 
@@ -183,13 +183,13 @@ Polymerium 使用[符号链接](https://www.wikiwand.com/en/Symbolic_link)进行
 
 ## 架构
 
-| 技术 | 用途 | 集成 |
-| --- | --- | --- |
-| **.NET 10** | 带 C# 预览功能的运行时 | 核心平台 |
-| **Avalonia 12** | 跨平台 XAML UI 框架 | 表示层 |
-| **MVVM** | 关注点分离 | 架构模式 |
-| **依赖注入** | 模块化、可测试的服务 | 服务管理 |
-| **响应式扩展** | 响应式数据流 | 数据流 |
+| 技术              | 用途             | 集成   |
+|-----------------|----------------|------|
+| **.NET 10**     | 带 C# 预览功能的运行时  | 核心平台 |
+| **Avalonia 12** | 跨平台 XAML UI 框架 | 表示层  |
+| **MVVM**        | 关注点分离          | 架构模式 |
+| **依赖注入**        | 模块化、可测试的服务     | 服务管理 |
+| **响应式扩展**       | 响应式数据流         | 数据流  |
 
 ### 项目结构
 
@@ -209,11 +209,11 @@ Polymerium/
 
 ## 平台支持
 
-| 平台                                                                                                         | 状态         |
-|------------------------------------------------------------------------------------------------------------|------------|
-| ![Windows](https://img.shields.io/badge/Windows-10+-0078D6?style=flat-square&logo=windows&logoColor=white) | ✅ **稳定**   |
-| ![Linux](https://img.shields.io/badge/Linux-AppImage-FCC624?style=flat-square&logo=linux&logoColor=black)  | ✅ **稳定**   |
-| ![macOS](https://img.shields.io/badge/macOS-ARM64-000000?style=flat-square&logo=apple&logoColor=white)     | ✅ **稳定**   |
+| 平台                                                                                                         | 状态       |
+|------------------------------------------------------------------------------------------------------------|----------|
+| ![Windows](https://img.shields.io/badge/Windows-10+-0078D6?style=flat-square&logo=windows&logoColor=white) | ✅ **稳定** |
+| ![Linux](https://img.shields.io/badge/Linux-AppImage-FCC624?style=flat-square&logo=linux&logoColor=black)  | ✅ **稳定** |
+| ![macOS](https://img.shields.io/badge/macOS-ARM64-000000?style=flat-square&logo=apple&logoColor=white)     | ✅ **稳定** |
 
 ---
 
@@ -232,9 +232,11 @@ Polymerium 尊重您的隐私：
 
 2026 年之前，Polymerium 的基础库、控件库与桌面应用全部由人工花费数年编写，代码库中不含任何一行 AI 生成的代码。
 
-随着今年几款前沿编码模型问世，AI Agent 开始能够勉强参与项目的构建工作。但实践中发现，当前 LLM 在软件工程素养和领域特定知识（尤其是 Avalonia）上存在致命短板，产出的代码问题较为明显，必须经过人工排查和修复。
+随着今年几款前沿编码模型问世，AI Agent 开始能够勉强参与项目的构建工作。但实践中发现，当前 LLM 在软件工程素养和领域特定知识（尤其是
+Avalonia）上存在致命短板，产出的代码问题较为明显，必须经过人工排查和修复。
 
-尽管有上述局限，Agent 的辅助仍显著加快了开发节奏：原本耗时一个月的任务，现在基本能在一周内交付。工作方式依旧保持不变——AI 负责提出方案并完成劳动密集的初步实现，由人工审阅、修正并完成剩余部分，确保代码方向不偏离预定轨道。
+尽管有上述局限，Agent 的辅助仍显著加快了开发节奏：原本耗时一个月的任务，现在基本能在一周内交付。工作方式依旧保持不变——AI
+负责提出方案并完成劳动密集的初步实现，由人工审阅、修正并完成剩余部分，确保代码方向不偏离预定轨道。
 
 ---
 

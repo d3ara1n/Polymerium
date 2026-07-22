@@ -28,8 +28,7 @@ using TridentCore.Core.Utilities;
 
 namespace Polymerium.Avalonia.PageModels;
 
-public partial class InstancePageModel : ViewModelBase,
-    IStatefulViewModel<InstancePageModel.SidebarState>
+public partial class InstancePageModel : ViewModelBase, IStatefulViewModel<InstancePageModel.SidebarState>
 {
     public InstancePageModel(
         IViewContext context,
@@ -40,8 +39,7 @@ public partial class InstancePageModel : ViewModelBase,
         NotificationService notificationService,
         DataService dataService,
         PersistenceService persistenceService,
-        InstanceService instanceService
-    )
+        InstanceService instanceService)
     {
         _profileManager = profileManager;
         _overlayService = overlayService;
@@ -50,55 +48,52 @@ public partial class InstancePageModel : ViewModelBase,
         _persistenceService = persistenceService;
         _aggregator = aggregator;
         _instanceService = instanceService;
-        SelectedPage =
-            context.Parameter switch
-            {
-                CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
-                _ => null,
-            } ?? PageEntries.FirstOrDefault();
+        SelectedPage = context.Parameter switch
+        {
+            CompositeParameter it => PageEntries.FirstOrDefault(x => x.Page == it.Subview),
+            _ => null
+        }
+                    ?? PageEntries.FirstOrDefault();
 
         var key = context.Parameter switch
         {
             CompositeParameter p => p.Key,
             string s => s,
-            _ => throw new PageNotReachedException(
-                typeof(InstancePage),
-                "Key to the instance is not provided"
-            ),
+            _ => throw new PageNotReachedException(typeof(InstancePage), "Key to the instance is not provided")
         };
         if (profileManager.TryGetImmutable(key, out var profile))
         {
-            Basic = new(
-                key,
-                profile.Name,
-                profile.Setup.Version,
-                profile.Setup.Loader,
-                profile.Setup.Source
-            );
-            Context = new(
-                Basic,
-                [
-                    .. widgetHostService.WidgetTypes.Select(type =>
-                    {
-                        var widget = (WidgetBase)Activator.CreateInstance(type)!;
-                        widget.Context = widgetHostService.GetOrCreateContext(Basic.Key, type.Name);
-                        return widget;
-                    }),
-                ]
-            );
+            Basic = new(key, profile.Name, profile.Setup.Version, profile.Setup.Loader, profile.Setup.Source);
+            Context = new(Basic,
+            [
+                .. widgetHostService.WidgetTypes.Select(type =>
+                {
+                    var widget = (WidgetBase)Activator.CreateInstance(type)!;
+                    widget.Context = widgetHostService.GetOrCreateContext(Basic.Key, type.Name);
+                    return widget;
+                })
+            ]);
         }
         else
         {
-            throw new PageNotReachedException(
-                typeof(InstancePage),
-                Resources.InstancePage_KeyNotFoundExceptionMessage.Replace("{0}", key)
-            );
+            throw new PageNotReachedException(typeof(InstancePage),
+                                              Resources.InstancePage_KeyNotFoundExceptionMessage.Replace("{0}", key));
         }
     }
 
     #region Nested type: CompositeParameter
 
     public record CompositeParameter(string Key, Type Subview);
+
+    #endregion
+
+    #region Nested type: SidebarState
+
+    public partial class SidebarState : ModelBase
+    {
+        [ObservableProperty]
+        public partial bool IsSidebarExpanded { get; set; } = true;
+    }
 
     #endregion
 
@@ -111,10 +106,7 @@ public partial class InstancePageModel : ViewModelBase,
     private Task ExportInstance() => _instanceService.ExportInstanceAsync(Basic.Key);
 
     [RelayCommand]
-    private void ManageSnapshotsAsync()
-    {
-        _overlayService.PopModal<SnapshotsModal>(Basic);
-    }
+    private void ManageSnapshotsAsync() => _overlayService.PopModal<SnapshotsModal>(Basic);
 
     [RelayCommand]
     public async Task ImportFromFileAsync(string? initialPath)
@@ -128,7 +120,7 @@ public partial class InstancePageModel : ViewModelBase,
         {
             PathAccepted = initialPath,
             DataService = _dataService,
-            NotificationService = _notificationService,
+            NotificationService = _notificationService
         };
         if (await _overlayService.PopDialogAsync(dialog))
         {
@@ -139,76 +131,52 @@ public partial class InstancePageModel : ViewModelBase,
                     {
                         await using (guard)
                         {
-                            if (
-                                !guard.Value.Setup.Packages.Any(x =>
-                                    PackageHelper.IsMatched(
-                                        x.Pref,
-                                        package.Package.Label,
-                                        package.Package.Namespace,
-                                        package.Package.ProjectId
-                                    )
-                                )
-                            )
+                            if (!guard.Value.Setup.Packages.Any(x => PackageHelper.IsMatched(x.Pref,
+                                                                    package.Package.Label,
+                                                                    package.Package.Namespace,
+                                                                    package.Package.ProjectId)))
                             {
-                                var pref = PackageHelper.ToPref(
-                                    package.Package.Label,
-                                    package.Package.Namespace,
-                                    package.Package.ProjectId,
-                                    package.Package.VersionId
-                                );
-                                guard.Value.Setup.Packages.Add(
-                                    new()
-                                    {
-                                        Pref = pref,
-                                        Enabled = true,
-                                        Source = null,
-                                    }
-                                );
-                                _persistenceService.AppendAction(
-                                    new()
-                                    {
-                                        Key = Basic.Key,
-                                        Kind = PersistenceService.ActionKind.EditPackage,
-                                        New = pref,
-                                    }
-                                );
-                                _notificationService.PopMessage(
-                                    Resources
-                                        .InstancePage_ImportPackageSuccessNotificationMessage.Replace(
-                                            "{0}",
-                                            package.Package.ProjectName
-                                        )
-                                        .Replace("{1}", package.Package.ProjectId),
-                                    guard.Key,
-                                    thumbnail: package.Thumbnail
-                                );
+                                var pref = PackageHelper.ToPref(package.Package.Label,
+                                                                package.Package.Namespace,
+                                                                package.Package.ProjectId,
+                                                                package.Package.VersionId);
+                                guard.Value.Setup.Packages.Add(new() { Pref = pref, Enabled = true, Source = null });
+                                _persistenceService.AppendAction(new()
+                                {
+                                    Key = Basic.Key,
+                                    Kind = PersistenceService.ActionKind
+                                                             .EditPackage,
+                                    New = pref
+                                });
+                                _notificationService.PopMessage(Resources
+                                                               .InstancePage_ImportPackageSuccessNotificationMessage
+                                                               .Replace("{0}", package.Package.ProjectName)
+                                                               .Replace("{1}", package.Package.ProjectId),
+                                                                guard.Key,
+                                                                thumbnail: package.Thumbnail);
                             }
                             else
                             {
-                                _notificationService.PopMessage(
-                                    Resources
-                                        .InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage.Replace(
-                                            "{0}",
-                                            package.Package.ProjectName
-                                        )
-                                        .Replace("{1}", package.Package.ProjectId),
-                                    Resources.InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle,
-                                    GrowlLevel.Danger,
-                                    thumbnail: package.Thumbnail
-                                );
+                                _notificationService.PopMessage(Resources
+                                                               .InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage
+                                                               .Replace("{0}", package.Package.ProjectName)
+                                                               .Replace("{1}", package.Package.ProjectId),
+                                                                Resources
+                                                                   .InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle,
+                                                                GrowlLevel.Danger,
+                                                                thumbnail: package.Thumbnail);
                             }
                         }
                     }
 
                     break;
                 case AssetIdentificationPersistModel persist:
-                    var target = Path.Combine(
-                        persist.IsInImportMode
-                            ? PathDef.Default.DirectoryOfImport(Basic.Key)
-                            : PathDef.Default.DirectoryOfPersist(Basic.Key),
-                        FileHelper.GetAssetFolderName(persist.Kind),
-                        Path.GetFileName(persist.Path)
-                    );
+                    var target =
+                        Path.Combine(persist.IsInImportMode
+                                         ? PathDef.Default.DirectoryOfImport(Basic.Key)
+                                         : PathDef.Default.DirectoryOfPersist(Basic.Key),
+                                     FileHelper.GetAssetFolderName(persist.Kind),
+                                     Path.GetFileName(persist.Path));
                     if (!File.Exists(target))
                     {
                         var dir = Path.GetDirectoryName(target);
@@ -218,30 +186,21 @@ public partial class InstancePageModel : ViewModelBase,
                         }
 
                         File.Copy(persist.Path, target, false);
-                        _notificationService.PopMessage(
-                            Resources.InstancePage_ImportFileSuccessNotificationMessage.Replace(
-                                "{0}",
-                                target
-                            ),
-                            Basic.Key,
-                            thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
-                        );
+                        _notificationService.PopMessage(Resources.InstancePage_ImportFileSuccessNotificationMessage
+                                                                 .Replace("{0}", target),
+                                                        Basic.Key,
+                                                        thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
                     }
                     else
                     {
-                        var relative = Path.GetRelativePath(
-                            PathDef.Default.DirectoryOfHome(Basic.Key),
-                            target
-                        );
-                        _notificationService.PopMessage(
-                            Resources.InstancePage_ImportFileAlreadyExistsDangerNotificationMessage.Replace(
-                                "{0}",
-                                relative
-                            ),
-                            Resources.InstancePage_ImportFileAlreadyExistsDangerNotificationTitle,
-                            GrowlLevel.Danger,
-                            thumbnail: ThumbnailHelper.ForInstance(Basic.Key)
-                        );
+                        var relative = Path.GetRelativePath(PathDef.Default.DirectoryOfHome(Basic.Key), target);
+                        _notificationService.PopMessage(Resources
+                                                       .InstancePage_ImportFileAlreadyExistsDangerNotificationMessage
+                                                       .Replace("{0}", relative),
+                                                        Resources
+                                                           .InstancePage_ImportFileAlreadyExistsDangerNotificationTitle,
+                                                        GrowlLevel.Danger,
+                                                        thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
                     }
 
                     break;
@@ -277,13 +236,15 @@ public partial class InstancePageModel : ViewModelBase,
 
     protected override async Task OnInitializeAsync(CancellationToken token)
     {
-        _aggregatorSubscription = _aggregator.Watch(Basic.Key).Subscribe(snapshot =>
-        {
-            Dispatcher.UIThread.Post(() =>
-            {
-                State = snapshot?.State ?? InstanceState.Idle;
-            });
-        });
+        _aggregatorSubscription = _aggregator
+                                 .Watch(Basic.Key)
+                                 .Subscribe(snapshot =>
+                                  {
+                                      Dispatcher.UIThread.Post(() =>
+                                      {
+                                          State = snapshot?.State ?? InstanceState.Idle;
+                                      });
+                                  });
 
         _profileManager.ProfileUpdated += OnProfileUpdated;
 
@@ -327,41 +288,21 @@ public partial class InstancePageModel : ViewModelBase,
         // Home
         new(typeof(InstanceHomePage), Symbol.Home, Resources.InstancePage_HomePageText),
         // Dashboard
-        new(
-            typeof(InstanceDashboardPage),
-            Symbol.PulseSquare,
-            Resources.InstancePage_DashboardPageText
-        ),
+        new(typeof(InstanceDashboardPage), Symbol.PulseSquare, Resources.InstancePage_DashboardPageText),
         // Setup
         new(typeof(InstanceSetupPage), Symbol.Apps, Resources.InstancePage_SetupPageText),
         // Files
         new(typeof(InstanceFilesPage), Symbol.DocumentFolder, Resources.InstancePage_FilesPageText),
         // Workspace
-        new(
-            typeof(InstanceWorkspacePage),
-            Symbol.ArrowSyncCircle,
-            Resources.InstancePage_WorkspacePageText
-        ),
+        new(typeof(InstanceWorkspacePage), Symbol.ArrowSyncCircle, Resources.InstancePage_WorkspacePageText),
         // Widgets
         new(typeof(InstanceWidgetsPage), Symbol.AppFolder, Resources.InstancePage_WidgetsPageText),
         // Statistics
-        new(
-            typeof(InstanceActivitiesPage),
-            Symbol.DataArea,
-            Resources.InstancePage_StatisticsPageText
-        ),
+        new(typeof(InstanceActivitiesPage), Symbol.DataArea, Resources.InstancePage_StatisticsPageText),
         // Storage
-        new(
-            typeof(InstanceStoragePage),
-            Symbol.ChartMultiple,
-            Resources.InstancePage_StoragePageText
-        ),
+        new(typeof(InstanceStoragePage), Symbol.ChartMultiple, Resources.InstancePage_StoragePageText),
         // Properties
-        new(
-            typeof(InstancePropertiesPage),
-            Symbol.Wrench,
-            Resources.InstancePage_PropertiesPageText
-        ),
+        new(typeof(InstancePropertiesPage), Symbol.Wrench, Resources.InstancePage_PropertiesPageText)
     ];
 
     [ObservableProperty]
@@ -375,16 +316,6 @@ public partial class InstancePageModel : ViewModelBase,
 
     [RelayCommand]
     private void ToggleSidebar() => ViewState?.IsSidebarExpanded = !ViewState.IsSidebarExpanded;
-
-    #endregion
-
-    #region Nested type: SidebarState
-
-    public partial class SidebarState : ModelBase
-    {
-        [ObservableProperty]
-        public partial bool IsSidebarExpanded { get; set; } = true;
-    }
 
     #endregion
 }

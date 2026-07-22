@@ -6,10 +6,8 @@ namespace Polymerium.Avalonia.Toasts;
 
 public partial class ImageViewerToast : Toast
 {
-    public static readonly StyledProperty<Uri> ImageSourceProperty = AvaloniaProperty.Register<
-        ImageViewerToast,
-        Uri
-    >(nameof(ImageSource));
+    public static readonly StyledProperty<Uri> ImageSourceProperty =
+        AvaloniaProperty.Register<ImageViewerToast, Uri>(nameof(ImageSource));
 
     public ImageViewerToast() => InitializeComponent();
 

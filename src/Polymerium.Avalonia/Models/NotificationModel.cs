@@ -32,6 +32,7 @@ public partial class NotificationModel : ModelBase
 
     [ObservableProperty]
     public partial Uri? Thumbnail { get; set; }
+
     public AvaloniaList<GrowlAction> Actions { get; init; } = [];
 
     #endregion

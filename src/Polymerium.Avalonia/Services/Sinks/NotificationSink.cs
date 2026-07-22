@@ -24,20 +24,17 @@ public class NotificationSink(
 {
     private const string JAVA_DOWNLOAD_URL = "https://adoptium.net/temurin/releases/";
 
-    public void Attach()
-    {
-        aggregator.StateChangeStream
-                  .Subscribe(change =>
-                  {
-                      foreach (var item in change)
-                      {
-                          if (item.Reason is ChangeReason.Remove)
-                          {
-                              HandleCompleted(item.Current);
-                          }
-                      }
-                  });
-    }
+    public void Attach() =>
+        aggregator.StateChangeStream.Subscribe(change =>
+        {
+            foreach (var item in change)
+            {
+                if (item.Reason is ChangeReason.Remove)
+                {
+                    HandleCompleted(item.Current);
+                }
+            }
+        });
 
     private void HandleCompleted(InstanceStateSnapshot snapshot)
     {
@@ -67,24 +64,22 @@ public class NotificationSink(
         switch (tracker.State)
         {
             case TrackerState.Finished:
-                notificationService.PopMessage(
-                    Resources.MainWindow_InstanceInstallingSuccessNotificationMessage,
-                    tracker.Key,
-                    GrowlLevel.Success,
-                    forceExpire: true,
-                    thumbnail: ThumbnailHelper.ForInstance(tracker.Key),
-                    actions: new GrowlAction(
-                        Resources.MainWindow_InstanceInstallingSuccessNotificationOpenText,
-                        new RelayCommand(() => navigationService.Navigate<InstancePage>(tracker.Key)),
-                        null
-                    ));
+                notificationService.PopMessage(Resources.MainWindow_InstanceInstallingSuccessNotificationMessage,
+                                               tracker.Key,
+                                               GrowlLevel.Success,
+                                               true,
+                                               ThumbnailHelper.ForInstance(tracker.Key),
+                                               new GrowlAction(Resources
+                                                                  .MainWindow_InstanceInstallingSuccessNotificationOpenText,
+                                                               new RelayCommand(() => navigationService
+                                                                                   .Navigate<InstancePage>(tracker
+                                                                                       .Key))));
                 break;
             case TrackerState.Faulted when tracker.FailureReason is not OperationCanceledException:
-                notificationService.PopMessage(
-                    tracker.FailureReason,
-                    Resources.MainWindow_InstanceInstallingDangerNotificationTitle
-                             .Replace("{0}", tracker.Key),
-                    thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
+                notificationService.PopMessage(tracker.FailureReason,
+                                               Resources.MainWindow_InstanceInstallingDangerNotificationTitle
+                                                        .Replace("{0}", tracker.Key),
+                                               thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
         }
     }
@@ -94,24 +89,22 @@ public class NotificationSink(
         switch (tracker.State)
         {
             case TrackerState.Finished:
-                notificationService.PopMessage(
-                    Resources.MainWindow_InstanceUpdatingSuccessNotificationMessage,
-                    tracker.Key,
-                    GrowlLevel.Success,
-                    forceExpire: true,
-                    thumbnail: ThumbnailHelper.ForInstance(tracker.Key),
-                    actions: new GrowlAction(
-                        Resources.MainWindow_InstanceUpdatingSuccessNotificationOpenText,
-                        new RelayCommand(() => navigationService.Navigate<InstancePage>(tracker.Key)),
-                        null
-                    ));
+                notificationService.PopMessage(Resources.MainWindow_InstanceUpdatingSuccessNotificationMessage,
+                                               tracker.Key,
+                                               GrowlLevel.Success,
+                                               true,
+                                               ThumbnailHelper.ForInstance(tracker.Key),
+                                               new GrowlAction(Resources
+                                                                  .MainWindow_InstanceUpdatingSuccessNotificationOpenText,
+                                                               new RelayCommand(() => navigationService
+                                                                                   .Navigate<InstancePage>(tracker
+                                                                                       .Key))));
                 break;
             case TrackerState.Faulted when tracker.FailureReason is not OperationCanceledException:
-                notificationService.PopMessage(
-                    tracker.FailureReason,
-                    Resources.MainWindow_InstanceUpdatingDangerNotificationTitle
-                             .Replace("{0}", tracker.Key),
-                    thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
+                notificationService.PopMessage(tracker.FailureReason,
+                                               Resources.MainWindow_InstanceUpdatingDangerNotificationTitle
+                                                        .Replace("{0}", tracker.Key),
+                                               thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
         }
     }
@@ -121,33 +114,31 @@ public class NotificationSink(
         switch (tracker.State)
         {
             case TrackerState.Finished:
-                notificationService.PopMessage(
-                    Resources.MainWindow_InstanceDeployingSuccessNotificationMessage,
-                    tracker.Key,
-                    GrowlLevel.Success,
-                    thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
+                notificationService.PopMessage(Resources.MainWindow_InstanceDeployingSuccessNotificationMessage,
+                                               tracker.Key,
+                                               GrowlLevel.Success,
+                                               thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
             case TrackerState.Faulted when tracker.FailureReason is not OperationCanceledException:
-                var title = Resources.MainWindow_InstanceDeployingDangerNotificationTitle
-                                     .Replace("{0}", tracker.Key);
+                var title = Resources.MainWindow_InstanceDeployingDangerNotificationTitle.Replace("{0}", tracker.Key);
                 if (FindBuildArtifactConflict(tracker.FailureReason) is not null)
                 {
-                    notificationService.PopMessage(
-                        Resources.MainWindow_InstanceDeployingBuildArtifactConflictDangerNotificationMessage,
-                        title,
-                        GrowlLevel.Danger,
-                        thumbnail: ThumbnailHelper.ForInstance(tracker.Key),
-                        actions: new GrowlAction(
-                            Resources.MainWindow_InstanceDeployingBuildArtifactConflictResetActionText,
-                            new AsyncRelayCommand(() => instanceService.ResetAsync(tracker.Key)),
-                            null));
+                    notificationService.PopMessage(Resources
+                                                      .MainWindow_InstanceDeployingBuildArtifactConflictDangerNotificationMessage,
+                                                   title,
+                                                   GrowlLevel.Danger,
+                                                   thumbnail: ThumbnailHelper.ForInstance(tracker.Key),
+                                                   actions: new
+                                                       GrowlAction(Resources
+                                                                      .MainWindow_InstanceDeployingBuildArtifactConflictResetActionText,
+                                                                   new AsyncRelayCommand(() => instanceService
+                                                                      .ResetAsync(tracker.Key))));
                     break;
                 }
 
-                notificationService.PopMessage(
-                    tracker.FailureReason,
-                    title,
-                    thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
+                notificationService.PopMessage(tracker.FailureReason,
+                                               title,
+                                               thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
         }
     }
@@ -157,11 +148,10 @@ public class NotificationSink(
         switch (tracker.State)
         {
             case TrackerState.Finished:
-                notificationService.PopMessage(
-                    Resources.MainWindow_InstanceLaunchingSuccessNotificationMessage,
-                    tracker.Key,
-                    GrowlLevel.Success,
-                    thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
+                notificationService.PopMessage(Resources.MainWindow_InstanceLaunchingSuccessNotificationMessage,
+                                               tracker.Key,
+                                               GrowlLevel.Success,
+                                               thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
             case TrackerState.Faulted when tracker.FailureReason is not OperationCanceledException:
                 // ProcessFaultedException 由 CrashDiagnosisSink 处理
@@ -177,10 +167,9 @@ public class NotificationSink(
                 }
 
                 // AccountException 或其他错误
-                notificationService.PopMessage(
-                    tracker.FailureReason,
-                    tracker.Key,
-                    thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
+                notificationService.PopMessage(tracker.FailureReason,
+                                               tracker.Key,
+                                               thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
         }
     }
@@ -213,28 +202,25 @@ public class NotificationSink(
         return null;
     }
 
-    private static bool IsProcessFaulted(Exception? ex) => ex is ProcessFaultedException
-                                                           or AggregateException
-    {
-        InnerException: ProcessFaultedException
-    };
+    private static bool IsProcessFaulted(Exception? ex) =>
+        ex is ProcessFaultedException or AggregateException { InnerException: ProcessFaultedException };
 
-    private void HandleJavaNotFound(string key, JavaNotFoundException exception)
-    {
-        notificationService.PopMessage(
-            string.Format(
-                Resources.MainWindow_JavaRuntimeNotFoundDangerNotificationMessage,
-                exception.MajorVersion),
-            Resources.MainWindow_JavaRuntimeNotFoundDangerNotificationTitle.Replace("{0}", key),
-            GrowlLevel.Danger,
-            thumbnail: ThumbnailHelper.ForInstance(key),
-            actions: new GrowlAction(
-                Resources.MainWindow_JavaRuntimeNotFoundDangerNotificationDownloadText,
-                new AsyncRelayCommand(() => TopLevelHelper.LaunchUriAsync(
-                    TopLevelHelper.GetTopLevel(),
-                    new(JAVA_DOWNLOAD_URL),
-                    Resources.MainWindow_JavaRuntimeDownloadDangerNotificationTitle,
-                    notificationService)),
-                null));
-    }
+    private void HandleJavaNotFound(string key, JavaNotFoundException exception) =>
+        notificationService.PopMessage(string.Format(Resources.MainWindow_JavaRuntimeNotFoundDangerNotificationMessage,
+                                                     exception.MajorVersion),
+                                       Resources.MainWindow_JavaRuntimeNotFoundDangerNotificationTitle
+                                                .Replace("{0}", key),
+                                       GrowlLevel.Danger,
+                                       thumbnail: ThumbnailHelper.ForInstance(key),
+                                       actions: new
+                                           GrowlAction(Resources
+                                                          .MainWindow_JavaRuntimeNotFoundDangerNotificationDownloadText,
+                                                       new AsyncRelayCommand(() =>
+                                                                                 TopLevelHelper
+                                                                                    .LaunchUriAsync(TopLevelHelper
+                                                                                            .GetTopLevel(),
+                                                                                         new(JAVA_DOWNLOAD_URL),
+                                                                                         Resources
+                                                                                            .MainWindow_JavaRuntimeDownloadDangerNotificationTitle,
+                                                                                         notificationService))));
 }

@@ -5,10 +5,8 @@ namespace Polymerium.Avalonia.Controls;
 
 public class PackageDependencyButton : Button
 {
-    public static readonly StyledProperty<bool> IsCheckedProperty = AvaloniaProperty.Register<
-        PackageDependencyButton,
-        bool
-    >(nameof(IsChecked));
+    public static readonly StyledProperty<bool> IsCheckedProperty =
+        AvaloniaProperty.Register<PackageDependencyButton, bool>(nameof(IsChecked));
 
     public bool IsChecked
     {

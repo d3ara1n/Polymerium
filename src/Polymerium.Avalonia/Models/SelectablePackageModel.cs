@@ -1,8 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Facilities;
-using System.Collections.Generic;
-using System.Linq;
 using TridentCore.Abstractions.Repositories.Resources;
 
 namespace Polymerium.Avalonia.Models;

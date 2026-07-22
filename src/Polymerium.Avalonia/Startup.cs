@@ -14,10 +14,10 @@ using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
 using NeoSmart.Caching.Sqlite;
 using Polly;
+using Polymerium.Avalonia.Controls;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Rendering;
-using Polymerium.Avalonia.Repositories;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Services.Sinks;
 using Polymerium.Avalonia.Snapshots;
@@ -38,6 +38,7 @@ namespace Polymerium.Avalonia;
 public static class Startup
 {
     private static SingleInstance? _singleInstance;
+
     public static void ConfigureServices(IServiceCollection services, bool debug)
     {
         services
@@ -62,25 +63,26 @@ public static class Startup
                                                                {
                                                                    case ProxyMode.Auto:
                                                                        handler.UseProxy = true;
-                                                                       handler.DefaultProxyCredentials =
-                                                                           CredentialCache.DefaultCredentials;
+                                                                       handler.DefaultProxyCredentials = CredentialCache
+                                                                          .DefaultCredentials;
                                                                        break;
 
                                                                    case ProxyMode.Manual:
                                                                        var protocol = (ProxyProtocol)config
                                                                           .NetworkProxyProtocol;
-                                                                       var proxy = new WebProxy(BuildProxyUri(
-                                                                           protocol,
-                                                                           config.NetworkProxyAddress,
-                                                                           config.NetworkProxyPort
-                                                                       ))
-                                                                       {
-                                                                           Credentials = !string.IsNullOrEmpty(config
-                                                                                             .NetworkProxyUsername)
-                                                                                              ? new NetworkCredential(config.NetworkProxyUsername,
-                                                                                                  config.NetworkProxyPassword)
-                                                                                              : null
-                                                                       };
+                                                                       var proxy =
+                                                                           new WebProxy(BuildProxyUri(protocol,
+                                                                               config.NetworkProxyAddress,
+                                                                               config.NetworkProxyPort))
+                                                                           {
+                                                                               Credentials =
+                                                                                   !string.IsNullOrEmpty(config
+                                                                                      .NetworkProxyUsername)
+                                                                                       ? new NetworkCredential(config
+                                                                                              .NetworkProxyUsername,
+                                                                                           config.NetworkProxyPassword)
+                                                                                       : null
+                                                                           };
 
                                                                        handler.Proxy = proxy;
                                                                        handler.UseProxy = true;
@@ -94,8 +96,8 @@ public static class Startup
                                                            else
                                                            {
                                                                handler.UseProxy = true;
-                                                               handler.DefaultProxyCredentials =
-                                                                   CredentialCache.DefaultCredentials;
+                                                               handler.DefaultProxyCredentials = CredentialCache
+                                                                  .DefaultCredentials;
                                                            }
                                                        }
                                                        catch
@@ -132,21 +134,21 @@ public static class Startup
                 setup.CachePath = path;
             })
            .AddMemoryCache(options =>
-           {
-               options.ExpirationScanFrequency = TimeSpan.FromMinutes(10);
-               options.TrackStatistics = true;
-           })
+            {
+                options.ExpirationScanFrequency = TimeSpan.FromMinutes(10);
+                options.TrackStatistics = true;
+            })
            .AddFusionCache()
            .WithoutLogger()
            .WithDefaultEntryOptions(options =>
-           {
-               options.Duration = TimeSpan.FromDays(7);
-               options.IsFailSafeEnabled = true;
-               options.FailSafeMaxDuration = TimeSpan.FromDays(14);
-               options.FailSafeThrottleDuration = TimeSpan.FromMinutes(5);
-               options.FactorySoftTimeout = TimeSpan.FromSeconds(10);
-               options.FactoryHardTimeout = TimeSpan.FromSeconds(30);
-           })
+            {
+                options.Duration = TimeSpan.FromDays(7);
+                options.IsFailSafeEnabled = true;
+                options.FailSafeMaxDuration = TimeSpan.FromDays(14);
+                options.FailSafeThrottleDuration = TimeSpan.FromMinutes(5);
+                options.FactorySoftTimeout = TimeSpan.FromSeconds(10);
+                options.FactoryHardTimeout = TimeSpan.FromSeconds(30);
+            })
            .WithNeueccMessagePackSerializer()
            .WithRegisteredDistributedCache();
 
@@ -220,7 +222,7 @@ public static class Startup
         {
             ProxyProtocol.Socks4 => new($"socks4://{address}:{port}"),
             ProxyProtocol.Socks5 => new($"socks5://{address}:{port}"),
-            _ => new($"http://{address}:{port}"),
+            _ => new($"http://{address}:{port}")
         };
 
     public static bool InitializeUnhostedServices()
@@ -232,12 +234,13 @@ public static class Startup
             SingleInstance.Send(new());
             return false;
         }
+
         _singleInstance.Received += OnIpcReceived;
         _singleInstance.StartServer();
 
         // Huskui 的 OverlayHost SmokeMask 是半透明遮罩，进捕获会经模糊+tint 后整体偏黑。Huskui 以 NuGet
         // 形式消费、无法挂 BlurBackdrop.ExcludeFromCapture，只能在此按名登记全局排除。
-        Polymerium.Avalonia.Controls.BlurBackdrop.ExcludedRoots.Add("PART_SmokeMask");
+        BlurBackdrop.ExcludedRoots.Add("PART_SmokeMask");
 
         #region SentrySdk Init (only in Debug)
 
@@ -287,29 +290,38 @@ public static class Startup
         {
             SentrySdk.Close();
         }
+
         _singleInstance?.Dispose();
     }
 
     private static void OnIpcReceived(SingleInstance.Message message)
     {
         if (message.Action != "activate")
+        {
             return;
+        }
 
         // NOTE: ApplicationLifetime 在 StartWithClassicDesktopLifetime 内部才赋值。在那之前碰
         //  Dispatcher.UIThread 会在当前 IPC 监听线程上懒构造 Dispatcher 并绑死 owner，随后
         //  Win32Platform.Initialize 的 VerifyAccess 会因主线程≠监听线程而抛异常崩溃（POLYMERIUM-28）。
         //  框架尚未就绪时丢弃这次激活即可——此时主窗口还没创建，无事可激活。
         if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime)
+        {
             return;
+        }
 
         Dispatcher.UIThread.Post(() =>
         {
-            if (
-                Application.Current?.ApplicationLifetime
-                is IClassicDesktopStyleApplicationLifetime { MainWindow: { } window })
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime
+                {
+                    MainWindow: { } window
+                })
             {
                 if (window.WindowState == WindowState.Minimized)
+                {
                     window.WindowState = WindowState.Normal;
+                }
+
                 window.Activate();
             }
         });

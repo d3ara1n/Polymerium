@@ -184,6 +184,11 @@ public const string CLASS_Selected = ":selected";
 
 Then use `PseudoClasses.Set(CLASS_Error, true)` instead of `PseudoClasses.Set(":error", true)`. Pseudo-class selectors in `.axaml` are still written as bare `:error`/`:selected` in style selectors — the constant is only for code-behind references.
 
+## View State Representation
+
+- **Never fan one logical state out across multiple `IsVisible` bindings.** When a UI region swaps between alternatives (e.g. a preview pane that differs for a local import vs an online source), do not model it as several boolean properties each gating a separate control. That splits a single decision into N properties and N controls that can drift out of sync, and hides which alternative is actually active.
+- **Represent the alternative as one value, and switch the view on that value.** Data side: an `enum`, or a base type with one derived class per case. View side: `SwitchContainer` for an enum/bool discriminant, or `DataTemplate` selection by type for derived classes. One source of truth on the data side, one switching mechanism on the view side.
+
 ## External Tracking (Jira / GitHub / Sentry)
 
 固定参数，调用 MCP 时直接复用，不要每次重新发现：

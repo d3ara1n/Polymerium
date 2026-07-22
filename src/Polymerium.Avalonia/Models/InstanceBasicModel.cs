@@ -10,13 +10,7 @@ namespace Polymerium.Avalonia.Models;
 
 public partial class InstanceBasicModel : ModelBase
 {
-    public InstanceBasicModel(
-        string key,
-        string name,
-        string version,
-        string? loader,
-        string? source
-    )
+    public InstanceBasicModel(string key, string name, string version, string? loader, string? source)
     {
         Key = key;
         Name = name;

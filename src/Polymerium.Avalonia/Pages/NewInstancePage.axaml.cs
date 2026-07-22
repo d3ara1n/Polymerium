@@ -9,9 +9,7 @@ namespace Polymerium.Avalonia.Pages;
 
 public partial class NewInstancePage : ScopedPage
 {
-    private static readonly DataFormat FileContentsFormat = DataFormat.CreateStringPlatformFormat(
-        "FileContents"
-    );
+    private static readonly DataFormat FileContentsFormat = DataFormat.CreateStringPlatformFormat("FileContents");
 
     public NewInstancePage() => InitializeComponent();
 

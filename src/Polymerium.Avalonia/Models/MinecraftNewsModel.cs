@@ -10,8 +10,7 @@ public class MinecraftNewsModel(
     string title,
     string description,
     Uri readMoreLink,
-    DateOnly publishedAt
-) : ModelBase
+    DateOnly publishedAt) : ModelBase
 {
     #region Direct
 

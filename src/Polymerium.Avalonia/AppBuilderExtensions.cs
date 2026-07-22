@@ -9,21 +9,12 @@ public static class AppBuilderExtensions
     public static AppBuilder WithFontSetup(this AppBuilder appBuilder)
     {
         appBuilder
-            .ConfigureFonts(fontManager =>
+           .ConfigureFonts(fontManager =>
             {
-                fontManager.AddFontCollection(
-                    new EmbeddedFontCollection(
-                        new("fonts:AlimamaFangYuanTi"),
-                        new("avares://Polymerium/Assets/Fonts/AlimamaFangYuanTi")
-                    )
-                );
+                fontManager.AddFontCollection(new EmbeddedFontCollection(new("fonts:AlimamaFangYuanTi"),
+                                                                         new("avares://Polymerium/Assets/Fonts/AlimamaFangYuanTi")));
             })
-            .With(
-                new FontManagerOptions
-                {
-                    DefaultFamilyName = "fonts:AlimamaFangYuanTi#AlimamaFangYuanTi",
-                }
-            );
+           .With(new FontManagerOptions { DefaultFamilyName = "fonts:AlimamaFangYuanTi#AlimamaFangYuanTi" });
         return appBuilder;
     }
 }

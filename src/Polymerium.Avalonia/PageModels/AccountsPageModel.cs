@@ -1,6 +1,5 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
@@ -51,7 +50,10 @@ public partial class AccountsPageModel(
         var raw = AccountHelper.ToRaw(account, enrolledAt, null, isDefault);
         persistenceService.AppendAccount(raw);
         if (isDefault)
+        {
             persistenceService.MarkDefaultAccount(account.Uuid);
+        }
+
         var model = AccountHelper.CreateModelFromAccount(account, enrolledAt);
         model.IsDefault = isDefault;
         Accounts.Add(model);
@@ -96,7 +98,7 @@ public partial class AccountsPageModel(
             XboxLiveService = xboxLiveService,
             MinecraftService = minecraftService,
             NotificationService = notificationService,
-            YggdrasilService = yggdrasilService,
+            YggdrasilService = yggdrasilService
         });
 
     [RelayCommand]

@@ -49,10 +49,7 @@ public partial class ModpackExporterDialog : Dialog
                                                                                o => o.PackData,
                                                                                (o, v) => o.PackData = v);
 
-    public ModpackExporterDialog()
-    {
-        InitializeComponent();
-    }
+    public ModpackExporterDialog() => InitializeComponent();
 
     public IReadOnlyList<ModpackExporterFormatModel> ExporterLabels { get; } =
     [
@@ -192,8 +189,11 @@ public partial class ModpackExporterDialog : Dialog
     private async Task AddTag()
     {
         if (PackData is null)
+        {
             return;
-        var dialog = new TagPickerDialog { ExistingTags = [.. AvailableTags.Except(PackData.ExcludedTags)], };
+        }
+
+        var dialog = new TagPickerDialog { ExistingTags = [.. AvailableTags.Except(PackData.ExcludedTags)] };
         if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is string tag && !string.IsNullOrEmpty(tag))
         {
             if (!PackData.ExcludedTags.Contains(tag))

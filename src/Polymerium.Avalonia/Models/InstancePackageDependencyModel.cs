@@ -14,8 +14,7 @@ public partial class InstancePackageDependencyModel(
     Bitmap thumbnail,
     Uri reference,
     uint refCount,
-    bool isRequired
-) : ModelBase
+    bool isRequired) : ModelBase
 {
     #region Reactive
 

@@ -15,17 +15,11 @@ public class WidgetHostService(PersistenceService persistenceService, IServicePr
 
     #region Private
 
-    private readonly IDictionary<string, WidgetContext> _cachedContexts =
-        new Dictionary<string, WidgetContext>();
+    private readonly IDictionary<string, WidgetContext> _cachedContexts = new Dictionary<string, WidgetContext>();
 
     #endregion
 
-    public Type[] WidgetTypes =>
-        [
-            typeof(NoteWidget),
-            typeof(NetworkCheckerWidget),
-            typeof(DeveloperToolboxWidget)
-        ];
+    public Type[] WidgetTypes => [typeof(NoteWidget), typeof(NetworkCheckerWidget), typeof(DeveloperToolboxWidget)];
 
     public WidgetContext GetOrCreateContext(string key, string widgetId)
     {

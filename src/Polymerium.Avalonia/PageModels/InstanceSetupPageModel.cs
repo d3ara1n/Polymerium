@@ -61,9 +61,10 @@ public partial class InstanceSetupPageModel(
     DataService dataService,
     OverlayService overlayService,
     NavigationService navigationService,
-    PersistenceService persistenceService) : InstancePageModelBase(context, aggregator, instanceManager, profileManager),
-                                             IStatefulViewModel<InstanceSetupPageModel.StateView>,
-                                             IViewStateKeyProvider
+    PersistenceService persistenceService)
+    : InstancePageModelBase(context, aggregator, instanceManager, profileManager),
+      IStatefulViewModel<InstanceSetupPageModel.StateView>,
+      IViewStateKeyProvider
 {
     #region Nested type: ExportedEntry
 
@@ -89,6 +90,24 @@ public partial class InstanceSetupPageModel(
         public Bitmap? Thumbnail { get; set; }
         public Project? Project { get; set; }
         public Package? Package { get; set; }
+    }
+
+    #endregion
+
+    #region Nested type: StateData
+
+    public partial class StateView : ModelBase
+    {
+        [ObservableProperty]
+        public partial int LayoutIndex { get; set; }
+
+        #region For PackageBulkUpdatePreviewerDialog
+
+        public bool LastChosenIsEnabledOnly { get; set; } = true;
+        public IReadOnlyList<string>? LastChosenTags { get; set; }
+        public PackageBulkUpdatePreviewerTagPolicy LastChosenTagPolicy { get; set; }
+
+        #endregion
     }
 
     #endregion
@@ -125,16 +144,15 @@ public partial class InstanceSetupPageModel(
             var toAdd = lookup
                        .Select(x =>
                         {
-                            var pkg = new InstancePackageModel(x,
-                                                               PackageSourceHelper.CanUpdate(x.Source, Basic.Source))
+                            var pkg = new InstancePackageModel(x, PackageSourceHelper.CanUpdate(x.Source, Basic.Source))
                             {
-                                PersistentIndex = persistentIndex++,
+                                PersistentIndex = persistentIndex++
                             };
                             return new PackageListItemBase.Entry
                             {
                                 Key = new PackageListKey.Entry(x),
                                 Group = GroupModelOf(pkg),
-                                Package = pkg,
+                                Package = pkg
                             };
                         })
                        .ToList();
@@ -142,12 +160,12 @@ public partial class InstanceSetupPageModel(
             // _flat 是合并期的唯一写入对象，无外部并发修改，StageCount 与 profile 严格一致
 
             // 同步组头：为每个有成员的非散装组确保恰好一个 Header，移除空组的 Header。
-            var presentGroups = _flat.Items
-                                     .OfType<PackageListItemBase.Entry>()
-                                     .Select(i => i.Group)
-                                     .Where(g => g is not LooseGroupModel)
-                                     .Distinct()
-                                     .ToList();
+            var presentGroups = _flat
+                               .Items.OfType<PackageListItemBase.Entry>()
+                               .Select(i => i.Group)
+                               .Where(g => g is not LooseGroupModel)
+                               .Distinct()
+                               .ToList();
 
             var bySource = presentGroups.ToDictionary(g => g.Source!, g => g);
             var desiredKeys = bySource.Keys.Select(s => new PackageListKey.Header(s)).ToHashSet();
@@ -193,7 +211,7 @@ public partial class InstanceSetupPageModel(
                             var package = await dataService.ResolvePackageAsync(r,
                                                                                     Filter.None with
                                                                                     {
-                                                                                        Kind = ResourceKind.Modpack,
+                                                                                        Kind = ResourceKind.Modpack
                                                                                     });
 
                             return new InstanceReferenceModel(profile.Setup.Source,
@@ -225,25 +243,23 @@ public partial class InstanceSetupPageModel(
         {
             await previous;
         }
-        catch
-        {
-        }
+        catch { }
 
         token.ThrowIfCancellationRequested();
 
         // 现场重判：排到时若前一个已把事情做完，这里为空，直接 no-op 完成
-        var pendingPackages = _flat.Items
-                                  .OfType<PackageListItemBase.Entry>()
-                                  .Select(i => i.Package)
-                                  .Where(p => p.Info is null || p.OldPrefCache != p.Entry.Pref)
-                                  .ToList();
-        var pendingGroups = _flat.Items
-                                 .OfType<PackageListItemBase.Entry>()
-                                 .Select(i => i.Group)
-                                 .OfType<ModpackGroupModel>()
-                                 .Distinct()
-                                 .Where(g => g.Info is null)
-                                 .ToList();
+        var pendingPackages = _flat
+                             .Items.OfType<PackageListItemBase.Entry>()
+                             .Select(i => i.Package)
+                             .Where(p => p.Info is null || p.OldPrefCache != p.Entry.Pref)
+                             .ToList();
+        var pendingGroups = _flat
+                           .Items.OfType<PackageListItemBase.Entry>()
+                           .Select(i => i.Group)
+                           .OfType<ModpackGroupModel>()
+                           .Distinct()
+                           .Where(g => g.Info is null)
+                           .ToList();
         if (pendingPackages.Count == 0 && pendingGroups.Count == 0)
         {
             return;
@@ -268,13 +284,13 @@ public partial class InstanceSetupPageModel(
             token.ThrowIfCancellationRequested();
 
             foreach (var package in packages)
+            {
                 package.IsLoaded = false;
+            }
 
             var items = packages
                        .Select(x => PackageHelper.TryParse(x.Entry.Pref, out var pref)
-                                        ? (Model: x,
-                                           Pref: pref,
-                                           Data: new RefreshIntermediateData(x))
+                                        ? (Model: x, Pref: pref, Data: new RefreshIntermediateData(x))
                                         : throw new FormatException($"Failed to parse pref: {x.Entry.Pref}"))
                        .ToList();
 
@@ -285,28 +301,31 @@ public partial class InstanceSetupPageModel(
                 var known = sourceGroup.Where(x => x.Pref.Version is not null).ToArray();
                 if (known.Length > 0)
                 {
-                    var resolved = await dataService.ResolvePackagesAsync(
-                        known.Select(x => x.Pref).Distinct(),
-                        Filter.None);
+                    var resolved =
+                        await dataService.ResolvePackagesAsync(known.Select(x => x.Pref).Distinct(), Filter.None);
                     foreach (var (id, package) in resolved.Successful)
                     {
                         foreach (var item in known.Where(x => x.Pref == id))
+                        {
                             item.Data.Package = package;
+                        }
                     }
                 }
 
                 var unknown = sourceGroup.Where(x => x.Pref.Version is null).ToArray();
                 if (unknown.Length > 0)
                 {
-                    var queried = await dataService.QueryProjectsAsync(
-                        unknown
-                           .Select(x => x.Pref.ToProjectIdentifier())
-                           .Distinct());
+                    var queried =
+                        await dataService.QueryProjectsAsync(unknown
+                                                            .Select(x => x.Pref.ToProjectIdentifier())
+                                                            .Distinct());
                     foreach (var (projectKey, project) in queried.Successful)
                     {
                         var id = projectKey.ToPackageIdentifier();
                         foreach (var item in unknown.Where(x => x.Pref == id))
+                        {
                             item.Data.Project = project;
+                        }
                     }
                 }
             }
@@ -362,7 +381,7 @@ public partial class InstanceSetupPageModel(
                                                                               x.Package.ReleaseType,
                                                                               x.Package.Dependencies)
                                                                       {
-                                                                          IsCurrent = true,
+                                                                          IsCurrent = true
                                                                       },
                                                                       x.Package.Author,
                                                                       x.Package.Summary,
@@ -380,7 +399,7 @@ public partial class InstanceSetupPageModel(
                                                                       x.Project.Reference,
                                                                       x.Thumbnail,
                                                                       x.Project.Kind),
-                    _ => null,
+                    _ => null
                 };
 
                 x.Model.OldPrefCache = x.Model.Entry.Pref;
@@ -401,13 +420,17 @@ public partial class InstanceSetupPageModel(
     private async Task RefreshModpackGroupInfoAsync(IReadOnlyList<ModpackGroupModel> groups, CancellationToken token)
     {
         foreach (var g in groups)
+        {
             g.IsLoaded = false;
+        }
 
         var identifiable = new List<(ModpackGroupModel Group, ProjectIdentifier Id)>();
         foreach (var g in groups)
         {
             if (g.Source is not null && PackageHelper.TryParse(g.Source, out var r))
+            {
                 identifiable.Add((g, r.ToProjectIdentifier()));
+            }
         }
 
         try
@@ -420,7 +443,9 @@ public partial class InstanceSetupPageModel(
                 foreach (var (id, project) in projects.Successful)
                 {
                     if (byId.TryGetValue(id, out var g))
+                    {
                         g.Info = new(g, project.ProjectName, project.Thumbnail);
+                    }
                 }
             }
         }
@@ -434,7 +459,9 @@ public partial class InstanceSetupPageModel(
         }
 
         foreach (var g in groups)
+        {
             g.IsLoaded = true;
+        }
     }
 
     private Uri GetNotificationThumbnail(Uri? preferred = null) =>
@@ -492,14 +519,14 @@ public partial class InstanceSetupPageModel(
 
         // 包变更流（tags 与计数共用）：从拍平源取 Entry 项解包成 InstancePackageModel
         var packages = _flat
-           .Connect()
-           .Filter(item => item is PackageListItemBase.Entry)
-           .Transform(item => ((PackageListItemBase.Entry)item).Package);
+                      .Connect()
+                      .Filter(item => item is PackageListItemBase.Entry)
+                      .Transform(item => ((PackageListItemBase.Entry)item).Package);
 
         packages
            .MergeManyChangeSets(x => x.Tags.ToObservableChangeSet())
            .GroupOn(x => x)
-           .Transform(group => new InstancePackageFilterTagModel(group.GroupKey) { RefCount = group.List.Count, })
+           .Transform(group => new InstancePackageFilterTagModel(group.GroupKey) { RefCount = group.List.Count })
            .DisposeMany()
            .Bind(out var tagsView)
            .Subscribe()
@@ -527,10 +554,10 @@ public partial class InstanceSetupPageModel(
         var comparer = new PackageListItemComparer(sourceOrders);
 
         var packageFilter = enability
-           .CombineLatest(lockility, (a, b) => (Func<InstancePackageModel, bool>)(x => a(x) && b(x)))
-           .CombineLatest(kind, (ab, c) => (Func<InstancePackageModel, bool>)(x => ab(x) && c(x)))
-           .CombineLatest(tags, (abc, d) => (Func<InstancePackageModel, bool>)(x => abc(x) && d(x)))
-           .CombineLatest(text, (abcd, e) => (Func<InstancePackageModel, bool>)(x => abcd(x) && e(x)));
+                           .CombineLatest(lockility, (a, b) => (Func<InstancePackageModel, bool>)(x => a(x) && b(x)))
+                           .CombineLatest(kind, (ab, c) => (Func<InstancePackageModel, bool>)(x => ab(x) && c(x)))
+                           .CombineLatest(tags, (abc, d) => (Func<InstancePackageModel, bool>)(x => abc(x) && d(x)))
+                           .CombineLatest(text, (abcd, e) => (Func<InstancePackageModel, bool>)(x => abcd(x) && e(x)));
 
         // 计数：只数通过过滤的包，不受折叠与组头影响
         packages
@@ -540,8 +567,10 @@ public partial class InstanceSetupPageModel(
            .DisposeWith(_subscriptions);
 
         // 列表：组头永远放行（独立于过滤），Entry 才套包过滤；折叠只藏 Entry 不藏组头
-        var itemFilter = packageFilter.Select(pf => (Func<PackageListItemBase, bool>)(item =>
-             item is PackageListItemBase.Header || item is PackageListItemBase.Entry e && pf(e.Package)));
+        var itemFilter =
+            packageFilter.Select(pf => (Func<PackageListItemBase, bool>)(item => item is PackageListItemBase.Header
+                                                                             || (item is PackageListItemBase.Entry e
+                                                                                         && pf(e.Package))));
 
         _flat
            .Connect()
@@ -628,21 +657,21 @@ public partial class InstanceSetupPageModel(
         x => enablity?.Value switch
         {
             bool it => x.IsEnabled == it,
-            _ => true,
+            _ => true
         };
 
     private static Func<InstancePackageModel, bool> BuildLockilityFilter(FilterModel? lockility) =>
         x => lockility?.Value switch
         {
             bool it => x.CanRemove != it,
-            _ => true,
+            _ => true
         };
 
     private static Func<InstancePackageModel, bool> BuildKindFilter(FilterModel? kind) =>
         x => kind?.Value switch
         {
             ResourceKind it => x.Info?.Kind == it,
-            _ => true,
+            _ => true
         };
 
     private static Func<InstancePackageModel, bool> BuildTextFilter(string? filter) =>
@@ -664,7 +693,7 @@ public partial class InstanceSetupPageModel(
                   ['!', .. var i] => pid.Contains(i, StringComparison.OrdinalIgnoreCase)
                                   || (version is InstancePackageVersionModel v
                                    && v.Id.Contains(i, StringComparison.OrdinalIgnoreCase)),
-                  _ => name.Contains(y, StringComparison.OrdinalIgnoreCase),
+                  _ => name.Contains(y, StringComparison.OrdinalIgnoreCase)
               }));
 
     private static Func<InstancePackageModel, bool> BuildTagFilter(ReadOnlyObservableCollection<string>? tags) =>
@@ -691,7 +720,7 @@ public partial class InstanceSetupPageModel(
             DataService = dataService,
             GameVersion = Basic.Version,
             SelectedLoader = loader,
-            SelectedVersion = version,
+            SelectedVersion = version
         };
         if (await overlayService.PopDialogAsync(dialog))
         {
@@ -709,7 +738,7 @@ public partial class InstanceSetupPageModel(
                             Key = Basic.Key,
                             Kind = PersistenceService.ActionKind.EditLoader,
                             Old = old,
-                            New = lurl,
+                            New = lurl
                         });
                     }
                 }
@@ -723,7 +752,7 @@ public partial class InstanceSetupPageModel(
                         {
                             Key = Basic.Key,
                             Kind = PersistenceService.ActionKind.EditLoader,
-                            Old = old,
+                            Old = old
                         });
                     }
                 }
@@ -741,8 +770,11 @@ public partial class InstanceSetupPageModel(
             overlayService.PopModal(new ProfileRulesModal
             {
                 Rules = Rules,
-                Packages = _flat.Items.OfType<PackageListItemBase.Entry>().Select(i => i.Package).ToList(),
-                OverlayService = overlayService,
+                Packages = _flat
+                          .Items.OfType<PackageListItemBase.Entry>()
+                          .Select(i => i.Package)
+                          .ToList(),
+                OverlayService = overlayService
             });
         }
     }
@@ -770,7 +802,7 @@ public partial class InstanceSetupPageModel(
                                                                  out var result)
                                                ? result.Identity
                                                : null
-                                         : null),
+                                         : null)
             });
         }
     }
@@ -800,7 +832,7 @@ public partial class InstanceSetupPageModel(
                     DataService = dataService,
                     PersistenceService = persistenceService,
                     DataContext = model,
-                    InstallCommand = InstallVersionCommand,
+                    InstallCommand = InstallVersionCommand
                 });
             }
             catch (OperationCanceledException) { }
@@ -810,7 +842,7 @@ public partial class InstanceSetupPageModel(
                                                Resources
                                                   .InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
                                                GrowlLevel.Warning,
-                                               thumbnail: GetNotificationThumbnail());
+                                               GetNotificationThumbnail());
             }
         }
     }
@@ -819,8 +851,7 @@ public partial class InstanceSetupPageModel(
     private void GotoPackageExplorerPage() => navigationService.Navigate<PackageExplorerPage>(Basic.Key);
 
     [RelayCommand]
-    private void GotoDependencyGraph()
-        => overlayService.PopModal<InstanceDependencyGraphModal>(Basic);
+    private void GotoDependencyGraph() => overlayService.PopModal<InstanceDependencyGraphModal>(Basic);
 
     [RelayCommand]
     private async Task UpdateBatchAsync()
@@ -829,12 +860,12 @@ public partial class InstanceSetupPageModel(
         {
             // 收集所有现有标签（去重，排除当前包已有的标签）
             var existingTags = profile.Setup.Packages.SelectMany(x => x.Tags).Distinct().OrderBy(t => t).ToList();
-            var previewer = new PackageBulkUpdatePreviewerDialog()
+            var previewer = new PackageBulkUpdatePreviewerDialog
             {
                 ExistingTags = existingTags,
                 OverlayService = overlayService,
                 IsEnabledOnly = true,
-                ViewState = ViewState,
+                ViewState = ViewState
             };
             if (await overlayService.PopDialogAsync(previewer)
              && previewer.Result is PackageBulkUpdatePreviewerModel
@@ -850,7 +881,7 @@ public partial class InstanceSetupPageModel(
                               {
                                   PackageBulkUpdatePreviewerTagPolicy.Include => tags.Any(y => x.Tags.Contains(y)),
                                   PackageBulkUpdatePreviewerTagPolicy.Exclude => !tags.Any(y => x.Tags.Contains(y)),
-                                  _ => true,
+                                  _ => true
                               })
                              .ToList();
                 var total = staging.Count;
@@ -890,7 +921,7 @@ public partial class InstanceSetupPageModel(
                                                    Resources
                                                       .InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
                                                    GrowlLevel.Warning,
-                                                   thumbnail: GetNotificationThumbnail());
+                                                   GetNotificationThumbnail());
                 }
 
                 if (progress.Token.IsCancellationRequested)
@@ -931,7 +962,10 @@ public partial class InstanceSetupPageModel(
                             try
                             {
                                 var resolved = await dataService
-                                                    .ResolvePackageAsync(new PackageIdentifier(result.Repository, result.Namespace, result.Identity, null),
+                                                    .ResolvePackageAsync(new(result.Repository,
+                                                                             result.Namespace,
+                                                                             result.Identity,
+                                                                             null),
                                                                          filter,
                                                                          false)
                                                     .ConfigureAwait(false);
@@ -957,7 +991,7 @@ public partial class InstanceSetupPageModel(
                                 notificationService.PopMessage(ex,
                                                                entry.Info?.ProjectName ?? entry.Entry.Pref,
                                                                GrowlLevel.Warning,
-                                                               thumbnail: GetNotificationThumbnail());
+                                                               GetNotificationThumbnail());
                             }
                         }
                     }
@@ -967,8 +1001,7 @@ public partial class InstanceSetupPageModel(
 
                     Dispatcher.UIThread.Post(() =>
                     {
-                        handle.Report(Math.Min(100d,
-                                               100d * (StageCount - total) / StageCount));
+                        handle.Report(Math.Min(100d, 100d * (StageCount - total) / StageCount));
                         handle.Report(Resources
                                      .InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage
                                      .Replace("{0}", updates.Count.ToString())
@@ -1016,7 +1049,7 @@ public partial class InstanceSetupPageModel(
                                 Key = Basic.Key,
                                 Kind = PersistenceService.ActionKind.EditPackage,
                                 Old = old,
-                                New = model.Model.Entry.Pref,
+                                New = model.Model.Entry.Pref
                             });
                         }
                     }
@@ -1113,7 +1146,7 @@ public partial class InstanceSetupPageModel(
                                                 Kind = PersistenceService.ActionKind
                                                                          .EditPackage,
                                                 Old = oldPref,
-                                                New = importedEntry.Pref,
+                                                New = importedEntry.Pref
                                             });
                                         }
 
@@ -1126,7 +1159,7 @@ public partial class InstanceSetupPageModel(
                                         {
                                             Enabled = importedEntry.Enabled,
                                             Pref = importedEntry.Pref,
-                                            Source = importedEntry.Source,
+                                            Source = importedEntry.Source
                                         };
                                         guard.Value.Setup.Packages.Add(newEntry);
                                         persistenceService.AppendAction(new()
@@ -1134,7 +1167,7 @@ public partial class InstanceSetupPageModel(
                                             Key = Basic.Key,
                                             Kind = PersistenceService.ActionKind
                                                                      .EditPackage,
-                                            New = importedEntry.Pref,
+                                            New = importedEntry.Pref
                                         });
                                         addedCount++;
                                     }
@@ -1195,14 +1228,14 @@ public partial class InstanceSetupPageModel(
             var output = new List<ExportedEntry>();
             var progress = notificationService.PopProgress("Export package list to file",
                                                            thumbnail: GetNotificationThumbnail());
-            var items = profile.Setup.Packages
-                               .Select(entry => PackageHelper.TryParse(entry.Pref, out var parsed)
-                                                    ? (Entry: entry,
-                                                       Id: parsed)
-                                                    : ((Profile.Rice.Entry Entry, PackageIdentifier Id)?)null)
-                               .Where(x => x is not null)
-                               .Select(x => x!.Value)
-                               .ToList();
+            var items = profile
+                       .Setup.Packages
+                       .Select(entry => PackageHelper.TryParse(entry.Pref, out var parsed)
+                                            ? (Entry: entry, Id: parsed)
+                                            : ((Profile.Rice.Entry Entry, PackageIdentifier Id)?)null)
+                       .Where(x => x is not null)
+                       .Select(x => x!.Value)
+                       .ToList();
 
             try
             {
@@ -1211,13 +1244,17 @@ public partial class InstanceSetupPageModel(
 
                 foreach (var sourceGroup in items.GroupBy(x => x.Entry.Source))
                 {
-                    var result = await dataService.ResolvePackagesAsync(
-                        sourceGroup.Select(x => x.Id).Distinct(),
-                        Filter.None);
+                    var result =
+                        await dataService.ResolvePackagesAsync(sourceGroup.Select(x => x.Id).Distinct(), Filter.None);
                     foreach (var (id, package) in result.Successful)
+                    {
                         successful[(id, sourceGroup.Key)] = package;
+                    }
+
                     foreach (var (id, error) in result.Failed)
+                    {
                         failed[(id, sourceGroup.Key)] = error;
+                    }
                 }
 
                 new BatchResolveResult<(PackageIdentifier Id, string? Source), Package>(successful, failed)
@@ -1240,12 +1277,13 @@ public partial class InstanceSetupPageModel(
             }
             catch (BatchResolveException<(PackageIdentifier Id, string? Source)> ex)
             {
-                var failed = ex.Failures.Keys
-                              .SelectMany(key => items
-                                                .Where(x => x.Id == key.Id && x.Entry.Source == key.Source)
-                                                .Select(x => x.Entry.Pref))
-                              .Distinct()
-                              .ToArray();
+                var failed = ex
+                            .Failures.Keys
+                            .SelectMany(key => items
+                                              .Where(x => x.Id == key.Id && x.Entry.Source == key.Source)
+                                              .Select(x => x.Entry.Pref))
+                            .Distinct()
+                            .ToArray();
                 notificationService.PopMessage(string.Join(Environment.NewLine, failed),
                                                Resources.InstanceSetupPage_FetchingInformationDangerNotificationTitle,
                                                GrowlLevel.Warning,
@@ -1259,7 +1297,7 @@ public partial class InstanceSetupPageModel(
                 notificationService.PopMessage(ex,
                                                Resources.InstanceSetupPage_FetchingInformationDangerNotificationTitle,
                                                GrowlLevel.Warning,
-                                               thumbnail: GetNotificationThumbnail());
+                                               GetNotificationThumbnail());
                 progress.Dispose();
                 return;
             }
@@ -1314,7 +1352,7 @@ public partial class InstanceSetupPageModel(
                                                                   Filter.None with
                                                                   {
                                                                       Kind = ResourceKind.Modpack,
-                                                                      Version = Basic.Version,
+                                                                      Version = Basic.Version
                                                                   });
                 var versions = page
                               .Select(x => new InstanceReferenceVersionModel(x.Label,
@@ -1325,7 +1363,7 @@ public partial class InstanceSetupPageModel(
                                                                              x.ReleaseType,
                                                                              x.PublishedAt)
                               {
-                                  IsCurrent = x.VersionId == reference.VersionId,
+                                  IsCurrent = x.VersionId == reference.VersionId
                               })
                               .ToList();
                 var dialog = new ReferenceVersionPickerDialog { Versions = versions };
@@ -1404,7 +1442,7 @@ public partial class InstanceSetupPageModel(
                 {
                     Key = Basic.Key,
                     Kind = PersistenceService.ActionKind.EditPackage,
-                    Old = model.Entry.Pref,
+                    Old = model.Entry.Pref
                 });
             }
         }
@@ -1413,10 +1451,11 @@ public partial class InstanceSetupPageModel(
     [RelayCommand]
     private async Task BatchEnableAsync()
     {
-        var candidates = _flat.Items.OfType<PackageListItemBase.Entry>()
-                              .Where(i => !i.Package.IsEnabled)
-                              .Select(i => new SelectablePackageModel(i.Package, i.Key))
-                              .ToList();
+        var candidates = _flat
+                        .Items.OfType<PackageListItemBase.Entry>()
+                        .Where(i => !i.Package.IsEnabled)
+                        .Select(i => new SelectablePackageModel(i.Package, i.Key))
+                        .ToList();
         if (candidates.Count == 0)
         {
             notificationService.PopMessage(Resources.InstanceSetupPage_BatchEnableNothingNotificationMessage,
@@ -1432,23 +1471,26 @@ public partial class InstanceSetupPageModel(
          && dialog.Result is IReadOnlyList<SelectablePackageModel> { Count: > 0 } selected)
         {
             foreach (var item in selected)
+            {
                 item.Source.IsEnabled = true;
+            }
 
-            notificationService.PopMessage(
-                Resources.InstanceSetupPage_BatchEnableSucceededNotificationMessage.Replace("{0}", selected.Count.ToString()),
-                Resources.InstanceSetupPage_BatchManagementNotificationTitle,
-                GrowlLevel.Success,
-                thumbnail: GetNotificationThumbnail());
+            notificationService.PopMessage(Resources.InstanceSetupPage_BatchEnableSucceededNotificationMessage
+                                                    .Replace("{0}", selected.Count.ToString()),
+                                           Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+                                           GrowlLevel.Success,
+                                           thumbnail: GetNotificationThumbnail());
         }
     }
 
     [RelayCommand]
     private async Task BatchDisableAsync()
     {
-        var candidates = _flat.Items.OfType<PackageListItemBase.Entry>()
-                              .Where(i => i.Package.IsEnabled)
-                              .Select(i => new SelectablePackageModel(i.Package, i.Key))
-                              .ToList();
+        var candidates = _flat
+                        .Items.OfType<PackageListItemBase.Entry>()
+                        .Where(i => i.Package.IsEnabled)
+                        .Select(i => new SelectablePackageModel(i.Package, i.Key))
+                        .ToList();
         if (candidates.Count == 0)
         {
             notificationService.PopMessage(Resources.InstanceSetupPage_BatchDisableNothingNotificationMessage,
@@ -1464,23 +1506,26 @@ public partial class InstanceSetupPageModel(
          && dialog.Result is IReadOnlyList<SelectablePackageModel> { Count: > 0 } selected)
         {
             foreach (var item in selected)
+            {
                 item.Source.IsEnabled = false;
+            }
 
-            notificationService.PopMessage(
-                Resources.InstanceSetupPage_BatchDisableSucceededNotificationMessage.Replace("{0}", selected.Count.ToString()),
-                Resources.InstanceSetupPage_BatchManagementNotificationTitle,
-                GrowlLevel.Success,
-                thumbnail: GetNotificationThumbnail());
+            notificationService.PopMessage(Resources.InstanceSetupPage_BatchDisableSucceededNotificationMessage
+                                                    .Replace("{0}", selected.Count.ToString()),
+                                           Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+                                           GrowlLevel.Success,
+                                           thumbnail: GetNotificationThumbnail());
         }
     }
 
     [RelayCommand]
     private async Task BatchDeleteAsync()
     {
-        var candidates = _flat.Items.OfType<PackageListItemBase.Entry>()
-                              .Where(i => i.Package.CanRemove)
-                              .Select(i => new SelectablePackageModel(i.Package, i.Key))
-                              .ToList();
+        var candidates = _flat
+                        .Items.OfType<PackageListItemBase.Entry>()
+                        .Where(i => i.Package.CanRemove)
+                        .Select(i => new SelectablePackageModel(i.Package, i.Key))
+                        .ToList();
         if (candidates.Count == 0)
         {
             notificationService.PopMessage(Resources.InstanceSetupPage_BatchRemoveNothingNotificationMessage,
@@ -1495,9 +1540,11 @@ public partial class InstanceSetupPageModel(
         if (await overlayService.PopDialogAsync(dialog)
          && dialog.Result is IReadOnlyList<SelectablePackageModel> { Count: > 0 } selected)
         {
-            if (!await overlayService.RequestStrongConfirmationAsync(
-                    Resources.InstanceSetupPage_BatchRemoveConfirmMessage.Replace("{0}", selected.Count.ToString()),
-                    Resources.InstanceSetupPage_BatchRemoveConfirmTitle))
+            if (!await overlayService.RequestStrongConfirmationAsync(Resources
+                                                                    .InstanceSetupPage_BatchRemoveConfirmMessage
+                                                                    .Replace("{0}", selected.Count.ToString()),
+                                                                     Resources
+                                                                        .InstanceSetupPage_BatchRemoveConfirmTitle))
             {
                 return;
             }
@@ -1515,26 +1562,24 @@ public partial class InstanceSetupPageModel(
                     {
                         Key = Basic.Key,
                         Kind = PersistenceService.ActionKind.EditPackage,
-                        Old = item.Source.Entry.Pref,
+                        Old = item.Source.Entry.Pref
                     });
                 }
+
                 _flat.Remove(keys);
                 StageCount -= keys.Count;
 
-                notificationService.PopMessage(
-                    Resources.InstanceSetupPage_BatchRemoveSucceededNotificationMessage.Replace("{0}", selected.Count.ToString()),
-                    Resources.InstanceSetupPage_BatchManagementNotificationTitle,
-                    GrowlLevel.Success,
-                    thumbnail: GetNotificationThumbnail());
+                notificationService.PopMessage(Resources.InstanceSetupPage_BatchRemoveSucceededNotificationMessage
+                                                        .Replace("{0}", selected.Count.ToString()),
+                                               Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+                                               GrowlLevel.Success,
+                                               thumbnail: GetNotificationThumbnail());
             }
         }
     }
 
     [RelayCommand]
-    private void RefreshPackages()
-    {
-        TriggerPackageMerge();
-    }
+    private void RefreshPackages() => TriggerPackageMerge();
 
     [RelayCommand]
     private async Task EditRaw(InstancePackageModel? model)
@@ -1556,15 +1601,19 @@ public partial class InstanceSetupPageModel(
     private void ToggleGroupExpanded(GroupModelBase? group)
     {
         if (group is null)
+        {
             return;
+        }
+
         group.IsExpanded = !group.IsExpanded;
     }
 
     [RelayCommand]
     private async Task ViewGroupDetailsAsync(GroupModelBase? group)
     {
-        if (group is ModpackGroupModel && group.Source is not null
-            && PackageHelper.TryParse(group.Source, out var source))
+        if (group is ModpackGroupModel
+         && group.Source is not null
+         && PackageHelper.TryParse(group.Source, out var source))
         {
             try
             {
@@ -1586,7 +1635,7 @@ public partial class InstanceSetupPageModel(
                     DataService = dataService,
                     PersistenceService = persistenceService,
                     DataContext = model,
-                    InstallCommand = InstallVersionCommand,
+                    InstallCommand = InstallVersionCommand
                 });
             }
             catch (OperationCanceledException) { }
@@ -1596,7 +1645,7 @@ public partial class InstanceSetupPageModel(
                                                Resources
                                                   .InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
                                                GrowlLevel.Warning,
-                                               thumbnail: GetNotificationThumbnail());
+                                               GetNotificationThumbnail());
             }
         }
     }
@@ -1609,11 +1658,15 @@ public partial class InstanceSetupPageModel(
     private GroupModelBase GroupModelOf((PackageSourceHelper.Kind Kind, string? Source) key)
     {
         if (key.Kind == PackageSourceHelper.Kind.Manual)
+        {
             return _loose;
+        }
 
         // NOTE: RecipeGroupModel 未设计，Recipe 系统落地后再实现（当前数据无 recipe:// source）
         if (key.Kind == PackageSourceHelper.Kind.Recipe)
+        {
             throw new NotImplementedException("Recipe group is not implemented yet.");
+        }
 
         return EnsureModpackGroup(key.Source!);
     }
@@ -1682,24 +1735,6 @@ public partial class InstanceSetupPageModel(
     public partial StateView? ViewState { get; set; }
 
     public string ViewStateKey => Basic.Key;
-
-    #endregion
-
-    #region Nested type: StateData
-
-    public partial class StateView : ModelBase
-    {
-        [ObservableProperty]
-        public partial int LayoutIndex { get; set; }
-
-        #region For PackageBulkUpdatePreviewerDialog
-
-        public bool LastChosenIsEnabledOnly { get; set; } = true;
-        public IReadOnlyList<string>? LastChosenTags { get; set; }
-        public PackageBulkUpdatePreviewerTagPolicy LastChosenTagPolicy { get; set; }
-
-        #endregion
-    }
 
     #endregion
 }

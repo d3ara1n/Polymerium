@@ -227,9 +227,10 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     [RelayCommand]
     private async Task DeleteInstanceAsync()
     {
-        if (!await _overlayService.RequestStrongConfirmationAsync(
-                Resources.InstancePropertiesPage_DeleteConfirmationMessage,
-                Resources.InstancePropertiesPage_DeleteConfirmationTitle))
+        if (!await _overlayService.RequestStrongConfirmationAsync(Resources
+                                                                     .InstancePropertiesPage_DeleteConfirmationMessage,
+                                                                  Resources
+                                                                     .InstancePropertiesPage_DeleteConfirmationTitle))
         {
             return;
         }
@@ -259,9 +260,10 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     [RelayCommand]
     private async Task UnlockInstanceAsync()
     {
-        if (!await _overlayService.RequestStrongConfirmationAsync(
-                Resources.InstancePropertiesPage_UnlockConfirmationMessage,
-                Resources.InstancePropertiesPage_UnlockConfirmationTitle))
+        if (!await _overlayService.RequestStrongConfirmationAsync(Resources
+                                                                     .InstancePropertiesPage_UnlockConfirmationMessage,
+                                                                  Resources
+                                                                     .InstancePropertiesPage_UnlockConfirmationTitle))
         {
             return;
         }
@@ -274,7 +276,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         {
             Key = Basic.Key,
             Kind = PersistenceService.ActionKind.Unlock,
-            Old = oldSource,
+            Old = oldSource
         });
         _notificationService.PopMessage(Resources.InstancePropertiesPage_UnlockingSuccessNotificationMessage,
                                         Basic.Key,
@@ -329,7 +331,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
                 Key = Basic.Key,
                 Kind = PersistenceService.ActionKind.Rename,
                 Old = oldName,
-                New = name,
+                New = name
             });
         }
     }

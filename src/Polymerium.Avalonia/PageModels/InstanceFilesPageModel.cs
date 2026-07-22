@@ -193,7 +193,7 @@ public partial class InstanceFilesPageModel(
                         && FileHelper.IsInDirectory(file.FullName, PathDef.Default.DirectoryOfImport(Basic.Key));
             var model = new AssetModModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata, imported)
             {
-                IsEnabled = file.Name.EndsWith(".jar"),
+                IsEnabled = file.Name.EndsWith(".jar")
             };
 
             mods.Add(model);
@@ -242,7 +242,7 @@ public partial class InstanceFilesPageModel(
                         && FileHelper.IsInDirectory(file.FullName, PathDef.Default.DirectoryOfImport(Basic.Key));
             var model = new AssetResourcePackModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata, imported)
             {
-                IsEnabled = file.Name.EndsWith(".zip"),
+                IsEnabled = file.Name.EndsWith(".zip")
             };
 
             resourcePacks.Add(model);
@@ -287,7 +287,7 @@ public partial class InstanceFilesPageModel(
                         && FileHelper.IsInDirectory(file.FullName, PathDef.Default.DirectoryOfImport(Basic.Key));
             var model = new AssetDataPackModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata, imported)
             {
-                IsEnabled = file.Name.EndsWith(".zip"),
+                IsEnabled = file.Name.EndsWith(".zip")
             };
 
             dataPacks.Add(model);
@@ -490,7 +490,7 @@ public partial class InstanceFilesPageModel(
         {
             true => x => x.IsEnabled,
             false => x => !x.IsEnabled,
-            _ => _ => true,
+            _ => _ => true
         };
 
     private static Func<AssetModModel, bool> BuildLockilityFilter(FilterModel? filter) =>
@@ -498,14 +498,14 @@ public partial class InstanceFilesPageModel(
         {
             true => x => x.IsLocked,
             false => x => !x.IsLocked,
-            _ => _ => true,
+            _ => _ => true
         };
 
     private static Func<AssetModModel, bool> BuildLoaderFilter(FilterModel? filter) =>
         filter?.Value switch
         {
             ModLoaderKind loader => x => x.Metadata.LoaderType == loader,
-            _ => _ => true,
+            _ => _ => true
         };
 
     private static Func<TAsset, bool> BuildPackSearchFilter<TAsset, TMetadata>(string? searchText)

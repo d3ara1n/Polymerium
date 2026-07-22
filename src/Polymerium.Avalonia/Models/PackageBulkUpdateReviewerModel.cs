@@ -15,8 +15,7 @@ public partial class PackageBulkUpdateReviewerModel(
     DateTimeOffset oldVersionTime,
     string newVersionId,
     string newVersionName,
-    DateTimeOffset newVersionTime
-) : ModelBase
+    DateTimeOffset newVersionTime) : ModelBase
 {
     #region Reactive
 

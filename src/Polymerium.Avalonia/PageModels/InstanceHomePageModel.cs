@@ -16,7 +16,6 @@ using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Exceptions;
-using TridentCore.Core.Exceptions;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Services;
@@ -25,6 +24,7 @@ using Polymerium.Avalonia.Widgets;
 using TridentCore.Abstractions.Extensions;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Core.Engines.Deploying;
+using TridentCore.Core.Exceptions;
 using TridentCore.Core.Igniters;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
@@ -89,8 +89,12 @@ public partial class InstanceHomePageModel(
             {
                 var cooked = AccountHelper.ToCooked(account);
                 SelectedAccount = AccountHelper.CreateModelFromAccount(cooked,
-                                      DateTimeHelper.FromPersistedLocalDateTime(account.EnrolledAt),
-                                      DateTimeHelper.FromPersistedLocalDateTime(account.LastUsedAt));
+                                                                       DateTimeHelper
+                                                                          .FromPersistedLocalDateTime(account
+                                                                              .EnrolledAt),
+                                                                       DateTimeHelper
+                                                                          .FromPersistedLocalDateTime(account
+                                                                              .LastUsedAt));
             }
         }
 
@@ -170,7 +174,7 @@ public partial class InstanceHomePageModel(
             DeployStage.EnsureRuntime => Resources.DeployStage_EnsureRuntime,
             DeployStage.GenerateManifest => Resources.DeployStage_GenerateManifest,
             DeployStage.SolidifyManifest => Resources.DeployStage_SolidifyManifest,
-            _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null),
+            _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
         };
 
     protected override void OnInstanceLaunched(LaunchTracker tracker)
@@ -205,7 +209,7 @@ public partial class InstanceHomePageModel(
         {
             GotoManagerViewCommand = OpenAccountsPageCommand,
             AccountsSource = accounts,
-            Result = SelectedAccount,
+            Result = SelectedAccount
         };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is AccountModel account)
         {
@@ -232,7 +236,7 @@ public partial class InstanceHomePageModel(
                                            [
                                                new(Resources
                                                       .InstanceHomePage_AccountNotFoundDangerNotificationSelectActionText,
-                                                   SwitchAccountCommand),
+                                                   SwitchAccountCommand)
                                            ]);
         }
         catch (AccountException ex)
@@ -297,7 +301,7 @@ public partial class InstanceHomePageModel(
                                             ? LaunchMode.Debug
                                             : LaunchMode.Managed,
             LaunchMode.Debug => LaunchMode.Managed,
-            _ => throw new ArgumentOutOfRangeException(),
+            _ => throw new ArgumentOutOfRangeException()
         };
 
     #endregion

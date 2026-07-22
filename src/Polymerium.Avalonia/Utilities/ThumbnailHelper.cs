@@ -9,8 +9,6 @@ public static class ThumbnailHelper
     public static Uri ForInstance(string key)
     {
         var iconPath = InstanceHelper.PickIcon(key);
-        return !string.IsNullOrEmpty(iconPath)
-            ? new(iconPath, UriKind.Absolute)
-            : AssetUriIndex.DirtImage;
+        return !string.IsNullOrEmpty(iconPath) ? new(iconPath, UriKind.Absolute) : AssetUriIndex.DirtImage;
     }
 }

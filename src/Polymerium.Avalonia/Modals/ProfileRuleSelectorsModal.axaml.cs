@@ -10,20 +10,18 @@ namespace Polymerium.Avalonia.Modals;
 
 public partial class ProfileRuleSelectorsModal : Modal
 {
-    public static readonly DirectProperty<
-        ProfileRuleSelectorsModal,
-        MappingCollection<Profile.Rice.Rule.RuleSelector, ProfileRuleSelectorModel>
-    > SelectorsProperty = AvaloniaProperty.RegisterDirect<
-        ProfileRuleSelectorsModal,
-        MappingCollection<Profile.Rice.Rule.RuleSelector, ProfileRuleSelectorModel>
-    >(nameof(Selectors), o => o.Selectors, (o, v) => o.Selectors = v);
+    public static readonly
+        DirectProperty<ProfileRuleSelectorsModal,
+            MappingCollection<Profile.Rice.Rule.RuleSelector, ProfileRuleSelectorModel>> SelectorsProperty =
+            AvaloniaProperty
+               .RegisterDirect<ProfileRuleSelectorsModal,
+                    MappingCollection<Profile.Rice.Rule.RuleSelector, ProfileRuleSelectorModel>>(nameof(Selectors),
+                    o => o.Selectors,
+                    (o, v) => o.Selectors = v);
 
     public ProfileRuleSelectorsModal() => InitializeComponent();
 
-    public required MappingCollection<
-        Profile.Rice.Rule.RuleSelector,
-        ProfileRuleSelectorModel
-    > Selectors
+    public required MappingCollection<Profile.Rice.Rule.RuleSelector, ProfileRuleSelectorModel> Selectors
     {
         get;
         set => SetAndRaise(SelectorsProperty, ref field, value);
@@ -35,8 +33,7 @@ public partial class ProfileRuleSelectorsModal : Modal
     #region Commands
 
     [RelayCommand]
-    private void AddSelector() =>
-        Selectors.Add(new(new() { Type = Profile.Rice.Rule.RuleSelector.SelectorType.Pref }));
+    private void AddSelector() => Selectors.Add(new(new() { Type = Profile.Rice.Rule.RuleSelector.SelectorType.Pref }));
 
     [RelayCommand]
     private void RemoveSelector(ProfileRuleSelectorModel? model)
@@ -52,14 +49,12 @@ public partial class ProfileRuleSelectorsModal : Modal
     {
         if (model != null)
         {
-            OverlayService.PopModal(
-                new ProfileRuleSelectorModal
-                {
-                    Selector = model,
-                    Packages = Packages,
-                    OverlayService = OverlayService,
-                }
-            );
+            OverlayService.PopModal(new ProfileRuleSelectorModal
+            {
+                Selector = model,
+                Packages = Packages,
+                OverlayService = OverlayService
+            });
         }
     }
 

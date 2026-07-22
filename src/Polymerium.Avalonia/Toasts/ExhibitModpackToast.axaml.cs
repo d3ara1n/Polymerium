@@ -1,4 +1,3 @@
-using TridentCore.Pref;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,40 +20,27 @@ namespace Polymerium.Avalonia.Toasts;
 public partial class ExhibitModpackToast : Toast
 {
     public static readonly StyledProperty<IRelayCommand<ExhibitVersionModel>?> InstallCommandProperty =
-        AvaloniaProperty.Register<ExhibitModpackToast, IRelayCommand<ExhibitVersionModel>?>(
-            nameof(InstallCommand)
-        );
+        AvaloniaProperty.Register<ExhibitModpackToast, IRelayCommand<ExhibitVersionModel>?>(nameof(InstallCommand));
 
-    public static readonly DirectProperty<
-        ExhibitModpackToast,
-        LazyObject?
-    > LazyDescriptionProperty = AvaloniaProperty.RegisterDirect<ExhibitModpackToast, LazyObject?>(
-        nameof(LazyDescription),
-        o => o.LazyDescription,
-        (o, v) => o.LazyDescription = v
-    );
+    public static readonly DirectProperty<ExhibitModpackToast, LazyObject?> LazyDescriptionProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, LazyObject?>(nameof(LazyDescription),
+                                                                          o => o.LazyDescription,
+                                                                          (o, v) => o.LazyDescription = v);
 
     public static readonly DirectProperty<ExhibitModpackToast, LazyObject?> LazyVersionsProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, LazyObject?>(
-            nameof(LazyVersions),
-            o => o.LazyVersions,
-            (o, v) => o.LazyVersions = v
-        );
+        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, LazyObject?>(nameof(LazyVersions),
+                                                                          o => o.LazyVersions,
+                                                                          (o, v) => o.LazyVersions = v);
 
     public static readonly DirectProperty<ExhibitModpackToast, bool> IsFavoriteProperty =
-        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, bool>(
-            nameof(IsFavorite),
-            o => o.IsFavorite,
-            (o, v) => o.IsFavorite = v
-        );
+        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, bool>(nameof(IsFavorite),
+                                                                   o => o.IsFavorite,
+                                                                   (o, v) => o.IsFavorite = v);
 
-    public static readonly DirectProperty<
-        ExhibitModpackToast,
-        ExhibitVersionModel?
-    > SelectedVersionProperty = AvaloniaProperty.RegisterDirect<
-        ExhibitModpackToast,
-        ExhibitVersionModel?
-    >(nameof(SelectedVersion), o => o.SelectedVersion, (o, v) => o.SelectedVersion = v);
+    public static readonly DirectProperty<ExhibitModpackToast, ExhibitVersionModel?> SelectedVersionProperty =
+        AvaloniaProperty.RegisterDirect<ExhibitModpackToast, ExhibitVersionModel?>(nameof(SelectedVersion),
+            o => o.SelectedVersion,
+            (o, v) => o.SelectedVersion = v);
 
     public ExhibitModpackToast() => InitializeComponent();
 
@@ -97,11 +83,7 @@ public partial class ExhibitModpackToast : Toast
     {
         base.OnLoaded(e);
 
-        IsFavorite = PersistenceService.IsFavoriteProject(
-            Modpack.Label,
-            Modpack.Namespace,
-            Modpack.ProjectId
-        );
+        IsFavorite = PersistenceService.IsFavoriteProject(Modpack.Label, Modpack.Namespace, Modpack.ProjectId);
         LoadVersions();
         LoadDescription();
     }
@@ -110,35 +92,30 @@ public partial class ExhibitModpackToast : Toast
         LazyVersions = new(async _ =>
         {
             var project = Modpack;
-            var versions = await DataService.InspectVersionsAsync(
-                project.Label,
-                project.Namespace,
-                project.ProjectId,
-                Filter.None with
-                {
-                    Kind = ResourceKind.Modpack,
-                }
-            );
+            var versions = await DataService.InspectVersionsAsync(project.Label,
+                                                                  project.Namespace,
+                                                                  project.ProjectId,
+                                                                  Filter.None with { Kind = ResourceKind.Modpack });
             var rv = versions
-                .Select(x => new ExhibitVersionModel(
-                    project.Label,
-                    project.Namespace,
-                    project.ProjectName,
-                    project.ProjectId,
-                    x.VersionName,
-                    x.VersionId,
-                    string.Join(
-                        ",",
-                        x.Requirements.AnyOfLoaders.Select(LoaderHelper.ToDisplayName)
-                    ),
-                    string.Join(",", x.Requirements.AnyOfVersions),
-                    string.Empty,
-                    x.PublishedAt,
-                    x.DownloadCount,
-                    x.ReleaseType,
-                    PackageHelper.ToPref(x.Label, x.Namespace, x.ProjectId, x.VersionId)
-                ))
-                .ToList();
+                    .Select(x => new ExhibitVersionModel(project.Label,
+                                                         project.Namespace,
+                                                         project.ProjectName,
+                                                         project.ProjectId,
+                                                         x.VersionName,
+                                                         x.VersionId,
+                                                         string.Join(",",
+                                                                     x.Requirements.AnyOfLoaders.Select(LoaderHelper
+                                                                        .ToDisplayName)),
+                                                         string.Join(",", x.Requirements.AnyOfVersions),
+                                                         string.Empty,
+                                                         x.PublishedAt,
+                                                         x.DownloadCount,
+                                                         x.ReleaseType,
+                                                         PackageHelper.ToPref(x.Label,
+                                                                              x.Namespace,
+                                                                              x.ProjectId,
+                                                                              x.VersionId)))
+                    .ToList();
             SelectedVersion = rv.FirstOrDefault();
             return new ExhibitVersionCollection(rv);
         });
@@ -146,7 +123,8 @@ public partial class ExhibitModpackToast : Toast
     private void LoadDescription() =>
         LazyDescription = new(async _ =>
         {
-            var description = await DataService.ReadDescriptionAsync(new ProjectIdentifier(Modpack.Label, Modpack.Namespace, Modpack.ProjectId));
+            var description =
+                await DataService.ReadDescriptionAsync(new(Modpack.Label, Modpack.Namespace, Modpack.ProjectId));
             return description;
         });
 
@@ -162,21 +140,19 @@ public partial class ExhibitModpackToast : Toast
             return;
         }
 
-        PersistenceService.AddFavoriteProject(
-            Modpack.Label,
-            Modpack.Namespace,
-            Modpack.ProjectId,
-            Modpack.ProjectName,
-            Modpack.AuthorName,
-            Modpack.Summary,
-            Modpack.Reference,
-            Modpack.Thumbnail,
-            ResourceKind.Modpack,
-            Modpack.DownloadCountRaw,
-            Modpack.Tags,
-            Modpack.UpdatedAtRaw,
-            Modpack.UpdatedAtRaw
-        );
+        PersistenceService.AddFavoriteProject(Modpack.Label,
+                                              Modpack.Namespace,
+                                              Modpack.ProjectId,
+                                              Modpack.ProjectName,
+                                              Modpack.AuthorName,
+                                              Modpack.Summary,
+                                              Modpack.Reference,
+                                              Modpack.Thumbnail,
+                                              ResourceKind.Modpack,
+                                              Modpack.DownloadCountRaw,
+                                              Modpack.Tags,
+                                              Modpack.UpdatedAtRaw,
+                                              Modpack.UpdatedAtRaw);
         IsFavorite = true;
     }
 
@@ -186,11 +162,10 @@ public partial class ExhibitModpackToast : Toast
         if (url is not null)
         {
             var rev = new Uri(url, UriKind.RelativeOrAbsolute);
-            return TopLevelHelper.LaunchUriAsync(
-                TopLevel.GetTopLevel(this),
-                rev.IsAbsoluteUri ? rev : new(Modpack.Reference, rev),
-                AppResources.ExhibitModpackToast_OpenModpackLinkDangerNotificationTitle
-            );
+            return TopLevelHelper.LaunchUriAsync(TopLevel.GetTopLevel(this),
+                                                 rev.IsAbsoluteUri ? rev : new(Modpack.Reference, rev),
+                                                 AppResources
+                                                    .ExhibitModpackToast_OpenModpackLinkDangerNotificationTitle);
         }
 
         return Task.CompletedTask;

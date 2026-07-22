@@ -8,11 +8,7 @@ using Resources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Models;
 
-public partial class AssetServerModel(
-    string sourceFilePath,
-    Bitmap icon,
-    AssetServerMetadataModel metadata
-) : ModelBase
+public partial class AssetServerModel(string sourceFilePath, Bitmap icon, AssetServerMetadataModel metadata) : ModelBase
 {
     public string SourceFilePath { get; } = sourceFilePath;
 
@@ -26,10 +22,25 @@ public partial class AssetServerModel(
 
     public bool HasLiveStatus =>
         !string.IsNullOrWhiteSpace(Description)
-        || !string.IsNullOrWhiteSpace(VersionName)
-        || OnlinePlayers is not null
-        || MaxPlayers is not null
-        || LatencyMilliseconds is not null;
+     || !string.IsNullOrWhiteSpace(VersionName)
+     || OnlinePlayers is not null
+     || MaxPlayers is not null
+     || LatencyMilliseconds is not null;
+
+    public void ApplyLiveStatus(MinecraftServerStatusHelper.ServerStatusResult status)
+    {
+        Description = status.Description;
+        VersionName = status.VersionName;
+        OnlinePlayers = status.OnlinePlayers;
+        MaxPlayers = status.MaxPlayers;
+        LatencyMilliseconds = status.LatencyMilliseconds;
+
+        var liveIcon = AssetServerHelper.ExtractIcon(status.FaviconBase64);
+        if (liveIcon != null)
+        {
+            Icon = liveIcon;
+        }
+    }
 
     #region Reactive
 
@@ -61,19 +72,4 @@ public partial class AssetServerModel(
     public partial long? LatencyMilliseconds { get; set; }
 
     #endregion
-
-    public void ApplyLiveStatus(MinecraftServerStatusHelper.ServerStatusResult status)
-    {
-        Description = status.Description;
-        VersionName = status.VersionName;
-        OnlinePlayers = status.OnlinePlayers;
-        MaxPlayers = status.MaxPlayers;
-        LatencyMilliseconds = status.LatencyMilliseconds;
-
-        var liveIcon = AssetServerHelper.ExtractIcon(status.FaviconBase64);
-        if (liveIcon != null)
-        {
-            Icon = liveIcon;
-        }
-    }
 }

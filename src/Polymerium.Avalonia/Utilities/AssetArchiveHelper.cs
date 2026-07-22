@@ -69,20 +69,17 @@ public static class AssetArchiveHelper
         var metadata = new TMetadata();
         if (root.TryGetProperty("pack", out var packElement))
         {
-            if (
-                packElement.TryGetProperty("pack_format", out var formatElement)
-                && formatElement.ValueKind == JsonValueKind.Number
-            )
+            if (packElement.TryGetProperty("pack_format", out var formatElement)
+             && formatElement.ValueKind == JsonValueKind.Number)
             {
                 metadata.PackFormat = formatElement.GetInt32();
             }
 
             if (packElement.TryGetProperty("description", out var descElement))
             {
-                metadata.Description =
-                    descElement.ValueKind == JsonValueKind.String
-                        ? descElement.GetString()
-                        : descElement.ToString();
+                metadata.Description = descElement.ValueKind == JsonValueKind.String
+                                           ? descElement.GetString()
+                                           : descElement.ToString();
             }
         }
 

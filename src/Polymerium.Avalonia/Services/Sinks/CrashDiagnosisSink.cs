@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
+using Huskui.Avalonia.Models;
+using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Utilities;
@@ -13,7 +15,6 @@ using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Exceptions;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
-using Huskui.Avalonia.Models;
 
 namespace Polymerium.Avalonia.Services.Sinks;
 
@@ -27,20 +28,17 @@ public class CrashDiagnosisSink(
     ProfileManager profileManager,
     OverlayService overlayService)
 {
-    public void Attach()
-    {
-        aggregator.StateChangeStream
-                  .Subscribe(change =>
-                  {
-                      foreach (var item in change)
-                      {
-                          if (item.Reason is ChangeReason.Remove)
-                          {
-                              HandleCompleted(item.Current);
-                          }
-                      }
-                  });
-    }
+    public void Attach() =>
+        aggregator.StateChangeStream.Subscribe(change =>
+        {
+            foreach (var item in change)
+            {
+                if (item.Reason is ChangeReason.Remove)
+                {
+                    HandleCompleted(item.Current);
+                }
+            }
+        });
 
     private void HandleCompleted(InstanceStateSnapshot snapshot)
     {
@@ -59,26 +57,22 @@ public class CrashDiagnosisSink(
             return;
         }
 
-        notificationService.PopMessage(
-            Resources.MainWindow_InstanceCrashedDangerNotificationMessage
-                     .Replace("{0}", launcher.Key),
-            Resources.MainWindow_InstanceCrashedDangerNotificationTitle,
-            GrowlLevel.Danger,
-            thumbnail: ThumbnailHelper.ForInstance(launcher.Key),
-            actions:
-            [
-                new(
-                    Resources.MainWindow_InstanceLaunchingDangerNotificationDiagnoseText,
-                    new RelayCommand(() => Diagnose(launcher)),
-                    null
-                   ),
-            ]);
+        notificationService.PopMessage(Resources.MainWindow_InstanceCrashedDangerNotificationMessage.Replace("{0}",
+                                           launcher.Key),
+                                       Resources.MainWindow_InstanceCrashedDangerNotificationTitle,
+                                       GrowlLevel.Danger,
+                                       thumbnail: ThumbnailHelper.ForInstance(launcher.Key),
+                                       actions:
+                                       [
+                                           new(Resources.MainWindow_InstanceLaunchingDangerNotificationDiagnoseText,
+                                               new RelayCommand(() => Diagnose(launcher)))
+                                       ]);
     }
 
     private void Diagnose(LaunchTracker tracker)
     {
         var crashReport = BuildCrashReport(tracker);
-        var modal = new Modals.GameCrashReportModal { Report = crashReport };
+        var modal = new GameCrashReportModal { Report = crashReport };
         overlayService.PopModal(modal);
     }
 
@@ -89,10 +83,9 @@ public class CrashDiagnosisSink(
         var logPath = Path.Combine(gameDir, "logs", "latest.log");
         var crashReportPath = FindLatestCrashReport(gameDir);
 
-        var loaderLabel = profile?.Setup.Loader != null &&
-                          LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
-            ? LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version)
-            : Resources.Enum_Vanilla;
+        var loaderLabel = profile?.Setup.Loader != null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
+                              ? LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version)
+                              : Resources.Enum_Vanilla;
 
         var javaVersion = tracker.JavaVersion?.ToString();
         var javaPath = tracker.JavaHome;
@@ -153,7 +146,7 @@ public class CrashDiagnosisSink(
             CrashReportPath = crashReportPath,
             LastLogLines = lastLogLines,
             ModCount = profile?.Setup.Packages.Count ?? 0,
-            CommandLine = tracker.CommandLine,
+            CommandLine = tracker.CommandLine
         };
     }
 
@@ -168,9 +161,9 @@ public class CrashDiagnosisSink(
             }
 
             return Directory
-                 .GetFiles(crashReportsDir, "crash-*.txt")
-                 .OrderByDescending(File.GetLastWriteTime)
-                 .FirstOrDefault();
+                  .GetFiles(crashReportsDir, "crash-*.txt")
+                  .OrderByDescending(File.GetLastWriteTime)
+                  .FirstOrDefault();
         }
         catch
         {
@@ -178,9 +171,6 @@ public class CrashDiagnosisSink(
         }
     }
 
-    private static bool IsProcessFaulted(Exception? ex) => ex is ProcessFaultedException
-                                                           or AggregateException
-    {
-        InnerException: ProcessFaultedException
-    };
+    private static bool IsProcessFaulted(Exception? ex) =>
+        ex is ProcessFaultedException or AggregateException { InnerException: ProcessFaultedException };
 }

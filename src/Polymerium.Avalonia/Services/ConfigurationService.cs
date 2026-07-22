@@ -8,10 +8,7 @@ namespace Polymerium.Avalonia.Services;
 
 public sealed class ConfigurationService : IDisposable
 {
-    private readonly string _filePath = Path.Combine(
-        PathDef.Default.PrivateConfigDirectory(),
-        "settings.json"
-    );
+    private readonly string _filePath = Path.Combine(PathDef.Default.PrivateConfigDirectory(), "settings.json");
 
     #region Injected
 
@@ -21,7 +18,7 @@ public sealed class ConfigurationService : IDisposable
 
     private readonly JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.General)
     {
-        WriteIndented = true,
+        WriteIndented = true
     };
 
     public ConfigurationService(ILogger<ConfigurationService> logger)
@@ -33,17 +30,11 @@ public sealed class ConfigurationService : IDisposable
         {
             try
             {
-                read = JsonSerializer.Deserialize<Configuration>(
-                    File.ReadAllText(_filePath),
-                    _serializerOptions
-                );
+                read = JsonSerializer.Deserialize<Configuration>(File.ReadAllText(_filePath), _serializerOptions);
             }
             catch (Exception ex)
             {
-                _logger.LogError(
-                    ex,
-                    "Failed to read configuration from disk, using default configuration"
-                );
+                _logger.LogError(ex, "Failed to read configuration from disk, using default configuration");
             }
         }
 

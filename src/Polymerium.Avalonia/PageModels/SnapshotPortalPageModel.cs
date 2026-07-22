@@ -21,16 +21,6 @@ public partial class SnapshotPortalPageModel(
 
     #endregion
 
-    #region Reactive
-
-    [ObservableProperty]
-    public partial int SnapshotCount { get; set; }
-
-    [ObservableProperty]
-    public partial string? LatestTimeText { get; set; }
-
-    #endregion
-
     #region Overrides
 
     protected override Task OnInitializeAsync(CancellationToken token)
@@ -39,9 +29,7 @@ public partial class SnapshotPortalPageModel(
         {
             var snapshots = Context.Handle.List();
             SnapshotCount = snapshots.Count;
-            LatestTimeText = snapshots.Count > 0
-                ? snapshots[0].CreatedAt.Humanize(false)
-                : null;
+            LatestTimeText = snapshots.Count > 0 ? snapshots[0].CreatedAt.Humanize(false) : null;
         }
         catch (Exception ex)
         {
@@ -50,6 +38,16 @@ public partial class SnapshotPortalPageModel(
 
         return Task.CompletedTask;
     }
+
+    #endregion
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial int SnapshotCount { get; set; }
+
+    [ObservableProperty]
+    public partial string? LatestTimeText { get; set; }
 
     #endregion
 }

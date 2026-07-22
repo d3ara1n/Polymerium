@@ -31,16 +31,14 @@ public partial class GameCrashReportModal : Modal
     private const int MAX_UPLOAD_BYTES = 10 * 1024 * 1024 - 1;
     private const int MAX_CRASH_REPORT_UPLOAD_LINES = 25_000;
 
-    private static readonly Uri AiTemplateUri = new(
-        "avares://Polymerium/Assets/Templates/CrashAiAnalysis.md"
-    );
-
-    private readonly IMclogsClient? _mclogsClient = Program.Services?.GetService<IMclogsClient>();
-    private readonly NotificationService? _notificationService =
-        Program.Services?.GetService<NotificationService>();
+    private static readonly Uri AiTemplateUri = new("avares://Polymerium/Assets/Templates/CrashAiAnalysis.md");
 
     public static readonly StyledProperty<CrashReportModel?> ReportProperty =
         AvaloniaProperty.Register<GameCrashReportModal, CrashReportModel?>(nameof(Report));
+
+    private readonly IMclogsClient? _mclogsClient = Program.Services?.GetService<IMclogsClient>();
+
+    private readonly NotificationService? _notificationService = Program.Services?.GetService<NotificationService>();
 
     public GameCrashReportModal() => InitializeComponent();
 
@@ -60,12 +58,11 @@ public partial class GameCrashReportModal : Modal
 
         var text = GenerateCrashReportText();
 
-        await TopLevelHelper.CopyToClipboardAsync(
-            TopLevel.GetTopLevel(this),
-            text,
-            AppResources.GameCrashReportModal_CopyCrashReportDangerNotificationTitle,
-            _notificationService
-        );
+        await TopLevelHelper.CopyToClipboardAsync(TopLevel.GetTopLevel(this),
+                                                  text,
+                                                  AppResources
+                                                     .GameCrashReportModal_CopyCrashReportDangerNotificationTitle,
+                                                  _notificationService);
     }
 
     [RelayCommand]
@@ -73,12 +70,10 @@ public partial class GameCrashReportModal : Modal
     {
         if (Report?.LogFilePath != null && File.Exists(Report.LogFilePath))
         {
-            return TopLevelHelper.LaunchFileInfoAsync(
-                TopLevel.GetTopLevel(this),
-                new(Report.LogFilePath),
-                AppResources.Shared_FailedToOpenLogFileDangerNotificationTitle,
-                _notificationService
-            );
+            return TopLevelHelper.LaunchFileInfoAsync(TopLevel.GetTopLevel(this),
+                                                      new(Report.LogFilePath),
+                                                      AppResources.Shared_FailedToOpenLogFileDangerNotificationTitle,
+                                                      _notificationService);
         }
 
         return Task.CompletedTask;
@@ -89,12 +84,11 @@ public partial class GameCrashReportModal : Modal
     {
         if (Report?.CrashReportPath != null && File.Exists(Report.CrashReportPath))
         {
-            return TopLevelHelper.LaunchFileInfoAsync(
-                TopLevel.GetTopLevel(this),
-                new(Report.CrashReportPath),
-                AppResources.GameCrashReportModal_OpenCrashReportDangerNotificationTitle,
-                _notificationService
-            );
+            return TopLevelHelper.LaunchFileInfoAsync(TopLevel.GetTopLevel(this),
+                                                      new(Report.CrashReportPath),
+                                                      AppResources
+                                                         .GameCrashReportModal_OpenCrashReportDangerNotificationTitle,
+                                                      _notificationService);
         }
 
         return Task.CompletedTask;
@@ -105,12 +99,11 @@ public partial class GameCrashReportModal : Modal
     {
         if (Report?.GameDirectory != null && Directory.Exists(Report.GameDirectory))
         {
-            return TopLevelHelper.LaunchDirectoryInfoAsync(
-                TopLevel.GetTopLevel(this),
-                new(Report.GameDirectory),
-                AppResources.GameCrashReportModal_OpenGameDirectoryDangerNotificationTitle,
-                _notificationService
-            );
+            return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(this),
+                                                           new(Report.GameDirectory),
+                                                           AppResources
+                                                              .GameCrashReportModal_OpenGameDirectoryDangerNotificationTitle,
+                                                           _notificationService);
         }
 
         return Task.CompletedTask;
@@ -132,23 +125,27 @@ public partial class GameCrashReportModal : Modal
 
         try
         {
-            var fileName =
-                $"crash-diagnostic-{Report.InstanceKey}-{DateTime.Now:yyyyMMdd-HHmmss}.zip";
-            var file = await top.StorageProvider.SaveFilePickerAsync(
-                new()
-                {
-                    Title = AppResources.GameCrashReportModal_ExportDialogTitle,
-                    SuggestedFileName = fileName,
-                    SuggestedStartLocation = await top.StorageProvider.TryGetWellKnownFolderAsync(
-                        WellKnownFolder.Downloads
-                    ),
-                    DefaultExtension = "zip",
-                    FileTypeChoices =
-                    [
-                        new(AppResources.Shared_ZipArchiveFileTypeText) { Patterns = ["*.zip"] },
-                    ],
-                }
-            );
+            var fileName = $"crash-diagnostic-{Report.InstanceKey}-{DateTime.Now:yyyyMMdd-HHmmss}.zip";
+            var file = await top.StorageProvider.SaveFilePickerAsync(new()
+            {
+                Title =
+                    AppResources
+                       .GameCrashReportModal_ExportDialogTitle,
+                SuggestedFileName = fileName,
+                SuggestedStartLocation =
+                    await top.StorageProvider
+                             .TryGetWellKnownFolderAsync(WellKnownFolder
+                                                            .Downloads),
+                DefaultExtension = "zip",
+                FileTypeChoices =
+                [
+                    new(AppResources
+                           .Shared_ZipArchiveFileTypeText)
+                    {
+                        Patterns = ["*.zip"]
+                    }
+                ]
+            });
 
             if (file == null)
             {
@@ -186,16 +183,10 @@ public partial class GameCrashReportModal : Modal
             if (Report.CrashReportPath != null)
             {
                 var crashFileName = Path.GetFileName(Report.CrashReportPath);
-                await archive.CreateEntryFromFileAsync(
-                    Report.CrashReportPath,
-                    $"crash-reports/{crashFileName}"
-                );
+                await archive.CreateEntryFromFileAsync(Report.CrashReportPath, $"crash-reports/{crashFileName}");
             }
 
-            var profilePath = Path.Combine(
-                Path.GetDirectoryName(Report.GameDirectory) ?? string.Empty,
-                "profile.json"
-            );
+            var profilePath = Path.Combine(Path.GetDirectoryName(Report.GameDirectory) ?? string.Empty, "profile.json");
             if (File.Exists(profilePath))
             {
                 await archive.CreateEntryFromFileAsync(profilePath, "profile.json");
@@ -212,10 +203,7 @@ public partial class GameCrashReportModal : Modal
             {
                 var modsListEntry = archive.CreateEntry("mods-list.txt");
                 await using var writer = new StreamWriter(await modsListEntry.OpenAsync());
-                var modFiles = Directory
-                    .GetFiles(modsDir, "*.jar")
-                    .Select(Path.GetFileName)
-                    .OrderBy(x => x);
+                var modFiles = Directory.GetFiles(modsDir, "*.jar").Select(Path.GetFileName).OrderBy(x => x);
                 foreach (var mod in modFiles)
                 {
                     await writer.WriteLineAsync(mod);
@@ -253,11 +241,9 @@ public partial class GameCrashReportModal : Modal
         var crashReportContent = GetCrashReportContentForAiExport();
         if (string.IsNullOrWhiteSpace(logContent) && string.IsNullOrWhiteSpace(crashReportContent))
         {
-            _notificationService?.PopMessage(
-                Properties.Resources.GameCrashReportModal_AiExportLogUnavailableMessage,
-                Properties.Resources.GameCrashReportModal_AiExportLogUnavailableTitle,
-                GrowlLevel.Danger
-            );
+            _notificationService?.PopMessage(AppResources.GameCrashReportModal_AiExportLogUnavailableMessage,
+                                             AppResources.GameCrashReportModal_AiExportLogUnavailableTitle,
+                                             GrowlLevel.Danger);
             return;
         }
 
@@ -265,20 +251,13 @@ public partial class GameCrashReportModal : Modal
         {
             CreateLogResponse? crashReportUpload = null;
             CreateLogResponse? logUpload = null;
-            using (
-                var uploadProgress = _notificationService?.PopProgress(
-                    Properties.Resources.GameCrashReportModal_AiExportUploadingMessage,
-                    Properties.Resources.GameCrashReportModal_AiExportUploadingTitle,
-                    GrowlLevel.Information
-                )
-            )
+            using (var uploadProgress =
+                   _notificationService?.PopProgress(AppResources.GameCrashReportModal_AiExportUploadingMessage,
+                                                     AppResources.GameCrashReportModal_AiExportUploadingTitle))
             {
                 if (!string.IsNullOrWhiteSpace(crashReportContent))
                 {
-                    crashReportUpload = await UploadTextToMclogsAsync(
-                        crashReportContent,
-                        "crash-report"
-                    );
+                    crashReportUpload = await UploadTextToMclogsAsync(crashReportContent, "crash-report");
                 }
 
                 if (!string.IsNullOrWhiteSpace(logContent))
@@ -287,43 +266,42 @@ public partial class GameCrashReportModal : Modal
                 }
             }
 
-            if (
-                (crashReportUpload == null || !crashReportUpload.Success)
-                && (logUpload == null || !logUpload.Success)
-            )
+            if ((crashReportUpload == null || !crashReportUpload.Success) && (logUpload == null || !logUpload.Success))
             {
-                _notificationService?.PopMessage(
-                    crashReportUpload?.Error
-                        ?? logUpload?.Error
-                        ?? Properties.Resources.GameCrashReportModal_AiExportUploadFailedMessage,
-                    Properties.Resources.GameCrashReportModal_AiExportUploadFailedTitle,
-                    GrowlLevel.Danger
-                );
+                _notificationService?.PopMessage(crashReportUpload?.Error
+                                              ?? logUpload?.Error
+                                              ?? AppResources.GameCrashReportModal_AiExportUploadFailedMessage,
+                                                 AppResources.GameCrashReportModal_AiExportUploadFailedTitle,
+                                                 GrowlLevel.Danger);
                 return;
             }
 
             var template = await LoadAiAnalysisTemplateAsync();
-            var markdown = GenerateAiAnalysisMarkdown(
-                template,
-                crashReportUpload,
-                logUpload,
-                crashReportContent,
-                logContent
-            );
-            var fileName =
-                $"crash-ai-analysis-{Report.InstanceKey}-{DateTime.Now:yyyyMMdd-HHmmss}.md";
-            var file = await top.StorageProvider.SaveFilePickerAsync(
-                new()
-                {
-                    Title = Properties.Resources.GameCrashReportModal_AiExportDialogTitle,
-                    SuggestedFileName = fileName,
-                    SuggestedStartLocation = await top.StorageProvider.TryGetWellKnownFolderAsync(
-                        WellKnownFolder.Downloads
-                    ),
-                    DefaultExtension = "md",
-                    FileTypeChoices = [new("Markdown") { Patterns = ["*.md"] }],
-                }
-            );
+            var markdown = GenerateAiAnalysisMarkdown(template,
+                                                      crashReportUpload,
+                                                      logUpload,
+                                                      crashReportContent,
+                                                      logContent);
+            var fileName = $"crash-ai-analysis-{Report.InstanceKey}-{DateTime.Now:yyyyMMdd-HHmmss}.md";
+            var file = await top.StorageProvider.SaveFilePickerAsync(new()
+            {
+                Title =
+                    AppResources
+                       .GameCrashReportModal_AiExportDialogTitle,
+                SuggestedFileName = fileName,
+                SuggestedStartLocation =
+                    await top.StorageProvider
+                             .TryGetWellKnownFolderAsync(WellKnownFolder
+                                                            .Downloads),
+                DefaultExtension = "md",
+                FileTypeChoices =
+                [
+                    new("Markdown")
+                    {
+                        Patterns = ["*.md"]
+                    }
+                ]
+            });
 
             if (file == null)
             {
@@ -333,11 +311,9 @@ public partial class GameCrashReportModal : Modal
             NotificationService.ProgressHandle? exportProgress = null;
             try
             {
-                exportProgress = _notificationService?.PopProgress(
-                    Properties.Resources.GameCrashReportModal_AiExportWritingMessage,
-                    Properties.Resources.GameCrashReportModal_AiExportWritingTitle,
-                    GrowlLevel.Information
-                );
+                exportProgress =
+                    _notificationService?.PopProgress(AppResources.GameCrashReportModal_AiExportWritingMessage,
+                                                      AppResources.GameCrashReportModal_AiExportWritingTitle);
 
                 await using var stream = await file.OpenWriteAsync();
                 await using var writer = new StreamWriter(stream, new UTF8Encoding(false));
@@ -348,20 +324,16 @@ public partial class GameCrashReportModal : Modal
                 exportProgress?.Dispose();
             }
 
-            _notificationService?.PopMessage(
-                Properties.Resources.GameCrashReportModal_AiExportSuccessMessage,
-                Properties.Resources.GameCrashReportModal_AiExportSuccessTitle,
-                GrowlLevel.Success,
-                forceExpire: true
-            );
+            _notificationService?.PopMessage(AppResources.GameCrashReportModal_AiExportSuccessMessage,
+                                             AppResources.GameCrashReportModal_AiExportSuccessTitle,
+                                             GrowlLevel.Success,
+                                             true);
         }
         catch (Exception ex)
         {
-            _notificationService?.PopMessage(
-                Program.IsDebug ? ex.ToString() : ex.Message,
-                Properties.Resources.GameCrashReportModal_AiExportFailedTitle,
-                GrowlLevel.Danger
-            );
+            _notificationService?.PopMessage(Program.IsDebug ? ex.ToString() : ex.Message,
+                                             AppResources.GameCrashReportModal_AiExportFailedTitle,
+                                             GrowlLevel.Danger);
         }
     }
 
@@ -372,10 +344,7 @@ public partial class GameCrashReportModal : Modal
         return await reader.ReadToEndAsync();
     }
 
-    private async Task<CreateLogResponse?> UploadTextToMclogsAsync(
-        string content,
-        string contentKind
-    )
+    private async Task<CreateLogResponse?> UploadTextToMclogsAsync(string content, string contentKind)
     {
         if (_mclogsClient == null)
         {
@@ -384,25 +353,25 @@ public partial class GameCrashReportModal : Modal
 
         try
         {
-            return await _mclogsClient.CreateLogAsync(
-                new(
-                    content,
-                    $"{Program.Brand}/{Program.Version}",
-                    [
-                        new("content_kind", contentKind, "Content Kind", false),
-                        new("instance_name", Report?.InstanceName, "Instance Name", true),
-                        new("instance_key", Report?.InstanceKey, "Instance Key", false),
-                        new(
-                            "minecraft_version",
-                            Report?.MinecraftVersion,
-                            "Minecraft Version",
-                            true
-                        ),
-                        new("loader", Report?.LoaderLabel, "Loader", true),
-                        new("operating_system", Report?.OperatingSystem, "Operating System", true),
-                    ]
-                )
-            );
+            return await _mclogsClient.CreateLogAsync(new(content,
+                                                          $"{Program.Brand}/{Program.Version}",
+                                                          [
+                                                              new("content_kind", contentKind, "Content Kind", false),
+                                                              new("instance_name",
+                                                                  Report?.InstanceName,
+                                                                  "Instance Name"),
+                                                              new("instance_key",
+                                                                  Report?.InstanceKey,
+                                                                  "Instance Key",
+                                                                  false),
+                                                              new("minecraft_version",
+                                                                  Report?.MinecraftVersion,
+                                                                  "Minecraft Version"),
+                                                              new("loader", Report?.LoaderLabel, "Loader"),
+                                                              new("operating_system",
+                                                                  Report?.OperatingSystem,
+                                                                  "Operating System")
+                                                          ]));
         }
         catch (ApiException ex)
         {
@@ -419,24 +388,13 @@ public partial class GameCrashReportModal : Modal
         CreateLogResponse? crashReportUpload,
         CreateLogResponse? logUpload,
         string? crashReportContent,
-        string? uploadedLogContent
-    )
+        string? uploadedLogContent)
     {
         var markdown = template;
-        foreach (
-            var pair in BuildAiTemplateTokens(
-                crashReportUpload,
-                logUpload,
-                crashReportContent,
-                uploadedLogContent
-            )
-        )
+        foreach (var pair in
+                 BuildAiTemplateTokens(crashReportUpload, logUpload, crashReportContent, uploadedLogContent))
         {
-            markdown = markdown.Replace(
-                $"{{{{{pair.Key}}}}}",
-                pair.Value,
-                StringComparison.Ordinal
-            );
+            markdown = markdown.Replace($"{{{{{pair.Key}}}}}", pair.Value, StringComparison.Ordinal);
         }
 
         return markdown;
@@ -446,11 +404,9 @@ public partial class GameCrashReportModal : Modal
         CreateLogResponse? crashReportUpload,
         CreateLogResponse? logUpload,
         string? crashReportContent,
-        string? uploadedLogContent
-    )
+        string? uploadedLogContent)
     {
-        var avaloniaVersion =
-            typeof(Application).Assembly.GetName().Version?.ToString() ?? "Unknown";
+        var avaloniaVersion = typeof(Application).Assembly.GetName().Version?.ToString() ?? "Unknown";
 
         return new(StringComparer.Ordinal)
         {
@@ -477,17 +433,14 @@ public partial class GameCrashReportModal : Modal
             ["dotnet_runtime"] = RuntimeInformation.FrameworkDescription,
             ["avalonia_version"] = avaloniaVersion,
             ["crash_report_url"] = crashReportUpload?.Url ?? "Unavailable",
-            ["crash_report_raw_url"] =
-                crashReportUpload?.Raw ?? crashReportUpload?.Url ?? "Unavailable",
+            ["crash_report_raw_url"] = crashReportUpload?.Raw ?? crashReportUpload?.Url ?? "Unavailable",
             ["log_url"] = logUpload?.Url ?? "Unavailable",
             ["raw_log_url"] = logUpload?.Raw ?? logUpload?.Url ?? "Unavailable",
             ["log_file_path"] = EscapeMarkdownInline(Report?.LogFilePath),
             ["crash_report_path"] = EscapeMarkdownInline(Report?.CrashReportPath),
             ["command_line"] = EscapeCodeFenceContent(Report?.CommandLine),
-            ["crash_report_excerpt"] = EscapeCodeFenceContent(
-                GetPreviewCrashReport(crashReportContent)
-            ),
-            ["last_log_lines"] = EscapeCodeFenceContent(GetPreviewLogLines(uploadedLogContent)),
+            ["crash_report_excerpt"] = EscapeCodeFenceContent(GetPreviewCrashReport(crashReportContent)),
+            ["last_log_lines"] = EscapeCodeFenceContent(GetPreviewLogLines(uploadedLogContent))
         };
     }
 
@@ -502,12 +455,10 @@ public partial class GameCrashReportModal : Modal
         {
             Path.Combine(Report.GameDirectory, "logs", "debug.log"),
             Report.LogFilePath,
-            Path.Combine(Report.GameDirectory, "logs", "latest.log"),
+            Path.Combine(Report.GameDirectory, "logs", "latest.log")
         };
 
-        foreach (
-            var candidatePath in candidatePaths.Where(static x => !string.IsNullOrWhiteSpace(x))
-        )
+        foreach (var candidatePath in candidatePaths.Where(static x => !string.IsNullOrWhiteSpace(x)))
         {
             try
             {
@@ -527,28 +478,22 @@ public partial class GameCrashReportModal : Modal
         }
 
         return string.IsNullOrWhiteSpace(Report.LastLogLines)
-            ? null
-            : BuildTailLogContent(
-                Report.LastLogLines.Replace("\r\n", "\n", StringComparison.Ordinal).Split('\n')
-            );
+                   ? null
+                   : BuildTailLogContent(Report
+                                        .LastLogLines.Replace("\r\n", "\n", StringComparison.Ordinal)
+                                        .Split('\n'));
     }
 
     private string? GetCrashReportContentForAiExport()
     {
-        if (
-            string.IsNullOrWhiteSpace(Report?.CrashReportPath)
-            || !File.Exists(Report.CrashReportPath)
-        )
+        if (string.IsNullOrWhiteSpace(Report?.CrashReportPath) || !File.Exists(Report.CrashReportPath))
         {
             return null;
         }
 
         try
         {
-            return BuildHeadContent(
-                File.ReadLines(Report.CrashReportPath),
-                MAX_CRASH_REPORT_UPLOAD_LINES
-            );
+            return BuildHeadContent(File.ReadLines(Report.CrashReportPath), MAX_CRASH_REPORT_UPLOAD_LINES);
         }
         catch
         {
@@ -600,11 +545,8 @@ public partial class GameCrashReportModal : Modal
             }
 
             var candidateLine = count == 0 ? line : $"{Environment.NewLine}{line}";
-            if (
-                Encoding.UTF8.GetByteCount(builder.ToString())
-                    + Encoding.UTF8.GetByteCount(candidateLine)
-                > MAX_UPLOAD_BYTES
-            )
+            if (Encoding.UTF8.GetByteCount(builder.ToString()) + Encoding.UTF8.GetByteCount(candidateLine)
+              > MAX_UPLOAD_BYTES)
             {
                 break;
             }
@@ -623,10 +565,7 @@ public partial class GameCrashReportModal : Modal
             return "Unavailable";
         }
 
-        var lines = logContent
-            .Replace("\r\n", "\n", StringComparison.Ordinal)
-            .Split('\n')
-            .TakeLast(100);
+        var lines = logContent.Replace("\r\n", "\n", StringComparison.Ordinal).Split('\n').TakeLast(100);
         var preview = string.Join(Environment.NewLine, lines).Trim();
         return string.IsNullOrWhiteSpace(preview) ? "Unavailable" : preview;
     }
@@ -638,10 +577,7 @@ public partial class GameCrashReportModal : Modal
             return "Unavailable";
         }
 
-        var lines = crashReportContent
-            .Replace("\r\n", "\n", StringComparison.Ordinal)
-            .Split('\n')
-            .Take(100);
+        var lines = crashReportContent.Replace("\r\n", "\n", StringComparison.Ordinal).Split('\n').Take(100);
         var preview = string.Join(Environment.NewLine, lines).Trim();
         return string.IsNullOrWhiteSpace(preview) ? "Unavailable" : preview;
     }

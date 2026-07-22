@@ -7,19 +7,13 @@ namespace Polymerium.Avalonia.Dialogs;
 
 public partial class TagPickerDialog : Dialog
 {
-    public static readonly DirectProperty<
-        TagPickerDialog,
-        IReadOnlyList<string>?
-    > ExistingTagsProperty = AvaloniaProperty.RegisterDirect<
-        TagPickerDialog,
-        IReadOnlyList<string>?
-    >(nameof(ExistingTags), o => o.ExistingTags, (o, v) => o.ExistingTags = v);
+    public static readonly DirectProperty<TagPickerDialog, IReadOnlyList<string>?> ExistingTagsProperty =
+        AvaloniaProperty.RegisterDirect<TagPickerDialog, IReadOnlyList<string>?>(nameof(ExistingTags),
+            o => o.ExistingTags,
+            (o, v) => o.ExistingTags = v);
 
     public static readonly DirectProperty<TagPickerDialog, bool> HasExistingTagsProperty =
-        AvaloniaProperty.RegisterDirect<TagPickerDialog, bool>(
-            nameof(HasExistingTags),
-            o => o.HasExistingTags
-        );
+        AvaloniaProperty.RegisterDirect<TagPickerDialog, bool>(nameof(HasExistingTags), o => o.HasExistingTags);
 
     public TagPickerDialog() => InitializeComponent();
 
@@ -48,6 +42,5 @@ public partial class TagPickerDialog : Dialog
 
     #endregion
 
-    protected override bool ValidateResult(object? result) =>
-        result is string str && !string.IsNullOrEmpty(str);
+    protected override bool ValidateResult(object? result) => result is string str && !string.IsNullOrEmpty(str);
 }

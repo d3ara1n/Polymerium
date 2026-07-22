@@ -1,10 +1,9 @@
-using TridentCore.Pref;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -82,7 +81,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
                 var status = await _dataService.CheckStatusAsync(repository.Label);
                 repository.Loaders =
                 [
-                    .. status.SupportedLoaders.Select(x => new LoaderBasicModel(x, LoaderHelper.ToDisplayName(x))),
+                    .. status.SupportedLoaders.Select(x => new LoaderBasicModel(x, LoaderHelper.ToDisplayName(x)))
                 ];
                 repository.Versions =
                 [
@@ -91,7 +90,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
                                                                            out var sem)
                                                                            ? sem
                                                                            : new(0, 0, 0),
-                                                                  SemVersion.SortOrderComparer),
+                                                                  SemVersion.SortOrderComparer)
                 ];
             }
         }
@@ -102,6 +101,16 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
     #region Nested type: SearchArguments
 
     public record SearchArguments(string? Query, string? Label);
+
+    #endregion
+
+    #region Nested type: State
+
+    public partial class State : ModelBase
+    {
+        [ObservableProperty]
+        public partial int LayoutIndex { get; set; }
+    }
 
     #endregion
 
@@ -133,7 +142,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
             "curseforge" => AssetUriIndex.RepositoryHeaderCurseforgeBitmap,
             "modrinth" => AssetUriIndex.RepositoryHeaderModrinthBitmap,
             "favorite" => AssetUriIndex.RepositoryHeaderFavoriteBitmap,
-            _ => HeaderImage,
+            _ => HeaderImage
         };
 
         _ = SearchAsync();
@@ -142,18 +151,12 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
     [ObservableProperty]
     public partial string? FilteredVersion { get; set; }
 
-    partial void OnFilteredVersionChanged(string? value)
-    {
-        _ = SearchAsync();
-    }
+    partial void OnFilteredVersionChanged(string? value) => _ = SearchAsync();
 
     [ObservableProperty]
     public partial LoaderBasicModel? FilteredLoader { get; set; }
 
-    partial void OnFilteredLoaderChanged(LoaderBasicModel? value)
-    {
-        _ = SearchAsync();
-    }
+    partial void OnFilteredLoaderChanged(LoaderBasicModel? value) => _ = SearchAsync();
 
     [ObservableProperty]
     public partial InfiniteCollection<ExhibitModel>? Exhibits { get; set; }
@@ -216,7 +219,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
                                                              x.Reference)
                                {
                                    IsFavorite =
-                                        _persistenceService.IsFavoriteProject(x.Label, x.Namespace, x.Pid),
+                                        _persistenceService.IsFavoriteProject(x.Label, x.Namespace, x.Pid)
                                })
                                .ToArray();
                     return tasks;
@@ -286,7 +289,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
             return;
         }
 
-        var project = await _dataService.QueryProjectAsync(new ProjectIdentifier(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
+        var project = await _dataService.QueryProjectAsync(new(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
         _persistenceService.AddFavoriteProject(project);
         exhibit.IsFavorite = true;
     }
@@ -298,7 +301,8 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
         {
             try
             {
-                var project = await _dataService.QueryProjectAsync(new ProjectIdentifier(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
+                var project =
+                    await _dataService.QueryProjectAsync(new(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
                 var model = new ExhibitModpackModel(project.Label,
                                                     project.Namespace,
                                                     project.ProjectId,
@@ -316,7 +320,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
                     DataService = _dataService,
                     PersistenceService = _persistenceService,
                     DataContext = model,
-                    InstallCommand = InstallVersionCommand,
+                    InstallCommand = InstallVersionCommand
                 });
             }
             catch (OperationCanceledException) { }
@@ -359,16 +363,6 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
                                                      .Replace("{0}", version.VersionName),
                                             version.ProjectName);
         }
-    }
-
-    #endregion
-
-    #region Nested type: State
-
-    public partial class State : ModelBase
-    {
-        [ObservableProperty]
-        public partial int LayoutIndex { get; set; }
     }
 
     #endregion

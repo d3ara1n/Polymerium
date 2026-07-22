@@ -16,7 +16,9 @@ public static class InternalUriHelper
     public static bool IsKind(string? s, string kind)
     {
         if (s is null)
+        {
             return false;
+        }
 
         var prefix = kind + "://";
         return s.StartsWith(prefix, StringComparison.Ordinal);

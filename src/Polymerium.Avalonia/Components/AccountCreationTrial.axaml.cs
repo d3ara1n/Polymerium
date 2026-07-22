@@ -24,7 +24,7 @@ public partial class AccountCreationTrial : AccountCreationStep
                 3 => TrialAccount.CreatePeter(),
                 4 => TrialAccount.CreateLois(),
                 5 => TrialAccount.CreateHerobrine(),
-                _ => throw new ArgumentOutOfRangeException(),
-            },
+                _ => throw new ArgumentOutOfRangeException()
+            }
         };
 }

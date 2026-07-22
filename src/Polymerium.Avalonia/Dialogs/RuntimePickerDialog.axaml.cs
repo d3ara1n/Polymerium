@@ -7,6 +7,5 @@ public partial class RuntimePickerDialog : Dialog
 {
     public RuntimePickerDialog() => InitializeComponent();
 
-    protected override bool ValidateResult(object? result) =>
-        result is RuntimePickerDialogCandidateModel;
+    protected override bool ValidateResult(object? result) => result is RuntimePickerDialogCandidateModel;
 }
