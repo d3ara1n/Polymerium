@@ -1225,7 +1225,7 @@
         <value>Generating manifest...</value>
     </data>
     <data name="DeployStage_SolidifyManifest" xml:space="preserve">
-        <value>Solidifying files...</value>
+        <value>Preparing files...</value>
     </data>
     <data name="InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle" xml:space="preserve">
         <value>Update packages in bulk</value>
