@@ -1207,7 +1207,7 @@
         <value>安装原版...</value>
     </data>
     <data name="DeployStage_ProcessLoader" xml:space="preserve">
-        <value>处理加载器...</value>
+        <value>安装模组加载器...</value>
     </data>
     <data name="DeployStage_SyncPackages" xml:space="preserve">
         <value>同步包...</value>
@@ -1330,7 +1330,7 @@
         <value>强调色</value>
     </data>
     <data name="DeployStage_EnsureRuntime" xml:space="preserve">
-        <value>确保运行时...</value>
+        <value>准备 Java 运行时...</value>
     </data>
     <data name="MainWindow_PlayMenuText" xml:space="preserve">
         <value>开始</value>
