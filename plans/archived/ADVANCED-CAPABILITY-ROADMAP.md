@@ -11,7 +11,7 @@
 | 能力 | 状态 | 意义 |
 |------|------|------|
 | **规则引擎 ProfileRules** | ✅ 完整 | 7 种选择器（Purl/Repository/Tag/Kind/And/Or/Not）× 3 种效果（Skipping/Normalizing/Destination），递归树形 UI。Minecraft 版的声明式包路由 |
-| **工作区 InstanceWorkspace** | ✅ 完整 | import/live 双目录 + Git 集成（stage/restore/diff/commit/checkout） |
+| **工作区 InstanceWorkspace** | ✅ 完整 | import→build 工作副本投影 + Git 集成（stage/restore/diff/commit/checkout） |
 | **快照系统 Snapshots** | ✅ 完整 | 全量文件 + 包清单，去重存储，链式 diff，并行处理 |
 | **导入/导出** | ✅ 完整 | 4 格式（trident/curseforge/modrinth/multimc），自动识别 |
 | **账号系统** | ✅ 完整 | Microsoft / Yggdrasil（自定义验证服务器）/ 离线，多账户 |
@@ -36,8 +36,8 @@
 | **A3** | Widget 开发者工具箱（补齐空壳 + 新增） | 🟠 P1 | M | 第一步已完成（JarInJar）；第二步经评估撚置（价值/ROI 低） |
 | **B3** | 版本元数据源可配置 | 🟠 P1 立即 | S | 已驳回（仅有一个可用端点，可配置无意义，且用户误改会导致元数据不可用） |
 | **A2** | 查询语法升级为真正的查询引擎 | 🟡 P2 | L | 已驳回 |
-| **B1** | GitHub 整合包源（packwiz 仓库拉取/更新） | 🟡 P2 战略 | L | [PACKWIZ-REPOSITORY-IMPORT](PACKWIZ-REPOSITORY-IMPORT.md) |
-| **B2** | 实例即工作流（配置即代码） | 🔵 P3 战略 | XL | 待讨论 |
+| **B1** | GitHub 整合包源（packwiz 仓库拉取/更新） | 🟡 P2 战略 | L | ✅ 已完成（蓝本：[PACKWIZ-REPOSITORY-IMPORT](PACKWIZ-REPOSITORY-IMPORT.md)） |
+| **B2** | 实例即工作流（配置即代码） | 🔵 P3 战略 | XL | 已驳回（计划前提错误） |
 
 ---
 
@@ -183,65 +183,24 @@ public int DependentCount { get; }  // 入边数：多少个依赖它
 
 ## 🟡 B1 — GitHub 整合包源（packwiz 仓库拉取/更新）
 
-**决策**：方案已定稿，见 [PACKWIZ-REPOSITORY-IMPORT](PACKWIZ-REPOSITORY-IMPORT.md)。
+**状态**：✅ 已完成。蓝本见 [PACKWIZ-REPOSITORY-IMPORT](PACKWIZ-REPOSITORY-IMPORT.md)。
 
 核心思路：新增 `PackwizRepository`（隐藏 IRepository）和 `PackwizImporter`（IProfileImporter），以 `pref://packwiz/owner/repo@tag` 为 URI。仓库整体作为 modpack 处理，mod 仅通过 `.pw.toml` 的 `[update]` 块提取外部引用，由现有 DataService 链路 resolve。
 
 ---
 
-## 🔵 B2 — 实例即工作流（配置即代码）详解
+## 🔵 B2 — 实例即工作流（配置即代码）（已驳回）
 
-> 用户要求「细说」此项。
+**决策**：驳回。本项的核心论点「Profile 不是文件、是内部模型 + SQLite、不可 diff、不在 git 管辖」与项目现状完全相反，建立在一个不存在的问题上。
 
-**核心理念**
+**实际情况**：
 
-把一个实例从「一堆运行时文件 + 内部二进制 Profile」变成**一个可版本控制、可审查、可协作的工作产物**。类比：dotfiles 之于个人配置，Infrastructure-as-Code 之于运维——这里是 **Instance-as-Code**。
+- **Profile 本就是文件**——`profile.json`，纯 JSON，由 `PathDef.FileOfProfile(key)` 落在 `instances/{key}/profile.json`，描述版本/loader/包清单/规则/运行覆盖项。官网 `concepts/metadata-driven`、`advanced/modpack-dev` 明确将其定义为 "plain JSON, diffable" 的实例定义。
+- **实例目录即 git 仓库根**——`InstanceWorkspacePageModel` 的 git 集成以 `PathDef.DirectoryOfHome(key)`（`instances/{key}/`）为工作目录（`LoadGitStatusAsync` / `TryOpenGitRepository`），`profile.json` 直接位于其下，是一等 tracked 文件。装/卸包、改规则、改 loader 引起的 profile.json 变更会进入工作区 git status，可 stage/commit/diff/checkout/restore。
+- **全 git 工作流是现有特色**——官网 `guides/git-collaboration` 专门讲多人分支协作与 profile.json 冲突解决；`comparisons/vs-prism-launcher` 把「可版本控制的整合包，可用于协作」列为差异化卖点。
+- **SQLite 不存 Profile**——`persistence.sqlite.db` 是 Polymerium 应用状态（FreeSql），`cache.sqlite.db` 是 HTTP 缓存；Profile 的唯一权威源是 `profile.json` 文件。
 
-**现状离这个理念有多近**
-
-已经具备 80% 基建：
-
-- ✅ 工作区有 git 集成（commit/checkout/diff）
-- ✅ import/live 双目录分离（源 vs 运行时，天然对应 git 的 index/working tree）
-- ✅ 规则引擎是声明式的（已经是「配置」而非「命令式代码」）
-- ✅ 快照系统记录全量状态
-- ❌ **Profile 不是文件**——它是内部模型 + SQLite，不可读、不可 diff、不在 git 管辖内
-
-**缺的最后一步：Profile 文件化**
-
-把 Profile（包清单、规则、loader/版本、JVM 参数）序列化为**人类可读文本**（TOML/JSON），放在工作区目录里纳入 git。
-
-一旦 Profile 变成文件，「实例即工作流」的全部能力随之解锁：
-
-| 能力 | 说明 |
-|------|------|
-| **可审查变更** | 装了个 mod、改了条规则、升了版本 → `git diff` 一目了然，`git log` 知道何时何人改的 |
-| **可协作** | 多人搭整合包：分支开发 + PR review 配置变更，和写代码一样 |
-| **可模板化** | 一个仓库参数化生成多版本实例（同一整合包的 1.20.1 / 1.21 分支） |
-| **CI 验证** | 仓库推送后，CI 用 Trident CLI（已存在）部署验证，集成包作者能在发布前发现冲突 |
-| **与 packwiz 生态对齐** | B1 拉取的 packwiz 仓库本身就是「实例即代码」，Profile 文件化让 Polymerium 原生具备同构能力，互通零摩擦 |
-
-**与各能力的协同**
-
-- 与 **B1**：Profile 文件化是「导出为 packwiz / 从 packwiz 同步」的天然中间层
-- 与 **规则引擎**：规则本来就是声明式，序列化为 TOML 最自然
-- 与 **快照**：快照记录二进制全量，Profile 文件记录可读增量，两者互补（快照=时间机，Profile 文件=版本控制）
-- 与 **Super Power**：可重新定义 Super Power 为「实例即代码工作流」开关——开启后 Profile 以文件形式落盘并纳入 git，关闭则维持内部模型（对不需要这套工作流的玩家无打扰）
-
-**方案方向（粗粒度）**
-
-1. 设计 Profile 序列化格式（TOML，对齐 packwiz 风格降低学习成本）
-2. `ProfileManager` 增加「文件双向同步」：内存 Profile ↔ 工作区 `profile.toml`
-3. 工作区 git 集成扩展：commit 时自动包含 `profile.toml`
-4. 设置项（Super Power 门控）：开启「实例即代码」模式
-
-**状态**：属 XL 级，依赖 B1 的理念先落地（packwiz 格式本身就是 Profile 文件化的参考实现）。建议 B1 推进后再以 packwiz 互操作为切入点自然演化出 B2，而非独立巨石式开发。
-
-**决策点（待讨论）**
-
-- 序列化格式：TOML（生态对齐 packwiz）vs JSON（实现简单）vs 自定义
-- 是否真的需要 Super Power 门控，还是直接作为默认行为
-- 与现有 SQLite 持久化的关系（文件为主、DB 为缓存？还是并行？）
+**结论**：本项提出的「Profile 文件化」「`ProfileManager` 文件双向同步」「commit 自动纳入 profile.toml」全部建立在错误前提上——要么早已是现状，要么无的放矢。它宣称「文件化后才解锁」的可审查/可协作/CI 验证/模板化能力，现在就已具备。无立项价值，驳回。
 
 ---
 
@@ -249,5 +208,5 @@ public int DependentCount { get; }  // 入边数：多少个依赖它
 
 1. **A1 依赖图增强** ← 现在，需求明确、风险低、最能立刻体现「专业工具」定位
 2. **A3 Widget** ← 用户勾选内容后启动，JarInJar 可先行
-3. **B1 GitHub 整合包源** ← 战略级，专门讨论后立项
-4. **B2 实例即工作流** ← B1 落地后自然演化
+3. ~~**B1 GitHub 整合包源**~~ ← ✅ 已完成
+4. ~~**B2 实例即工作流**~~ ← 已驳回（前提错误）
