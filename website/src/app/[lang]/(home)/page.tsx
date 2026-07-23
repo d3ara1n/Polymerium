@@ -12,6 +12,7 @@ import {
   Monitor,
   ShieldCheck,
   ShoppingBag,
+  type LucideIcon,
 } from 'lucide-react';
 import { LinkButton } from '@/components/link-button';
 import { DownloadButton, type DownloadLabels } from '@/components/download-button';
@@ -31,7 +32,7 @@ const DOWNLOAD_URL = `${GITHUB_URL}/releases`;
 
 /* ─── i18n dictionaries ─── */
 
-function useDict(lang: string) {
+function getDict(lang: string) {
   if (lang === 'zh') {
     return {
       // Hero
@@ -94,7 +95,7 @@ function useDict(lang: string) {
       mcpTitle: '唯一内置 MCP 的 Minecraft 启动器',
       mcpDesc:
         '启动 trident MCP 服务器，AI Agent 可以直接创建实例、添加模组、构建部署、管理快照——30+ 工具覆盖完整工作流。',
-      mcpCta: '查看 CLI 文档',
+      mcpCta: '查看 MCP 文档',
 
       // Screenshot tour
       tourTitle: '界面一览',
@@ -141,8 +142,8 @@ function useDict(lang: string) {
       ],
 
       // CTA
-      ctaTitle: '准备好节省磁盘空间了吗？',
-      ctaSub: '下载 Polymerium，体验元数据驱动的实例管理。',
+      ctaTitle: '几分钟，创建你的第一个实例。',
+      ctaSub: '下载 Polymerium，体验元数据驱动的不同。',
 
       // Footer
       footerDocs: '文档',
@@ -209,7 +210,7 @@ function useDict(lang: string) {
     mcpTitle: 'The Only Minecraft Launcher with Built-in MCP',
     mcpDesc:
       'Start the trident MCP server and let AI agents create instances, add mods, build deployments, and manage snapshots — 30+ tools covering the full workflow.',
-    mcpCta: 'View CLI Docs',
+    mcpCta: 'View MCP Docs',
 
     tourTitle: 'A Look Inside',
     tourItems: [
@@ -253,8 +254,8 @@ function useDict(lang: string) {
       },
     ],
 
-    ctaTitle: 'Ready to Save Disk Space?',
-    ctaSub: 'Download Polymerium and experience metadata-driven instance management.',
+    ctaTitle: 'Build Your First Instance in Minutes.',
+    ctaSub: 'Download Polymerium and see what metadata-driven really means.',
 
     footerDocs: 'Docs',
     footerLicense: 'MIT License',
@@ -274,7 +275,16 @@ function GitHubIcon(props: React.ComponentProps<'svg'>) {
   );
 }
 
-const featureIcons = [ShoppingBag, HardDrive, RefreshCw, Camera, FileJson, ShieldCheck];
+type FeatureVariant = 'hero' | 'wide' | 'default';
+
+const FEATURE_LAYOUT: { variant: FeatureVariant; icon: LucideIcon }[] = [
+  { variant: 'hero', icon: ShoppingBag },
+  { variant: 'default', icon: HardDrive },
+  { variant: 'default', icon: RefreshCw },
+  { variant: 'default', icon: Camera },
+  { variant: 'default', icon: FileJson },
+  { variant: 'wide', icon: ShieldCheck },
+];
 
 /* ─── profile.json syntax-highlighted sample ─── */
 
@@ -306,7 +316,7 @@ const profileJsonLines: [string, string][][] = [
 export async function generateMetadata(props: PageProps<'/[lang]'>): Promise<Metadata> {
   const params = await props.params;
   const lang = params.lang;
-  const d = useDict(lang);
+  const d = getDict(lang);
 
   return {
     title: d.metaTitle,
@@ -334,7 +344,7 @@ export async function generateMetadata(props: PageProps<'/[lang]'>): Promise<Met
 export default async function HomePage(props: PageProps<'/[lang]'>) {
   const params = await props.params;
   const lang = params.lang;
-  const d = useDict(lang);
+  const d = getDict(lang);
 
   const release = await getRelease();
   const downloadLabels: DownloadLabels = {
@@ -346,53 +356,52 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
     allFilesTemplate: d.allFilesTemplate,
   };
 
-  const faqSchema = {
+  const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: d.faqItems.map((item) => ({
-      '@type': 'Question',
-      name: item.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.a,
-      },
-    })),
-  };
-
-  const softwareSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: 'Polymerium',
-    applicationCategory: 'GameApplication',
-    operatingSystem: 'Windows, Linux, macOS',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-    },
-    description: d.metaDesc,
-    url: `https://polymerium.dearain.dev/${lang}`,
-    installUrl: 'https://github.com/d3ara1n/Polymerium/releases',
-    license: 'https://opensource.org/licenses/MIT',
-  };
-
-  const organizationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Polymerium',
-    url: 'https://polymerium.dearain.dev',
-    logo: 'https://polymerium.dearain.dev/favicon.png',
-  };
-
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
+    '@graph': [
       {
-        '@type': 'ListItem',
-        position: 1,
-        name: lang === 'zh' ? '首页' : 'Home',
-        item: `https://polymerium.dearain.dev/${lang}`,
+        '@type': 'FAQPage',
+        mainEntity: d.faqItems.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.a,
+          },
+        })),
+      },
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Polymerium',
+        applicationCategory: 'GameApplication',
+        operatingSystem: 'Windows, Linux, macOS',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+        },
+        description: d.metaDesc,
+        url: `https://polymerium.dearain.dev/${lang}`,
+        installUrl: 'https://github.com/d3ara1n/Polymerium/releases',
+        license: 'https://opensource.org/licenses/MIT',
+      },
+      {
+        '@type': 'Organization',
+        name: 'Polymerium',
+        url: 'https://polymerium.dearain.dev',
+        logo: 'https://polymerium.dearain.dev/favicon.png',
+        sameAs: ['https://github.com/d3ara1n/Polymerium'],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: lang === 'zh' ? '首页' : 'Home',
+            item: `https://polymerium.dearain.dev/${lang}`,
+          },
+        ],
       },
     ],
   };
@@ -401,19 +410,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
     <div className="flex flex-col flex-1">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* ──── Hero ──── */}
@@ -424,13 +421,13 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 pt-14 pb-16 md:pt-20 md:pb-24 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
           <div>
             <Reveal>
-              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-fd-foreground leading-[1.12]">
+              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground leading-[1.12]">
                 <HeroVerb verbs={d.heroVerbs} className="text-primary" />
                 {d.heroRest}
               </h1>
             </Reveal>
             <Reveal delay={0.08}>
-              <p className="mt-6 max-w-xl text-lg text-fd-muted-foreground leading-relaxed">
+              <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
                 {d.heroSub}
               </p>
             </Reveal>
@@ -452,6 +449,8 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                   <Zap className="size-3.5 text-primary" />
                   <a
                     href={getMirrorChyanUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
                   >
                     {d.mirrorHint}
@@ -461,7 +460,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
             </Reveal>
           </div>
 
-          <Reveal delay={0.2} className="relative">
+          <div className="relative">
             <div
               aria-hidden
               className="absolute -inset-8 rounded-[2.5rem] bg-primary/15 blur-3xl"
@@ -472,14 +471,15 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
               width={1920}
               height={1098}
               priority
+              sizes="(min-width: 1024px) 45vw, 100vw"
               className="relative rounded-xl border border-border shadow-2xl shadow-primary/10"
             />
-          </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ──── Tech Badges ──── */}
-      <section className="border-y border-fd-border py-5">
+      <section className="border-y border-border py-5">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-6">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Monitor className="size-4 text-primary" />
@@ -507,7 +507,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
               {d.coreDesc}
             </p>
           </Reveal>
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} className="min-w-0">
             <div className="terminal-block">
               <div className="terminal-titlebar">
                 <span className="window-dot" style={{ background: '#ff5f57' }} />
@@ -539,7 +539,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
       </section>
 
       {/* ──── Features Bento ──── */}
-      <section className="py-24 border-t border-fd-border">
+      <section className="py-24 border-t border-border">
         <div className="mx-auto max-w-6xl px-6">
           <Reveal>
             <h2 className="text-center text-3xl md:text-4xl font-bold tracking-tight text-foreground">
@@ -548,8 +548,11 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
           </Reveal>
           <div className="mt-14 grid gap-5 md:grid-cols-6">
             {d.features.map((f, i) => {
-              const Icon = featureIcons[i];
-              if (i === 0) {
+              const { variant, icon: Icon } = FEATURE_LAYOUT[i] ?? {
+                variant: 'default' as FeatureVariant,
+                icon: ShieldCheck,
+              };
+              if (variant === 'hero') {
                 return (
                   <Reveal key={f.title} className="md:col-span-4">
                     <div className="group h-full rounded-2xl border border-border bg-card overflow-hidden transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5">
@@ -571,7 +574,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                               alt={d.marketShotAlt}
                               fill
                               sizes="(min-width: 768px) 22rem, 100vw"
-                              className="object-cover object-left-top"
+                              className="object-cover object-left-top transition-transform duration-300 group-hover:scale-[1.02]"
                             />
                           </div>
                         </div>
@@ -580,7 +583,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                   </Reveal>
                 );
               }
-              if (i === 5) {
+              if (variant === 'wide') {
                 return (
                   <Reveal key={f.title} className="md:col-span-6">
                     <div className="group flex h-full items-center gap-5 rounded-2xl border border-primary/25 bg-primary/8 p-6 transition-all duration-200 hover:border-primary/50">
@@ -612,7 +615,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
       </section>
 
       {/* ──── Screenshot Tour ──── */}
-      <section className="py-24 border-t border-fd-border">
+      <section className="py-24 border-t border-border">
         <div className="mx-auto max-w-6xl px-6">
           <Reveal>
             <h2 className="text-center text-3xl md:text-4xl font-bold tracking-tight text-foreground">
@@ -630,6 +633,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                         alt={item.alt}
                         width={1920}
                         height={1098}
+                        sizes="(min-width: 768px) 45vw, 100vw"
                         className="transition-transform duration-300 group-hover:scale-[1.02]"
                       />
                     </div>
@@ -648,9 +652,9 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
       </section>
 
       {/* ──── CLI + MCP Highlight ──── */}
-      <section className="py-24 border-t border-fd-border">
+      <section className="py-24 border-t border-border">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2">
-          <Reveal>
+          <Reveal className="min-w-0">
             <div className="terminal-block">
               <div className="terminal-titlebar">
                 <span className="window-dot" style={{ background: '#ff5f57' }} />
@@ -719,7 +723,12 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
               {d.mcpDesc}
             </p>
             <div className="mt-8">
-              <LinkButton href={`/${lang}/docs/advanced/cli`} variant="outline" className="rounded-full">
+              <LinkButton
+                href={`/${lang}/docs/advanced/mcp`}
+                variant="outline"
+                size="lg"
+                className="rounded-full"
+              >
                 {d.mcpCta}
                 <ArrowRight className="size-4" />
               </LinkButton>
@@ -729,7 +738,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
       </section>
 
       {/* ──── FAQ ──── */}
-      <section className="py-24 border-t border-fd-border">
+      <section className="py-24 border-t border-border">
         <div className="mx-auto max-w-3xl px-6">
           <Reveal>
             <h2 className="text-center text-3xl md:text-4xl font-bold tracking-tight text-foreground">
@@ -739,7 +748,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
           <div className="mt-10">
             <Accordion>
               {d.faqItems.map((item, i) => (
-                <AccordionItem key={i} value={`faq-${i}`}>
+                <AccordionItem key={item.q} value={`faq-${i}`}>
                   <AccordionTrigger>{item.q}</AccordionTrigger>
                   <AccordionContent>{item.a}</AccordionContent>
                 </AccordionItem>
@@ -750,7 +759,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
       </section>
 
       {/* ──── CTA ──── */}
-      <section className="relative overflow-hidden py-24 border-t border-fd-border">
+      <section className="relative overflow-hidden py-24 border-t border-border">
         <div
           aria-hidden
           className="pointer-events-none absolute bottom-[-40%] left-1/2 -translate-x-1/2 hero-glow"
@@ -767,7 +776,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
       </section>
 
       {/* ──── Footer ──── */}
-      <footer className="border-t border-fd-border py-10">
+      <footer className="border-t border-border py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 sm:flex-row sm:justify-between">
           <div className="flex items-center gap-2.5">
             <Logo className="size-5 text-primary" />

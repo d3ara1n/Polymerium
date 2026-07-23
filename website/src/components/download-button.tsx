@@ -62,7 +62,7 @@ export function DownloadButton({
     : labels.genericDownloadLabel;
 
   return (
-    <div className={cn('inline-flex overflow-hidden rounded-full shadow-lg', className)}>
+    <div className={cn('inline-flex overflow-hidden rounded-full shadow-lg focus-within:outline-none focus-within:ring-3 focus-within:ring-ring/50', className)}>
       <a
         href={mainHref}
         className="inline-flex h-9 items-center gap-1.5 bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/80"
