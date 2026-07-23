@@ -1,0 +1,16 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="mark">
+      <rect x="-30" y="-30" width="60" height="60" rx="16" fill="none" stroke="#3A2E1C" stroke-width="12" transform="translate(-17 17)"/>
+      <rect x="-30" y="-30" width="60" height="60" rx="16" fill="none" stroke="#3A2E1C" stroke-width="12" transform="translate(17 -17)"/>
+    </g>
+  </defs>
+  <!-- box body -->
+  <rect x="28" y="44" width="72" height="60" rx="9" fill="#EEA93B"/>
+  <!-- top flap -->
+  <path d="M28 53 L40 30 L88 30 L100 53 Z" fill="#F8CD6B"/>
+  <!-- packing tape -->
+  <rect x="59" y="30" width="10" height="30" fill="#C98420" opacity="0.9"/>
+  <!-- logo print on body -->
+  <use href="#mark" transform="translate(64 80) rotate(45) scale(0.285)"/>
+</svg>

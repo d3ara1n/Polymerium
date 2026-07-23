@@ -1,10 +1,16 @@
 ﻿# Polymerium
 
-![Polymerium](https://socialify.git.ci/d3ara1n/Polymerium/image?description=1&font=Jost&forks=1&issues=1&language=1&name=1&owner=1&pattern=Overlapping%20Hexagons&pulls=1&stargazers=1&theme=Auto)
+<a href="https://polymerium.dearain.dev">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/banner-dark.zh.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/brand/banner-light.zh.svg">
+    <img alt="Polymerium" src="assets/brand/banner-light.zh.svg">
+  </picture>
+</a>
 
 <div align="center">
 
-**一个简单的理念：实例是一份可编辑的配置，不是一堆复制的文件。**
+**一个 Minecraft 启动器，源于一个简单的理念。**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![.NET 10.0](https://img.shields.io/badge/.NET-10-5C2D91?style=for-the-badge&logoColor=white)](https://dotnet.microsoft.com/)
