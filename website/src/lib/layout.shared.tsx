@@ -35,7 +35,7 @@ export function baseOptions(lang: string): BaseLayoutProps {
     },
     links: [
       {
-        text: 'Docs',
+        text: lang === 'zh' ? '文档' : 'Documentation',
         url: `/${lang}/docs`,
         active: 'nested-url',
       },
