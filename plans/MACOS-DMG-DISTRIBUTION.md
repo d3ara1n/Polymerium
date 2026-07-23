@@ -57,7 +57,7 @@ Velopack 打包步骤加 `--noInst` 跳过 pkg 生成：
 
 ```yaml
 elif [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
-    pack_extra_args="$pack_extra_args --icon ./src/Polymerium.Avalonia/Assets/Icon.icns --bundleId dev.dearain.Polymerium --noInst"
+    pack_extra_args="$pack_extra_args --icon ./src/Polymerium.Avalonia/Assets/Icon.App.icns --bundleId dev.dearain.Polymerium --noInst"
 ```
 
 ### 本地脚本改动（Publish-Velopack.ps1）
@@ -92,7 +92,7 @@ brew install create-dmg
 
 create-dmg \
     --volname "Polymerium" \
-    --volicon "./src/Polymerium.Avalonia/Assets/Icon.icns" \
+    --volicon "./src/Polymerium.Avalonia/Assets/Icon.App.icns" \
     --window-pos 200 120 \
     --window-size 600 400 \
     --icon-size 100 \

@@ -6,7 +6,7 @@ namespace Polymerium.Avalonia.Assets;
 
 public static class AssetUriIndex
 {
-    public static readonly Uri Icon = new("avares://Polymerium/Assets/Icon.png", UriKind.Absolute);
+    public static readonly Uri Icon = new("avares://Polymerium/Assets/Icon.App.png", UriKind.Absolute);
 
     public static readonly Uri RepositoryHeaderCurseforge =
         new("avares://Polymerium/Assets/Images/Repositories/Header_CurseForge.png", UriKind.Absolute);

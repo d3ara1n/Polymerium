@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   HardDrive,
@@ -6,25 +7,17 @@ import {
   FileJson,
   Terminal,
   ArrowRight,
-  Download,
   Zap,
   RefreshCw,
   Monitor,
   ShieldCheck,
-  LayoutGrid,
-  Package,
-  Wrench,
-  Pencil,
-  Home,
   ShoppingBag,
-  Plus,
-  ChevronDown,
-  Search,
-  RotateCw,
-  House,
 } from 'lucide-react';
 import { LinkButton } from '@/components/link-button';
 import { DownloadButton, type DownloadLabels } from '@/components/download-button';
+import { HeroVerb } from '@/components/hero-verb';
+import { Reveal } from '@/components/reveal';
+import { Logo } from '@/components/logo';
 import { getMirrorChyanUrl, getRelease } from '@/lib/releases';
 import {
   Accordion,
@@ -42,12 +35,13 @@ function useDict(lang: string) {
   if (lang === 'zh') {
     return {
       // Hero
-      heroTagline: '每个模组只存一份的 Minecraft 启动器',
+      heroVerbs: ['管理', '打包', '交付'],
+      heroRest: '你的 Minecraft 体验',
       heroSub:
-        '基于元数据驱动的实例管理器——零重复存储、快照、内置 CLI 与 MCP AI Agent 模式。',
+        '元数据驱动的 Minecraft 启动器，每个模组只存一份——零重复实例、快照系统，以及内置 CLI 与 MCP AI Agent 模式。',
+      heroShotAlt: 'Polymerium 主界面截图',
       ctaDownload: '下载',
       ctaCli: '命令行工具',
-      ctaViewDocs: '查看文档',
 
       // Download split button
       downloadForTemplate: '下载 {name} 版',
@@ -58,52 +52,40 @@ function useDict(lang: string) {
       mirrorHint: '已有 Mirror酱 CDK？前往高速下载',
 
       // Tech badges
-      badgeCrossPlatform: '跨平台',
       badgeOpenSource: 'MIT 开源',
-      badgeLoaders: '支持所有主流加载器',
 
       // Core value
       coreTitle: '实例不是文件夹，是一份描述',
       coreDesc:
         'Polymerium 用一个轻量的 profile.json 描述你的游戏配置——版本、加载器、模组列表。部署时从共享缓存通过符号链接构建，不复制任何文件。这意味着零重复存储、秒级切换整合包、Git 友好的版本控制。',
-      coreJson: `{
-  "version": "1.21.4",
-  "loader": { "type": "fabric", "version": "0.16.9" },
-  "modloader": true,
-  "packages": [
-    "modrinth:sodium",
-    "modrinth:iris",
-    "modrinth:fabric-api"
-  ]
-}`,
-      coreJsonLabel: 'profile.json',
 
       // Features
       featuresTitle: '为高效而生',
+      marketShotAlt: 'Polymerium 整合包市场界面截图',
       features: [
         {
+          title: '整合包市场',
+          desc: '在启动器内直接浏览、安装和更新来自 Modrinth 与 CurseForge 的整合包。',
+        },
+        {
           title: '零重复存储',
-          desc: '每个模组文件只存一份，通过符号链接共享到所有实例。节省 60–80% 磁盘空间。',
+          desc: '每个模组文件只存一份，通过符号链接共享到所有实例。实例越多，节省的磁盘空间越多。',
         },
         {
           title: '秒级切换',
-          desc: '秒级切换不同整合包，无需等待文件复制。',
+          desc: '在不同整合包之间秒级切换。实例由元数据构建，无需复制任何文件。',
         },
         {
           title: '快照系统',
-          desc: '保存、恢复和对比完整游戏状态。安全地尝试任何改动。',
+          desc: '保存、恢复和对比完整游戏状态，放心尝试任何改动。',
         },
         {
           title: 'Git 友好的整合包',
-          desc: '实例 = 一个 JSON 文件。用 Git 管理你的整合包开发。',
-        },
-        {
-          title: '命令行 + MCP 模式',
-          desc: '30+ 命令自动化全流程。让 AI Agent 直接管理你的实例。',
+          desc: '一个实例就是一个 JSON 文件，像代码一样用 Git 管理你的整合包。',
         },
         {
           title: '隐私优先',
-          desc: '无广告、无遥测、无数据收集。MIT 开源。',
+          desc: '无广告、无遥测、无数据收集，MIT 协议开源。',
         },
       ],
 
@@ -114,22 +96,20 @@ function useDict(lang: string) {
         '启动 trident MCP 服务器，AI Agent 可以直接创建实例、添加模组、构建部署、管理快照——30+ 工具覆盖完整工作流。',
       mcpCta: '查看 CLI 文档',
 
-      // Quick start
-      quickTitle: '三步上手',
-      quickSteps: [
-        { step: '01', title: '下载安装', desc: '从 GitHub Releases 下载对应平台的安装包，安装即可。' },
-        { step: '02', title: '创建实例', desc: '选择游戏版本和加载器，添加你需要的模组。' },
-        { step: '03', title: '开始游戏', desc: '一键构建部署，启动 Minecraft。' },
+      // Screenshot tour
+      tourTitle: '界面一览',
+      tourItems: [
+        {
+          title: '实例总览',
+          desc: '部署、启动、游戏时长统计，一屏搞定。',
+          alt: 'Polymerium 实例总览界面截图',
+        },
+        {
+          title: '包管理',
+          desc: '每个包一个开关，版本由 Pref 稳定引用锁定。',
+          alt: 'Polymerium 包管理界面截图',
+        },
       ],
-      // Quick start mockup strings
-      qsAssets: 'Assets',
-      qsNewInstance: '新建实例',
-      qsVersion: '版本',
-      qsLoader: '加载器',
-      qsSearchMods: '搜索模组…',
-      qsCreateBtn: '创建',
-      qsLaunching: '启动中…',
-      qsDeploying: '正在部署实例…',
 
       // FAQ
       faqTitle: '常见问题',
@@ -167,35 +147,20 @@ function useDict(lang: string) {
       // Footer
       footerDocs: '文档',
       footerLicense: 'MIT 开源协议',
-      footerMadeWith: '用 ❤️ 制作',
 
       // Meta
       metaTitle: 'Polymerium — Minecraft 实例管理器',
       metaDesc: '基于元数据驱动的 Minecraft 实例管理器。零重复存储、快照、CLI、MCP AI Agent 模式。',
-
-      // Mockup (app schematic)
-      mockOverview: '概览',
-      mockInstanceName: 'Fabulously Optimized',
-      mockSetup: '设置',
-      mockDetails: '详情 →',
-      mockPackages: '个包',
-      mockPlayTime: '游戏时长',
-      mockSnapshots: '快照',
-      mockStorageSaved: '节省空间',
-      mockReady: '一切就绪',
-      mockLaunch: '启动',
-      mockHome: '主页',
-      mockMarketplace: '市场',
-      mockAddInstance: '添加实例',
     };
   }
   return {
-    heroTagline: 'The Minecraft Launcher That Stores Each Mod Exactly Once',
+    heroVerbs: ['Manage', 'Pack', 'Deliver'],
+    heroRest: ' your Minecraft experience.',
     heroSub:
-      'Metadata-driven instance manager with zero-duplication storage, snapshots, and a built-in CLI with MCP mode for AI agents.',
+      'The metadata-driven Minecraft launcher that stores each mod exactly once — zero-duplication instances, snapshots, and a built-in CLI with MCP mode for AI agents.',
+    heroShotAlt: 'Screenshot of the Polymerium home screen',
     ctaDownload: 'Download',
     ctaCli: 'CLI Tool',
-    ctaViewDocs: 'View Docs',
 
     // Download split button
     downloadForTemplate: 'Download for {name}',
@@ -205,50 +170,38 @@ function useDict(lang: string) {
     allFilesTemplate: 'All files in {version} on GitHub',
     mirrorHint: 'Already have a Mirror酱 CDK? Fast download',
 
-    badgeCrossPlatform: 'Cross-platform',
     badgeOpenSource: 'MIT License',
-    badgeLoaders: 'All major loaders supported',
 
     coreTitle: 'An Instance Is a Description, Not a Folder Copy',
     coreDesc:
       'Polymerium describes your game setup with a lightweight profile.json — version, loader, mod list. Instances are built on demand from a shared cache using symlinks. No files are copied. That means zero duplication, instant modpack switching, and Git-friendly version control.',
-    coreJson: `{
-  "version": "1.21.4",
-  "loader": { "type": "fabric", "version": "0.16.9" },
-  "modloader": true,
-  "packages": [
-    "modrinth:sodium",
-    "modrinth:iris",
-    "modrinth:fabric-api"
-  ]
-}`,
-    coreJsonLabel: 'profile.json',
 
     featuresTitle: 'Built for Efficiency',
+    marketShotAlt: 'Screenshot of the Polymerium modpack marketplace',
     features: [
       {
+        title: 'Modpack Marketplace',
+        desc: 'Browse, install, and update modpacks from Modrinth and CurseForge without leaving the launcher.',
+      },
+      {
         title: 'Zero Duplication',
-        desc: 'Each mod file stored once, symlinked everywhere. Save 60–80% disk space.',
+        desc: 'Every mod file is stored exactly once and shared across instances via symlinks. The more instances you run, the more disk you save.',
       },
       {
         title: 'Instant Switching',
-        desc: 'Change modpacks in seconds, not minutes. No file copying needed.',
+        desc: 'Switch between modpacks in seconds. Instances are built from metadata, not file copies.',
       },
       {
         title: 'Snapshots',
-        desc: 'Save, restore, and diff entire game states. Experiment safely.',
+        desc: 'Save, restore, and diff entire game states. Experiment without fear.',
       },
       {
         title: 'Git-Friendly Modpacks',
-        desc: 'Instance = one JSON file. Version control your modpack development.',
-      },
-      {
-        title: 'CLI + MCP Mode',
-        desc: '30+ commands for automation. Let AI agents manage your instances.',
+        desc: 'An instance is a single JSON file. Version control your modpack like code.',
       },
       {
         title: 'Privacy First',
-        desc: 'No ads, no telemetry, no data collection. Open source (MIT).',
+        desc: 'No ads, no telemetry, no data collection. Open source under the MIT license.',
       },
     ],
 
@@ -258,21 +211,19 @@ function useDict(lang: string) {
       'Start the trident MCP server and let AI agents create instances, add mods, build deployments, and manage snapshots — 30+ tools covering the full workflow.',
     mcpCta: 'View CLI Docs',
 
-    quickTitle: 'Up and Running in 3 Steps',
-    quickSteps: [
-      { step: '01', title: 'Download', desc: 'Download the installer for your platform from GitHub Releases.' },
-      { step: '02', title: 'Create Instance', desc: 'Pick a Minecraft version, choose a loader, add the mods you want.' },
-      { step: '03', title: 'Play', desc: 'One-click deploy and launch. That\'s it.' },
+    tourTitle: 'A Look Inside',
+    tourItems: [
+      {
+        title: 'Instance Overview',
+        desc: 'Deploy, launch, and track play time from a single screen.',
+        alt: 'Screenshot of the instance overview with the launch pad',
+      },
+      {
+        title: 'Package Management',
+        desc: 'Every package one toggle away, versions pinned by stable Pref references.',
+        alt: 'Screenshot of the package management page',
+      },
     ],
-    // Quick start mockup strings
-    qsAssets: 'Assets',
-    qsNewInstance: 'New Instance',
-    qsVersion: 'Version',
-    qsLoader: 'Loader',
-    qsSearchMods: 'Search mods…',
-    qsCreateBtn: 'Create',
-    qsLaunching: 'Launching…',
-    qsDeploying: 'Deploying instance…',
 
     faqTitle: 'Frequently Asked Questions',
     faqItems: [
@@ -307,25 +258,9 @@ function useDict(lang: string) {
 
     footerDocs: 'Docs',
     footerLicense: 'MIT License',
-    footerMadeWith: 'Made with ❤️',
 
     metaTitle: 'Polymerium — Minecraft Instance Manager',
     metaDesc: 'Metadata-driven Minecraft instance manager. Zero-duplication storage, snapshots, CLI, MCP AI Agent mode.',
-
-    // Mockup (app schematic)
-    mockOverview: 'Overview',
-    mockInstanceName: 'Fabulously Optimized',
-    mockSetup: 'Setup',
-    mockDetails: 'Details →',
-    mockPackages: 'packages',
-    mockPlayTime: 'Play Time',
-    mockSnapshots: 'Snapshots',
-    mockStorageSaved: 'Storage Saved',
-    mockReady: 'Everything is ready',
-    mockLaunch: 'LAUNCH',
-    mockHome: 'Home',
-    mockMarketplace: 'Marketplace',
-    mockAddInstance: 'Add Instance',
   };
 }
 
@@ -339,7 +274,32 @@ function GitHubIcon(props: React.ComponentProps<'svg'>) {
   );
 }
 
-const featureIcons = [HardDrive, RefreshCw, Camera, FileJson, Terminal, ShieldCheck];
+const featureIcons = [ShoppingBag, HardDrive, RefreshCw, Camera, FileJson, ShieldCheck];
+
+/* ─── profile.json syntax-highlighted sample ─── */
+
+const profileJsonLines: [string, string][][] = [
+  [['code-punct', '{']],
+  [['code-key', '  "version"'], ['code-punct', ': '], ['code-string', '"1.21.4"'], ['code-punct', ',']],
+  [
+    ['code-key', '  "loader"'],
+    ['code-punct', ': { '],
+    ['code-key', '"type"'],
+    ['code-punct', ': '],
+    ['code-string', '"fabric"'],
+    ['code-punct', ', '],
+    ['code-key', '"version"'],
+    ['code-punct', ': '],
+    ['code-string', '"0.16.9"'],
+    ['code-punct', ' },'],
+  ],
+  [['code-key', '  "packages"'], ['code-punct', ': [']],
+  [['code-string', '    "modrinth:sodium"'], ['code-punct', ',']],
+  [['code-string', '    "modrinth:iris"'], ['code-punct', ',']],
+  [['code-string', '    "modrinth:fabric-api"']],
+  [['code-punct', '  ]']],
+  [['code-punct', '}']],
+];
 
 /* ─── Metadata ─── */
 
@@ -455,434 +415,327 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+
       {/* ──── Hero ──── */}
-      <section className="relative overflow-hidden pt-24 pb-20 md:pt-36 md:pb-28">
+      <section className="relative overflow-hidden">
         <div aria-hidden className="pointer-events-none absolute inset-0 hero-grid" />
-        <div aria-hidden className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hero-glow" />
+        <div aria-hidden className="pointer-events-none absolute -top-40 right-[-8%] hero-glow" />
 
-        <div className="relative mx-auto max-w-5xl px-6 text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-fd-foreground leading-tight">
-            {d.heroTagline}
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-fd-muted-foreground leading-relaxed">
-            {d.heroSub}
-          </p>
-
-          {/* CTA buttons */}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <DownloadButton release={release} labels={downloadLabels} />
-            <LinkButton href={`/${lang}/docs/advanced/cli`} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
-                <Terminal className="size-4" />
-                {d.ctaCli}
-            </LinkButton>
-            <LinkButton href={`/${lang}/docs`} variant="ghost" size="lg" className="rounded-full px-7 text-sm font-semibold">
-                {d.ctaViewDocs}
-                <ArrowRight className="size-4" />
-            </LinkButton>
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 pt-14 pb-16 md:pt-20 md:pb-24 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
+          <div>
+            <Reveal>
+              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-fd-foreground leading-[1.12]">
+                <HeroVerb verbs={d.heroVerbs} className="text-primary" />
+                {d.heroRest}
+              </h1>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p className="mt-6 max-w-xl text-lg text-fd-muted-foreground leading-relaxed">
+                {d.heroSub}
+              </p>
+            </Reveal>
+            <Reveal delay={0.16}>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <DownloadButton release={release} labels={downloadLabels} />
+                <LinkButton
+                  href={`/${lang}/docs/advanced/cli`}
+                  variant="outline"
+                  size="lg"
+                  className="rounded-full px-7 text-sm font-semibold"
+                >
+                  <Terminal className="size-4" />
+                  {d.ctaCli}
+                </LinkButton>
+              </div>
+              {lang === 'zh' && (
+                <p className="mt-4 flex items-center gap-1.5 text-sm text-muted-foreground">
+                  <Zap className="size-3.5 text-primary" />
+                  <a
+                    href={getMirrorChyanUrl()}
+                    className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                  >
+                    {d.mirrorHint}
+                  </a>
+                </p>
+              )}
+            </Reveal>
           </div>
 
-          {lang === 'zh' && (
-            <p className="mt-4 flex items-center justify-center gap-1.5 text-sm text-muted-foreground">
-              <Zap className="size-3.5 text-primary" />
-              <a
-                href={getMirrorChyanUrl()}
-                className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
-              >
-                {d.mirrorHint}
-              </a>
-            </p>
-          )}
-
-          {/* App schematic — simplified Polymerium UI mockup */}
-          <div className="mx-auto mt-16 max-w-4xl">
-            <div className="app-schematic rounded-xl overflow-hidden border border-border bg-card shadow-2xl">
-              {/* Titlebar */}
-              <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border bg-muted">
-                <span className="size-3 rounded-full bg-[#ff5f57]" />
-                <span className="size-3 rounded-full bg-[#febc2e]" />
-                <span className="size-3 rounded-full bg-[#28c840]" />
-                <span className="ml-3 text-[11px] font-medium text-muted-foreground">Polymerium</span>
-              </div>
-
-              {/* App body — 3-column layout */}
-              <div className="flex h-[280px] sm:h-[320px]">
-                {/* Left sidebar */}
-                <div className="hidden sm:flex w-12 flex-col items-center gap-4 py-4 border-r border-border bg-muted/50">
-                  <div className="size-6 rounded-md bg-primary/10 flex items-center justify-center">
-                    <LayoutGrid className="size-3.5 text-primary" />
-                  </div>
-                  <div className="size-6 rounded-md bg-muted flex items-center justify-center">
-                    <Package className="size-3.5 text-muted-foreground" />
-                  </div>
-                  <div className="size-6 rounded-md bg-muted flex items-center justify-center">
-                    <Wrench className="size-3.5 text-muted-foreground" />
-                  </div>
-                  <div className="mt-auto size-6 rounded-md bg-muted flex items-center justify-center">
-                    <Pencil className="size-3.5 text-muted-foreground" />
-                  </div>
-                </div>
-
-                {/* Main content */}
-                <div className="flex-1 flex flex-col p-4 gap-3 overflow-hidden">
-                  {/* Top row — banner + setup panel */}
-                  <div className="flex gap-3 h-[100px]">
-                    {/* Instance banner */}
-                    <div className="flex-[2] rounded-lg overflow-hidden relative bg-gradient-to-br from-primary/20 to-muted border border-border">
-                      <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 30% 70%, hsl(var(--color-primary) / 0.2) 0%, transparent 60%)' }} />
-                      <div className="relative p-3 h-full flex flex-col justify-between">
-                        <div className="text-[10px] text-muted-foreground font-medium">{d.mockOverview}</div>
-                        <div className="text-sm font-bold text-foreground truncate">{d.mockInstanceName}</div>
-                      </div>
-                    </div>
-                    {/* Setup panel */}
-                    <div className="flex-1 rounded-lg border border-border bg-muted p-3 flex flex-col justify-between">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] text-muted-foreground">{d.mockSetup}</span>
-                        <span className="text-[10px] text-muted-foreground/60">{d.mockDetails}</span>
-                      </div>
-                      <div className="text-lg font-bold text-foreground">43<span className="text-[10px] font-normal text-muted-foreground ml-1">{d.mockPackages}</span></div>
-                      <div className="flex gap-3 text-[10px]">
-                        <span className="text-muted-foreground">Fabric</span>
-                        <span className="text-muted-foreground">1.21.5</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Middle row — stats */}
-                  <div className="flex gap-3 flex-1">
-                    {/* Play Time */}
-                    <div className="flex-1 rounded-lg border border-border bg-muted p-3 flex flex-col items-center justify-center gap-1">
-                      <div className="relative size-14 text-primary">
-                        <svg className="size-14 -rotate-90" viewBox="0 0 36 36">
-                          <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--border)" strokeWidth="2" />
-                          <circle cx="18" cy="18" r="15.9" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="60 100" />
-                        </svg>
-                      </div>
-                      <div className="text-[9px] text-muted-foreground">{d.mockPlayTime}</div>
-                      <div className="text-sm font-bold text-foreground">8.3<span className="text-[9px] font-normal text-muted-foreground">h</span></div>
-                    </div>
-                    {/* Snapshots */}
-                    <div className="flex-1 rounded-lg border border-border bg-muted p-3 flex flex-col items-center justify-center gap-1">
-                      <Camera className="size-6 text-muted-foreground" />
-                      <div className="text-[9px] text-muted-foreground">{d.mockSnapshots}</div>
-                      <div className="text-sm font-bold text-foreground">3</div>
-                    </div>
-                    {/* Storage Saved */}
-                    <div className="hidden sm:flex flex-1 rounded-lg border border-border bg-muted p-3 flex-col items-center justify-center gap-1">
-                      <Package className="size-6 text-muted-foreground" />
-                      <div className="text-[9px] text-muted-foreground">{d.mockStorageSaved}</div>
-                      <div className="text-sm font-bold text-foreground">4.2<span className="text-[9px] font-normal text-muted-foreground">GB</span></div>
-                    </div>
-                  </div>
-
-                  {/* Bottom row — launch pad */}
-                  <div className="flex items-center gap-3">
-                    <div className="flex-1 flex items-center gap-2 text-[10px] text-primary">
-                      <span className="size-2 rounded-full bg-primary/60" />
-                      {d.mockReady}
-                    </div>
-                    <div className="rounded-md bg-primary px-4 py-1.5 text-[11px] font-bold text-primary-foreground">{d.mockLaunch}</div>
-                    <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                      <div className="size-5 rounded bg-muted flex items-center justify-center text-[8px] font-bold text-muted-foreground">ST</div>
-                      <span>Stewie</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right sidebar */}
-                <div className="hidden md:flex w-40 flex-col gap-2 p-3 border-l border-border bg-muted/50">
-                  <div className="flex items-center gap-2 rounded-md bg-muted px-3 py-2 text-[10px] text-muted-foreground">
-                    <Home className="size-3" />
-                    {d.mockHome}
-                  </div>
-                  <div className="flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-[10px] font-medium text-primary-foreground">
-                    <ShoppingBag className="size-3" />
-                    {d.mockMarketplace}
-                  </div>
-                  {/* Instance list */}
-                  <div className="mt-1 flex-1 rounded-md border border-border bg-card p-2 flex flex-col gap-1.5">
-                    <div className="rounded border border-border bg-muted/50 p-1.5 text-left">
-                      <div className="text-[8px] text-muted-foreground/60 truncate text-left">CURSEFORGE#fabulously_optimized</div>
-                      <div className="text-[9px] text-foreground truncate text-left">Fabulously Optimized</div>
-                      <div className="flex gap-2 mt-1">
-                        <span className="text-[7px] text-muted-foreground">Fabric</span>
-                        <span className="text-[7px] text-muted-foreground">1.21.5</span>
-                      </div>
-                    </div>
-                    <div className="rounded border border-border bg-muted/50 p-1.5 text-left">
-                      <div className="text-[8px] text-muted-foreground/60 truncate text-left">MODRINTH#create</div>
-                      <div className="text-[9px] text-foreground truncate text-left">Create: Above and Beyond</div>
-                      <div className="flex gap-2 mt-1">
-                        <span className="text-[7px] text-muted-foreground">Forge</span>
-                        <span className="text-[7px] text-muted-foreground">1.20.1</span>
-                      </div>
-                    </div>
-                    <div className="mt-auto rounded-md border border-dashed border-muted-foreground/30 bg-muted/30 p-2 flex items-center justify-center gap-1.5 text-muted-foreground/50">
-                      <Plus className="size-3" />
-                      <span className="text-[10px]">{d.mockAddInstance}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Reveal delay={0.2} className="relative">
+            <div
+              aria-hidden
+              className="absolute -inset-8 rounded-[2.5rem] bg-primary/15 blur-3xl"
+            />
+            <Image
+              src="/screenshots/landing.webp"
+              alt={d.heroShotAlt}
+              width={1920}
+              height={1098}
+              priority
+              className="relative rounded-xl border border-border shadow-2xl shadow-primary/10"
+            />
+          </Reveal>
         </div>
       </section>
 
       {/* ──── Tech Badges ──── */}
-      <section className="border-t border-fd-border py-12">
-        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-8 gap-y-4 px-6">
-          {/* Cross-platform */}
+      <section className="border-y border-fd-border py-5">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-6">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Monitor className="size-4" />
+            <Monitor className="size-4 text-primary" />
             <span className="font-medium">Win / Linux / macOS</span>
           </div>
-          {/* Separator */}
-          <span className="hidden sm:block size-1 rounded-full bg-border" />
-          {/* Open source */}
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <GitHubIcon className="size-4" />
             <span className="font-medium">{d.badgeOpenSource}</span>
           </div>
-          {/* Separator */}
-          <span className="hidden sm:block size-1 rounded-full bg-border" />
-          {/* Loaders */}
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Zap className="size-4" />
+            <Zap className="size-4 text-primary" />
             <span className="font-medium">Fabric · Forge · NeoForge · Quilt</span>
           </div>
         </div>
       </section>
 
       {/* ──── Core Value Prop ──── */}
-      <section className="py-20 border-t border-fd-border">
-        <div className="mx-auto grid max-w-5xl items-center gap-12 px-6 md:grid-cols-2">
-          <div>
+      <section className="py-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2">
+          <Reveal>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground leading-tight">
               {d.coreTitle}
             </h2>
-            <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+            <p className="mt-6 text-base leading-relaxed text-muted-foreground max-w-[58ch]">
               {d.coreDesc}
             </p>
-          </div>
-          <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm">
-            <div className="flex items-center gap-2 border-b border-border bg-muted px-4 py-2.5">
-              <span className="text-xs font-medium text-muted-foreground">{d.coreJsonLabel}</span>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="terminal-block">
+              <div className="terminal-titlebar">
+                <span className="window-dot" style={{ background: '#ff5f57' }} />
+                <span className="window-dot" style={{ background: '#febc2e' }} />
+                <span className="window-dot" style={{ background: '#28c840' }} />
+                <span className="ml-3 text-xs font-medium" style={{ color: 'oklch(0.62 0.015 70)' }}>
+                  profile.json
+                </span>
+              </div>
+              <div className="terminal-body">
+                <pre>
+                  <code>
+                    {profileJsonLines.map((line, i) => (
+                      <span key={i}>
+                        {line.map(([cls, text], j) => (
+                          <span key={j} className={cls}>
+                            {text}
+                          </span>
+                        ))}
+                        {'\n'}
+                      </span>
+                    ))}
+                  </code>
+                </pre>
+              </div>
             </div>
-            <pre className="p-5 text-[13px] leading-relaxed text-foreground overflow-x-auto">
-              <code>{d.coreJson}</code>
-            </pre>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ──── Features Grid ──── */}
-      <section className="py-20 border-t border-fd-border">
-        <div className="mx-auto max-w-5xl px-6">
-          <h2 className="text-center text-3xl font-bold text-foreground">{d.featuresTitle}</h2>
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {/* ──── Features Bento ──── */}
+      <section className="py-24 border-t border-fd-border">
+        <div className="mx-auto max-w-6xl px-6">
+          <Reveal>
+            <h2 className="text-center text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+              {d.featuresTitle}
+            </h2>
+          </Reveal>
+          <div className="mt-14 grid gap-5 md:grid-cols-6">
             {d.features.map((f, i) => {
               const Icon = featureIcons[i];
+              if (i === 0) {
+                return (
+                  <Reveal key={f.title} className="md:col-span-4">
+                    <div className="group h-full rounded-2xl border border-border bg-card overflow-hidden transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5">
+                      <div className="grid h-full items-center sm:grid-cols-2">
+                        <div className="p-7">
+                          <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-primary-foreground">
+                            <Icon className="size-5" />
+                          </div>
+                          <h3 className="mt-4 text-lg font-semibold text-foreground">{f.title}</h3>
+                          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                            {f.desc}
+                          </p>
+                        </div>
+                        <div className="border-t border-border p-4 sm:border-t-0 sm:border-l sm:p-5">
+                          {/* NOTE: aspect-[7/4] matches the source image (1920×1098); swap the screenshot and this ratio must change with it, or object-cover crops again */}
+                          <div className="relative aspect-[7/4] w-full overflow-hidden rounded-lg border border-border">
+                            <Image
+                              src="/screenshots/marketplace.webp"
+                              alt={d.marketShotAlt}
+                              fill
+                              sizes="(min-width: 768px) 22rem, 100vw"
+                              className="object-cover object-left-top"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Reveal>
+                );
+              }
+              if (i === 5) {
+                return (
+                  <Reveal key={f.title} className="md:col-span-6">
+                    <div className="group flex h-full items-center gap-5 rounded-2xl border border-primary/25 bg-primary/8 p-6 transition-all duration-200 hover:border-primary/50">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-primary-foreground">
+                        <Icon className="size-5" />
+                      </div>
+                      <p className="text-sm leading-relaxed text-muted-foreground">
+                        <span className="font-semibold text-foreground">{f.title} — </span>
+                        {f.desc}
+                      </p>
+                    </div>
+                  </Reveal>
+                );
+              }
               return (
-                <div
-                  key={f.title}
-                  className="group rounded-2xl border border-border bg-card p-7 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5"
-                >
-                  <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-primary-foreground">
-                    <Icon className="size-5" />
+                <Reveal key={f.title} delay={0.05 * i} className="md:col-span-2">
+                  <div className="group h-full rounded-2xl border border-border bg-card p-7 transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-primary-foreground">
+                      <Icon className="size-5" />
+                    </div>
+                    <h3 className="mt-4 text-base font-semibold text-foreground">{f.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
                   </div>
-                  <h3 className="mt-4 text-base font-semibold text-foreground">{f.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
-                </div>
+                </Reveal>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* ──── MCP Highlight ──── */}
-      <section className="py-20 border-t border-fd-border">
-        <div className="mx-auto grid max-w-5xl items-center gap-12 px-6 md:grid-cols-2">
-          {/* Terminal placeholder — replace with asciinema/VHS embed later */}
-          <div className="terminal-block">
-            <div className="terminal-titlebar">
-              <span className="window-dot" style={{ background: '#ff5f57' }} />
-              <span className="window-dot" style={{ background: '#febc2e' }} />
-              <span className="window-dot" style={{ background: '#28c840' }} />
-              <span className="ml-3 text-xs font-medium" style={{ color: 'oklch(0.556 0 0)' }}>trident — MCP server</span>
-            </div>
-            <div className="terminal-body">
-              <div>
-                <span className="terminal-prompt">$ </span>
-                <span className="terminal-cmd">trident</span>{' '}
-                <span className="terminal-flag">instance create</span>{' '}
-                <span className="terminal-cmd">my-pack</span>{' '}
-                <span className="terminal-flag">--version</span>{' '}
-                <span className="terminal-cmd">1.21.4</span>
-              </div>
-              <div>
-                <span className="terminal-prompt">$ </span>
-                <span className="terminal-cmd">trident</span>{' '}
-                <span className="terminal-flag">package add</span>{' '}
-                <span className="terminal-cmd">modrinth:sodium</span>
-              </div>
-              <div>
-                <span className="terminal-prompt">$ </span>
-                <span className="terminal-cmd">trident</span>{' '}
-                <span className="terminal-flag">package add</span>{' '}
-                <span className="terminal-cmd">modrinth:iris</span>
-              </div>
-              <div>
-                <span className="terminal-prompt">$ </span>
-                <span className="terminal-cmd">trident</span>{' '}
-                <span className="terminal-flag">instance build</span>{' '}
-                <span className="terminal-cmd">my-pack</span>
-              </div>
-              <div>
-                <span className="terminal-prompt">$ </span>
-                <span className="terminal-cmd">trident</span>{' '}
-                <span className="terminal-flag">instance run</span>{' '}
-                <span className="terminal-cmd">my-pack</span>
-              </div>
-              <div className="mt-2" style={{ color: 'oklch(0.7 0.15 145)' }}>
-                ✓ Instance "my-pack" deployed and launched.
-              </div>
-              <div className="mt-3">
-                <span className="terminal-prompt">$ </span>
-                <span className="terminal-cmd">trident</span>{' '}
-                <span className="terminal-flag">--mcp</span>
-              </div>
-              <div style={{ color: 'oklch(0.7 0.12 260)' }}>
-                MCP server listening on stdio... (30+ tools registered)
-              </div>
-
-            </div>
+      {/* ──── Screenshot Tour ──── */}
+      <section className="py-24 border-t border-fd-border">
+        <div className="mx-auto max-w-6xl px-6">
+          <Reveal>
+            <h2 className="text-center text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+              {d.tourTitle}
+            </h2>
+          </Reveal>
+          <div className="mt-14 grid gap-6 md:grid-cols-2">
+            {d.tourItems.map((item, i) => (
+              <Reveal key={item.title} delay={0.08 * i}>
+                <figure className="group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5">
+                  <div className="p-4 sm:p-5">
+                    <div className="overflow-hidden rounded-xl border border-border">
+                      <Image
+                        src={i === 0 ? '/screenshots/instance.webp' : '/screenshots/setup.webp'}
+                        alt={item.alt}
+                        width={1920}
+                        height={1098}
+                        className="transition-transform duration-300 group-hover:scale-[1.02]"
+                      />
+                    </div>
+                  </div>
+                  <figcaption className="px-6 pb-6 pt-1">
+                    <h3 className="text-base font-semibold text-foreground">{item.title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                      {item.desc}
+                    </p>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
           </div>
+        </div>
+      </section>
 
-          <div>
+      {/* ──── CLI + MCP Highlight ──── */}
+      <section className="py-24 border-t border-fd-border">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2">
+          <Reveal>
+            <div className="terminal-block">
+              <div className="terminal-titlebar">
+                <span className="window-dot" style={{ background: '#ff5f57' }} />
+                <span className="window-dot" style={{ background: '#febc2e' }} />
+                <span className="window-dot" style={{ background: '#28c840' }} />
+                <span className="ml-3 text-xs font-medium" style={{ color: 'oklch(0.62 0.015 70)' }}>
+                  trident — MCP server
+                </span>
+              </div>
+              <div className="terminal-body">
+                <div>
+                  <span className="terminal-prompt">$ </span>
+                  <span className="terminal-cmd">trident</span>{' '}
+                  <span className="terminal-flag">instance create</span>{' '}
+                  <span className="terminal-cmd">my-pack</span>{' '}
+                  <span className="terminal-flag">--version</span>{' '}
+                  <span className="terminal-cmd">1.21.4</span>
+                </div>
+                <div>
+                  <span className="terminal-prompt">$ </span>
+                  <span className="terminal-cmd">trident</span>{' '}
+                  <span className="terminal-flag">package add</span>{' '}
+                  <span className="terminal-cmd">modrinth:sodium</span>
+                </div>
+                <div>
+                  <span className="terminal-prompt">$ </span>
+                  <span className="terminal-cmd">trident</span>{' '}
+                  <span className="terminal-flag">package add</span>{' '}
+                  <span className="terminal-cmd">modrinth:iris</span>
+                </div>
+                <div>
+                  <span className="terminal-prompt">$ </span>
+                  <span className="terminal-cmd">trident</span>{' '}
+                  <span className="terminal-flag">instance build</span>{' '}
+                  <span className="terminal-cmd">my-pack</span>
+                </div>
+                <div>
+                  <span className="terminal-prompt">$ </span>
+                  <span className="terminal-cmd">trident</span>{' '}
+                  <span className="terminal-flag">instance run</span>{' '}
+                  <span className="terminal-cmd">my-pack</span>
+                </div>
+                <div className="mt-2" style={{ color: 'oklch(0.72 0.13 150)' }}>
+                  ✓ Instance "my-pack" deployed and launched.
+                </div>
+                <div className="mt-3">
+                  <span className="terminal-prompt">$ </span>
+                  <span className="terminal-cmd">trident</span>{' '}
+                  <span className="terminal-flag">--mcp</span>
+                </div>
+                <div style={{ color: 'oklch(0.72 0.11 255)' }}>
+                  MCP server listening on stdio... (30+ tools registered)
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1}>
             <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
               {d.mcpLabel}
             </span>
             <h2 className="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-foreground leading-tight">
               {d.mcpTitle}
             </h2>
-            <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+            <p className="mt-6 text-base leading-relaxed text-muted-foreground max-w-[58ch]">
               {d.mcpDesc}
             </p>
             <div className="mt-8">
               <LinkButton href={`/${lang}/docs/advanced/cli`} variant="outline" className="rounded-full">
-                  {d.mcpCta}
-                  <ArrowRight className="size-4" />
+                {d.mcpCta}
+                <ArrowRight className="size-4" />
               </LinkButton>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ──── Quick Start ──── */}
-      <section className="py-20 border-t border-fd-border">
-        <div className="mx-auto max-w-5xl px-6">
-          <h2 className="text-center text-3xl font-bold text-foreground">{d.quickTitle}</h2>
-          <div className="mt-14 grid gap-10 md:grid-cols-3">
-            {/* Step 1 — Download: Chrome browser download bar focused crop */}
-            <div className="flex flex-col items-center text-center">
-              <div className="mb-6 w-full aspect-[5/3] rounded-xl border border-border bg-background overflow-hidden flex flex-col">
-                {/* Browser toolbar crop — no traffic lights, just nav + address */}
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-muted/60 border-b border-border">
-                  <RotateCw className="size-3 text-muted-foreground" />
-                  <House className="size-3 text-muted-foreground" />
-                  <div className="ml-1 flex-1 h-5 rounded-full bg-muted flex items-center px-2.5 gap-1.5">
-                    <svg className="size-2.5 text-muted-foreground shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                    <span className="text-[9px] text-muted-foreground truncate">github.com/d3ara1n/Polymerium/releases</span>
-                  </div>
-                </div>
-                {/* Page content — minimal skeleton hint */}
-                <div className="px-4 pt-3 bg-background">
-                  <div className="h-2 w-32 rounded bg-muted mb-1" />
-                  <div className="h-1.5 w-20 rounded bg-muted/50" />
-                </div>
-                {/* Download bar — the focus, fully visible */}
-                <div className="mt-auto border-t border-border bg-muted px-4 py-3 flex items-center gap-3">
-                  <Download className="size-4 text-primary shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[10px] font-medium text-foreground truncate">Polymerium-1.0.0-win-x64.exe</div>
-                    <div className="mt-1 h-1.5 rounded-full bg-border overflow-hidden">
-                      <div className="h-full w-[68%] rounded-full bg-primary" />
-                    </div>
-                  </div>
-                  <span className="text-[9px] text-muted-foreground whitespace-nowrap shrink-0">67.8 / 89.2 MB</span>
-                </div>
-              </div>
-              <span className="text-xs font-bold uppercase tracking-widest text-primary">{d.quickSteps[0].step}</span>
-              <h3 className="mt-2 text-lg font-semibold text-foreground">{d.quickSteps[0].title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{d.quickSteps[0].desc}</p>
-            </div>
-
-            {/* Step 2 — Create Instance: Polymerium dialog, no window chrome */}
-            <div className="flex flex-col items-center text-center">
-              <div className="mb-6 w-full aspect-[5/3] rounded-xl border border-border bg-background flex items-start justify-center overflow-hidden p-5">
-                <div className="w-full max-w-[280px] rounded-lg border border-border bg-card shadow-lg">
-                  <div className="px-4 py-2.5 border-b border-border">
-                    <div className="text-xs font-semibold text-foreground">{d.qsNewInstance}</div>
-                  </div>
-                  <div className="p-3 space-y-2.5">
-                    <div>
-                      <div className="text-[9px] text-muted-foreground mb-1">{d.qsVersion}</div>
-                      <div className="h-6 rounded border border-border bg-muted px-2 flex items-center justify-between text-[10px] text-foreground">
-                        <span>1.21.5</span>
-                        <ChevronDown className="size-3 text-muted-foreground" />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-[9px] text-muted-foreground mb-1">{d.qsLoader}</div>
-                      <div className="flex gap-1.5">
-                        <div className="h-6 px-2 rounded border border-primary bg-primary/10 flex items-center text-[10px] font-medium text-primary">Fabric</div>
-                        <div className="h-6 px-2 rounded border border-border bg-muted flex items-center text-[10px] text-muted-foreground">Forge</div>
-                        <div className="h-6 px-2 rounded border border-border bg-muted flex items-center text-[10px] text-muted-foreground">Quilt</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="px-3 py-2.5 border-t border-border flex justify-end">
-                    <div className="h-6 px-3 rounded bg-primary flex items-center text-[10px] font-bold text-primary-foreground">{d.qsCreateBtn}</div>
-                  </div>
-                </div>
-              </div>
-              <span className="text-xs font-bold uppercase tracking-widest text-primary">{d.quickSteps[1].step}</span>
-              <h3 className="mt-2 text-lg font-semibold text-foreground">{d.quickSteps[1].title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{d.quickSteps[1].desc}</p>
-            </div>
-
-            {/* Step 3 — Play: Launch progress, no window chrome */}
-            <div className="flex flex-col items-center text-center">
-              <div className="mb-6 w-full aspect-[5/3] rounded-xl border border-border bg-background flex flex-col items-center justify-center gap-3 p-6">
-                <div className="text-xs font-semibold text-foreground">{d.mockInstanceName}</div>
-                <div className="w-full max-w-[80%]">
-                  <div className="h-2 rounded-full bg-border overflow-hidden">
-                    <div className="h-full w-[87%] rounded-full bg-primary" />
-                  </div>
-                  <div className="mt-1.5 text-center text-[9px] text-muted-foreground">{d.qsDeploying}</div>
-                </div>
-                <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                  <span className="size-2 rounded-full bg-primary/60" />
-                  {d.qsLaunching}
-                </div>
-                <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                  <div className="size-4 rounded bg-muted flex items-center justify-center text-[7px] font-bold text-muted-foreground">ST</div>
-                  <span>Stewie</span>
-                </div>
-              </div>
-              <span className="text-xs font-bold uppercase tracking-widest text-primary">{d.quickSteps[2].step}</span>
-              <h3 className="mt-2 text-lg font-semibold text-foreground">{d.quickSteps[2].title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{d.quickSteps[2].desc}</p>
-            </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ──── FAQ ──── */}
-      <section className="py-20 border-t border-fd-border">
+      <section className="py-24 border-t border-fd-border">
         <div className="mx-auto max-w-3xl px-6">
-          <h2 className="text-center text-3xl font-bold text-foreground">{d.faqTitle}</h2>
+          <Reveal>
+            <h2 className="text-center text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+              {d.faqTitle}
+            </h2>
+          </Reveal>
           <div className="mt-10">
             <Accordion>
               {d.faqItems.map((item, i) => (
@@ -897,23 +750,30 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
       </section>
 
       {/* ──── CTA ──── */}
-      <section className="py-20 border-t border-fd-border">
-        <div className="mx-auto max-w-4xl px-6 text-center">
-          <h2 className="text-3xl font-bold text-foreground">{d.ctaTitle}</h2>
+      <section className="relative overflow-hidden py-24 border-t border-fd-border">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute bottom-[-40%] left-1/2 -translate-x-1/2 hero-glow"
+        />
+        <Reveal className="relative mx-auto max-w-4xl px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+            {d.ctaTitle}
+          </h2>
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{d.ctaSub}</p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-8 flex justify-center">
             <DownloadButton release={release} labels={downloadLabels} />
-            <LinkButton href={`/${lang}/docs/advanced/cli`} variant="outline" size="lg" className="rounded-full px-7 text-sm font-semibold">
-                <Terminal className="size-4" />
-                {d.ctaCli}
-            </LinkButton>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* ──── Footer ──── */}
       <footer className="border-t border-fd-border py-10">
-        <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 px-6 sm:flex-row sm:justify-between">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 sm:flex-row sm:justify-between">
+          <div className="flex items-center gap-2.5">
+            <Logo className="size-5 text-primary" />
+            <span className="text-sm font-semibold text-foreground">Polymerium</span>
+            <span className="text-sm text-muted-foreground">· {d.footerLicense}</span>
+          </div>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <Link href={DOWNLOAD_URL} className="hover:text-foreground transition">
               {d.ctaDownload}
@@ -921,9 +781,14 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
             <Link href={`/${lang}/docs`} className="hover:text-foreground transition">
               {d.footerDocs}
             </Link>
-            <span>{d.footerLicense}</span>
+            <Link
+              href={GITHUB_URL}
+              className="inline-flex items-center gap-1.5 hover:text-foreground transition"
+            >
+              <GitHubIcon className="size-4" />
+              GitHub
+            </Link>
           </div>
-          <p className="text-sm text-muted-foreground">{d.footerMadeWith}</p>
         </div>
       </footer>
     </div>

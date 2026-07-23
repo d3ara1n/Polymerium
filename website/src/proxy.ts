@@ -47,5 +47,9 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  // Root-level routes and static assets have no locale prefix; they must bypass
+  // the i18n redirect or they 307 into /en/<path> and 404.
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon|og/|brand/|screenshots/|llms|robots|sitemap|static.json).*)',
+  ],
 };
