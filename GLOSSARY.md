@@ -6,7 +6,7 @@ This glossary defines the canonical user-facing terms for Polymerium. Use these 
 
 | English | Chinese | Definition and usage |
 | --- | --- | --- |
-| Polymerium launcher | Polymerium 启动器 | The application. Use "launcher" rather than "manager" when naming the product category. |
+| Polymerium launcher / instance manager | Polymerium 启动器 | The application. The product is positioned as an instance manager — its scope is broader than launching the game — but "launcher" is the market-facing category name because it is what users immediately recognize. Use "launcher" when naming the product category; "instance manager" remains accurate when describing the product's actual scope. |
 | instance | 实例 | A Minecraft environment managed by Polymerium, including its profile and managed directories. |
 | profile / instance profile | 配置 / 实例配置 | The metadata that defines an instance, such as the Minecraft version, loader, packages, and rules. Use "profile" for this representation, not as a synonym for the whole instance. |
 | modpack | 整合包 | A distributable collection of game versions, packages, configuration, and other source files. Do not shorten it to "package" when the complete modpack is meant. |

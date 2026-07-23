@@ -1,10 +1,16 @@
 # Polymerium
 
-![Polymerium](https://socialify.git.ci/d3ara1n/Polymerium/image?description=1&font=Jost&forks=1&issues=1&language=1&name=1&owner=1&pattern=Overlapping%20Hexagons&pulls=1&stargazers=1&theme=Auto)
+<a href="https://polymerium.dearain.dev">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/banner-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/brand/banner-light.svg">
+    <img alt="Polymerium" src="assets/brand/banner-light.svg">
+  </picture>
+</a>
 
 <div align="center">
 
-**A Minecraft instance manager built on a simple idea: your instance is a recipe, not a pile of copied files.**
+**A Minecraft instance manager built on a simple idea.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![.NET 10.0](https://img.shields.io/badge/.NET-10-5C2D91?style=for-the-badge&logoColor=white)](https://dotnet.microsoft.com/)
