@@ -127,9 +127,9 @@ jobs:
                   if [ "${{ matrix.runtime }}" = "win-x64" ]; then
                       pack_extra_args="$pack_extra_args --icon ./src/Polymerium.Avalonia/Assets/Icon.Installer.ico"
                   elif [ "${{ matrix.runtime }}" = "osx-arm64" ]; then
-                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.Avalonia/Assets/Icon.icns --bundleId dev.dearain.Polymerium"
+                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.Avalonia/Assets/Icon.App.icns --bundleId dev.dearain.Polymerium"
                   else
-                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.Avalonia/Assets/Icon.png"
+                      pack_extra_args="$pack_extra_args --icon ./src/Polymerium.Avalonia/Assets/Icon.App.png"
                   fi
                   vpk download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} $download_extra_args || echo "No previous release found, skipping"
                   vpk pack --runtime ${{ matrix.runtime }} --packId Polymerium --packVersion ${{ steps.get_version.outputs.version }} --packDir src/Polymerium.Avalonia/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish --releaseNotes CHANGELOG.md --mainExe ${{ steps.exe_name.outputs.exe_name }} $pack_extra_args

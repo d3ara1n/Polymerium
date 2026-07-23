@@ -172,7 +172,8 @@
                                 WindowDecorationProperties.ElementRole="CloseButton">
                                 <Button.Styles>
                                     <Style Selector="Button:pointerover fi|SymbolIcon">
-                                        <Setter Property="Foreground" Value="{StaticResource ControlDangerForegroundBrush}" />
+                                        <Setter Property="Foreground"
+                                                Value="{StaticResource ControlDangerForegroundBrush}" />
                                     </Style>
                                 </Button.Styles>
                                 <fi:SymbolIcon Symbol="Dismiss">

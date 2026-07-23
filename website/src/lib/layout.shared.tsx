@@ -1,4 +1,5 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+import { Logo } from '@/components/logo';
 import { i18n } from './i18n';
 import { uiTranslations } from 'fumadocs-ui/i18n';
 import { appName, gitConfig } from './shared';
@@ -25,7 +26,12 @@ export const translations = i18n
 export function baseOptions(lang: string): BaseLayoutProps {
   return {
     nav: {
-      title: appName,
+      title: (
+        <span className="inline-flex items-center gap-2">
+          <Logo className="size-5 text-[#EEA93B]" />
+          {appName}
+        </span>
+      ),
     },
     links: [
       {

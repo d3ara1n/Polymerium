@@ -43,10 +43,10 @@ if ($Rid -like "win-*") {
     $IconPath = "./src/Polymerium.Avalonia/Assets/Icon.Installer.ico"
 } elseif ($Rid -like "osx-*") {
     $ExeName = "Polymerium"
-    $IconPath = "./src/Polymerium.Avalonia/Assets/Icon.icns"
+    $IconPath = "./src/Polymerium.Avalonia/Assets/Icon.App.icns"
 } else {
     $ExeName = "Polymerium"
-    $IconPath = "./src/Polymerium.Avalonia/Assets/Icon.png"
+    $IconPath = "./src/Polymerium.Avalonia/Assets/Icon.App.png"
 }
 
 $PackDir = "Publish/$Rid"

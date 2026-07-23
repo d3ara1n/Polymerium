@@ -1,6 +1,6 @@
 import { Provider } from '@/app/provider';
 import { i18nProvider } from 'fumadocs-ui/i18n';
-import { Inter } from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google';
 import { translations } from '@/lib/layout.shared';
 import { i18n } from '@/lib/i18n';
 import type { Metadata } from 'next';
@@ -8,8 +8,14 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import '../global.css';
 
-const inter = Inter({
+const geistSans = Geist({
   subsets: ['latin'],
+  variable: '--font-geist-sans',
+});
+
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  variable: '--font-geist-mono',
 });
 
 export const metadata: Metadata = {
@@ -48,7 +54,7 @@ export function generateStaticParams() {
 export default async function Layout({ params, children }: LayoutProps<'/[lang]'>) {
   const { lang } = await params;
   return (
-    <html lang={lang} className={inter.className} suppressHydrationWarning>
+    <html lang={lang} className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
         <Provider i18n={i18nProvider(translations, lang)}>{children}</Provider>
         <Analytics />

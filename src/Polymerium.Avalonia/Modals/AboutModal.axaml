@@ -43,8 +43,9 @@
                 ClipToBounds="True"
                 CornerRadius="{StaticResource LargeCornerRadius}">
                 <Image
-                    Source="/Assets/Icon.png"
-                    Stretch="UniformToFill" />
+                    Source="/Assets/Icon.App.png"
+                    Stretch="UniformToFill"
+                    RenderOptions.BitmapInterpolationMode="HighQuality"/>
             </Border>
 
             <!--  Brand Name  -->
