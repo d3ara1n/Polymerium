@@ -364,7 +364,7 @@
                             <TextBox
                                 Grid.Column="0"
                                 PlaceholderText="1270"
-                                Text="{Binding WindowInitialHeight, Mode=TwoWay}">
+                                Text="{Binding WindowInitialWidth, Mode=TwoWay}">
                                 <TextBox.InnerLeftContent>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock
@@ -379,7 +379,7 @@
                             <TextBox
                                 Grid.Column="2"
                                 PlaceholderText="720"
-                                Text="{Binding WindowInitialWidth, Mode=TwoWay}">
+                                Text="{Binding WindowInitialHeight, Mode=TwoWay}">
                                 <TextBox.InnerLeftContent>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock
