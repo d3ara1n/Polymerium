@@ -334,7 +334,7 @@ export async function generateMetadata(props: PageProps<'/[lang]'>): Promise<Met
       description: d.metaDesc,
       locale: lang === 'zh' ? 'zh_CN' : 'en_US',
       url: `https://polymerium.dearain.dev/${lang}`,
-      images: [{ url: `/og/home?lang=${lang}`, width: 1200, height: 630, type: 'image/png' }],
+      images: [{ url: `/og/home/${lang}`, width: 1200, height: 630, type: 'image/png' }],
     },
   };
 }
