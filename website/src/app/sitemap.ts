@@ -17,12 +17,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  // Doc pages
+  // Doc pages — real last-modified dates from the git-backed last-modified plugin
   const pages = source.getPages();
   for (const page of pages) {
     entries.push({
       url: `${BASE}${page.url}`,
-      lastModified: new Date(),
+      lastModified: page.data.lastModified,
       changeFrequency: 'weekly',
       priority: 0.8,
     });
