@@ -2,47 +2,45 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
-    xmlns:fi="using:FluentIcons.Avalonia">
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
     <ControlTheme
         x:Key="{x:Type app:SettingsEntry}"
         TargetType="app:SettingsEntry">
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <StackPanel Spacing="8" />
+                <StackPanel Spacing="8"/>
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid
-                    ColumnDefinitions="4*,6*"
-                    ColumnSpacing="12">
-                    <Grid
-                        Grid.Column="0"
-                        ColumnDefinitions="Auto,8,*">
+                <StackPanel Spacing="8">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                         <fi:SymbolIcon
                             Grid.Column="0"
-                            Margin="3"
                             VerticalAlignment="Top"
-                            FontSize="26"
+                            FontSize="20"
                             IconVariant="Regular"
                             Symbol="{TemplateBinding Icon}" />
                         <StackPanel
-                            Grid.Column="2"
-                            Spacing="4">
+                            Grid.Column="1"
+                            Spacing="2">
                             <TextBlock
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
                                 Text="{TemplateBinding Title}" />
                             <TextBlock
+                                IsVisible="{TemplateBinding Summary, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{TemplateBinding Summary}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>
-                    <ItemsPresenter
-                        Grid.Column="1"
-                        ItemsPanel="{TemplateBinding ItemsPanel}" />
-                </Grid>
+                    <husk:Card Padding="16,12">
+                        <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+                    </husk:Card>
+                </StackPanel>
             </ControlTemplate>
         </Setter>
     </ControlTheme>

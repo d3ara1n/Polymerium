@@ -35,7 +35,10 @@
                     Duration="{StaticResource ControlFasterAnimationDuration}" />
             </Transitions>
         </Border.Transitions>
-        <app:SettingsEntryItem Header="{x:Static lang:Resources.SafeLock_Title}">
+        <app:SettingsEntryItem
+            Padding="0"
+            Header="{x:Static lang:Resources.SafeLock_Title}"
+            Orientation="Vertical">
             <StackPanel Spacing="8">
                 <Border
                     Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
