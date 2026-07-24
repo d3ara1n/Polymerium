@@ -252,7 +252,7 @@ public partial class SnapshotCreationPageModel(
         var (snapshot, references) = model.Metadata;
         snapshot = snapshot with
         {
-            Label = !string.IsNullOrEmpty(Label) ? Label : Resources.Snapshot_UntitledLabelText,
+            Label = !string.IsNullOrEmpty(Label) ? Label : DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             Remark = Remark
         };
 
