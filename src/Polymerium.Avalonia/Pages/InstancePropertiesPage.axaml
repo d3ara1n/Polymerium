@@ -12,15 +12,20 @@
     d:DesignWidth="800"
     x:DataType="app:InstancePropertiesPageModel"
     mc:Ignorable="d">
+    <app:Subpage.Resources>
+        <x:Double x:Key="SettingsControlMinWidth">280</x:Double>
+    </app:Subpage.Resources>
     <StackPanel
         MaxWidth="1440"
         Margin="24"
-        Spacing="12">
+        Spacing="20">
         <app:SettingsEntry
             Title="{x:Static lang:Resources.InstancePropertiesPage_TitleTitle}"
             Icon="AppTitle"
             Summary="{x:Static lang:Resources.InstancePropertiesPage_TitleSubtitle}">
-            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_DisplayNameLabelText}">
+            <app:SettingsEntryItem
+                Header="{x:Static lang:Resources.InstancePropertiesPage_DisplayNameLabelText}"
+                Orientation="Vertical">
                 <Border
                     Background="{StaticResource ControlBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
@@ -56,7 +61,9 @@
                     </StackPanel>
                 </Border>
             </app:SettingsEntryItem>
-            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_ThumbnailLabelText}">
+            <app:SettingsEntryItem
+                Header="{x:Static lang:Resources.InstancePropertiesPage_ThumbnailLabelText}"
+                Orientation="Vertical">
                 <Grid
                     ColumnDefinitions="Auto,*"
                     ColumnSpacing="12">
@@ -115,7 +122,6 @@
                 </Grid>
             </app:SettingsEntryItem>
         </app:SettingsEntry>
-        <husk:Divider />
         <app:SettingsEntry
             Title="{x:Static lang:Resources.InstancePropertiesPage_OverridesTitle}"
             Icon="Games"
@@ -138,6 +144,7 @@
             </Button>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_JavaHomeLabelText}">
                 <TextBox
+                    MinWidth="{StaticResource SettingsControlMinWidth}"
                     PlaceholderText="{Binding JavaHomeWatermark}"
                     Text="{Binding JavaHomeOverride, Mode=TwoWay, FallbackValue={x:Null}}">
                     <TextBox.InnerRightContent>
@@ -165,6 +172,7 @@
             </app:SettingsEntryItem>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_JavaMaxMemoryLabelText}">
                 <NumericUpDown
+                    MinWidth="{StaticResource SettingsControlMinWidth}"
                     Increment="512"
                     Minimum="0"
                     PlaceholderText="{Binding JavaMaxMemoryWatermark}"
@@ -183,23 +191,22 @@
             </app:SettingsEntryItem>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_JavaAdditionalArgumentsLabelText}">
                 <TextBox
+                    MinWidth="{StaticResource SettingsControlMinWidth}"
                     PlaceholderText="{Binding JavaAdditionalArgumentsWatermark}"
                     Text="{Binding JavaAdditionalArgumentsOverride, Mode=TwoWay}" />
             </app:SettingsEntryItem>
-            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_CommandWrapperLabelText}">
-                <StackPanel Spacing="4">
-                    <TextBox
-                        PlaceholderText="{Binding CommandWrapperWatermark}"
-                        Text="{Binding CommandWrapperOverride, Mode=TwoWay}" />
-                    <TextBlock
-                        FontSize="{StaticResource SmallFontSize}"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.InstancePropertiesPage_CommandWrapperDescriptionText}"
-                        TextWrapping="Wrap" />
-                </StackPanel>
+            <app:SettingsEntryItem
+                Header="{x:Static lang:Resources.InstancePropertiesPage_CommandWrapperLabelText}"
+                Description="{x:Static lang:Resources.InstancePropertiesPage_CommandWrapperDescriptionText}">
+                <TextBox
+                    MinWidth="{StaticResource SettingsControlMinWidth}"
+                    PlaceholderText="{Binding CommandWrapperWatermark}"
+                    Text="{Binding CommandWrapperOverride, Mode=TwoWay}" />
             </app:SettingsEntryItem>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_WindowInitialSizeLabelText}">
-                <Grid ColumnDefinitions="*,7,*">
+                <Grid
+                    MinWidth="{StaticResource SettingsControlMinWidth}"
+                    ColumnDefinitions="*,7,*">
                     <TextBox
                         Grid.Column="0"
                         PlaceholderText="{Binding WindowInitialWidthWatermark}"
@@ -234,11 +241,11 @@
             </app:SettingsEntryItem>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_QuickConnectLabelText}">
                 <TextBox
+                    MinWidth="{StaticResource SettingsControlMinWidth}"
                     PlaceholderText="{Binding QuickConnectAddressWatermark}"
                     Text="{Binding QuickConnectAddressOverride, Mode=TwoWay}" />
             </app:SettingsEntryItem>
         </app:SettingsEntry>
-        <husk:Divider />
         <!-- <app:SettingsEntry Icon="Camera" Title="Snapshots (WIP)" Summary="Backup, yes, it's called backup"> -->
         <!--     <app:SettingsEntryItem Header="Taken Automatically When"> -->
         <!--         <ComboBox SelectedIndex="0"> -->
@@ -265,7 +272,9 @@
             <!--         </ComboBox> -->
             <!--     </StackPanel> -->
             <!-- </app:SettingsEntryItem> -->
-            <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_FastLaunchLabelText}">
+            <app:SettingsEntryItem
+                Header="{x:Static lang:Resources.InstancePropertiesPage_FastLaunchLabelText}"
+                Orientation="Vertical">
                 <StackPanel Spacing="8">
                     <husk:InfoBar Content="{x:Static lang:Resources.InstancePropertiesPage_FastLaunchPrompt}" />
                     <ToggleSwitch
@@ -275,7 +284,6 @@
                 </StackPanel>
             </app:SettingsEntryItem>
         </app:SettingsEntry>
-        <husk:Divider />
         <husk:BusyContainer
             Background="Transparent"
             IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=Idle, FallbackValue=False}">
@@ -325,7 +333,9 @@
                 Title="{x:Static lang:Resources.InstancePropertiesPage_DangerZoneTitle}"
                 Icon="WarningShield"
                 Summary="{x:Static lang:Resources.InstancePropertiesPage_DangerZoneSubtitle}">
-                <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_SacrificeLabelText}">
+                <app:SettingsEntryItem
+                    Header="{x:Static lang:Resources.InstancePropertiesPage_SacrificeLabelText}"
+                    Orientation="Vertical">
                     <Grid ColumnDefinitions="*,8,*">
                         <Button
                             Grid.Column="0"
@@ -356,7 +366,8 @@
                 </app:SettingsEntryItem>
                 <app:SettingsEntryItem
                     IsVisible="{Binding Basic.Source, Converter={x:Static ObjectConverters.IsNotNull}}"
-                    Header="{x:Static lang:Resources.InstancePropertiesPage_LinkerLabelText}">
+                    Header="{x:Static lang:Resources.InstancePropertiesPage_LinkerLabelText}"
+                    Orientation="Vertical">
                     <StackPanel Spacing="8">
                         <husk:InfoBar Content="{x:Static lang:Resources.InstancePropertiesPage_LinkerPrompt}" />
                         <Button Command="{Binding UnlockInstanceCommand}">

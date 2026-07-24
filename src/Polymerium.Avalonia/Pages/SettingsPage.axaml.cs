@@ -44,15 +44,6 @@ public partial class SettingsPage : Page
             {
                 _sections.Add(new() { Title = entry.Title, Icon = entry.Icon, Target = entry });
             }
-            else if (NavigationSectionProperties.GetTitle(child) is { Length: > 0 } title)
-            {
-                _sections.Add(new()
-                {
-                    Title = title,
-                    Icon = NavigationSectionProperties.GetIcon(child),
-                    Target = child
-                });
-            }
         }
     }
 
