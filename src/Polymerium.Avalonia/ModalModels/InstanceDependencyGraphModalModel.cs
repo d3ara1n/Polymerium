@@ -127,15 +127,9 @@ public partial class InstanceDependencyGraphModalModel(
                                           return null;
                                       }
 
-                                      var isRequired = _packages.TryGetValue(depKey, out var depPkg)
-                                                    && depPkg.Dependencies.Any(d => NodeKey(d.Label,
-                                                                                       d.Namespace,
-                                                                                       d.ProjectId)
-                                                                                == node.Key
-                                                                                && d.IsRequired);
                                       return new DependencyEntry(depKey,
                                                                  depNode.ProjectName,
-                                                                 isRequired,
+                                                                 false,
                                                                  depNode.IsMissing);
                                   })
                                  .Where(e => e is not null)

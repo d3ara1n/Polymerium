@@ -151,6 +151,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding $parent[TextBox].Clear}">
                                 <fi:SymbolIcon
+                                    IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                     FontSize="{StaticResource SmallFontSize}"
                                     Symbol="Dismiss" />
                             </Button>
