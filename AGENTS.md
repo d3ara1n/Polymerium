@@ -6,7 +6,7 @@
 - `src/Polymerium.Avalonia` is the only app in this repo.
 - `submodules/Trident.Net` is a git submodule and is part of the solution build. Treat it as an integral part of this project: it participates in the same development workflow and should be edited freely alongside the main codebase. Do not treat submodule changes as out-of-scope — feel free to modify files under `submodules/Trident.Net` when the task requires it. `Huskui.Avalonia` is consumed as a NuGet package, not a submodule.
 - Fresh clones need submodules initialized: `git submodule update --init --recursive`.
-- `plans/` holds task blueprints — independent design docs written so a fresh session can pick up a task from the plan alone, without re-deriving the decisions or reconstructing progress from code. See `plans/README.md` for the writing conventions; treat `plans/archived/` as a graveyard (no reference value, do not read).
+- `plans/` holds task plans — intent-only starting prompts, not maintained design docs. Read `plans/README.md` before writing one. Treat `plans/archived/` as a graveyard (no reference value, do not read).
 - `GLOSSARY.md` defines canonical user-facing Polymerium terminology. Follow it when writing app strings, docs, changelog entries, issue text, or support messages.
 
 @GLOSSARY.md
@@ -126,9 +126,9 @@ Version-numbering convention: **`minor` increments mark milestones, not individu
 
 - **One type per `.cs` file.** Never declare more than one top-level type in a single file. A new type has only two valid homes: its own file, or nested inside the type it belongs to.
 - **Choose by semantic ownership, not by visibility or who references it.** The question is whether the type is that other type's own concept — not whether it is public or used elsewhere.
-  - **Nested type (类中类)** when it is dedicated to an outer class, even if that class exposes it through its public API (e.g. as a parameter or return type). The fact that callers must supply/pass values of that type does **not** make it independent. Example: `SkinView` nests inside `AccountHelper` because it exists only to describe `AccountHelper`'s body-render URLs.
+  - **Nested type** when it is dedicated to an outer class, even if that class exposes it through its public API (e.g. as a parameter or return type). The fact that callers must supply/pass values of that type does **not** make it independent. Example: `SkinView` nests inside `AccountHelper` because it exists only to describe `AccountHelper`'s body-render URLs.
   - **Own file** when it is a shared model — a type with its own data/properties that View, ViewModel, and Services may all consume is a standalone entity and gets its own file (under `Models/` for models). Example: `SkinFrame` is a model the view binds to and view models build, so it lives in `Models/SkinFrame.cs`, not tucked inside the control.
-- **静态工具类用 `Helper` 后缀、放 `Utilities`。** 无状态工具类是 `public static class XxxHelper`（不可实例化），归属 `<Project>.Utilities` 命名空间；扩展方法类另用 `XxxExtensions` 后缀、放 `Extensions/`，两者不混。
+- **Stateless helper classes use the `Helper` suffix and live in `Utilities`.** A stateless helper is a `public static class XxxHelper` (never instantiated) under the `<Project>.Utilities` namespace; extension-method classes use the separate `XxxExtensions` suffix and live in `Extensions/`. Do not mix the two.
 
 ## Comments
 
@@ -194,31 +194,31 @@ Pick the tier by what the state *is*:
 
 ## External Tracking (Jira / GitHub / Sentry)
 
-固定参数，调用 MCP 时直接复用，不要每次重新发现：
+Fixed parameters — reuse these directly when calling MCP, do not rediscover them each time:
 
 - **Atlassian site**: https://d3ara1n.atlassian.net
 - **cloudId**: `88eb6a79-a7aa-49eb-8e71-5fffb7d4896b`
 - **Jira project key**: `POLY`
-- **Issue types**（`issueTypeName` 传中文名即可）: 故障=`10070`, 任务=`10001`, 长篇故事=`10002`, 子任务=`10003`
+- **Issue types** (pass the Chinese name as `issueTypeName`): 故障 (Bug)=`10070`, 任务 (Task)=`10001`, 长篇故事 (Epic)=`10002`, 子任务 (Sub-task)=`10003`
 - **GitHub**: owner=`d3ara1n`, repo=`Polymerium`
 - **Sentry**: organizationSlug=`gravitylab`, regionUrl=`https://us.sentry.io`, projectSlug=`polymerium`
   - Issue search uses `projectSlugOrId="polymerium"`.
   - Event search uses `projectSlug="polymerium"`.
 
-双向链接约定（把 GitHub issue 转录到 Jira 时遵循）：
+Bidirectional linking convention (follow when transcribing a GitHub issue to Jira):
 
-- Jira issue 描述内嵌 GitHub issue URL；
-- GitHub issue 评论附 `[POLY-XX](https://d3ara1n.atlassian.net/browse/POLY-XX)` 指回 Jira；
-- 修复 commit 首行以 `POLY-XX: type(scope): ...` 关联（见下文 Git Commit）。
+- Embed the GitHub issue URL in the Jira issue description.
+- Add a `[POLY-XX](https://d3ara1n.atlassian.net/browse/POLY-XX)` comment on the GitHub issue linking back to Jira.
+- Prefix the fix commit's first line with `POLY-XX: type(scope): ...` (see Git Commit below).
 
-NOTE: site URL / cloudId / project key 本身不私密——没有 API token 任何人都调不动 Jira API，真正敏感的 token 由 MCP 层保管，不写进本文件。Jira 站点默认私有，外部 GitHub 用户无权访问，进度需同步回 GitHub issue 评论才能被 reporter 看见。
+NOTE: the site URL / cloudId / project key are not secret on their own — without an API token nobody can call the Jira API, and the actually-sensitive token is held by the MCP layer, not written into this file. The Jira site is private by default; external GitHub users have no access, so progress must be synced back as a comment on the GitHub issue for the reporter to see.
 
 ## Git Commit
 
 - **Do not commit on your own initiative.** Make all the edits you need, then stop and wait for the user to explicitly tell you to commit (e.g. "提交"). Never auto-commit after editing without being asked.
-- 首行按 Conventional Commits 格式：`type(scope): description`
-- 关联 Jira issue 时，issue key 放首行开头：`POLY-XX: type(scope): description`
-- 关联 GitHub issue 时，issue key 放首行末尾括号内：`type(scope): description (#nnn)`
-- body 写变更要点，与首行空一行隔开
+- First line follows Conventional Commits: `type(scope): description`.
+- When linking a Jira issue, put the issue key at the start of the first line: `POLY-XX: type(scope): description`.
+- When linking a GitHub issue, put the issue key in parentheses at the end of the first line: `type(scope): description (#nnn)`.
+- Write the change summary in the body, separated from the first line by a blank line.
 
 @ROLLING.md
