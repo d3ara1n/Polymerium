@@ -420,18 +420,18 @@
                                     Grid.Column="0"
                                     Padding="8"
                                     Background="{StaticResource OverlaySolidBackgroundBrush}">
-                                    <Button.CornerRadius>
+                                    <Border.CornerRadius>
                                         <MultiBinding
                                             Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
                                             <Binding
-                                                Path="Margin"
+                                                Path="CornerRadius"
                                                 RelativeSource="{RelativeSource Mode=FindAncestor,
-                                                                                AncestorType=Grid}" />
+                                                                                AncestorType=Border}" />
                                             <Binding
-                                                Path="Padding"
-                                                RelativeSource="{RelativeSource Mode=Self}" />
+                                                Path="Margin"
+                                                RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Grid}" />
                                         </MultiBinding>
-                                    </Button.CornerRadius>
+                                    </Border.CornerRadius>
                                     <StackPanel>
                                         <TextBlock
                                             FontSize="{StaticResource SmallFontSize}"
