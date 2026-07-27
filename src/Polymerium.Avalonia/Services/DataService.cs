@@ -38,7 +38,7 @@ public class DataService(
     private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromHours(12);
     private static readonly TimeSpan ICON_FILE_EXPIRED_IN = TimeSpan.FromDays(30);
 
-    public async ValueTask<Package> IdentifyVersionAsync(string filePath) => await agent.IdentityAsync(filePath);
+    public async ValueTask<Package> IdentifyVersionAsync(string filePath) => await agent.IdentifyAsync(filePath);
 
     // Package / Project / Description / Changelog / Status 的缓存统一由
     // Trident 仓库缓存层管理，此处直接委托。DataService 只缓存 UI hot data
