@@ -186,8 +186,11 @@ Then use `PseudoClasses.Set(CLASS_Error, true)` instead of `PseudoClasses.Set(":
 
 ## View State Representation
 
-- **Never fan one logical state out across multiple `IsVisible` bindings.** When a UI region swaps between alternatives (e.g. a preview pane that differs for a local import vs an online source), do not model it as several boolean properties each gating a separate control. That splits a single decision into N properties and N controls that can drift out of sync, and hides which alternative is actually active.
-- **Represent the alternative as one value, and switch the view on that value.** Data side: an `enum`, or a base type with one derived class per case. View side: `SwitchContainer` for an enum/bool discriminant, or `DataTemplate` selection by type for derived classes. One source of truth on the data side, one switching mechanism on the view side.
+Pick the tier by what the state *is*:
+
+- **Independent visibility of simple chrome → `IsVisible`.** A badge, a hint row, an element that shows or hides on its own. **Never fan one logical state out across multiple `IsVisible` bindings** — when a UI region swaps between alternatives, do not model it as several boolean properties each gating a separate control. That splits a single decision into N properties and N controls that can drift out of sync, and hides which alternative is actually active.
+- **A fixed set of alternatives → one discriminant, switched.** When the alternatives are known up front (e.g. a preview pane that differs for a local import vs an online source), represent the alternative as one value: data side an `enum`, or a base type with one derived class per case; view side `SwitchContainer` for an enum/bool discriminant, or `DataTemplate` selection by type for derived classes. One source of truth on the data side, one switching mechanism on the view side.
+- **A produced result → the result object's own nullability.** When a region first collects input (a form) and then shows what the operation produced (scan results, a computed report), the discriminant is the result object itself — do not invent a `Step` enum or a `HasResult` flag alongside it. Data side: one nullable `TResult?` property. View side: `husk:PlaceholderContainer` with `Source="{Binding Result}"`, the result view in `SourceTemplate`, and the input form in `Placeholder`. Producing assigns the object; discarding is `Result = null`, which returns the region to the form for another round. The result reference is the single source of truth for which side is shown.
 
 ## External Tracking (Jira / GitHub / Sentry)
 
