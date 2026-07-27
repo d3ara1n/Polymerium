@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
 using AsyncImageLoader;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -125,7 +126,11 @@ internal static class Program
         {
             try
             {
-                runtime.StopAsync().WaitAsync(TimeSpan.FromSeconds(10)).GetAwaiter().GetResult();
+                // NOTE: the CTS self-cancels at 10s; WaitAsync then throws OperationCanceledException,
+                //  which Sentry filters out — so a slow shutdown times out silently rather than being
+                //  misreported as a crash.
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+                runtime.StopAsync(cts.Token).WaitAsync(cts.Token).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -160,9 +165,9 @@ internal static class Program
             ErrorReporter.Report(stopException,
                                  new(ErrorReporter.ErrorReportSource.LifetimeShutdown,
                                      "shutdown",
-                                     true,
-                                     true,
-                                     SentryLevel.Error));
+                                     false,
+                                     false,
+                                     SentryLevel.Warning));
         }
 
         #endregion
