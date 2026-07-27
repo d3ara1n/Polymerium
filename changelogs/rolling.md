@@ -8,6 +8,7 @@
 
 - Fix some minor layout flaws
 - Fix CurseForge description rendering
+- Fix file identification only checking the first repository and missing files available on others
 
 ### Added
 
