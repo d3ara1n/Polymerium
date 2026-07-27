@@ -87,7 +87,7 @@ public class FavoriteRepository(
                                                                }));
     }
 
-    public Task<Package> IdentifyAsync(ReadOnlyMemory<byte> content) => throw new NotImplementedException();
+    public Task<Package> IdentifyAsync(ReadOnlyMemory<byte> content) => throw new NotSupportedException("favorite repositories cannot identify files");
 
     public Task<Project> QueryAsync(ScopedProjectIdentifier id) => throw new NotImplementedException();
 
