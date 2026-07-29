@@ -89,6 +89,9 @@ public class FavoriteRepository(
 
     public Task<Package> IdentifyAsync(ReadOnlyMemory<byte> content) => throw new NotSupportedException("favorite repositories cannot identify files");
 
+    public Task<IReadOnlyList<Package?>> IdentifyBatchAsync(IEnumerable<ReadOnlyMemory<byte>> contents) =>
+        throw new NotSupportedException("favorite repositories cannot identify files");
+
     public Task<Project> QueryAsync(ScopedProjectIdentifier id) => throw new NotImplementedException();
 
     public Task<BatchResolveResult<ScopedProjectIdentifier, Project>> QueryBatchAsync(
