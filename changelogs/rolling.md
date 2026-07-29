@@ -6,6 +6,7 @@
 
 ### Fixed
 
+- Fix the package explorer dropping the selected resource type and falling back to mods when switching repositories
 - Fix some minor layout flaws
 - Fix CurseForge description rendering
 - Fix file identification only checking the first repository and missing files available on others
