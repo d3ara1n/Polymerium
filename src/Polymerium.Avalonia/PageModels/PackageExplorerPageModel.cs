@@ -8,6 +8,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
@@ -36,6 +37,7 @@ public partial class PackageExplorerPageModel : ViewModelBase
     #region Fields
 
     private readonly CompositeDisposable _subscriptions = new();
+    private bool _suppressSearchOnKindChange;
 
     #endregion
 
@@ -225,13 +227,30 @@ public partial class PackageExplorerPageModel : ViewModelBase
             return;
         }
 
-        // HACK: 此时 SelectedKind 没回绑，Filter 未更新，因此手动提前打补丁
-        if (value.Kinds?.Any(x => x == Filter.Kind) is not true)
-        {
-            Filter = Filter with { Kind = value.Kinds?.FirstOrDefault() ?? Filter.Kind };
-        }
+        // NOTE: 资源类型选择器是 TabStrip，其 SelectionMode 为 AlwaysSelected。切仓库会替换它的
+        //  ItemsSource，SelectionModel 会先 Clear 再强制 SelectedIndex=0（各仓库 Kinds 的首项恒为
+        //  Mod），经 TwoWay 把 Mod 回写到 SelectedKind 并触发一次多余的 Mod 搜索，覆盖正确结果。
+        //  所以这里先记下用户当前的选择、压住这次多余搜索，等绑定平息后再按新仓库重断言。
+        var desiredKind = SelectedKind;
+        _suppressSearchOnKindChange = true;
 
-        _ = SearchAsync();
+        Dispatcher.UIThread.Post(() =>
+        {
+            _suppressSearchOnKindChange = false;
+
+            var target = value.Kinds?.Any(x => x == desiredKind) is true
+                             ? desiredKind
+                             : value.Kinds?.FirstOrDefault() ?? desiredKind;
+
+            if (SelectedKind != target)
+            {
+                SelectedKind = target;
+            }
+            else
+            {
+                _ = SearchAsync();
+            }
+        });
     }
 
     [ObservableProperty]
@@ -275,8 +294,11 @@ public partial class PackageExplorerPageModel : ViewModelBase
 
         Filter = Filter with { Kind = value };
 
-
-        _ = SearchAsync();
+        // NOTE: 切仓库时 TabStrip 的强制回写也会走到这里，那次搜索由 OnSelectedRepositoryChanged 统一发起。
+        if (!_suppressSearchOnKindChange)
+        {
+            _ = SearchAsync();
+        }
     }
 
     [ObservableProperty]

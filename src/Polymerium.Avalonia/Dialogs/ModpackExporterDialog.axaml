@@ -36,7 +36,7 @@
                     <TabStrip.ItemTemplate>
                         <DataTemplate x:DataType="app:ModpackExporterFormatModel">
                             <Grid
-                                ColumnDefinitions="Auto,Auto"
+                                ColumnDefinitions="*,Auto"
                                 ColumnSpacing="4">
                                 <husk:IconLabel
                                     Grid.Column="0"
