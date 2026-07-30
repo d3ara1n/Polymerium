@@ -192,6 +192,22 @@ Pick the tier by what the state *is*:
 - **A fixed set of alternatives → one discriminant, switched.** When the alternatives are known up front (e.g. a preview pane that differs for a local import vs an online source), represent the alternative as one value: data side an `enum`, or a base type with one derived class per case; view side `SwitchContainer` for an enum/bool discriminant, or `DataTemplate` selection by type for derived classes. One source of truth on the data side, one switching mechanism on the view side.
 - **A produced result → the result object's own nullability.** When a region first collects input (a form) and then shows what the operation produced (scan results, a computed report), the discriminant is the result object itself — do not invent a `Step` enum or a `HasResult` flag alongside it. Data side: one nullable `TResult?` property. View side: `husk:PlaceholderContainer` with `Source="{Binding Result}"`, the result view in `SourceTemplate`, and the input form in `Placeholder`. Producing assigns the object; discarding is `Result = null`, which returns the region to the form for another round. The result reference is the single source of truth for which side is shown.
 
+## Model Purity
+
+Models — the data items a view or view-model binds to (anything under `Models/`, or a per-item DTO bound in an `ItemsControl`/`DataTemplate`) — hold **atomic, raw values only**. A model property stores one piece of data; it never derives, decorates, coalesces, or re-shapes it.
+
+Forbidden in a model:
+
+- **Formatted/decorated values** — e.g. `LoaderDisplay => Format(Loader)`. The raw value stays; formatting is the view's job.
+- **Derived booleans** — e.g. `IsCorrupt => CorruptReason is not null`, `HasLoader => Loader is not null`. These duplicate information the raw value already carries.
+- **Coalesced/fallback values** — e.g. `Name => Name ?? Key`. Fallback is presentation policy.
+
+All such transformation belongs in the XAML via its native mechanisms: `Converter` (value→display), `SwitchContainer`/`DataTemplate` (conditional rendering), `IsVisible` + a null/existence converter (presence). The model supplies the atom; the view composes the presentation.
+
+Rationale: a model that decorates couples the data shape to one presentation — the same atom cannot render a second way without editing the model, and the derived value silently drifts from the raw one it wraps. Keeping models data-only makes them reusable and concentrates every presentation decision in exactly one layer.
+
+This pairs with, but is distinct from, *View State Representation* above: that decides *which* property drives a region; this decides *what kind* of property a model may expose.
+
 ## External Tracking (Jira / GitHub / Sentry)
 
 Fixed parameters — reuse these directly when calling MCP, do not rediscover them each time:
