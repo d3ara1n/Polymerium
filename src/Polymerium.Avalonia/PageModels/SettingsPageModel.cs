@@ -228,6 +228,9 @@ public partial class SettingsPageModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
+    private void OpenMigrate() => OverlayService.PopModal<MigrateModal>();
+
     #endregion
 
     #region Updates

@@ -704,6 +704,18 @@
                         </Button>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
+                        Header="{x:Static lang:Resources.SettingsPage_MigrateFromLauncherLabelText}"
+                        Description="{x:Static lang:Resources.SettingsPage_MigrateFromLauncherDescription}">
+                        <Button
+                            Classes="Small"
+                            Command="{Binding OpenMigrateCommand}"
+                            Theme="{StaticResource OutlineButtonTheme}">
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
+                                Symbol="ArrowRight" />
+                        </Button>
+                    </app:SettingsEntryItem>
+                    <app:SettingsEntryItem
                         Header="{x:Static lang:Resources.SettingsPage_GarbageCollectButtonText}"
                         Description="{x:Static lang:Resources.SettingsPage_GarbageCollectDescription}">
                         <Button

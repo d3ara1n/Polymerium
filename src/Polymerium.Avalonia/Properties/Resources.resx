@@ -27,6 +27,57 @@
     <data name="MainWindow_HomeButtonText" xml:space="preserve">
         <value>Home</value>
     </data>
+    <data name="Migrate_Title" xml:space="preserve">
+        <value>Migrate</value>
+    </data>
+    <data name="Migrate_DirectoryMissing" xml:space="preserve">
+        <value>Directory does not exist</value>
+    </data>
+    <data name="Migrate_ScanFailed" xml:space="preserve">
+        <value>Scan failed</value>
+    </data>
+    <data name="Migrate_Preparing" xml:space="preserve">
+        <value>Preparing migration...</value>
+    </data>
+    <data name="Migrate_Identifying" xml:space="preserve">
+        <value>Identifying mods...</value>
+    </data>
+    <data name="Migrate_Cancelled" xml:space="preserve">
+        <value>Migration cancelled</value>
+    </data>
+    <data name="Migrate_Failed" xml:space="preserve">
+        <value>Migration failed</value>
+    </data>
+    <data name="Migrate_SummarySuccess" xml:space="preserve">
+        <value>Migrated {0} instance(s) from the launcher.</value>
+    </data>
+    <data name="Migrate_SummaryPartial" xml:space="preserve">
+        <value>Migrated {0}/{1} instance(s) from the launcher.{2}</value>
+    </data>
+    <data name="MigrateModal_Title" xml:space="preserve">
+        <value>Migrate from Launcher</value>
+    </data>
+    <data name="MigrateModal_DirectoryWatermark" xml:space="preserve">
+        <value>Launcher data directory</value>
+    </data>
+    <data name="MigrateModal_Scan" xml:space="preserve">
+        <value>Scan</value>
+    </data>
+    <data name="MigrateModal_Migrate" xml:space="preserve">
+        <value>Migrate</value>
+    </data>
+    <data name="SettingsPage_MigrateFromLauncherLabelText" xml:space="preserve">
+        <value>Migrate from Launcher</value>
+    </data>
+    <data name="SettingsPage_MigrateFromLauncherDescription" xml:space="preserve">
+        <value>Import instances from another launcher&apos;s data directory.</value>
+    </data>
+    <data name="Migrate_CancelButton" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="MigrateModal_Description" xml:space="preserve">
+        <value>Pick a launcher and its data directory, then scan for importable instances.</value>
+    </data>
     <data name="MainWindow_MarketplaceButtonText" xml:space="preserve">
         <value>Go to Marketplace</value>
     </data>

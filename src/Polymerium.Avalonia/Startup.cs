@@ -23,8 +23,10 @@ using Polymerium.Avalonia.Services.Sinks;
 using Polymerium.Avalonia.Snapshots;
 using Sentry;
 using TridentCore.Abstractions;
+using TridentCore.Abstractions.Adapters;
 using TridentCore.Abstractions.Exporters;
 using TridentCore.Abstractions.Importers;
+using TridentCore.Core.Adapters;
 using TridentCore.Core.Engines.Deploying;
 using TridentCore.Core.Exporters;
 using TridentCore.Core.Extensions;
@@ -174,6 +176,7 @@ public static class Startup
            .AddTransient<IProfileImporter, ModrinthImporter>()
            .AddTransient<IProfileImporter, MultiMcImporter>()
            .AddTransient<IProfileImporter, PackwizImporter>()
+           .AddTransient<ILauncherAdapter, MultiMcLauncherAdapter>()
            .AddTransient<IProfileExporter, TridentExporter>()
            .AddTransient<IProfileExporter, CurseForgeExporter>()
            .AddTransient<IProfileExporter, ModrinthExporter>()
@@ -184,6 +187,7 @@ public static class Startup
            .AddSingleton<RepositoryAgent>()
            .AddSingleton<ImporterAgent>()
            .AddSingleton<ExporterAgent>()
+           .AddSingleton<MigratorAgent>()
            .AddSingleton<InstanceManager>()
            .AddSingleton<InstanceStateAggregator>()
            .AddSingleton<ActivitySink>()

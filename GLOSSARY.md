@@ -47,6 +47,7 @@ Use the product label followed by the physical directory on first mention, for e
 | Workspace | 工作区 | The tool that compares the Pack Source with its working copy and synchronizes selected changes between them. |
 | Sync to Import | 同步到 Import | Copy or synchronize a selected working-copy change into the Pack Source so it becomes part of the modpack. "Promote" / "提升" may explain the concept, but the UI command remains "Sync to Import". |
 | restore working copy | 还原工作副本 | Replace a selected working-copy file with the version from the Pack Source. Distinguish this from restoring an entire snapshot. |
+| promote | 提升 | Move volatile data into a more durable managed layer so it survives reset or becomes part of a distributable pack. Two directions: build→persist (runtime data becomes protected Local Data that survives reset) and live→import (a working-copy change becomes part of the Pack Source). The UI command remains "Sync to Import" for live→import; build→persist has no dedicated command yet. |
 
 ## Runtime And Accounts
 

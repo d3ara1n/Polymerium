@@ -1,0 +1,132 @@
+<husk:Modal
+    x:Class="Polymerium.Avalonia.Modals.MigrateModal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:DataType="app:MigrateModalModel"
+    Width="560"
+    Height="540"
+    d:DesignHeight="540"
+    d:DesignWidth="560"
+    mc:Ignorable="d">
+    <DockPanel VerticalSpacing="12">
+        <Grid
+            DockPanel.Dock="Top"
+            ColumnDefinitions="*,Auto"
+            ColumnSpacing="12">
+            <TextBlock
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                FontSize="{StaticResource LargeFontSize}"
+                FontWeight="{StaticResource ControlStrongFontWeight}"
+                Text="{x:Static lang:Resources.MigrateModal_Title}" />
+            <Button
+                Grid.Column="1"
+                Classes="Small"
+                Command="{Binding $parent[app:MigrateModal].Dismiss}"
+                IsCancel="True">
+                <fi:SymbolIcon
+                    FontSize="{StaticResource MediumFontSize}"
+                    Symbol="Dismiss" />
+            </Button>
+        </Grid>
+
+        <husk:PlaceholderContainer Source="{Binding Result}">
+            <husk:PlaceholderContainer.SourceTemplate>
+                <DataTemplate DataType="app:MigrateScanResult">
+                    <DockPanel VerticalSpacing="12">
+                        <husk:ModalActionPanel DockPanel.Dock="Bottom">
+                            <Button
+                                Command="{Binding BackCommand}">
+                                <fi:SymbolIcon Symbol="ArrowHookUpLeft" />
+                            </Button>
+                            <Button
+                                IsDefault="True"
+                                Classes="Primary"
+                                Command="{Binding MigrateCommand}"
+                                CommandParameter="{Binding $parent[app:MigrateModal]}"
+                                Content="{x:Static lang:Resources.MigrateModal_Migrate}" />
+                        </husk:ModalActionPanel>
+                        <ScrollViewer Padding="0">
+                            <ItemsControl ItemsSource="{Binding Instances}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="app:MigrateInstanceRow">
+                                        <Grid
+                                            Margin="0,4"
+                                            ColumnDefinitions="Auto,*,Auto"
+                                            ColumnSpacing="8">
+                                            <CheckBox
+                                                Grid.Column="0"
+                                                VerticalAlignment="Center"
+                                                IsChecked="{Binding IsSelected}"
+                                                IsEnabled="{Binding !IsCorrupt}" />
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="{Binding Name}" />
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Opacity="0.6"
+                                                    Spacing="6">
+                                                    <TextBlock
+                                                        FontSize="12"
+                                                        Text="{Binding MinecraftVersion}" />
+                                                    <TextBlock
+                                                        FontSize="12"
+                                                        IsVisible="{Binding HasLoader}"
+                                                        Text="·" />
+                                                    <TextBlock
+                                                        FontSize="12"
+                                                        IsVisible="{Binding HasLoader}"
+                                                        Text="{Binding LoaderDisplay}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <TextBlock
+                                                Grid.Column="2"
+                                                VerticalAlignment="Center"
+                                                FontSize="12"
+                                                IsVisible="{Binding IsCorrupt}"
+                                                Opacity="0.6"
+                                                Text="{Binding CorruptReason}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </DockPanel>
+                </DataTemplate>
+            </husk:PlaceholderContainer.SourceTemplate>
+
+            <StackPanel HorizontalAlignment="Stretch" Spacing="12">
+                <TextBlock
+                    Opacity="0.7"
+                    Text="{x:Static lang:Resources.MigrateModal_Description}"
+                    TextWrapping="Wrap" />
+                <StackPanel Spacing="8">
+                    <ComboBox
+                        HorizontalAlignment="Stretch"
+                        ItemsSource="{Binding Kinds}"
+                        SelectedItem="{Binding SelectedKind}" />
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <TextBox
+                            Grid.Column="0"
+                            Text="{Binding DataDirectory}"
+                            Watermark="{x:Static lang:Resources.MigrateModal_DirectoryWatermark}" />
+                        <Button
+                            Grid.Column="1"
+                            Command="{Binding BrowseCommand}"
+                            Content="..." />
+                    </Grid>
+                </StackPanel>
+                <Button
+                    HorizontalAlignment="Right"
+                    Command="{Binding ScanCommand}"
+                    Content="{x:Static lang:Resources.MigrateModal_Scan}"
+                    IsEnabled="{Binding !IsScanning}" />
+            </StackPanel>
+        </husk:PlaceholderContainer>
+    </DockPanel>
+</husk:Modal>
