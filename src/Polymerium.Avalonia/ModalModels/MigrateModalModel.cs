@@ -1,5 +1,5 @@
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData;
+using DynamicData.Binding;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.Avalonia.Facilities;
@@ -23,12 +25,13 @@ public partial class MigrateModalModel(
     MigratorAgent migratorAgent,
     NotificationService notificationService) : ViewModelBase
 {
-    private CancellationTokenSource? _scanCts;
+    private IDisposable? _selectionSubscription;
 
-    public LauncherKind[] Kinds => migratorAgent.SupportedKinds;
+    public IReadOnlyList<MigrateLauncherKindModel> Kinds { get; } =
+        [..migratorAgent.SupportedKinds.Select(k => new MigrateLauncherKindModel(k, migratorAgent.DefaultDataDirectory(k)))];
 
     [ObservableProperty]
-    public partial LauncherKind SelectedKind { get; set; }
+    public partial MigrateLauncherKindModel? SelectedLauncher { get; set; }
 
     [ObservableProperty]
     public partial string? DataDirectory { get; set; }
@@ -39,23 +42,73 @@ public partial class MigrateModalModel(
     [ObservableProperty]
     public partial MigrateScanResult? Result { get; set; }
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedSummary))]
+    [NotifyPropertyChangedFor(nameof(MigrateLabel))]
+    [NotifyCanExecuteChangedFor(nameof(MigrateCommand))]
+    public partial int SelectedCount { get; private set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedSummary))]
+    public partial int TotalCount { get; private set; }
+
+    [ObservableProperty]
+    public partial bool? AllSelected { get; set; }
+
+    public string SelectedSummary =>
+        string.Format(Resources.MigrateModal_SelectedCountFormat, SelectedCount, TotalCount);
+
+    public string MigrateLabel => string.Format(Resources.MigrateModal_MigrateWithCount, SelectedCount);
+
+    partial void OnAllSelectedChanged(bool? value)
+    {
+        if (value is not bool v || Result is null)
+        {
+            return;
+        }
+
+        foreach (var item in Result.Instances.Where(x => x.Instance.CorruptReason is null))
+        {
+            item.IsSelected = v;
+        }
+    }
+
     protected override Task OnInitializeAsync(CancellationToken token)
     {
-        SelectedKind = Kinds.FirstOrDefault();
-        DataDirectory = migratorAgent.DefaultDataDirectory(SelectedKind);
+        SelectedLauncher = Kinds.FirstOrDefault();
         return Task.CompletedTask;
     }
 
-    partial void OnSelectedKindChanged(LauncherKind value) =>
-        DataDirectory = migratorAgent.DefaultDataDirectory(value);
+    partial void OnSelectedLauncherChanged(MigrateLauncherKindModel? value) =>
+        DataDirectory = value?.DefaultDirectory;
 
     protected override Task OnDeinitializeAsync()
     {
-        // NOTE: only the scan token is owned here, and it is disposed by the scan task itself (it
-        //  captures the CTS locally), so deinitialize just signals cancel. The migrate task owns its
-        //  own CTS and outlives this modal by design — it must not be cancelled here.
-        _scanCts?.Cancel();
+        _selectionSubscription?.Dispose();
         return Task.CompletedTask;
+    }
+
+    private void ArmSelectionPipeline()
+    {
+        _selectionSubscription?.Dispose();
+        _selectionSubscription = Result?.Instances
+                                        .ToObservableChangeSet()
+                                        .AutoRefresh(x => x.IsSelected)
+                                        .Subscribe(_ => RefreshSelectionState());
+    }
+
+    private void RefreshSelectionState()
+    {
+        if (Result is null)
+        {
+            return;
+        }
+
+        var instances = Result.Instances;
+        TotalCount = instances.Count;
+        SelectedCount = instances.Count(x => x.IsSelected);
+        var selectable = instances.Count(x => x.Instance.CorruptReason is null);
+        AllSelected = SelectedCount == 0 ? false : SelectedCount == selectable ? true : null;
     }
 
     [RelayCommand]
@@ -82,27 +135,27 @@ public partial class MigrateModalModel(
     [RelayCommand]
     private async Task ScanAsync()
     {
-        if (string.IsNullOrWhiteSpace(DataDirectory) || !Directory.Exists(DataDirectory))
+        if (SelectedLauncher is null || string.IsNullOrWhiteSpace(DataDirectory) || !Directory.Exists(DataDirectory))
         {
             notificationService.PopMessage(Resources.Migrate_DirectoryMissing, Resources.Migrate_Title);
             return;
         }
 
-        _scanCts?.Cancel();
-        var cts = new CancellationTokenSource();
-        _scanCts = cts;
         IsScanning = true;
         Result = null;
         try
         {
-            var instances = await migratorAgent.ScanAsync(SelectedKind, DataDirectory!, cts.Token);
+            var instances = await migratorAgent.ScanAsync(SelectedLauncher.Kind,
+                                                          DataDirectory!,
+                                                          CancellationToken.None);
             Result = new MigrateScanResult
             {
-                Instances = [..instances.Select(i => new MigrateInstanceModel(i))]
+                Instances = [..instances.Select(i => new MigrateInstanceModel(i)
+                {
+                    IsSelected = i.CorruptReason is null
+                })]
             };
-        }
-        catch (OperationCanceledException)
-        {
+            ArmSelectionPipeline();
         }
         catch (Exception ex)
         {
@@ -110,15 +163,21 @@ public partial class MigrateModalModel(
         }
         finally
         {
-            cts.Dispose();
             IsScanning = false;
         }
     }
 
     [RelayCommand]
-    private void Back() => Result = null;
+    private void Back()
+    {
+        Result = null;
+        _selectionSubscription?.Dispose();
+        _selectionSubscription = null;
+    }
 
-    [RelayCommand]
+    private bool CanMigrate() => SelectedCount > 0;
+
+    [RelayCommand(CanExecute = nameof(CanMigrate))]
     private async Task MigrateAsync(Modal? self)
     {
         var selected = Result?.Instances.Where(x => x.IsSelected).Select(x => x.Instance).ToList();

@@ -60,8 +60,17 @@
     <data name="MigrateModal_Scan" xml:space="preserve">
         <value>扫描</value>
     </data>
-    <data name="MigrateModal_Migrate" xml:space="preserve">
-        <value>迁移</value>
+    <data name="MigrateModal_MigrateWithCount" xml:space="preserve">
+        <value>迁移 ({0})</value>
+    </data>
+    <data name="MigrateModal_BackButtonText" xml:space="preserve">
+        <value>返回</value>
+    </data>
+    <data name="MigrateModal_SelectAll" xml:space="preserve">
+        <value>全选</value>
+    </data>
+    <data name="MigrateModal_SelectedCountFormat" xml:space="preserve">
+        <value>已选 {0}/{1}</value>
     </data>
     <data name="SettingsPage_MigrateFromLauncherLabelText" xml:space="preserve">
         <value>从启动器迁移</value>

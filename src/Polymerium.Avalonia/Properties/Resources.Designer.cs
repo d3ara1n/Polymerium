@@ -2859,9 +2859,24 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("MigrateModal_Scan", resourceCulture);
             }
         }
-        public static string MigrateModal_Migrate {
+        public static string MigrateModal_MigrateWithCount {
             get {
-                return ResourceManager.GetString("MigrateModal_Migrate", resourceCulture);
+                return ResourceManager.GetString("MigrateModal_MigrateWithCount", resourceCulture);
+            }
+        }
+        public static string MigrateModal_BackButtonText {
+            get {
+                return ResourceManager.GetString("MigrateModal_BackButtonText", resourceCulture);
+            }
+        }
+        public static string MigrateModal_SelectAll {
+            get {
+                return ResourceManager.GetString("MigrateModal_SelectAll", resourceCulture);
+            }
+        }
+        public static string MigrateModal_SelectedCountFormat {
+            get {
+                return ResourceManager.GetString("MigrateModal_SelectedCountFormat", resourceCulture);
             }
         }
         public static string SettingsPage_MigrateFromLauncherLabelText {
