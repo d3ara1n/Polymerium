@@ -99,11 +99,13 @@ public static class AssetModHelper
         if (root.TryGetProperty("authors", out var authorsElement))
         {
             metadata.Authors = authorsElement.ValueKind == JsonValueKind.Array
-                                   ? authorsElement
-                                    .EnumerateArray()
-                                    .Select(x => x.GetString() ?? "")
-                                    .Where(x => !string.IsNullOrEmpty(x))
-                                    .ToArray()
+                                   ?
+                                   [
+                                       .. authorsElement
+                                         .EnumerateArray()
+                                         .Select(x => x.GetString() ?? "")
+                                         .Where(x => !string.IsNullOrEmpty(x))
+                                   ]
                                    : [authorsElement.GetString() ?? ""];
         }
 
@@ -165,7 +167,7 @@ public static class AssetModHelper
 
                 if (metadataElement.TryGetProperty("contributors", out var contributorsElement))
                 {
-                    metadata.Authors = contributorsElement.EnumerateObject().Select(x => x.Name).ToArray();
+                    metadata.Authors = [.. contributorsElement.EnumerateObject().Select(x => x.Name)];
                 }
 
                 if (metadataElement.TryGetProperty("contact", out var contactElement))
@@ -282,11 +284,13 @@ public static class AssetModHelper
             if (modInfo.TryGetProperty("authorList", out var authorsElement)
              && authorsElement.ValueKind == JsonValueKind.Array)
             {
-                metadata.Authors = authorsElement
-                                  .EnumerateArray()
-                                  .Select(x => x.GetString() ?? "")
-                                  .Where(x => !string.IsNullOrEmpty(x))
-                                  .ToArray();
+                metadata.Authors =
+                [
+                    .. authorsElement
+                      .EnumerateArray()
+                      .Select(x => x.GetString() ?? "")
+                      .Where(x => !string.IsNullOrEmpty(x))
+                ];
             }
 
             return metadata;

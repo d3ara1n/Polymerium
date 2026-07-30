@@ -13,7 +13,7 @@ public partial class PackDataModel : ModelBase
     public PackDataModel(PackData pack)
     {
         _pack = pack;
-        ExcludedTags = new(_pack.ExcludedTags, x => x, x => x);
+        ExcludedTags = [with(_pack.ExcludedTags, x => x, x => x)];
         OfflineMode = pack.OfflineMode;
         IncludingSource = pack.IncludingSource;
         IncludingTags = pack.IncludingTags;

@@ -279,7 +279,7 @@ public partial class InstanceDependencyGraphModalModel(
                 outgoing[parentKey] = outgoing.GetValueOrDefault(parentKey) + 1;
                 if (!incoming.TryGetValue(depKey, out var list))
                 {
-                    incoming[depKey] = list = new();
+                    incoming[depKey] = list = [];
                 }
 
                 if (!list.Contains(parentKey))

@@ -44,7 +44,7 @@ public partial class InstancePackageModel(Profile.Rice.Entry entry, bool canUpda
     [ObservableProperty]
     public partial InstancePackageInfoModel? Info { get; set; }
 
-    public MappingCollection<string, string> Tags { get; } = new(entry.Tags, x => x, x => x);
+    public MappingCollection<string, string> Tags { get; } = [with(entry.Tags, x => x, x => x)];
 
     #endregion
 }

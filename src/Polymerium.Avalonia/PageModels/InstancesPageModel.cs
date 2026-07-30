@@ -54,7 +54,7 @@ public partial class InstancesPageModel(
     {
         get;
         private set => SetProperty(ref field, value);
-    } = new(new());
+    } = [with([])];
 
     #endregion
 
@@ -76,7 +76,7 @@ public partial class InstancesPageModel(
         SetupFilters();
 
         Observable
-           .CombineLatest(_filters.Select(f => f.WhenValueChanged(x => x.IsActive)).ToArray())
+           .CombineLatest([.. _filters.Select(f => f.WhenValueChanged(x => x.IsActive))])
            .Select(xs => xs.Any(x => x))
            .Subscribe(x => AnyFilterActive = x)
            .DisposeWith(_disposables);
@@ -290,7 +290,7 @@ public partial class InstancesPageModel(
                 card.Tags.Add(added);
             }
 
-            persistenceService.SetInstanceTags(key, updated.ToArray());
+            persistenceService.SetInstanceTags(key, [.. updated]);
         }
     }
 

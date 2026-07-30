@@ -51,6 +51,168 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string Migrate_Title {
+            get {
+                return ResourceManager.GetString("Migrate_Title", resourceCulture);
+            }
+        }
+        
+        public static string Migrate_DirectoryMissing {
+            get {
+                return ResourceManager.GetString("Migrate_DirectoryMissing", resourceCulture);
+            }
+        }
+        
+        public static string Migrate_ScanFailed {
+            get {
+                return ResourceManager.GetString("Migrate_ScanFailed", resourceCulture);
+            }
+        }
+        
+        public static string Migrate_Preparing {
+            get {
+                return ResourceManager.GetString("Migrate_Preparing", resourceCulture);
+            }
+        }
+        
+        public static string Migrate_Identifying {
+            get {
+                return ResourceManager.GetString("Migrate_Identifying", resourceCulture);
+            }
+        }
+        
+        public static string Migrate_Failed {
+            get {
+                return ResourceManager.GetString("Migrate_Failed", resourceCulture);
+            }
+        }
+        
+        public static string Migrate_SummarySuccess {
+            get {
+                return ResourceManager.GetString("Migrate_SummarySuccess", resourceCulture);
+            }
+        }
+        
+        public static string Migrate_SummaryPartial {
+            get {
+                return ResourceManager.GetString("Migrate_SummaryPartial", resourceCulture);
+            }
+        }
+        
+        public static string MigrateModal_Title {
+            get {
+                return ResourceManager.GetString("MigrateModal_Title", resourceCulture);
+            }
+        }
+        
+        public static string MigrateModal_DirectoryWatermark {
+            get {
+                return ResourceManager.GetString("MigrateModal_DirectoryWatermark", resourceCulture);
+            }
+        }
+        
+        public static string MigrateModal_Scan {
+            get {
+                return ResourceManager.GetString("MigrateModal_Scan", resourceCulture);
+            }
+        }
+        
+        public static string MigrateModal_MigrateWithCount {
+            get {
+                return ResourceManager.GetString("MigrateModal_MigrateWithCount", resourceCulture);
+            }
+        }
+        
+        public static string MigrateModal_BackButtonText {
+            get {
+                return ResourceManager.GetString("MigrateModal_BackButtonText", resourceCulture);
+            }
+        }
+        
+        public static string MigrateModal_SelectAll {
+            get {
+                return ResourceManager.GetString("MigrateModal_SelectAll", resourceCulture);
+            }
+        }
+        
+        public static string MigrateModal_SelectedCountFormat {
+            get {
+                return ResourceManager.GetString("MigrateModal_SelectedCountFormat", resourceCulture);
+            }
+        }
+        
+        public static string SettingsPage_MigrateFromLauncherLabelText {
+            get {
+                return ResourceManager.GetString("SettingsPage_MigrateFromLauncherLabelText", resourceCulture);
+            }
+        }
+        
+        public static string SettingsPage_MigrateFromLauncherDescription {
+            get {
+                return ResourceManager.GetString("SettingsPage_MigrateFromLauncherDescription", resourceCulture);
+            }
+        }
+        
+        public static string Migrate_CancelButton {
+            get {
+                return ResourceManager.GetString("Migrate_CancelButton", resourceCulture);
+            }
+        }
+        
+        public static string MigrateModal_Description {
+            get {
+                return ResourceManager.GetString("MigrateModal_Description", resourceCulture);
+            }
+        }
+        
+        public static string LauncherKind_MultiMc {
+            get {
+                return ResourceManager.GetString("LauncherKind_MultiMc", resourceCulture);
+            }
+        }
+        
+        public static string LauncherKind_PrismLauncher {
+            get {
+                return ResourceManager.GetString("LauncherKind_PrismLauncher", resourceCulture);
+            }
+        }
+        
+        public static string LauncherKind_CurseForgeApp {
+            get {
+                return ResourceManager.GetString("LauncherKind_CurseForgeApp", resourceCulture);
+            }
+        }
+        
+        public static string LauncherKind_AtLauncher {
+            get {
+                return ResourceManager.GetString("LauncherKind_AtLauncher", resourceCulture);
+            }
+        }
+        
+        public static string LauncherKind_ModrinthApp {
+            get {
+                return ResourceManager.GetString("LauncherKind_ModrinthApp", resourceCulture);
+            }
+        }
+        
+        public static string CorruptReason_PackFileMissing {
+            get {
+                return ResourceManager.GetString("CorruptReason_PackFileMissing", resourceCulture);
+            }
+        }
+        
+        public static string CorruptReason_PackFileMalformed {
+            get {
+                return ResourceManager.GetString("CorruptReason_PackFileMalformed", resourceCulture);
+            }
+        }
+        
+        public static string CorruptReason_MinecraftComponentMissing {
+            get {
+                return ResourceManager.GetString("CorruptReason_MinecraftComponentMissing", resourceCulture);
+            }
+        }
+        
         public static string MainWindow_MarketplaceButtonText {
             get {
                 return ResourceManager.GetString("MainWindow_MarketplaceButtonText", resourceCulture);
@@ -2802,126 +2964,6 @@ namespace Polymerium.Avalonia.Properties {
         public static string SettingsPage_GarbageCollectDescription {
             get {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectDescription", resourceCulture);
-            }
-        }
-        public static string Migrate_Title {
-            get {
-                return ResourceManager.GetString("Migrate_Title", resourceCulture);
-            }
-        }
-        public static string Migrate_DirectoryMissing {
-            get {
-                return ResourceManager.GetString("Migrate_DirectoryMissing", resourceCulture);
-            }
-        }
-        public static string Migrate_ScanFailed {
-            get {
-                return ResourceManager.GetString("Migrate_ScanFailed", resourceCulture);
-            }
-        }
-        public static string Migrate_Preparing {
-            get {
-                return ResourceManager.GetString("Migrate_Preparing", resourceCulture);
-            }
-        }
-        public static string Migrate_Identifying {
-            get {
-                return ResourceManager.GetString("Migrate_Identifying", resourceCulture);
-            }
-        }
-        public static string Migrate_Failed {
-            get {
-                return ResourceManager.GetString("Migrate_Failed", resourceCulture);
-            }
-        }
-        public static string Migrate_SummarySuccess {
-            get {
-                return ResourceManager.GetString("Migrate_SummarySuccess", resourceCulture);
-            }
-        }
-        public static string Migrate_SummaryPartial {
-            get {
-                return ResourceManager.GetString("Migrate_SummaryPartial", resourceCulture);
-            }
-        }
-        public static string MigrateModal_Title {
-            get {
-                return ResourceManager.GetString("MigrateModal_Title", resourceCulture);
-            }
-        }
-        public static string MigrateModal_DirectoryWatermark {
-            get {
-                return ResourceManager.GetString("MigrateModal_DirectoryWatermark", resourceCulture);
-            }
-        }
-        public static string MigrateModal_Scan {
-            get {
-                return ResourceManager.GetString("MigrateModal_Scan", resourceCulture);
-            }
-        }
-        public static string MigrateModal_MigrateWithCount {
-            get {
-                return ResourceManager.GetString("MigrateModal_MigrateWithCount", resourceCulture);
-            }
-        }
-        public static string MigrateModal_BackButtonText {
-            get {
-                return ResourceManager.GetString("MigrateModal_BackButtonText", resourceCulture);
-            }
-        }
-        public static string MigrateModal_SelectAll {
-            get {
-                return ResourceManager.GetString("MigrateModal_SelectAll", resourceCulture);
-            }
-        }
-        public static string MigrateModal_SelectedCountFormat {
-            get {
-                return ResourceManager.GetString("MigrateModal_SelectedCountFormat", resourceCulture);
-            }
-        }
-        public static string SettingsPage_MigrateFromLauncherLabelText {
-            get {
-                return ResourceManager.GetString("SettingsPage_MigrateFromLauncherLabelText", resourceCulture);
-            }
-        }
-        public static string SettingsPage_MigrateFromLauncherDescription {
-            get {
-                return ResourceManager.GetString("SettingsPage_MigrateFromLauncherDescription", resourceCulture);
-            }
-        }
-        public static string Migrate_CancelButton {
-            get {
-                return ResourceManager.GetString("Migrate_CancelButton", resourceCulture);
-            }
-        }
-        public static string MigrateModal_Description {
-            get {
-                return ResourceManager.GetString("MigrateModal_Description", resourceCulture);
-            }
-        }
-        public static string LauncherKind_MultiMc {
-            get {
-                return ResourceManager.GetString("LauncherKind_MultiMc", resourceCulture);
-            }
-        }
-        public static string LauncherKind_PrismLauncher {
-            get {
-                return ResourceManager.GetString("LauncherKind_PrismLauncher", resourceCulture);
-            }
-        }
-        public static string CorruptReason_PackFileMissing {
-            get {
-                return ResourceManager.GetString("CorruptReason_PackFileMissing", resourceCulture);
-            }
-        }
-        public static string CorruptReason_PackFileMalformed {
-            get {
-                return ResourceManager.GetString("CorruptReason_PackFileMalformed", resourceCulture);
-            }
-        }
-        public static string CorruptReason_MinecraftComponentMissing {
-            get {
-                return ResourceManager.GetString("CorruptReason_MinecraftComponentMissing", resourceCulture);
             }
         }
         

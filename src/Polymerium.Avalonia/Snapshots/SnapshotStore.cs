@@ -52,7 +52,9 @@ public class SnapshotStore : ISnapshotStore
     }
 
     public IReadOnlyList<SnapshotInfo> GetSnapshots() =>
-        _freeSql.Select<SnapshotRecord>().OrderByDescending(x => x.CreatedAt).ToList().Select(FromRecord).ToList();
+    [
+        .. _freeSql.Select<SnapshotRecord>().OrderByDescending(x => x.CreatedAt).ToList().Select(FromRecord)
+    ];
 
     public SnapshotInfo? GetSnapshot(object id)
     {
@@ -63,7 +65,7 @@ public class SnapshotStore : ISnapshotStore
     public IReadOnlyList<ReferenceInfo> GetReferences(object snapshotId)
     {
         var guid = ParseId(snapshotId);
-        return _freeSql.Select<ReferenceRecord>().Where(x => x.SnapshotId == guid).ToList().Select(FromRecord).ToList();
+        return [.. _freeSql.Select<ReferenceRecord>().Where(x => x.SnapshotId == guid).ToList().Select(FromRecord)];
     }
 
     public void DeleteSnapshot(object id)

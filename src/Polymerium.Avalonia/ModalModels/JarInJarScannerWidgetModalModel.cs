@@ -76,7 +76,7 @@ public partial class JarInJarScannerWidgetModalModel(
         var modsDir = Path.Combine(PathDef.Default.DirectoryOfBuild(_key), "mods");
         if (!Directory.Exists(modsDir))
         {
-            return (0, [], new(StringComparer.OrdinalIgnoreCase));
+            return (0, [], [with(StringComparer.OrdinalIgnoreCase)]);
         }
 
         var files = Directory.GetFiles(modsDir, "*.jar", SearchOption.TopDirectoryOnly);

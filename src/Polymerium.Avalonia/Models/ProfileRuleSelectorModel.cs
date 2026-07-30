@@ -27,7 +27,7 @@ public partial class ProfileRuleSelectorModel(Profile.Rice.Rule.RuleSelector own
                   or Profile.Rice.Rule.RuleSelector.SelectorType.Not)
         {
             owner.Children ??= [];
-            Children ??= new(owner.Children, x => new(x), x => x.Owner);
+            Children ??= [with(owner.Children, x => new(x), x => x.Owner)];
         }
         else
         {

@@ -436,7 +436,7 @@ public partial class InstanceFilesPageModel(
     {
         // 加载数据包列表
         var dataPacks = AssetWorldHelper.ParseDataPacks(world.WorldPath, world.Metadata);
-        SelectedWorldDataPacks = new(dataPacks);
+        SelectedWorldDataPacks = [.. dataPacks];
 
         // 加载玩家列表（只包含在账号管理中的玩家）
         var accounts = persistenceService
@@ -453,7 +453,7 @@ public partial class InstanceFilesPageModel(
                       .ToList();
 
         var players = AssetWorldHelper.ParsePlayers(world.WorldPath, accounts);
-        SelectedWorldPlayers = new(players);
+        SelectedWorldPlayers = [.. players];
 
         // 如果有玩家，默认选中第一个
         if (SelectedWorldPlayers.Count > 0)
@@ -472,7 +472,7 @@ public partial class InstanceFilesPageModel(
     {
         // 加载玩家统计数据
         var stats = player.Stats.GetDisplayStats();
-        SelectedPlayerStats = new(stats);
+        SelectedPlayerStats = [.. stats];
     }
 
     #endregion

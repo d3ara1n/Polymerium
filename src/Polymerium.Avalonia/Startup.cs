@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
 using NeoSmart.Caching.Sqlite;
 using Polly;
+using Polymerium.Avalonia.Adapters;
 using Polymerium.Avalonia.Controls;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
@@ -177,6 +178,9 @@ public static class Startup
            .AddTransient<IProfileImporter, MultiMcImporter>()
            .AddTransient<IProfileImporter, PackwizImporter>()
            .AddTransient<ILauncherAdapter, MultiMcLauncherAdapter>()
+           .AddTransient<ILauncherAdapter, CurseForgeLauncherAdapter>()
+           .AddTransient<ILauncherAdapter, AtLauncherAdapter>()
+           .AddTransient<ILauncherAdapter, ModrinthLauncherAdapter>()
            .AddTransient<IProfileExporter, TridentExporter>()
            .AddTransient<IProfileExporter, CurseForgeExporter>()
            .AddTransient<IProfileExporter, ModrinthExporter>()

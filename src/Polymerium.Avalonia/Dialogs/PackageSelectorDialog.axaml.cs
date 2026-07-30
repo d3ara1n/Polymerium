@@ -131,14 +131,12 @@ public partial class PackageSelectorDialog : Dialog
         _items.Clear();
         _items.AddOrUpdate(items);
         _totalCount = items.Count;
-        Types = items.Where(x => x.Kind is not null).Select(x => x.Kind!.Value).Distinct().OrderBy(x => x).ToList();
-        Authors = items
-                 .Where(x => !string.IsNullOrEmpty(x.Author))
-                 .Select(x => x.Author!)
-                 .Distinct()
-                 .OrderBy(x => x)
-                 .ToList();
-        Tags = items.SelectMany(x => x.Tags).Distinct().OrderBy(x => x).ToList();
+        Types = [.. items.Where(x => x.Kind is not null).Select(x => x.Kind!.Value).Distinct().OrderBy(x => x)];
+        Authors =
+        [
+            .. items.Where(x => !string.IsNullOrEmpty(x.Author)).Select(x => x.Author!).Distinct().OrderBy(x => x)
+        ];
+        Tags = [.. items.SelectMany(x => x.Tags).Distinct().OrderBy(x => x)];
         RecomputeSelection();
     }
 

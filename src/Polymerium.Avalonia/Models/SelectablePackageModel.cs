@@ -25,7 +25,7 @@ public partial class SelectablePackageModel(InstancePackageModel source, Package
 
     public Bitmap? Thumbnail { get; } = source.Info?.Thumbnail;
 
-    public IReadOnlyList<string> Tags { get; } = source.Tags.ToList();
+    public IReadOnlyList<string> Tags { get; } = [.. source.Tags];
 
     [ObservableProperty]
     public partial bool IsSelected { get; set; }

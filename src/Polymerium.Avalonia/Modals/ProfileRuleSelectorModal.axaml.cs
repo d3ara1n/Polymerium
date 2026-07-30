@@ -55,7 +55,7 @@ public partial class ProfileRuleSelectorModal : Modal
     [RelayCommand]
     private async Task PickTagAsync()
     {
-        var dialog = new TagPickerDialog { ExistingTags = Packages.SelectMany(x => x.Tags).Distinct().ToList() };
+        var dialog = new TagPickerDialog { ExistingTags = [.. Packages.SelectMany(x => x.Tags).Distinct()] };
         if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is string tag)
         {
             Selector.Tag = tag;
