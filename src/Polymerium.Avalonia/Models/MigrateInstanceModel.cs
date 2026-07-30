@@ -1,10 +1,12 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using TridentCore.Abstractions.Adapters;
 
 namespace Polymerium.Avalonia.Models;
 
-public class MigrateInstanceModel(LauncherInstance instance)
+public partial class MigrateInstanceModel(LauncherInstance instance) : ObservableObject
 {
     public LauncherInstance Instance { get; } = instance;
 
-    public bool IsSelected { get; set; }
+    [ObservableProperty]
+    public partial bool IsSelected { get; set; }
 }
