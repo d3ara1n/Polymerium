@@ -42,9 +42,6 @@
     <data name="Migrate_Identifying" xml:space="preserve">
         <value>正在识别模组...</value>
     </data>
-    <data name="Migrate_Cancelled" xml:space="preserve">
-        <value>迁移已取消</value>
-    </data>
     <data name="Migrate_Failed" xml:space="preserve">
         <value>迁移失败</value>
     </data>
@@ -77,6 +74,21 @@
     </data>
     <data name="MigrateModal_Description" xml:space="preserve">
         <value>选择启动器及其数据目录，然后扫描可导入的实例。</value>
+    </data>
+    <data name="LauncherKind_MultiMc" xml:space="preserve">
+        <value>MultiMC</value>
+    </data>
+    <data name="LauncherKind_PrismLauncher" xml:space="preserve">
+        <value>Prism Launcher</value>
+    </data>
+    <data name="CorruptReason_PackFileMissing" xml:space="preserve">
+        <value>配置文件缺失</value>
+    </data>
+    <data name="CorruptReason_PackFileMalformed" xml:space="preserve">
+        <value>配置文件已损坏</value>
+    </data>
+    <data name="CorruptReason_MinecraftComponentMissing" xml:space="preserve">
+        <value>配置文件中缺少 Minecraft 版本</value>
     </data>
     <data name="MainWindow_UpdateFoundNotificationTitle" xml:space="preserve">
         <value>发现新版本</value>

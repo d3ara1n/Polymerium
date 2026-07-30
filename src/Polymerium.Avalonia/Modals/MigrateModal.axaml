@@ -42,20 +42,20 @@
                     <DockPanel VerticalSpacing="12">
                         <husk:ModalActionPanel DockPanel.Dock="Bottom">
                             <Button
-                                Command="{Binding BackCommand}">
+                                Command="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext).BackCommand}">
                                 <fi:SymbolIcon Symbol="ArrowHookUpLeft" />
                             </Button>
                             <Button
                                 IsDefault="True"
                                 Classes="Primary"
-                                Command="{Binding MigrateCommand}"
+                                Command="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext).MigrateCommand}"
                                 CommandParameter="{Binding $parent[app:MigrateModal]}"
                                 Content="{x:Static lang:Resources.MigrateModal_Migrate}" />
                         </husk:ModalActionPanel>
                         <ScrollViewer Padding="0">
                             <ItemsControl ItemsSource="{Binding Instances}">
                                 <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="app:MigrateInstanceRow">
+                                    <DataTemplate x:DataType="app:MigrateInstanceModel">
                                         <Grid
                                             Margin="0,4"
                                             ColumnDefinitions="Auto,*,Auto"
@@ -64,33 +64,33 @@
                                                 Grid.Column="0"
                                                 VerticalAlignment="Center"
                                                 IsChecked="{Binding IsSelected}"
-                                                IsEnabled="{Binding !IsCorrupt}" />
+                                                IsEnabled="{Binding Instance.CorruptReason, Converter={x:Static ObjectConverters.IsNull}}" />
                                             <StackPanel Grid.Column="1">
-                                                <TextBlock Text="{Binding Name}" />
+                                                <TextBlock Text="{Binding Instance.Name}" />
                                                 <StackPanel
                                                     Orientation="Horizontal"
                                                     Opacity="0.6"
                                                     Spacing="6">
                                                     <TextBlock
                                                         FontSize="12"
-                                                        Text="{Binding MinecraftVersion}" />
+                                                        Text="{Binding Instance.MinecraftVersion}" />
                                                     <TextBlock
                                                         FontSize="12"
-                                                        IsVisible="{Binding HasLoader}"
+                                                        IsVisible="{Binding Instance.Loader, Converter={x:Static ObjectConverters.IsNotNull}}"
                                                         Text="·" />
                                                     <TextBlock
                                                         FontSize="12"
-                                                        IsVisible="{Binding HasLoader}"
-                                                        Text="{Binding LoaderDisplay}" />
+                                                        IsVisible="{Binding Instance.Loader, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                                        Text="{Binding Instance.Loader, Converter={x:Static app:InternalConverters.LoaderToDisplayLabel}}" />
                                                 </StackPanel>
                                             </StackPanel>
                                             <TextBlock
                                                 Grid.Column="2"
                                                 VerticalAlignment="Center"
                                                 FontSize="12"
-                                                IsVisible="{Binding IsCorrupt}"
+                                                IsVisible="{Binding Instance.CorruptReason, Converter={x:Static ObjectConverters.IsNotNull}}"
                                                 Opacity="0.6"
-                                                Text="{Binding CorruptReason}" />
+                                                Text="{Binding Instance.CorruptReason, Converter={x:Static app:LocalizedEnumConverters.LocalizedCorruptReason}}" />
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -109,7 +109,13 @@
                     <ComboBox
                         HorizontalAlignment="Stretch"
                         ItemsSource="{Binding Kinds}"
-                        SelectedItem="{Binding SelectedKind}" />
+                        SelectedItem="{Binding SelectedKind}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedLauncherKind}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                         <TextBox
                             Grid.Column="0"

@@ -6,6 +6,7 @@ using Avalonia.Media;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Converters;
 using Polymerium.Avalonia.Models;
+using TridentCore.Abstractions.Utilities;
 
 namespace Polymerium.Avalonia.Converters;
 
@@ -188,4 +189,7 @@ public static class InternalConverters
         var index = Math.Abs(name.GetHashCode()) % palette.Length;
         return new SolidColorBrush(palette[index]);
     });
+
+    public static IValueConverter LoaderToDisplayLabel { get; } = new RelayConverter(v =>
+        v is string lurl ? LoaderHelper.ToDisplayLabel(lurl) : v);
 }

@@ -51,11 +51,10 @@ public partial class MigrateModalModel(
 
     protected override Task OnDeinitializeAsync()
     {
-        // Only the coarse-scan token is owned here; the migrate task owns its own CTS and outlives this
-        // modal by design, so it must NOT be cancelled on deinitialize.
+        // NOTE: only the scan token is owned here, and it is disposed by the scan task itself (it
+        //  captures the CTS locally), so deinitialize just signals cancel. The migrate task owns its
+        //  own CTS and outlives this modal by design — it must not be cancelled here.
         _scanCts?.Cancel();
-        _scanCts?.Dispose();
-        _scanCts = null;
         return Task.CompletedTask;
     }
 
@@ -90,17 +89,16 @@ public partial class MigrateModalModel(
         }
 
         _scanCts?.Cancel();
-        _scanCts = new();
+        var cts = new CancellationTokenSource();
+        _scanCts = cts;
         IsScanning = true;
         Result = null;
         try
         {
-            var instances = await migratorAgent.ScanAsync(SelectedKind, DataDirectory!, _scanCts.Token);
+            var instances = await migratorAgent.ScanAsync(SelectedKind, DataDirectory!, cts.Token);
             Result = new MigrateScanResult
             {
-                Instances = [..instances.Select(i => new MigrateInstanceRow(i))],
-                MigrateCommand = MigrateCommand,
-                BackCommand = BackCommand
+                Instances = [..instances.Select(i => new MigrateInstanceModel(i))]
             };
         }
         catch (OperationCanceledException)
@@ -112,6 +110,7 @@ public partial class MigrateModalModel(
         }
         finally
         {
+            cts.Dispose();
             IsScanning = false;
         }
     }
@@ -131,8 +130,8 @@ public partial class MigrateModalModel(
         var total = selected.Count;
         using var cts = new CancellationTokenSource();
         var handle = notificationService.PopProgress(Resources.Migrate_Preparing, Resources.Migrate_Title);
-        // Cancel-only action: cancels the migrate CTS but keeps the notification visible so the user
-        // sees progress until the summary lands. handle.Dispose happens in finally below.
+        // NOTE: cancel-only action — it cancels the migrate CTS but keeps the notification visible so
+        //  the user sees progress until the summary lands.
         handle.AddAction(new GrowlAction(Resources.Migrate_CancelButton, new RelayCommand(() => cts.Cancel())));
         self.Dismiss();
 
@@ -177,7 +176,6 @@ public partial class MigrateModalModel(
         }
         catch (OperationCanceledException)
         {
-            notificationService.PopMessage(Resources.Migrate_Cancelled, Resources.Migrate_Title);
         }
         catch (Exception ex)
         {
