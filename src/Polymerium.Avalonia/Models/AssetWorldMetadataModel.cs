@@ -33,5 +33,5 @@ public class AssetWorldMetadataModel
     public int ThunderTime { get; set; }
 
     // 数据包信息
-    public HashSet<string> EnabledDataPacks { get; set; } = new();
+    public HashSet<string> EnabledDataPacks { get; set; } = [];
 }

@@ -90,6 +90,15 @@
     <data name="LauncherKind_PrismLauncher" xml:space="preserve">
         <value>Prism Launcher</value>
     </data>
+    <data name="LauncherKind_CurseForgeApp" xml:space="preserve">
+        <value>CurseForge App</value>
+    </data>
+    <data name="LauncherKind_AtLauncher" xml:space="preserve">
+        <value>ATLauncher</value>
+    </data>
+    <data name="LauncherKind_ModrinthApp" xml:space="preserve">
+        <value>Modrinth App</value>
+    </data>
     <data name="CorruptReason_PackFileMissing" xml:space="preserve">
         <value>配置文件缺失</value>
     </data>

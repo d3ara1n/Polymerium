@@ -91,7 +91,7 @@ public class BlurBackdrop : ContentControl
     ///     NuGet 宿主控件无法挂 <see cref="ExcludeFromCaptureProperty" />，只能在此按名登记；待 BlurBackdrop
     ///     并入上游 Huskui 后改用附加属性，此集合可清空。
     /// </summary>
-    public static HashSet<string> ExcludedRoots { get; } = new(StringComparer.Ordinal);
+    public static HashSet<string> ExcludedRoots { get; } = [with(StringComparer.Ordinal)];
 
     public double BlurRadius
     {

@@ -100,6 +100,9 @@ public static class LocalizedEnumConverters
             {
                 LauncherKind.MultiMc => Resources.LauncherKind_MultiMc,
                 LauncherKind.PrismLauncher => Resources.LauncherKind_PrismLauncher,
+                LauncherKind.CurseForgeApp => Resources.LauncherKind_CurseForgeApp,
+                LauncherKind.AtLauncher => Resources.LauncherKind_AtLauncher,
+                LauncherKind.ModrinthApp => Resources.LauncherKind_ModrinthApp,
                 _ => kind
             };
         }

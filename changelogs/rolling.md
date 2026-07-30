@@ -2,7 +2,7 @@
 
 ### ✨ Highlights ✨
 
--
+- Introduce migration of instances from third-party launchers
 
 ### Fixed
 
@@ -13,7 +13,7 @@
 
 ### Added
 
--
+- Introduce migration of instances from third-party launchers
 
 ### Changed
 

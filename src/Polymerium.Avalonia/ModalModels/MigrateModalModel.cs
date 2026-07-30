@@ -62,7 +62,7 @@ public partial class MigrateModalModel(
 
     partial void OnAllSelectedChanged(bool? value)
     {
-        if (value is not bool v || Result is null)
+        if (value is not { } v || Result is null)
         {
             return;
         }
@@ -115,14 +115,14 @@ public partial class MigrateModalModel(
     private async Task BrowseAsync()
     {
         var top = TopLevelHelper.GetTopLevel();
-        if (top.StorageProvider.CanOpen != true)
+        if (!top.StorageProvider.CanOpen)
         {
             return;
         }
 
         var folders = await top.StorageProvider
-                               .OpenFolderPickerAsync(new FolderPickerOpenOptions
-                               {
+                               .OpenFolderPickerAsync(new()
+                                {
                                    Title = Resources.MigrateModal_Title
                                });
         var path = folders.FirstOrDefault()?.TryGetLocalPath();
@@ -148,7 +148,7 @@ public partial class MigrateModalModel(
             var instances = await migratorAgent.ScanAsync(SelectedLauncher.Kind,
                                                           DataDirectory!,
                                                           CancellationToken.None);
-            Result = new MigrateScanResult
+            Result = new()
             {
                 Instances = [..instances.Select(i => new MigrateInstanceModel(i)
                 {
@@ -191,7 +191,7 @@ public partial class MigrateModalModel(
         var handle = notificationService.PopProgress(Resources.Migrate_Preparing, Resources.Migrate_Title);
         // NOTE: cancel-only action — it cancels the migrate CTS but keeps the notification visible so
         //  the user sees progress until the summary lands.
-        handle.AddAction(new GrowlAction(Resources.Migrate_CancelButton, new RelayCommand(() => cts.Cancel())));
+        handle.AddAction(new(Resources.Migrate_CancelButton, new RelayCommand(cts.Cancel)));
         self.Dismiss();
 
         var progress = new Progress<MigrateProgress>(p =>

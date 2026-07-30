@@ -43,7 +43,7 @@ public class ScrapService : ILifetimeService
     {
         if (!_buffers.TryGetValue(e.Key, out var buffer))
         {
-            buffer = new(CAPACITY);
+            buffer = [with(CAPACITY)];
             _buffers.Add(e.Key, buffer);
         }
 

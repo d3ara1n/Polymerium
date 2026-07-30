@@ -397,7 +397,9 @@ public class PersistenceService(IFreeSql freeSql)
     }
 
     public string[] GetInstanceTags(string key) =>
-        freeSql.Select<InstanceTag>().Where(x => x.Key == key).ToList(x => x.Tag).ToArray();
+    [
+        .. freeSql.Select<InstanceTag>().Where(x => x.Key == key).ToList(x => x.Tag)
+    ];
 
     public void SetInstanceTags(string key, string[] tags)
     {
@@ -517,7 +519,7 @@ public class PersistenceService(IFreeSql freeSql)
                       .ToList();
 
         totalCount = filtered.Count;
-        return filtered.Skip((int)(pageIndex * pageSize)).Take((int)pageSize).ToList();
+        return [.. filtered.Skip((int)(pageIndex * pageSize)).Take((int)pageSize)];
     }
 
     public static string? NormalizeFavoriteNamespace(string ns) => string.IsNullOrEmpty(ns) ? null : ns;

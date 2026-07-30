@@ -170,7 +170,7 @@ public partial class InstanceSetupPageModel(
             var bySource = presentGroups.ToDictionary(g => g.Source!, g => g);
             var desiredKeys = bySource.Keys.Select(s => new PackageListKey.Header(s)).ToHashSet();
             var currentKeys = _flat.Keys.OfType<PackageListKey.Header>().ToHashSet();
-            _flat.Remove(currentKeys.Except(desiredKeys).Cast<PackageListKey>().ToList());
+            _flat.Remove([.. currentKeys.Except(desiredKeys).Cast<PackageListKey>()]);
             foreach (var key in desiredKeys.Except(currentKeys))
             {
                 _flat.AddOrUpdate(new PackageListItemBase.Header { Key = key, Group = bySource[key.Source] });
@@ -505,7 +505,7 @@ public partial class InstanceSetupPageModel(
             TriggerPackageMerge();
             TriggerReferenceRefresh();
             // 只需要一次，因为 Profile.Setup.Rules 总是同一个
-            Rules ??= new(profile.Setup.Rules, x => new(x), x => x.Owner);
+            Rules ??= [with(profile.Setup.Rules, x => new(x), x => x.Owner)];
         });
 
         UpdatingPending = true;
@@ -770,10 +770,7 @@ public partial class InstanceSetupPageModel(
             overlayService.PopModal(new ProfileRulesModal
             {
                 Rules = Rules,
-                Packages = _flat
-                          .Items.OfType<PackageListItemBase.Entry>()
-                          .Select(i => i.Package)
-                          .ToList(),
+                Packages = [.. _flat.Items.OfType<PackageListItemBase.Entry>().Select(i => i.Package)],
                 OverlayService = overlayService
             });
         }
