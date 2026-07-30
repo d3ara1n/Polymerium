@@ -2804,6 +2804,91 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("SettingsPage_GarbageCollectDescription", resourceCulture);
             }
         }
+        public static string Migrate_Title {
+            get {
+                return ResourceManager.GetString("Migrate_Title", resourceCulture);
+            }
+        }
+        public static string Migrate_DirectoryMissing {
+            get {
+                return ResourceManager.GetString("Migrate_DirectoryMissing", resourceCulture);
+            }
+        }
+        public static string Migrate_ScanFailed {
+            get {
+                return ResourceManager.GetString("Migrate_ScanFailed", resourceCulture);
+            }
+        }
+        public static string Migrate_Preparing {
+            get {
+                return ResourceManager.GetString("Migrate_Preparing", resourceCulture);
+            }
+        }
+        public static string Migrate_Identifying {
+            get {
+                return ResourceManager.GetString("Migrate_Identifying", resourceCulture);
+            }
+        }
+        public static string Migrate_Cancelled {
+            get {
+                return ResourceManager.GetString("Migrate_Cancelled", resourceCulture);
+            }
+        }
+        public static string Migrate_Failed {
+            get {
+                return ResourceManager.GetString("Migrate_Failed", resourceCulture);
+            }
+        }
+        public static string Migrate_SummarySuccess {
+            get {
+                return ResourceManager.GetString("Migrate_SummarySuccess", resourceCulture);
+            }
+        }
+        public static string Migrate_SummaryPartial {
+            get {
+                return ResourceManager.GetString("Migrate_SummaryPartial", resourceCulture);
+            }
+        }
+        public static string MigrateModal_Title {
+            get {
+                return ResourceManager.GetString("MigrateModal_Title", resourceCulture);
+            }
+        }
+        public static string MigrateModal_DirectoryWatermark {
+            get {
+                return ResourceManager.GetString("MigrateModal_DirectoryWatermark", resourceCulture);
+            }
+        }
+        public static string MigrateModal_Scan {
+            get {
+                return ResourceManager.GetString("MigrateModal_Scan", resourceCulture);
+            }
+        }
+        public static string MigrateModal_Migrate {
+            get {
+                return ResourceManager.GetString("MigrateModal_Migrate", resourceCulture);
+            }
+        }
+        public static string SettingsPage_MigrateFromLauncherLabelText {
+            get {
+                return ResourceManager.GetString("SettingsPage_MigrateFromLauncherLabelText", resourceCulture);
+            }
+        }
+        public static string SettingsPage_MigrateFromLauncherDescription {
+            get {
+                return ResourceManager.GetString("SettingsPage_MigrateFromLauncherDescription", resourceCulture);
+            }
+        }
+        public static string Migrate_CancelButton {
+            get {
+                return ResourceManager.GetString("Migrate_CancelButton", resourceCulture);
+            }
+        }
+        public static string MigrateModal_Description {
+            get {
+                return ResourceManager.GetString("MigrateModal_Description", resourceCulture);
+            }
+        }
         
         public static string SettingsPage_ClearStatisticsDescription {
             get {

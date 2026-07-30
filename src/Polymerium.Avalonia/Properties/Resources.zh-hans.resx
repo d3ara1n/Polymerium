@@ -27,6 +27,57 @@
     <data name="MainWindow_UpdateFoundNotificationMessage" xml:space="preserve">
         <value>新版本 {0} 已可用。</value>
     </data>
+    <data name="Migrate_Title" xml:space="preserve">
+        <value>迁移</value>
+    </data>
+    <data name="Migrate_DirectoryMissing" xml:space="preserve">
+        <value>目录不存在</value>
+    </data>
+    <data name="Migrate_ScanFailed" xml:space="preserve">
+        <value>扫描失败</value>
+    </data>
+    <data name="Migrate_Preparing" xml:space="preserve">
+        <value>正在准备迁移...</value>
+    </data>
+    <data name="Migrate_Identifying" xml:space="preserve">
+        <value>正在识别模组...</value>
+    </data>
+    <data name="Migrate_Cancelled" xml:space="preserve">
+        <value>迁移已取消</value>
+    </data>
+    <data name="Migrate_Failed" xml:space="preserve">
+        <value>迁移失败</value>
+    </data>
+    <data name="Migrate_SummarySuccess" xml:space="preserve">
+        <value>从启动器迁移了 {0} 个实例。</value>
+    </data>
+    <data name="Migrate_SummaryPartial" xml:space="preserve">
+        <value>从启动器迁移了 {0}/{1} 个实例。{2}</value>
+    </data>
+    <data name="MigrateModal_Title" xml:space="preserve">
+        <value>从启动器迁移</value>
+    </data>
+    <data name="MigrateModal_DirectoryWatermark" xml:space="preserve">
+        <value>启动器数据目录</value>
+    </data>
+    <data name="MigrateModal_Scan" xml:space="preserve">
+        <value>扫描</value>
+    </data>
+    <data name="MigrateModal_Migrate" xml:space="preserve">
+        <value>迁移</value>
+    </data>
+    <data name="SettingsPage_MigrateFromLauncherLabelText" xml:space="preserve">
+        <value>从启动器迁移</value>
+    </data>
+    <data name="SettingsPage_MigrateFromLauncherDescription" xml:space="preserve">
+        <value>从其他启动器的数据目录导入实例。</value>
+    </data>
+    <data name="Migrate_CancelButton" xml:space="preserve">
+        <value>取消</value>
+    </data>
+    <data name="MigrateModal_Description" xml:space="preserve">
+        <value>选择启动器及其数据目录，然后扫描可导入的实例。</value>
+    </data>
     <data name="MainWindow_UpdateFoundNotificationTitle" xml:space="preserve">
         <value>发现新版本</value>
     </data>
