@@ -2,6 +2,7 @@ using Avalonia.Data.Converters;
 using Huskui.Avalonia.Converters;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Properties;
+using TridentCore.Abstractions.Adapters;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Core.Igniters;
@@ -85,6 +86,37 @@ public static class LocalizedEnumConverters
                 Profile.Rice.Rule.RuleSelector.SelectorType.Tag => Resources.SelectorType_Tag,
                 Profile.Rice.Rule.RuleSelector.SelectorType.Kind => Resources.SelectorType_Kind,
                 _ => type
+            };
+        }
+
+        return v;
+    });
+
+    public static IValueConverter LocalizedLauncherKind { get; } = new RelayConverter((v, _) =>
+    {
+        if (v is LauncherKind kind)
+        {
+            return kind switch
+            {
+                LauncherKind.MultiMc => Resources.LauncherKind_MultiMc,
+                LauncherKind.PrismLauncher => Resources.LauncherKind_PrismLauncher,
+                _ => kind
+            };
+        }
+
+        return v;
+    });
+
+    public static IValueConverter LocalizedCorruptReason { get; } = new RelayConverter((v, _) =>
+    {
+        if (v is CorruptReason reason)
+        {
+            return reason switch
+            {
+                CorruptReason.PackFileMissing => Resources.CorruptReason_PackFileMissing,
+                CorruptReason.PackFileMalformed => Resources.CorruptReason_PackFileMalformed,
+                CorruptReason.MinecraftComponentMissing => Resources.CorruptReason_MinecraftComponentMissing,
+                _ => reason
             };
         }
 

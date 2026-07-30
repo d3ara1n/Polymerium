@@ -42,9 +42,6 @@
     <data name="Migrate_Identifying" xml:space="preserve">
         <value>Identifying mods...</value>
     </data>
-    <data name="Migrate_Cancelled" xml:space="preserve">
-        <value>Migration cancelled</value>
-    </data>
     <data name="Migrate_Failed" xml:space="preserve">
         <value>Migration failed</value>
     </data>
@@ -77,6 +74,21 @@
     </data>
     <data name="MigrateModal_Description" xml:space="preserve">
         <value>Pick a launcher and its data directory, then scan for importable instances.</value>
+    </data>
+    <data name="LauncherKind_MultiMc" xml:space="preserve">
+        <value>MultiMC</value>
+    </data>
+    <data name="LauncherKind_PrismLauncher" xml:space="preserve">
+        <value>Prism Launcher</value>
+    </data>
+    <data name="CorruptReason_PackFileMissing" xml:space="preserve">
+        <value>Pack file is missing</value>
+    </data>
+    <data name="CorruptReason_PackFileMalformed" xml:space="preserve">
+        <value>Pack file is malformed</value>
+    </data>
+    <data name="CorruptReason_MinecraftComponentMissing" xml:space="preserve">
+        <value>Minecraft version is missing from the pack file</value>
     </data>
     <data name="MainWindow_MarketplaceButtonText" xml:space="preserve">
         <value>Go to Marketplace</value>

@@ -2829,11 +2829,6 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("Migrate_Identifying", resourceCulture);
             }
         }
-        public static string Migrate_Cancelled {
-            get {
-                return ResourceManager.GetString("Migrate_Cancelled", resourceCulture);
-            }
-        }
         public static string Migrate_Failed {
             get {
                 return ResourceManager.GetString("Migrate_Failed", resourceCulture);
@@ -2887,6 +2882,31 @@ namespace Polymerium.Avalonia.Properties {
         public static string MigrateModal_Description {
             get {
                 return ResourceManager.GetString("MigrateModal_Description", resourceCulture);
+            }
+        }
+        public static string LauncherKind_MultiMc {
+            get {
+                return ResourceManager.GetString("LauncherKind_MultiMc", resourceCulture);
+            }
+        }
+        public static string LauncherKind_PrismLauncher {
+            get {
+                return ResourceManager.GetString("LauncherKind_PrismLauncher", resourceCulture);
+            }
+        }
+        public static string CorruptReason_PackFileMissing {
+            get {
+                return ResourceManager.GetString("CorruptReason_PackFileMissing", resourceCulture);
+            }
+        }
+        public static string CorruptReason_PackFileMalformed {
+            get {
+                return ResourceManager.GetString("CorruptReason_PackFileMalformed", resourceCulture);
+            }
+        }
+        public static string CorruptReason_MinecraftComponentMissing {
+            get {
+                return ResourceManager.GetString("CorruptReason_MinecraftComponentMissing", resourceCulture);
             }
         }
         
