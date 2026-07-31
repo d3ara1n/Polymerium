@@ -19,9 +19,12 @@ public class ModrinthLauncherAdapter : ILauncherAdapter
     private const string INSTANCE_DB = "app.db";
     private const string PROFILES_FOLDER = "profiles";
 
-    // One query, positional columns: path, name, game_version, mod_loader, mod_loader_version.
+    // NOTE: the Modrinth App splits profile metadata across two tables — instances holds path/name,
+    //  instance_content_sets holds the game version and loader — joined by the applied content set.
+    //  Positional columns: path, name, game_version, loader, loader_version.
     private const string QUERY =
-        "SELECT path, name, game_version, mod_loader, mod_loader_version FROM profiles";
+        "SELECT i.path, i.name, c.game_version, c.loader, c.loader_version "
+        + "FROM instances i LEFT JOIN instance_content_sets c ON c.id = i.applied_content_set_id";
 
     private static readonly string[] IDENTIFIABLE_SUBDIRS = ["mods", "resourcepacks", "shaderpacks"];
 
