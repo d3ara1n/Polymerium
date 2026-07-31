@@ -172,7 +172,6 @@ public partial class SnapshotCreationPageModel(
             ["assets"] = () => Resources.AssetKind_Asset
         }.ToFrozenDictionary();
 
-    // NOTE: live 概念保留——运行副本现在是 import 在 build 上的投影，快照引用以 build/ 前缀落地。
     private static readonly FrozenDictionary<string, Func<string>> PrimaryAliases =
         new Dictionary<string, Func<string>>(StringComparer.OrdinalIgnoreCase)
         {

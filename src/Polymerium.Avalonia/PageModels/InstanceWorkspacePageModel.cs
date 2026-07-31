@@ -272,8 +272,6 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private async Task LoadChangeListAsync(CancellationToken token)
     {
-        // NOTE: 工作副本是 import 在 build 上的投影，不再有独立 live 目录。
-        // 以 import 为清单遍历、去 build 查差异；build 里非 import 路径的内容（包软链接/日志/assets）不在此范围。
         var buildDir = PathDef.Default.DirectoryOfBuild(Basic.Key);
         var importDir = PathDef.Default.DirectoryOfImport(Basic.Key);
 
@@ -288,7 +286,6 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         {
             var livePath = Path.Combine(buildDir, importEntry);
             var importPath = Path.Combine(importDir, importEntry);
-            // NOTE: persist/package 赢下的路径是软链接，不是 import 投影，不进工作副本变更。
             if (!File.Exists(livePath) || File.ResolveLinkTarget(livePath, false) is not null)
             {
                 continue;

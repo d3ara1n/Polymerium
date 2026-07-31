@@ -621,12 +621,6 @@ public partial class InstanceSetupPageModel(
     {
         _updatingSubscription?.Dispose();
         if (_pageCancellationTokenSource is null || _pageCancellationTokenSource.IsCancellationRequested)
-        // NOTE: 当 TokenSource 被销毁意味着该页面已经退出
-        //  但该 TrackerBase.StateChanged 事件未接触订阅
-        //  实际是状态订阅有三层，第一层由 InstancePageModelBase 维护，且正确工作
-        //  第二层是第一层的订阅事件中创建，由事件处理函数维护
-        //  而第三层是位于 TrackerBase 内部，这一层状态维护脱离 ViewModel 但是状态表现却在 ViewModel 中进行
-        //  需要减少数据链路的层数，让整个状态可统一维护，例如使用统一的状态收发 StateAggregator
         {
             return;
         }
@@ -1659,7 +1653,6 @@ public partial class InstanceSetupPageModel(
             return _loose;
         }
 
-        // NOTE: RecipeGroupModel 未设计，Recipe 系统落地后再实现（当前数据无 recipe:// source）
         if (key.Kind == PackageSourceHelper.Kind.Recipe)
         {
             throw new NotImplementedException("Recipe group is not implemented yet.");
