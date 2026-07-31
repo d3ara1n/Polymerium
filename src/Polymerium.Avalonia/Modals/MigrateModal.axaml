@@ -64,29 +64,32 @@
                             <Button
                                 IsDefault="True"
                                 Classes="Primary"
-                                Command="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext).MigrateCommand}"
+                                Command="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext)?.MigrateCommand}"
                                 CommandParameter="{Binding $parent[app:MigrateModal]}"
-                                Content="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext).MigrateLabel}" />
+                                Content="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext)?.MigrateLabel}" />
                         </husk:ModalActionPanel>
+                        <Grid
+                            DockPanel.Dock="Top"
+                            Margin="12,0"
+                            ColumnDefinitions="Auto,*">
+                            <CheckBox
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Content="{x:Static lang:Resources.MigrateModal_SelectAll}"
+                                IsChecked="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext)?.AllSelected}"
+                                IsThreeState="True" />
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext)?.SelectedSummary}" />
+                        </Grid>
                         <husk:Card Padding="12,8">
-                            <DockPanel VerticalSpacing="8">
-                                <Grid
-                                    DockPanel.Dock="Top"
-                                    ColumnDefinitions="Auto,*">
-                                    <CheckBox
-                                        Grid.Column="0"
-                                        VerticalAlignment="Center"
-                                        Content="{x:Static lang:Resources.MigrateModal_SelectAll}"
-                                        IsChecked="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext).AllSelected}"
-                                        IsThreeState="True" />
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        FontSize="{StaticResource SmallFontSize}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext).SelectedSummary}" />
-                                </Grid>
+                            <app:EmptyContainer
+                                Icon="FolderSearch"
+                                IsEmpty="{Binding Instances.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}">
                                 <ScrollViewer Padding="0">
                                     <ItemsControl ItemsSource="{Binding Instances}">
                                         <ItemsControl.ItemsPanel>
@@ -139,7 +142,7 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
                                 </ScrollViewer>
-                            </DockPanel>
+                            </app:EmptyContainer>
                         </husk:Card>
                     </DockPanel>
                 </DataTemplate>
