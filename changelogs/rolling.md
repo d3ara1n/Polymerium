@@ -10,6 +10,7 @@
 - Fix some minor layout flaws
 - Fix CurseForge description rendering
 - Fix file identification only checking the first repository and missing files available on others
+- Fix a crash under locales that use a comma decimal separator such as Russian (Huskui.Avalonia, POLYMERIUM-1M)
 
 ### Added
 
