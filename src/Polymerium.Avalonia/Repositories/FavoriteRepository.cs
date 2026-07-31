@@ -113,7 +113,11 @@ public class FavoriteRepository(
         throw new NotSupportedException();
 
     public Task<PackageIdentifier> RecognizeAsync(Uri uri, CancellationToken cancellationToken = default) =>
-        throw new NotImplementedException();
+        throw new NotSupportedException("favorite repositories cannot recognize urls");
+
+    public Task<BatchResolveResult<Uri, PackageIdentifier>> RecognizeBatchAsync(
+        IEnumerable<Uri> uris, CancellationToken cancellationToken = default) =>
+        throw new NotSupportedException("favorite repositories cannot recognize urls");
 
     #endregion
 }
