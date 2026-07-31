@@ -1,0 +1,22 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <rect id="link" x="-30" y="-30" width="60" height="60" rx="16" fill="none" stroke-width="12"/>
+    <!-- B-local clip around the (30,-4) crossing: puts dark link over gold at this crossing only -->
+    <clipPath id="weave">
+      <rect x="24" y="-10" width="12" height="12"/>
+    </clipPath>
+  </defs>
+  <g transform="translate(64 64) rotate(45) scale(0.95)">
+    <g transform="translate(-17 17)">
+      <use href="#link" stroke="#3A2E1C"/>
+    </g>
+    <g transform="translate(17 -17)">
+      <use href="#link" stroke="#EEA93B"/>
+    </g>
+    <g transform="translate(-17 17)">
+      <g clip-path="url(#weave)">
+        <use href="#link" stroke="#3A2E1C"/>
+      </g>
+    </g>
+  </g>
+</svg>

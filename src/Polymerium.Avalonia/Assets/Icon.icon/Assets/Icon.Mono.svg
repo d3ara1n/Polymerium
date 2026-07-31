@@ -1,0 +1,13 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <rect id="link" x="-30" y="-30" width="60" height="60" rx="16" fill="none" stroke-width="12"/>
+  </defs>
+  <g transform="translate(64 64) rotate(45) scale(0.95)">
+    <g transform="translate(-17 17)">
+      <use href="#link" stroke="#EEA93B"/>
+    </g>
+    <g transform="translate(17 -17)">
+      <use href="#link" stroke="#EEA93B"/>
+    </g>
+  </g>
+</svg>
