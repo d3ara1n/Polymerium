@@ -198,7 +198,7 @@ function master() {
   pad(ctx, 10, CHORDS.A, 2.6, 0.11);
   kick(ctx, 10, 0.6);
   lead(ctx, 9.32, N.Cs5, 0.5, 0.15, 0.25); // verb 打包
-  lead(ctx, 10.52, N.A4, 0.5, 0.15, -0.25); // verb 交付
+  lead(ctx, 10.52, N.A4, 0.5, 0.15, -0.25); // verb 分享
   pad(ctx, 12, CHORDS.G, 2.2, 0.1);
   kick(ctx, 12, 0.55);
   lead(ctx, 11.72, N.B4, 0.45, 0.14, 0.2);

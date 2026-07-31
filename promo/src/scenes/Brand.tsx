@@ -5,7 +5,7 @@ import { Logo } from "../components/Logo";
 import { Sub } from "../components/bits";
 import { C, FONT_SANS, SPRING_BOUNCE, SPRING_SNAP } from "../theme";
 
-const VERBS = ["管理", "打包", "交付"];
+const VERBS = ["管理", "打包", "分享"];
 const VERB_EVERY = 72; // frames per verb
 const EXIT_AT = 348;
 

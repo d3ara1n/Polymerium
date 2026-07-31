@@ -36,7 +36,7 @@ function getDict(lang: string) {
   if (lang === 'zh') {
     return {
       // Hero
-      heroVerbs: ['管理', '打包', '交付'],
+      heroVerbs: ['管理', '打包', '分享'],
       heroRest: '你的 Minecraft 体验',
       heroSub:
         '元数据驱动的 Minecraft 启动器，每个模组只存一份——零重复实例、快照系统，以及内置 CLI 与 MCP AI Agent 模式。',
@@ -155,7 +155,7 @@ function getDict(lang: string) {
     };
   }
   return {
-    heroVerbs: ['Manage', 'Pack', 'Deliver'],
+    heroVerbs: ['Manage', 'Pack', 'Ship'],
     heroRest: ' your Minecraft experience.',
     heroSub:
       'The metadata-driven Minecraft launcher that stores each mod exactly once — zero-duplication instances, snapshots, and a built-in CLI with MCP mode for AI agents.',
