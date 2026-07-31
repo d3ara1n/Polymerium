@@ -250,7 +250,7 @@ public static class Startup
         // 形式消费、无法挂 BlurBackdrop.ExcludeFromCapture，只能在此按名登记全局排除。
         BlurBackdrop.ExcludedRoots.Add("PART_SmokeMask");
 
-        #region SentrySdk Init (only in Debug)
+        #region SentrySdk Init (only in Release)
 
         if (!Program.IsDebug)
         {
@@ -258,7 +258,8 @@ public static class Startup
             {
                 options.Dsn = "https://70f1e791a5f2b8cb31f0947a1bac5e7a@o941379.ingest.us.sentry.io/4510328831410176";
                 options.AutoSessionTracking = true;
-                options.Environment = Program.IsDebug ? "Development" : "Production";
+                options.Environment = "Production";
+                options.Release = Program.Version;
                 options.CacheDirectoryPath = PathDef.Default.PrivateCacheDirectory();
                 options.AddExceptionFilterForType<OperationCanceledException>();
                 options.AddExceptionFilterForType<TaskCanceledException>();
@@ -271,18 +272,6 @@ public static class Startup
 
                     return @event;
                 });
-                if (Program.IsDebug)
-                {
-                    options.Release = "In Dev";
-                    options.Debug = true;
-                    options.TracesSampleRate = 1.0f;
-                }
-                else
-                {
-                    options.Release = Program.Version;
-                    options.TracesSampleRate = 0.1f;
-                }
-
                 options.SendDefaultPii = true;
             });
         }
