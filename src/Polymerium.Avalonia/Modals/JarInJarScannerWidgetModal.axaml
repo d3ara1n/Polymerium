@@ -13,6 +13,7 @@
     Padding="8"
     d:DesignHeight="520"
     d:DesignWidth="720"
+    Width="560"
     x:DataType="modalModels:JarInJarScannerWidgetModalModel"
     mc:Ignorable="d">
     <husk:Modal.Resources>
@@ -131,8 +132,6 @@
             <!--  Scanning 态  -->
             <husk:SwitchCase Value="Scanning">
                 <StackPanel
-                    MaxWidth="520"
-                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Spacing="12">
                     <StackPanel
