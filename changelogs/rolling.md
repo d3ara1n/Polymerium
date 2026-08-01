@@ -8,6 +8,7 @@
 ### Fixed
 
 - Fix Modrinth packages owned by an organization not resolving correctly
+- Fix the corner radius options not showing localized labels
 
 ### Added
 

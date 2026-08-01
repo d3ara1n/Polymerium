@@ -215,7 +215,7 @@
                             SelectedIndex="{Binding CornerStyle, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="husk:CornerStyle">
-                                    <TextBlock Text="{Binding}" />
+                                    <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedCornerStyle}}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
