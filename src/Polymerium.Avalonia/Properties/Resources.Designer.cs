@@ -6705,6 +6705,12 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string InstanceDashboardPage_AutoScrollToolTipText {
+            get {
+                return ResourceManager.GetString("InstanceDashboardPage_AutoScrollToolTipText", resourceCulture);
+            }
+        }
+        
         public static string InstancePage_ImportAssetToolTipText {
             get {
                 return ResourceManager.GetString("InstancePage_ImportAssetToolTipText", resourceCulture);

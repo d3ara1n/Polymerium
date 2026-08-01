@@ -512,6 +512,22 @@
                                 <TextBlock Text="{x:Static lang:Resources.InstanceDashboardPage_FilterErrorText}" />
                             </StackPanel>
                         </ToggleButton>
+                        <husk:Divider Orientation="Vertical" />
+                        <!--  自动跟随开关：向上滚动离开底部时由 code-behind 自动取消勾选  -->
+                        <ToggleButton
+                            Classes="Small"
+                            IsChecked="{Binding $parent[app:InstanceDashboardPage].IsAutoScroll, Mode=TwoWay}"
+                            ToolTip.Tip="{x:Static lang:Resources.InstanceDashboardPage_AutoScrollToolTipText}">
+                            <ToggleButton.Styles>
+                                <Style Selector="ToggleButton:checked">
+                                    <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
+                                </Style>
+                            </ToggleButton.Styles>
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource LargeFontSize}"
+                                Symbol="TextBoxAlignBottom" />
+                        </ToggleButton>
                     </StackPanel>
                 </Grid>
 
@@ -521,8 +537,12 @@
                 <Panel Grid.Row="2">
                     <app:EmptyContainer IsEmpty="{Binding FilteredLogCollection.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}">
                         <!--  日志列表  -->
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                            <ItemsControl ItemsSource="{Binding FilteredLogCollection}">
+                        <ScrollViewer
+                            x:Name="LogScroller"
+                            HorizontalScrollBarVisibility="Auto">
+                            <ItemsControl
+                                x:Name="LogList"
+                                ItemsSource="{Binding FilteredLogCollection}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <VirtualizingStackPanel />
