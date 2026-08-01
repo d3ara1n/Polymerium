@@ -3511,10 +3511,25 @@
         <value>清除</value>
     </data>
     <data name="InstancesPage_FilterEmptyText" xml:space="preserve">
-        <value>没有可选项</value>
+        <value>没有符合筛选条件的实例</value>
     </data>
     <data name="InstancesPage_EditTagsMenuText" xml:space="preserve">
         <value>编辑标签</value>
+    </data>
+    <data name="InstancesPage_EmptyTitleText" xml:space="preserve">
+        <value>还没有实例</value>
+    </data>
+    <data name="InstancesPage_EmptySubtitleText" xml:space="preserve">
+        <value>下载整合包或导入整合包开始游戏</value>
+    </data>
+    <data name="InstancesPage_DownloadModpackButtonText" xml:space="preserve">
+        <value>下载整合包</value>
+    </data>
+    <data name="InstancesPage_ImportModpackButtonText" xml:space="preserve">
+        <value>导入整合包</value>
+    </data>
+    <data name="InstancesPage_MigrateLinkText" xml:space="preserve">
+        <value>从其他启动器迁移</value>
     </data>
     <data name="Snapshot_UntitledLabelText" xml:space="preserve">
         <value>未命名</value>

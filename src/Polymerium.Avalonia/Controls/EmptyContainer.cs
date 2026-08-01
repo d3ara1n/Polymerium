@@ -23,4 +23,13 @@ public class EmptyContainer : ContentControl
         get => GetValue(IsEmptyProperty);
         set => SetValue(IsEmptyProperty, value);
     }
+
+    public static readonly StyledProperty<string?> TextProperty =
+        AvaloniaProperty.Register<EmptyContainer, string?>(nameof(Text));
+
+    public string? Text
+    {
+        get => GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
+    }
 }

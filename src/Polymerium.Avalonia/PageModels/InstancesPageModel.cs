@@ -14,6 +14,7 @@ using DynamicData;
 using DynamicData.Binding;
 using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
+using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Properties;
@@ -48,6 +49,8 @@ public partial class InstancesPageModel(
     [ObservableProperty]
     public partial bool AnyFilterActive { get; set; }
 
+    [ObservableProperty]
+    public partial int TotalCount { get; private set; }
     public IReadOnlyList<InstanceFilterBase> Filters => _filters;
 
     public ReadOnlyObservableCollection<InstanceCardModel> View
@@ -82,6 +85,8 @@ public partial class InstancesPageModel(
            .DisposeWith(_disposables);
 
         RebuildPipeline();
+
+        _cards.CountChanged.Subscribe(x => TotalCount = x).DisposeWith(_disposables);
 
         return base.OnInitializeAsync(token);
     }
@@ -223,6 +228,12 @@ public partial class InstancesPageModel(
 
     [RelayCommand]
     private void NewInstance() => navigationService.Navigate<NewInstancePage>();
+
+    [RelayCommand]
+    private void GotoMarketplace() => navigationService.Navigate<MarketplaceSearchPage>();
+
+    [RelayCommand]
+    private void Migrate() => overlayService.PopModal<MigrateModal>();
 
     [RelayCommand]
     private void Play(string key) => instanceService.Play(key);
