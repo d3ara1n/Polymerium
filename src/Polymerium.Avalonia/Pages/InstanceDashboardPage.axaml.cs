@@ -90,7 +90,7 @@ public partial class InstanceDashboardPage : Subpage
         {
             _disableDebounce++;
             // 连续多次向上滚才判定为有意回看，避免惯性/触控板抖动误关跟随
-            if (_disableDebounce > 3)
+            if (_disableDebounce > 1)
             {
                 IsAutoScroll = false;
                 _disableDebounce = 0;
