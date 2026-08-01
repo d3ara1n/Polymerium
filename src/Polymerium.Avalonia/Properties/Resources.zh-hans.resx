@@ -3363,6 +3363,9 @@
     <data name="InstanceDashboardPage_FilterErrorText" xml:space="preserve">
         <value>错误</value>
     </data>
+    <data name="InstanceDashboardPage_AutoScrollToolTipText" xml:space="preserve">
+        <value>自动滚动到最新日志</value>
+    </data>
     <data name="InstancePage_ImportAssetToolTipText" xml:space="preserve">
         <value>从文件导入资源</value>
     </data>

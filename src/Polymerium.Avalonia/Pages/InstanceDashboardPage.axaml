@@ -93,7 +93,9 @@
                         </TextBlock>
                     </Border>
                 </InlineUIContainer>
-                <Run Text="{Binding Message}" />
+                <Run
+                    FontFamily="Cascadia Code, Consolas, monospace"
+                    Text="{Binding Message}" />
             </TextBlock>
         </DataTemplate>
     </app:Subpage.Resources>
@@ -512,6 +514,23 @@
                                 <TextBlock Text="{x:Static lang:Resources.InstanceDashboardPage_FilterErrorText}" />
                             </StackPanel>
                         </ToggleButton>
+                        <husk:Divider Orientation="Vertical" />
+                        <!--  自动滚动开关：默认选中。两种取消途径——点击取消，或向上滚动离开底部时由 code-behind 自动取消  -->
+                        <ToggleButton
+                            Classes="Small"
+                            IsChecked="{Binding IsAutoScroll, Mode=TwoWay}"
+                            ToolTip.Tip="{x:Static lang:Resources.InstanceDashboardPage_AutoScrollToolTipText}">
+                            <ToggleButton.Styles>
+                                <!--  选中态使用强调色，与左侧级别过滤开关的视觉语言一致，让跟随状态一目了然  -->
+                                <Style Selector="ToggleButton:checked">
+                                    <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />
+                                </Style>
+                            </ToggleButton.Styles>
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource LargeFontSize}"
+                                Symbol="TextBoxAlignBottom" />
+                        </ToggleButton>
                     </StackPanel>
                 </Grid>
 
@@ -521,7 +540,9 @@
                 <Panel Grid.Row="2">
                     <app:EmptyContainer IsEmpty="{Binding FilteredLogCollection.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:True}}">
                         <!--  日志列表  -->
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                        <ScrollViewer
+                            x:Name="LogScroller"
+                            HorizontalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding FilteredLogCollection}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
