@@ -1,4 +1,5 @@
 using Avalonia.Data.Converters;
+using Huskui.Avalonia;
 using Huskui.Avalonia.Converters;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Properties;
@@ -120,6 +121,22 @@ public static class LocalizedEnumConverters
                 CorruptReason.PackFileMalformed => Resources.CorruptReason_PackFileMalformed,
                 CorruptReason.MinecraftComponentMissing => Resources.CorruptReason_MinecraftComponentMissing,
                 _ => reason
+            };
+        }
+
+        return v;
+    });
+
+    public static IValueConverter LocalizedCornerStyle { get; } = new RelayConverter((v, _) =>
+    {
+        if (v is CornerStyle style)
+        {
+            return style switch
+            {
+                CornerStyle.Large => Resources.CornerStyle_Large,
+                CornerStyle.Normal => Resources.CornerStyle_Normal,
+                CornerStyle.None => Resources.CornerStyle_None,
+                _ => style
             };
         }
 

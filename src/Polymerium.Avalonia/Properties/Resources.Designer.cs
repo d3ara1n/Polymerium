@@ -2541,6 +2541,24 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string CornerStyle_Large {
+            get {
+                return ResourceManager.GetString("CornerStyle_Large", resourceCulture);
+            }
+        }
+
+        public static string CornerStyle_Normal {
+            get {
+                return ResourceManager.GetString("CornerStyle_Normal", resourceCulture);
+            }
+        }
+
+        public static string CornerStyle_None {
+            get {
+                return ResourceManager.GetString("CornerStyle_None", resourceCulture);
+            }
+        }
+
         public static string LaunchMode_Managed {
             get {
                 return ResourceManager.GetString("LaunchMode_Managed", resourceCulture);

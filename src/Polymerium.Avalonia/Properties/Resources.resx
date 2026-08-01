@@ -1461,6 +1461,15 @@
     <data name="SettingsPage_CornerStyleLabelText" xml:space="preserve">
         <value>Corner Radius</value>
     </data>
+    <data name="CornerStyle_Large" xml:space="preserve">
+        <value>Large</value>
+    </data>
+    <data name="CornerStyle_Normal" xml:space="preserve">
+        <value>Normal</value>
+    </data>
+    <data name="CornerStyle_None" xml:space="preserve">
+        <value>None</value>
+    </data>
     <data name="InstancePage_KeyNotFoundExceptionMessage" xml:space="preserve">
         <value>Key '{0}' to the instance is not found or prepared</value>
     </data>

@@ -1452,6 +1452,15 @@
     <data name="SettingsPage_CornerStyleLabelText" xml:space="preserve">
         <value>圆角</value>
     </data>
+    <data name="CornerStyle_Large" xml:space="preserve">
+        <value>大</value>
+    </data>
+    <data name="CornerStyle_Normal" xml:space="preserve">
+        <value>标准</value>
+    </data>
+    <data name="CornerStyle_None" xml:space="preserve">
+        <value>无</value>
+    </data>
     <data name="InstancePage_KeyNotFoundExceptionMessage" xml:space="preserve">
         <value>'{0}' 指向的实例不存在或未准备完</value>
     </data>
