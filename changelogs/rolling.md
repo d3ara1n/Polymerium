@@ -2,8 +2,7 @@
 
 ### ✨ Highlights ✨
 
-- Add an auto-scroll toggle to the instance log view that follows new log lines and pauses when scrolling up (#78)
-- Fix Modrinth packages owned by an organization not resolving correctly
+- Add an auto-scroll toggle to the instance log view that follows new log lines and pauses when scrolling up
 - Add download, import, and migration shortcuts to the empty instances page
 
 ### Fixed
@@ -18,7 +17,7 @@
 
 ### Changed
 
--
+- Improve the instance list layout so cards stretch to fill the page width
 
 ### Removed
 

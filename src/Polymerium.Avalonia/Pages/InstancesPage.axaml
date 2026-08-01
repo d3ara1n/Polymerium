@@ -228,15 +228,14 @@
                         ItemsSource="{Binding View}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel
-                                ItemSpacing="8"
-                                LineSpacing="8" />
+                            <husk:FlexWrapPanel
+                                ColumnSpacing="8"
+                                RowSpacing="8" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="app:InstanceCardModel">
                             <app:InstanceCard
-                                Width="220"
                                 Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
                                 CommandParameter="{Binding Basic.Key}">
                                 <app:InstanceCard.ContextFlyout>
@@ -305,6 +304,14 @@
                             </app:InstanceCard>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemContainerTheme>
+                        <ControlTheme TargetType="ContentPresenter">
+                            <Setter Property="MinWidth" Value="180" />
+                            <Setter Property="MaxWidth" Value="280" />
+                            <Setter Property="MinHeight" Value="160" />
+                            <Setter Property="MaxHeight" Value="260" />
+                        </ControlTheme>
+                    </ItemsControl.ItemContainerTheme>
                     </ItemsControl>
                 </ScrollViewer>
             </app:EmptyContainer>
