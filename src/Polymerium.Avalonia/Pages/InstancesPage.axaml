@@ -128,6 +128,20 @@
                     <ComboBoxItem Content="{x:Static lang:Resources.InstancesPage_SortByName}" />
                 </ComboBox>
                 <Button
+                    Command="{Binding ManageRecipesCommand}">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="7">
+                        <fi:SymbolIcon
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
+                            Symbol="Bookmark" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Static lang:Resources.InstancesPage_ManageRecipesButtonText}" />
+                    </StackPanel>
+                </Button>
+                <Button
                     Classes="Primary"
                     Command="{Binding NewInstanceCommand}">
                     <StackPanel

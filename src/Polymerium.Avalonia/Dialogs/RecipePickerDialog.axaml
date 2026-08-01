@@ -1,0 +1,56 @@
+<husk:Dialog
+    x:Class="Polymerium.Avalonia.Dialogs.RecipePickerDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{x:Static lang:Resources.RecipePickerDialog_Title}"
+    Width="320"
+    IsPrimaryButtonVisible="True"
+    Message="{x:Static lang:Resources.RecipePickerDialog_Prompt}"
+    mc:Ignorable="d">
+    <husk:SwitchContainer
+        TargetType="x:Boolean"
+        Value="{Binding $parent[app:RecipePickerDialog].RecipesSource.Count, Mode=OneWay, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue={x:False}}">
+        <husk:SwitchCase Value="{x:False}">
+            <StackPanel
+                Margin="0,24"
+                Spacing="8">
+                <fi:SymbolIcon
+                    HorizontalAlignment="Center"
+                    FontSize="{StaticResource ExtraLargeFontSize}"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Symbol="Bookmark" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.RecipePickerDialog_EmptyText}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </husk:SwitchCase>
+        <husk:SwitchCase Value="{x:True}">
+            <ListBox
+                MaxHeight="320"
+                ItemsSource="{Binding $parent[app:RecipePickerDialog].RecipesSource}"
+                SelectedItem="{Binding $parent[app:RecipePickerDialog].Result, Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="app:RecipeCardModel">
+                        <StackPanel Margin="0,2" Spacing="2">
+                            <TextBlock Text="{Binding Name}" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Binding Description}"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </husk:SwitchCase>
+    </husk:SwitchContainer>
+</husk:Dialog>

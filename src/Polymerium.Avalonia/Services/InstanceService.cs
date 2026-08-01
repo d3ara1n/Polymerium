@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -408,5 +409,14 @@ public class InstanceService
                                                 thumbnail: ThumbnailHelper.ForInstance(key));
             }
         }
+    }
+
+    public IReadOnlyList<string> GetRecipeReferences(string recipeId)
+    {
+        var uri = InternalUriHelper.Recipe(recipeId);
+        return _profileManager.Profiles
+            .Where(p => p.Item2.Setup.Packages.Any(e => e.Source == uri))
+            .Select(p => p.Item1)
+            .ToList();
     }
 }

@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using System.Reactive.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
@@ -1209,6 +1210,122 @@ public partial class InstanceSetupPageModel(
         }
     }
 
+    private async Task ApplyRecipeAsync(string recipeId)
+    {
+        var recipe = persistenceService.GetRecipe(recipeId);
+        if (recipe is null)
+        {
+            return;
+        }
+
+        var items = persistenceService.GetRecipeItems(recipeId);
+        if (items.Count == 0)
+        {
+            notificationService.PopMessage(Resources
+                                             .InstanceSetupPage_ApplyRecipeEmptyWarningNotificationMessage,
+                                           Resources.InstanceSetupPage_ImportListWarningNotificationTitle,
+                                           GrowlLevel.Warning,
+                                           thumbnail: GetNotificationThumbnail());
+            return;
+        }
+
+        var addedCount = 0;
+
+        try
+        {
+            await Task.Run(async () =>
+            {
+                var identifiers = items
+                    .Select(i => new PackageIdentifier(i.Label,
+                                                      PersistenceService.NormalizeFavoriteNamespace(i.Namespace),
+                                                      i.ProjectId,
+                                                      null))
+                    .ToList();
+                var filter = Filter.FromSetup(ProfileManager.GetImmutable(Basic.Key).Setup);
+                var resolved = await dataService.ResolvePackagesAsync(identifiers, filter);
+
+                var resolvedByProject = resolved.Successful.ToDictionary(
+                    x => (x.Key.Repository.ToLowerInvariant(), x.Key.Namespace, x.Key.Identity),
+                    x => x.Value);
+
+                if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
+                {
+                    await using (guard)
+                    {
+                        var source = InternalUriHelper.Recipe(recipeId);
+                        var setup = guard.Value.Setup;
+                        foreach (var item in items)
+                        {
+                            var ns = PersistenceService.NormalizeFavoriteNamespace(item.Namespace);
+                            var package = resolvedByProject.TryGetValue(
+                                                                          (item.Label.ToLowerInvariant(), ns, item.ProjectId),
+                                                                          out var p)
+                                ? p
+                                : null;
+                            var pref = package is not null
+                                ? PackageHelper.ToPref(package)
+                                : PackageHelper.ToPref(item.Label, ns, item.ProjectId, null);
+                            var tags = JsonSerializer.Deserialize<List<string>>(item.Tags) ?? [];
+
+                            setup.Packages.Add(new()
+                            {
+                                Pref = pref,
+                                Enabled = package is not null,
+                                Source = source,
+                                Tags = tags
+                            });
+                            persistenceService.AppendAction(new()
+                            {
+                                Key = Basic.Key,
+                                Kind = PersistenceService.ActionKind.EditPackage,
+                                New = pref
+                            });
+                            addedCount++;
+                        }
+                    }
+                }
+            });
+
+            notificationService.PopMessage(Resources
+                                             .InstanceSetupPage_ApplyRecipeSuccessNotificationMessage
+                                             .Replace("{0}", addedCount.ToString()),
+                                           Resources.InstanceSetupPage_ApplyRecipeSuccessNotificationTitle,
+                                           GrowlLevel.Success,
+                                           thumbnail: GetNotificationThumbnail());
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to apply recipe {id}", recipeId);
+            notificationService.PopMessage(ex,
+                                           Resources.InstanceSetupPage_ApplyRecipeDangerNotificationTitle,
+                                           thumbnail: GetNotificationThumbnail());
+        }
+    }
+
+    [RelayCommand]
+    private async Task ImportFromRecipeAsync()
+    {
+        var recipes = persistenceService.GetRecipes();
+        if (recipes.Count == 0)
+        {
+            notificationService.PopMessage(Resources
+                                             .InstanceSetupPage_ImportRecipeNoRecipesWarningNotificationMessage,
+                                           Resources.InstanceSetupPage_ImportListWarningNotificationTitle,
+                                           GrowlLevel.Warning,
+                                           thumbnail: GetNotificationThumbnail());
+            return;
+        }
+
+        var source = recipes
+            .Select(r => new RecipeCardModel(r.Id) { Name = r.Name, Description = r.Description })
+            .ToList();
+        var dialog = new RecipePickerDialog { RecipesSource = source };
+        if (await overlayService.PopDialogAsync(dialog) && dialog.Result is RecipeCardModel selected)
+        {
+            await ApplyRecipeAsync(selected.Id);
+        }
+    }
+
     [RelayCommand]
     private async Task ExportListAsync()
     {
@@ -1655,7 +1772,7 @@ public partial class InstanceSetupPageModel(
 
         if (key.Kind == PackageSourceHelper.Kind.Recipe)
         {
-            throw new NotImplementedException("Recipe group is not implemented yet.");
+            return EnsureRecipeGroup(key.Source!);
         }
 
         return EnsureModpackGroup(key.Source!);
@@ -1670,6 +1787,25 @@ public partial class InstanceSetupPageModel(
         }
 
         return (ModpackGroupModel)model;
+    }
+
+    private RecipeGroupModel EnsureRecipeGroup(string source)
+    {
+        if (!_groupModels.TryGetValue((PackageSourceHelper.Kind.Recipe, source), out var model))
+        {
+            var id = source["recipe://".Length..];
+            var recipe = persistenceService.GetRecipe(id);
+            model = new RecipeGroupModel
+            {
+                Kind = PackageSourceHelper.Kind.Recipe,
+                Source = source,
+                Name = recipe?.Name,
+                IsMissing = recipe is null
+            };
+            _groupModels[(PackageSourceHelper.Kind.Recipe, source)] = model;
+        }
+
+        return (RecipeGroupModel)model;
     }
 
     #endregion

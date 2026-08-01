@@ -230,6 +230,9 @@ public partial class InstancesPageModel(
     private void NewInstance() => navigationService.Navigate<NewInstancePage>();
 
     [RelayCommand]
+    private void ManageRecipes() => navigationService.Navigate<RecipesPage>();
+
+    [RelayCommand]
     private void GotoMarketplace() => navigationService.Navigate<MarketplaceSearchPage>();
 
     [RelayCommand]
