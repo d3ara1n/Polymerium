@@ -93,9 +93,7 @@
                         </TextBlock>
                     </Border>
                 </InlineUIContainer>
-                <Run
-                    FontFamily="Cascadia Code, Consolas, monospace"
-                    Text="{Binding Message}" />
+                <Run Text="{Binding Message}" />
             </TextBlock>
         </DataTemplate>
     </app:Subpage.Resources>
@@ -515,13 +513,12 @@
                             </StackPanel>
                         </ToggleButton>
                         <husk:Divider Orientation="Vertical" />
-                        <!--  自动滚动开关：默认选中。两种取消途径——点击取消，或向上滚动离开底部时由 code-behind 自动取消  -->
+                        <!--  自动跟随开关：向上滚动离开底部时由 code-behind 自动取消勾选  -->
                         <ToggleButton
                             Classes="Small"
                             IsChecked="{Binding IsAutoScroll, Mode=TwoWay}"
                             ToolTip.Tip="{x:Static lang:Resources.InstanceDashboardPage_AutoScrollToolTipText}">
                             <ToggleButton.Styles>
-                                <!--  选中态使用强调色，与左侧级别过滤开关的视觉语言一致，让跟随状态一目了然  -->
                                 <Style Selector="ToggleButton:checked">
                                     <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
                                     <Setter Property="Foreground" Value="{StaticResource ControlAccentForegroundBrush}" />

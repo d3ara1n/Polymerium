@@ -120,8 +120,6 @@ public partial class InstanceDashboardPageModel(
 
     partial void OnIsFilterErrorChanged(bool value) => SetupView();
 
-    // 日志自动跟随开关：默认开启（"默认是滚动状态"）。跟随逻辑见 InstanceDashboardPage 的 code-behind。
-    // 放在模型上而非控件上，与 IsFilterInformation 等 UI 开关保持一致，切换按钮可直接绑定。
     [ObservableProperty]
     public partial bool IsAutoScroll { get; set; } = true;
 
