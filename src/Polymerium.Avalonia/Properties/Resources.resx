@@ -1347,6 +1347,18 @@
     <data name="InstanceSetupPage_ImportListDangerNotificationTitle" xml:space="preserve">
         <value>Import package list</value>
     </data>
+    <data name="InstanceSetupPage_ApplyRecipeEmptyWarningNotificationMessage" xml:space="preserve">
+        <value>This recipe has no packages</value>
+    </data>
+    <data name="InstanceSetupPage_ApplyRecipeSuccessNotificationTitle" xml:space="preserve">
+        <value>Recipe applied</value>
+    </data>
+    <data name="InstanceSetupPage_ApplyRecipeSuccessNotificationMessage" xml:space="preserve">
+        <value>Added {0} package(s)</value>
+    </data>
+    <data name="InstanceSetupPage_ApplyRecipeDangerNotificationTitle" xml:space="preserve">
+        <value>Apply recipe</value>
+    </data>
     <data name="InstanceSetupPage_FetchingInformationDangerNotificationTitle" xml:space="preserve">
         <value>Failed to fetching information</value>
     </data>
@@ -3611,5 +3623,95 @@ Affected entries: {0}
     </data>
     <data name="AssetKind_Asset" xml:space="preserve">
         <value>Assets</value>
+    </data>
+    <data name="RecipesPage_Title" xml:space="preserve">
+        <value>Recipes</value>
+    </data>
+    <data name="RecipesPage_NewButtonText" xml:space="preserve">
+        <value>New Recipe</value>
+    </data>
+    <data name="RecipesPage_ImportButtonText" xml:space="preserve">
+        <value>Import</value>
+    </data>
+    <data name="RecipesPage_EmptyTitleText" xml:space="preserve">
+        <value>No recipes yet</value>
+    </data>
+    <data name="RecipesPage_EmptySubtitleText" xml:space="preserve">
+        <value>Create a recipe to reuse a set of packages across instances</value>
+    </data>
+    <data name="RecipesPage_ItemCountSuffix" xml:space="preserve">
+        <value>packages</value>
+    </data>
+    <data name="RecipesPage_OpenMenuText" xml:space="preserve">
+        <value>Open</value>
+    </data>
+    <data name="RecipesPage_ExportMenuText" xml:space="preserve">
+        <value>Export</value>
+    </data>
+    <data name="RecipesPage_DeleteMenuText" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="RecipesPage_NewDialogTitle" xml:space="preserve">
+        <value>New Recipe</value>
+    </data>
+    <data name="RecipesPage_ComingSoonNotificationMessage" xml:space="preserve">
+        <value>Import and export are coming soon</value>
+    </data>
+    <data name="RecipesPage_DeleteBlockedByReferencesWarningNotificationMessage" xml:space="preserve">
+        <value>This recipe is referenced by {0} instance(s) and cannot be deleted</value>
+    </data>
+    <data name="RecipesPage_DeleteBlockedByReferencesWarningNotificationTitle" xml:space="preserve">
+        <value>Recipe in use</value>
+    </data>
+    <data name="RecipesPage_DeleteConfirmationMessage" xml:space="preserve">
+        <value>Are you sure you want to delete this recipe? This cannot be undone.</value>
+    </data>
+    <data name="RecipesPage_DeleteConfirmationTitle" xml:space="preserve">
+        <value>Delete recipe</value>
+    </data>
+    <data name="RecipesPage_DeleteSuccessNotificationMessage" xml:space="preserve">
+        <value>Recipe deleted</value>
+    </data>
+    <data name="RecipePage_NameWatermark" xml:space="preserve">
+        <value>Recipe name</value>
+    </data>
+    <data name="RecipePage_DescriptionWatermark" xml:space="preserve">
+        <value>Description (optional)</value>
+    </data>
+    <data name="RecipePage_SaveButtonText" xml:space="preserve">
+        <value>Save</value>
+    </data>
+    <data name="RecipePage_ExportButtonText" xml:space="preserve">
+        <value>Export</value>
+    </data>
+    <data name="RecipePage_AddItemWatermark" xml:space="preserve">
+        <value>Paste a Pref (pref://...)</value>
+    </data>
+    <data name="RecipePage_AddItemButtonText" xml:space="preserve">
+        <value>Add</value>
+    </data>
+    <data name="RecipePage_InvalidPrefWarningNotificationMessage" xml:space="preserve">
+        <value>The entered reference is not a valid Pref</value>
+    </data>
+    <data name="RecipePage_InvalidPrefWarningNotificationTitle" xml:space="preserve">
+        <value>Invalid reference</value>
+    </data>
+    <data name="InstancesPage_ManageRecipesButtonText" xml:space="preserve">
+        <value>Manage recipes</value>
+    </data>
+    <data name="InstanceSetupPage_ImportRecipeMenuText" xml:space="preserve">
+        <value>Import from recipe</value>
+    </data>
+    <data name="InstanceSetupPage_ImportRecipeNoRecipesWarningNotificationMessage" xml:space="preserve">
+        <value>No recipes yet. Create one on the Recipes page first.</value>
+    </data>
+    <data name="RecipePickerDialog_Title" xml:space="preserve">
+        <value>Select a recipe</value>
+    </data>
+    <data name="RecipePickerDialog_Prompt" xml:space="preserve">
+        <value>Choose a recipe to apply</value>
+    </data>
+    <data name="RecipePickerDialog_EmptyText" xml:space="preserve">
+        <value>No recipes yet</value>
     </data>
 </root>

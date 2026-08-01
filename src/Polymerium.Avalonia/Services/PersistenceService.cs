@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using FreeSql.DataAnnotations;
+using NanoidDotNet;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
@@ -158,6 +159,47 @@ public class PersistenceService(IFreeSql freeSql)
 
         [Column(IsPrimary = true)]
         public required string Tag { get; set; }
+    }
+
+    #endregion
+
+    #region Nested type: Recipe
+
+    public class Recipe
+    {
+        [Column(IsPrimary = true)]
+        public required string Id { get; set; }
+
+        public required string Name { get; set; }
+
+        public string? Description { get; set; }
+
+        public required DateTime CreatedAt { get; set; }
+
+        public required DateTime UpdatedAt { get; set; }
+    }
+
+    #endregion
+
+    #region Nested type: RecipeItem
+
+    public class RecipeItem
+    {
+        [Column(IsPrimary = true)]
+        public required string Id { get; set; }
+
+        public required string RecipeId { get; set; }
+
+        public required string Label { get; set; }
+
+        public string Namespace { get; set; } = string.Empty;
+
+        public required string ProjectId { get; set; }
+
+        [Column(DbType = "BLOB")]
+        public string Tags { get; set; } = "[]";
+
+        public string? Note { get; set; }
     }
 
     #endregion
@@ -539,6 +581,84 @@ public class PersistenceService(IFreeSql freeSql)
             || favorite.Summary.Contains(query, StringComparison.OrdinalIgnoreCase)
             || DeserializeFavoriteTags(favorite.Tags).Any(x => x.Contains(query, StringComparison.OrdinalIgnoreCase));
     }
+
+    #endregion
+
+    #region Recipes
+
+    public IReadOnlyList<Recipe> GetRecipes() =>
+        freeSql.Select<Recipe>().OrderByDescending(x => x.UpdatedAt).ToList();
+
+    public Recipe? GetRecipe(string id) => freeSql.Select<Recipe>().Where(x => x.Id == id).First();
+
+    public IReadOnlyList<RecipeItem> GetRecipeItems(string recipeId) =>
+        freeSql.Select<RecipeItem>().Where(x => x.RecipeId == recipeId).ToList();
+
+    public int CountRecipeItems(string recipeId) =>
+        (int)freeSql.Select<RecipeItem>().Where(x => x.RecipeId == recipeId).Count();
+
+    public Recipe InsertRecipe(string name, string? description)
+    {
+        var now = DateTime.Now;
+        var recipe = new Recipe
+        {
+            Id = Nanoid.Generate(Nanoid.Alphabets.Default, 12),
+            Name = name,
+            Description = description,
+            CreatedAt = now,
+            UpdatedAt = now
+        };
+        freeSql.Insert(recipe).ExecuteAffrows();
+        return recipe;
+    }
+
+    public void UpdateRecipe(string id, string name, string? description) =>
+        freeSql.Update<Recipe>()
+               .Where(x => x.Id == id)
+               .Set(x => x.Name, name)
+               .Set(x => x.Description, description)
+               .Set(x => x.UpdatedAt, DateTime.Now)
+               .ExecuteAffrows();
+
+    public void DeleteRecipe(string id) =>
+        freeSql.Transaction(() =>
+        {
+            freeSql.Delete<RecipeItem>().Where(x => x.RecipeId == id).ExecuteAffrows();
+            freeSql.Delete<Recipe>().Where(x => x.Id == id).ExecuteAffrows();
+        });
+
+    public void AddRecipeItem(string recipeId,
+                              string label,
+                              string? ns,
+                              string projectId,
+                              IReadOnlyList<string> tags,
+                              string? note)
+    {
+        freeSql.Insert(new RecipeItem
+        {
+            Id = Nanoid.Generate(Nanoid.Alphabets.Default, 12),
+            RecipeId = recipeId,
+            Label = label,
+            Namespace = ns ?? string.Empty,
+            ProjectId = projectId,
+            Tags = JsonSerializer.Serialize(tags),
+            Note = note
+        }).ExecuteAffrows();
+        TouchRecipe(recipeId);
+    }
+
+    public void RemoveRecipeItem(string id)
+    {
+        var recipeId = freeSql.Select<RecipeItem>().Where(x => x.Id == id).First()?.RecipeId;
+        freeSql.Delete<RecipeItem>().Where(x => x.Id == id).ExecuteAffrows();
+        if (recipeId != null)
+        {
+            TouchRecipe(recipeId);
+        }
+    }
+
+    public void TouchRecipe(string id) =>
+        freeSql.Update<Recipe>().Where(x => x.Id == id).Set(x => x.UpdatedAt, DateTime.Now).ExecuteAffrows();
 
     #endregion
 }

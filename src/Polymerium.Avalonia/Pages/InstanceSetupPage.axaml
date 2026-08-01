@@ -749,6 +749,11 @@
                                         Icon="{fie:SymbolIcon Symbol=ArrowImport,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
+                                        Command="{Binding ImportFromRecipeCommand}"
+                                        Header="{x:Static lang:Resources.InstanceSetupPage_ImportRecipeMenuText}"
+                                        Icon="{fie:SymbolIcon Symbol=Bookmark,
+                                                              FontSize={StaticResource MediumFontSize}}" />
+                                    <MenuItem
                                         Command="{Binding ExportListCommand}"
                                         Header="{x:Static lang:Resources.InstanceSetupPage_ExportListMenuText}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowExport,

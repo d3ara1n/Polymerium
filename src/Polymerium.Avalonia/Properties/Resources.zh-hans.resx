@@ -1338,6 +1338,18 @@
     <data name="InstanceSetupPage_ImportListDangerNotificationTitle" xml:space="preserve">
         <value>导入包列表</value>
     </data>
+    <data name="InstanceSetupPage_ApplyRecipeEmptyWarningNotificationMessage" xml:space="preserve">
+        <value>该配方没有任何包</value>
+    </data>
+    <data name="InstanceSetupPage_ApplyRecipeSuccessNotificationTitle" xml:space="preserve">
+        <value>已应用配方</value>
+    </data>
+    <data name="InstanceSetupPage_ApplyRecipeSuccessNotificationMessage" xml:space="preserve">
+        <value>已添加 {0} 个包</value>
+    </data>
+    <data name="InstanceSetupPage_ApplyRecipeDangerNotificationTitle" xml:space="preserve">
+        <value>应用配方</value>
+    </data>
     <data name="InstanceSetupPage_FetchingInformationDangerNotificationTitle" xml:space="preserve">
         <value>获取信息失败</value>
     </data>
@@ -3602,5 +3614,95 @@
     </data>
     <data name="AssetKind_Asset" xml:space="preserve">
         <value>资产</value>
+    </data>
+    <data name="RecipesPage_Title" xml:space="preserve">
+        <value>配方</value>
+    </data>
+    <data name="RecipesPage_NewButtonText" xml:space="preserve">
+        <value>新建配方</value>
+    </data>
+    <data name="RecipesPage_ImportButtonText" xml:space="preserve">
+        <value>导入</value>
+    </data>
+    <data name="RecipesPage_EmptyTitleText" xml:space="preserve">
+        <value>还没有配方</value>
+    </data>
+    <data name="RecipesPage_EmptySubtitleText" xml:space="preserve">
+        <value>创建一个配方，在不同实例间复用一组包</value>
+    </data>
+    <data name="RecipesPage_ItemCountSuffix" xml:space="preserve">
+        <value>个包</value>
+    </data>
+    <data name="RecipesPage_OpenMenuText" xml:space="preserve">
+        <value>打开</value>
+    </data>
+    <data name="RecipesPage_ExportMenuText" xml:space="preserve">
+        <value>导出</value>
+    </data>
+    <data name="RecipesPage_DeleteMenuText" xml:space="preserve">
+        <value>删除</value>
+    </data>
+    <data name="RecipesPage_NewDialogTitle" xml:space="preserve">
+        <value>新建配方</value>
+    </data>
+    <data name="RecipesPage_ComingSoonNotificationMessage" xml:space="preserve">
+        <value>导入和导出即将推出</value>
+    </data>
+    <data name="RecipesPage_DeleteBlockedByReferencesWarningNotificationMessage" xml:space="preserve">
+        <value>此配方被 {0} 个实例引用，无法删除</value>
+    </data>
+    <data name="RecipesPage_DeleteBlockedByReferencesWarningNotificationTitle" xml:space="preserve">
+        <value>配方使用中</value>
+    </data>
+    <data name="RecipesPage_DeleteConfirmationMessage" xml:space="preserve">
+        <value>确定要删除此配方吗？此操作无法撤销。</value>
+    </data>
+    <data name="RecipesPage_DeleteConfirmationTitle" xml:space="preserve">
+        <value>删除配方</value>
+    </data>
+    <data name="RecipesPage_DeleteSuccessNotificationMessage" xml:space="preserve">
+        <value>配方已删除</value>
+    </data>
+    <data name="RecipePage_NameWatermark" xml:space="preserve">
+        <value>配方名称</value>
+    </data>
+    <data name="RecipePage_DescriptionWatermark" xml:space="preserve">
+        <value>描述（可选）</value>
+    </data>
+    <data name="RecipePage_SaveButtonText" xml:space="preserve">
+        <value>保存</value>
+    </data>
+    <data name="RecipePage_ExportButtonText" xml:space="preserve">
+        <value>导出</value>
+    </data>
+    <data name="RecipePage_AddItemWatermark" xml:space="preserve">
+        <value>粘贴包引用（pref://...）</value>
+    </data>
+    <data name="RecipePage_AddItemButtonText" xml:space="preserve">
+        <value>添加</value>
+    </data>
+    <data name="RecipePage_InvalidPrefWarningNotificationMessage" xml:space="preserve">
+        <value>输入的引用不是有效的包引用</value>
+    </data>
+    <data name="RecipePage_InvalidPrefWarningNotificationTitle" xml:space="preserve">
+        <value>无效的引用</value>
+    </data>
+    <data name="InstancesPage_ManageRecipesButtonText" xml:space="preserve">
+        <value>管理配方</value>
+    </data>
+    <data name="InstanceSetupPage_ImportRecipeMenuText" xml:space="preserve">
+        <value>从配方导入</value>
+    </data>
+    <data name="InstanceSetupPage_ImportRecipeNoRecipesWarningNotificationMessage" xml:space="preserve">
+        <value>还没有配方，请先在配方页面创建。</value>
+    </data>
+    <data name="RecipePickerDialog_Title" xml:space="preserve">
+        <value>选择配方</value>
+    </data>
+    <data name="RecipePickerDialog_Prompt" xml:space="preserve">
+        <value>选择要应用的配方</value>
+    </data>
+    <data name="RecipePickerDialog_EmptyText" xml:space="preserve">
+        <value>还没有配方</value>
     </data>
 </root>
