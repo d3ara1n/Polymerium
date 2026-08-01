@@ -121,9 +121,6 @@ public partial class InstanceDashboardPageModel(
     partial void OnIsFilterErrorChanged(bool value) => SetupView();
 
     [ObservableProperty]
-    public partial bool IsAutoScroll { get; set; } = true;
-
-    [ObservableProperty]
     public partial IList<ScrapModel>? LogCollection { get; set; }
 
     [ObservableProperty]

@@ -516,7 +516,7 @@
                         <!--  自动跟随开关：向上滚动离开底部时由 code-behind 自动取消勾选  -->
                         <ToggleButton
                             Classes="Small"
-                            IsChecked="{Binding IsAutoScroll, Mode=TwoWay}"
+                            IsChecked="{Binding $parent[app:InstanceDashboardPage].IsAutoScroll, Mode=TwoWay}"
                             ToolTip.Tip="{x:Static lang:Resources.InstanceDashboardPage_AutoScrollToolTipText}">
                             <ToggleButton.Styles>
                                 <Style Selector="ToggleButton:checked">
@@ -540,7 +540,9 @@
                         <ScrollViewer
                             x:Name="LogScroller"
                             HorizontalScrollBarVisibility="Auto">
-                            <ItemsControl ItemsSource="{Binding FilteredLogCollection}">
+                            <ItemsControl
+                                x:Name="LogList"
+                                ItemsSource="{Binding FilteredLogCollection}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <VirtualizingStackPanel />
