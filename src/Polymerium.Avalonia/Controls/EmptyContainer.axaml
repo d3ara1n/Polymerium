@@ -23,8 +23,11 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource LargeFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            <TextBlock.Text>
+                                <Binding Path="Text" RelativeSource="{RelativeSource TemplatedParent}" TargetNullValue="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                            </TextBlock.Text>
+                        </TextBlock>
                     </StackPanel>
 
                     <ContentPresenter

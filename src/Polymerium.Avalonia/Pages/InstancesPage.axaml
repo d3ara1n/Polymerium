@@ -146,9 +146,10 @@
         </Grid>
         <Panel>
             <StackPanel
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                IsVisible="{Binding View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
-                Spacing="8">
+                IsVisible="{Binding TotalCount, Converter={x:Static husk:NumberConverters.IsZero}}"
+                Spacing="12">
                 <fi:SymbolIcon
                     HorizontalAlignment="Center"
                     FontSize="{StaticResource ExtraLargeFontSize}"
@@ -157,13 +158,60 @@
                 <TextBlock
                     HorizontalAlignment="Center"
                     FontSize="{StaticResource LargeFontSize}"
+                    Text="{x:Static lang:Resources.InstancesPage_EmptyTitleText}" />
+                <TextBlock
+                    HorizontalAlignment="Center"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                    Text="{x:Static lang:Resources.InstancesPage_EmptySubtitleText}" />
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="12">
+                    <Button
+                        Classes="Primary"
+                        Command="{Binding GotoMarketplaceCommand}">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="7">
+                            <fi:SymbolIcon
+                                VerticalAlignment="Center"
+                                FontSize="{StaticResource MediumFontSize}"
+                                Symbol="BuildingStore" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.InstancesPage_DownloadModpackButtonText}" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Command="{Binding NewInstanceCommand}"
+                        Theme="{StaticResource OutlineButtonTheme}">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="7">
+                            <fi:SymbolIcon
+                                VerticalAlignment="Center"
+                                FontSize="{StaticResource MediumFontSize}"
+                                Symbol="FolderZip" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.InstancesPage_ImportModpackButtonText}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <HyperlinkButton
+                    HorizontalAlignment="Center"
+                    Command="{Binding MigrateCommand}"
+                    Content="{x:Static lang:Resources.InstancesPage_MigrateLinkText}" />
             </StackPanel>
-            <ScrollViewer>
-                <ItemsControl
-                    Padding="4"
-                    ItemsSource="{Binding View}">
+            <app:EmptyContainer
+                Icon="Search"
+                IsEmpty="{Binding View.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
+                IsVisible="{Binding TotalCount, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                Text="{x:Static lang:Resources.InstancesPage_FilterEmptyText}">
+                <ScrollViewer>
+                    <ItemsControl
+                        Padding="4"
+                        ItemsSource="{Binding View}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel
@@ -243,8 +291,9 @@
                             </app:InstanceCard>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
+                    </ItemsControl>
+                </ScrollViewer>
+            </app:EmptyContainer>
         </Panel>
     </DockPanel>
 </husk:Page>

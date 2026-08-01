@@ -3520,10 +3520,25 @@ Affected entries: {0}
         <value>Clear</value>
     </data>
     <data name="InstancesPage_FilterEmptyText" xml:space="preserve">
-        <value>No options available</value>
+        <value>No instances match the current filter</value>
     </data>
     <data name="InstancesPage_EditTagsMenuText" xml:space="preserve">
         <value>Edit Tags</value>
+    </data>
+    <data name="InstancesPage_EmptyTitleText" xml:space="preserve">
+        <value>No instances yet</value>
+    </data>
+    <data name="InstancesPage_EmptySubtitleText" xml:space="preserve">
+        <value>Download a modpack or import a pack file to get started</value>
+    </data>
+    <data name="InstancesPage_DownloadModpackButtonText" xml:space="preserve">
+        <value>Download Modpack</value>
+    </data>
+    <data name="InstancesPage_ImportModpackButtonText" xml:space="preserve">
+        <value>Import Modpack</value>
+    </data>
+    <data name="InstancesPage_MigrateLinkText" xml:space="preserve">
+        <value>Migrate from another launcher</value>
     </data>
     <data name="Snapshot_UntitledLabelText" xml:space="preserve">
         <value>Untitled</value>
