@@ -3372,6 +3372,9 @@ Affected entries: {0}
     <data name="InstanceDashboardPage_FilterErrorText" xml:space="preserve">
         <value>Error</value>
     </data>
+    <data name="InstanceDashboardPage_AutoScrollToolTipText" xml:space="preserve">
+        <value>Auto-scroll to latest log</value>
+    </data>
     <data name="InstancePage_ImportAssetToolTipText" xml:space="preserve">
         <value>Import asset from file</value>
     </data>
