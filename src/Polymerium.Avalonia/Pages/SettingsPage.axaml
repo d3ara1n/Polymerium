@@ -15,8 +15,7 @@
     Header="{x:Static lang:Resources.SettingsPage_Title}"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
-    <husk:Page.Resources>
-        <x:Double x:Key="SettingsControlMinWidth">280</x:Double>
+    <husk:Page.Resources>
         <ItemsPanelTemplate x:Key="EqualWidthTabStripPanel">
             <UniformGrid Rows="1" ColumnSpacing="6" />
         </ItemsPanelTemplate>
@@ -99,7 +98,7 @@
                     Title="{x:Static lang:Resources.SettingsPage_SuperPowerTitle}"
                     Icon="Beaker"
                     Summary="{x:Static lang:Resources.SettingsPage_SuperPowerSubtitle}">
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_SuperPowerLabelText}">
+                    <app:SettingsEntryItem HorizontalContentAlignment="Right" Header="{x:Static lang:Resources.SettingsPage_SuperPowerLabelText}">
                         <ToggleSwitch IsChecked="{Binding SuperPowerActivated, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                 </app:SettingsEntry>
@@ -108,12 +107,11 @@
                     Title="{x:Static lang:Resources.SettingsPage_DisplayTitle}"
                     Icon="LocalLanguage"
                     Summary="{x:Static lang:Resources.SettingsPage_DisplaySubtitle}">
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_TitleBarVisibilityLabelText}">
+                    <app:SettingsEntryItem HorizontalContentAlignment="Right" Header="{x:Static lang:Resources.SettingsPage_TitleBarVisibilityLabelText}">
                         <ToggleSwitch IsChecked="{Binding TitleBarVisibility, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_SidebarPlacementLabelText}">
-                        <TabStrip
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <TabStrip
                             ItemsPanel="{StaticResource EqualWidthTabStripPanel}"
                             SelectedIndex="{Binding SidebarPlacement, Mode=TwoWay}">
                             <TabStripItem>
@@ -147,8 +145,7 @@
                         </TabStrip>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_ThemeVariantLabelText}">
-                        <TabStrip
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <TabStrip
                             ItemsPanel="{StaticResource EqualWidthTabStripPanel}"
                             SelectedIndex="{Binding DarkMode, Mode=TwoWay}">
                             <TabStripItem>
@@ -187,8 +184,7 @@
                         </TabStrip>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_AccentColorLabelText}">
-                        <ComboBox
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <ComboBox
                             ItemsSource="{Binding AccentColors}"
                             SelectedIndex="{Binding AccentColor, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
@@ -210,8 +206,7 @@
                         </ComboBox>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_CornerStyleLabelText}">
-                        <ComboBox
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <ComboBox
                             ItemsSource="{Binding CornerStyles}"
                             SelectedIndex="{Binding CornerStyle, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
@@ -222,8 +217,7 @@
                         </ComboBox>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_BackgroundStyleLabelText}">
-                        <ComboBox
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <ComboBox
                             ItemsSource="{Binding BackgroundStyles}"
                             SelectedItem="{Binding BackgroundMode, Mode=TwoWay}">
                             <ComboBox.SelectionBoxItemTemplate>
@@ -255,8 +249,7 @@
                     <app:SettingsEntryItem
                         Header="{x:Static lang:Resources.SettingsPage_LanguageLabelText}"
                         Description="{x:Static lang:Resources.SettingsPage_RestartRequiredLabelText}">
-                        <ComboBox
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <ComboBox
                             ItemsSource="{Binding Languages}"
                             SelectedItem="{Binding Language, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
@@ -284,8 +277,7 @@
                     Icon="TextFont"
                     Summary="{x:Static lang:Resources.SettingsPage_FontSubtitle}">
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_MainFontLabelText}">
-                        <Border
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <Border
                             Padding="3"
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
@@ -305,8 +297,7 @@
                         </Border>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_CodeFontLabelText}">
-                        <Border
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <Border
                             Padding="3"
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
@@ -326,8 +317,7 @@
                         </Border>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_LogFontLabelText}">
-                        <Border
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <Border
                             Padding="3"
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
@@ -394,8 +384,7 @@
                     Icon="Joystick"
                     Summary="{x:Static lang:Resources.SettingsPage_GameDefaultsSubtitle}">
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_JavaMaxMemoryLabelText}">
-                        <NumericUpDown
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <NumericUpDown
                             Increment="512"
                             Minimum="0"
                             PlaceholderText="{x:Static lang:Resources.SettingsPage_JavaMaxMemoryPlaceholder}"
@@ -414,22 +403,19 @@
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
                         Header="{x:Static lang:Resources.SettingsPage_JavaAdditionalArgumentsLabelText}">
-                        <TextBox
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <TextBox
                             PlaceholderText="{x:Static lang:Resources.SettingsPage_JavaAdditionalArgumentsPlaceholder}"
                             Text="{Binding JavaAdditionalArguments, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
                         Header="{x:Static lang:Resources.SettingsPage_CommandWrapperLabelText}"
                         Description="{x:Static lang:Resources.SettingsPage_CommandWrapperDescriptionText}">
-                        <TextBox
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <TextBox
                             PlaceholderText="{x:Static lang:Resources.SettingsPage_CommandWrapperPlaceholder}"
                             Text="{Binding CommandWrapper, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_WindowInitialSizeLabelText}">
-                        <Grid
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <Grid
                             ColumnDefinitions="*,*" ColumnSpacing="6">
                             <TextBox
                                 Grid.Column="0"
@@ -472,8 +458,7 @@
                     <app:SettingsEntryItem
                         Header="{x:Static lang:Resources.SettingsPage_ProxyEnabledLabelText}"
                         Description="{x:Static lang:Resources.SettingsPage_RestartRequiredLabelText}">
-                        <Border
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <Border
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
                             <Grid
@@ -691,12 +676,11 @@
                             </Grid>
                         </app:Plaque>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_UpdateAutoCheckLabelText}">
+                    <app:SettingsEntryItem HorizontalContentAlignment="Right" Header="{x:Static lang:Resources.SettingsPage_UpdateAutoCheckLabelText}">
                         <ToggleSwitch IsChecked="{Binding AutoCheckUpdates, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_UpdateSourceLabelText}">
-                        <TabStrip
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <TabStrip
                             ItemsPanel="{StaticResource EqualWidthTabStripPanel}"
                             SelectedIndex="{Binding UpdateSource, Mode=TwoWay}">
                             <TabStripItem>
@@ -732,8 +716,7 @@
                     <app:SettingsEntryItem
                         IsVisible="{Binding UpdateSource, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=1}"
                         Header="{x:Static lang:Resources.SettingsPage_MirrorChyanCdkLabelText}">
-                        <TextBox
-                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                        <TextBox
                             PasswordChar="*"
                             PlaceholderText="{x:Static lang:Resources.SettingsPage_MirrorChyanCdkPlaceholder}"
                             Text="{Binding MirrorChyanCdk, Mode=TwoWay}" />

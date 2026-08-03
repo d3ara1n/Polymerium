@@ -13,7 +13,6 @@
     x:DataType="app:InstancePropertiesPageModel"
     mc:Ignorable="d">
     <app:Subpage.Resources>
-        <x:Double x:Key="SettingsControlMinWidth">280</x:Double>
     </app:Subpage.Resources>
     <StackPanel
         MaxWidth="1440"
@@ -144,7 +143,6 @@
             </Button>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_JavaHomeLabelText}">
                 <TextBox
-                    MinWidth="{StaticResource SettingsControlMinWidth}"
                     PlaceholderText="{Binding JavaHomeWatermark}"
                     Text="{Binding JavaHomeOverride, Mode=TwoWay, FallbackValue={x:Null}}">
                     <TextBox.InnerRightContent>
@@ -173,7 +171,6 @@
             </app:SettingsEntryItem>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_JavaMaxMemoryLabelText}">
                 <NumericUpDown
-                    MinWidth="{StaticResource SettingsControlMinWidth}"
                     Increment="512"
                     Minimum="0"
                     PlaceholderText="{Binding JavaMaxMemoryWatermark}"
@@ -192,7 +189,6 @@
             </app:SettingsEntryItem>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_JavaAdditionalArgumentsLabelText}">
                 <TextBox
-                    MinWidth="{StaticResource SettingsControlMinWidth}"
                     PlaceholderText="{Binding JavaAdditionalArgumentsWatermark}"
                     Text="{Binding JavaAdditionalArgumentsOverride, Mode=TwoWay}" />
             </app:SettingsEntryItem>
@@ -200,13 +196,11 @@
                 Header="{x:Static lang:Resources.InstancePropertiesPage_CommandWrapperLabelText}"
                 Description="{x:Static lang:Resources.InstancePropertiesPage_CommandWrapperDescriptionText}">
                 <TextBox
-                    MinWidth="{StaticResource SettingsControlMinWidth}"
                     PlaceholderText="{Binding CommandWrapperWatermark}"
                     Text="{Binding CommandWrapperOverride, Mode=TwoWay}" />
             </app:SettingsEntryItem>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_WindowInitialSizeLabelText}">
                 <Grid
-                    MinWidth="{StaticResource SettingsControlMinWidth}"
                     ColumnDefinitions="*,7,*">
                     <TextBox
                         Grid.Column="0"
@@ -242,7 +236,6 @@
             </app:SettingsEntryItem>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_QuickConnectLabelText}">
                 <TextBox
-                    MinWidth="{StaticResource SettingsControlMinWidth}"
                     PlaceholderText="{Binding QuickConnectAddressWatermark}"
                     Text="{Binding QuickConnectAddressOverride, Mode=TwoWay}" />
             </app:SettingsEntryItem>

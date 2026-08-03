@@ -6,13 +6,17 @@
         x:Key="{x:Type app:SettingsEntryItem}"
         TargetType="app:SettingsEntryItem">
         <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Padding="{TemplateBinding Padding}">
                     <Grid
                         MinHeight="36"
-                        ColumnDefinitions="*,Auto"
                         ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" MaxWidth="480" MinWidth="280" />
+                        </Grid.ColumnDefinitions>
                         <StackPanel
                             Grid.Column="0"
                             VerticalAlignment="Center"
