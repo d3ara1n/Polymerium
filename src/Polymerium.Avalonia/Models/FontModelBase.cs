@@ -81,29 +81,3 @@ public abstract class FontModelBase
         }
     }
 }
-
-// 用默认字体（未自定义）。Raw 为空串，Preview 为 fallback。
-public sealed class DefaultFontModel(FontFamily fallback) : FontModelBase(fallback, true)
-{
-    public override string Raw => string.Empty;
-}
-
-// 系统已安装字体。失败（family 不存在）时 IsAvailable=false、Preview 回退。
-public sealed class SystemFontModel(string familyName, FontFamily preview, bool available)
-    : FontModelBase(preview, available)
-{
-    public string FamilyName { get; } = familyName;
-
-    public override string Raw => FamilyName;
-}
-
-// 外部字体文件。失败（文件缺失/损坏）时 IsAvailable=false、Preview 回退、FamilyName 退化为文件名。
-public sealed class FileFontModel(string path, string familyName, FontFamily preview, bool available)
-    : FontModelBase(preview, available)
-{
-    public string FilePath { get; } = path;
-
-    public string FamilyName { get; } = familyName;
-
-    public override string Raw => $"{FilePath}#{FamilyName}";
-}
