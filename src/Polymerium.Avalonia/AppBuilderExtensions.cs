@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.Fonts;
+using Polymerium.Avalonia.Models;
 
 namespace Polymerium.Avalonia;
 
@@ -13,6 +14,7 @@ public static class AppBuilderExtensions
             {
                 fontManager.AddFontCollection(new EmbeddedFontCollection(new("fonts:AlimamaFangYuanTi"),
                                                                          new("avares://Polymerium/Assets/Fonts/AlimamaFangYuanTi")));
+                fontManager.AddFontCollection(RuntimeFontCollection.Instance);
             })
            .With(new FontManagerOptions { DefaultFamilyName = "fonts:AlimamaFangYuanTi#AlimamaFangYuanTi" });
         return appBuilder;

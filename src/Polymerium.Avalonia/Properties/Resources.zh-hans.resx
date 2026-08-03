@@ -525,6 +525,54 @@
     <data name="SettingsPage_FontLabelText" xml:space="preserve">
         <value>字体</value>
     </data>
+    <data name="SettingsPage_FontTitle" xml:space="preserve">
+        <value>字体</value>
+    </data>
+    <data name="SettingsPage_FontSubtitle" xml:space="preserve">
+        <value>自定义界面、代码与日志使用的字体</value>
+    </data>
+    <data name="SettingsPage_MainFontLabelText" xml:space="preserve">
+        <value>界面字体</value>
+    </data>
+    <data name="SettingsPage_CodeFontLabelText" xml:space="preserve">
+        <value>代码字体</value>
+    </data>
+    <data name="SettingsPage_LogFontLabelText" xml:space="preserve">
+        <value>日志字体</value>
+    </data>
+    <data name="SettingsPage_FontDefaultText" xml:space="preserve">
+        <value>使用默认字体</value>
+    </data>
+    <data name="FontPickerDialog_Title" xml:space="preserve">
+        <value>选择字体</value>
+    </data>
+    <data name="FontPickerDialog_UnavailableText" xml:space="preserve">
+        <value>字体不可用</value>
+    </data>
+    <data name="FontPickerDialog_CurrentFontLabelText" xml:space="preserve">
+        <value>当前字体</value>
+    </data>
+    <data name="FontPickerDialog_NoneSelectedText" xml:space="preserve">
+        <value>未选择字体</value>
+    </data>
+    <data name="FontPickerDialog_ChooseFileButtonText" xml:space="preserve">
+        <value>选择字体文件</value>
+    </data>
+    <data name="FontPickerDialog_ChooseFileTitle" xml:space="preserve">
+        <value>选择字体文件</value>
+    </data>
+    <data name="FontPickerDialog_FontFileFilter" xml:space="preserve">
+        <value>字体文件</value>
+    </data>
+    <data name="FontPickerDialog_SampleText" xml:space="preserve">
+        <value>AaBb 永和 0123</value>
+    </data>
+    <data name="FontPickerDialog_UseDefaultButtonText" xml:space="preserve">
+        <value>重置回默认</value>
+    </data>
+    <data name="FontPickerDialog_SearchPlaceholderText" xml:space="preserve">
+        <value>搜索字体…</value>
+    </data>
     <data name="SettingsPage_JavaTitle" xml:space="preserve">
         <value>Java 预设</value>
     </data>

@@ -1064,6 +1064,86 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("SettingsPage_FontLabelText", resourceCulture);
             }
         }
+        public static string SettingsPage_FontTitle {
+            get {
+                return ResourceManager.GetString("SettingsPage_FontTitle", resourceCulture);
+            }
+        }
+        public static string SettingsPage_FontSubtitle {
+            get {
+                return ResourceManager.GetString("SettingsPage_FontSubtitle", resourceCulture);
+            }
+        }
+        public static string SettingsPage_MainFontLabelText {
+            get {
+                return ResourceManager.GetString("SettingsPage_MainFontLabelText", resourceCulture);
+            }
+        }
+        public static string SettingsPage_CodeFontLabelText {
+            get {
+                return ResourceManager.GetString("SettingsPage_CodeFontLabelText", resourceCulture);
+            }
+        }
+        public static string SettingsPage_LogFontLabelText {
+            get {
+                return ResourceManager.GetString("SettingsPage_LogFontLabelText", resourceCulture);
+            }
+        }
+        public static string SettingsPage_FontDefaultText {
+            get {
+                return ResourceManager.GetString("SettingsPage_FontDefaultText", resourceCulture);
+            }
+        }
+        public static string FontPickerDialog_Title {
+            get {
+                return ResourceManager.GetString("FontPickerDialog_Title", resourceCulture);
+            }
+        }
+        public static string FontPickerDialog_UnavailableText {
+            get {
+                return ResourceManager.GetString("FontPickerDialog_UnavailableText", resourceCulture);
+            }
+        }
+        public static string FontPickerDialog_CurrentFontLabelText {
+            get {
+                return ResourceManager.GetString("FontPickerDialog_CurrentFontLabelText", resourceCulture);
+            }
+        }
+        public static string FontPickerDialog_NoneSelectedText {
+            get {
+                return ResourceManager.GetString("FontPickerDialog_NoneSelectedText", resourceCulture);
+            }
+        }
+        public static string FontPickerDialog_ChooseFileButtonText {
+            get {
+                return ResourceManager.GetString("FontPickerDialog_ChooseFileButtonText", resourceCulture);
+            }
+        }
+        public static string FontPickerDialog_ChooseFileTitle {
+            get {
+                return ResourceManager.GetString("FontPickerDialog_ChooseFileTitle", resourceCulture);
+            }
+        }
+        public static string FontPickerDialog_FontFileFilter {
+            get {
+                return ResourceManager.GetString("FontPickerDialog_FontFileFilter", resourceCulture);
+            }
+        }
+        public static string FontPickerDialog_SampleText {
+            get {
+                return ResourceManager.GetString("FontPickerDialog_SampleText", resourceCulture);
+            }
+        }
+        public static string FontPickerDialog_UseDefaultButtonText {
+            get {
+                return ResourceManager.GetString("FontPickerDialog_UseDefaultButtonText", resourceCulture);
+            }
+        }
+        public static string FontPickerDialog_SearchPlaceholderText {
+            get {
+                return ResourceManager.GetString("FontPickerDialog_SearchPlaceholderText", resourceCulture);
+            }
+        }
         
         public static string SettingsPage_JavaTitle {
             get {

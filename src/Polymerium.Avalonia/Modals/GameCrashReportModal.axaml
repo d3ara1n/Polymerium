@@ -332,7 +332,7 @@
                             HorizontalScrollBarVisibility="Auto">
                             <TextBlock
                                 Margin="16"
-                                FontFamily="Cascadia Code, Consolas, Courier New, monospace"
+                                FontFamily="{DynamicResource LogFontFamily}"
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{Binding $parent[app:GameCrashReportModal].Report.LastLogLines, FallbackValue={x:Null}}"

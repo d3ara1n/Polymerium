@@ -534,6 +534,54 @@
     <data name="SettingsPage_FontLabelText" xml:space="preserve">
         <value>Font</value>
     </data>
+    <data name="SettingsPage_FontTitle" xml:space="preserve">
+        <value>Font</value>
+    </data>
+    <data name="SettingsPage_FontSubtitle" xml:space="preserve">
+        <value>Customize fonts for the interface, code, and logs</value>
+    </data>
+    <data name="SettingsPage_MainFontLabelText" xml:space="preserve">
+        <value>Interface font</value>
+    </data>
+    <data name="SettingsPage_CodeFontLabelText" xml:space="preserve">
+        <value>Code font</value>
+    </data>
+    <data name="SettingsPage_LogFontLabelText" xml:space="preserve">
+        <value>Log font</value>
+    </data>
+    <data name="SettingsPage_FontDefaultText" xml:space="preserve">
+        <value>Using default font</value>
+    </data>
+    <data name="FontPickerDialog_Title" xml:space="preserve">
+        <value>Choose Font</value>
+    </data>
+    <data name="FontPickerDialog_UnavailableText" xml:space="preserve">
+        <value>Font unavailable</value>
+    </data>
+    <data name="FontPickerDialog_CurrentFontLabelText" xml:space="preserve">
+        <value>Current font</value>
+    </data>
+    <data name="FontPickerDialog_NoneSelectedText" xml:space="preserve">
+        <value>No font selected</value>
+    </data>
+    <data name="FontPickerDialog_ChooseFileButtonText" xml:space="preserve">
+        <value>Choose font file</value>
+    </data>
+    <data name="FontPickerDialog_ChooseFileTitle" xml:space="preserve">
+        <value>Choose a font file</value>
+    </data>
+    <data name="FontPickerDialog_FontFileFilter" xml:space="preserve">
+        <value>Font files</value>
+    </data>
+    <data name="FontPickerDialog_SampleText" xml:space="preserve">
+        <value>AaBb 永和 0123</value>
+    </data>
+    <data name="FontPickerDialog_UseDefaultButtonText" xml:space="preserve">
+        <value>Use default</value>
+    </data>
+    <data name="FontPickerDialog_SearchPlaceholderText" xml:space="preserve">
+        <value>Search fonts</value>
+    </data>
     <data name="SettingsPage_JavaTitle" xml:space="preserve">
         <value>Java Presets</value>
     </data>

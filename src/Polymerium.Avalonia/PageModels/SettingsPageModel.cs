@@ -27,7 +27,8 @@ public partial class SettingsPageModel : ViewModelBase
         UpdateService updateService,
         UpdateManager updateManager,
         GarbageCollector garbageCollector,
-        ThemeService themeService)
+        ThemeService themeService,
+        FontService fontService)
     {
         OverlayService = overlayService;
         _configurationService = configurationService;
@@ -38,6 +39,7 @@ public partial class SettingsPageModel : ViewModelBase
         _updateManager = updateManager;
         _garbageCollector = garbageCollector;
         _themeService = themeService;
+        _fontService = fontService;
 
         SuperPowerActivated = configurationService.Value.ApplicationSuperPowerActivated;
         TitleBarVisibility = configurationService.Value.ApplicationTitleBarVisibility;
@@ -84,6 +86,9 @@ public partial class SettingsPageModel : ViewModelBase
 
         UpdateProxyStatusText();
 
+        MainFontSelection = _fontService.Main;
+        CodeFontSelection = _fontService.Code;
+        LogFontSelection = _fontService.Log;
         SyncUpdateState();
     }
 
@@ -103,6 +108,7 @@ public partial class SettingsPageModel : ViewModelBase
     private readonly UpdateManager _updateManager;
     private readonly GarbageCollector _garbageCollector;
     private readonly ThemeService _themeService;
+    private readonly FontService _fontService;
 
     #endregion
 
@@ -547,6 +553,54 @@ public partial class SettingsPageModel : ViewModelBase
             ProxyPort = newSettings.Port;
             ProxyUsername = newSettings.Username;
             ProxyPassword = newSettings.Password;
+        }
+    }
+
+    #endregion
+    #region Font Settings
+
+    [ObservableProperty]
+    public partial FontModelBase MainFontSelection { get; set; }
+
+    [ObservableProperty]
+    public partial FontModelBase CodeFontSelection { get; set; }
+
+    [ObservableProperty]
+    public partial FontModelBase LogFontSelection { get; set; }
+
+    [RelayCommand]
+    private async Task OpenMainFontPickerAsync()
+    {
+        var dialog = new FontPickerDialog();
+        dialog.Initialize(MainFontSelection, FontService.MainFallback);
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is FontModelBase selection)
+        {
+            MainFontSelection = selection;
+            _fontService.SetMain(selection);
+        }
+    }
+
+    [RelayCommand]
+    private async Task OpenCodeFontPickerAsync()
+    {
+        var dialog = new FontPickerDialog();
+        dialog.Initialize(CodeFontSelection, FontService.CodeFallback);
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is FontModelBase selection)
+        {
+            CodeFontSelection = selection;
+            _fontService.SetCode(selection);
+        }
+    }
+
+    [RelayCommand]
+    private async Task OpenLogFontPickerAsync()
+    {
+        var dialog = new FontPickerDialog();
+        dialog.Initialize(LogFontSelection, FontService.LogFallback);
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is FontModelBase selection)
+        {
+            LogFontSelection = selection;
+            _fontService.SetLog(selection);
         }
     }
 

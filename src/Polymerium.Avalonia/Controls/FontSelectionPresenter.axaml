@@ -1,0 +1,108 @@
+<UserControl
+    x:Class="Polymerium.Avalonia.Controls.FontSelectionPresenter"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:local="clr-namespace:Polymerium.Avalonia.Controls"
+    xmlns:models="clr-namespace:Polymerium.Avalonia.Models">
+    <!--  Selection 恒非 null（DefaultFontModel 兜底），按派生类型直接匹配 DataTemplate。  -->
+    <ContentControl Content="{Binding Selection, RelativeSource={RelativeSource AncestorType=local:FontSelectionPresenter}}">
+        <ContentControl.DataTemplates>
+            <!--  默认：居中淡淡引导，无卡片  -->
+            <DataTemplate DataType="models:DefaultFontModel">
+                <StackPanel
+                    Margin="11"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="8">
+                    <fi:SymbolIcon
+                        VerticalAlignment="Center"
+                        FontSize="{StaticResource MediumFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Symbol="ColorBackground" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.SettingsPage_FontDefaultText}" />
+                </StackPanel>
+            </DataTemplate>
+            <!--  系统字体：信息卡片  -->
+            <DataTemplate DataType="models:SystemFontModel">
+                <Border
+                    Padding="12,8"
+                    Background="{StaticResource OverlaySolidBackgroundBrush}"
+                    CornerRadius="{StaticResource SmallCornerRadius}">
+                    <StackPanel Spacing="4">
+                        <TextBlock
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.FontPickerDialog_CurrentFontLabelText}" />
+                        <TextBlock
+                            FontFamily="{Binding Preview}"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{Binding FamilyName}"
+                            TextTrimming="CharacterEllipsis" />
+                        <StackPanel
+                            IsVisible="{Binding !IsAvailable}"
+                            Orientation="Horizontal"
+                            Spacing="4">
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource DangerForegroundBrush}"
+                                Symbol="Warning" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource DangerForegroundBrush}"
+                                Text="{x:Static lang:Resources.FontPickerDialog_UnavailableText}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </DataTemplate>
+            <!--  文件字体：信息卡片 + 文件来源标记  -->
+            <DataTemplate DataType="models:FileFontModel">
+                <Border
+                    Padding="12,8"
+                    Background="{StaticResource OverlaySolidBackgroundBrush}"
+                    CornerRadius="{StaticResource SmallCornerRadius}">
+                    <StackPanel Spacing="4">
+                        <TextBlock
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{x:Static lang:Resources.FontPickerDialog_CurrentFontLabelText}" />
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <fi:SymbolIcon
+                                VerticalAlignment="Center"
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Symbol="Document" />
+                            <TextBlock
+                                FontFamily="{Binding Preview}"
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{Binding FamilyName}"
+                                TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
+                        <TextBlock
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Binding FilePath}"
+                            TextTrimming="CharacterEllipsis" />
+                        <StackPanel
+                            IsVisible="{Binding !IsAvailable}"
+                            Orientation="Horizontal"
+                            Spacing="4">
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource DangerForegroundBrush}"
+                                Symbol="Warning" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource DangerForegroundBrush}"
+                                Text="{x:Static lang:Resources.FontPickerDialog_UnavailableText}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </DataTemplate>
+        </ContentControl.DataTemplates>
+    </ContentControl>
+</UserControl>

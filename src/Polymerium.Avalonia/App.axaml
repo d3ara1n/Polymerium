@@ -12,9 +12,15 @@
         <StyleInclude Source="avares://Polymerium/Themes/Bundle.axaml" />
         <StyleInclude Source="avares://Huskui.Avalonia/Themes/Addons.InlineUIContainerAlignment.axaml" />
         <StyleInclude Source="avares://Huskui.Avalonia/Themes/Addons.NoAutoScrollToSelectedItem.axaml" />
+        <Style Selector=":is(Control)">
+            <Setter Property="TextElement.FontFamily" Value="{DynamicResource MainFontFamily}" />
+        </Style>
     </Application.Styles>
     <Application.Resources>
         <ResourceDictionary>
+            <FontFamily x:Key="MainFontFamily">fonts:AlimamaFangYuanTi#AlimamaFangYuanTi</FontFamily>
+            <FontFamily x:Key="CodeFontFamily">Cascadia Code, Consolas, Courier New, monospace</FontFamily>
+            <FontFamily x:Key="LogFontFamily">Cascadia Code, Consolas, monospace</FontFamily>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
                     <ImageBrush
