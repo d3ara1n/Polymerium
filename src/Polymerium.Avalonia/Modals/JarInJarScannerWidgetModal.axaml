@@ -10,10 +10,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:modalModels="clr-namespace:Polymerium.Avalonia.ModalModels"
     xmlns:models="clr-namespace:Polymerium.Avalonia.Models"
+    Width="560"
     Padding="8"
     d:DesignHeight="520"
     d:DesignWidth="720"
-    Width="560"
     x:DataType="modalModels:JarInJarScannerWidgetModalModel"
     mc:Ignorable="d">
     <husk:Modal.Resources>

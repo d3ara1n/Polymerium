@@ -87,9 +87,12 @@ public class FavoriteRepository(
                                                                }));
     }
 
-    public Task<Package> IdentifyAsync(ReadOnlyMemory<byte> content) => throw new NotSupportedException("favorite repositories cannot identify files");
+    public Task<Package> IdentifyAsync(ReadOnlyMemory<byte> content) =>
+        throw new NotSupportedException("favorite repositories cannot identify files");
 
-    public Task<IReadOnlyList<Package?>> IdentifyBatchAsync(IEnumerable<ReadOnlyMemory<byte>> contents, CancellationToken cancellationToken = default) =>
+    public Task<IReadOnlyList<Package?>> IdentifyBatchAsync(
+        IEnumerable<ReadOnlyMemory<byte>> contents,
+        CancellationToken cancellationToken = default) =>
         throw new NotSupportedException("favorite repositories cannot identify files");
 
     public Task<Project> QueryAsync(ScopedProjectIdentifier id) => throw new NotImplementedException();
@@ -116,7 +119,8 @@ public class FavoriteRepository(
         throw new NotSupportedException("favorite repositories cannot recognize urls");
 
     public Task<BatchResolveResult<Uri, PackageIdentifier>> RecognizeBatchAsync(
-        IEnumerable<Uri> uris, CancellationToken cancellationToken = default) =>
+        IEnumerable<Uri> uris,
+        CancellationToken cancellationToken = default) =>
         throw new NotSupportedException("favorite repositories cannot recognize urls");
 
     #endregion

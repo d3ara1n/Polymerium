@@ -12,17 +12,17 @@ public abstract class FontModelBase
 {
     private static HashSet<string>? _systemFamilies;
 
-    public abstract string Raw { get; }
-
-    public FontFamily Preview { get; }
-
-    public bool IsAvailable { get; }
-
     private protected FontModelBase(FontFamily preview, bool available)
     {
         Preview = preview;
         IsAvailable = available;
     }
+
+    public abstract string Raw { get; }
+
+    public FontFamily Preview { get; }
+
+    public bool IsAvailable { get; }
 
     // 系统已安装字体的 family name 集合（大小写不敏感，SkiaSharp 枚举，启动后不变）。
     public static ICollection<string> SystemFontFamilies => _systemFamilies ??= EnumerateSystemFonts();
@@ -54,8 +54,8 @@ public abstract class FontModelBase
     {
         var family = new FontFamily(familyName);
         // 用 TryGetGlyphTypeface 单查而非枚举全部系统字体，避免启动时同步阻塞。
-        var available = FontManager.Current.TryGetGlyphTypeface(new Typeface(family), out _);
-        return new SystemFontModel(familyName, available ? family : fallback, available);
+        var available = FontManager.Current.TryGetGlyphTypeface(new(family), out _);
+        return new(familyName, available ? family : fallback, available);
     }
 
     public static FileFontModel FromFile(string path, FontFamily fallback)
@@ -64,7 +64,7 @@ public abstract class FontModelBase
         {
             if (!File.Exists(path))
             {
-                return new FileFontModel(path, System.IO.Path.GetFileName(path), fallback, false);
+                return new(path, Path.GetFileName(path), fallback, false);
             }
 
             using var sk = SKTypeface.FromFile(path);
@@ -73,11 +73,11 @@ public abstract class FontModelBase
             using var stream = File.OpenRead(path);
             RuntimeFontCollection.Instance.TryAddGlyphTypeface(stream, out _);
 
-            return new FileFontModel(path, familyName, new FontFamily($"{RuntimeFontCollection.Scheme}#{familyName}"), true);
+            return new(path, familyName, new($"{RuntimeFontCollection.Scheme}#{familyName}"), true);
         }
         catch
         {
-            return new FileFontModel(path, System.IO.Path.GetFileName(path), fallback, false);
+            return new(path, Path.GetFileName(path), fallback, false);
         }
     }
 }

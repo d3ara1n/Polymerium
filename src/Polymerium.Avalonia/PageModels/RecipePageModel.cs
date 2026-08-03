@@ -10,8 +10,6 @@ using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
-using TridentCore.Abstractions.Repositories;
-using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Abstractions.Utilities;
 using TridentCore.Pref;
 
@@ -27,19 +25,6 @@ public partial class RecipePageModel(
     public string Id { get; } = context.Parameter!;
 
     public ObservableCollection<RecipeItemModel> Items { get; } = [];
-
-    #region Reactive
-
-    [ObservableProperty]
-    public partial string Name { get; set; } = string.Empty;
-
-    [ObservableProperty]
-    public partial string? Description { get; set; }
-
-    [ObservableProperty]
-    public partial string? NewItemPref { get; set; }
-
-    #endregion
 
     #region Overrides
 
@@ -66,8 +51,8 @@ public partial class RecipePageModel(
         {
             var key = (item.Label, item.Namespace, item.ProjectId);
             Items.Add(byKey.TryGetValue(key, out var reused)
-                ? reused
-                : new(item.Id, item.Label, item.Namespace, item.ProjectId) { Note = item.Note });
+                          ? reused
+                          : new(item.Id, item.Label, item.Namespace, item.ProjectId) { Note = item.Note });
         }
 
         await ResolveItemInfoAsync(token);
@@ -85,7 +70,8 @@ public partial class RecipePageModel(
         {
             var identifiers = pending
                              .Select(x => new ProjectIdentifier(x.Label,
-                                                                PersistenceService.NormalizeFavoriteNamespace(x.Namespace),
+                                                                PersistenceService
+                                                                   .NormalizeFavoriteNamespace(x.Namespace),
                                                                 x.ProjectId))
                              .Distinct()
                              .ToList();
@@ -108,6 +94,19 @@ public partial class RecipePageModel(
             // NOTE: Info 是渐进增强，解析失败时保留原始标识即可，不阻断页面。
         }
     }
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial string Name { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string? Description { get; set; }
+
+    [ObservableProperty]
+    public partial string? NewItemPref { get; set; }
+
+    #endregion
 
     #region Commands
 
@@ -148,8 +147,7 @@ public partial class RecipePageModel(
     [RelayCommand]
     private void Export() =>
         notificationService.PopMessage(Resources.RecipesPage_ComingSoonNotificationMessage,
-                                       Resources.RecipePage_ExportButtonText,
-                                       GrowlLevel.Information);
+                                       Resources.RecipePage_ExportButtonText);
 
     [RelayCommand]
     private void GoBack() => navigationService.GoBack();

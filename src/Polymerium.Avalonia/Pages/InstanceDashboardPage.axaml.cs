@@ -9,21 +9,14 @@ namespace Polymerium.Avalonia.Pages;
 public partial class InstanceDashboardPage : Subpage
 {
     public static readonly DirectProperty<InstanceDashboardPage, bool> IsAutoScrollProperty =
-        AvaloniaProperty.RegisterDirect<InstanceDashboardPage, bool>(
-            nameof(IsAutoScroll),
-            o => o.IsAutoScroll,
-            (o, v) => o.IsAutoScroll = v,
-            true);
+        AvaloniaProperty.RegisterDirect<InstanceDashboardPage, bool>(nameof(IsAutoScroll),
+                                                                     o => o.IsAutoScroll,
+                                                                     (o, v) => o.IsAutoScroll = v,
+                                                                     true);
 
-    public bool IsAutoScroll
-    {
-        get;
-        set => SetAndRaise(IsAutoScrollProperty, ref field, value);
-    } = true;
+    private int _disableDebounce; // 关闭跟随的滞回计数
 
-    private bool _scrollPending;   // 钉底请求合并标志，配合 RequestScrollToEnd 做节流
-
-    private int _disableDebounce;  // 关闭跟随的滞回计数
+    private bool _scrollPending; // 钉底请求合并标志，配合 RequestScrollToEnd 做节流
 
     public InstanceDashboardPage()
     {
@@ -31,6 +24,12 @@ public partial class InstanceDashboardPage : Subpage
         ((INotifyCollectionChanged)LogList.Items).CollectionChanged += OnItemsChanged;
         LogScroller.ScrollChanged += OnLogScrollChanged;
     }
+
+    public bool IsAutoScroll
+    {
+        get;
+        set => SetAndRaise(IsAutoScrollProperty, ref field, value);
+    } = true;
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {

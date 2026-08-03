@@ -4,11 +4,7 @@ using TridentCore.Abstractions.Repositories.Resources;
 
 namespace Polymerium.Avalonia.Models;
 
-public sealed partial class RecipeItemModel(
-    string id,
-    string label,
-    string? ns,
-    string projectId) : ModelBase
+public sealed partial class RecipeItemModel(string id, string label, string? ns, string projectId) : ModelBase
 {
     public string Id { get; } = id;
     public string Label { get; set; } = label;

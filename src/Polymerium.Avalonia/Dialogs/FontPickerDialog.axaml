@@ -1,4 +1,4 @@
-<husk:Dialog
+﻿<husk:Dialog
     x:Class="Polymerium.Avalonia.Dialogs.FontPickerDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,7 +10,10 @@
     Title="{x:Static lang:Resources.FontPickerDialog_Title}"
     Width="380"
     IsPrimaryButtonVisible="True">
-    <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="12">
+    <Grid
+        Margin="16"
+        RowDefinitions="Auto,Auto,Auto,*"
+        RowSpacing="12">
         <!--  顶部当前选中预览（按 Selected 的派生类型走全局 DataTemplate）  -->
         <Border
             Grid.Row="0"
@@ -21,7 +24,10 @@
         </Border>
 
         <!--  操作行：用默认 + 选择字体文件  -->
-        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="8">
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="8">
             <Button
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
@@ -49,13 +55,16 @@
         <!--  系统字体列表（左字体名 + 右样例预览，均用该字体渲染）  -->
         <ListBox
             Grid.Row="3"
-            Theme="{StaticResource CleanListBoxTheme}"
             MinHeight="240"
             ItemsSource="{Binding $parent[app:FontPickerDialog].FilteredSystemFonts}"
-            SelectedItem="{Binding $parent[app:FontPickerDialog].SelectedSystemFont, Mode=TwoWay}">
+            SelectedItem="{Binding $parent[app:FontPickerDialog].SelectedSystemFont, Mode=TwoWay}"
+            Theme="{StaticResource CleanListBoxTheme}">
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="sys:String">
-                    <TextBlock Padding="8,4" Text="{Binding .}" TextTrimming="CharacterEllipsis" />
+                    <TextBlock
+                        Padding="8,4"
+                        Text="{Binding .}"
+                        TextTrimming="CharacterEllipsis" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

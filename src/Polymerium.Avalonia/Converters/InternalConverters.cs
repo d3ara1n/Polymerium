@@ -190,6 +190,6 @@ public static class InternalConverters
         return new SolidColorBrush(palette[index]);
     });
 
-    public static IValueConverter LoaderToDisplayLabel { get; } = new RelayConverter(v =>
-        v is string lurl ? LoaderHelper.ToDisplayLabel(lurl) : v);
+    public static IValueConverter LoaderToDisplayLabel { get; } =
+        new RelayConverter(v => v is string lurl ? LoaderHelper.ToDisplayLabel(lurl) : v);
 }

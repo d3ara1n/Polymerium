@@ -15,11 +15,31 @@ namespace Polymerium.Avalonia.Dialogs;
 
 public partial class FontPickerDialog : Dialog
 {
+    private List<string> _allSystemFonts = [];
     private FontFamily _fallback = new("sans-serif");
 
-    private List<string> _allSystemFonts = [];
-
     public FontPickerDialog() => InitializeComponent();
+
+    // 列表数据源：实例不变，仅填充/清空内容，ObservableCollection 的增删通知 ListBox 更新。
+    public ObservableCollection<string> FilteredSystemFonts { get; } = [];
+
+    public string? SearchText
+    {
+        get;
+        set => SetAndRaise(SearchTextProperty, ref field, value);
+    }
+
+    public string? SelectedSystemFont
+    {
+        get;
+        set => SetAndRaise(SelectedSystemFontProperty, ref field, value);
+    }
+
+    public FontModelBase? Selected
+    {
+        get;
+        set => SetAndRaise(SelectedProperty, ref field, value);
+    }
 
     protected override bool ValidateResult(object? result) => true;
 
@@ -67,46 +87,6 @@ public partial class FontPickerDialog : Dialog
         }
     }
 
-    #region Avalonia Properties
-
-    public static readonly DirectProperty<FontPickerDialog, FontModelBase?> SelectedProperty =
-        AvaloniaProperty.RegisterDirect<FontPickerDialog, FontModelBase?>(nameof(Selected),
-            o => o.Selected,
-            (o, v) => o.Selected = v);
-
-    public static readonly DirectProperty<FontPickerDialog, string?> SearchTextProperty =
-        AvaloniaProperty.RegisterDirect<FontPickerDialog, string?>(nameof(SearchText),
-            o => o.SearchText,
-            (o, v) => o.SearchText = v);
-
-    public static readonly DirectProperty<FontPickerDialog, string?> SelectedSystemFontProperty =
-        AvaloniaProperty.RegisterDirect<FontPickerDialog, string?>(nameof(SelectedSystemFont),
-            o => o.SelectedSystemFont,
-            (o, v) => o.SelectedSystemFont = v);
-
-    #endregion
-
-    // 列表数据源：实例不变，仅填充/清空内容，ObservableCollection 的增删通知 ListBox 更新。
-    public ObservableCollection<string> FilteredSystemFonts { get; } = [];
-
-    public string? SearchText
-    {
-        get;
-        set => SetAndRaise(SearchTextProperty, ref field, value);
-    }
-
-    public string? SelectedSystemFont
-    {
-        get;
-        set => SetAndRaise(SelectedSystemFontProperty, ref field, value);
-    }
-
-    public FontModelBase? Selected
-    {
-        get;
-        set => SetAndRaise(SelectedProperty, ref field, value);
-    }
-
     [RelayCommand]
     private void UseDefault()
     {
@@ -123,12 +103,14 @@ public partial class FontPickerDialog : Dialog
             return;
         }
 
-        var result = await storage.OpenFilePickerAsync(new FilePickerOpenOptions
+        var result = await storage.OpenFilePickerAsync(new()
         {
-            Title = Properties.Resources.FontPickerDialog_ChooseFileTitle,
+            Title = Properties.Resources
+                              .FontPickerDialog_ChooseFileTitle,
             FileTypeFilter =
             [
-                new FilePickerFileType(Properties.Resources.FontPickerDialog_FontFileFilter)
+                new(Properties.Resources
+                              .FontPickerDialog_FontFileFilter)
                 {
                     Patterns = ["*.ttf", "*.otf", "*.ttc"]
                 }
@@ -142,4 +124,23 @@ public partial class FontPickerDialog : Dialog
             SelectedSystemFont = null;
         }
     }
+
+    #region Avalonia Properties
+
+    public static readonly DirectProperty<FontPickerDialog, FontModelBase?> SelectedProperty =
+        AvaloniaProperty.RegisterDirect<FontPickerDialog, FontModelBase?>(nameof(Selected),
+                                                                          o => o.Selected,
+                                                                          (o, v) => o.Selected = v);
+
+    public static readonly DirectProperty<FontPickerDialog, string?> SearchTextProperty =
+        AvaloniaProperty.RegisterDirect<FontPickerDialog, string?>(nameof(SearchText),
+                                                                   o => o.SearchText,
+                                                                   (o, v) => o.SearchText = v);
+
+    public static readonly DirectProperty<FontPickerDialog, string?> SelectedSystemFontProperty =
+        AvaloniaProperty.RegisterDirect<FontPickerDialog, string?>(nameof(SelectedSystemFont),
+                                                                   o => o.SelectedSystemFont,
+                                                                   (o, v) => o.SelectedSystemFont = v);
+
+    #endregion
 }

@@ -34,13 +34,6 @@ namespace Polymerium.Avalonia.PageModels;
 
 public partial class PackageExplorerPageModel : ViewModelBase
 {
-    #region Fields
-
-    private readonly CompositeDisposable _subscriptions = new();
-    private bool _suppressSearchOnKindChange;
-
-    #endregion
-
     public PackageExplorerPageModel(
         IViewContext<string> context,
         RepositoryAgent agent,
@@ -126,6 +119,13 @@ public partial class PackageExplorerPageModel : ViewModelBase
             }
         }
     }
+
+    #endregion
+
+    #region Fields
+
+    private readonly CompositeDisposable _subscriptions = new();
+    private bool _suppressSearchOnKindChange;
 
     #endregion
 

@@ -11,11 +11,11 @@ public partial class FontSelectionPresenter : UserControl
     public static readonly StyledProperty<FontModelBase?> SelectionProperty =
         AvaloniaProperty.Register<FontSelectionPresenter, FontModelBase?>(nameof(Selection));
 
+    public FontSelectionPresenter() => InitializeComponent();
+
     public FontModelBase? Selection
     {
         get => GetValue(SelectionProperty);
         set => SetValue(SelectionProperty, value);
     }
-
-    public FontSelectionPresenter() => InitializeComponent();
 }

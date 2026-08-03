@@ -22,9 +22,8 @@ public class ModrinthLauncherAdapter : ILauncherAdapter
     // NOTE: the Modrinth App splits profile metadata across two tables — instances holds path/name,
     //  instance_content_sets holds the game version and loader — joined by the applied content set.
     //  Positional columns: path, name, game_version, loader, loader_version.
-    private const string QUERY =
-        "SELECT i.path, i.name, c.game_version, c.loader, c.loader_version "
-        + "FROM instances i LEFT JOIN instance_content_sets c ON c.id = i.applied_content_set_id";
+    private const string QUERY = "SELECT i.path, i.name, c.game_version, c.loader, c.loader_version "
+                               + "FROM instances i LEFT JOIN instance_content_sets c ON c.id = i.applied_content_set_id";
 
     private static readonly string[] IDENTIFIABLE_SUBDIRS = ["mods", "resourcepacks", "shaderpacks"];
 
@@ -50,7 +49,9 @@ public class ModrinthLauncherAdapter : ILauncherAdapter
         return LauncherDataDirHelper.LocateUnderConventional("ModrinthApp", "com.modrinth.theseus");
     }
 
-    public async Task<IReadOnlyList<LauncherInstance>> ScanAsync(string rootDir, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<LauncherInstance>> ScanAsync(
+        string rootDir,
+        CancellationToken cancellationToken = default)
     {
         var dbPath = Path.Combine(rootDir, INSTANCE_DB);
         if (!File.Exists(dbPath))
@@ -63,11 +64,8 @@ public class ModrinthLauncherAdapter : ILauncherAdapter
 
         // One connection, one query, scoped to this scan and disposed at the end of the method — no
         // handle held between scans. Read-only so a running Modrinth App's writes never conflict.
-        var connectionString = new SqliteConnectionStringBuilder
-        {
-            DataSource = dbPath,
-            Mode = SqliteOpenMode.ReadOnly
-        }.ToString();
+        var connectionString = new SqliteConnectionStringBuilder { DataSource = dbPath, Mode = SqliteOpenMode.ReadOnly }
+           .ToString();
         await using var connection = new SqliteConnection(connectionString);
         await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
 
@@ -116,15 +114,18 @@ public class ModrinthLauncherAdapter : ILauncherAdapter
             MinecraftVersion = gameVersion,
             Loader = ResolveLoader(loaderName, loaderVersion),
             CorruptReason = string.IsNullOrEmpty(gameVersion) ? CorruptReason.MinecraftComponentMissing : null,
-            IdentifiableSubdirs = [.. IDENTIFIABLE_SUBDIRS.Where(d => Directory.Exists(Path.Combine(profileDir, d)))]
+            IdentifiableSubdirs =
+            [
+                .. IDENTIFIABLE_SUBDIRS.Where(d => Directory.Exists(Path.Combine(profileDir, d)))
+            ]
         };
     }
 
     private static string? ResolveLoader(string? loaderName, string? loaderVersion)
     {
         if (string.IsNullOrEmpty(loaderName)
-            || string.IsNullOrEmpty(loaderVersion)
-            || !LOADER_BY_NAME.TryGetValue(loaderName, out var identity))
+         || string.IsNullOrEmpty(loaderVersion)
+         || !LOADER_BY_NAME.TryGetValue(loaderName, out var identity))
         {
             return null;
         }

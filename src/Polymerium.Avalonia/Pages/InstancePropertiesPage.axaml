@@ -12,8 +12,7 @@
     d:DesignWidth="800"
     x:DataType="app:InstancePropertiesPageModel"
     mc:Ignorable="d">
-    <app:Subpage.Resources>
-    </app:Subpage.Resources>
+    <app:Subpage.Resources />
     <StackPanel
         MaxWidth="1440"
         Margin="24"
@@ -193,15 +192,14 @@
                     Text="{Binding JavaAdditionalArgumentsOverride, Mode=TwoWay}" />
             </app:SettingsEntryItem>
             <app:SettingsEntryItem
-                Header="{x:Static lang:Resources.InstancePropertiesPage_CommandWrapperLabelText}"
-                Description="{x:Static lang:Resources.InstancePropertiesPage_CommandWrapperDescriptionText}">
+                Description="{x:Static lang:Resources.InstancePropertiesPage_CommandWrapperDescriptionText}"
+                Header="{x:Static lang:Resources.InstancePropertiesPage_CommandWrapperLabelText}">
                 <TextBox
                     PlaceholderText="{Binding CommandWrapperWatermark}"
                     Text="{Binding CommandWrapperOverride, Mode=TwoWay}" />
             </app:SettingsEntryItem>
             <app:SettingsEntryItem Header="{x:Static lang:Resources.InstancePropertiesPage_WindowInitialSizeLabelText}">
-                <Grid
-                    ColumnDefinitions="*,7,*">
+                <Grid ColumnDefinitions="*,7,*">
                     <TextBox
                         Grid.Column="0"
                         PlaceholderText="{Binding WindowInitialWidthWatermark}"

@@ -57,8 +57,9 @@
         <DataTemplate
             x:Key="ScrapTemplate"
             DataType="app:ScrapModel">
-            <TextBlock TextTrimming="CharacterEllipsis"
-                       FontFamily="{DynamicResource LogFontFamily}">
+            <TextBlock
+                FontFamily="{DynamicResource LogFontFamily}"
+                TextTrimming="CharacterEllipsis">
                 <Run
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{Binding Date}" />

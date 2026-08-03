@@ -127,10 +127,7 @@ public partial class InstanceDependencyGraphModalModel(
                                           return null;
                                       }
 
-                                      return new DependencyEntry(depKey,
-                                                                 depNode.ProjectName,
-                                                                 false,
-                                                                 depNode.IsMissing);
+                                      return new DependencyEntry(depKey, depNode.ProjectName, false, depNode.IsMissing);
                                   })
                                  .Where(e => e is not null)
                                  .Cast<DependencyEntry>()

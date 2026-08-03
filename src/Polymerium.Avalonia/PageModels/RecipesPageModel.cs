@@ -53,9 +53,8 @@ public partial class RecipesPageModel(
     [RelayCommand]
     private async Task NewAsync()
     {
-        var name = await overlayService.RequestInputAsync(
-            title: Resources.RecipesPage_NewDialogTitle,
-            placeholder: "Untitled");
+        var name = await overlayService.RequestInputAsync(title: Resources.RecipesPage_NewDialogTitle,
+                                                          placeholder: "Untitled");
 
         // RequestInputAsync returns null when the user cancels; only proceed on confirm.
         if (name is null)
@@ -63,9 +62,7 @@ public partial class RecipesPageModel(
             return;
         }
 
-        var recipe = persistenceService.InsertRecipe(
-            string.IsNullOrWhiteSpace(name) ? "Untitled" : name,
-            null);
+        var recipe = persistenceService.InsertRecipe(string.IsNullOrWhiteSpace(name) ? "Untitled" : name, null);
         Items.Add(new(recipe.Id) { Name = recipe.Name });
         navigationService.Navigate<RecipePage>(recipe.Id);
     }
@@ -73,14 +70,12 @@ public partial class RecipesPageModel(
     [RelayCommand]
     private void Export(RecipeCardModel? card) =>
         notificationService.PopMessage(Resources.RecipesPage_ComingSoonNotificationMessage,
-                                       Resources.RecipesPage_ExportMenuText,
-                                       GrowlLevel.Information);
+                                       Resources.RecipesPage_ExportMenuText);
 
     [RelayCommand]
     private void Import() =>
         notificationService.PopMessage(Resources.RecipesPage_ComingSoonNotificationMessage,
-                                       Resources.RecipesPage_ImportButtonText,
-                                       GrowlLevel.Information);
+                                       Resources.RecipesPage_ImportButtonText);
 
     [RelayCommand]
     private async Task DeleteAsync(RecipeCardModel? card)
@@ -93,12 +88,10 @@ public partial class RecipesPageModel(
         var references = instanceService.GetRecipeReferences(card.Id);
         if (references.Count > 0)
         {
-            notificationService.PopMessage(
-                Resources.RecipesPage_DeleteBlockedByReferencesWarningNotificationMessage.Replace(
-                    "{0}",
-                    references.Count.ToString()),
-                Resources.RecipesPage_DeleteBlockedByReferencesWarningNotificationTitle,
-                GrowlLevel.Warning);
+            notificationService.PopMessage(Resources.RecipesPage_DeleteBlockedByReferencesWarningNotificationMessage
+                                                    .Replace("{0}", references.Count.ToString()),
+                                           Resources.RecipesPage_DeleteBlockedByReferencesWarningNotificationTitle,
+                                           GrowlLevel.Warning);
             return;
         }
 

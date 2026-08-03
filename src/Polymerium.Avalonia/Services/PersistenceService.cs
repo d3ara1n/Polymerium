@@ -586,8 +586,7 @@ public class PersistenceService(IFreeSql freeSql)
 
     #region Recipes
 
-    public IReadOnlyList<Recipe> GetRecipes() =>
-        freeSql.Select<Recipe>().OrderByDescending(x => x.UpdatedAt).ToList();
+    public IReadOnlyList<Recipe> GetRecipes() => freeSql.Select<Recipe>().OrderByDescending(x => x.UpdatedAt).ToList();
 
     public Recipe? GetRecipe(string id) => freeSql.Select<Recipe>().Where(x => x.Id == id).First();
 
@@ -613,12 +612,13 @@ public class PersistenceService(IFreeSql freeSql)
     }
 
     public void UpdateRecipe(string id, string name, string? description) =>
-        freeSql.Update<Recipe>()
-               .Where(x => x.Id == id)
-               .Set(x => x.Name, name)
-               .Set(x => x.Description, description)
-               .Set(x => x.UpdatedAt, DateTime.Now)
-               .ExecuteAffrows();
+        freeSql
+           .Update<Recipe>()
+           .Where(x => x.Id == id)
+           .Set(x => x.Name, name)
+           .Set(x => x.Description, description)
+           .Set(x => x.UpdatedAt, DateTime.Now)
+           .ExecuteAffrows();
 
     public void DeleteRecipe(string id) =>
         freeSql.Transaction(() =>
@@ -627,23 +627,26 @@ public class PersistenceService(IFreeSql freeSql)
             freeSql.Delete<Recipe>().Where(x => x.Id == id).ExecuteAffrows();
         });
 
-    public void AddRecipeItem(string recipeId,
-                              string label,
-                              string? ns,
-                              string projectId,
-                              IReadOnlyList<string> tags,
-                              string? note)
+    public void AddRecipeItem(
+        string recipeId,
+        string label,
+        string? ns,
+        string projectId,
+        IReadOnlyList<string> tags,
+        string? note)
     {
-        freeSql.Insert(new RecipeItem
-        {
-            Id = Nanoid.Generate(Nanoid.Alphabets.Default, 12),
-            RecipeId = recipeId,
-            Label = label,
-            Namespace = ns ?? string.Empty,
-            ProjectId = projectId,
-            Tags = JsonSerializer.Serialize(tags),
-            Note = note
-        }).ExecuteAffrows();
+        freeSql
+           .Insert(new RecipeItem
+           {
+               Id = Nanoid.Generate(Nanoid.Alphabets.Default, 12),
+               RecipeId = recipeId,
+               Label = label,
+               Namespace = ns ?? string.Empty,
+               ProjectId = projectId,
+               Tags = JsonSerializer.Serialize(tags),
+               Note = note
+           })
+           .ExecuteAffrows();
         TouchRecipe(recipeId);
     }
 

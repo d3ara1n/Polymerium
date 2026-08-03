@@ -134,11 +134,13 @@
             <Grid
                 ColumnDefinitions="Auto,*"
                 ColumnSpacing="8">
-                <fi:SymbolIcon Grid.Column="0"
+                <fi:SymbolIcon
+                    Grid.Column="0"
                     FontSize="{StaticResource MediumFontSize}"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Symbol="Info" />
-                <TextBlock Grid.Column="1"
+                <TextBlock
+                    Grid.Column="1"
                     FontStyle="Italic"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{x:Static lang:Resources.SnapshotPortalPage_Hint}"

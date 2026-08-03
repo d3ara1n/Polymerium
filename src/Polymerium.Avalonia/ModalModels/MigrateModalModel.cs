@@ -28,7 +28,10 @@ public partial class MigrateModalModel(
     private IDisposable? _selectionSubscription;
 
     public IReadOnlyList<MigrateLauncherKindModel> Kinds { get; } =
-        [..migratorAgent.SupportedKinds.Select(k => new MigrateLauncherKindModel(k, migratorAgent.DefaultDataDirectory(k)))];
+    [
+        .. migratorAgent.SupportedKinds.Select(k => new MigrateLauncherKindModel(k,
+                                                   migratorAgent.DefaultDataDirectory(k)))
+    ];
 
     [ObservableProperty]
     public partial MigrateLauncherKindModel? SelectedLauncher { get; set; }
@@ -79,8 +82,7 @@ public partial class MigrateModalModel(
         return Task.CompletedTask;
     }
 
-    partial void OnSelectedLauncherChanged(MigrateLauncherKindModel? value) =>
-        DataDirectory = value?.DefaultDirectory;
+    partial void OnSelectedLauncherChanged(MigrateLauncherKindModel? value) => DataDirectory = value?.DefaultDirectory;
 
     protected override Task OnDeinitializeAsync()
     {
@@ -91,10 +93,10 @@ public partial class MigrateModalModel(
     private void ArmSelectionPipeline()
     {
         _selectionSubscription?.Dispose();
-        _selectionSubscription = Result?.Instances
-                                        .ToObservableChangeSet()
-                                        .AutoRefresh(x => x.IsSelected)
-                                        .Subscribe(_ => RefreshSelectionState());
+        _selectionSubscription = Result
+                               ?.Instances.ToObservableChangeSet()
+                                .AutoRefresh(x => x.IsSelected)
+                                .Subscribe(_ => RefreshSelectionState());
     }
 
     private void RefreshSelectionState()
@@ -120,11 +122,7 @@ public partial class MigrateModalModel(
             return;
         }
 
-        var folders = await top.StorageProvider
-                               .OpenFolderPickerAsync(new()
-                                {
-                                   Title = Resources.MigrateModal_Title
-                               });
+        var folders = await top.StorageProvider.OpenFolderPickerAsync(new() { Title = Resources.MigrateModal_Title });
         var path = folders.FirstOrDefault()?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(path))
         {
@@ -150,10 +148,13 @@ public partial class MigrateModalModel(
                                                           CancellationToken.None);
             Result = new()
             {
-                Instances = [..instances.Select(i => new MigrateInstanceModel(i)
-                {
-                    IsSelected = i.CorruptReason is null
-                })]
+                Instances =
+                [
+                    .. instances.Select(i => new MigrateInstanceModel(i)
+                    {
+                        IsSelected = i.CorruptReason is null
+                    })
+                ]
             };
             ArmSelectionPipeline();
         }
@@ -223,19 +224,15 @@ public partial class MigrateModalModel(
             else
             {
                 var failedList = failed.Count > 0
-                    ? "\n" + string.Join("\n", failed.Select(f => $"- {f.Name}: {f.Failure}"))
-                    : string.Empty;
+                                     ? "\n" + string.Join("\n", failed.Select(f => $"- {f.Name}: {f.Failure}"))
+                                     : string.Empty;
                 summary = string.Format(Resources.Migrate_SummaryPartial, succeeded, total, failedList);
-                level = succeeded > 0
-                    ? GrowlLevel.Warning
-                    : cancelled ? GrowlLevel.Information : GrowlLevel.Danger;
+                level = succeeded > 0 ? GrowlLevel.Warning : cancelled ? GrowlLevel.Information : GrowlLevel.Danger;
             }
 
             notificationService.PopMessage(summary, Resources.Migrate_Title, level);
         }
-        catch (OperationCanceledException)
-        {
-        }
+        catch (OperationCanceledException) { }
         catch (Exception ex)
         {
             notificationService.PopMessage(ex, Resources.Migrate_Failed);

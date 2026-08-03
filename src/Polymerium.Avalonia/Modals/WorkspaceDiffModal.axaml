@@ -128,8 +128,8 @@
             <husk:DiffView
                 x:Name="DiffView"
                 Grid.Row="2"
-                LeftText="{Binding LiveText}"
                 FontFamily="{DynamicResource CodeFontFamily}"
+                LeftText="{Binding LiveText}"
                 RightText="{Binding ImportText}" />
         </Grid>
     </DockPanel>

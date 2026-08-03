@@ -171,7 +171,7 @@ public partial class InstanceSetupPageModel(
             var bySource = presentGroups.ToDictionary(g => g.Source!, g => g);
             var desiredKeys = bySource.Keys.Select(s => new PackageListKey.Header(s)).ToHashSet();
             var currentKeys = _flat.Keys.OfType<PackageListKey.Header>().ToHashSet();
-            _flat.Remove([.. currentKeys.Except(desiredKeys).Cast<PackageListKey>()]);
+            _flat.Remove([.. currentKeys.Except(desiredKeys)]);
             foreach (var key in desiredKeys.Except(currentKeys))
             {
                 _flat.AddOrUpdate(new PackageListItemBase.Header { Key = key, Group = bySource[key.Source] });
@@ -765,7 +765,12 @@ public partial class InstanceSetupPageModel(
             overlayService.PopModal(new ProfileRulesModal
             {
                 Rules = Rules,
-                Packages = [.. _flat.Items.OfType<PackageListItemBase.Entry>().Select(i => i.Package)],
+                Packages =
+                [
+                    .. _flat
+                      .Items.OfType<PackageListItemBase.Entry>()
+                      .Select(i => i.Package)
+                ],
                 OverlayService = overlayService
             });
         }
@@ -1221,8 +1226,7 @@ public partial class InstanceSetupPageModel(
         var items = persistenceService.GetRecipeItems(recipeId);
         if (items.Count == 0)
         {
-            notificationService.PopMessage(Resources
-                                             .InstanceSetupPage_ApplyRecipeEmptyWarningNotificationMessage,
+            notificationService.PopMessage(Resources.InstanceSetupPage_ApplyRecipeEmptyWarningNotificationMessage,
                                            Resources.InstanceSetupPage_ImportListWarningNotificationTitle,
                                            GrowlLevel.Warning,
                                            thumbnail: GetNotificationThumbnail());
@@ -1236,17 +1240,19 @@ public partial class InstanceSetupPageModel(
             await Task.Run(async () =>
             {
                 var identifiers = items
-                    .Select(i => new PackageIdentifier(i.Label,
-                                                      PersistenceService.NormalizeFavoriteNamespace(i.Namespace),
-                                                      i.ProjectId,
-                                                      null))
-                    .ToList();
+                                 .Select(i => new PackageIdentifier(i.Label,
+                                                                    PersistenceService
+                                                                       .NormalizeFavoriteNamespace(i.Namespace),
+                                                                    i.ProjectId,
+                                                                    null))
+                                 .ToList();
                 var filter = Filter.FromSetup(ProfileManager.GetImmutable(Basic.Key).Setup);
                 var resolved = await dataService.ResolvePackagesAsync(identifiers, filter);
 
-                var resolvedByProject = resolved.Successful.ToDictionary(
-                    x => (x.Key.Repository.ToLowerInvariant(), x.Key.Namespace, x.Key.Identity),
-                    x => x.Value);
+                var resolvedByProject =
+                    resolved.Successful.ToDictionary(x => (x.Key.Repository.ToLowerInvariant(), x.Key.Namespace,
+                                                           x.Key.Identity),
+                                                     x => x.Value);
 
                 if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
                 {
@@ -1257,14 +1263,14 @@ public partial class InstanceSetupPageModel(
                         foreach (var item in items)
                         {
                             var ns = PersistenceService.NormalizeFavoriteNamespace(item.Namespace);
-                            var package = resolvedByProject.TryGetValue(
-                                                                          (item.Label.ToLowerInvariant(), ns, item.ProjectId),
-                                                                          out var p)
-                                ? p
-                                : null;
+                            var package =
+                                resolvedByProject.TryGetValue((item.Label.ToLowerInvariant(), ns, item.ProjectId),
+                                                              out var p)
+                                    ? p
+                                    : null;
                             var pref = package is not null
-                                ? PackageHelper.ToPref(package)
-                                : PackageHelper.ToPref(item.Label, ns, item.ProjectId, null);
+                                           ? PackageHelper.ToPref(package)
+                                           : PackageHelper.ToPref(item.Label, ns, item.ProjectId, null);
                             var tags = JsonSerializer.Deserialize<List<string>>(item.Tags) ?? [];
 
                             setup.Packages.Add(new()
@@ -1286,9 +1292,8 @@ public partial class InstanceSetupPageModel(
                 }
             });
 
-            notificationService.PopMessage(Resources
-                                             .InstanceSetupPage_ApplyRecipeSuccessNotificationMessage
-                                             .Replace("{0}", addedCount.ToString()),
+            notificationService.PopMessage(Resources.InstanceSetupPage_ApplyRecipeSuccessNotificationMessage
+                                                    .Replace("{0}", addedCount.ToString()),
                                            Resources.InstanceSetupPage_ApplyRecipeSuccessNotificationTitle,
                                            GrowlLevel.Success,
                                            thumbnail: GetNotificationThumbnail());
@@ -1308,8 +1313,7 @@ public partial class InstanceSetupPageModel(
         var recipes = persistenceService.GetRecipes();
         if (recipes.Count == 0)
         {
-            notificationService.PopMessage(Resources
-                                             .InstanceSetupPage_ImportRecipeNoRecipesWarningNotificationMessage,
+            notificationService.PopMessage(Resources.InstanceSetupPage_ImportRecipeNoRecipesWarningNotificationMessage,
                                            Resources.InstanceSetupPage_ImportListWarningNotificationTitle,
                                            GrowlLevel.Warning,
                                            thumbnail: GetNotificationThumbnail());
@@ -1317,8 +1321,8 @@ public partial class InstanceSetupPageModel(
         }
 
         var source = recipes
-            .Select(r => new RecipeCardModel(r.Id) { Name = r.Name, Description = r.Description })
-            .ToList();
+                    .Select(r => new RecipeCardModel(r.Id) { Name = r.Name, Description = r.Description })
+                    .ToList();
         var dialog = new RecipePickerDialog { RecipesSource = source };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is RecipeCardModel selected)
         {
