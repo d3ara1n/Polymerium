@@ -7331,6 +7331,12 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string RecipesPage_EditMenuText {
+            get {
+                return ResourceManager.GetString("RecipesPage_EditMenuText", resourceCulture);
+            }
+        }
+        
         public static string RecipesPage_ExportMenuText {
             get {
                 return ResourceManager.GetString("RecipesPage_ExportMenuText", resourceCulture);
@@ -7385,21 +7391,15 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string RecipePage_NameWatermark {
+        public static string RecipePage_EditButtonText {
             get {
-                return ResourceManager.GetString("RecipePage_NameWatermark", resourceCulture);
+                return ResourceManager.GetString("RecipePage_EditButtonText", resourceCulture);
             }
         }
         
-        public static string RecipePage_DescriptionWatermark {
+        public static string RecipePage_NoDescriptionText {
             get {
-                return ResourceManager.GetString("RecipePage_DescriptionWatermark", resourceCulture);
-            }
-        }
-        
-        public static string RecipePage_SaveButtonText {
-            get {
-                return ResourceManager.GetString("RecipePage_SaveButtonText", resourceCulture);
+                return ResourceManager.GetString("RecipePage_NoDescriptionText", resourceCulture);
             }
         }
         
@@ -7409,27 +7409,40 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string RecipePage_AddItemWatermark {
+        
+        public static string RecipePage_AddPackageButtonText {
             get {
-                return ResourceManager.GetString("RecipePage_AddItemWatermark", resourceCulture);
+                return ResourceManager.GetString("RecipePage_AddPackageButtonText", resourceCulture);
             }
         }
         
-        public static string RecipePage_AddItemButtonText {
+        public static string RecipePage_NoPackagesText {
             get {
-                return ResourceManager.GetString("RecipePage_AddItemButtonText", resourceCulture);
+                return ResourceManager.GetString("RecipePage_NoPackagesText", resourceCulture);
             }
         }
         
-        public static string RecipePage_InvalidPrefWarningNotificationMessage {
+        public static string RecipeEditorDialog_Prompt {
             get {
-                return ResourceManager.GetString("RecipePage_InvalidPrefWarningNotificationMessage", resourceCulture);
+                return ResourceManager.GetString("RecipeEditorDialog_Prompt", resourceCulture);
             }
         }
         
-        public static string RecipePage_InvalidPrefWarningNotificationTitle {
+        public static string RecipeEditorDialog_NameWatermark {
             get {
-                return ResourceManager.GetString("RecipePage_InvalidPrefWarningNotificationTitle", resourceCulture);
+                return ResourceManager.GetString("RecipeEditorDialog_NameWatermark", resourceCulture);
+            }
+        }
+        
+        public static string RecipeEditorDialog_DescriptionWatermark {
+            get {
+                return ResourceManager.GetString("RecipeEditorDialog_DescriptionWatermark", resourceCulture);
+            }
+        }
+        
+        public static string RecipeEditorDialog_EditTitle {
+            get {
+                return ResourceManager.GetString("RecipeEditorDialog_EditTitle", resourceCulture);
             }
         }
         

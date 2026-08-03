@@ -4,8 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
+using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Properties;
@@ -20,7 +20,8 @@ public partial class RecipePageModel(
     PersistenceService persistenceService,
     DataService dataService,
     NavigationService navigationService,
-    NotificationService notificationService) : ViewModelBase
+    NotificationService notificationService,
+    OverlayService overlayService) : ViewModelBase
 {
     public string Id { get; } = context.Parameter!;
 
@@ -103,35 +104,30 @@ public partial class RecipePageModel(
     [ObservableProperty]
     public partial string? Description { get; set; }
 
-    [ObservableProperty]
-    public partial string? NewItemPref { get; set; }
-
     #endregion
 
     #region Commands
 
     [RelayCommand]
-    private void SaveMetadata() => persistenceService.UpdateRecipe(Id, Name, Description);
+    private async Task EditAsync()
+    {
+        var dialog = new RecipeEditorDialog
+        {
+            Title = Resources.RecipeEditorDialog_EditTitle,
+            RecipeName = Name,
+            RecipeDescription = Description
+        };
+        if (await overlayService.PopDialogAsync(dialog) && dialog.Result is RecipeEditorResultModel result)
+        {
+            Name = result.Name;
+            Description = result.Description;
+            persistenceService.UpdateRecipe(Id, Name, Description);
+        }
+    }
 
     [RelayCommand]
-    private async Task AddItemAsync()
+    private void AddItem()
     {
-        if (string.IsNullOrWhiteSpace(NewItemPref))
-        {
-            return;
-        }
-
-        if (!PackageHelper.TryParse(NewItemPref, out var id))
-        {
-            notificationService.PopMessage(Resources.RecipePage_InvalidPrefWarningNotificationMessage,
-                                           Resources.RecipePage_InvalidPrefWarningNotificationTitle,
-                                           GrowlLevel.Warning);
-            return;
-        }
-
-        persistenceService.AddRecipeItem(Id, id.Repository, id.Namespace, id.Identity, [], null);
-        NewItemPref = null;
-        await ReloadItemsAsync(CancellationToken.None);
     }
 
     [RelayCommand]

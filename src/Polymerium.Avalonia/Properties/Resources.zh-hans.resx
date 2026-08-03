@@ -3684,6 +3684,9 @@
     <data name="RecipesPage_OpenMenuText" xml:space="preserve">
         <value>打开</value>
     </data>
+    <data name="RecipesPage_EditMenuText" xml:space="preserve">
+        <value>编辑</value>
+    </data>
     <data name="RecipesPage_ExportMenuText" xml:space="preserve">
         <value>导出</value>
     </data>
@@ -3711,29 +3714,32 @@
     <data name="RecipesPage_DeleteSuccessNotificationMessage" xml:space="preserve">
         <value>配方已删除</value>
     </data>
-    <data name="RecipePage_NameWatermark" xml:space="preserve">
-        <value>配方名称</value>
+    <data name="RecipePage_EditButtonText" xml:space="preserve">
+        <value>编辑</value>
     </data>
-    <data name="RecipePage_DescriptionWatermark" xml:space="preserve">
-        <value>描述（可选）</value>
-    </data>
-    <data name="RecipePage_SaveButtonText" xml:space="preserve">
-        <value>保存</value>
+    <data name="RecipePage_NoDescriptionText" xml:space="preserve">
+        <value>暂无描述</value>
     </data>
     <data name="RecipePage_ExportButtonText" xml:space="preserve">
         <value>导出</value>
     </data>
-    <data name="RecipePage_AddItemWatermark" xml:space="preserve">
-        <value>粘贴包引用（pref://...）</value>
+    <data name="RecipePage_AddPackageButtonText" xml:space="preserve">
+        <value>添加包</value>
     </data>
-    <data name="RecipePage_AddItemButtonText" xml:space="preserve">
-        <value>添加</value>
+    <data name="RecipePage_NoPackagesText" xml:space="preserve">
+        <value>还没有包</value>
     </data>
-    <data name="RecipePage_InvalidPrefWarningNotificationMessage" xml:space="preserve">
-        <value>输入的引用不是有效的包引用</value>
+    <data name="RecipeEditorDialog_Prompt" xml:space="preserve">
+        <value>设置名称与可选描述</value>
     </data>
-    <data name="RecipePage_InvalidPrefWarningNotificationTitle" xml:space="preserve">
-        <value>无效的引用</value>
+    <data name="RecipeEditorDialog_NameWatermark" xml:space="preserve">
+        <value>配方名称</value>
+    </data>
+    <data name="RecipeEditorDialog_DescriptionWatermark" xml:space="preserve">
+        <value>描述（可选）</value>
+    </data>
+    <data name="RecipeEditorDialog_EditTitle" xml:space="preserve">
+        <value>编辑配方</value>
     </data>
     <data name="InstancesPage_ManageRecipesButtonText" xml:space="preserve">
         <value>管理配方</value>

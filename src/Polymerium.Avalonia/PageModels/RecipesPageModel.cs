@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
+using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
@@ -51,20 +52,42 @@ public partial class RecipesPageModel(
     }
 
     [RelayCommand]
-    private async Task NewAsync()
+    private async Task EditAsync(RecipeCardModel? card)
     {
-        var name = await overlayService.RequestInputAsync(title: Resources.RecipesPage_NewDialogTitle,
-                                                          placeholder: "Untitled");
-
-        // RequestInputAsync returns null when the user cancels; only proceed on confirm.
-        if (name is null)
+        if (card is null)
         {
             return;
         }
 
-        var recipe = persistenceService.InsertRecipe(string.IsNullOrWhiteSpace(name) ? "Untitled" : name, null);
-        Items.Add(new(recipe.Id) { Name = recipe.Name });
-        navigationService.Navigate<RecipePage>(recipe.Id);
+        var dialog = new RecipeEditorDialog
+        {
+            Title = Resources.RecipeEditorDialog_EditTitle,
+            RecipeName = card.Name,
+            RecipeDescription = card.Description
+        };
+        if (await overlayService.PopDialogAsync(dialog) && dialog.Result is RecipeEditorResultModel result)
+        {
+            persistenceService.UpdateRecipe(card.Id, result.Name, result.Description);
+            card.Name = result.Name;
+            card.Description = result.Description;
+        }
+    }
+
+    [RelayCommand]
+    private async Task NewAsync()
+    {
+        var dialog = new RecipeEditorDialog { Title = Resources.RecipesPage_NewDialogTitle };
+        if (await overlayService.PopDialogAsync(dialog) && dialog.Result is RecipeEditorResultModel result)
+        {
+            var name = string.IsNullOrWhiteSpace(result.Name) ? "Untitled" : result.Name;
+            var recipe = persistenceService.InsertRecipe(name, result.Description);
+            Items.Add(new(recipe.Id)
+            {
+                Name = recipe.Name,
+                Description = recipe.Description
+            });
+            navigationService.Navigate<RecipePage>(recipe.Id);
+        }
     }
 
     [RelayCommand]
