@@ -51,6 +51,7 @@ public partial class InstancesPageModel(
 
     [ObservableProperty]
     public partial int TotalCount { get; private set; }
+
     public IReadOnlyList<InstanceFilterBase> Filters => _filters;
 
     public ReadOnlyObservableCollection<InstanceCardModel> View

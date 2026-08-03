@@ -1,4 +1,4 @@
-<UserControl
+﻿<UserControl
     x:Class="Polymerium.Avalonia.Controls.FontSelectionPresenter"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -70,7 +70,9 @@
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{x:Static lang:Resources.FontPickerDialog_CurrentFontLabelText}" />
-                        <StackPanel Orientation="Horizontal" Spacing="6">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="6">
                             <fi:SymbolIcon
                                 VerticalAlignment="Center"
                                 FontSize="{StaticResource SmallFontSize}"

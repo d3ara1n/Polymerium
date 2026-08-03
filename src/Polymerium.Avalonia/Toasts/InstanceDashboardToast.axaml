@@ -20,9 +20,9 @@
             x:Key="ScrapTemplate"
             DataType="app:ScrapModel">
             <TextBlock
+                FontFamily="{DynamicResource LogFontFamily}"
                 TextTrimming="CharacterEllipsis"
-                ToolTip.Tip="{Binding Message}"
-                FontFamily="{DynamicResource LogFontFamily}">
+                ToolTip.Tip="{Binding Message}">
                 <Run
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{Binding Time, StringFormat=HH:mm:ss}" />

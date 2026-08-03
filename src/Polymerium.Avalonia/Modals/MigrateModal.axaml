@@ -1,4 +1,4 @@
-<husk:Modal
+﻿<husk:Modal
     x:Class="Polymerium.Avalonia.Modals.MigrateModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,11 +8,11 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:DataType="app:MigrateModalModel"
     Width="560"
     Height="540"
     d:DesignHeight="540"
     d:DesignWidth="560"
+    x:DataType="app:MigrateModalModel"
     mc:Ignorable="d">
     <DockPanel VerticalSpacing="12">
         <!--  Header  -->
@@ -62,11 +62,11 @@
                                 </StackPanel>
                             </Button>
                             <Button
-                                IsDefault="True"
                                 Classes="Primary"
                                 Command="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext)?.MigrateCommand}"
                                 CommandParameter="{Binding $parent[app:MigrateModal]}"
-                                Content="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext)?.MigrateLabel}" />
+                                Content="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext)?.MigrateLabel}"
+                                IsDefault="True" />
                         </husk:ModalActionPanel>
                         <Grid
                             DockPanel.Dock="Top"
@@ -102,35 +102,35 @@
                                                 <CheckBox
                                                     Padding="4"
                                                     HorizontalContentAlignment="Stretch"
+                                                    IsEnabled="{Binding Instance.CorruptReason, Converter={x:Static ObjectConverters.IsNull}}"
                                                     Cursor="Hand"
-                                                    IsChecked="{Binding IsSelected}"
-                                                    IsEnabled="{Binding Instance.CorruptReason, Converter={x:Static ObjectConverters.IsNull}}">
+                                                    IsChecked="{Binding IsSelected}">
                                                     <Grid
                                                         ColumnDefinitions="*,Auto"
                                                         ColumnSpacing="8">
                                                         <StackPanel Grid.Column="0">
                                                             <TextBlock Text="{Binding Instance.Name}" />
                                                             <StackPanel
-                                                                Orientation="Horizontal"
                                                                 Opacity="0.6"
+                                                                Orientation="Horizontal"
                                                                 Spacing="6">
                                                                 <TextBlock
                                                                     FontSize="12"
                                                                     Text="{Binding Instance.MinecraftVersion}" />
                                                                 <TextBlock
-                                                                    FontSize="12"
                                                                     IsVisible="{Binding Instance.Loader, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                                                    FontSize="12"
                                                                     Text="·" />
                                                                 <TextBlock
-                                                                    FontSize="12"
                                                                     IsVisible="{Binding Instance.Loader, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                                                    FontSize="12"
                                                                     Text="{Binding Instance.Loader, Converter={x:Static app:InternalConverters.LoaderToDisplayLabel}}" />
                                                             </StackPanel>
                                                         </StackPanel>
                                                         <husk:Tag
                                                             Grid.Column="1"
-                                                            VerticalAlignment="Center"
                                                             Classes="Warning"
+                                                            VerticalAlignment="Center"
                                                             IsVisible="{Binding Instance.CorruptReason, Converter={x:Static ObjectConverters.IsNotNull}}">
                                                             <TextBlock
                                                                 FontSize="{StaticResource SmallFontSize}"
@@ -154,10 +154,10 @@
                     Layout="Right"
                     Spacing="8">
                     <Button
-                        IsDefault="True"
                         Classes="Primary"
+                        IsEnabled="{Binding !IsScanning}"
                         Command="{Binding ScanCommand}"
-                        IsEnabled="{Binding !IsScanning}">
+                        IsDefault="True">
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="6">
@@ -168,14 +168,16 @@
                             <husk:ProgressRing
                                 Width="{StaticResource MediumFontSize}"
                                 Height="{StaticResource MediumFontSize}"
-                                IsIndeterminate="True"
                                 IsVisible="{Binding IsScanning}"
+                                IsIndeterminate="True"
                                 Theme="{StaticResource SolidProgressRingTheme}" />
                             <TextBlock Text="{x:Static lang:Resources.MigrateModal_Scan}" />
                         </StackPanel>
                     </Button>
                 </husk:ModalActionPanel>
-                <StackPanel HorizontalAlignment="Stretch" Spacing="12">
+                <StackPanel
+                    HorizontalAlignment="Stretch"
+                    Spacing="12">
                     <TextBlock
                         Opacity="0.7"
                         Text="{x:Static lang:Resources.MigrateModal_Description}"
@@ -208,12 +210,16 @@
                             </DataTemplate>
                         </TabStrip.ItemTemplate>
                     </TabStrip>
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Grid
+                        ColumnDefinitions="*,Auto"
+                        ColumnSpacing="8">
                         <TextBox
                             Grid.Column="0"
-                            Text="{Binding DataDirectory}"
-                            PlaceholderText="{x:Static lang:Resources.MigrateModal_DirectoryWatermark}" />
-                        <Button Grid.Column="1" Command="{Binding BrowseCommand}">
+                            PlaceholderText="{x:Static lang:Resources.MigrateModal_DirectoryWatermark}"
+                            Text="{Binding DataDirectory}" />
+                        <Button
+                            Grid.Column="1"
+                            Command="{Binding BrowseCommand}">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
                                 Symbol="FolderOpen" />

@@ -106,7 +106,8 @@ public class InstanceService
                                       profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
                                                           _configurationService.Value.GameJavaMaxMemory),
                                       windowSize:
-                                      (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH, _configurationService.Value.GameWindowInitialWidth),
+                                      (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH,
+                                                           _configurationService.Value.GameWindowInitialWidth),
                                        profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
                                                            _configurationService.Value.GameWindowInitialHeight)),
                                       quickConnectAddress:
@@ -414,9 +415,9 @@ public class InstanceService
     public IReadOnlyList<string> GetRecipeReferences(string recipeId)
     {
         var uri = InternalUriHelper.Recipe(recipeId);
-        return _profileManager.Profiles
-            .Where(p => p.Item2.Setup.Packages.Any(e => e.Source == uri))
-            .Select(p => p.Item1)
-            .ToList();
+        return _profileManager
+              .Profiles.Where(p => p.Item2.Setup.Packages.Any(e => e.Source == uri))
+              .Select(p => p.Item1)
+              .ToList();
     }
 }

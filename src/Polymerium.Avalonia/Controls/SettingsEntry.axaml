@@ -9,14 +9,16 @@
         TargetType="app:SettingsEntry">
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <StackPanel Spacing="8"/>
+                <StackPanel Spacing="8" />
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
                 <StackPanel Spacing="8">
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Grid
+                        ColumnDefinitions="Auto,*"
+                        ColumnSpacing="12">
                         <fi:SymbolIcon
                             Grid.Column="0"
                             VerticalAlignment="Top"
@@ -30,7 +32,8 @@
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
                                 Text="{TemplateBinding Title}" />
                             <TextBlock
-                                IsVisible="{TemplateBinding Summary, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                IsVisible="{TemplateBinding Summary,
+                                                            Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{TemplateBinding Summary}"

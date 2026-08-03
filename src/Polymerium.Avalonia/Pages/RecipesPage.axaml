@@ -1,4 +1,4 @@
-<husk:Page
+﻿<husk:Page
     x:Class="Polymerium.Avalonia.Pages.RecipesPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -83,8 +83,8 @@
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{x:Static lang:Resources.RecipesPage_EmptySubtitleText}" />
                 <Button
-                    HorizontalAlignment="Center"
                     Classes="Primary"
+                    HorizontalAlignment="Center"
                     Command="{Binding NewCommand}">
                     <StackPanel
                         Orientation="Horizontal"
@@ -127,8 +127,8 @@
                                             Text="{Binding Name}"
                                             TextTrimming="CharacterEllipsis" />
                                         <TextBlock
-                                            MaxLines="2"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            MaxLines="2"
                                             Text="{Binding Description}"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="Wrap" />

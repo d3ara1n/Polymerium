@@ -15,14 +15,13 @@ public sealed class FontService(ConfigurationService configurationService)
 
     public static readonly FontFamily MainFallback = new("fonts:AlimamaFangYuanTi#AlimamaFangYuanTi");
 
-    public static readonly FontFamily CodeFallback =
-        new("Cascadia Code, Consolas, Courier New, monospace");
+    public static readonly FontFamily CodeFallback = new("Cascadia Code, Consolas, Courier New, monospace");
 
     public static readonly FontFamily LogFallback = new("Cascadia Code, Consolas, monospace");
-
-    private FontModelBase _main = new DefaultFontModel(MainFallback);
     private FontModelBase _code = new DefaultFontModel(CodeFallback);
     private FontModelBase _log = new DefaultFontModel(LogFallback);
+
+    private FontModelBase _main = new DefaultFontModel(MainFallback);
 
     public FontModelBase Main => _main;
 

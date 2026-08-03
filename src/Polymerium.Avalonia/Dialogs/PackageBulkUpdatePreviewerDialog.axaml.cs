@@ -97,10 +97,7 @@ public partial class PackageBulkUpdatePreviewerDialog : Dialog
     [RelayCommand]
     private async Task AddTag()
     {
-        var dialog = new TagPickerDialog
-        {
-            ExistingTags = [.. ExistingTags.Where(x => !Tags?.Contains(x) ?? true)]
-        };
+        var dialog = new TagPickerDialog { ExistingTags = [.. ExistingTags.Where(x => !Tags?.Contains(x) ?? true)] };
         if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is string tag && !string.IsNullOrEmpty(tag))
         {
             Tags ??= [];

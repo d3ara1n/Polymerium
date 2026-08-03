@@ -15,7 +15,10 @@
                         ColumnSpacing="16">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" MaxWidth="480" MinWidth="280" />
+                            <ColumnDefinition
+                                Width="*"
+                                MinWidth="280"
+                                MaxWidth="480" />
                         </Grid.ColumnDefinitions>
                         <StackPanel
                             Grid.Column="0"
@@ -25,7 +28,8 @@
                                 Content="{TemplateBinding Header}"
                                 ContentTemplate="{TemplateBinding HeaderTemplate}" />
                             <TextBlock
-                                IsVisible="{TemplateBinding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                IsVisible="{TemplateBinding Description,
+                                                            Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{TemplateBinding Description}"
@@ -52,7 +56,8 @@
                                     Content="{TemplateBinding Header}"
                                     ContentTemplate="{TemplateBinding HeaderTemplate}" />
                                 <TextBlock
-                                    IsVisible="{TemplateBinding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                    IsVisible="{TemplateBinding Description,
+                                                                Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                     FontSize="{StaticResource SmallFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="{TemplateBinding Description}"

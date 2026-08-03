@@ -3,21 +3,24 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:controls="clr-namespace:Polymerium.Avalonia.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="clr-namespace:Polymerium.Avalonia.Controls"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:SettingsPageModel"
     Header="{x:Static lang:Resources.SettingsPage_Title}"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
-    <husk:Page.Resources>
+    <husk:Page.Resources>
+
         <ItemsPanelTemplate x:Key="EqualWidthTabStripPanel">
-            <UniformGrid Rows="1" ColumnSpacing="6" />
+            <UniformGrid
+                ColumnSpacing="6"
+                Rows="1" />
         </ItemsPanelTemplate>
         <ControlTheme
             x:Key="SettingsNavListItemTheme"
@@ -59,7 +62,9 @@
             </Style>
         </ControlTheme>
     </husk:Page.Resources>
-    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+    <Grid
+        ColumnDefinitions="Auto,*"
+        ColumnSpacing="16">
         <!--  Inline section navigation  -->
         <ListBox
             x:Name="NavList"
@@ -98,7 +103,9 @@
                     Title="{x:Static lang:Resources.SettingsPage_SuperPowerTitle}"
                     Icon="Beaker"
                     Summary="{x:Static lang:Resources.SettingsPage_SuperPowerSubtitle}">
-                    <app:SettingsEntryItem HorizontalContentAlignment="Right" Header="{x:Static lang:Resources.SettingsPage_SuperPowerLabelText}">
+                    <app:SettingsEntryItem
+                        HorizontalContentAlignment="Right"
+                        Header="{x:Static lang:Resources.SettingsPage_SuperPowerLabelText}">
                         <ToggleSwitch IsChecked="{Binding SuperPowerActivated, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                 </app:SettingsEntry>
@@ -107,11 +114,13 @@
                     Title="{x:Static lang:Resources.SettingsPage_DisplayTitle}"
                     Icon="LocalLanguage"
                     Summary="{x:Static lang:Resources.SettingsPage_DisplaySubtitle}">
-                    <app:SettingsEntryItem HorizontalContentAlignment="Right" Header="{x:Static lang:Resources.SettingsPage_TitleBarVisibilityLabelText}">
+                    <app:SettingsEntryItem
+                        HorizontalContentAlignment="Right"
+                        Header="{x:Static lang:Resources.SettingsPage_TitleBarVisibilityLabelText}">
                         <ToggleSwitch IsChecked="{Binding TitleBarVisibility, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_SidebarPlacementLabelText}">
-                        <TabStrip
+                        <TabStrip
                             ItemsPanel="{StaticResource EqualWidthTabStripPanel}"
                             SelectedIndex="{Binding SidebarPlacement, Mode=TwoWay}">
                             <TabStripItem>
@@ -145,7 +154,7 @@
                         </TabStrip>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_ThemeVariantLabelText}">
-                        <TabStrip
+                        <TabStrip
                             ItemsPanel="{StaticResource EqualWidthTabStripPanel}"
                             SelectedIndex="{Binding DarkMode, Mode=TwoWay}">
                             <TabStripItem>
@@ -184,7 +193,7 @@
                         </TabStrip>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_AccentColorLabelText}">
-                        <ComboBox
+                        <ComboBox
                             ItemsSource="{Binding AccentColors}"
                             SelectedIndex="{Binding AccentColor, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
@@ -206,7 +215,7 @@
                         </ComboBox>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_CornerStyleLabelText}">
-                        <ComboBox
+                        <ComboBox
                             ItemsSource="{Binding CornerStyles}"
                             SelectedIndex="{Binding CornerStyle, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
@@ -217,7 +226,7 @@
                         </ComboBox>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_BackgroundStyleLabelText}">
-                        <ComboBox
+                        <ComboBox
                             ItemsSource="{Binding BackgroundStyles}"
                             SelectedItem="{Binding BackgroundMode, Mode=TwoWay}">
                             <ComboBox.SelectionBoxItemTemplate>
@@ -247,9 +256,9 @@
                         </ComboBox>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_LanguageLabelText}"
-                        Description="{x:Static lang:Resources.SettingsPage_RestartRequiredLabelText}">
-                        <ComboBox
+                        Description="{x:Static lang:Resources.SettingsPage_RestartRequiredLabelText}"
+                        Header="{x:Static lang:Resources.SettingsPage_LanguageLabelText}">
+                        <ComboBox
                             ItemsSource="{Binding Languages}"
                             SelectedItem="{Binding Language, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
@@ -277,11 +286,13 @@
                     Icon="TextFont"
                     Summary="{x:Static lang:Resources.SettingsPage_FontSubtitle}">
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_MainFontLabelText}">
-                        <Border
+                        <Border
                             Padding="3"
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="3">
+                            <Grid
+                                ColumnDefinitions="*,Auto"
+                                ColumnSpacing="3">
                                 <controls:FontSelectionPresenter
                                     Grid.Column="0"
                                     VerticalAlignment="Center"
@@ -291,17 +302,21 @@
                                     Classes="Small"
                                     Command="{Binding OpenMainFontPickerCommand}"
                                     Theme="{StaticResource GhostButtonTheme}">
-                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Settings" />
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="Settings" />
                                 </Button>
                             </Grid>
                         </Border>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_CodeFontLabelText}">
-                        <Border
+                        <Border
                             Padding="3"
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="3">
+                            <Grid
+                                ColumnDefinitions="*,Auto"
+                                ColumnSpacing="3">
                                 <controls:FontSelectionPresenter
                                     Grid.Column="0"
                                     VerticalAlignment="Center"
@@ -311,17 +326,21 @@
                                     Classes="Small"
                                     Command="{Binding OpenCodeFontPickerCommand}"
                                     Theme="{StaticResource GhostButtonTheme}">
-                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Settings" />
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="Settings" />
                                 </Button>
                             </Grid>
                         </Border>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_LogFontLabelText}">
-                        <Border
+                        <Border
                             Padding="3"
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="3">
+                            <Grid
+                                ColumnDefinitions="*,Auto"
+                                ColumnSpacing="3">
                                 <controls:FontSelectionPresenter
                                     Grid.Column="0"
                                     VerticalAlignment="Center"
@@ -331,7 +350,9 @@
                                     Classes="Small"
                                     Command="{Binding OpenLogFontPickerCommand}"
                                     Theme="{StaticResource GhostButtonTheme}">
-                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Settings" />
+                                    <fi:SymbolIcon
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        Symbol="Settings" />
                                 </Button>
                             </Grid>
                         </Border>
@@ -384,7 +405,7 @@
                     Icon="Joystick"
                     Summary="{x:Static lang:Resources.SettingsPage_GameDefaultsSubtitle}">
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_JavaMaxMemoryLabelText}">
-                        <NumericUpDown
+                        <NumericUpDown
                             Increment="512"
                             Minimum="0"
                             PlaceholderText="{x:Static lang:Resources.SettingsPage_JavaMaxMemoryPlaceholder}"
@@ -401,22 +422,22 @@
                             </NumericUpDown.InnerRightContent>
                         </NumericUpDown>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_JavaAdditionalArgumentsLabelText}">
-                        <TextBox
+                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_JavaAdditionalArgumentsLabelText}">
+                        <TextBox
                             PlaceholderText="{x:Static lang:Resources.SettingsPage_JavaAdditionalArgumentsPlaceholder}"
                             Text="{Binding JavaAdditionalArguments, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_CommandWrapperLabelText}"
-                        Description="{x:Static lang:Resources.SettingsPage_CommandWrapperDescriptionText}">
-                        <TextBox
+                        Description="{x:Static lang:Resources.SettingsPage_CommandWrapperDescriptionText}"
+                        Header="{x:Static lang:Resources.SettingsPage_CommandWrapperLabelText}">
+                        <TextBox
                             PlaceholderText="{x:Static lang:Resources.SettingsPage_CommandWrapperPlaceholder}"
                             Text="{Binding CommandWrapper, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_WindowInitialSizeLabelText}">
-                        <Grid
-                            ColumnDefinitions="*,*" ColumnSpacing="6">
+                        <Grid
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="6">
                             <TextBox
                                 Grid.Column="0"
                                 PlaceholderText="1270"
@@ -456,9 +477,9 @@
                     Icon="TopSpeed"
                     Summary="{x:Static lang:Resources.SettingsPage_NetworkSubtitle}">
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_ProxyEnabledLabelText}"
-                        Description="{x:Static lang:Resources.SettingsPage_RestartRequiredLabelText}">
-                        <Border
+                        Description="{x:Static lang:Resources.SettingsPage_RestartRequiredLabelText}"
+                        Header="{x:Static lang:Resources.SettingsPage_ProxyEnabledLabelText}">
+                        <Border
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
                             <Grid
@@ -470,15 +491,15 @@
                                     Padding="8"
                                     Background="{StaticResource OverlaySolidBackgroundBrush}">
                                     <Border.CornerRadius>
-                                        <MultiBinding
-                                            Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                        <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
                                             <Binding
                                                 Path="CornerRadius"
                                                 RelativeSource="{RelativeSource Mode=FindAncestor,
                                                                                 AncestorType=Border}" />
                                             <Binding
                                                 Path="Margin"
-                                                RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Grid}" />
+                                                RelativeSource="{RelativeSource Mode=FindAncestor,
+                                                                                AncestorType=Grid}" />
                                         </MultiBinding>
                                     </Border.CornerRadius>
                                     <StackPanel>
@@ -510,8 +531,8 @@
                     Icon="Wrench"
                     Summary="{x:Static lang:Resources.SettingsPage_MaintenanceSubtitle}">
                     <app:SettingsEntryItem
-                        Orientation="Vertical"
-                        Header="{x:Static lang:Resources.SettingsPage_VersionLabelText}">
+                        Header="{x:Static lang:Resources.SettingsPage_VersionLabelText}"
+                        Orientation="Vertical">
                         <app:Plaque>
                             <app:Plaque.Header>
                                 <husk:SwitchContainer
@@ -533,8 +554,7 @@
                                                 Classes="Small Primary"
                                                 Command="{Binding ViewReleaseCommand}"
                                                 CommandParameter="{Binding UpdateTarget}">
-                                                <TextBlock
-                                                    Text="{x:Static lang:Resources.SettingsPage_UpdatesViewButtonText}" />
+                                                <TextBlock Text="{x:Static lang:Resources.SettingsPage_UpdatesViewButtonText}" />
                                             </Button>
                                         </DockPanel>
                                     </husk:SwitchCase>
@@ -543,8 +563,7 @@
                                             Classes="Small"
                                             Command="{Binding CheckUpdatesCommand}"
                                             Theme="{StaticResource OutlineButtonTheme}">
-                                            <TextBlock
-                                                Text="{x:Static lang:Resources.SettingsPage_UpdatesCheckButtonText}" />
+                                            <TextBlock Text="{x:Static lang:Resources.SettingsPage_UpdatesCheckButtonText}" />
                                         </Button>
                                     </husk:SwitchCase>
                                 </husk:SwitchContainer>
@@ -676,11 +695,13 @@
                             </Grid>
                         </app:Plaque>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem HorizontalContentAlignment="Right" Header="{x:Static lang:Resources.SettingsPage_UpdateAutoCheckLabelText}">
+                    <app:SettingsEntryItem
+                        HorizontalContentAlignment="Right"
+                        Header="{x:Static lang:Resources.SettingsPage_UpdateAutoCheckLabelText}">
                         <ToggleSwitch IsChecked="{Binding AutoCheckUpdates, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_UpdateSourceLabelText}">
-                        <TabStrip
+                        <TabStrip
                             ItemsPanel="{StaticResource EqualWidthTabStripPanel}"
                             SelectedIndex="{Binding UpdateSource, Mode=TwoWay}">
                             <TabStripItem>
@@ -716,7 +737,7 @@
                     <app:SettingsEntryItem
                         IsVisible="{Binding UpdateSource, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=1}"
                         Header="{x:Static lang:Resources.SettingsPage_MirrorChyanCdkLabelText}">
-                        <TextBox
+                        <TextBox
                             PasswordChar="*"
                             PlaceholderText="{x:Static lang:Resources.SettingsPage_MirrorChyanCdkPlaceholder}"
                             Text="{Binding MirrorChyanCdk, Mode=TwoWay}" />
@@ -735,11 +756,10 @@
                             FontSize="{StaticResource SmallFontSize}"
                             NavigateUri="https://mirrorchyan.com" />
                     </TextBlock>
-                    <husk:Divider
-                        Content="{x:Static lang:Resources.SettingsPage_ToolsGroupTitle}" />
+                    <husk:Divider Content="{x:Static lang:Resources.SettingsPage_ToolsGroupTitle}" />
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_StorageManagementLabelText}"
-                        Description="{x:Static lang:Resources.SettingsPage_StorageManagementDescription}">
+                        Description="{x:Static lang:Resources.SettingsPage_StorageManagementDescription}"
+                        Header="{x:Static lang:Resources.SettingsPage_StorageManagementLabelText}">
                         <Button
                             Classes="Small"
                             Command="{Binding NavigateCommand}"
@@ -751,8 +771,8 @@
                         </Button>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_MigrateFromLauncherLabelText}"
-                        Description="{x:Static lang:Resources.SettingsPage_MigrateFromLauncherDescription}">
+                        Description="{x:Static lang:Resources.SettingsPage_MigrateFromLauncherDescription}"
+                        Header="{x:Static lang:Resources.SettingsPage_MigrateFromLauncherLabelText}">
                         <Button
                             Classes="Small"
                             Command="{Binding OpenMigrateCommand}"
@@ -763,8 +783,8 @@
                         </Button>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_GarbageCollectButtonText}"
-                        Description="{x:Static lang:Resources.SettingsPage_GarbageCollectDescription}">
+                        Description="{x:Static lang:Resources.SettingsPage_GarbageCollectDescription}"
+                        Header="{x:Static lang:Resources.SettingsPage_GarbageCollectButtonText}">
                         <Button
                             Classes="Small"
                             Command="{Binding GarbageCollectCommand}"
@@ -774,11 +794,10 @@
                                 Symbol="Checkmark" />
                         </Button>
                     </app:SettingsEntryItem>
-                    <husk:Divider
-                        Content="{x:Static lang:Resources.SettingsPage_DangerZoneDividerText}" />
+                    <husk:Divider Content="{x:Static lang:Resources.SettingsPage_DangerZoneDividerText}" />
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_ClearStatisticsButtonText}"
-                        Description="{x:Static lang:Resources.SettingsPage_ClearStatisticsDescription}">
+                        Description="{x:Static lang:Resources.SettingsPage_ClearStatisticsDescription}"
+                        Header="{x:Static lang:Resources.SettingsPage_ClearStatisticsButtonText}">
                         <Button
                             Classes="Small"
                             Command="{Binding ClearStatisticsCommand}"
@@ -790,8 +809,8 @@
                         </Button>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_ClearRecordsButtonText}"
-                        Description="{x:Static lang:Resources.SettingsPage_ClearRecordsDescription}">
+                        Description="{x:Static lang:Resources.SettingsPage_ClearRecordsDescription}"
+                        Header="{x:Static lang:Resources.SettingsPage_ClearRecordsButtonText}">
                         <Button
                             Classes="Small"
                             Command="{Binding ClearRecordsCommand}"
@@ -810,9 +829,10 @@
                     <Grid
                         ColumnDefinitions="*,Auto"
                         ColumnSpacing="16">
-                        <StackPanel Grid.Column="0"
-                                    Name="LinksPanel"
-                                    Spacing="2">
+                        <StackPanel
+                            Name="LinksPanel"
+                            Grid.Column="0"
+                            Spacing="2">
                             <TextBlock ClipToBounds="False">
                                 <Run Text="Source Code:" />
                                 <HyperlinkButton
@@ -890,13 +910,13 @@
                                 <Run Text=")" />
                             </TextBlock>
                         </StackPanel>
-                        <!-- The About image deliberately overlaps LinksPanel; ZIndex=-1 sends it behind so it never covers the links -->
+                        <!--  The About image deliberately overlaps LinksPanel; ZIndex=-1 sends it behind so it never covers the links  -->
                         <husk:ConstrainedBox
                             Grid.Column="1"
-                            ZIndex="-1"
                             Height="{Binding #LinksPanel.Bounds.Height}"
                             HorizontalAlignment="Right"
-                            AspectRatio="0.684">
+                            AspectRatio="0.684"
+                            ZIndex="-1">
                             <Border
                                 Background="{DynamicResource SettingsImageBrush}"
                                 CornerRadius="{StaticResource MediumCornerRadius}"

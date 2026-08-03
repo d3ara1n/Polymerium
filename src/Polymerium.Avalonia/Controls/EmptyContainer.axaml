@@ -25,7 +25,10 @@
                             FontSize="{StaticResource LargeFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <TextBlock.Text>
-                                <Binding Path="Text" RelativeSource="{RelativeSource TemplatedParent}" TargetNullValue="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                                <Binding
+                                    Path="Text"
+                                    RelativeSource="{RelativeSource TemplatedParent}"
+                                    TargetNullValue="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
                             </TextBlock.Text>
                         </TextBlock>
                     </StackPanel>

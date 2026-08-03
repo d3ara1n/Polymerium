@@ -557,6 +557,7 @@ public partial class SettingsPageModel : ViewModelBase
     }
 
     #endregion
+
     #region Font Settings
 
     [ObservableProperty]

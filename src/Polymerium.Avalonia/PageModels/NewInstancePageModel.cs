@@ -132,7 +132,11 @@ public partial class NewInstancePageModel(
         }
         else
         {
-            profile = new() { Name = DisplayName, Setup = new() { Loader = null, Version = VersionName, Source = null } };
+            profile = new()
+            {
+                Name = DisplayName,
+                Setup = new() { Loader = null, Version = VersionName, Source = null }
+            };
         }
 
         if (Thumbnail != null)

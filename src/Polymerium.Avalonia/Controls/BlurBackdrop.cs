@@ -43,7 +43,7 @@ public class BlurBackdrop : ContentControl
     ///     挂在任何 Visual 上，使其（及子树）不参与后方内容捕获。用于排除会污染 tint 的半透明遮罩等。
     /// </summary>
     public static readonly AttachedProperty<bool> ExcludeFromCaptureProperty =
-        AvaloniaProperty.RegisterAttached<BlurBackdrop, Visual, bool>("ExcludeFromCapture", false);
+        AvaloniaProperty.RegisterAttached<BlurBackdrop, Visual, bool>("ExcludeFromCapture");
 
     /// <summary>
     ///     挂在内置 BlurBackdrop 背景层的 overlay（Modal/Dialog/Sidebar/Toast）上，关闭其默认毛玻璃并恢复不透明底色。
