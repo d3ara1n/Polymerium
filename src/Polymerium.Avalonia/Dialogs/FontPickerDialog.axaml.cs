@@ -69,8 +69,8 @@ public partial class FontPickerDialog : Dialog
 
     #region Avalonia Properties
 
-    public static readonly DirectProperty<FontPickerDialog, FontModelBase> SelectedProperty =
-        AvaloniaProperty.RegisterDirect<FontPickerDialog, FontModelBase>(nameof(Selected),
+    public static readonly DirectProperty<FontPickerDialog, FontModelBase?> SelectedProperty =
+        AvaloniaProperty.RegisterDirect<FontPickerDialog, FontModelBase?>(nameof(Selected),
             o => o.Selected,
             (o, v) => o.Selected = v);
 
@@ -101,7 +101,7 @@ public partial class FontPickerDialog : Dialog
         set => SetAndRaise(SelectedSystemFontProperty, ref field, value);
     }
 
-    public FontModelBase Selected
+    public FontModelBase? Selected
     {
         get;
         set => SetAndRaise(SelectedProperty, ref field, value);

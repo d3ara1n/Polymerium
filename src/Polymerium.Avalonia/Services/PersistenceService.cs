@@ -564,7 +564,7 @@ public class PersistenceService(IFreeSql freeSql)
         return [.. filtered.Skip((int)(pageIndex * pageSize)).Take((int)pageSize)];
     }
 
-    public static string? NormalizeFavoriteNamespace(string ns) => string.IsNullOrEmpty(ns) ? null : ns;
+    public static string? NormalizeFavoriteNamespace(string? ns) => string.IsNullOrEmpty(ns) ? null : ns;
 
     public static IReadOnlyList<string> DeserializeFavoriteTags(string tags) =>
         JsonSerializer.Deserialize<IReadOnlyList<string>>(tags) ?? [];
