@@ -212,7 +212,7 @@
                         <TextBox
                             Grid.Column="0"
                             Text="{Binding DataDirectory}"
-                            Watermark="{x:Static lang:Resources.MigrateModal_DirectoryWatermark}" />
+                            PlaceholderText="{x:Static lang:Resources.MigrateModal_DirectoryWatermark}" />
                         <Button Grid.Column="1" Command="{Binding BrowseCommand}">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
