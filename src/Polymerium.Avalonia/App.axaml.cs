@@ -193,6 +193,8 @@ public class App : Application
             return new();
         }
 
+        Program.Services.GetService<FontService>()?.ApplyFromConfiguration();
+        
         var configuration = Program.Services.GetRequiredService<ConfigurationService>();
         var window = new MainWindow();
 

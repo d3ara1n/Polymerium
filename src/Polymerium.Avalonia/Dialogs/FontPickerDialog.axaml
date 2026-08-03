@@ -1,0 +1,63 @@
+<husk:Dialog
+    x:Class="Polymerium.Avalonia.Dialogs.FontPickerDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:controls="clr-namespace:Polymerium.Avalonia.Controls"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+    Title="{x:Static lang:Resources.FontPickerDialog_Title}"
+    Width="380"
+    IsPrimaryButtonVisible="True">
+    <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="12">
+        <!--  顶部当前选中预览（按 Selected 的派生类型走全局 DataTemplate）  -->
+        <Border
+            Grid.Row="0"
+            Padding="3"
+            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+            CornerRadius="{StaticResource MediumCornerRadius}">
+            <controls:FontSelectionPresenter Selection="{Binding $parent[app:FontPickerDialog].Selected}" />
+        </Border>
+
+        <!--  操作行：用默认 + 选择字体文件  -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="8">
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                Command="{Binding $parent[app:FontPickerDialog].UseDefaultCommand}">
+                <husk:IconLabel
+                    Icon="ArrowReset"
+                    Text="{x:Static lang:Resources.FontPickerDialog_UseDefaultButtonText}" />
+            </Button>
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                Command="{Binding $parent[app:FontPickerDialog].ChooseFileCommand}">
+                <husk:IconLabel
+                    Icon="DocumentAdd"
+                    Text="{x:Static lang:Resources.FontPickerDialog_ChooseFileButtonText}" />
+            </Button>
+        </Grid>
+
+        <!--  搜索框  -->
+        <TextBox
+            Grid.Row="2"
+            PlaceholderText="{x:Static lang:Resources.FontPickerDialog_SearchPlaceholderText}"
+            Text="{Binding $parent[app:FontPickerDialog].SearchText, Mode=TwoWay}" />
+
+        <!--  系统字体列表（左字体名 + 右样例预览，均用该字体渲染）  -->
+        <ListBox
+            Grid.Row="3"
+            Theme="{StaticResource CleanListBoxTheme}"
+            MinHeight="240"
+            ItemsSource="{Binding $parent[app:FontPickerDialog].FilteredSystemFonts}"
+            SelectedItem="{Binding $parent[app:FontPickerDialog].SelectedSystemFont, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="sys:String">
+                    <TextBlock Padding="8,4" Text="{Binding .}" TextTrimming="CharacterEllipsis" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</husk:Dialog>

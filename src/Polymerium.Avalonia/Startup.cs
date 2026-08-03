@@ -211,6 +211,7 @@ public static class Startup
            .AddTransient<IRepositoryProviderAccessor, UserRepositoryProviderAccessor>()
            .AddSingleton<ConfigurationService>()
            .AddSingleton<ThemeService>()
+           .AddSingleton<FontService>()
            .AddSingleton<NotificationService>()
            .AddSingleton<NavigationService>()
            .AddSingleton<OverlayService>()

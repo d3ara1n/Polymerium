@@ -57,13 +57,12 @@
         <DataTemplate
             x:Key="ScrapTemplate"
             DataType="app:ScrapModel">
-            <TextBlock TextTrimming="CharacterEllipsis">
+            <TextBlock TextTrimming="CharacterEllipsis"
+                       FontFamily="{DynamicResource LogFontFamily}">
                 <Run
-                    FontFamily="Cascadia Code, Consolas, monospace"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{Binding Date}" />
                 <Run
-                    FontFamily="Cascadia Code, Consolas, monospace"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{Binding Time}" />
                 <InlineUIContainer BaselineAlignment="Center">
@@ -82,7 +81,6 @@
                             </MultiBinding>
                         </Border.IsVisible>
                         <TextBlock
-                            FontFamily="Cascadia Code, Consolas, monospace"
                             FontSize="{StaticResource ExtraSmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run Text="[" />

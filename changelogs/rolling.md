@@ -4,6 +4,7 @@
 
 - Add an auto-scroll toggle to the instance log view that follows new log lines and pauses when scrolling up
 - Add download, import, and migration shortcuts to the empty instances page
+- Add customizable interface, code, and log fonts selectable from installed system fonts or external font files
 
 ### Fixed
 
@@ -14,6 +15,7 @@
 
 - Add an auto-scroll toggle to the instance log view that follows new log lines and pauses when scrolling up (#78)
 - Add download, import, and migration shortcuts to the empty instances page
+- Add customizable interface, code, and log fonts selectable from installed system fonts or external font files
 
 ### Changed
 

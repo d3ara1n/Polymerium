@@ -8,6 +8,7 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Polymerium.Avalonia.Controls"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:SettingsPageModel"
@@ -276,11 +277,74 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_FontLabelText}">
-                        <TextBox
+                </app:SettingsEntry>
+                <!--  Font  -->
+                <app:SettingsEntry
+                    Title="{x:Static lang:Resources.SettingsPage_FontTitle}"
+                    Icon="TextFont"
+                    Summary="{x:Static lang:Resources.SettingsPage_FontSubtitle}">
+                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_MainFontLabelText}">
+                        <Border
                             MinWidth="{StaticResource SettingsControlMinWidth}"
-                            IsEnabled="False"
-                            PlaceholderText="(Builtin)" />
+                            Padding="3"
+                            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="3">
+                                <controls:FontSelectionPresenter
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Selection="{Binding MainFontSelection}" />
+                                <Button
+                                    Grid.Column="1"
+                                    Classes="Small"
+                                    Command="{Binding OpenMainFontPickerCommand}"
+                                    Theme="{StaticResource GhostButtonTheme}">
+                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Settings" />
+                                </Button>
+                            </Grid>
+                        </Border>
+                    </app:SettingsEntryItem>
+                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_CodeFontLabelText}">
+                        <Border
+                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                            Padding="3"
+                            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="3">
+                                <controls:FontSelectionPresenter
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Selection="{Binding CodeFontSelection}" />
+                                <Button
+                                    Grid.Column="1"
+                                    Classes="Small"
+                                    Command="{Binding OpenCodeFontPickerCommand}"
+                                    Theme="{StaticResource GhostButtonTheme}">
+                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Settings" />
+                                </Button>
+                            </Grid>
+                        </Border>
+                    </app:SettingsEntryItem>
+                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_LogFontLabelText}">
+                        <Border
+                            MinWidth="{StaticResource SettingsControlMinWidth}"
+                            Padding="3"
+                            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="3">
+                                <controls:FontSelectionPresenter
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Selection="{Binding LogFontSelection}" />
+                                <Button
+                                    Grid.Column="1"
+                                    Classes="Small"
+                                    Command="{Binding OpenLogFontPickerCommand}"
+                                    Theme="{StaticResource GhostButtonTheme}">
+                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="Settings" />
+                                </Button>
+                            </Grid>
+                        </Border>
                     </app:SettingsEntryItem>
                 </app:SettingsEntry>
                 <!--  Java  -->

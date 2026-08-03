@@ -21,9 +21,9 @@
             DataType="app:ScrapModel">
             <TextBlock
                 TextTrimming="CharacterEllipsis"
-                ToolTip.Tip="{Binding Message}">
+                ToolTip.Tip="{Binding Message}"
+                FontFamily="{DynamicResource LogFontFamily}">
                 <Run
-                    FontFamily="Cascadia Code, Consolas, monospace"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{Binding Time, StringFormat=HH:mm:ss}" />
                 <InlineUIContainer BaselineAlignment="Center">
@@ -42,7 +42,6 @@
                             </MultiBinding>
                         </Border.IsVisible>
                         <TextBlock
-                            FontFamily="Cascadia Code, Consolas, monospace"
                             FontSize="{StaticResource ExtraSmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run Text="[" />
