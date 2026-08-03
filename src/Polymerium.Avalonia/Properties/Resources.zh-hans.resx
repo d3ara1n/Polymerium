@@ -3195,6 +3195,9 @@
     <data name="SnapshotManagementPage_RemarkLabelText" xml:space="preserve">
     <value>备注</value>
   </data>
+    <data name="SnapshotManagementPage_NoRemarkText" xml:space="preserve">
+    <value>暂无备注</value>
+  </data>
     <data name="SnapshotManagementPage_PackageCountLabelText" xml:space="preserve">
     <value>模组/包数量</value>
   </data>

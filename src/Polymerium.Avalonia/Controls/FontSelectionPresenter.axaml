@@ -33,7 +33,7 @@
                     Padding="12,8"
                     Background="{StaticResource OverlaySolidBackgroundBrush}"
                     CornerRadius="{StaticResource SmallCornerRadius}">
-                    <StackPanel Spacing="4">
+                    <StackPanel Spacing="2">
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -65,7 +65,7 @@
                     Padding="12,8"
                     Background="{StaticResource OverlaySolidBackgroundBrush}"
                     CornerRadius="{StaticResource SmallCornerRadius}">
-                    <StackPanel Spacing="4">
+                    <StackPanel Spacing="2">
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"

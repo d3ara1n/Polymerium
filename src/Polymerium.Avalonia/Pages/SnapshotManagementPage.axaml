@@ -118,10 +118,19 @@
                                 Padding="12"
                                 Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                 CornerRadius="{StaticResource MediumCornerRadius}">
-                                <TextBlock
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{Binding Remark}"
-                                    TextWrapping="Wrap" />
+                                <StackPanel>
+                                    <TextBlock
+                                        IsVisible="{Binding Remark, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Binding Remark}"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        IsVisible="{Binding Remark, Converter={x:Static StringConverters.IsNullOrEmpty}}"
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{x:Static lang:Resources.SnapshotManagementPage_NoRemarkText}" />
+                                </StackPanel>
                             </Border>
 
                             <!--  Stats cards  -->

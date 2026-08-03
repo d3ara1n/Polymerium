@@ -8,10 +8,10 @@
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:sys="clr-namespace:System;assembly=System.Runtime"
     Title="{x:Static lang:Resources.FontPickerDialog_Title}"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled"
     Width="380"
     IsPrimaryButtonVisible="True">
     <Grid
-        Margin="16"
         RowDefinitions="Auto,Auto,Auto,*"
         RowSpacing="12">
         <!--  顶部当前选中预览（按 Selected 的派生类型走全局 DataTemplate）  -->

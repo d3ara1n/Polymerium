@@ -28,8 +28,7 @@
                 Orientation="Horizontal"
                 Spacing="4">
                 <Button
-                    Command="{Binding ImportCommand}"
-                    Theme="{StaticResource GhostButtonTheme}">
+                    Command="{Binding ImportCommand}">
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="6">

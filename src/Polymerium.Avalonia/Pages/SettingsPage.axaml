@@ -299,6 +299,7 @@
                                     Selection="{Binding MainFontSelection}" />
                                 <Button
                                     Grid.Column="1"
+                                    Padding="6"
                                     Classes="Small"
                                     Command="{Binding OpenMainFontPickerCommand}"
                                     Theme="{StaticResource GhostButtonTheme}">
@@ -324,6 +325,7 @@
                                 <Button
                                     Grid.Column="1"
                                     Classes="Small"
+                                    Padding="6"
                                     Command="{Binding OpenCodeFontPickerCommand}"
                                     Theme="{StaticResource GhostButtonTheme}">
                                     <fi:SymbolIcon
@@ -348,6 +350,7 @@
                                 <Button
                                     Grid.Column="1"
                                     Classes="Small"
+                                    Padding="6"
                                     Command="{Binding OpenLogFontPickerCommand}"
                                     Theme="{StaticResource GhostButtonTheme}">
                                     <fi:SymbolIcon

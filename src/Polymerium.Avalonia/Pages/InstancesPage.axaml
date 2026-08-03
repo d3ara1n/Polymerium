@@ -127,7 +127,7 @@
                     <ComboBoxItem Content="{x:Static lang:Resources.InstancesPage_SortByLastPlayed}" />
                     <ComboBoxItem Content="{x:Static lang:Resources.InstancesPage_SortByName}" />
                 </ComboBox>
-                <Button Command="{Binding ManageRecipesCommand}">
+                <Button Command="{Binding ManageRecipesCommand}" IsVisible="{x:Static app:Program.IsDebug}">
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="7">

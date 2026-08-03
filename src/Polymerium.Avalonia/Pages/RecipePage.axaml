@@ -25,9 +25,9 @@
                 Theme="{StaticResource PageHeaderTextBlockTheme}" />
             <Button
                 Grid.Column="1"
+
                 VerticalAlignment="Center"
-                Command="{Binding EditCommand}"
-                Theme="{StaticResource GhostButtonTheme}">
+                Command="{Binding EditCommand}">
                 <StackPanel
                     Orientation="Horizontal"
                     Spacing="6">
@@ -43,8 +43,7 @@
             <Button
                 Grid.Column="2"
                 VerticalAlignment="Center"
-                Command="{Binding ExportCommand}"
-                Theme="{StaticResource GhostButtonTheme}">
+                Command="{Binding ExportCommand}">
                 <StackPanel
                     Orientation="Horizontal"
                     Spacing="6">

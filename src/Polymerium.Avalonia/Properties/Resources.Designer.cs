@@ -6353,6 +6353,12 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string SnapshotManagementPage_NoRemarkText {
+            get {
+                return ResourceManager.GetString("SnapshotManagementPage_NoRemarkText", resourceCulture);
+            }
+        }
+        
         public static string SnapshotManagementPage_PackageCountLabelText {
             get {
                 return ResourceManager.GetString("SnapshotManagementPage_PackageCountLabelText", resourceCulture);
