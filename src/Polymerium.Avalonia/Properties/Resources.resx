@@ -3204,6 +3204,9 @@ Affected entries: {0}
     <data name="SnapshotManagementPage_RemarkLabelText" xml:space="preserve">
     <value>Remark</value>
   </data>
+    <data name="SnapshotManagementPage_NoRemarkText" xml:space="preserve">
+    <value>No remark</value>
+  </data>
     <data name="SnapshotManagementPage_PackageCountLabelText" xml:space="preserve">
     <value>Packages</value>
   </data>
