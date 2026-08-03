@@ -194,7 +194,7 @@ public class App : Application
         }
 
         Program.Services.GetService<FontService>()?.ApplyFromConfiguration();
-        
+
         var configuration = Program.Services.GetRequiredService<ConfigurationService>();
         var window = new MainWindow();
 
