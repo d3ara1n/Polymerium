@@ -2,15 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
+using DynamicData.Binding;
 using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
+using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
@@ -18,6 +21,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using System.Reactive.Linq;
 using TridentCore.Abstractions.Repositories;
+using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Abstractions.Utilities;
 using TridentCore.Pref;
 
@@ -40,11 +44,23 @@ public partial class RecipePageModel(
     [ObservableProperty]
     public partial ReadOnlyObservableCollection<RecipeItemModel>? Items { get; set; }
 
+    public IReadOnlyList<ResourceKind?> KindFilterOptions { get; } =
+        [null, .. Enum.GetValues<ResourceKind>().Where(k => k != ResourceKind.Unknown)];
+
     #region Overrides
 
     protected override async Task OnInitializeAsync(CancellationToken token)
     {
-        _items.Connect().Bind(out var view).Subscribe().DisposeWith(_subscriptions);
+        var queryFilter = this.WhenValueChanged(x => x.QueryText).Select(BuildQueryFilter);
+        var kindFilter = this.WhenValueChanged(x => x.SelectedKind).Select(BuildKindFilter);
+        _items.Connect().Count().Subscribe(c => TotalCount = c).DisposeWith(_subscriptions);
+        _items
+            .Connect()
+            .Filter(queryFilter)
+            .Filter(kindFilter)
+            .Bind(out var view)
+            .Subscribe()
+            .DisposeWith(_subscriptions);
         Items = view;
 
         var recipe = persistenceService.GetRecipe(Id);
@@ -65,6 +81,23 @@ public partial class RecipePageModel(
 
     #endregion
 
+    private static Func<RecipeItemModel, bool> BuildQueryFilter(string? query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return _ => true;
+        }
+
+        var q = query.Trim();
+        return item => (item.Info?.ProjectName?.Contains(q, StringComparison.OrdinalIgnoreCase) ?? false)
+                    || (item.Info?.Author?.Contains(q, StringComparison.OrdinalIgnoreCase) ?? false)
+                    || item.Label.Contains(q, StringComparison.OrdinalIgnoreCase)
+                    || item.ProjectId.Contains(q, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static Func<RecipeItemModel, bool> BuildKindFilter(ResourceKind? kind) =>
+        kind is null ? _ => true : item => item.Info?.Kind == kind;
+
     private async Task ReloadItemsAsync(CancellationToken token)
     {
         var stored = persistenceService.GetRecipeItems(Id);
@@ -75,7 +108,7 @@ public partial class RecipePageModel(
         // toRemove: cache 有、DB 无
         _items.Remove([.. _items.Keys.Where(k => !storedKeys.Contains(k))]);
 
-        // toAdd / toUpdate: Lookup 命中则刷新 Note，未命中则新建
+        // toAdd / toUpdate: Lookup 命中则刷新 Note/Tags，未命中则新建
         var toAdd = new List<RecipeItemModel>();
         foreach (var s in stored)
         {
@@ -84,10 +117,15 @@ public partial class RecipePageModel(
             if (_items.Lookup(id) is { HasValue: true, Value: var existing })
             {
                 existing.Note = s.Note;
+                existing.Tags = DeserializeTags(s.Tags);
             }
             else
             {
-                toAdd.Add(new(s.Id, s.Label, ns, s.ProjectId) { Note = s.Note });
+                toAdd.Add(new(s.Id, s.Label, ns, s.ProjectId)
+                {
+                    Note = s.Note,
+                    Tags = DeserializeTags(s.Tags)
+                });
             }
         }
 
@@ -96,6 +134,19 @@ public partial class RecipePageModel(
         if (toAdd.Count > 0)
         {
             await ResolveItemInfoAsync(toAdd, token);
+        }
+    }
+
+    private static ObservableCollection<string> DeserializeTags(string json)
+    {
+        try
+        {
+            var tags = JsonSerializer.Deserialize<string[]>(json) ?? [];
+            return new ObservableCollection<string>(tags);
+        }
+        catch
+        {
+            return [];
         }
     }
 
@@ -143,9 +194,32 @@ public partial class RecipePageModel(
     [ObservableProperty]
     public partial bool IsRefreshing { get; set; }
 
+    [ObservableProperty]
+    public partial string QueryText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial ResourceKind? SelectedKind { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(EmptyText))]
+    public partial int TotalCount { get; private set; }
+
+    public string EmptyText => TotalCount == 0
+        ? Resources.RecipePage_NoPackagesText
+        : Resources.RecipePage_NoMatchesText;
+
     #endregion
 
     #region Commands
+
+    [RelayCommand]
+    private void OpenItem(RecipeItemModel? item)
+    {
+        if (item is not null)
+        {
+            overlayService.PopModal<RecipeItemModal>(item);
+        }
+    }
 
     [RelayCommand]
     private async Task EditAsync()

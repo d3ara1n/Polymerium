@@ -3747,6 +3747,33 @@
     <data name="RecipePage_NoPackagesText" xml:space="preserve">
         <value>还没有包</value>
     </data>
+    <data name="RecipePage_SearchPlaceholderText" xml:space="preserve">
+        <value>搜索包</value>
+    </data>
+    <data name="RecipePage_KindFilterAllText" xml:space="preserve">
+        <value>全部</value>
+    </data>
+    <data name="RecipePage_NoMatchesText" xml:space="preserve">
+        <value>没有匹配的包</value>
+    </data>
+    <data name="RecipeItemModal_SummaryLabelText" xml:space="preserve">
+        <value>摘要</value>
+    </data>
+    <data name="RecipeItemModal_NoteLabelText" xml:space="preserve">
+        <value>备注</value>
+    </data>
+    <data name="RecipeItemModal_NoteWatermarkText" xml:space="preserve">
+        <value>为这个包添加私人备注</value>
+    </data>
+    <data name="RecipeItemModal_TagsLabelText" xml:space="preserve">
+        <value>标签</value>
+    </data>
+    <data name="RecipeItemModal_EditTagsButtonText" xml:space="preserve">
+        <value>编辑标签</value>
+    </data>
+    <data name="RecipeItemModal_SaveButtonText" xml:space="preserve">
+        <value>保存</value>
+    </data>
     <data name="RecipeEditorDialog_Prompt" xml:space="preserve">
         <value>设置名称与可选描述</value>
     </data>

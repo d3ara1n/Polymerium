@@ -14,6 +14,7 @@
         <ResourceInclude Source="/Controls/InstanceEntryButton.axaml" />
         <ResourceInclude Source="/Controls/InstanceCard.axaml" />
         <ResourceInclude Source="/Controls/InstancePackageButton.axaml" />
+        <ResourceInclude Source="/Controls/RecipeItemButton.axaml" />
         <ResourceInclude Source="/Controls/EmptyContainer.axaml" />
         <ResourceInclude Source="/Controls/ExhibitModpackButton.axaml" />
         <ResourceInclude Source="/Controls/ExhibitPackageButton.axaml" />
