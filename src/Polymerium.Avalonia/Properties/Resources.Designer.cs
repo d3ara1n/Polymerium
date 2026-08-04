@@ -795,6 +795,18 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string MarketplaceSearchPage_VersionFilterPlaceholder {
+            get {
+                return ResourceManager.GetString("MarketplaceSearchPage_VersionFilterPlaceholder", resourceCulture);
+            }
+        }
+        
+        public static string MarketplaceSearchPage_LoaderFilterPlaceholder {
+            get {
+                return ResourceManager.GetString("MarketplaceSearchPage_LoaderFilterPlaceholder", resourceCulture);
+            }
+        }
+        
         public static string MarketplaceSearchPage_SearchButtonText {
             get {
                 return ResourceManager.GetString("MarketplaceSearchPage_SearchButtonText", resourceCulture);
@@ -7419,6 +7431,24 @@ namespace Polymerium.Avalonia.Properties {
         public static string RecipePage_AddPackageButtonText {
             get {
                 return ResourceManager.GetString("RecipePage_AddPackageButtonText", resourceCulture);
+            }
+        }
+        
+        public static string RecipePage_AddPackageInvalidPrefWarningMessage {
+            get {
+                return ResourceManager.GetString("RecipePage_AddPackageInvalidPrefWarningMessage", resourceCulture);
+            }
+        }
+        
+        public static string RecipePage_AddPackageInvalidPrefWarningTitle {
+            get {
+                return ResourceManager.GetString("RecipePage_AddPackageInvalidPrefWarningTitle", resourceCulture);
+            }
+        }
+        
+        public static string RecipePage_AddPackagePrefPlaceholder {
+            get {
+                return ResourceManager.GetString("RecipePage_AddPackagePrefPlaceholder", resourceCulture);
             }
         }
         

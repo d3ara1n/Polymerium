@@ -390,6 +390,12 @@
     <data name="MarketplaceSearchPage_SearchBarPlaceholder" xml:space="preserve">
         <value>由这些关键词在...</value>
     </data>
+    <data name="MarketplaceSearchPage_VersionFilterPlaceholder" xml:space="preserve">
+        <value>全部版本</value>
+    </data>
+    <data name="MarketplaceSearchPage_LoaderFilterPlaceholder" xml:space="preserve">
+        <value>全部加载器</value>
+    </data>
     <data name="MarketplaceSearchPage_SearchButtonText" xml:space="preserve">
         <value>搜索</value>
     </data>
@@ -3728,6 +3734,15 @@
     </data>
     <data name="RecipePage_AddPackageButtonText" xml:space="preserve">
         <value>添加包</value>
+    </data>
+    <data name="RecipePage_AddPackageInvalidPrefWarningMessage" xml:space="preserve">
+        <value>输入的包引用格式无效</value>
+    </data>
+    <data name="RecipePage_AddPackageInvalidPrefWarningTitle" xml:space="preserve">
+        <value>无效的包引用</value>
+    </data>
+    <data name="RecipePage_AddPackagePrefPlaceholder" xml:space="preserve">
+        <value>pref://modrinth/...</value>
     </data>
     <data name="RecipePage_NoPackagesText" xml:space="preserve">
         <value>还没有包</value>

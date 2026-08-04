@@ -11,6 +11,7 @@
 - Fix Modrinth packages owned by an organization not resolving correctly
 - Fix the corner radius options not showing localized labels
 - Fix the snapshot detail showing an empty box when a snapshot has no remark
+- Fix the marketplace search filters resetting inconsistently when switching the source repository
 
 ### Added
 
@@ -21,6 +22,7 @@
 ### Changed
 
 - Improve the instance list layout so cards stretch to fill the page width
+- Update the marketplace search filter placeholders to clarify the unfiltered state
 
 ### Removed
 
