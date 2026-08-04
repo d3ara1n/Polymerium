@@ -150,7 +150,7 @@
                         <ComboBox
                             Grid.Column="0"
                             ItemsSource="{Binding SelectedRepository.Versions}"
-                            PlaceholderText="Version"
+                            PlaceholderText="{x:Static lang:Resources.MarketplaceSearchPage_VersionFilterPlaceholder}"
                             SelectedItem="{Binding FilteredVersion, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="x:String">
@@ -161,7 +161,7 @@
                         <ComboBox
                             Grid.Column="1"
                             ItemsSource="{Binding SelectedRepository.Loaders}"
-                            PlaceholderText="Loader"
+                            PlaceholderText="{x:Static lang:Resources.MarketplaceSearchPage_LoaderFilterPlaceholder}"
                             SelectedItem="{Binding FilteredLoader, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="app:LoaderBasicModel">

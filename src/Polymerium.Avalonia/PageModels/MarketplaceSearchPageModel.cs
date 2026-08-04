@@ -145,6 +145,8 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
             _ => HeaderImage
         };
 
+        FilteredLoader = null;
+        FilteredVersion = null;
         _ = SearchAsync();
     }
 

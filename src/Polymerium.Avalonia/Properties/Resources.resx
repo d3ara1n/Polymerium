@@ -399,6 +399,12 @@
     <data name="MarketplaceSearchPage_SearchBarPlaceholder" xml:space="preserve">
         <value>With the keywords in...</value>
     </data>
+    <data name="MarketplaceSearchPage_VersionFilterPlaceholder" xml:space="preserve">
+        <value>All versions</value>
+    </data>
+    <data name="MarketplaceSearchPage_LoaderFilterPlaceholder" xml:space="preserve">
+        <value>All loaders</value>
+    </data>
     <data name="MarketplaceSearchPage_SearchButtonText" xml:space="preserve">
         <value>Search</value>
     </data>
@@ -3737,6 +3743,15 @@ Affected entries: {0}
     </data>
     <data name="RecipePage_AddPackageButtonText" xml:space="preserve">
         <value>Add Package</value>
+    </data>
+    <data name="RecipePage_AddPackageInvalidPrefWarningMessage" xml:space="preserve">
+        <value>The entered pref is not in a valid format</value>
+    </data>
+    <data name="RecipePage_AddPackageInvalidPrefWarningTitle" xml:space="preserve">
+        <value>Invalid pref</value>
+    </data>
+    <data name="RecipePage_AddPackagePrefPlaceholder" xml:space="preserve">
+        <value>pref://modrinth/...</value>
     </data>
     <data name="RecipePage_NoPackagesText" xml:space="preserve">
         <value>No packages yet</value>
