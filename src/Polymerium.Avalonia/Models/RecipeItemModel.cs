@@ -16,4 +16,7 @@ public sealed partial class RecipeItemModel(string id, string label, string? ns,
 
     [ObservableProperty]
     public partial Project? Info { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsLoaded { get; set; }
 }

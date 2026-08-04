@@ -3750,8 +3750,8 @@ Affected entries: {0}
     <data name="RecipePage_AddPackageInvalidPrefWarningTitle" xml:space="preserve">
         <value>Invalid pref</value>
     </data>
-    <data name="RecipePage_AddPackagePrefPlaceholder" xml:space="preserve">
-        <value>pref://modrinth/...</value>
+    <data name="RecipePage_AddPackagePromptMessage" xml:space="preserve">
+        <value>Enter a package pref, e.g. pref://modrinth/...</value>
     </data>
     <data name="RecipePage_NoPackagesText" xml:space="preserve">
         <value>No packages yet</value>

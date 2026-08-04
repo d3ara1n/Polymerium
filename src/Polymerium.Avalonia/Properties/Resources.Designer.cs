@@ -7446,9 +7446,9 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string RecipePage_AddPackagePrefPlaceholder {
+        public static string RecipePage_AddPackagePromptMessage {
             get {
-                return ResourceManager.GetString("RecipePage_AddPackagePrefPlaceholder", resourceCulture);
+                return ResourceManager.GetString("RecipePage_AddPackagePromptMessage", resourceCulture);
             }
         }
         
