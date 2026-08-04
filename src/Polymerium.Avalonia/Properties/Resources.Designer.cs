@@ -213,6 +213,12 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string MainWindow_MarketplaceButtonSubText {
+            get {
+                return ResourceManager.GetString("MainWindow_MarketplaceButtonSubText", resourceCulture);
+            }
+        }
+        
         public static string MainWindow_MarketplaceButtonText {
             get {
                 return ResourceManager.GetString("MainWindow_MarketplaceButtonText", resourceCulture);
@@ -777,39 +783,51 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string MarketplacePortalPage_ModpacksEntryDescription {
+            get {
+                return ResourceManager.GetString("MarketplacePortalPage_ModpacksEntryDescription", resourceCulture);
+            }
+        }
+        
+        public static string MarketplacePortalPage_ModpacksEntryTitle {
+            get {
+                return ResourceManager.GetString("MarketplacePortalPage_ModpacksEntryTitle", resourceCulture);
+            }
+        }
+        
         public static string MarketplacePortalPage_SearchButtonText {
             get {
                 return ResourceManager.GetString("MarketplacePortalPage_SearchButtonText", resourceCulture);
             }
         }
         
-        public static string MarketplaceSearchPage_Title {
+        public static string MarketplaceModpacksPage_Title {
             get {
-                return ResourceManager.GetString("MarketplaceSearchPage_Title", resourceCulture);
+                return ResourceManager.GetString("MarketplaceModpacksPage_Title", resourceCulture);
             }
         }
         
-        public static string MarketplaceSearchPage_SearchBarPlaceholder {
+        public static string MarketplaceModpacksPage_SearchBarPlaceholder {
             get {
-                return ResourceManager.GetString("MarketplaceSearchPage_SearchBarPlaceholder", resourceCulture);
+                return ResourceManager.GetString("MarketplaceModpacksPage_SearchBarPlaceholder", resourceCulture);
             }
         }
         
-        public static string MarketplaceSearchPage_VersionFilterPlaceholder {
+        public static string MarketplaceModpacksPage_VersionFilterPlaceholder {
             get {
-                return ResourceManager.GetString("MarketplaceSearchPage_VersionFilterPlaceholder", resourceCulture);
+                return ResourceManager.GetString("MarketplaceModpacksPage_VersionFilterPlaceholder", resourceCulture);
             }
         }
         
-        public static string MarketplaceSearchPage_LoaderFilterPlaceholder {
+        public static string MarketplaceModpacksPage_LoaderFilterPlaceholder {
             get {
-                return ResourceManager.GetString("MarketplaceSearchPage_LoaderFilterPlaceholder", resourceCulture);
+                return ResourceManager.GetString("MarketplaceModpacksPage_LoaderFilterPlaceholder", resourceCulture);
             }
         }
         
-        public static string MarketplaceSearchPage_SearchButtonText {
+        public static string MarketplaceModpacksPage_SearchButtonText {
             get {
-                return ResourceManager.GetString("MarketplaceSearchPage_SearchButtonText", resourceCulture);
+                return ResourceManager.GetString("MarketplaceModpacksPage_SearchButtonText", resourceCulture);
             }
         }
         
@@ -1715,9 +1733,9 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string MarketplaceSearchPage_OpenWebsiteMenuText {
+        public static string MarketplaceModpacksPage_OpenWebsiteMenuText {
             get {
-                return ResourceManager.GetString("MarketplaceSearchPage_OpenWebsiteMenuText", resourceCulture);
+                return ResourceManager.GetString("MarketplaceModpacksPage_OpenWebsiteMenuText", resourceCulture);
             }
         }
         
@@ -2855,15 +2873,15 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string MarketplaceSearchPage_ModpackInstallingNotificationMessage {
+        public static string MarketplaceModpacksPage_ModpackInstallingNotificationMessage {
             get {
-                return ResourceManager.GetString("MarketplaceSearchPage_ModpackInstallingNotificationMessage", resourceCulture);
+                return ResourceManager.GetString("MarketplaceModpacksPage_ModpackInstallingNotificationMessage", resourceCulture);
             }
         }
         
-        public static string MarketplaceSearchPage_ModpackLoadingDangerNotificationTitle {
+        public static string MarketplaceModpacksPage_ModpackLoadingDangerNotificationTitle {
             get {
-                return ResourceManager.GetString("MarketplaceSearchPage_ModpackLoadingDangerNotificationTitle", resourceCulture);
+                return ResourceManager.GetString("MarketplaceModpacksPage_ModpackLoadingDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -4787,9 +4805,9 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string MarketplaceSearchPage_Message {
+        public static string MarketplaceModpacksPage_Message {
             get {
-                return ResourceManager.GetString("MarketplaceSearchPage_Message", resourceCulture);
+                return ResourceManager.GetString("MarketplaceModpacksPage_Message", resourceCulture);
             }
         }
         
@@ -5993,9 +6011,9 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string MarketplaceSearchPage_OpenProjectWebsiteDangerNotificationTitle {
+        public static string MarketplaceModpacksPage_OpenProjectWebsiteDangerNotificationTitle {
             get {
-                return ResourceManager.GetString("MarketplaceSearchPage_OpenProjectWebsiteDangerNotificationTitle", resourceCulture);
+                return ResourceManager.GetString("MarketplaceModpacksPage_OpenProjectWebsiteDangerNotificationTitle", resourceCulture);
             }
         }
         

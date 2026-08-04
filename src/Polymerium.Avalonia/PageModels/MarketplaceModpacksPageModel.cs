@@ -26,9 +26,9 @@ using TridentCore.Core.Services;
 
 namespace Polymerium.Avalonia.PageModels;
 
-public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewModel<MarketplaceSearchPageModel.State>
+public partial class MarketplaceModpacksPageModel : ViewModelBase, IStatefulViewModel<MarketplaceModpacksPageModel.State>
 {
-    public MarketplaceSearchPageModel(
+    public MarketplaceModpacksPageModel(
         IViewContext<SearchArguments> context,
         RepositoryAgent agent,
         InstanceManager instanceManager,
@@ -259,7 +259,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
         if (exhibit is not null)
         {
             _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Namespace, exhibit.ProjectId, null);
-            _notificationService.PopMessage(Resources.MarketplaceSearchPage_ModpackInstallingNotificationMessage
+            _notificationService.PopMessage(Resources.MarketplaceModpacksPage_ModpackInstallingNotificationMessage
                                                      .Replace("{0}", exhibit.ProjectName),
                                             exhibit.ProjectName,
                                             thumbnail: exhibit.Thumbnail);
@@ -329,7 +329,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
             catch (Exception ex)
             {
                 _notificationService.PopMessage(ex,
-                                                Resources.MarketplaceSearchPage_ModpackLoadingDangerNotificationTitle,
+                                                Resources.MarketplaceModpacksPage_ModpackLoadingDangerNotificationTitle,
                                                 GrowlLevel.Warning);
             }
         }
@@ -343,7 +343,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
             return TopLevelHelper.LaunchUriAsync(TopLevelHelper.GetTopLevel(),
                                                  exhibit.Reference,
                                                  Resources
-                                                    .MarketplaceSearchPage_OpenProjectWebsiteDangerNotificationTitle,
+                                                    .MarketplaceModpacksPage_OpenProjectWebsiteDangerNotificationTitle,
                                                  _notificationService,
                                                  thumbnail: exhibit.Thumbnail);
         }
@@ -361,7 +361,7 @@ public partial class MarketplaceSearchPageModel : ViewModelBase, IStatefulViewMo
                                      version.Namespace,
                                      version.ProjectId,
                                      version.VersionId);
-            _notificationService.PopMessage(Resources.MarketplaceSearchPage_ModpackInstallingNotificationMessage
+            _notificationService.PopMessage(Resources.MarketplaceModpacksPage_ModpackInstallingNotificationMessage
                                                      .Replace("{0}", version.VersionName),
                                             version.ProjectName);
         }

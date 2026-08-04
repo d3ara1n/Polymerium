@@ -108,8 +108,11 @@
     <data name="CorruptReason_MinecraftComponentMissing" xml:space="preserve">
         <value>Minecraft version is missing from the pack file</value>
     </data>
+    <data name="MainWindow_MarketplaceButtonSubText" xml:space="preserve">
+        <value>Resource Downloads</value>
+    </data>
     <data name="MainWindow_MarketplaceButtonText" xml:space="preserve">
-        <value>Go to Marketplace</value>
+        <value>Marketplace</value>
     </data>
     <data name="MainWindow_UpdateAvailableButtonText" xml:space="preserve">
         <value>Update</value>
@@ -388,24 +391,30 @@
         <value>Discovery Center</value>
     </data>
     <data name="MarketplacePortalPage_DiscoveryCenterSubtitle" xml:space="preserve">
-        <value>Everything(mostly) begins here</value>
+        <value>Search modpacks…</value>
+    </data>
+    <data name="MarketplacePortalPage_ModpacksEntryDescription" xml:space="preserve">
+        <value>Search and download modpacks from various repositories</value>
+    </data>
+    <data name="MarketplacePortalPage_ModpacksEntryTitle" xml:space="preserve">
+        <value>Modpacks</value>
     </data>
     <data name="MarketplacePortalPage_SearchButtonText" xml:space="preserve">
         <value>Search</value>
     </data>
-    <data name="MarketplaceSearchPage_Title" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_Title" xml:space="preserve">
         <value>Search modpacks</value>
     </data>
-    <data name="MarketplaceSearchPage_SearchBarPlaceholder" xml:space="preserve">
-        <value>With the keywords in...</value>
+    <data name="MarketplaceModpacksPage_SearchBarPlaceholder" xml:space="preserve">
+        <value>Search by keywords…</value>
     </data>
-    <data name="MarketplaceSearchPage_VersionFilterPlaceholder" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_VersionFilterPlaceholder" xml:space="preserve">
         <value>All versions</value>
     </data>
-    <data name="MarketplaceSearchPage_LoaderFilterPlaceholder" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_LoaderFilterPlaceholder" xml:space="preserve">
         <value>All loaders</value>
     </data>
-    <data name="MarketplaceSearchPage_SearchButtonText" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_SearchButtonText" xml:space="preserve">
         <value>Search</value>
     </data>
     <data name="Shared_FetchingLabelText" xml:space="preserve">
@@ -867,7 +876,7 @@
     <data name="ExhibitDependencyButton_RequiredTagText" xml:space="preserve">
         <value>Required</value>
     </data>
-    <data name="MarketplaceSearchPage_OpenWebsiteMenuText" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>Open Website</value>
     </data>
     <data name="ExhibitModpackButton_InstallButtonText" xml:space="preserve">
@@ -1437,10 +1446,10 @@
     <data name="InstanceSetupPage_InstallVersionNotificationMessage" xml:space="preserve">
         <value>{0}({1}) has added to install queue</value>
     </data>
-    <data name="MarketplaceSearchPage_ModpackInstallingNotificationMessage" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_ModpackInstallingNotificationMessage" xml:space="preserve">
         <value>{0} has been added to the queue</value>
     </data>
-    <data name="MarketplaceSearchPage_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
         <value>Loading project information failed</value>
     </data>
     <data name="ResourceKind_World" xml:space="preserve">
@@ -2416,7 +2425,7 @@
     <data name="InstanceSetupPage_ImportListMenuText" xml:space="preserve">
         <value>Import List</value>
     </data>
-    <data name="MarketplaceSearchPage_Message" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_Message" xml:space="preserve">
         <value>View and download modpacks from various sources. If you need more precise search filters, please search for the modpack on the corresponding website and then enter the name here to install.</value>
     </data>
     <data name="LandingPage_RandomPlayTitle" xml:space="preserve">
@@ -3024,7 +3033,7 @@ Affected entries: {0}
     <data name="PackageExplorerPage_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
     <value>Failed to load project information</value>
   </data>
-    <data name="MarketplaceSearchPage_OpenProjectWebsiteDangerNotificationTitle" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_OpenProjectWebsiteDangerNotificationTitle" xml:space="preserve">
     <value>Failed to open project website</value>
   </data>
     <data name="InstancePage_ImportPackageSuccessNotificationMessage" xml:space="preserve">

@@ -201,7 +201,7 @@
                             <fi:SymbolIcon
                                 VerticalAlignment="Center"
                                 FontSize="{StaticResource MediumFontSize}"
-                                Symbol="BuildingStore" />
+                                Symbol="Gift" />
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Text="{x:Static lang:Resources.InstancesPage_DownloadModpackButtonText}" />

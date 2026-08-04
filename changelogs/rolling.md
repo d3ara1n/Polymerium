@@ -5,6 +5,7 @@
 - Add an auto-scroll toggle to the instance log view that follows new log lines and pauses when scrolling up
 - Add download, import, and migration shortcuts to the empty instances page
 - Add customizable interface, code, and log fonts selectable from installed system fonts or external font files
+- Rework the marketplace entry copy with a download-resource label on the sidebar button and completed search placeholders
 
 ### Fixed
 
@@ -12,17 +13,20 @@
 - Fix the corner radius options not showing localized labels
 - Fix the snapshot detail showing an empty box when a snapshot has no remark
 - Fix the marketplace search filters resetting inconsistently when switching the source repository
+- Fix the marketplace entry buttons showing a blank icon
 
 ### Added
 
 - Add an auto-scroll toggle to the instance log view that follows new log lines and pauses when scrolling up (#78)
 - Add download, import, and migration shortcuts to the empty instances page
 - Add customizable interface, code, and log fonts selectable from installed system fonts or external font files (#78)
+- Add a modpack entry card to the marketplace portal page
 
 ### Changed
 
 - Improve the instance list layout so cards stretch to fill the page width
 - Update the marketplace search filter placeholders to clarify the unfiltered state
+- Rework the marketplace entry copy with a download-resource label on the sidebar button and completed search placeholders
 
 ### Removed
 

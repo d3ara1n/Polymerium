@@ -169,7 +169,7 @@ public partial class LandingPageModel(
     }
 
     [RelayCommand]
-    private void GotoMarketplace() => navigationService.Navigate<MarketplaceSearchPage>();
+    private void GotoMarketplace() => navigationService.Navigate<MarketplaceModpacksPage>();
 
     [RelayCommand]
     private void TryOne()
@@ -252,7 +252,7 @@ public partial class LandingPageModel(
                                     version.Namespace,
                                     version.ProjectId,
                                     version.VersionId);
-            notificationService.PopMessage(Resources.MarketplaceSearchPage_ModpackInstallingNotificationMessage
+            notificationService.PopMessage(Resources.MarketplaceModpacksPage_ModpackInstallingNotificationMessage
                                                     .Replace("{0}", version.VersionName),
                                            version.ProjectName);
         }

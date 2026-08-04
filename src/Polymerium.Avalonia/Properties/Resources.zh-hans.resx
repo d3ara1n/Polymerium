@@ -18,8 +18,11 @@
     <data name="MainWindow_HomeButtonText" xml:space="preserve">
         <value>主页</value>
     </data>
+    <data name="MainWindow_MarketplaceButtonSubText" xml:space="preserve">
+        <value>资源下载</value>
+    </data>
     <data name="MainWindow_MarketplaceButtonText" xml:space="preserve">
-        <value>正在前往：集市</value>
+        <value>集市</value>
     </data>
     <data name="MainWindow_UpdateAvailableButtonText" xml:space="preserve">
         <value>有更新</value>
@@ -379,24 +382,30 @@
         <value>探索发现</value>
     </data>
     <data name="MarketplacePortalPage_DiscoveryCenterSubtitle" xml:space="preserve">
-        <value>寻找新的开始</value>
+        <value>搜索整合包…</value>
+    </data>
+    <data name="MarketplacePortalPage_ModpacksEntryDescription" xml:space="preserve">
+        <value>搜索并下载来自各个资源仓库的整合包</value>
+    </data>
+    <data name="MarketplacePortalPage_ModpacksEntryTitle" xml:space="preserve">
+        <value>整合包</value>
     </data>
     <data name="MarketplacePortalPage_SearchButtonText" xml:space="preserve">
         <value>搜索</value>
     </data>
-    <data name="MarketplaceSearchPage_Title" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_Title" xml:space="preserve">
         <value>搜索整合包</value>
     </data>
-    <data name="MarketplaceSearchPage_SearchBarPlaceholder" xml:space="preserve">
-        <value>由这些关键词在...</value>
+    <data name="MarketplaceModpacksPage_SearchBarPlaceholder" xml:space="preserve">
+        <value>输入关键词搜索…</value>
     </data>
-    <data name="MarketplaceSearchPage_VersionFilterPlaceholder" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_VersionFilterPlaceholder" xml:space="preserve">
         <value>全部版本</value>
     </data>
-    <data name="MarketplaceSearchPage_LoaderFilterPlaceholder" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_LoaderFilterPlaceholder" xml:space="preserve">
         <value>全部加载器</value>
     </data>
-    <data name="MarketplaceSearchPage_SearchButtonText" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_SearchButtonText" xml:space="preserve">
         <value>搜索</value>
     </data>
     <data name="Shared_FetchingLabelText" xml:space="preserve">
@@ -858,7 +867,7 @@
     <data name="ExhibitDependencyButton_RequiredTagText" xml:space="preserve">
         <value>必要</value>
     </data>
-    <data name="MarketplaceSearchPage_OpenWebsiteMenuText" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>前往网站</value>
     </data>
     <data name="ExhibitModpackButton_InstallButtonText" xml:space="preserve">
@@ -1428,10 +1437,10 @@
     <data name="InstanceSetupPage_InstallVersionNotificationMessage" xml:space="preserve">
         <value>{0}({1}) 已添加到安装队列</value>
     </data>
-    <data name="MarketplaceSearchPage_ModpackInstallingNotificationMessage" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_ModpackInstallingNotificationMessage" xml:space="preserve">
         <value>{0} 已添加到队列</value>
     </data>
-    <data name="MarketplaceSearchPage_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_ModpackLoadingDangerNotificationTitle" xml:space="preserve">
         <value>获取项目信息失败</value>
     </data>
     <data name="ResourceKind_World" xml:space="preserve">
@@ -2407,7 +2416,7 @@
     <data name="InstanceSetupPage_ImportListMenuText" xml:space="preserve">
         <value>导入列表</value>
     </data>
-    <data name="MarketplaceSearchPage_Message" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_Message" xml:space="preserve">
         <value>查看并下载来自各个资源提供方的整合包。如果需要更精确的搜索过滤选项，请在对应资源网站上完成整合包查找，然后在这里输入名字即可安装。</value>
     </data>
     <data name="LandingPage_RandomPlayTitle" xml:space="preserve">
@@ -3015,7 +3024,7 @@
     <data name="PackageExplorerPage_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
     <value>加载项目信息失败</value>
   </data>
-    <data name="MarketplaceSearchPage_OpenProjectWebsiteDangerNotificationTitle" xml:space="preserve">
+    <data name="MarketplaceModpacksPage_OpenProjectWebsiteDangerNotificationTitle" xml:space="preserve">
     <value>打开项目网站失败</value>
   </data>
     <data name="InstancePage_ImportPackageSuccessNotificationMessage" xml:space="preserve">
@@ -3313,7 +3322,7 @@
         <value>主页</value>
     </data>
     <data name="AppMenu_MarketplaceText" xml:space="preserve">
-        <value>市场中心</value>
+        <value>集市</value>
     </data>
     <data name="AppMenu_AccountsText" xml:space="preserve">
         <value>账户管理</value>
