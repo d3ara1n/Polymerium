@@ -3765,6 +3765,21 @@ Affected entries: {0}
     <data name="RecipePage_NoMatchesText" xml:space="preserve">
         <value>No matching packages</value>
     </data>
+    <data name="RecipePage_PackageCountLabelText" xml:space="preserve">
+        <value>Packages</value>
+    </data>
+    <data name="RecipePage_EditNoteMenuText" xml:space="preserve">
+        <value>Edit Note</value>
+    </data>
+    <data name="RecipePage_RemoveItemMenuText" xml:space="preserve">
+        <value>Remove</value>
+    </data>
+    <data name="RecipeItemButton_NoTagsText" xml:space="preserve">
+        <value>No tags</value>
+    </data>
+    <data name="RecipeItemButton_NoNoteText" xml:space="preserve">
+        <value>No note</value>
+    </data>
     <data name="RecipeItemModal_SummaryLabelText" xml:space="preserve">
         <value>Summary</value>
     </data>

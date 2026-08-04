@@ -3756,6 +3756,21 @@
     <data name="RecipePage_NoMatchesText" xml:space="preserve">
         <value>没有匹配的包</value>
     </data>
+    <data name="RecipePage_PackageCountLabelText" xml:space="preserve">
+        <value>包</value>
+    </data>
+    <data name="RecipePage_EditNoteMenuText" xml:space="preserve">
+        <value>编辑备注</value>
+    </data>
+    <data name="RecipePage_RemoveItemMenuText" xml:space="preserve">
+        <value>移除</value>
+    </data>
+    <data name="RecipeItemButton_NoTagsText" xml:space="preserve">
+        <value>暂无标签</value>
+    </data>
+    <data name="RecipeItemButton_NoNoteText" xml:space="preserve">
+        <value>暂无备注</value>
+    </data>
     <data name="RecipeItemModal_SummaryLabelText" xml:space="preserve">
         <value>摘要</value>
     </data>

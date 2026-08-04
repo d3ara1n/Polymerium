@@ -1,17 +1,19 @@
-﻿<husk:Page
+<husk:Page
     x:Class="Polymerium.Avalonia.Pages.RecipePage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="600"
     d:DesignWidth="800"
     x:DataType="app:RecipePageModel"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <husk:Page.Header>
         <Grid
             ColumnDefinitions="*,Auto,Auto,Auto"
@@ -26,110 +28,89 @@
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 Command="{Binding EditCommand}">
-                <StackPanel
-                    Orientation="Horizontal"
-                    Spacing="6">
-                    <fi:SymbolIcon
-                        VerticalAlignment="Center"
-                        FontSize="{StaticResource MediumFontSize}"
-                        Symbol="Edit" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.RecipePage_EditButtonText}" />
-                </StackPanel>
+                <husk:IconLabel
+                    Icon="Edit"
+                    Text="{x:Static lang:Resources.RecipePage_EditButtonText}" />
             </Button>
             <Button
                 Grid.Column="2"
                 VerticalAlignment="Center"
                 Command="{Binding ExportCommand}">
-                <StackPanel
-                    Orientation="Horizontal"
-                    Spacing="6">
-                    <fi:SymbolIcon
-                        VerticalAlignment="Center"
-                        FontSize="{StaticResource MediumFontSize}"
-                        Symbol="ArrowExport" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.RecipePage_ExportButtonText}" />
-                </StackPanel>
+                <husk:IconLabel
+                    Icon="ArrowExport"
+                    Text="{x:Static lang:Resources.RecipePage_ExportButtonText}" />
             </Button>
             <Button
                 Grid.Column="3"
                 Classes="Primary"
                 VerticalAlignment="Center"
                 Command="{Binding AddItemCommand}">
-                <StackPanel
-                    Orientation="Horizontal"
-                    Spacing="6">
-                    <fi:SymbolIcon
-                        VerticalAlignment="Center"
-                        FontSize="{StaticResource MediumFontSize}"
-                        Symbol="Add" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.RecipePage_AddPackageButtonText}" />
-                </StackPanel>
+                <husk:IconLabel
+                    Icon="Add"
+                    Text="{x:Static lang:Resources.RecipePage_AddPackageButtonText}" />
             </Button>
         </Grid>
     </husk:Page.Header>
-    <StackPanel Spacing="16">
-        <Border
-            Background="{StaticResource LayerBackgroundBrush}"
-            CornerRadius="{StaticResource MediumCornerRadius}"
-            Padding="16,12">
-            <StackPanel>
+    <Grid
+        RowDefinitions="Auto,Auto,*"
+        RowSpacing="16">
+        <husk:SwitchContainer
+            Grid.Row="0"
+            TargetType="x:Boolean"
+            Value="{Binding Description, Converter={x:Static StringConverters.IsNullOrEmpty}}">
+            <husk:SwitchCase Value="{x:False}">
                 <TextBlock
-                    IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{Binding Description}"
                     TextWrapping="Wrap" />
+            </husk:SwitchCase>
+            <husk:SwitchCase Value="{x:True}">
                 <TextBlock
-                    HorizontalAlignment="Center"
-                    IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNullOrEmpty}}"
                     FontSize="{StaticResource SmallFontSize}"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{x:Static lang:Resources.RecipePage_NoDescriptionText}" />
-            </StackPanel>
-        </Border>
-        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            </husk:SwitchCase>
+        </husk:SwitchContainer>
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="Auto,*,Auto"
+            ColumnSpacing="12">
             <TextBox
                 Grid.Column="0"
-                MinWidth="320"
-                MaxWidth="480"
-                HorizontalAlignment="Left"
+                MinWidth="168"
                 PlaceholderText="{x:Static lang:Resources.RecipePage_SearchPlaceholderText}"
-                Text="{Binding QueryText}" />
+                Text="{Binding QueryText}">
+                <TextBox.InnerRightContent>
+                    <Button
+                        Command="{Binding $parent[TextBox].Clear}"
+                        Content="{fie:SymbolIcon Symbol=Dismiss,
+                                                 FontSize={StaticResource MediumFontSize}}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                </TextBox.InnerRightContent>
+            </TextBox>
+            <TextBlock Grid.Column="1">
+                <Run
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{x:Static lang:Resources.RecipePage_PackageCountLabelText}" />
+                <LineBreak />
+                <Run Text="{Binding Items.Count, Mode=OneWay, FallbackValue=0}" />
+                <Run
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="/" />
+                <Run Text="{Binding TotalCount, Mode=OneWay, FallbackValue=0}" />
+            </TextBlock>
             <StackPanel
-                Grid.Column="1"
-                VerticalAlignment="Center"
+                Grid.Column="2"
                 Orientation="Horizontal"
-                Spacing="12">
-                <StackPanel
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal"
-                    Spacing="4">
-                    <fi:SymbolIcon
-                        VerticalAlignment="Center"
-                        FontSize="{StaticResource SmallFontSize}"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Symbol="BoxMultiple" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        FontSize="{StaticResource SmallFontSize}"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{Binding Items.Count}" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        FontSize="{StaticResource SmallFontSize}"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.RecipesPage_ItemCountSuffix}" />
+                Spacing="8">
+                <StackPanel IsVisible="{Binding IsRefreshing}">
                     <husk:ProgressRing
-                        Width="14"
-                        Height="14"
-                        VerticalAlignment="Center"
-                        IsIndeterminate="{Binding IsRefreshing}"
-                        IsVisible="{Binding IsRefreshing}"
-                        ShowProgressText="False" />
+                        Width="16"
+                        Height="16"
+                        HorizontalAlignment="Center"
+                        IsIndeterminate="{Binding IsRefreshing}" />
+                    <TextBlock Text="{x:Static lang:Resources.Shared_FetchingLabelText}" />
                 </StackPanel>
                 <ComboBox
                     MinWidth="120"
@@ -144,25 +125,62 @@
             </StackPanel>
         </Grid>
         <app:EmptyContainer
+            Grid.Row="2"
             Icon="BoxMultiple"
             IsEmpty="{Binding Items.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
             Text="{Binding EmptyText}">
-            <ItemsControl ItemsSource="{Binding Items}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Spacing="4" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="app:RecipeItemModel">
+            <ScrollViewer
+                HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl ItemsSource="{Binding Items}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="app:RecipeItemModel">
                         <app:RecipeItemButton
+                            Margin="0,0,0,8"
                             Command="{Binding $parent[ItemsControl].((app:RecipePageModel)DataContext).OpenItemCommand}"
                             CommandParameter="{Binding}"
-                            RemoveCommand="{Binding $parent[ItemsControl].((app:RecipePageModel)DataContext).RemoveItemCommand}"
-                            Theme="{StaticResource RecipeItemButtonTheme}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                            Theme="{StaticResource RecipeItemButtonTheme}">
+                            <app:RecipeItemButton.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuItem
+                                        Command="{Binding $parent[ItemsControl].((app:RecipePageModel)DataContext).EditItemTagsCommand}"
+                                        CommandParameter="{Binding}"
+                                        Header="{x:Static lang:Resources.RecipeItemModal_EditTagsButtonText}"
+                                        Icon="{fie:SymbolIcon Symbol=Tag,
+                                                              FontSize={StaticResource MediumFontSize}}" />
+                                    <MenuItem
+                                        Command="{Binding $parent[ItemsControl].((app:RecipePageModel)DataContext).EditItemNoteCommand}"
+                                        CommandParameter="{Binding}"
+                                        Header="{x:Static lang:Resources.RecipePage_EditNoteMenuText}"
+                                        Icon="{fie:SymbolIcon Symbol=Edit,
+                                                              FontSize={StaticResource MediumFontSize}}" />
+                                    <MenuItem Header="-" />
+                                    <MenuItem
+                                        Command="{Binding $parent[ItemsControl].((app:RecipePageModel)DataContext).RemoveItemCommand}"
+                                        CommandParameter="{Binding}">
+                                        <MenuItem.Header>
+                                            <TextBlock
+                                                Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                Text="{x:Static lang:Resources.RecipePage_RemoveItemMenuText}" />
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                Symbol="Delete" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </MenuFlyout>
+                            </app:RecipeItemButton.ContextFlyout>
+                            </app:RecipeItemButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </app:EmptyContainer>
-    </StackPanel>
+    </Grid>
 </husk:Page>
