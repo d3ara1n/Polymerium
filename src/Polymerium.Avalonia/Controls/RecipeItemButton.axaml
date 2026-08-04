@@ -1,0 +1,156 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:trident="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions">
+    <Design.PreviewWith>
+        <Panel>
+            <StackPanel
+                Margin="24"
+                Spacing="12">
+                <app:RecipeItemButton Theme="{StaticResource RecipeItemButtonTheme}" />
+            </StackPanel>
+        </Panel>
+    </Design.PreviewWith>
+
+    <ControlTheme
+        x:Key="RecipeItemButtonTheme"
+        TargetType="app:RecipeItemButton">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <ControlTemplate x:DataType="app:RecipeItemModel">
+                <husk:Card
+                    Name="Background"
+                    Padding="0"
+                    Background="{StaticResource LayerBackgroundBrush}"
+                    CornerRadius="{StaticResource MediumCornerRadius}">
+                    <husk:Card.Transitions>
+                        <Transitions>
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="Background"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Easing="SineEaseOut"
+                                Property="BorderBrush"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                        </Transitions>
+                    </husk:Card.Transitions>
+                    <Grid
+                        Margin="{StaticResource CardContentMargin}"
+                        ColumnDefinitions="Auto,*,Auto"
+                        ColumnSpacing="12">
+                        <husk:PlaceholderContainer
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Source="{Binding Info}">
+                            <husk:PlaceholderContainer.SourceTemplate>
+                                <DataTemplate DataType="trident:Project">
+                                    <Border
+                                        Width="48"
+                                        Height="48"
+                                        ClipToBounds="True"
+                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <Image async:ImageLoader.Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+                                    </Border>
+                                </DataTemplate>
+                            </husk:PlaceholderContainer.SourceTemplate>
+                            <husk:PlaceholderContainer.Placeholder>
+                                <Border
+                                    Width="48"
+                                    Height="48"
+                                    Background="{StaticResource LayerBackgroundBrush}"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <fi:SymbolIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Symbol="Box" />
+                                </Border>
+                            </husk:PlaceholderContainer.Placeholder>
+                        </husk:PlaceholderContainer>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Spacing="4">
+                            <husk:PlaceholderContainer Source="{Binding Info}">
+                                <husk:PlaceholderContainer.SourceTemplate>
+                                    <DataTemplate DataType="trident:Project">
+                                        <StackPanel Spacing="2">
+                                            <TextBlock
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Binding ProjectName}"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <TextBlock
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Binding Author, StringFormat={}@{0}}"
+                                                TextTrimming="CharacterEllipsis" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </husk:PlaceholderContainer.SourceTemplate>
+                                <husk:PlaceholderContainer.Placeholder>
+                                    <StackPanel Spacing="2">
+                                        <TextBlock
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="{Binding Label}"
+                                            TextTrimming="CharacterEllipsis" />
+                                        <TextBlock
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Text="{Binding ProjectId}"
+                                            TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
+                                </husk:PlaceholderContainer.Placeholder>
+                            </husk:PlaceholderContainer>
+
+                            <ItemsControl
+                                IsVisible="{Binding Tags.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                ItemsSource="{Binding Tags}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="4" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <TextBlock Text="{Binding}" />
+                                        </husk:Tag>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <Button
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Command="{Binding $parent[app:RecipeItemButton].RemoveCommand}"
+                            CommandParameter="{Binding}"
+                            Theme="{StaticResource GhostButtonTheme}">
+                            <fi:SymbolIcon
+                                FontSize="{StaticResource MediumFontSize}"
+                                Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                Symbol="Delete" />
+                        </Button>
+                    </Grid>
+                </husk:Card>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ husk|Card#Background">
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ husk|Card#Background">
+            <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

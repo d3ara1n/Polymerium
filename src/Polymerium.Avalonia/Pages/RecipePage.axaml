@@ -3,20 +3,18 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
-    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:trident="using:TridentCore.Abstractions.Repositories.Resources"
     d:DesignHeight="600"
     d:DesignWidth="800"
     x:DataType="app:RecipePageModel"
     mc:Ignorable="d">
     <husk:Page.Header>
         <Grid
-            ColumnDefinitions="*,Auto,Auto"
+            ColumnDefinitions="*,Auto,Auto,Auto"
             ColumnSpacing="8">
             <TextBlock
                 Grid.Column="0"
@@ -26,7 +24,6 @@
                 Theme="{StaticResource PageHeaderTextBlockTheme}" />
             <Button
                 Grid.Column="1"
-
                 VerticalAlignment="Center"
                 Command="{Binding EditCommand}">
                 <StackPanel
@@ -57,6 +54,23 @@
                         Text="{x:Static lang:Resources.RecipePage_ExportButtonText}" />
                 </StackPanel>
             </Button>
+            <Button
+                Grid.Column="3"
+                Classes="Primary"
+                VerticalAlignment="Center"
+                Command="{Binding AddItemCommand}">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="6">
+                    <fi:SymbolIcon
+                        VerticalAlignment="Center"
+                        FontSize="{StaticResource MediumFontSize}"
+                        Symbol="Add" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Static lang:Resources.RecipePage_AddPackageButtonText}" />
+                </StackPanel>
+            </Button>
         </Grid>
     </husk:Page.Header>
     <StackPanel Spacing="16">
@@ -77,57 +91,62 @@
                     Text="{x:Static lang:Resources.RecipePage_NoDescriptionText}" />
             </StackPanel>
         </Border>
-        <Grid ColumnDefinitions="*,Auto">
-            <Button
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <TextBox
                 Grid.Column="0"
+                MinWidth="320"
+                MaxWidth="480"
                 HorizontalAlignment="Left"
-                Command="{Binding AddItemCommand}"
-                Theme="{StaticResource OutlineButtonTheme}">
-                <StackPanel
-                    Orientation="Horizontal"
-                    Spacing="6">
-                    <fi:SymbolIcon
-                        VerticalAlignment="Center"
-                        FontSize="{StaticResource MediumFontSize}"
-                        Symbol="Add" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.RecipePage_AddPackageButtonText}" />
-                </StackPanel>
-            </Button>
+                PlaceholderText="{x:Static lang:Resources.RecipePage_SearchPlaceholderText}"
+                Text="{Binding QueryText}" />
             <StackPanel
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 Orientation="Horizontal"
-                Spacing="4">
-                <fi:SymbolIcon
+                Spacing="12">
+                <StackPanel
                     VerticalAlignment="Center"
-                    FontSize="{StaticResource SmallFontSize}"
-                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Symbol="BoxMultiple" />
-                <TextBlock
-                    VerticalAlignment="Center"
-                    FontSize="{StaticResource SmallFontSize}"
-                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{Binding Items.Count}" />
-                <TextBlock
-                    VerticalAlignment="Center"
-                    FontSize="{StaticResource SmallFontSize}"
-                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.RecipesPage_ItemCountSuffix}" />
-                <husk:ProgressRing
-                    Width="14"
-                    Height="14"
-                    VerticalAlignment="Center"
-                    IsIndeterminate="{Binding IsRefreshing}"
-                    IsVisible="{Binding IsRefreshing}"
-                    ShowProgressText="False" />
+                    Orientation="Horizontal"
+                    Spacing="4">
+                    <fi:SymbolIcon
+                        VerticalAlignment="Center"
+                        FontSize="{StaticResource SmallFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Symbol="BoxMultiple" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="{StaticResource SmallFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{Binding Items.Count}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="{StaticResource SmallFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{x:Static lang:Resources.RecipesPage_ItemCountSuffix}" />
+                    <husk:ProgressRing
+                        Width="14"
+                        Height="14"
+                        VerticalAlignment="Center"
+                        IsIndeterminate="{Binding IsRefreshing}"
+                        IsVisible="{Binding IsRefreshing}"
+                        ShowProgressText="False" />
+                </StackPanel>
+                <ComboBox
+                    MinWidth="120"
+                    ItemsSource="{Binding KindFilterOptions}"
+                    SelectedItem="{Binding SelectedKind, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}, TargetNullValue={x:Static lang:Resources.RecipePage_KindFilterAllText}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </StackPanel>
         </Grid>
         <app:EmptyContainer
             Icon="BoxMultiple"
             IsEmpty="{Binding Items.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
-            Text="{x:Static lang:Resources.RecipePage_NoPackagesText}">
+            Text="{Binding EmptyText}">
             <ItemsControl ItemsSource="{Binding Items}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -136,90 +155,11 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="app:RecipeItemModel">
-                        <Grid
-                            ColumnDefinitions="*,Auto"
-                            ColumnSpacing="12">
-                            <husk:PlaceholderContainer
-                                Grid.Column="0"
-                                VerticalAlignment="Center"
-                                Source="{Binding Info}">
-                                <husk:PlaceholderContainer.SourceTemplate>
-                                    <DataTemplate DataType="trident:Project">
-                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                            <Border
-                                                Grid.Column="0"
-                                                Width="32"
-                                                Height="32"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Background="{StaticResource LayerBackgroundBrush}"
-                                                ClipToBounds="True"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <Image async:ImageLoader.Source="{Binding Thumbnail}" Stretch="UniformToFill" />
-                                            </Border>
-                                            <StackPanel
-                                                Grid.Column="1"
-                                                Spacing="2">
-                                                <TextBlock
-                                                    FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="{Binding ProjectName}"
-                                                    TextTrimming="CharacterEllipsis" />
-                                                <TextBlock
-                                                    FontSize="{StaticResource SmallFontSize}"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{Binding Author}"
-                                                    TextTrimming="CharacterEllipsis" />
-                                            </StackPanel>
-                                        </Grid>
-                                    </DataTemplate>
-                                </husk:PlaceholderContainer.SourceTemplate>
-                                <husk:PlaceholderContainer.Placeholder>
-                                    <husk:SkeletonContainer IsLoading="{Binding !IsLoaded}">
-                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                            <Border
-                                                Grid.Column="0"
-                                                Width="32"
-                                                Height="32"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Background="{StaticResource LayerBackgroundBrush}"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <fi:SymbolIcon
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="{StaticResource MediumFontSize}"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Symbol="Box" />
-                                            </Border>
-                                            <StackPanel
-                                                Grid.Column="1"
-                                                Spacing="2">
-                                                <TextBlock
-                                                    FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="{Binding Label}"
-                                                    TextTrimming="CharacterEllipsis" />
-                                                <TextBlock
-                                                    FontSize="{StaticResource SmallFontSize}"
-                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{Binding ProjectId}"
-                                                    TextTrimming="CharacterEllipsis" />
-                                            </StackPanel>
-                                        </Grid>
-                                    </husk:SkeletonContainer>
-                                </husk:PlaceholderContainer.Placeholder>
-                            </husk:PlaceholderContainer>
-                            <Button
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).RemoveItemCommand, FallbackValue={x:Null}}"
-                                CommandParameter="{Binding}"
-                                Theme="{StaticResource GhostButtonTheme}">
-                                <fi:SymbolIcon
-                                    FontSize="{StaticResource MediumFontSize}"
-                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                    Symbol="Delete" />
-                            </Button>
-                        </Grid>
+                        <app:RecipeItemButton
+                            Command="{Binding $parent[ItemsControl].((app:RecipePageModel)DataContext).OpenItemCommand}"
+                            CommandParameter="{Binding}"
+                            RemoveCommand="{Binding $parent[ItemsControl].((app:RecipePageModel)DataContext).RemoveItemCommand}"
+                            Theme="{StaticResource RecipeItemButtonTheme}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

@@ -1,8 +1,8 @@
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Facilities;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Pref;
-
 namespace Polymerium.Avalonia.Models;
 
 public sealed partial class RecipeItemModel(string id, string label, string? ns, string projectId) : ModelBase
@@ -15,6 +15,9 @@ public sealed partial class RecipeItemModel(string id, string label, string? ns,
 
     [ObservableProperty]
     public partial string? Note { get; set; }
+
+    [ObservableProperty]
+    public partial ObservableCollection<string> Tags { get; set; } = [];
 
     [ObservableProperty]
     public partial Project? Info { get; set; }

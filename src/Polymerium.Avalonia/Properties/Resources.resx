@@ -3756,6 +3756,33 @@ Affected entries: {0}
     <data name="RecipePage_NoPackagesText" xml:space="preserve">
         <value>No packages yet</value>
     </data>
+    <data name="RecipePage_SearchPlaceholderText" xml:space="preserve">
+        <value>Search packages</value>
+    </data>
+    <data name="RecipePage_KindFilterAllText" xml:space="preserve">
+        <value>All</value>
+    </data>
+    <data name="RecipePage_NoMatchesText" xml:space="preserve">
+        <value>No matching packages</value>
+    </data>
+    <data name="RecipeItemModal_SummaryLabelText" xml:space="preserve">
+        <value>Summary</value>
+    </data>
+    <data name="RecipeItemModal_NoteLabelText" xml:space="preserve">
+        <value>Note</value>
+    </data>
+    <data name="RecipeItemModal_NoteWatermarkText" xml:space="preserve">
+        <value>Add a private note for this package</value>
+    </data>
+    <data name="RecipeItemModal_TagsLabelText" xml:space="preserve">
+        <value>Tags</value>
+    </data>
+    <data name="RecipeItemModal_EditTagsButtonText" xml:space="preserve">
+        <value>Edit Tags</value>
+    </data>
+    <data name="RecipeItemModal_SaveButtonText" xml:space="preserve">
+        <value>Save</value>
+    </data>
     <data name="RecipeEditorDialog_Prompt" xml:space="preserve">
         <value>Set a name and an optional description</value>
     </data>

@@ -7458,6 +7458,60 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string RecipePage_SearchPlaceholderText {
+            get {
+                return ResourceManager.GetString("RecipePage_SearchPlaceholderText", resourceCulture);
+            }
+        }
+        
+        public static string RecipePage_KindFilterAllText {
+            get {
+                return ResourceManager.GetString("RecipePage_KindFilterAllText", resourceCulture);
+            }
+        }
+        
+        public static string RecipePage_NoMatchesText {
+            get {
+                return ResourceManager.GetString("RecipePage_NoMatchesText", resourceCulture);
+            }
+        }
+        
+        public static string RecipeItemModal_SummaryLabelText {
+            get {
+                return ResourceManager.GetString("RecipeItemModal_SummaryLabelText", resourceCulture);
+            }
+        }
+        
+        public static string RecipeItemModal_NoteLabelText {
+            get {
+                return ResourceManager.GetString("RecipeItemModal_NoteLabelText", resourceCulture);
+            }
+        }
+        
+        public static string RecipeItemModal_NoteWatermarkText {
+            get {
+                return ResourceManager.GetString("RecipeItemModal_NoteWatermarkText", resourceCulture);
+            }
+        }
+        
+        public static string RecipeItemModal_TagsLabelText {
+            get {
+                return ResourceManager.GetString("RecipeItemModal_TagsLabelText", resourceCulture);
+            }
+        }
+        
+        public static string RecipeItemModal_EditTagsButtonText {
+            get {
+                return ResourceManager.GetString("RecipeItemModal_EditTagsButtonText", resourceCulture);
+            }
+        }
+        
+        public static string RecipeItemModal_SaveButtonText {
+            get {
+                return ResourceManager.GetString("RecipeItemModal_SaveButtonText", resourceCulture);
+            }
+        }
+        
         public static string RecipeEditorDialog_Prompt {
             get {
                 return ResourceManager.GetString("RecipeEditorDialog_Prompt", resourceCulture);

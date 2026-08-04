@@ -660,6 +660,17 @@ public class PersistenceService(IFreeSql freeSql)
         }
     }
 
+    public void UpdateRecipeItem(string id, IReadOnlyList<string> tags, string? note)
+    {
+        freeSql
+           .Update<RecipeItem>()
+           .Where(x => x.Id == id)
+           .Set(x => x.Tags, JsonSerializer.Serialize(tags))
+           .Set(x => x.Note, note)
+           .ExecuteAffrows();
+        TouchRecipe(id);
+    }
+
     public void TouchRecipe(string id) =>
         freeSql.Update<Recipe>().Where(x => x.Id == id).Set(x => x.UpdatedAt, DateTime.Now).ExecuteAffrows();
 
