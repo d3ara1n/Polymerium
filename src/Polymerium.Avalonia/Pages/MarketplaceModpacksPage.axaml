@@ -1,5 +1,5 @@
 ﻿<husk:Page
-    x:Class="Polymerium.Avalonia.Pages.MarketplaceSearchPage"
+    x:Class="Polymerium.Avalonia.Pages.MarketplaceModpacksPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
@@ -14,7 +14,7 @@
     Padding="0"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="app:MarketplaceSearchPageModel"
+    x:DataType="app:MarketplaceModpacksPageModel"
     Background="{x:Null}"
     IsHeaderVisible="False"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
@@ -24,13 +24,13 @@
             x:Key="ExhibitModpackButtonFlyout"
             x:DataType="app:ExhibitModel">
             <MenuItem
-                Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
+                Command="{Binding $parent[app:MarketplaceModpacksPage].((app:MarketplaceModpacksPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
                 Header="{x:Static lang:Resources.ExhibitModpackToast_InstallButtonText}"
                 Icon="{fie:SymbolIcon Symbol=ArrowDownload,
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem
-                Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).FavoriteModpackCommand, FallbackValue={x:Null}}"
+                Command="{Binding $parent[app:MarketplaceModpacksPage].((app:MarketplaceModpacksPageModel)DataContext).FavoriteModpackCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
                 Header="{x:Static lang:Resources.PackageExplorerPage_FavoriteMenuText}"
                 Icon="{fie:SymbolIcon Symbol=CollectionsAdd,
@@ -96,9 +96,9 @@
             </MenuItem>
             <MenuItem Header="-" />
             <MenuItem
-                Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).OpenWebsiteCommand, FallbackValue={x:Null}}"
+                Command="{Binding $parent[app:MarketplaceModpacksPage].((app:MarketplaceModpacksPageModel)DataContext).OpenWebsiteCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
-                Header="{x:Static lang:Resources.MarketplaceSearchPage_OpenWebsiteMenuText}"
+                Header="{x:Static lang:Resources.MarketplaceModpacksPage_OpenWebsiteMenuText}"
                 Icon="{fie:SymbolIcon Symbol=Link,
                                       FontSize={StaticResource MediumFontSize}}" />
         </MenuFlyout>
@@ -132,10 +132,10 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="{x:Static lang:Resources.MarketplaceSearchPage_Title}" />
+                                Text="{x:Static lang:Resources.MarketplaceModpacksPage_Title}" />
                             <TextBlock
                                 Opacity="0.8"
-                                Text="{x:Static lang:Resources.MarketplaceSearchPage_Message}"
+                                Text="{x:Static lang:Resources.MarketplaceModpacksPage_Message}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </DockPanel>
@@ -150,7 +150,7 @@
                         <ComboBox
                             Grid.Column="0"
                             ItemsSource="{Binding SelectedRepository.Versions}"
-                            PlaceholderText="{x:Static lang:Resources.MarketplaceSearchPage_VersionFilterPlaceholder}"
+                            PlaceholderText="{x:Static lang:Resources.MarketplaceModpacksPage_VersionFilterPlaceholder}"
                             SelectedItem="{Binding FilteredVersion, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="x:String">
@@ -161,7 +161,7 @@
                         <ComboBox
                             Grid.Column="1"
                             ItemsSource="{Binding SelectedRepository.Loaders}"
-                            PlaceholderText="{x:Static lang:Resources.MarketplaceSearchPage_LoaderFilterPlaceholder}"
+                            PlaceholderText="{x:Static lang:Resources.MarketplaceModpacksPage_LoaderFilterPlaceholder}"
                             SelectedItem="{Binding FilteredLoader, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="app:LoaderBasicModel">
@@ -180,7 +180,7 @@
                         </Button>
                         <TextBox
                             Grid.Column="3"
-                            PlaceholderText="{x:Static lang:Resources.MarketplaceSearchPage_SearchBarPlaceholder}"
+                            PlaceholderText="{x:Static lang:Resources.MarketplaceModpacksPage_SearchBarPlaceholder}"
                             Text="{Binding QueryText, Mode=TwoWay}">
                             <TextBox.InnerRightContent>
                                 <Button
@@ -233,7 +233,7 @@
                                 </husk:SwitchContainer>
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Static lang:Resources.MarketplaceSearchPage_SearchButtonText}" />
+                                    Text="{x:Static lang:Resources.MarketplaceModpacksPage_SearchButtonText}" />
                                 <husk:Tag
                                     Classes="Status"
                                     Background="{StaticResource LayerBackgroundBrush}"
@@ -252,7 +252,7 @@
                                         <app:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="app:ExhibitModel">
                                                 <app:ExhibitModpackButton
-                                                    Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).ViewModpackCommand, FallbackValue={x:Null}}"
+                                                    Command="{Binding $parent[app:MarketplaceModpacksPage].((app:MarketplaceModpacksPageModel)DataContext).ViewModpackCommand, FallbackValue={x:Null}}"
                                                     CommandParameter="{Binding}"
                                                     ContextFlyout="{StaticResource ExhibitModpackButtonFlyout}"
                                                     Theme="{StaticResource ListExhibitModpackButtonTheme}" />
@@ -270,7 +270,7 @@
                                         <app:ListTemplateCombinationModel.ItemTemplate>
                                             <DataTemplate x:DataType="app:ExhibitModel">
                                                 <app:ExhibitModpackButton
-                                                    Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).ViewModpackCommand, FallbackValue={x:Null}}"
+                                                    Command="{Binding $parent[app:MarketplaceModpacksPage].((app:MarketplaceModpacksPageModel)DataContext).ViewModpackCommand, FallbackValue={x:Null}}"
                                                     CommandParameter="{Binding}"
                                                     ContextFlyout="{StaticResource ExhibitModpackButtonFlyout}"
                                                     Theme="{StaticResource GridExhibitModpackButtonTheme}" />

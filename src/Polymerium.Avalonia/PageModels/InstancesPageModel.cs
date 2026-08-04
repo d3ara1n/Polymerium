@@ -234,7 +234,7 @@ public partial class InstancesPageModel(
     private void ManageRecipes() => navigationService.Navigate<RecipesPage>();
 
     [RelayCommand]
-    private void GotoMarketplace() => navigationService.Navigate<MarketplaceSearchPage>();
+    private void GotoMarketplace() => navigationService.Navigate<MarketplaceModpacksPage>();
 
     [RelayCommand]
     private void Migrate() => overlayService.PopModal<MigrateModal>();

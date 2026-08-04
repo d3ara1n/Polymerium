@@ -139,7 +139,7 @@
                                 Spacing="8">
                                 <Button
                                     Classes="Primary Small"
-                                    Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
+                                    Command="{Binding $parent[app:MarketplaceModpacksPage].((app:MarketplaceModpacksPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}">
                                     <StackPanel
                                         Orientation="Horizontal"
@@ -252,7 +252,7 @@
                                     Grid.Row="1"
                                     Classes="Primary Small"
                                     BackgroundSizing="InnerBorderEdge"
-                                    Command="{Binding $parent[app:MarketplaceSearchPage].((app:MarketplaceSearchPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
+                                    Command="{Binding $parent[app:MarketplaceModpacksPage].((app:MarketplaceModpacksPageModel)DataContext).InstallLatestCommand, FallbackValue={x:Null}}"
                                     CommandParameter="{Binding}">
                                     <StackPanel
                                         Orientation="Horizontal"

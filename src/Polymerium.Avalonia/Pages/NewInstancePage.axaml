@@ -271,7 +271,7 @@
                             Spacing="8">
                             <fi:SymbolIcon
                                 FontSize="18"
-                                Symbol="BuildingStore" />
+                                Symbol="Gift" />
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Text="{x:Static lang:Resources.NewInstancePage_DownloadButtonText}" />

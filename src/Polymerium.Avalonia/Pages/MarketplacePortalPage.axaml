@@ -71,6 +71,48 @@
                             Text="{x:Static lang:Resources.MarketplacePortalPage_SearchButtonText}" />
                     </StackPanel>
                 </Button>
+                <Button
+                    Margin="36,0"
+                    Padding="16,12"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    Command="{Binding GotoModpacksCommand}"
+                    Theme="{StaticResource OutlineButtonTheme}">
+                    <Grid
+                        ColumnDefinitions="Auto,*,Auto"
+                        ColumnSpacing="16">
+                        <Border
+                            Width="44"
+                            Height="44"
+                            VerticalAlignment="Center"
+                            CornerRadius="8"
+                            Background="{StaticResource LayerBackgroundBrush}">
+                            <fi:SymbolIcon
+                                FontSize="22"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Symbol="Box" />
+                        </Border>
+                        <StackPanel
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Spacing="2">
+                            <TextBlock
+                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                Text="{x:Static lang:Resources.MarketplacePortalPage_ModpacksEntryTitle}" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Opacity="0.7"
+                                Text="{x:Static lang:Resources.MarketplacePortalPage_ModpacksEntryDescription}"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                        <fi:SymbolIcon
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
+                            Symbol="ChevronRight" />
+                    </Grid>
+                </Button>
             </StackPanel>
         </Panel>
     </Grid>
