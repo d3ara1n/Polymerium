@@ -53,7 +53,7 @@ public partial class RecipePageModel(
     {
         var queryFilter = this.WhenValueChanged(x => x.QueryText).Select(BuildQueryFilter);
         var kindFilter = this.WhenValueChanged(x => x.SelectedKind).Select(BuildKindFilter);
-        _items.Connect().Count().Subscribe(c => TotalCount = c).DisposeWith(_subscriptions);
+        _items.CountChanged.Subscribe(c => TotalCount = c).DisposeWith(_subscriptions);
         _items
             .Connect()
             .Filter(queryFilter)
@@ -267,6 +267,50 @@ public partial class RecipePageModel(
             persistenceService.RemoveRecipeItem(item.Id);
             _items.Remove(item.Identifier);
         }
+    }
+
+    [RelayCommand]
+    private async Task EditItemTagsAsync(RecipeItemModel? item)
+    {
+        if (item is null)
+        {
+            return;
+        }
+
+        var dialog = new TagsEditorDialog
+        {
+            InitialTags = item.Tags.ToArray(),
+            Suggestions = item.Info?.Tags
+        };
+        if (await overlayService.PopDialogAsync(dialog) && dialog.Result is IReadOnlyList<string> result)
+        {
+            item.Tags.Clear();
+            foreach (var tag in result)
+            {
+                item.Tags.Add(tag);
+            }
+            persistenceService.UpdateRecipeItem(item.Id, result, item.Note);
+        }
+    }
+
+    [RelayCommand]
+    private async Task EditItemNoteAsync(RecipeItemModel? item)
+    {
+        if (item is null)
+        {
+            return;
+        }
+
+        var input = await overlayService.RequestInputAsync(title: Resources.RecipePage_EditNoteMenuText,
+                                                           placeholder: item.Note,
+                                                           multiLine: true);
+        if (input is null)
+        {
+            return;
+        }
+
+        item.Note = string.IsNullOrWhiteSpace(input) ? null : input;
+        persistenceService.UpdateRecipeItem(item.Id, item.Tags, item.Note);
     }
 
     [RelayCommand]

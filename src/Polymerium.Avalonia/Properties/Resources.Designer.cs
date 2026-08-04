@@ -7476,6 +7476,35 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string RecipePage_PackageCountLabelText {
+            get {
+                return ResourceManager.GetString("RecipePage_PackageCountLabelText", resourceCulture);
+            }
+        }
+        
+        public static string RecipePage_EditNoteMenuText {
+            get {
+                return ResourceManager.GetString("RecipePage_EditNoteMenuText", resourceCulture);
+            }
+        }
+        
+        public static string RecipePage_RemoveItemMenuText {
+            get {
+                return ResourceManager.GetString("RecipePage_RemoveItemMenuText", resourceCulture);
+            }
+        }
+        
+        public static string RecipeItemButton_NoTagsText {
+            get {
+                return ResourceManager.GetString("RecipeItemButton_NoTagsText", resourceCulture);
+            }
+        }
+        
+        public static string RecipeItemButton_NoNoteText {
+            get {
+                return ResourceManager.GetString("RecipeItemButton_NoNoteText", resourceCulture);
+            }
+        }
         public static string RecipeItemModal_SummaryLabelText {
             get {
                 return ResourceManager.GetString("RecipeItemModal_SummaryLabelText", resourceCulture);

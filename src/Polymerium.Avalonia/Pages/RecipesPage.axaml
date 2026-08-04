@@ -29,32 +29,16 @@
                 Spacing="4">
                 <Button
                     Command="{Binding ImportCommand}">
-                    <StackPanel
-                        Orientation="Horizontal"
-                        Spacing="6">
-                        <fi:SymbolIcon
-                            VerticalAlignment="Center"
-                            FontSize="{StaticResource MediumFontSize}"
-                            Symbol="ArrowImport" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Text="{x:Static lang:Resources.RecipesPage_ImportButtonText}" />
-                    </StackPanel>
+                    <husk:IconLabel
+                        Icon="ArrowImport"
+                        Text="{x:Static lang:Resources.RecipesPage_ImportButtonText}" />
                 </Button>
                 <Button
                     Classes="Primary"
                     Command="{Binding NewCommand}">
-                    <StackPanel
-                        Orientation="Horizontal"
-                        Spacing="7">
-                        <fi:SymbolIcon
-                            VerticalAlignment="Center"
-                            FontSize="{StaticResource MediumFontSize}"
-                            Symbol="Add" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Text="{x:Static lang:Resources.RecipesPage_NewButtonText}" />
-                    </StackPanel>
+                    <husk:IconLabel
+                        Icon="Add"
+                        Text="{x:Static lang:Resources.RecipesPage_NewButtonText}" />
                 </Button>
             </StackPanel>
         </Grid>
@@ -83,17 +67,9 @@
                     Classes="Primary"
                     HorizontalAlignment="Center"
                     Command="{Binding NewCommand}">
-                    <StackPanel
-                        Orientation="Horizontal"
-                        Spacing="7">
-                        <fi:SymbolIcon
-                            VerticalAlignment="Center"
-                            FontSize="{StaticResource MediumFontSize}"
-                            Symbol="Add" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Text="{x:Static lang:Resources.RecipesPage_NewButtonText}" />
-                    </StackPanel>
+                    <husk:IconLabel
+                        Icon="Add"
+                        Text="{x:Static lang:Resources.RecipesPage_NewButtonText}" />
                 </Button>
             </StackPanel>
             <ScrollViewer IsVisible="{Binding Items.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}">
@@ -116,7 +92,7 @@
                                 Command="{Binding $parent[app:RecipesPage].((app:RecipesPageModel)DataContext).OpenCommand, FallbackValue={x:Null}}"
                                 CommandParameter="{Binding}"
                                 Theme="{StaticResource OutlineButtonTheme}">
-                                <Border Padding="12">
+                                <Border>
                                     <StackPanel Spacing="6">
                                         <TextBlock
                                             FontSize="{StaticResource LargeFontSize}"
