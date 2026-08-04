@@ -3,6 +3,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
@@ -114,6 +115,13 @@
                     FontSize="{StaticResource SmallFontSize}"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{x:Static lang:Resources.RecipesPage_ItemCountSuffix}" />
+                <husk:ProgressRing
+                    Width="14"
+                    Height="14"
+                    VerticalAlignment="Center"
+                    IsIndeterminate="{Binding IsRefreshing}"
+                    IsVisible="{Binding IsRefreshing}"
+                    ShowProgressText="False" />
             </StackPanel>
         </Grid>
         <app:EmptyContainer
@@ -129,56 +137,79 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="app:RecipeItemModel">
                         <Grid
-                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnDefinitions="*,Auto"
                             ColumnSpacing="12">
-                            <Border
-                                Grid.Column="0"
-                                Width="32"
-                                Height="32"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Background="{StaticResource LayerBackgroundBrush}"
-                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                <fi:SymbolIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    FontSize="{StaticResource MediumFontSize}"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Symbol="BoxMultiple" />
-                            </Border>
                             <husk:PlaceholderContainer
-                                Grid.Column="1"
+                                Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Source="{Binding Info}">
                                 <husk:PlaceholderContainer.SourceTemplate>
                                     <DataTemplate DataType="trident:Project">
-                                        <StackPanel Spacing="2">
-                                            <TextBlock
-                                                FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                Text="{Binding ProjectName}"
-                                                TextTrimming="CharacterEllipsis" />
-                                            <TextBlock
-                                                FontSize="{StaticResource SmallFontSize}"
-                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{Binding Author}"
-                                                TextTrimming="CharacterEllipsis" />
-                                        </StackPanel>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                            <Border
+                                                Grid.Column="0"
+                                                Width="32"
+                                                Height="32"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Background="{StaticResource LayerBackgroundBrush}"
+                                                ClipToBounds="True"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <Image async:ImageLoader.Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+                                            </Border>
+                                            <StackPanel
+                                                Grid.Column="1"
+                                                Spacing="2">
+                                                <TextBlock
+                                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                    Text="{Binding ProjectName}"
+                                                    TextTrimming="CharacterEllipsis" />
+                                                <TextBlock
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding Author}"
+                                                    TextTrimming="CharacterEllipsis" />
+                                            </StackPanel>
+                                        </Grid>
                                     </DataTemplate>
                                 </husk:PlaceholderContainer.SourceTemplate>
-                                <StackPanel Spacing="2">
-                                    <TextBlock
-                                        FontWeight="{StaticResource ControlStrongFontWeight}"
-                                        Text="{Binding Label}"
-                                        TextTrimming="CharacterEllipsis" />
-                                    <TextBlock
-                                        FontSize="{StaticResource SmallFontSize}"
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{Binding ProjectId}"
-                                        TextTrimming="CharacterEllipsis" />
-                                </StackPanel>
+                                <husk:PlaceholderContainer.Placeholder>
+                                    <husk:SkeletonContainer IsLoading="{Binding !IsLoaded}">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                            <Border
+                                                Grid.Column="0"
+                                                Width="32"
+                                                Height="32"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Background="{StaticResource LayerBackgroundBrush}"
+                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                <fi:SymbolIcon
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Symbol="Box" />
+                                            </Border>
+                                            <StackPanel
+                                                Grid.Column="1"
+                                                Spacing="2">
+                                                <TextBlock
+                                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                    Text="{Binding Label}"
+                                                    TextTrimming="CharacterEllipsis" />
+                                                <TextBlock
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    Text="{Binding ProjectId}"
+                                                    TextTrimming="CharacterEllipsis" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </husk:SkeletonContainer>
+                                </husk:PlaceholderContainer.Placeholder>
                             </husk:PlaceholderContainer>
                             <Button
-                                Grid.Column="2"
+                                Grid.Column="1"
                                 VerticalAlignment="Center"
                                 Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).RemoveItemCommand, FallbackValue={x:Null}}"
                                 CommandParameter="{Binding}"

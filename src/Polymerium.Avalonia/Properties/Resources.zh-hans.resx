@@ -3741,8 +3741,8 @@
     <data name="RecipePage_AddPackageInvalidPrefWarningTitle" xml:space="preserve">
         <value>无效的包引用</value>
     </data>
-    <data name="RecipePage_AddPackagePrefPlaceholder" xml:space="preserve">
-        <value>pref://modrinth/...</value>
+    <data name="RecipePage_AddPackagePromptMessage" xml:space="preserve">
+        <value>输入包引用，例如 pref://modrinth/...</value>
     </data>
     <data name="RecipePage_NoPackagesText" xml:space="preserve">
         <value>还没有包</value>
