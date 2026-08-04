@@ -28,7 +28,6 @@
             <ControlTemplate x:DataType="app:InstancePackageModel">
                 <husk:Card
                     Name="Background"
-                    Height="68"
                     Padding="0"
                     Background="{StaticResource LayerBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
@@ -88,7 +87,7 @@
                                         Margin="{StaticResource CardContentMargin}"
                                         ColumnDefinitions="Auto,*"
                                         ColumnSpacing="8"
-                                        RowDefinitions="Auto,*">
+                                        RowDefinitions="Auto,Auto">
                                         <Border
                                             Grid.Row="0"
                                             Grid.RowSpan="2"
