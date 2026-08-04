@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Facilities;
 using TridentCore.Abstractions.Repositories.Resources;
+using TridentCore.Pref;
 
 namespace Polymerium.Avalonia.Models;
 
@@ -10,6 +11,7 @@ public sealed partial class RecipeItemModel(string id, string label, string? ns,
     public string Label { get; set; } = label;
     public string? Namespace { get; set; } = ns;
     public string ProjectId { get; set; } = projectId;
+    public ProjectIdentifier Identifier { get; } = new(label, ns, projectId);
 
     [ObservableProperty]
     public partial string? Note { get; set; }
