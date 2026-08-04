@@ -2,7 +2,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -139,7 +138,6 @@ public partial class InstanceSetupPageModel(
                 }
             }
 
-            StageCount = entryCount;
             _flat.Remove(toRemove);
             var persistentIndex = entryCount - toRemove.Count;
             var toAdd = lookup
@@ -158,7 +156,6 @@ public partial class InstanceSetupPageModel(
                         })
                        .ToList();
             _flat.AddOrUpdate(toAdd);
-            // _flat 是合并期的唯一写入对象，无外部并发修改，StageCount 与 profile 严格一致
 
             // 同步组头：为每个有成员的非散装组确保恰好一个 Header，移除空组的 Header。
             var presentGroups = _flat
@@ -177,11 +174,6 @@ public partial class InstanceSetupPageModel(
                 _flat.AddOrUpdate(new PackageListItemBase.Header { Key = key, Group = bySource[key.Source] });
             }
 
-            StageCount += toAdd.Count - toRemove.Count;
-            if (StageCount != profile.Setup.Packages.Count)
-            {
-                throw new UnreachableException("使用相对数量更新总数是很大胆冒险的，但能很好验证差异计算是否正确。能触发这个异常就是差异计算出现错误了");
-            }
 
             // 统一入口：包与组的信息加载排成一队，RefreshMetadataAsync 现场重判待加载项、统一管 IsRefreshing
             _metadataTask = RefreshMetadataAsync(_metadataTask, token.Value);
@@ -559,6 +551,12 @@ public partial class InstanceSetupPageModel(
                            .CombineLatest(kind, (ab, c) => (Func<InstancePackageModel, bool>)(x => ab(x) && c(x)))
                            .CombineLatest(tags, (abc, d) => (Func<InstancePackageModel, bool>)(x => abc(x) && d(x)))
                            .CombineLatest(text, (abcd, e) => (Func<InstancePackageModel, bool>)(x => abcd(x) && e(x)));
+
+        // 总数：只数包（Entry），不含组头；merge 与批量删除自动同步
+        packages
+           .QueryWhenChanged(items => items.Count)
+           .Subscribe(c => StageCount = c)
+           .DisposeWith(_subscriptions);
 
         // 计数：只数通过过滤的包，不受折叠与组头影响
         packages
@@ -1679,7 +1677,6 @@ public partial class InstanceSetupPageModel(
                 }
 
                 _flat.Remove(keys);
-                StageCount -= keys.Count;
 
                 notificationService.PopMessage(Resources.InstanceSetupPage_BatchRemoveSucceededNotificationMessage
                                                         .Replace("{0}", selected.Count.ToString()),
