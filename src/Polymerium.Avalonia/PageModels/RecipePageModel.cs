@@ -33,7 +33,7 @@ public partial class RecipePageModel(
 {
     public string Id { get; } = context.Parameter!;
 
-    private readonly SourceCache<RecipeItemModel, (string Label, string? Namespace, string ProjectId)> _items = new(x => (x.Label, x.Namespace, x.ProjectId));
+    private readonly SourceCache<RecipeItemModel, ProjectIdentifier> _items = new(x => x.Identifier);
 
     private readonly CompositeDisposable _subscriptions = new();
 
@@ -68,63 +68,49 @@ public partial class RecipePageModel(
     private async Task ReloadItemsAsync(CancellationToken token)
     {
         var stored = persistenceService.GetRecipeItems(Id);
-        var storedKeys = stored.Select(KeyOf).ToHashSet();
+        var storedKeys = stored
+                         .Select(s => new ProjectIdentifier(s.Label, PersistenceService.NormalizeFavoriteNamespace(s.Namespace), s.ProjectId))
+                         .ToHashSet();
 
         // toRemove: cache 有、DB 无
-        _items.Remove(_items.Keys.Where(k => !storedKeys.Contains(k)).ToList());
+        _items.Remove([.. _items.Keys.Where(k => !storedKeys.Contains(k))]);
 
         // toAdd / toUpdate: Lookup 命中则刷新 Note，未命中则新建
         var toAdd = new List<RecipeItemModel>();
         foreach (var s in stored)
         {
-            if (_items.Lookup(KeyOf(s)) is { HasValue: true, Value: var existing })
+            var ns = PersistenceService.NormalizeFavoriteNamespace(s.Namespace);
+            var id = new ProjectIdentifier(s.Label, ns, s.ProjectId);
+            if (_items.Lookup(id) is { HasValue: true, Value: var existing })
             {
                 existing.Note = s.Note;
             }
             else
             {
-                toAdd.Add(new(s.Id, s.Label, s.Namespace, s.ProjectId) { Note = s.Note });
+                toAdd.Add(new(s.Id, s.Label, ns, s.ProjectId) { Note = s.Note });
             }
         }
 
         _items.AddOrUpdate(toAdd);
 
-        await ResolveItemInfoAsync(token);
+        if (toAdd.Count > 0)
+        {
+            await ResolveItemInfoAsync(toAdd, token);
+        }
     }
 
-    private static (string Label, string? Namespace, string ProjectId) KeyOf(RecipeItemModel x) =>
-        (x.Label, x.Namespace, x.ProjectId);
-
-    private static (string Label, string? Namespace, string ProjectId) KeyOf(PersistenceService.RecipeItem x) =>
-        (x.Label, x.Namespace, x.ProjectId);
-
-    private async Task ResolveItemInfoAsync(CancellationToken token)
+    private async Task ResolveItemInfoAsync(IReadOnlyList<RecipeItemModel> pending, CancellationToken token)
     {
-        var pending = _items.Items.Where(x => !x.IsLoaded).ToList();
-        if (pending.Count == 0)
-        {
-            return;
-        }
-
         IsRefreshing = true;
         try
         {
-            var identifiers = pending
-                             .Select(x => new ProjectIdentifier(x.Label,
-                                                                PersistenceService
-                                                                   .NormalizeFavoriteNamespace(x.Namespace),
-                                                                x.ProjectId))
-                             .Distinct()
-                             .ToList();
+            var identifiers = pending.Select(x => x.Identifier).Distinct().ToList();
 
             var result = await Task.Run(() => dataService.QueryProjectsAsync(identifiers), token);
             var resolved = result.Successful;
             foreach (var item in pending)
             {
-                var key = new ProjectIdentifier(item.Label,
-                                                PersistenceService.NormalizeFavoriteNamespace(item.Namespace),
-                                                item.ProjectId);
-                if (resolved.TryGetValue(key, out var project))
+                if (resolved.TryGetValue(item.Identifier, out var project))
                 {
                     item.Info = project;
                 }
@@ -205,7 +191,7 @@ public partial class RecipePageModel(
         if (item is not null)
         {
             persistenceService.RemoveRecipeItem(item.Id);
-            _items.Remove(KeyOf(item));
+            _items.Remove(item.Identifier);
         }
     }
 
