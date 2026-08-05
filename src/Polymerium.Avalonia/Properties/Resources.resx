@@ -3351,6 +3351,12 @@ Affected entries: {0}
     <data name="AppMenu_StorageText" xml:space="preserve">
         <value>Storage</value>
     </data>
+    <data name="AppMenu_InstancesText" xml:space="preserve">
+        <value>Instances</value>
+    </data>
+    <data name="AppMenu_RecipesText" xml:space="preserve">
+        <value>Recipes</value>
+    </data>
     <data name="AppMenu_FullScreenText" xml:space="preserve">
         <value>Toggle Full Screen</value>
     </data>
@@ -3578,6 +3584,12 @@ Affected entries: {0}
     </data>
     <data name="MainWindow_InstancesButtonText" xml:space="preserve">
         <value>Instances</value>
+    </data>
+    <data name="MainWindow_RecipesButtonText" xml:space="preserve">
+        <value>Recipes</value>
+    </data>
+    <data name="MainWindow_SettingsButtonText" xml:space="preserve">
+        <value>Settings</value>
     </data>
     <data name="InstancesPage_Title" xml:space="preserve">
         <value>Instances</value>
@@ -3821,9 +3833,6 @@ Affected entries: {0}
     </data>
     <data name="RecipeEditorDialog_EditTitle" xml:space="preserve">
         <value>Edit Recipe</value>
-    </data>
-    <data name="InstancesPage_ManageRecipesButtonText" xml:space="preserve">
-        <value>Manage recipes</value>
     </data>
     <data name="InstanceSetupPage_ImportRecipeMenuText" xml:space="preserve">
         <value>Import from recipe</value>
