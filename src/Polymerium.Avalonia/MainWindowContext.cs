@@ -24,7 +24,6 @@ using TridentCore.Abstractions;
 using TridentCore.Abstractions.Tasks;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
-using Velopack;
 using NotificationSidebar = Polymerium.Avalonia.Sidebars.NotificationSidebar;
 
 namespace Polymerium.Avalonia;
@@ -41,7 +40,6 @@ public partial class MainWindowContext : ObservableObject
         InstanceService instanceService,
         OverlayService overlayService,
         UpdateService updateService,
-        UpdateManager updateManager,
         ConfigurationService configurationService)
     {
         _profileManager = profileManager;
@@ -51,11 +49,7 @@ public partial class MainWindowContext : ObservableObject
         _instanceService = instanceService;
         _overlayService = overlayService;
         _updateService = updateService;
-        _updateManager = updateManager;
         _configurationService = configurationService;
-
-        _updateService.SetHandler(OnUpdateFound);
-        CurrentUpdate = _updateService.CurrentUpdate;
 
         SubscribeProfileList(profileManager);
         SubscribeState(aggregator);
@@ -111,7 +105,6 @@ public partial class MainWindowContext : ObservableObject
 
     public void OnDeinitialize()
     {
-        _updateService.SetHandler(null);
         _notificationService.ClearAll();
         _notificationService.UnreadCountChanged -= OnUnreadCountChanged;
 
@@ -132,7 +125,6 @@ public partial class MainWindowContext : ObservableObject
     private readonly InstanceService _instanceService;
     private readonly OverlayService _overlayService;
     private readonly UpdateService _updateService;
-    private readonly UpdateManager _updateManager;
     private readonly ProfileManager _profileManager;
     private readonly ConfigurationService _configurationService;
 
@@ -142,9 +134,6 @@ public partial class MainWindowContext : ObservableObject
 
     [ObservableProperty]
     public partial ReadOnlyObservableCollection<InstanceEntryModel> View { get; set; }
-
-    [ObservableProperty]
-    public partial AppUpdateModel? CurrentUpdate { get; set; }
 
     [ObservableProperty]
     public partial int UnreadNotificationCount { get; set; }
@@ -215,24 +204,6 @@ public partial class MainWindowContext : ObservableObject
 
     [RelayCommand]
     private void OpenNotificationSidebar() => _overlayService.PopSidebar<NotificationSidebar>();
-
-    private bool CanOpenUpdateModal(AppUpdateModel? model) => model != null;
-
-    [RelayCommand(CanExecute = nameof(CanOpenUpdateModal))]
-    private void OpenUpdateModal(AppUpdateModel? model)
-    {
-        if (model == null)
-        {
-            return;
-        }
-
-        _overlayService.PopModal(new AppUpdateModal
-        {
-            Model = model,
-            NotificationService = _notificationService,
-            UpdateManager = _updateManager
-        });
-    }
 
     #endregion
 
@@ -323,8 +294,6 @@ public partial class MainWindowContext : ObservableObject
     #endregion
 
     #region Other reactive
-
-    private void OnUpdateFound(AppUpdateModel? model) => Dispatcher.UIThread.Post(() => CurrentUpdate = model);
 
     // NotificationService 的事件假定在 UI 线程触发（见服务注释），此处直接赋值即可
     private void OnUnreadCountChanged(int count) => UnreadNotificationCount = count;

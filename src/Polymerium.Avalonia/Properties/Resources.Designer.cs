@@ -225,12 +225,6 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string MainWindow_UpdateAvailableButtonText {
-            get {
-                return ResourceManager.GetString("MainWindow_UpdateAvailableButtonText", resourceCulture);
-            }
-        }
-        
         public static string MainWindow_UpdateFoundNotificationMessage {
             get {
                 return ResourceManager.GetString("MainWindow_UpdateFoundNotificationMessage", resourceCulture);
