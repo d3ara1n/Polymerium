@@ -23,7 +23,7 @@ public sealed class RecipeExplorerSession : ExplorerSession
     private readonly DataService _dataService;
     private readonly OverlayService _overlayService;
     private string _title = string.Empty;
-    private Dictionary<ProjectIdentifier, string> _knownItems = [];
+    private HashSet<ProjectIdentifier> _knownItems = [];
 
     public override Bitmap? Background => null;
 
@@ -117,9 +117,9 @@ public sealed class RecipeExplorerSession : ExplorerSession
                 case { State: ExhibitState.Adding }:
                 {
                     _persistenceService.AddRecipeItem(_recipeId,
-                                                      model.Label,
-                                                      model.Namespace,
-                                                      model.ProjectId,
+                                                      new ProjectIdentifier(model.Label,
+                                                                            PersistenceService.NormalizeNamespace(model.Namespace),
+                                                                            model.ProjectId),
                                                       [],
                                                       null);
                     model.State = ExhibitState.Editable;
@@ -128,11 +128,11 @@ public sealed class RecipeExplorerSession : ExplorerSession
                 case { State: ExhibitState.Removing }:
                 {
                     var identifier = new ProjectIdentifier(model.Label,
-                                                           PersistenceService.NormalizeFavoriteNamespace(model.Namespace),
+                                                           PersistenceService.NormalizeNamespace(model.Namespace),
                                                            model.ProjectId);
-                    if (_knownItems.Remove(identifier, out var itemId))
+                    if (_knownItems.Remove(identifier))
                     {
-                        _persistenceService.RemoveRecipeItem(itemId);
+                        _persistenceService.RemoveRecipeItem(_recipeId, identifier);
                     }
 
                     model.State = null;
@@ -146,14 +146,14 @@ public sealed class RecipeExplorerSession : ExplorerSession
     }
 
     private bool IsKnown(string label, string? @namespace, string projectId) =>
-        _knownItems.ContainsKey(new ProjectIdentifier(label,
-                                                      PersistenceService.NormalizeFavoriteNamespace(@namespace),
-                                                      projectId));
+        _knownItems.Contains(new ProjectIdentifier(label,
+                                                    PersistenceService.NormalizeNamespace(@namespace),
+                                                    projectId));
 
-    private Dictionary<ProjectIdentifier, string> LoadItems() =>
+    private HashSet<ProjectIdentifier> LoadItems() =>
         _persistenceService.GetRecipeItems(_recipeId)
-                           .ToDictionary(x => new ProjectIdentifier(x.Label,
-                                                                    PersistenceService.NormalizeFavoriteNamespace(x.Namespace),
-                                                                    x.ProjectId),
-                                         x => x.Id);
+                           .Select(x => new ProjectIdentifier(x.Label,
+                                                              PersistenceService.NormalizeNamespace(x.Namespace),
+                                                              x.ProjectId))
+                           .ToHashSet();
 }

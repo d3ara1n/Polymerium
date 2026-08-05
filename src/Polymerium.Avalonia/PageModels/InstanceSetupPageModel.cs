@@ -1244,7 +1244,7 @@ public partial class InstanceSetupPageModel(
                 var identifiers = items
                                  .Select(i => new PackageIdentifier(i.Label,
                                                                     PersistenceService
-                                                                       .NormalizeFavoriteNamespace(i.Namespace),
+                                                                       .NormalizeNamespace(i.Namespace),
                                                                     i.ProjectId,
                                                                     null))
                                  .ToList();
@@ -1264,7 +1264,7 @@ public partial class InstanceSetupPageModel(
                         var setup = guard.Value.Setup;
                         foreach (var item in items)
                         {
-                            var ns = PersistenceService.NormalizeFavoriteNamespace(item.Namespace);
+                            var ns = PersistenceService.NormalizeNamespace(item.Namespace);
                             var package =
                                 resolvedByProject.TryGetValue((item.Label.ToLowerInvariant(), ns, item.ProjectId),
                                                               out var p)

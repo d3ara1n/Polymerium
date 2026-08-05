@@ -7371,6 +7371,36 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string RecipeExporterDialog_Title {
+            get {
+                return ResourceManager.GetString("RecipeExporterDialog_Title", resourceCulture);
+            }
+        }
+
+        public static string RecipeExporterDialog_Prompt {
+            get {
+                return ResourceManager.GetString("RecipeExporterDialog_Prompt", resourceCulture);
+            }
+        }
+
+        public static string RecipeExporterDialog_ItemCountLabelText {
+            get {
+                return ResourceManager.GetString("RecipeExporterDialog_ItemCountLabelText", resourceCulture);
+            }
+        }
+
+        public static string RecipeExporterDialog_PathLabelText {
+            get {
+                return ResourceManager.GetString("RecipeExporterDialog_PathLabelText", resourceCulture);
+            }
+        }
+
+        public static string RecipeExporterDialog_PathBarPlaceholder {
+            get {
+                return ResourceManager.GetString("RecipeExporterDialog_PathBarPlaceholder", resourceCulture);
+            }
+        }
+
         public static string RecipesPage_Title {
             get {
                 return ResourceManager.GetString("RecipesPage_Title", resourceCulture);
@@ -7437,12 +7467,6 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string RecipesPage_ComingSoonNotificationMessage {
-            get {
-                return ResourceManager.GetString("RecipesPage_ComingSoonNotificationMessage", resourceCulture);
-            }
-        }
-        
         public static string RecipesPage_DeleteBlockedByReferencesWarningNotificationMessage {
             get {
                 return ResourceManager.GetString("RecipesPage_DeleteBlockedByReferencesWarningNotificationMessage", resourceCulture);
@@ -7473,6 +7497,48 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string RecipesPage_ImportSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("RecipesPage_ImportSuccessNotificationMessage", resourceCulture);
+            }
+        }
+
+        public static string RecipesPage_ImportDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("RecipesPage_ImportDangerNotificationTitle", resourceCulture);
+            }
+        }
+
+        public static string RecipesPage_ImportDangerNotificationMessage {
+            get {
+                return ResourceManager.GetString("RecipesPage_ImportDangerNotificationMessage", resourceCulture);
+            }
+        }
+
+        public static string RecipesPage_ExportSuccessNotificationMessage {
+            get {
+                return ResourceManager.GetString("RecipesPage_ExportSuccessNotificationMessage", resourceCulture);
+            }
+        }
+
+        public static string RecipesPage_ExportSuccessNotificationTitle {
+            get {
+                return ResourceManager.GetString("RecipesPage_ExportSuccessNotificationTitle", resourceCulture);
+            }
+        }
+
+        public static string RecipesPage_ExportDangerNotificationMessage {
+            get {
+                return ResourceManager.GetString("RecipesPage_ExportDangerNotificationMessage", resourceCulture);
+            }
+        }
+
+        public static string RecipesPage_ExportDangerNotificationTitle {
+            get {
+                return ResourceManager.GetString("RecipesPage_ExportDangerNotificationTitle", resourceCulture);
+            }
+        }
+
         public static string RecipePage_EditButtonText {
             get {
                 return ResourceManager.GetString("RecipePage_EditButtonText", resourceCulture);

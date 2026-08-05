@@ -3714,6 +3714,21 @@ Affected entries: {0}
     <data name="AssetKind_Asset" xml:space="preserve">
         <value>Assets</value>
     </data>
+    <data name="RecipeExporterDialog_Title" xml:space="preserve">
+        <value>Export recipe</value>
+    </data>
+    <data name="RecipeExporterDialog_Prompt" xml:space="preserve">
+        <value>Export this recipe into a shareable file</value>
+    </data>
+    <data name="RecipeExporterDialog_ItemCountLabelText" xml:space="preserve">
+        <value>packages</value>
+    </data>
+    <data name="RecipeExporterDialog_PathLabelText" xml:space="preserve">
+        <value>Export to</value>
+    </data>
+    <data name="RecipeExporterDialog_PathBarPlaceholder" xml:space="preserve">
+        <value>Choose file path</value>
+    </data>
     <data name="RecipesPage_Title" xml:space="preserve">
         <value>Recipes</value>
     </data>
@@ -3747,9 +3762,6 @@ Affected entries: {0}
     <data name="RecipesPage_NewDialogTitle" xml:space="preserve">
         <value>New Recipe</value>
     </data>
-    <data name="RecipesPage_ComingSoonNotificationMessage" xml:space="preserve">
-        <value>Import and export are coming soon</value>
-    </data>
     <data name="RecipesPage_DeleteBlockedByReferencesWarningNotificationMessage" xml:space="preserve">
         <value>This recipe is referenced by {0} instance(s) and cannot be deleted</value>
     </data>
@@ -3764,6 +3776,27 @@ Affected entries: {0}
     </data>
     <data name="RecipesPage_DeleteSuccessNotificationMessage" xml:space="preserve">
         <value>Recipe deleted</value>
+    </data>
+    <data name="RecipesPage_ImportSuccessNotificationMessage" xml:space="preserve">
+        <value>Recipe imported</value>
+    </data>
+    <data name="RecipesPage_ImportDangerNotificationTitle" xml:space="preserve">
+        <value>Import failed</value>
+    </data>
+    <data name="RecipesPage_ImportDangerNotificationMessage" xml:space="preserve">
+        <value>The file is not a valid recipe</value>
+    </data>
+    <data name="RecipesPage_ExportSuccessNotificationMessage" xml:space="preserve">
+        <value>Recipe exported to {0}</value>
+    </data>
+    <data name="RecipesPage_ExportSuccessNotificationTitle" xml:space="preserve">
+        <value>Recipe exported</value>
+    </data>
+    <data name="RecipesPage_ExportDangerNotificationMessage" xml:space="preserve">
+        <value>Failed to export recipe to {0}</value>
+    </data>
+    <data name="RecipesPage_ExportDangerNotificationTitle" xml:space="preserve">
+        <value>Export failed</value>
     </data>
     <data name="RecipePage_EditButtonText" xml:space="preserve">
         <value>Edit</value>
