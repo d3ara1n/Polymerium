@@ -891,81 +891,81 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string PackageExplorerPage_PendingLabelText {
+        public static string ExplorerPage_PendingLabelText {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_PendingLabelText", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_PendingLabelText", resourceCulture);
             }
         }
         
-        public static string PackageExplorerPage_AddLabelText {
+        public static string ExplorerPage_AddLabelText {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_AddLabelText", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_AddLabelText", resourceCulture);
             }
         }
         
-        public static string PackageExplorerPage_ModifyLabelText {
+        public static string ExplorerPage_ModifyLabelText {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_ModifyLabelText", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_ModifyLabelText", resourceCulture);
             }
         }
         
-        public static string PackageExplorerPage_RemoveLabelText {
+        public static string ExplorerPage_RemoveLabelText {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_RemoveLabelText", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_RemoveLabelText", resourceCulture);
             }
         }
         
-        public static string PackageExplorerPage_EmptyLabelText {
+        public static string ExplorerPage_EmptyLabelText {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_EmptyLabelText", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_EmptyLabelText", resourceCulture);
             }
         }
         
-        public static string PackageExplorerPage_CollectButtonText {
+        public static string ExplorerPage_CollectButtonText {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_CollectButtonText", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_CollectButtonText", resourceCulture);
             }
         }
         
-        public static string PackageExplorerPage_SearchBarPlaceholder {
+        public static string ExplorerPage_SearchBarPlaceholder {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_SearchBarPlaceholder", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_SearchBarPlaceholder", resourceCulture);
             }
         }
         
-        public static string PackageExplorerPage_SearchButtonText {
+        public static string ExplorerPage_SearchButtonText {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_SearchButtonText", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_SearchButtonText", resourceCulture);
             }
         }
         
-        public static string PackageExplorerPage_InstallMenuText {
+        public static string ExplorerPage_InstallMenuText {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_InstallMenuText", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_InstallMenuText", resourceCulture);
             }
         }
         
-        public static string PackageExplorerPage_FavoriteMenuText {
+        public static string ExplorerPage_FavoriteMenuText {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_FavoriteMenuText", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_FavoriteMenuText", resourceCulture);
             }
         }
         
-        public static string PackageExplorerPage_RepositoryMenuText {
+        public static string ExplorerPage_RepositoryMenuText {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_RepositoryMenuText", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_RepositoryMenuText", resourceCulture);
             }
         }
         
-        public static string PackageExplorerPage_NamespaceMenuText {
+        public static string ExplorerPage_NamespaceMenuText {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_NamespaceMenuText", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_NamespaceMenuText", resourceCulture);
             }
         }
         
-        public static string PackageExplorerPage_RemoveFromPendingMenuText {
+        public static string ExplorerPage_RemoveFromPendingMenuText {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_RemoveFromPendingMenuText", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_RemoveFromPendingMenuText", resourceCulture);
             }
         }
         
@@ -2276,6 +2276,30 @@ namespace Polymerium.Avalonia.Properties {
         public static string ExhibitPackageModal_EmptyListLabelText {
             get {
                 return ResourceManager.GetString("ExhibitPackageModal_EmptyListLabelText", resourceCulture);
+            }
+        }
+        
+        public static string ExhibitProjectModal_AddButtonText {
+            get {
+                return ResourceManager.GetString("ExhibitProjectModal_AddButtonText", resourceCulture);
+            }
+        }
+        
+        public static string ExhibitProjectModal_InRecipeTagText {
+            get {
+                return ResourceManager.GetString("ExhibitProjectModal_InRecipeTagText", resourceCulture);
+            }
+        }
+        
+        public static string ExhibitProjectModal_AddingTagText {
+            get {
+                return ResourceManager.GetString("ExhibitProjectModal_AddingTagText", resourceCulture);
+            }
+        }
+        
+        public static string ExhibitProjectModal_RemovingTagText {
+            get {
+                return ResourceManager.GetString("ExhibitProjectModal_RemovingTagText", resourceCulture);
             }
         }
         
@@ -6005,9 +6029,9 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string PackageExplorerPage_LoadProjectInformationDangerNotificationTitle {
+        public static string ExplorerPage_LoadProjectInformationDangerNotificationTitle {
             get {
-                return ResourceManager.GetString("PackageExplorerPage_LoadProjectInformationDangerNotificationTitle", resourceCulture);
+                return ResourceManager.GetString("ExplorerPage_LoadProjectInformationDangerNotificationTitle", resourceCulture);
             }
         }
         
@@ -7449,24 +7473,6 @@ namespace Polymerium.Avalonia.Properties {
         public static string RecipePage_AddPackageButtonText {
             get {
                 return ResourceManager.GetString("RecipePage_AddPackageButtonText", resourceCulture);
-            }
-        }
-        
-        public static string RecipePage_AddPackageInvalidPrefWarningMessage {
-            get {
-                return ResourceManager.GetString("RecipePage_AddPackageInvalidPrefWarningMessage", resourceCulture);
-            }
-        }
-        
-        public static string RecipePage_AddPackageInvalidPrefWarningTitle {
-            get {
-                return ResourceManager.GetString("RecipePage_AddPackageInvalidPrefWarningTitle", resourceCulture);
-            }
-        }
-        
-        public static string RecipePage_AddPackagePromptMessage {
-            get {
-                return ResourceManager.GetString("RecipePage_AddPackagePromptMessage", resourceCulture);
             }
         }
         

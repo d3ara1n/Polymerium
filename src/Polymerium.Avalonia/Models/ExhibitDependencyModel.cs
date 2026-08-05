@@ -5,7 +5,7 @@ using TridentCore.Abstractions.Repositories.Resources;
 namespace Polymerium.Avalonia.Models;
 
 public class ExhibitDependencyModel(
-    ExhibitModel exhibit,
+    InstanceExhibitModel exhibit,
     string label,
     string? ns,
     string pid,
@@ -20,7 +20,7 @@ public class ExhibitDependencyModel(
 
     #region Direct
 
-    public ExhibitModel Exhibit => exhibit;
+    public InstanceExhibitModel Exhibit => exhibit;
     public string Label => label;
     public string? Ns => ns;
     public string Pid => pid;

@@ -166,7 +166,8 @@ public partial class ExhibitPackageModal : Modal
     public required Filter Filter { get; init; }
 
     public required Action<ExhibitModel> ModifyPendingCallback { get; init; }
-    public required Func<Project, ExhibitModel> LinkExhibitCallback { get; init; }
+    public required Func<Project, InstanceExhibitModel> LinkExhibitCallback { get; init; }
+    public required Action<ExhibitModel> UndoCallback { get; init; }
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
@@ -507,10 +508,9 @@ public partial class ExhibitPackageModal : Modal
     [RelayCommand]
     private void Undo()
     {
-        Exhibit.State = Exhibit.Installed == null ? null : ExhibitState.Editable;
         Exhibit.PendingVersionId = null;
         Exhibit.PendingVersionName = null;
-        ModifyPendingCallback(Exhibit);
+        UndoCallback(Exhibit);
         Dismiss();
     }
 

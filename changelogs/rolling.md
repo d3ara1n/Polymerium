@@ -6,6 +6,7 @@
 - Add download, import, and migration shortcuts to the empty instances page
 - Add customizable interface, code, and log fonts selectable from installed system fonts or external font files
 - Rework the marketplace entry copy with a download-resource label on the sidebar button and completed search placeholders
+- Add a searchable package picker for browsing repositories and adding packages to a recipe
 
 ### Fixed
 
@@ -21,6 +22,7 @@
 - Add download, import, and migration shortcuts to the empty instances page
 - Add customizable interface, code, and log fonts selectable from installed system fonts or external font files (#78)
 - Add a modpack entry card to the marketplace portal page
+- Add a searchable package picker for browsing repositories and adding packages to a recipe (#POLY-120)
 
 ### Changed
 
