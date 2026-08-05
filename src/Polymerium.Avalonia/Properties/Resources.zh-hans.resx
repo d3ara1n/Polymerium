@@ -438,43 +438,43 @@
     <data name="NewInstancePage_ImportButtonText" xml:space="preserve">
         <value>导入</value>
     </data>
-    <data name="PackageExplorerPage_PendingLabelText" xml:space="preserve">
+    <data name="ExplorerPage_PendingLabelText" xml:space="preserve">
         <value>待处理</value>
     </data>
-    <data name="PackageExplorerPage_AddLabelText" xml:space="preserve">
+    <data name="ExplorerPage_AddLabelText" xml:space="preserve">
         <value>新增</value>
     </data>
-    <data name="PackageExplorerPage_ModifyLabelText" xml:space="preserve">
+    <data name="ExplorerPage_ModifyLabelText" xml:space="preserve">
         <value>修改</value>
     </data>
-    <data name="PackageExplorerPage_RemoveLabelText" xml:space="preserve">
+    <data name="ExplorerPage_RemoveLabelText" xml:space="preserve">
         <value>移除</value>
     </data>
-    <data name="PackageExplorerPage_EmptyLabelText" xml:space="preserve">
+    <data name="ExplorerPage_EmptyLabelText" xml:space="preserve">
         <value>无</value>
     </data>
-    <data name="PackageExplorerPage_CollectButtonText" xml:space="preserve">
+    <data name="ExplorerPage_CollectButtonText" xml:space="preserve">
         <value>执行</value>
     </data>
-    <data name="PackageExplorerPage_SearchBarPlaceholder" xml:space="preserve">
+    <data name="ExplorerPage_SearchBarPlaceholder" xml:space="preserve">
         <value>根据名字...</value>
     </data>
-    <data name="PackageExplorerPage_SearchButtonText" xml:space="preserve">
+    <data name="ExplorerPage_SearchButtonText" xml:space="preserve">
         <value>搜索</value>
     </data>
-    <data name="PackageExplorerPage_InstallMenuText" xml:space="preserve">
+    <data name="ExplorerPage_InstallMenuText" xml:space="preserve">
         <value>安装</value>
     </data>
-    <data name="PackageExplorerPage_FavoriteMenuText" xml:space="preserve">
+    <data name="ExplorerPage_FavoriteMenuText" xml:space="preserve">
         <value>收藏</value>
     </data>
-    <data name="PackageExplorerPage_RepositoryMenuText" xml:space="preserve">
+    <data name="ExplorerPage_RepositoryMenuText" xml:space="preserve">
         <value>仓库</value>
     </data>
-    <data name="PackageExplorerPage_NamespaceMenuText" xml:space="preserve">
+    <data name="ExplorerPage_NamespaceMenuText" xml:space="preserve">
         <value>命名空间</value>
     </data>
-    <data name="PackageExplorerPage_RemoveFromPendingMenuText" xml:space="preserve">
+    <data name="ExplorerPage_RemoveFromPendingMenuText" xml:space="preserve">
         <value>从待定中移除</value>
     </data>
     <data name="SettingsPage_Title" xml:space="preserve">
@@ -1139,6 +1139,18 @@
     </data>
     <data name="ExhibitPackageModal_EmptyListLabelText" xml:space="preserve">
         <value>选择一个版本</value>
+    </data>
+    <data name="ExhibitProjectModal_AddButtonText" xml:space="preserve">
+        <value>添加到配方</value>
+    </data>
+    <data name="ExhibitProjectModal_InRecipeTagText" xml:space="preserve">
+        <value>已在配方中</value>
+    </data>
+    <data name="ExhibitProjectModal_AddingTagText" xml:space="preserve">
+        <value>待添加</value>
+    </data>
+    <data name="ExhibitProjectModal_RemovingTagText" xml:space="preserve">
+        <value>待移除</value>
     </data>
     <data name="InstancePackageModal_VersionsTabText" xml:space="preserve">
         <value>版本</value>
@@ -3021,7 +3033,7 @@
     <data name="LandingPage_LoadModpackDetailsDangerNotificationTitle" xml:space="preserve">
     <value>加载整合包详情失败</value>
   </data>
-    <data name="PackageExplorerPage_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
+    <data name="ExplorerPage_LoadProjectInformationDangerNotificationTitle" xml:space="preserve">
     <value>加载项目信息失败</value>
   </data>
     <data name="MarketplaceModpacksPage_OpenProjectWebsiteDangerNotificationTitle" xml:space="preserve">
@@ -3743,15 +3755,6 @@
     </data>
     <data name="RecipePage_AddPackageButtonText" xml:space="preserve">
         <value>添加包</value>
-    </data>
-    <data name="RecipePage_AddPackageInvalidPrefWarningMessage" xml:space="preserve">
-        <value>输入的包引用格式无效</value>
-    </data>
-    <data name="RecipePage_AddPackageInvalidPrefWarningTitle" xml:space="preserve">
-        <value>无效的包引用</value>
-    </data>
-    <data name="RecipePage_AddPackagePromptMessage" xml:space="preserve">
-        <value>输入包引用，例如 pref://modrinth/...</value>
     </data>
     <data name="RecipePage_NoPackagesText" xml:space="preserve">
         <value>还没有包</value>

@@ -843,7 +843,11 @@ public partial class InstanceSetupPageModel(
     }
 
     [RelayCommand]
-    private void GotoPackageExplorerPage() => navigationService.Navigate<PackageExplorerPage>(Basic.Key);
+    private void GotoExplorerPage() => navigationService.Navigate<ExplorerPage>(new InstanceExplorerSession(Basic.Key,
+                                                                                    ProfileManager,
+                                                                                    dataService,
+                                                                                    overlayService,
+                                                                                    persistenceService));
 
     [RelayCommand]
     private void GotoDependencyGraph() => overlayService.PopModal<InstanceDependencyGraphModal>(Basic);
