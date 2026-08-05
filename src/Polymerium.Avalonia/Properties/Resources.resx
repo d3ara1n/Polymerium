@@ -114,9 +114,6 @@
     <data name="MainWindow_MarketplaceButtonText" xml:space="preserve">
         <value>Marketplace</value>
     </data>
-    <data name="MainWindow_UpdateAvailableButtonText" xml:space="preserve">
-        <value>Update</value>
-    </data>
     <data name="MainWindow_UpdateFoundNotificationMessage" xml:space="preserve">
         <value>Version {0} is available.</value>
     </data>

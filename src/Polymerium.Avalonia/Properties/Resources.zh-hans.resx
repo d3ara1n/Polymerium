@@ -24,9 +24,6 @@
     <data name="MainWindow_MarketplaceButtonText" xml:space="preserve">
         <value>集市</value>
     </data>
-    <data name="MainWindow_UpdateAvailableButtonText" xml:space="preserve">
-        <value>有更新</value>
-    </data>
     <data name="MainWindow_UpdateFoundNotificationMessage" xml:space="preserve">
         <value>新版本 {0} 已可用。</value>
     </data>

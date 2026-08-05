@@ -14,8 +14,6 @@ public class UpdateService(
     UpdateManager updateManager,
     IOptions<MirrorChyanSourceOptions> mirrorChyanSourceOptions) : ILifetimeService
 {
-    private Action<AppUpdateModel?>? _handler;
-
     public bool IsAvailable => updateManager.IsInstalled || Program.IsDebug;
 
     public bool CanCheckUpdate => IsAvailable && !IsChecking;
@@ -49,8 +47,6 @@ public class UpdateService(
 
     public ValueTask StopAsync(CancellationToken cancellationToken = default) => ValueTask.CompletedTask;
 
-    public void SetHandler(Action<AppUpdateModel?>? handler) => _handler = handler;
-
     public async Task CheckUpdateAsync()
     {
         if (IsChecking)
@@ -63,7 +59,6 @@ public class UpdateService(
             CurrentUpdate = null;
             IsUpdateChecked = false;
             UpdateState = AppUpdateState.Unavailable;
-            _handler?.Invoke(null);
             return;
         }
 
@@ -86,7 +81,6 @@ public class UpdateService(
             }
 
             IsUpdateChecked = true;
-            _handler?.Invoke(CurrentUpdate);
         }
         catch (Exception)
         {
