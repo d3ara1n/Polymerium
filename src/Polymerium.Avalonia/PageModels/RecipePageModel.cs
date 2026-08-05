@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -18,6 +19,7 @@ using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.Utilities;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using System.Reactive.Linq;
@@ -102,7 +104,7 @@ public partial class RecipePageModel(
     {
         var stored = persistenceService.GetRecipeItems(Id);
         var storedKeys = stored
-                         .Select(s => new ProjectIdentifier(s.Label, PersistenceService.NormalizeFavoriteNamespace(s.Namespace), s.ProjectId))
+                         .Select(s => new ProjectIdentifier(s.Label, PersistenceService.NormalizeNamespace(s.Namespace), s.ProjectId))
                          .ToHashSet();
 
         // toRemove: cache 有、DB 无
@@ -112,19 +114,19 @@ public partial class RecipePageModel(
         var toAdd = new List<RecipeItemModel>();
         foreach (var s in stored)
         {
-            var ns = PersistenceService.NormalizeFavoriteNamespace(s.Namespace);
+            var ns = PersistenceService.NormalizeNamespace(s.Namespace);
             var id = new ProjectIdentifier(s.Label, ns, s.ProjectId);
             if (_items.Lookup(id) is { HasValue: true, Value: var existing })
             {
                 existing.Note = s.Note;
-                existing.Tags = DeserializeTags(s.Tags);
+                existing.Tags = new ObservableCollection<string>(RecipeHelper.DeserializeTags(s.Tags));
             }
             else
             {
-                toAdd.Add(new(s.Id, s.Label, ns, s.ProjectId)
+                toAdd.Add(new(Id, s.Label, ns, s.ProjectId)
                 {
                     Note = s.Note,
-                    Tags = DeserializeTags(s.Tags)
+                    Tags = new ObservableCollection<string>(RecipeHelper.DeserializeTags(s.Tags))
                 });
             }
         }
@@ -134,19 +136,6 @@ public partial class RecipePageModel(
         if (toAdd.Count > 0)
         {
             await ResolveItemInfoAsync(toAdd, token);
-        }
-    }
-
-    private static ObservableCollection<string> DeserializeTags(string json)
-    {
-        try
-        {
-            var tags = JsonSerializer.Deserialize<string[]>(json) ?? [];
-            return new ObservableCollection<string>(tags);
-        }
-        catch
-        {
-            return [];
         }
     }
 
@@ -249,7 +238,7 @@ public partial class RecipePageModel(
     {
         if (item is not null)
         {
-            persistenceService.RemoveRecipeItem(item.Id);
+            persistenceService.RemoveRecipeItem(item.RecipeId, item.Identifier);
             _items.Remove(item.Identifier);
         }
     }
@@ -274,7 +263,7 @@ public partial class RecipePageModel(
             {
                 item.Tags.Add(tag);
             }
-            persistenceService.UpdateRecipeItem(item.Id, result, item.Note);
+            persistenceService.UpdateRecipeItem(item.RecipeId, item.Identifier, result, item.Note);
         }
     }
 
@@ -295,13 +284,44 @@ public partial class RecipePageModel(
         }
 
         item.Note = string.IsNullOrWhiteSpace(input) ? null : input;
-        persistenceService.UpdateRecipeItem(item.Id, item.Tags, item.Note);
+        persistenceService.UpdateRecipeItem(item.RecipeId, item.Identifier, item.Tags, item.Note);
     }
 
     [RelayCommand]
-    private void Export() =>
-        notificationService.PopMessage(Resources.RecipesPage_ComingSoonNotificationMessage,
-                                       Resources.RecipePage_ExportButtonText);
+    private async Task ExportAsync()
+    {
+        var recipe = persistenceService.GetRecipe(Id);
+        if (recipe is null)
+        {
+            return;
+        }
+
+        var items = persistenceService.GetRecipeItems(Id);
+        var document = RecipeHelper.ToDocument(recipe.Name,
+                                                recipe.Description,
+                                                items.Select(i => (i.Label,
+                                                                    PersistenceService.NormalizeNamespace(i.Namespace),
+                                                                    i.ProjectId,
+                                                                    RecipeHelper.DeserializeTags(i.Tags),
+                                                                    i.Note)));
+        var dialog = new RecipeExporterDialog { ItemCount = items.Count, RecipeName = recipe.Name };
+        if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
+        {
+            try
+            {
+                await Task.Run(() => File.WriteAllText(path, RecipeHelper.Serialize(document)));
+                notificationService.PopMessage(Resources.RecipesPage_ExportSuccessNotificationMessage.Replace("{0}", path),
+                                               Resources.RecipesPage_ExportSuccessNotificationTitle,
+                                               GrowlLevel.Success);
+            }
+            catch (Exception)
+            {
+                notificationService.PopMessage(Resources.RecipesPage_ExportDangerNotificationMessage.Replace("{0}", path),
+                                               Resources.RecipesPage_ExportDangerNotificationTitle,
+                                               GrowlLevel.Danger);
+            }
+        }
+    }
 
     [RelayCommand]
     private void GoBack() => navigationService.GoBack();

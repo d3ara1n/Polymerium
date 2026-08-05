@@ -7,6 +7,7 @@ using NanoidDotNet;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
+using TridentCore.Pref;
 using TridentCore.Core.Accounts;
 
 namespace Polymerium.Avalonia.Services;
@@ -186,14 +187,15 @@ public class PersistenceService(IFreeSql freeSql)
     public class RecipeItem
     {
         [Column(IsPrimary = true)]
-        public required string Id { get; set; }
-
         public required string RecipeId { get; set; }
 
+        [Column(IsPrimary = true)]
         public required string Label { get; set; }
 
-        public string Namespace { get; set; } = string.Empty;
+        [Column(IsPrimary = true)]
+        public required string Namespace { get; set; } = string.Empty;
 
+        [Column(IsPrimary = true)]
         public required string ProjectId { get; set; }
 
         [Column(DbType = "BLOB")]
@@ -564,7 +566,7 @@ public class PersistenceService(IFreeSql freeSql)
         return [.. filtered.Skip((int)(pageIndex * pageSize)).Take((int)pageSize)];
     }
 
-    public static string? NormalizeFavoriteNamespace(string? ns) => string.IsNullOrEmpty(ns) ? null : ns;
+    public static string? NormalizeNamespace(string? ns) => string.IsNullOrEmpty(ns) ? null : ns;
 
     public static IReadOnlyList<string> DeserializeFavoriteTags(string tags) =>
         JsonSerializer.Deserialize<IReadOnlyList<string>>(tags) ?? [];
@@ -627,22 +629,15 @@ public class PersistenceService(IFreeSql freeSql)
             freeSql.Delete<Recipe>().Where(x => x.Id == id).ExecuteAffrows();
         });
 
-    public void AddRecipeItem(
-        string recipeId,
-        string label,
-        string? ns,
-        string projectId,
-        IReadOnlyList<string> tags,
-        string? note)
+    public void AddRecipeItem(string recipeId, ProjectIdentifier project, IReadOnlyList<string> tags, string? note)
     {
         freeSql
            .Insert(new RecipeItem
            {
-               Id = Nanoid.Generate(Nanoid.Alphabets.Default, 12),
                RecipeId = recipeId,
-               Label = label,
-               Namespace = ns ?? string.Empty,
-               ProjectId = projectId,
+               Label = project.Repository,
+               Namespace = project.Namespace ?? string.Empty,
+               ProjectId = project.Identity,
                Tags = JsonSerializer.Serialize(tags),
                Note = note
            })
@@ -650,25 +645,31 @@ public class PersistenceService(IFreeSql freeSql)
         TouchRecipe(recipeId);
     }
 
-    public void RemoveRecipeItem(string id)
+    public void RemoveRecipeItem(string recipeId, ProjectIdentifier project)
     {
-        var recipeId = freeSql.Select<RecipeItem>().Where(x => x.Id == id).First()?.RecipeId;
-        freeSql.Delete<RecipeItem>().Where(x => x.Id == id).ExecuteAffrows();
-        if (recipeId != null)
-        {
-            TouchRecipe(recipeId);
-        }
+        var ns = project.Namespace ?? string.Empty;
+        freeSql.Delete<RecipeItem>()
+               .Where(x => x.RecipeId == recipeId
+                        && x.Label == project.Repository
+                        && x.Namespace == ns
+                        && x.ProjectId == project.Identity)
+               .ExecuteAffrows();
+        TouchRecipe(recipeId);
     }
 
-    public void UpdateRecipeItem(string id, IReadOnlyList<string> tags, string? note)
+    public void UpdateRecipeItem(string recipeId, ProjectIdentifier project, IReadOnlyList<string> tags, string? note)
     {
+        var ns = project.Namespace ?? string.Empty;
         freeSql
            .Update<RecipeItem>()
-           .Where(x => x.Id == id)
+           .Where(x => x.RecipeId == recipeId
+                    && x.Label == project.Repository
+                    && x.Namespace == ns
+                    && x.ProjectId == project.Identity)
            .Set(x => x.Tags, JsonSerializer.Serialize(tags))
            .Set(x => x.Note, note)
            .ExecuteAffrows();
-        TouchRecipe(id);
+        TouchRecipe(recipeId);
     }
 
     public void TouchRecipe(string id) =>

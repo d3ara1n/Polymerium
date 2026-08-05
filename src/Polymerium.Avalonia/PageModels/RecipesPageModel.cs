@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +11,10 @@ using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
+using System.IO;
+using System.Linq;
+using Polymerium.Avalonia.Utilities;
+using TridentCore.Pref;
 
 namespace Polymerium.Avalonia.PageModels;
 
@@ -84,21 +90,114 @@ public partial class RecipesPageModel(
             Items.Add(new(recipe.Id)
             {
                 Name = recipe.Name,
-                Description = recipe.Description
+                Description = recipe.Description,
+                ItemCount = 0
             });
-            navigationService.Navigate<RecipePage>(recipe.Id);
         }
     }
 
     [RelayCommand]
-    private void Export(RecipeCardModel? card) =>
-        notificationService.PopMessage(Resources.RecipesPage_ComingSoonNotificationMessage,
-                                       Resources.RecipesPage_ExportMenuText);
+    private async Task ExportAsync(RecipeCardModel? card)
+    {
+        if (card is null)
+        {
+            return;
+        }
+
+        var recipe = persistenceService.GetRecipe(card.Id);
+        if (recipe is null)
+        {
+            return;
+        }
+
+        var items = persistenceService.GetRecipeItems(card.Id);
+        var document = RecipeHelper.ToDocument(recipe.Name,
+                                                recipe.Description,
+                                                items.Select(i => (i.Label,
+                                                                    PersistenceService.NormalizeNamespace(i.Namespace),
+                                                                    i.ProjectId,
+                                                                    RecipeHelper.DeserializeTags(i.Tags),
+                                                                    i.Note)));
+        var dialog = new RecipeExporterDialog { ItemCount = items.Count, RecipeName = recipe.Name };
+        if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
+        {
+            try
+            {
+                await Task.Run(() => File.WriteAllText(path, RecipeHelper.Serialize(document)));
+                notificationService.PopMessage(Resources.RecipesPage_ExportSuccessNotificationMessage.Replace("{0}", path),
+                                               Resources.RecipesPage_ExportSuccessNotificationTitle,
+                                               GrowlLevel.Success);
+            }
+            catch (Exception)
+            {
+                notificationService.PopMessage(Resources.RecipesPage_ExportDangerNotificationMessage.Replace("{0}", path),
+                                               Resources.RecipesPage_ExportDangerNotificationTitle,
+                                               GrowlLevel.Danger);
+            }
+        }
+    }
 
     [RelayCommand]
-    private void Import() =>
-        notificationService.PopMessage(Resources.RecipesPage_ComingSoonNotificationMessage,
-                                       Resources.RecipesPage_ImportButtonText);
+    private async Task ImportAsync()
+    {
+        var path = await overlayService.RequestFileAsync();
+        if (path is null)
+        {
+            return;
+        }
+
+        string text;
+        try
+        {
+            text = await File.ReadAllTextAsync(path);
+        }
+        catch (Exception)
+        {
+            notificationService.PopMessage(Resources.RecipesPage_ImportDangerNotificationMessage,
+                                           Resources.RecipesPage_ImportDangerNotificationTitle,
+                                           GrowlLevel.Danger);
+            return;
+        }
+
+        if (!RecipeHelper.TryDeserialize(text, out var document))
+        {
+            notificationService.PopMessage(Resources.RecipesPage_ImportDangerNotificationMessage,
+                                           Resources.RecipesPage_ImportDangerNotificationTitle,
+                                           GrowlLevel.Danger);
+            return;
+        }
+
+        var name = string.IsNullOrWhiteSpace(document.Name) ? "Untitled" : document.Name;
+        var recipe = persistenceService.InsertRecipe(name, document.Description);
+        var added = 0;
+        var seen = new HashSet<ProjectIdentifier>();
+        foreach (var item in document.Items)
+        {
+            if (!RecipeHelper.TryExtractIdentity(item, out var label, out var ns, out var projectId))
+            {
+                continue;
+            }
+
+            var identifier = new ProjectIdentifier(label, ns, projectId);
+            if (!seen.Add(identifier))
+            {
+                continue;
+            }
+
+            persistenceService.AddRecipeItem(recipe.Id, identifier, item.Tags, item.Note);
+            added++;
+        }
+
+        Items.Add(new(recipe.Id)
+        {
+            Name = recipe.Name,
+            Description = recipe.Description,
+            ItemCount = added
+        });
+        notificationService.PopMessage(Resources.RecipesPage_ImportSuccessNotificationMessage,
+                                       recipe.Name,
+                                       GrowlLevel.Success);
+    }
 
     [RelayCommand]
     private async Task DeleteAsync(RecipeCardModel? card)

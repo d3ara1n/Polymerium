@@ -23,7 +23,7 @@ public class FavoriteRepository(
 
     private static Exhibit ToExhibit(PersistenceService.FavoriteProject favorite) =>
         new(favorite.Label,
-            PersistenceService.NormalizeFavoriteNamespace(favorite.Namespace),
+            PersistenceService.NormalizeNamespace(favorite.Namespace),
             favorite.ProjectId,
             favorite.ProjectName,
             string.IsNullOrWhiteSpace(favorite.Thumbnail) ? null : new Uri(favorite.Thumbnail),

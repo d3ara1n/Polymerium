@@ -53,7 +53,7 @@ public partial class RecipeItemModalModel(
     {
         Item.Note = NoteDraft;
         Item.Tags = new ObservableCollection<string>(TagsDraft);
-        persistenceService.UpdateRecipeItem(Item.Id, TagsDraft.ToArray(), NoteDraft);
+        persistenceService.UpdateRecipeItem(Item.RecipeId, Item.Identifier, TagsDraft.ToArray(), NoteDraft);
         self?.Dismiss();
     }
 }

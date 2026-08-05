@@ -3705,6 +3705,21 @@
     <data name="AssetKind_Asset" xml:space="preserve">
         <value>资产</value>
     </data>
+    <data name="RecipeExporterDialog_Title" xml:space="preserve">
+        <value>导出配方</value>
+    </data>
+    <data name="RecipeExporterDialog_Prompt" xml:space="preserve">
+        <value>将此配方导出为可分享的文件</value>
+    </data>
+    <data name="RecipeExporterDialog_ItemCountLabelText" xml:space="preserve">
+        <value>个包</value>
+    </data>
+    <data name="RecipeExporterDialog_PathLabelText" xml:space="preserve">
+        <value>导出到</value>
+    </data>
+    <data name="RecipeExporterDialog_PathBarPlaceholder" xml:space="preserve">
+        <value>选择文件路径</value>
+    </data>
     <data name="RecipesPage_Title" xml:space="preserve">
         <value>配方</value>
     </data>
@@ -3738,9 +3753,6 @@
     <data name="RecipesPage_NewDialogTitle" xml:space="preserve">
         <value>新建配方</value>
     </data>
-    <data name="RecipesPage_ComingSoonNotificationMessage" xml:space="preserve">
-        <value>导入和导出即将推出</value>
-    </data>
     <data name="RecipesPage_DeleteBlockedByReferencesWarningNotificationMessage" xml:space="preserve">
         <value>此配方被 {0} 个实例引用，无法删除</value>
     </data>
@@ -3755,6 +3767,27 @@
     </data>
     <data name="RecipesPage_DeleteSuccessNotificationMessage" xml:space="preserve">
         <value>配方已删除</value>
+    </data>
+    <data name="RecipesPage_ImportSuccessNotificationMessage" xml:space="preserve">
+        <value>配方已导入</value>
+    </data>
+    <data name="RecipesPage_ImportDangerNotificationTitle" xml:space="preserve">
+        <value>导入失败</value>
+    </data>
+    <data name="RecipesPage_ImportDangerNotificationMessage" xml:space="preserve">
+        <value>该文件不是有效的配方文件</value>
+    </data>
+    <data name="RecipesPage_ExportSuccessNotificationMessage" xml:space="preserve">
+        <value>配方已导出到 {0}</value>
+    </data>
+    <data name="RecipesPage_ExportSuccessNotificationTitle" xml:space="preserve">
+        <value>配方已导出</value>
+    </data>
+    <data name="RecipesPage_ExportDangerNotificationMessage" xml:space="preserve">
+        <value>导出配方到 {0} 失败</value>
+    </data>
+    <data name="RecipesPage_ExportDangerNotificationTitle" xml:space="preserve">
+        <value>导出失败</value>
     </data>
     <data name="RecipePage_EditButtonText" xml:space="preserve">
         <value>编辑</value>

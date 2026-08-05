@@ -224,15 +224,14 @@
                 </Grid>
                 <Grid
                     Margin="9"
-                    ColumnDefinitions="Auto,*,Auto"
+                    ColumnDefinitions="48,*,48"
                     ColumnSpacing="8"
-                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto,Auto"
+                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*,Auto"
                     RowSpacing="8">
                     <Button
                         Grid.Row="0"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
-                        Height="48"
                         Command="{Binding NavigateCommand}"
                         CommandParameter="{x:Type app:LandingPage}"
                         Theme="{StaticResource OutlineButtonTheme}">
@@ -252,8 +251,6 @@
                     <Button
                         Grid.Row="0"
                         Grid.Column="2"
-                        Width="48"
-                        Height="48"
                         Command="{Binding NavigateCommand}"
                         CommandParameter="{x:Type app:NewInstancePage}"
                         Theme="{StaticResource OutlineButtonTheme}">
@@ -289,58 +286,53 @@
                             </StackPanel>
                         </StackPanel>
                     </Button>
-                    <Grid
+                    <Button
                         Grid.Row="2"
                         Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        ColumnDefinitions="Auto,*,Auto"
-                        ColumnSpacing="8">
-                        <Button
-                            Grid.Column="0"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="{x:Type app:RecipesPage}"
-                            Theme="{StaticResource OutlineButtonTheme}"
-                            ToolTip.Tip="{x:Static lang:Resources.MainWindow_RecipesButtonText}">
+                        Command="{Binding NavigateCommand}"
+                        CommandParameter="{x:Type app:RecipesPage}"
+                        Theme="{StaticResource OutlineButtonTheme}"
+                        ToolTip.Tip="{x:Static lang:Resources.MainWindow_RecipesButtonText}">
+                        <fi:SymbolIcon
+                            FontSize="18"
+                            IconVariant="Color"
+                            Symbol="ListBar" />
+                    </Button>
+                    <Button Grid.Row="2"
+                        Grid.Column="1"
+                        Command="{Binding NavigateCommand}"
+                        CommandParameter="{x:Type app:InstancesPage}"
+                        Theme="{StaticResource OutlineButtonTheme}">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="8">
                             <fi:SymbolIcon
                                 FontSize="18"
                                 IconVariant="Color"
-                                Symbol="Bookmark" />
-                        </Button>
-                        <Button
-                            Grid.Column="1"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="{x:Type app:InstancesPage}"
-                            Theme="{StaticResource OutlineButtonTheme}">
-                            <StackPanel
-                                Orientation="Horizontal"
-                                Spacing="8">
-                                <fi:SymbolIcon
-                                    FontSize="18"
-                                    IconVariant="Color"
-                                    Symbol="Apps" />
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    Text="{x:Static lang:Resources.MainWindow_InstancesButtonText}" />
-                            </StackPanel>
-                        </Button>
-                        <Button
-                            Grid.Column="2"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="{x:Type app:AccountsPage}"
-                            Theme="{StaticResource OutlineButtonTheme}"
-                            ToolTip.Tip="{x:Static lang:Resources.MainWindow_AccountButtonText}">
-                            <fi:SymbolIcon
-                                FontSize="18"
-                                IconVariant="Color"
-                                Symbol="People" />
-                        </Button>
-                    </Grid>
+                                Symbol="Apps" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Static lang:Resources.MainWindow_InstancesButtonText}" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        Command="{Binding NavigateCommand}"
+                        CommandParameter="{x:Type app:AccountsPage}"
+                        Theme="{StaticResource OutlineButtonTheme}"
+                        ToolTip.Tip="{x:Static lang:Resources.MainWindow_AccountButtonText}">
+                        <fi:SymbolIcon
+                            FontSize="18"
+                            IconVariant="Color"
+                            Symbol="People" />
+                    </Button>
                     <husk:Divider
                         Grid.Row="3"
                         Grid.Column="0"
                         Grid.ColumnSpan="3" />
                     <Grid
-                        Grid.Row="3"
+                        Grid.Row="4"
                         Grid.Column="0"
                         Grid.ColumnSpan="3"
                         ColumnDefinitions="Auto,*,Auto"
@@ -393,7 +385,7 @@
                         </StackPanel>
                     </Grid>
                     <husk:Divider
-                        Grid.Row="4"
+                        Grid.Row="5"
                         Grid.Column="0"
                         Grid.ColumnSpan="3" />
                     <husk:DropContainer
@@ -520,12 +512,13 @@
                         </Panel>
                     </husk:DropContainer>
                     <husk:Divider
-                        Grid.Row="7"
+                        Grid.Row="6"
                         Grid.Column="0"
                         Grid.ColumnSpan="3" />
                     <Button
-                        Grid.Row="8"
+                        Grid.Row="7"
                         Grid.Column="0"
+                        Grid.ColumnSpan="2"
                         Command="{Binding NavigateCommand}"
                         CommandParameter="{x:Type app:SettingsPage}"
                         Theme="{StaticResource OutlineButtonTheme}">
@@ -542,7 +535,7 @@
                         </StackPanel>
                     </Button>
                     <Button
-                        Grid.Row="8"
+                        Grid.Row="7"
                         Grid.Column="2"
                         Command="{Binding AboutCommand}"
                         Theme="{StaticResource OutlineButtonTheme}"
@@ -550,7 +543,7 @@
                         <fi:SymbolIcon
                             FontSize="18"
                             IconVariant="Color"
-                            Symbol="Info" />
+                            Symbol="Molecule" />
                     </Button>
                 </Grid>
             </DockPanel>
