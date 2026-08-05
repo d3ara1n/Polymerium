@@ -15,6 +15,7 @@ using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
+using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using System.Reactive.Disposables;
@@ -22,7 +23,6 @@ using System.Reactive.Disposables.Fluent;
 using System.Reactive.Linq;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
-using TridentCore.Abstractions.Utilities;
 using TridentCore.Pref;
 
 namespace Polymerium.Avalonia.PageModels;
@@ -239,25 +239,10 @@ public partial class RecipePageModel(
     }
 
     [RelayCommand]
-    private async Task AddItemAsync()
-    {
-        var input = await overlayService.RequestInputAsync(message: Resources.RecipePage_AddPackagePromptMessage);
-        if (string.IsNullOrWhiteSpace(input))
-        {
-            return;
-        }
-
-        if (!PackageHelper.TryParse(input, out var id))
-        {
-            notificationService.PopMessage(Resources.RecipePage_AddPackageInvalidPrefWarningMessage,
-                                           Resources.RecipePage_AddPackageInvalidPrefWarningTitle,
-                                           GrowlLevel.Warning);
-            return;
-        }
-
-        persistenceService.AddRecipeItem(Id, id.Repository, id.Namespace, id.Identity, [], null);
-        await ReloadItemsAsync(CancellationToken.None);
-    }
+    private void AddItem() => navigationService.Navigate<ExplorerPage>(new RecipeExplorerSession(Id,
+                                                                                                persistenceService,
+                                                                                                dataService,
+                                                                                                overlayService));
 
     [RelayCommand]
     private void RemoveItem(RecipeItemModel? item)
