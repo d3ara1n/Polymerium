@@ -6646,6 +6646,17 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("AppMenu_StorageText", resourceCulture);
             }
         }
+        public static string AppMenu_InstancesText {
+            get {
+                return ResourceManager.GetString("AppMenu_InstancesText", resourceCulture);
+            }
+        }
+        
+        public static string AppMenu_RecipesText {
+            get {
+                return ResourceManager.GetString("AppMenu_RecipesText", resourceCulture);
+            }
+        }
         
         public static string AppMenu_FullScreenText {
             get {
@@ -7100,6 +7111,17 @@ namespace Polymerium.Avalonia.Properties {
         public static string MainWindow_InstancesButtonText {
             get {
                 return ResourceManager.GetString("MainWindow_InstancesButtonText", resourceCulture);
+            }
+        }
+        public static string MainWindow_RecipesButtonText {
+            get {
+                return ResourceManager.GetString("MainWindow_RecipesButtonText", resourceCulture);
+            }
+        }
+        
+        public static string MainWindow_SettingsButtonText {
+            get {
+                return ResourceManager.GetString("MainWindow_SettingsButtonText", resourceCulture);
             }
         }
         
@@ -7589,11 +7611,6 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
-        public static string InstancesPage_ManageRecipesButtonText {
-            get {
-                return ResourceManager.GetString("InstancesPage_ManageRecipesButtonText", resourceCulture);
-            }
-        }
         
         public static string InstanceSetupPage_ImportRecipeMenuText {
             get {

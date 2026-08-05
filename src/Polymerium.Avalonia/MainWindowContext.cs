@@ -257,6 +257,9 @@ public partial class MainWindowContext : ObservableObject
     private void GoInstances() => _navigationService.Navigate<InstancesPage>();
 
     [RelayCommand]
+    private void GoRecipes() => _navigationService.Navigate<RecipesPage>();
+
+    [RelayCommand]
     private void GoStorage() => _navigationService.Navigate<MaintenanceStoragePage>();
 
     [RelayCommand]
