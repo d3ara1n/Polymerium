@@ -23,6 +23,7 @@
 - Add customizable interface, code, and log fonts selectable from installed system fonts or external font files (#78)
 - Add a modpack entry card to the marketplace portal page
 - Add a searchable package picker for browsing repositories and adding packages to a recipe (#POLY-120)
+- Notify the user when the startup auto-check finds a new version, with a button that opens the update dialog directly
 
 ### Changed
 
