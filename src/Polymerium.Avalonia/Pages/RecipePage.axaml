@@ -141,26 +141,26 @@
                         <DataTemplate x:DataType="app:RecipeItemModel">
                         <app:RecipeItemButton
                             Margin="0,0,0,8"
-                            Command="{Binding $parent[ItemsControl].((app:RecipePageModel)DataContext).OpenItemCommand}"
+                            Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).OpenItemCommand}"
                             CommandParameter="{Binding}"
                             Theme="{StaticResource RecipeItemButtonTheme}">
                             <app:RecipeItemButton.ContextFlyout>
                                 <MenuFlyout>
                                     <MenuItem
-                                        Command="{Binding $parent[ItemsControl].((app:RecipePageModel)DataContext).EditItemTagsCommand}"
+                                        Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).EditItemTagsCommand}"
                                         CommandParameter="{Binding}"
                                         Header="{x:Static lang:Resources.RecipeItemModal_EditTagsButtonText}"
                                         Icon="{fie:SymbolIcon Symbol=Tag,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
-                                        Command="{Binding $parent[ItemsControl].((app:RecipePageModel)DataContext).EditItemNoteCommand}"
+                                        Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).EditItemNoteCommand}"
                                         CommandParameter="{Binding}"
                                         Header="{x:Static lang:Resources.RecipePage_EditNoteMenuText}"
                                         Icon="{fie:SymbolIcon Symbol=Edit,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem Header="-" />
                                     <MenuItem
-                                        Command="{Binding $parent[ItemsControl].((app:RecipePageModel)DataContext).RemoveItemCommand}"
+                                        Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).RemoveItemCommand}"
                                         CommandParameter="{Binding}">
                                         <MenuItem.Header>
                                             <TextBlock

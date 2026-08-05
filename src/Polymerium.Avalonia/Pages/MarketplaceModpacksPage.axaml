@@ -32,7 +32,7 @@
             <MenuItem
                 Command="{Binding $parent[app:MarketplaceModpacksPage].((app:MarketplaceModpacksPageModel)DataContext).FavoriteModpackCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
-                Header="{x:Static lang:Resources.PackageExplorerPage_FavoriteMenuText}"
+                Header="{x:Static lang:Resources.ExplorerPage_FavoriteMenuText}"
                 Icon="{fie:SymbolIcon Symbol=CollectionsAdd,
                                       FontSize={StaticResource MediumFontSize}}"
                 IsChecked="{Binding IsFavorite, Mode=OneWay}"
@@ -73,7 +73,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerPage_RepositoryMenuText}" />
+                        <TextBlock Text="{x:Static lang:Resources.ExplorerPage_RepositoryMenuText}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Label, FallbackValue=Repository}" />
@@ -87,7 +87,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.PackageExplorerPage_NamespaceMenuText}" />
+                        <TextBlock Text="{x:Static lang:Resources.ExplorerPage_NamespaceMenuText}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Namespace, FallbackValue=Namespace}" />

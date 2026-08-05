@@ -97,7 +97,7 @@
                         Width="3"
                         Margin="0,4"
                         HorizontalAlignment="Left"
-                        IsVisible="{Binding Exhibit.Installed.Enabled, Mode=OneTime, FallbackValue={x:False}}"
+                        IsVisible="{Binding Exhibit.Entry.Enabled, Mode=OneTime, FallbackValue={x:False}}"
                         Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
                         BorderBrush="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
                         BorderThickness="1"

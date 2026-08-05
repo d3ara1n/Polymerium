@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.Avalonia.Facilities;
-using TridentCore.Abstractions.FileModels;
 
 namespace Polymerium.Avalonia.Models;
 
@@ -54,8 +53,6 @@ public partial class ExhibitModel(
     [ObservableProperty]
     public partial ExhibitState? State { get; set; }
 
-    [ObservableProperty]
-    public partial Profile.Rice.Entry? Installed { get; set; }
 
     [ObservableProperty]
     public partial string? InstalledVersionName { get; set; }
