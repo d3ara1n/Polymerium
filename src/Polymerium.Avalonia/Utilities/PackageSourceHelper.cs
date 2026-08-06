@@ -36,7 +36,7 @@ public static class PackageSourceHelper
         source switch
         {
             null => Kind.Manual,
-            _ when RecipeHelper.TryGetId(source, out _) => Kind.Recipe,
+            _ when InternalUriHelper.IsKind(source, RecipeHelper.Scheme) => Kind.Recipe,
             _ when InternalUriHelper.IsKind(source, "pref") => Kind.Modpack,
             // COMPAT: legacy Purl-format Source from pre-rename modpacks; remove once on-disk
             // profiles no longer carry old-format Source values.

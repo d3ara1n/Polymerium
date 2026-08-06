@@ -13,9 +13,9 @@ public static class RecipeHelper
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
 
 
-    public const string RecipeScheme = "recipe";
+    public const string Scheme = "recipe";
 
-    private const string RecipePrefix = RecipeScheme + "://";
+    private const string RecipePrefix = Scheme + "://";
 
     public static string ToUri(string id) => RecipePrefix + id;
 
