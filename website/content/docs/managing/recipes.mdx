@@ -1,0 +1,53 @@
+---
+title: Recipes
+description: Curate shareable lists of packages — mods, resource packs, shaders, and more — and apply them to instances.
+---
+
+## What Is a Recipe?
+
+A recipe is a user-curated list of package references — mods, resource packs, shader packs, data packs, or worlds — saved under a name, with optional tags and a note on each item. Think of it as a wishlist or a preset package list: a named set of packages you can apply to an instance and share as a file.
+
+A recipe holds **references only** (`pref://` URIs). It contains no mod files, no configuration, and no Minecraft version or loader — that is exactly what makes it different from a modpack.
+
+## Recipes vs. Modpacks
+
+| | Recipe | Modpack |
+|--|--------|---------|
+| Contains | Package references + tags/notes | Minecraft version, loader, packages, config files |
+| Applies to | An instance you're setting up — adds its packages | Creates or updates a whole instance |
+| File | Lightweight JSON | A `.zip` / `.mrpack` archive |
+
+Because a recipe is only a list of references, applying it never touches an instance's Minecraft version or loader, and it stays valid as packages are updated — the references resolve to whatever the repositories currently offer.
+
+## Creating a Recipe
+
+1. Open **Recipes** from the app menu or the toolbar button.
+2. Click **New** and give the recipe a name and an optional description.
+3. Open the recipe to start adding packages.
+
+## Adding Packages
+
+1. Open the recipe and click **Add** — this opens the package explorer.
+2. Browse CurseForge and Modrinth and add projects to the recipe.
+3. Each item can carry **tags** (for organization) and a **note** (for anything worth remembering).
+4. Use the search box and the kind filter to navigate larger recipes.
+
+Projects you've already added show an **In Recipe** marker when you browse them elsewhere.
+
+## Applying a Recipe to an Instance
+
+When creating a new instance, open the import menu in the setup page and choose **Import from recipe**, then pick a recipe. Polymerium resolves each reference through the repositories and adds the packages to the instance's package list; the recipe also appears as a source group in the instance's setup, and opening it takes you back to the recipe.
+
+## Sharing Recipes
+
+- **Export** a recipe to a JSON file — from the **Recipes** list or the recipe page.
+- **Import** a recipe from a JSON file on the **Recipes** page.
+- The file stores each item as a package reference together with its tags and note.
+
+## Deleting a Recipe
+
+A recipe that instances still reference can't be deleted. Polymerium lists the referencing instances — remove the recipe from those instances in their setup first, then delete it.
+
+## Recipes and the Changelog
+
+Recipe files are versioned JSON documents, so they diff cleanly in version control — useful when you keep a recipe file in a git repository and share it with a team. See the [Git Collaboration →](/docs/guides/git-collaboration) guide.

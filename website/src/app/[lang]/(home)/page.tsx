@@ -129,7 +129,7 @@ function getDict(lang: string) {
         },
         {
           q: '能从其他启动器迁移吗？',
-          a: '支持从官方 Minecraft 启动器、Prism Launcher 等启动器迁移。详见迁移指南。',
+          a: '支持从 Prism Launcher、MultiMC、CurseForge 应用、ATLauncher、Modrinth 应用直接导入实例；官方 Minecraft 启动器等无适配器的启动器可手动迁移。详见迁移指南。',
         },
         {
           q: '什么是 MCP 模式？',
@@ -242,7 +242,7 @@ function getDict(lang: string) {
       },
       {
         q: 'Can I migrate from other launchers?',
-        a: 'Yes. Polymerium supports migrating from the vanilla Minecraft launcher, Prism Launcher, and more. See the migration guide for details.',
+        a: 'Yes. Polymerium imports instances directly from Prism Launcher, MultiMC, the CurseForge app, ATLauncher, and the Modrinth app, and supports manual migration from any other launcher. See the migration guide for details.',
       },
       {
         q: 'What is MCP mode?',
