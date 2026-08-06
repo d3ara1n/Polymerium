@@ -3859,7 +3859,7 @@
         <value>编辑配方</value>
     </data>
     <data name="InstanceSetupPage_ImportRecipeMenuText" xml:space="preserve">
-        <value>从配方导入</value>
+        <value>导入配方</value>
     </data>
     <data name="InstanceSetupPage_ImportRecipeNoRecipesWarningNotificationMessage" xml:space="preserve">
         <value>还没有配方，请先在配方页面创建。</value>
