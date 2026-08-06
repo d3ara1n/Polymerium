@@ -53,7 +53,7 @@ public class Configuration
             OperatingSystem.IsMacOS() ? CornerStyle.Large :
             OperatingSystem.IsLinux() ? CornerStyle.None : CornerStyle.Normal
         },
-        { APPLICATION_STYLE_BACKGROUND, 0 },
+        { APPLICATION_STYLE_BACKGROUND, 4 },
         { APPLICATION_STYLE_THEME_VARIANT, 0 },
         { APPLICATION_LANGUAGE, CultureInfo.InstalledUICulture.Name },
         { APPLICATION_WINDOW_WIDTH, 1111.0 },

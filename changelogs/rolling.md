@@ -30,6 +30,7 @@
 - Improve the instance list layout so cards stretch to fill the page width
 - Update the marketplace search filter placeholders to clarify the unfiltered state
 - Rework the marketplace entry copy with a download-resource label on the sidebar button and completed search placeholders
+- Change the default background style to None
 
 ### Removed
 
