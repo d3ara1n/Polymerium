@@ -23,7 +23,8 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource LargeFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            TextWrapping="Wrap">
                             <TextBlock.Text>
                                 <Binding
                                     Path="Text"

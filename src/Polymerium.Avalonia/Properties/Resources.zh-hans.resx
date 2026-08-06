@@ -18,6 +18,9 @@
     <data name="MainWindow_HomeButtonText" xml:space="preserve">
         <value>主页</value>
     </data>
+    <data name="MainWindow_EmptyInstanceListText" xml:space="preserve">
+        <value>暂无实例。前往实例管理界面钉选，即可在此快速访问。</value>
+    </data>
     <data name="MainWindow_MarketplaceButtonSubText" xml:space="preserve">
         <value>资源下载</value>
     </data>

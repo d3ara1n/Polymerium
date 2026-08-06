@@ -27,6 +27,9 @@
     <data name="MainWindow_HomeButtonText" xml:space="preserve">
         <value>Home</value>
     </data>
+    <data name="MainWindow_EmptyInstanceListText" xml:space="preserve">
+        <value>No instances yet. Pin some from Instances for quick access here.</value>
+    </data>
     <data name="Migrate_Title" xml:space="preserve">
         <value>Migrate</value>
     </data>
