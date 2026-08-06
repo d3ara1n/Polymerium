@@ -55,4 +55,7 @@ public static class PackageSourceHelper
 
     /// <summary>整组能否解散（Ungroup）：当前整合包组不可（须先解绑降级），Recipe 可。</summary>
     public static bool CanUngroup(string? source, string? current) => source is not null && source != current;
+
+    /// <summary>整组能否删除（Remove Group）：当前整合包组不可（服役中），其余可。</summary>
+    public static bool CanDelete(string? source, string? current) => source is not null && source != current;
 }

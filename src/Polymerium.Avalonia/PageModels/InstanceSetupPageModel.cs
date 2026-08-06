@@ -174,7 +174,6 @@ public partial class InstanceSetupPageModel(
                 _flat.AddOrUpdate(new PackageListItemBase.Header { Key = key, Group = bySource[key.Source] });
             }
 
-
             // 统一入口：包与组的信息加载排成一队，RefreshMetadataAsync 现场重判待加载项、统一管 IsRefreshing
             _metadataTask = RefreshMetadataAsync(_metadataTask, token.Value);
         }
@@ -249,7 +248,7 @@ public partial class InstanceSetupPageModel(
         var pendingGroups = _flat
                            .Items.OfType<PackageListItemBase.Entry>()
                            .Select(i => i.Group)
-                           .OfType<ModpackGroupModel>()
+                           .Where(g => g is not LooseGroupModel)
                            .Distinct()
                            .Where(g => g.Info is null)
                            .ToList();
@@ -262,7 +261,7 @@ public partial class InstanceSetupPageModel(
         try
         {
             await Task.WhenAll(RefreshPackageInfoAsync(pendingPackages, token),
-                               RefreshModpackGroupInfoAsync(pendingGroups, token));
+                               RefreshGroupInfoAsync(pendingGroups, token));
         }
         finally
         {
@@ -410,14 +409,14 @@ public partial class InstanceSetupPageModel(
         }
     }
 
-    private async Task RefreshModpackGroupInfoAsync(IReadOnlyList<ModpackGroupModel> groups, CancellationToken token)
+    private async Task RefreshGroupInfoAsync(IReadOnlyList<GroupModel> groups, CancellationToken token)
     {
         foreach (var g in groups)
         {
             g.IsLoaded = false;
         }
 
-        var identifiable = new List<(ModpackGroupModel Group, ProjectIdentifier Id)>();
+        var identifiable = new List<(GroupModel Group, ProjectIdentifier Id)>();
         foreach (var g in groups)
         {
             if (g.Source is not null && PackageHelper.TryParse(g.Source, out var r))
@@ -437,7 +436,7 @@ public partial class InstanceSetupPageModel(
                 {
                     if (byId.TryGetValue(id, out var g))
                     {
-                        g.Info = new(g, project.ProjectName, project.Thumbnail);
+                        g.Info = new ModpackGroupInfoModel(project.ProjectName, project.Thumbnail);
                     }
                 }
             }
@@ -473,7 +472,7 @@ public partial class InstanceSetupPageModel(
     private Task _metadataTask = Task.CompletedTask;
     private IDisposable? _updatingSubscription;
     private readonly CompositeDisposable _subscriptions = new();
-    private readonly Dictionary<(PackageSourceHelper.Kind Kind, string? Source), GroupModelBase> _groupModels = new();
+    private readonly Dictionary<(PackageSourceHelper.Kind Kind, string? Source), GroupModel> _groupModels = new();
     private readonly LooseGroupModel _loose = new() { Kind = PackageSourceHelper.Kind.Manual, Source = null };
 
     #endregion
@@ -497,6 +496,7 @@ public partial class InstanceSetupPageModel(
         {
             TriggerPackageMerge();
             TriggerReferenceRefresh();
+            NotifyGroupCommandStates();
             // 只需要一次，因为 Profile.Setup.Rules 总是同一个
             Rules ??= [with(profile.Setup.Rules, x => new(x), x => x.Owner)];
         });
@@ -556,6 +556,20 @@ public partial class InstanceSetupPageModel(
         packages
            .QueryWhenChanged(items => items.Count)
            .Subscribe(c => StageCount = c)
+           .DisposeWith(_subscriptions);
+        // 组计数：按 Group 引用分桶，与 StageCount 同源派生
+        _flat
+           .Connect()
+           .Filter(item => item is PackageListItemBase.Entry)
+           .Transform(item => (PackageListItemBase.Entry)item)
+           .QueryWhenChanged(query => query.Items.GroupBy(e => e.Group).ToDictionary(g => g.Key, g => g.Count()))
+           .Subscribe(counts =>
+           {
+               foreach (var (group, count) in counts)
+               {
+                   group.Count = count;
+               }
+           })
            .DisposeWith(_subscriptions);
 
         // 计数：只数通过过滤的包，不受折叠与组头影响
@@ -1663,8 +1677,6 @@ public partial class InstanceSetupPageModel(
                 return;
             }
 
-            // NOTE: 直接改单例 Packages 并外科式同步 _flat，不开 guard、不落盘、不触发 merge
-            //  （落盘由页面生命周期负责，同 UpdateBatch.ReviewAsync）。
             if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
             {
                 var keys = new List<PackageListKey>();
@@ -1680,7 +1692,7 @@ public partial class InstanceSetupPageModel(
                     });
                 }
 
-                _flat.Remove(keys);
+                TriggerPackageMerge();
 
                 notificationService.PopMessage(Resources.InstanceSetupPage_BatchRemoveSucceededNotificationMessage
                                                         .Replace("{0}", selected.Count.ToString()),
@@ -1711,7 +1723,7 @@ public partial class InstanceSetupPageModel(
     }
 
     [RelayCommand]
-    private void ToggleGroupExpanded(GroupModelBase? group)
+    private void ToggleGroupExpanded(GroupModel? group)
     {
         if (group is null)
         {
@@ -1722,9 +1734,141 @@ public partial class InstanceSetupPageModel(
     }
 
     [RelayCommand]
-    private async Task ViewGroupDetailsAsync(GroupModelBase? group)
+    private void EnableGroup(GroupModel? group) => SetGroupEnabled(group, true);
+
+    [RelayCommand]
+    private void DisableGroup(GroupModel? group) => SetGroupEnabled(group, false);
+
+    // NOTE: set 语义而非 toggle——整组统一落到目标值，不得对组内包逐包取反
+    //  与包级勾选（Active）的逐包翻转是两种不同的心智模型。
+    private void SetGroupEnabled(GroupModel? group, bool value)
     {
-        if (group is ModpackGroupModel
+        if (group is null)
+        {
+            return;
+        }
+
+        foreach (var item in _flat.Items.OfType<PackageListItemBase.Entry>().Where(i => i.Group == group))
+        {
+            item.Package.IsEnabled = value;
+        }
+    }
+
+    [RelayCommand(CanExecute = nameof(CanDisbandGroup))]
+    private async Task DisbandGroupAsync(GroupModel? group)
+    {
+        if (group?.Source is null || !PackageSourceHelper.CanUngroup(group.Source, Basic.Source))
+        {
+            return;
+        }
+
+        var items = _flat.Items.OfType<PackageListItemBase.Entry>().Where(i => i.Group == group).ToList();
+        if (items.Count == 0)
+        {
+            return;
+        }
+
+        if (!await overlayService.RequestStrongConfirmationAsync(Resources
+                                                                .InstanceSetupPage_DisbandGroupConfirmMessage,
+                                                                 Resources.InstanceSetupPage_DisbandGroupConfirmTitle))
+        {
+            return;
+        }
+
+        foreach (var item in items)
+        {
+            item.Package.Entry.Source = null;
+            persistenceService.AppendAction(new()
+            {
+                Key = Basic.Key,
+                Kind = PersistenceService.ActionKind.EditPackage,
+                Old = item.Package.Entry.Pref
+            });
+        }
+        // HACK: merge 按 Entry 地址判存续，Source 置空后 Entry 仍在 profile 中，已存在的 item 不会重建，
+        //  而 item.Group 是 init-only 不可变——只能先删旧 item，让 merge 走新增分支重新归组到散装
+        _flat.Remove(items.Select(i => i.Key));
+        TriggerPackageMerge();
+    }
+
+    private bool CanDisbandGroup(GroupModel? group) =>
+        group is { Source: not null } && PackageSourceHelper.CanUngroup(group.Source, Basic.Source);
+
+    [RelayCommand(CanExecute = nameof(CanRemoveGroup))]
+    private async Task RemoveGroupAsync(GroupModel? group)
+    {
+        if (group?.Source is null || !PackageSourceHelper.CanDelete(group.Source, Basic.Source))
+        {
+            return;
+        }
+
+        var items = _flat.Items.OfType<PackageListItemBase.Entry>().Where(i => i.Group == group).ToList();
+        if (items.Count == 0)
+        {
+            return;
+        }
+
+        if (!await overlayService.RequestStrongConfirmationAsync(Resources
+                                                                .InstanceSetupPage_RemoveGroupConfirmMessage,
+                                                                 Resources.InstanceSetupPage_RemoveGroupConfirmTitle))
+        {
+            return;
+        }
+
+        if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
+        {
+            foreach (var item in items)
+            {
+                profile.Setup.Packages.Remove(item.Package.Entry);
+                persistenceService.AppendAction(new()
+                {
+                    Key = Basic.Key,
+                    Kind = PersistenceService.ActionKind.EditPackage,
+                    Old = item.Package.Entry.Pref
+                });
+            }
+
+            TriggerPackageMerge();
+        }
+    }
+
+    private bool CanRemoveGroup(GroupModel? group) =>
+        group is { Source: not null } && PackageSourceHelper.CanDelete(group.Source, Basic.Source);
+
+    private void NotifyGroupCommandStates()
+    {
+        DisbandGroupCommand.NotifyCanExecuteChanged();
+        RemoveGroupCommand.NotifyCanExecuteChanged();
+    }
+
+    [RelayCommand]
+    private async Task ActivateGroupHeaderAsync(GroupModel? group)
+    {
+        if (group is null)
+        {
+            return;
+        }
+
+        // 组头唯一按钮：Info 已赋值 → 查看详情；未赋值（加载失败）→ 触发 merge 重试
+        if (group.Info is null)
+        {
+            TriggerPackageMerge();
+            return;
+        }
+
+        await ViewGroupDetailsAsync(group);
+    }
+
+    [RelayCommand]
+    private async Task ViewGroupDetailsAsync(GroupModel? group)
+    {
+        if (group is { Kind: PackageSourceHelper.Kind.Recipe, Source: not null })
+        {
+            navigationService.Navigate<RecipePage>(group.Source["recipe://".Length..]);
+            return;
+        }
+
+        if (group is { Kind: PackageSourceHelper.Kind.Modpack }
          && group.Source is not null
          && PackageHelper.TryParse(group.Source, out var source))
         {
@@ -1766,51 +1910,40 @@ public partial class InstanceSetupPageModel(
     private static (PackageSourceHelper.Kind Kind, string? Source) GetGroupKey(InstancePackageModel pkg) =>
         (PackageSourceHelper.Classify(pkg.Entry.Source), pkg.Entry.Source);
 
-    private GroupModelBase GroupModelOf(InstancePackageModel pkg) => GroupModelOf(GetGroupKey(pkg));
+    private GroupModel GroupModelOf(InstancePackageModel pkg) => GroupModelOf(GetGroupKey(pkg));
 
-    private GroupModelBase GroupModelOf((PackageSourceHelper.Kind Kind, string? Source) key)
+    private GroupModel GroupModelOf((PackageSourceHelper.Kind Kind, string? Source) key)
     {
         if (key.Kind == PackageSourceHelper.Kind.Manual)
         {
             return _loose;
         }
 
-        if (key.Kind == PackageSourceHelper.Kind.Recipe)
-        {
-            return EnsureRecipeGroup(key.Source!);
-        }
-
-        return EnsureModpackGroup(key.Source!);
+        return EnsureGroup(key.Kind, key.Source!);
     }
 
-    private ModpackGroupModel EnsureModpackGroup(string source)
+    private GroupModel EnsureGroup(PackageSourceHelper.Kind kind, string source)
     {
-        if (!_groupModels.TryGetValue((PackageSourceHelper.Kind.Modpack, source), out var model))
+        if (!_groupModels.TryGetValue((kind, source), out var model))
         {
-            model = new ModpackGroupModel { Kind = PackageSourceHelper.Kind.Modpack, Source = source };
-            _groupModels[(PackageSourceHelper.Kind.Modpack, source)] = model;
-        }
-
-        return (ModpackGroupModel)model;
-    }
-
-    private RecipeGroupModel EnsureRecipeGroup(string source)
-    {
-        if (!_groupModels.TryGetValue((PackageSourceHelper.Kind.Recipe, source), out var model))
-        {
-            var id = source["recipe://".Length..];
-            var recipe = persistenceService.GetRecipe(id);
-            model = new RecipeGroupModel
+            var g = new GroupModel { Kind = kind, Source = source };
+            if (kind == PackageSourceHelper.Kind.Recipe)
             {
-                Kind = PackageSourceHelper.Kind.Recipe,
-                Source = source,
-                Name = recipe?.Name,
-                IsMissing = recipe is null
-            };
-            _groupModels[(PackageSourceHelper.Kind.Recipe, source)] = model;
+                // NOTE: Recipe 信息同步可得——能解析即赋 Info，解析不出则 Info 留空，
+                //  与 Modpack 网络 IO 失败合并为同一「Info 未赋值 = 失败」语义，交公共层渲染重试。
+                g.IsLoaded = true;
+                var recipe = persistenceService.GetRecipe(source["recipe://".Length..]);
+                if (recipe is not null)
+                {
+                    g.Info = new RecipeGroupInfoModel(recipe.Name);
+                }
+            }
+
+            _groupModels[(kind, source)] = g;
+            return g;
         }
 
-        return (RecipeGroupModel)model;
+        return model;
     }
 
     #endregion
