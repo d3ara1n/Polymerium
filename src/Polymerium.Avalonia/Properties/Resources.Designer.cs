@@ -51,6 +51,12 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string MainWindow_EmptyInstanceListText {
+            get {
+                return ResourceManager.GetString("MainWindow_EmptyInstanceListText", resourceCulture);
+            }
+        }
+        
         public static string Migrate_Title {
             get {
                 return ResourceManager.GetString("Migrate_Title", resourceCulture);

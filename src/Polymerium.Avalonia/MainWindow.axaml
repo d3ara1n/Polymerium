@@ -362,22 +362,10 @@
                                 </StackPanel>
                             </Panel>
                         </husk:DropContainer.Overlay>
-                        <Panel>
-                            <StackPanel
-                                VerticalAlignment="Center"
-                                IsVisible="{Binding View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
-                                Spacing="8">
-                                <fi:SymbolIcon
-                                    HorizontalAlignment="Center"
-                                    FontSize="{StaticResource ExtraLargeFontSize}"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Symbol="Cube" />
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    FontSize="{StaticResource LargeFontSize}"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
-                            </StackPanel>
+                        <app:EmptyContainer
+                            Icon="Apps"
+                            IsEmpty="{Binding View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
+                            Text="{x:Static lang:Resources.MainWindow_EmptyInstanceListText}">
                             <ScrollViewer>
                                 <ItemsControl ItemsSource="{Binding View}">
                                     <ItemsControl.ItemTemplate>
@@ -453,7 +441,7 @@
                                     </ItemsControl.ItemsPanel>
                                 </ItemsControl>
                             </ScrollViewer>
-                        </Panel>
+                        </app:EmptyContainer>
                     </husk:DropContainer>
                     <husk:Divider
                         Grid.Row="5"
