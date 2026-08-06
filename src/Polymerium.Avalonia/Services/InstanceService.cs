@@ -412,12 +412,12 @@ public class InstanceService
         }
     }
 
-    public IReadOnlyList<string> GetRecipeReferences(string recipeId)
+    public IReadOnlyList<RecipeReference> GetRecipeReferences(string recipeId)
     {
         var uri = InternalUriHelper.Recipe(recipeId);
         return _profileManager
               .Profiles.Where(p => p.Item2.Setup.Packages.Any(e => e.Source == uri))
-              .Select(p => p.Item1)
+              .Select(p => new RecipeReference(p.Item1, p.Item2.Name))
               .ToList();
     }
 }
