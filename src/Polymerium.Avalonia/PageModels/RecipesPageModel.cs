@@ -210,8 +210,10 @@ public partial class RecipesPageModel(
         var references = instanceService.GetRecipeReferences(card.Id);
         if (references.Count > 0)
         {
+            var body = string.Join(Environment.NewLine, references.Select(r => $" - {r.Name}"));
             notificationService.PopMessage(Resources.RecipesPage_DeleteBlockedByReferencesWarningNotificationMessage
-                                                    .Replace("{0}", references.Count.ToString()),
+                                                    .Replace("{0}", references.Count.ToString())
+                                         + ":" + Environment.NewLine + body,
                                            Resources.RecipesPage_DeleteBlockedByReferencesWarningNotificationTitle,
                                            GrowlLevel.Warning);
             return;
