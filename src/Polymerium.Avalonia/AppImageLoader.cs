@@ -49,7 +49,7 @@ public class AppImageLoader(HttpClient httpClient, SkinRenderService skinRendere
         Bitmap? bitmap;
         try
         {
-            bitmap = InternalUriHelper.IsKind(url, "skin")
+            bitmap = InternalUriHelper.IsKind(url, SkinHelper.Scheme)
                          ? await skinRenderer.RenderAsync(url).ConfigureAwait(false)
                          : await LoadAsync(url, storageProvider).ConfigureAwait(false);
         }

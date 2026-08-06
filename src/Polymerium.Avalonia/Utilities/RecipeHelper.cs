@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -11,6 +12,27 @@ public static class RecipeHelper
 
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
 
+
+    public const string RecipeScheme = "recipe";
+
+    private const string RecipePrefix = RecipeScheme + "://";
+
+    public static string ToUri(string id) => RecipePrefix + id;
+
+    public static bool TryGetId(string? s, [MaybeNullWhen(false)] out string id)
+    {
+        if (s is null || !s.StartsWith(RecipePrefix, StringComparison.Ordinal))
+        {
+            id = null!;
+            return false;
+        }
+
+        id = s[RecipePrefix.Length..];
+        return true;
+    }
+
+    public static string GetId(string s) =>
+        TryGetId(s, out var id) ? id : throw new FormatException($"Not a recipe uri: {s}");
     public static string Serialize(RecipeDocument document) => JsonSerializer.Serialize(document, JsonOptions);
 
     public static bool TryDeserialize(string text, [NotNullWhen(true)] out RecipeDocument? document)

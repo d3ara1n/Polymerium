@@ -414,7 +414,7 @@ public class InstanceService
 
     public IReadOnlyList<RecipeReference> GetRecipeReferences(string recipeId)
     {
-        var uri = InternalUriHelper.Recipe(recipeId);
+        var uri = RecipeHelper.ToUri(recipeId);
         return _profileManager
               .Profiles.Where(p => p.Item2.Setup.Packages.Any(e => e.Source == uri))
               .Select(p => new RecipeReference(p.Item1, p.Item2.Name))

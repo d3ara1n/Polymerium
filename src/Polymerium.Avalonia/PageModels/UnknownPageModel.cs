@@ -34,13 +34,13 @@ public partial class UnknownPageModel(
     /// </summary>
     public IReadOnlyList<SkinViewSample> SkinViewSamples { get; } =
     [
-        new("Face · 正面头像", InternalUriHelper.Skin("?type=face&src=asset:Steve")),
-        new("Body · 等距全身", InternalUriHelper.Skin("?type=body&src=asset:Steve")),
-        new("Cover · 等距半身", InternalUriHelper.Skin("?type=cover&src=asset:Steve")),
-        new("Front · 正面平视", InternalUriHelper.Skin("?type=front&src=asset:Steve")),
-        new("Right · 右侧平视", InternalUriHelper.Skin("?type=right&src=asset:Steve")),
-        new("Back · 背面平视", InternalUriHelper.Skin("?type=back&src=asset:Steve")),
-        new("Left · 左侧平视", InternalUriHelper.Skin("?type=left&src=asset:Steve"))
+        new("Face · 正面头像", SkinHelper.ToUri("face", "asset:Steve")),
+        new("Body · 等距全身", SkinHelper.ToUri("body", "asset:Steve")),
+        new("Cover · 等距半身", SkinHelper.ToUri("cover", "asset:Steve")),
+        new("Front · 正面平视", SkinHelper.ToUri("front", "asset:Steve")),
+        new("Right · 右侧平视", SkinHelper.ToUri("right", "asset:Steve")),
+        new("Back · 背面平视", SkinHelper.ToUri("back", "asset:Steve")),
+        new("Left · 左侧平视", SkinHelper.ToUri("left", "asset:Steve"))
     ];
 
     #region Overrides

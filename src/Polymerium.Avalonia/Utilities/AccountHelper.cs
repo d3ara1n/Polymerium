@@ -77,23 +77,23 @@ public static class AccountHelper
     ///     <see cref="Services.SkinRenderService" /> 解析路由后离线渲染。
     /// </summary>
     public static Uri GetFaceUrl(string src) =>
-        new(InternalUriHelper.Skin($"?type=face&src={Uri.EscapeDataString(src)}"), UriKind.Absolute);
+        new(SkinHelper.ToUri("face", src), UriKind.Absolute);
 
     public static Uri GetBodyUrl(string src) =>
-        new(InternalUriHelper.Skin($"?type=body&src={Uri.EscapeDataString(src)}"), UriKind.Absolute);
+        new(SkinHelper.ToUri("body", src), UriKind.Absolute);
 
     /// <summary>
     ///     构造半身像（Cover）的本地渲染 URI：与 <see cref="GetBodyUrl" /> 共用全身缩放，
     ///     头顶贴顶、画布截取上半身，适合方形卡片预览。
     /// </summary>
     public static Uri GetCoverUrl(string src) =>
-        new(InternalUriHelper.Skin($"?type=cover&src={Uri.EscapeDataString(src)}"), UriKind.Absolute);
+        new(SkinHelper.ToUri("cover", src), UriKind.Absolute);
 
     public static IReadOnlyList<Uri> GetBodyViewUrls(string src) =>
     [
-        new(InternalUriHelper.Skin($"?type=front&src={Uri.EscapeDataString(src)}"), UriKind.Absolute),
-        new(InternalUriHelper.Skin($"?type=right&src={Uri.EscapeDataString(src)}"), UriKind.Absolute),
-        new(InternalUriHelper.Skin($"?type=back&src={Uri.EscapeDataString(src)}"), UriKind.Absolute),
-        new(InternalUriHelper.Skin($"?type=left&src={Uri.EscapeDataString(src)}"), UriKind.Absolute)
+        new(SkinHelper.ToUri("front", src), UriKind.Absolute),
+        new(SkinHelper.ToUri("right", src), UriKind.Absolute),
+        new(SkinHelper.ToUri("back", src), UriKind.Absolute),
+        new(SkinHelper.ToUri("left", src), UriKind.Absolute)
     ];
 }
