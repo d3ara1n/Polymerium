@@ -1,58 +1,48 @@
 using System;
-using Avalonia.Media.Imaging;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.Avalonia.Facilities;
 
 namespace Polymerium.Avalonia.Models;
 
-public class InstanceActionModel(
-    string projectId,
-    string projectName,
-    string? oldVersionId,
-    string? oldVersionName,
-    string? newVersionId,
-    string? newVersionName,
-    Bitmap thumbnail,
+public partial class InstanceActionModel(
+    string? oldPref,
+    string? newPref,
     DateTimeOffset modifiedAt,
     bool canUndo) : ModelBase
 {
     #region Direct
 
-    public InstanceActionKind Kind
-    {
-        get
+    // Kind 由 Old/New Pref 的存在性推导：同一次包变更里「从哪边来、到哪边去」是确定的，
+    // 与能否解析无关——解析失败的 Update 依然是 Update，只是退化为展示原始 Pref。
+    public InstanceActionKind Kind =>
+        (oldPref, newPref) switch
         {
-            if (oldVersionId != null && newVersionId != null)
-            {
-                return InstanceActionKind.Update;
-            }
+            (not null, not null) => InstanceActionKind.Update,
+            (null, not null) => InstanceActionKind.Add,
+            (not null, null) => InstanceActionKind.Remove,
+            _ => InstanceActionKind.Unknown
+        };
 
-            if (oldVersionId == null && newVersionId != null)
-            {
-                return InstanceActionKind.Add;
-            }
-
-            if (oldVersionId != null && newVersionId == null)
-            {
-                return InstanceActionKind.Remove;
-            }
-
-            return InstanceActionKind.Unknown;
-        }
-    }
-
-    public string ProjectId => projectId;
-    public string ProjectName => projectName;
-    public string? OldVersionId => oldVersionId;
-    public string? OldVersionName => oldVersionName;
-    public string? NewVersionId => newVersionId;
-    public string? NewVersionName => newVersionName;
-    public Bitmap Thumbnail => thumbnail;
+    // 原始 Pref 始终可得（来自 Action 记录），是解析失败时的兜底展示。
+    public string? OldPref => oldPref;
+    public string? NewPref => newPref;
 
     public DateTimeOffset ModifiedAtRaw => modifiedAt;
     public string ModifiedAt => modifiedAt.Humanize();
 
     public bool CanUndo => canUndo;
+
+    #endregion
+
+    #region Reactive
+
+    [ObservableProperty]
+    public partial bool IsLoaded { get; set; }
+
+    // Info 非空即「解析成功」，为 null 即「解析失败」——失败时卡片退化为展示原始 Pref。
+    [ObservableProperty]
+    public partial InstanceActionInfoModel? Info { get; set; }
 
     #endregion
 }

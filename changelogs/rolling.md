@@ -16,6 +16,8 @@
 - Fix the snapshot detail showing an empty box when a snapshot has no remark
 - Fix the marketplace search filters resetting inconsistently when switching the source repository
 - Fix the marketplace entry buttons showing a blank icon
+- Fix the instance activities changelog crashing when navigating between pages (Huskui.Avalonia)
+- Fix the instance activities changelog showing an empty page when a package change record failed to resolve
 
 ### Added
 
@@ -25,6 +27,7 @@
 - Add a modpack entry card to the marketplace portal page
 - Add a searchable package picker for browsing repositories and adding packages to a recipe (#POLY-120)
 - Notify the user when the startup auto-check finds a new version, with a button that opens the update dialog directly
+- Add a fallback showing the raw package reference for package change records in the instance activities changelog that can no longer be resolved
 
 ### Changed
 

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
@@ -20,6 +21,7 @@ using SkiaSharp;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Abstractions.Utilities;
+using TridentCore.Pref;
 using TridentCore.Core.Services;
 
 namespace Polymerium.Avalonia.PageModels;
@@ -60,44 +62,89 @@ public partial class InstanceActivitiesPageModel(
             var actions = persistenceService.GetActions(Basic.Key, pageIndex, ActionPageSize, out var totalCount);
             ActionTotalCount = totalCount;
 
-            var tasks = actions
-                       .Where(x => !(x.Old == null && x.New == null))
-                       .Select(async x =>
-                        {
-                            Package? oldPackage = null;
-                            Package? newPackage = null;
-                            if (x.Old != null && PackageHelper.TryParse(x.Old, out var old))
-                            {
-                                oldPackage = await dataService.ResolvePackageAsync(old, Filter.None);
-                            }
+            // 过滤掉 Old/New 全空的无效记录（无任何包引用，展示无意义）
+            var valid = actions.Where(x => !(x.Old == null && x.New == null)).ToList();
 
-                            if (x.New != null && PackageHelper.TryParse(x.New, out var @new))
-                            {
-                                newPackage = await dataService.ResolvePackageAsync(@new, Filter.None);
-                            }
+            // 收集页面内所有 Pref，解析为 identifier 后去重，一次性批量解析。
+            // 批量解析会把失败项单独放进 Failed，不会因为单条失败连累整页。
+            var prefToId = new Dictionary<string, PackageIdentifier>();
+            foreach (var pref in valid
+                               .SelectMany(x => new[] { x.Old, x.New })
+                               .Where(s => !string.IsNullOrEmpty(s))
+                               .Select(s => s!)
+                               .Distinct())
+            {
+                if (PackageHelper.TryParse(pref, out var id))
+                {
+                    prefToId[pref] = id;
+                }
+            }
 
-                            var thumbnail = newPackage?.Thumbnail != null || oldPackage?.Thumbnail != null
-                                                ? await dataService.GetBitmapAsync(newPackage?.Thumbnail
-                                                   ?? oldPackage?.Thumbnail
-                                                   ?? throw new NotImplementedException())
-                                                : AssetUriIndex.DirtImageBitmap;
+            var batch = await dataService.ResolvePackagesAsync(prefToId.Values.Distinct(), Filter.None);
 
-                            return new InstanceActionModel(newPackage?.ProjectId
-                                                        ?? oldPackage?.ProjectId ?? string.Empty,
-                                                           newPackage?.ProjectName
-                                                        ?? oldPackage?.ProjectName ?? string.Empty,
-                                                           oldPackage?.VersionId,
-                                                           oldPackage?.VersionName,
-                                                           newPackage?.VersionId,
-                                                           newPackage?.VersionName,
-                                                           thumbnail,
-                                                           DateTimeHelper.FromPersistedLocalDateTime(x.At),
-                                                           false);
-                        })
-                       .ToArray();
+            Package? ResolveByPref(string? pref) =>
+                pref is not null
+                && prefToId.TryGetValue(pref, out var id)
+                && batch.Successful.TryGetValue(id, out var pkg)
+                    ? pkg
+                    : null;
 
-            await Task.WhenAll(tasks);
-            var results = tasks.Where(x => x.IsCompletedSuccessfully).Select(x => x.Result).ToList();
+            // 预取缩略图（每个 Uri 一次），单张失败不连累整页
+            var thumbnails = new Dictionary<Uri, Bitmap>();
+            var thumbnailUris = valid
+                                .Select(x => ResolveByPref(x.New) ?? ResolveByPref(x.Old))
+                                .Where(p => p?.Thumbnail != null)
+                                .Select(p => p!.Thumbnail!)
+                                .Distinct()
+                                .ToList();
+
+            if (thumbnailUris.Count > 0)
+            {
+                await Task.WhenAll(thumbnailUris.Select(async uri =>
+                {
+                    try
+                    {
+                        thumbnails[uri] = await dataService.GetBitmapAsync(uri);
+                    }
+                    catch
+                    {
+                        // 单张缩略图获取失败不阻塞整页，退化为默认图
+                    }
+                }));
+            }
+
+            var results = valid
+                          .Select(x =>
+                           {
+                               var newPkg = ResolveByPref(x.New);
+                               var oldPkg = ResolveByPref(x.Old);
+                               var primary = newPkg ?? oldPkg;
+
+                               var model = new InstanceActionModel(
+                                   x.Old,
+                                   x.New,
+                                   DateTimeHelper.FromPersistedLocalDateTime(x.At),
+                                   false);
+
+                               if (primary != null)
+                               {
+                                   model.IsLoaded = true;
+                                   var thumbUri = newPkg?.Thumbnail ?? oldPkg?.Thumbnail;
+                                   var thumbnail = thumbUri is not null
+                                                  && thumbnails.TryGetValue(thumbUri, out var bmp)
+                                       ? bmp
+                                       : AssetUriIndex.DirtImageBitmap;
+                                   model.Info = new InstanceActionInfoModel(
+                                       primary.ProjectName,
+                                       oldPkg?.VersionName,
+                                       newPkg?.VersionName,
+                                       thumbnail);
+                               }
+
+                               return model;
+                           })
+                          .ToList();
+
             return new InstanceActionCollection(results);
         });
         PagedActions = lazy;

@@ -156,7 +156,6 @@
             <app:PackageListItemTemplateSelector.HeaderTemplate>
                 <DataTemplate x:DataType="app:PackageListItemBase+Header">
                     <Grid
-                        Margin="0,8,0,4"
                         ColumnDefinitions="Auto,*"
                         ColumnSpacing="4">
                         <Button
