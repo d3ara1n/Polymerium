@@ -33,91 +33,138 @@
                         <Grid
                             ColumnDefinitions="Auto,*,*,Auto"
                             ColumnSpacing="8">
+                        <!--  缩略图；解析失败退化为告警图标  -->
+                        <husk:PlaceholderContainer
+                            Grid.Column="0"
+                            Source="{Binding Info}">
+                            <husk:PlaceholderContainer.SourceTemplate>
+                                <DataTemplate DataType="app:InstanceActionInfoModel">
+                                    <Border
+                                        Width="38"
+                                        Height="38"
+                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <Border.Background>
+                                            <ImageBrush Source="{Binding Thumbnail}" />
+                                        </Border.Background>
+                                    </Border>
+                                </DataTemplate>
+                            </husk:PlaceholderContainer.SourceTemplate>
                             <Border
-                                Grid.Column="0"
                                 Width="38"
                                 Height="38"
+                                Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                <Border.Background>
-                                    <ImageBrush Source="{Binding Thumbnail}" />
-                                </Border.Background>
+                                <fi:SymbolIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Symbol="Warning" />
                             </Border>
-                            <Grid
-                                Grid.Column="1"
-                                RowDefinitions="*,*">
-                                <TextBlock
-                                    Grid.Row="0"
-                                    FontWeight="{StaticResource ControlStrongFontWeight}"
-                                    Text="{Binding ProjectName}" />
-                                <husk:SwitchContainer
-                                    Grid.Row="1"
-                                    TargetType="app:InstanceActionKind"
-                                    Value="{Binding Kind}">
-                                    <husk:SwitchCase Value="Add">
-                                        <husk:Tag Classes="Status Small Success">
-                                            <husk:IconLabel
-                                                Icon="Add"
-                                                Text="{x:Static lang:Resources.InstanceActionCard_AddText}" />
-                                        </husk:Tag>
-                                    </husk:SwitchCase>
-                                    <husk:SwitchCase Value="Remove">
-                                        <husk:Tag Classes="Status Small Danger">
-                                            <husk:IconLabel
-                                                Icon="Dismiss"
-                                                Text="{x:Static lang:Resources.InstanceActionCard_RemoveText}" />
-                                        </husk:Tag>
-                                    </husk:SwitchCase>
-                                    <husk:SwitchCase Value="Update">
-                                        <husk:Tag Classes="Status Small Warning">
-                                            <husk:IconLabel
-                                                Icon="ArrowUp"
-                                                Text="{x:Static lang:Resources.InstanceActionCard_UpdateText}" />
-                                        </husk:Tag>
-                                    </husk:SwitchCase>
-                                    <husk:SwitchCase Value="Unknown">
-                                        <husk:Tag
-                                            Classes="Status Small"
-                                            Content="{x:Static lang:Resources.InstanceActionCard_UnknownText}" />
-                                    </husk:SwitchCase>
-                                </husk:SwitchContainer>
-                            </Grid>
+                        </husk:PlaceholderContainer>
+
+                        <!--  项目名 / 解析失败时显示原始 Pref  -->
+                        <Grid
+                            Grid.Column="1"
+                            RowDefinitions="*,*">
+                            <husk:PlaceholderContainer
+                                Grid.Row="0"
+                                Source="{Binding Info}">
+                                <husk:PlaceholderContainer.SourceTemplate>
+                                    <DataTemplate DataType="app:InstanceActionInfoModel">
+                                        <TextBlock
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="{Binding ProjectName}"
+                                            TextTrimming="CharacterEllipsis" />
+                                    </DataTemplate>
+                                </husk:PlaceholderContainer.SourceTemplate>
+                                <StackPanel Spacing="2" Orientation="Horizontal">
+                                    <TextBlock
+                                        IsVisible="{Binding OldPref, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Binding OldPref}"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <TextBlock
+                                        IsVisible="{Binding NewPref, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Binding NewPref}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                            </husk:PlaceholderContainer>
+
+                            <!--  Kind 标签（公共，与能否解析无关）  -->
                             <husk:SwitchContainer
-                                Grid.Column="2"
-                                VerticalAlignment="Center"
+                                Grid.Row="1"
                                 TargetType="app:InstanceActionKind"
                                 Value="{Binding Kind}">
                                 <husk:SwitchCase Value="Add">
-                                    <TextBlock
-                                        Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                        Text="{Binding NewVersionName}" />
+                                    <husk:Tag Classes="Status Small Success">
+                                        <husk:IconLabel
+                                            Icon="Add"
+                                            Text="{x:Static lang:Resources.InstanceActionCard_AddText}" />
+                                    </husk:Tag>
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="Remove">
-                                    <TextBlock
-                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{Binding OldVersionName}" />
+                                    <husk:Tag Classes="Status Small Danger">
+                                        <husk:IconLabel
+                                            Icon="Dismiss"
+                                            Text="{x:Static lang:Resources.InstanceActionCard_RemoveText}" />
+                                    </husk:Tag>
                                 </husk:SwitchCase>
                                 <husk:SwitchCase Value="Update">
-                                    <StackPanel>
-                                        <TextBlock
-                                            Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                            Text="{Binding NewVersionName}" />
-                                        <TextBlock
-                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{Binding OldVersionName}" />
-                                    </StackPanel>
+                                    <husk:Tag Classes="Status Small Warning">
+                                        <husk:IconLabel
+                                            Icon="ArrowUp"
+                                            Text="{x:Static lang:Resources.InstanceActionCard_UpdateText}" />
+                                    </husk:Tag>
+                                </husk:SwitchCase>
+                                <husk:SwitchCase Value="Unknown">
+                                    <husk:Tag
+                                        Classes="Status Small"
+                                        Content="{x:Static lang:Resources.InstanceActionCard_UnknownText}" />
                                 </husk:SwitchCase>
                             </husk:SwitchContainer>
-                            <StackPanel Grid.Column="3">
-                                <TextBlock
-                                    HorizontalAlignment="Right"
-                                    Background="Transparent"
-                                    FontSize="{StaticResource SmallFontSize}"
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{Binding ModifiedAt}"
-                                    ToolTip.Tip="{Binding ModifiedAtRaw}" />
-                            </StackPanel>
                         </Grid>
-                    </Border>
+
+                        <!--  版本名（公共；解析失败时 Info 为空，此处自然留空）  -->
+                        <husk:SwitchContainer
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            TargetType="app:InstanceActionKind"
+                            Value="{Binding Kind}">
+                            <husk:SwitchCase Value="Add">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                    Text="{Binding Info.NewVersionName}" />
+                            </husk:SwitchCase>
+                            <husk:SwitchCase Value="Remove">
+                                <TextBlock
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding Info.OldVersionName}" />
+                            </husk:SwitchCase>
+                            <husk:SwitchCase Value="Update">
+                                <StackPanel>
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                        Text="{Binding Info.NewVersionName}" />
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Binding Info.OldVersionName}" />
+                                </StackPanel>
+                            </husk:SwitchCase>
+                        </husk:SwitchContainer>
+
+                        <StackPanel Grid.Column="3">
+                            <TextBlock
+                                HorizontalAlignment="Right"
+                                Background="Transparent"
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Binding ModifiedAt}"
+                                ToolTip.Tip="{Binding ModifiedAtRaw}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
                 </DockPanel>
             </ControlTemplate>
         </Setter>
