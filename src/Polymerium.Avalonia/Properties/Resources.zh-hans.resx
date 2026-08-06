@@ -912,6 +912,12 @@
     <data name="InstanceSetupPage_RemoveGroupMenuText" xml:space="preserve">
         <value>移除组</value>
     </data>
+    <data name="InstanceSetupPage_RaiseGroupPriorityMenuText" xml:space="preserve">
+        <value>提升组优先级</value>
+    </data>
+    <data name="InstanceSetupPage_LowerGroupPriorityMenuText" xml:space="preserve">
+        <value>降低组优先级</value>
+    </data>
     <data name="InstanceSetupPage_DisbandGroupConfirmTitle" xml:space="preserve">
         <value>解散组</value>
     </data>

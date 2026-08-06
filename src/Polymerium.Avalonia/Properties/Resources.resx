@@ -921,6 +921,12 @@
     <data name="InstanceSetupPage_RemoveGroupMenuText" xml:space="preserve">
         <value>Remove Group</value>
     </data>
+    <data name="InstanceSetupPage_RaiseGroupPriorityMenuText" xml:space="preserve">
+        <value>Raise Priority</value>
+    </data>
+    <data name="InstanceSetupPage_LowerGroupPriorityMenuText" xml:space="preserve">
+        <value>Lower Priority</value>
+    </data>
     <data name="InstanceSetupPage_DisbandGroupConfirmTitle" xml:space="preserve">
         <value>Disband Group</value>
     </data>
