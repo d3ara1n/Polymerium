@@ -24,8 +24,8 @@
                 Theme="{StaticResource PageHeaderTextBlockTheme}" />
             <Button
                 Grid.Column="1"
-                VerticalAlignment="Center"
                 Classes="Primary"
+                VerticalAlignment="Center"
                 Command="{Binding NewInstanceCommand}">
                 <StackPanel
                     Orientation="Horizontal"
@@ -49,8 +49,8 @@
             ColumnSpacing="8">
             <TextBox
                 Grid.Column="0"
-                HorizontalAlignment="Left"
                 Width="222"
+                HorizontalAlignment="Left"
                 PlaceholderText="{x:Static lang:Resources.InstancesPage_SearchWatermark}"
                 Text="{Binding FilterText, Mode=TwoWay}" />
             <StackPanel

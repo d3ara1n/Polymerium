@@ -29,9 +29,10 @@ public abstract class ExplorerSession
     // NOTE: 打开宿主专属的详情弹窗。modifyPending 与 findExisting 是 explorer 传入的两个回调：前者
     //  回报待定区状态变更，后者复用已存在的模型实例（依赖项同时也是搜索结果/待定项时保持状态同步）。
     //  其余一切（弹窗类型、ViewPackage 递归、LinkExhibit、Undo 组合）都是 session 自己的事。
-    public abstract Task ViewExhibitAsync(ExhibitModel exhibit,
-                                          Action<ExhibitModel> modifyPending,
-                                          Func<ProjectIdentifier, ExhibitModel?> findExisting);
+    public abstract Task ViewExhibitAsync(
+        ExhibitModel exhibit,
+        Action<ExhibitModel> modifyPending,
+        Func<ProjectIdentifier, ExhibitModel?> findExisting);
 
     // NOTE: 落盘待定改动。instance 原地修改随身携带的 Entry（零 lookup），recipe 更新自己的配方存储。
     //  返回 false 表示写入失败，待定区应保留等待重试。

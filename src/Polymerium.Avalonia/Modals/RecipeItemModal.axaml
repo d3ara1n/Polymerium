@@ -17,7 +17,9 @@
     x:DataType="app:RecipeItemModalModel"
     mc:Ignorable="d">
     <husk:ConstrainedBox AspectRatio="0.8">
-        <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12">
+        <Grid
+            RowDefinitions="Auto,*,Auto"
+            RowSpacing="12">
             <Border
                 Grid.Row="0"
                 Padding="12"
@@ -158,16 +160,16 @@
                         <TextBox
                             MinHeight="80"
                             AcceptsReturn="True"
+                            PlaceholderText="{x:Static lang:Resources.RecipeItemModal_NoteWatermarkText}"
                             Text="{Binding NoteDraft, Mode=TwoWay}"
-                            TextWrapping="Wrap"
-                            PlaceholderText="{x:Static lang:Resources.RecipeItemModal_NoteWatermarkText}" />
+                            TextWrapping="Wrap" />
                     </StackPanel>
 
                     <StackPanel Spacing="6">
                         <DockPanel>
                             <Button
-                                Classes="Small"
                                 DockPanel.Dock="Right"
+                                Classes="Small"
                                 Command="{Binding EditTagsCommand}"
                                 Theme="{StaticResource GhostButtonTheme}">
                                 <husk:IconLabel
@@ -183,7 +185,9 @@
                         <ItemsControl ItemsSource="{Binding TagsDraft}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <WrapPanel ItemSpacing="6" LineSpacing="6" />
+                                    <WrapPanel
+                                        ItemSpacing="6"
+                                        LineSpacing="6" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
@@ -197,8 +201,8 @@
                         <Button
                             Classes="Small"
                             HorizontalAlignment="Left"
-                            Command="{Binding EditTagsCommand}"
                             IsVisible="{Binding TagsDraft.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
+                            Command="{Binding EditTagsCommand}"
                             Theme="{StaticResource GhostButtonTheme}">
                             <husk:IconLabel
                                 Icon="Add"

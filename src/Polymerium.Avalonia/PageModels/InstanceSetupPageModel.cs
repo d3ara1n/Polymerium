@@ -553,10 +553,7 @@ public partial class InstanceSetupPageModel(
                            .CombineLatest(text, (abcd, e) => (Func<InstancePackageModel, bool>)(x => abcd(x) && e(x)));
 
         // 总数：只数包（Entry），不含组头；merge 与批量删除自动同步
-        packages
-           .QueryWhenChanged(items => items.Count)
-           .Subscribe(c => StageCount = c)
-           .DisposeWith(_subscriptions);
+        packages.QueryWhenChanged(items => items.Count).Subscribe(c => StageCount = c).DisposeWith(_subscriptions);
         // 组计数：按 Group 引用分桶，与 StageCount 同源派生
         _flat
            .Connect()
@@ -564,12 +561,12 @@ public partial class InstanceSetupPageModel(
            .Transform(item => (PackageListItemBase.Entry)item)
            .QueryWhenChanged(query => query.Items.GroupBy(e => e.Group).ToDictionary(g => g.Key, g => g.Count()))
            .Subscribe(counts =>
-           {
-               foreach (var (group, count) in counts)
-               {
-                   group.Count = count;
-               }
-           })
+            {
+                foreach (var (group, count) in counts)
+                {
+                    group.Count = count;
+                }
+            })
            .DisposeWith(_subscriptions);
 
         // 计数：只数通过过滤的包，不受折叠与组头影响
@@ -857,11 +854,12 @@ public partial class InstanceSetupPageModel(
     }
 
     [RelayCommand]
-    private void GotoExplorerPage() => navigationService.Navigate<ExplorerPage>(new InstanceExplorerSession(Basic.Key,
-                                                                                    ProfileManager,
-                                                                                    dataService,
-                                                                                    overlayService,
-                                                                                    persistenceService));
+    private void GotoExplorerPage() =>
+        navigationService.Navigate<ExplorerPage>(new InstanceExplorerSession(Basic.Key,
+                                                                             ProfileManager,
+                                                                             dataService,
+                                                                             overlayService,
+                                                                             persistenceService));
 
     [RelayCommand]
     private void GotoDependencyGraph() => overlayService.PopModal<InstanceDependencyGraphModal>(Basic);
@@ -1257,8 +1255,7 @@ public partial class InstanceSetupPageModel(
             {
                 var identifiers = items
                                  .Select(i => new PackageIdentifier(i.Label,
-                                                                    PersistenceService
-                                                                       .NormalizeNamespace(i.Namespace),
+                                                                    PersistenceService.NormalizeNamespace(i.Namespace),
                                                                     i.ProjectId,
                                                                     null))
                                  .ToList();
@@ -1768,8 +1765,7 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        if (!await overlayService.RequestStrongConfirmationAsync(Resources
-                                                                .InstanceSetupPage_DisbandGroupConfirmMessage,
+        if (!await overlayService.RequestStrongConfirmationAsync(Resources.InstanceSetupPage_DisbandGroupConfirmMessage,
                                                                  Resources.InstanceSetupPage_DisbandGroupConfirmTitle))
         {
             return;
@@ -1785,6 +1781,7 @@ public partial class InstanceSetupPageModel(
                 Old = item.Package.Entry.Pref
             });
         }
+
         // HACK: merge 按 Entry 地址判存续，Source 置空后 Entry 仍在 profile 中，已存在的 item 不会重建，
         //  而 item.Group 是 init-only 不可变——只能先删旧 item，让 merge 走新增分支重新归组到散装
         _flat.Remove(items.Select(i => i.Key));
@@ -1808,8 +1805,7 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        if (!await overlayService.RequestStrongConfirmationAsync(Resources
-                                                                .InstanceSetupPage_RemoveGroupConfirmMessage,
+        if (!await overlayService.RequestStrongConfirmationAsync(Resources.InstanceSetupPage_RemoveGroupConfirmMessage,
                                                                  Resources.InstanceSetupPage_RemoveGroupConfirmTitle))
         {
             return;

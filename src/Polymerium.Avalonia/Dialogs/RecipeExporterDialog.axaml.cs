@@ -12,8 +12,8 @@ public partial class RecipeExporterDialog : Dialog
 {
     public static readonly DirectProperty<RecipeExporterDialog, int> ItemCountProperty =
         AvaloniaProperty.RegisterDirect<RecipeExporterDialog, int>(nameof(ItemCount),
-                                                                    o => o.ItemCount,
-                                                                    (o, v) => o.ItemCount = v);
+                                                                   o => o.ItemCount,
+                                                                   (o, v) => o.ItemCount = v);
 
     public RecipeExporterDialog() => InitializeComponent();
 

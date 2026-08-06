@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Polymerium.Avalonia.Facilities;
 using TridentCore.Abstractions.FileModels;
 
 namespace Polymerium.Avalonia.Models;
@@ -19,16 +18,16 @@ public partial class InstanceExhibitModel(
     DateTimeOffset updatedAt,
     ulong downloads,
     Uri reference) : ExhibitModel(label,
-                                   @namespace,
-                                   projectId,
-                                   projectName,
-                                   summary,
-                                   thumbnail,
-                                   author,
-                                   tags,
-                                   updatedAt,
-                                   downloads,
-                                   reference)
+                                  @namespace,
+                                  projectId,
+                                  projectName,
+                                  summary,
+                                  thumbnail,
+                                  author,
+                                  tags,
+                                  updatedAt,
+                                  downloads,
+                                  reference)
 {
     [ObservableProperty]
     public partial Profile.Rice.Entry? Entry { get; set; }

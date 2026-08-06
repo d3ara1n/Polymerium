@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -20,31 +21,26 @@ public partial class RecipeItemModalModel(
 {
     public RecipeItemModel Item { get; } = context.Parameter!;
 
-    protected override Task OnInitializeAsync(CancellationToken token)
-    {
-        NoteDraft = Item.Note;
-        TagsDraft = new ObservableCollection<string>(Item.Tags);
-        return Task.CompletedTask;
-    }
-
     [ObservableProperty]
     public partial string? NoteDraft { get; set; }
 
     [ObservableProperty]
     public partial ObservableCollection<string> TagsDraft { get; set; } = [];
 
+    protected override Task OnInitializeAsync(CancellationToken token)
+    {
+        NoteDraft = Item.Note;
+        TagsDraft = new(Item.Tags);
+        return Task.CompletedTask;
+    }
+
     [RelayCommand]
     private async Task EditTagsAsync()
     {
-        var dialog = new TagsEditorDialog
+        var dialog = new TagsEditorDialog { InitialTags = TagsDraft.ToArray(), Suggestions = Item.Info?.Tags };
+        if (await overlayService.PopDialogAsync(dialog) && dialog.Result is IReadOnlyList<string> result)
         {
-            InitialTags = TagsDraft.ToArray(),
-            Suggestions = Item.Info?.Tags
-        };
-        if (await overlayService.PopDialogAsync(dialog)
-            && dialog.Result is System.Collections.Generic.IReadOnlyList<string> result)
-        {
-            TagsDraft = new ObservableCollection<string>(result);
+            TagsDraft = new(result);
         }
     }
 
@@ -52,7 +48,7 @@ public partial class RecipeItemModalModel(
     private void Save(Modal? self)
     {
         Item.Note = NoteDraft;
-        Item.Tags = new ObservableCollection<string>(TagsDraft);
+        Item.Tags = new(TagsDraft);
         persistenceService.UpdateRecipeItem(Item.RecipeId, Item.Identifier, TagsDraft.ToArray(), NoteDraft);
         self?.Dismiss();
     }

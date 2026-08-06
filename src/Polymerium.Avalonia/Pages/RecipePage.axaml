@@ -1,4 +1,4 @@
-<husk:Page
+﻿<husk:Page
     x:Class="Polymerium.Avalonia.Pages.RecipePage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -12,8 +12,8 @@
     d:DesignHeight="600"
     d:DesignWidth="800"
     x:DataType="app:RecipePageModel"
-    mc:Ignorable="d"
-    ScrollViewer.VerticalScrollBarVisibility="Disabled">
+    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+    mc:Ignorable="d">
     <husk:Page.Header>
         <Grid
             ColumnDefinitions="*,Auto,Auto,Auto"
@@ -82,11 +82,11 @@
                 Text="{Binding QueryText}">
                 <TextBox.InnerRightContent>
                     <Button
+                        IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                         Command="{Binding $parent[TextBox].Clear}"
                         Content="{fie:SymbolIcon Symbol=Dismiss,
                                                  FontSize={StaticResource MediumFontSize}}"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        IsVisible="{Binding $parent[TextBox].Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}" />
                 </TextBox.InnerRightContent>
             </TextBox>
             <TextBlock Grid.Column="1">
@@ -129,8 +129,7 @@
             Icon="BoxMultiple"
             IsEmpty="{Binding Items.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
             Text="{Binding EmptyText}">
-            <ScrollViewer
-                HorizontalScrollBarVisibility="Disabled">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl ItemsSource="{Binding Items}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -139,43 +138,43 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="app:RecipeItemModel">
-                        <app:RecipeItemButton
-                            Margin="0,0,0,8"
-                            Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).OpenItemCommand}"
-                            CommandParameter="{Binding}"
-                            Theme="{StaticResource RecipeItemButtonTheme}">
-                            <app:RecipeItemButton.ContextFlyout>
-                                <MenuFlyout>
-                                    <MenuItem
-                                        Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).EditItemTagsCommand}"
-                                        CommandParameter="{Binding}"
-                                        Header="{x:Static lang:Resources.RecipeItemModal_EditTagsButtonText}"
-                                        Icon="{fie:SymbolIcon Symbol=Tag,
-                                                              FontSize={StaticResource MediumFontSize}}" />
-                                    <MenuItem
-                                        Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).EditItemNoteCommand}"
-                                        CommandParameter="{Binding}"
-                                        Header="{x:Static lang:Resources.RecipePage_EditNoteMenuText}"
-                                        Icon="{fie:SymbolIcon Symbol=Edit,
-                                                              FontSize={StaticResource MediumFontSize}}" />
-                                    <MenuItem Header="-" />
-                                    <MenuItem
-                                        Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).RemoveItemCommand}"
-                                        CommandParameter="{Binding}">
-                                        <MenuItem.Header>
-                                            <TextBlock
-                                                Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                Text="{x:Static lang:Resources.RecipePage_RemoveItemMenuText}" />
-                                        </MenuItem.Header>
-                                        <MenuItem.Icon>
-                                            <fi:SymbolIcon
-                                                FontSize="{StaticResource MediumFontSize}"
-                                                Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                Symbol="Delete" />
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                </MenuFlyout>
-                            </app:RecipeItemButton.ContextFlyout>
+                            <app:RecipeItemButton
+                                Margin="0,0,0,8"
+                                Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).OpenItemCommand}"
+                                CommandParameter="{Binding}"
+                                Theme="{StaticResource RecipeItemButtonTheme}">
+                                <app:RecipeItemButton.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuItem
+                                            Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).EditItemTagsCommand}"
+                                            CommandParameter="{Binding}"
+                                            Header="{x:Static lang:Resources.RecipeItemModal_EditTagsButtonText}"
+                                            Icon="{fie:SymbolIcon Symbol=Tag,
+                                                                  FontSize={StaticResource MediumFontSize}}" />
+                                        <MenuItem
+                                            Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).EditItemNoteCommand}"
+                                            CommandParameter="{Binding}"
+                                            Header="{x:Static lang:Resources.RecipePage_EditNoteMenuText}"
+                                            Icon="{fie:SymbolIcon Symbol=Edit,
+                                                                  FontSize={StaticResource MediumFontSize}}" />
+                                        <MenuItem Header="-" />
+                                        <MenuItem
+                                            Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).RemoveItemCommand}"
+                                            CommandParameter="{Binding}">
+                                            <MenuItem.Header>
+                                                <TextBlock
+                                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                    Text="{x:Static lang:Resources.RecipePage_RemoveItemMenuText}" />
+                                            </MenuItem.Header>
+                                            <MenuItem.Icon>
+                                                <fi:SymbolIcon
+                                                    FontSize="{StaticResource MediumFontSize}"
+                                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                    Symbol="Delete" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </MenuFlyout>
+                                </app:RecipeItemButton.ContextFlyout>
                             </app:RecipeItemButton>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

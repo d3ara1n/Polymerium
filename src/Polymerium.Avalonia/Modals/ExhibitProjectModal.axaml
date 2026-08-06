@@ -1,4 +1,4 @@
-<husk:Modal
+﻿<husk:Modal
     x:Class="Polymerium.Avalonia.Modals.ExhibitProjectModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

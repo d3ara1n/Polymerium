@@ -85,12 +85,12 @@
                             Width="44"
                             Height="44"
                             VerticalAlignment="Center"
-                            CornerRadius="8"
-                            Background="{StaticResource LayerBackgroundBrush}">
+                            Background="{StaticResource LayerBackgroundBrush}"
+                            CornerRadius="8">
                             <fi:SymbolIcon
-                                FontSize="22"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
+                                FontSize="22"
                                 Symbol="Box" />
                         </Border>
                         <StackPanel

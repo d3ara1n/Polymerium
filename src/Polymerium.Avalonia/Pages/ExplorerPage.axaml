@@ -417,8 +417,8 @@
                                     <husk:Divider Orientation="Vertical" />
                                     <CheckBox
                                         Margin="6,0"
-                                        IsChecked="{Binding IsFilterEnabled, Mode=TwoWay}"
-                                        IsVisible="{Binding IsFilterVisible}">
+                                        IsVisible="{Binding IsFilterVisible}"
+                                        IsChecked="{Binding IsFilterEnabled, Mode=TwoWay}">
                                         <StackPanel
                                             Orientation="Horizontal"
                                             Spacing="4">

@@ -21,7 +21,6 @@ using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
-using Polymerium.Avalonia.Utilities;
 using Refit;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
@@ -87,22 +86,6 @@ public partial class ExplorerPageModel : ViewModelBase
         RemovingPackagesView = removing;
     }
 
-    #region Direct
-
-    public IEnumerable<RepositoryBasicModel> Repositories { get; }
-
-    public string Title => _session.Title;
-
-    public Bitmap? Background => _session.Background;
-
-    public bool IsFilterVisible => _session.InitialFilter is not null;
-
-    public string? FilterLoaderLabel { get; }
-
-    public string? FilterVersionLabel { get; }
-
-    #endregion
-
     #region Overrides
 
     protected override async Task OnInitializeAsync(CancellationToken token)
@@ -121,6 +104,22 @@ public partial class ExplorerPageModel : ViewModelBase
             }
         }
     }
+
+    #endregion
+
+    #region Direct
+
+    public IEnumerable<RepositoryBasicModel> Repositories { get; }
+
+    public string Title => _session.Title;
+
+    public Bitmap? Background => _session.Background;
+
+    public bool IsFilterVisible => _session.InitialFilter is not null;
+
+    public string? FilterLoaderLabel { get; }
+
+    public string? FilterVersionLabel { get; }
 
     #endregion
 
@@ -170,7 +169,9 @@ public partial class ExplorerPageModel : ViewModelBase
 
     #region Collections
 
-    public SourceCache<ExhibitModel, ProjectIdentifier> PendingPackagesSource { get; } = new(x => new ProjectIdentifier(x.Label, x.Namespace, x.ProjectId));
+    public SourceCache<ExhibitModel, ProjectIdentifier> PendingPackagesSource { get; } =
+        new(x => new(x.Label, x.Namespace, x.ProjectId));
+
     public ReadOnlyObservableCollection<ExhibitModel> AddingPackagesView { get; }
     public ReadOnlyObservableCollection<ExhibitModel> ModifyingPackagesView { get; }
     public ReadOnlyObservableCollection<ExhibitModel> RemovingPackagesView { get; }
@@ -228,11 +229,7 @@ public partial class ExplorerPageModel : ViewModelBase
     {
         if (value && _session.InitialFilter is { } initial)
         {
-            Filter = Filter with
-            {
-                Loader = initial.Loader,
-                Version = initial.Version
-            };
+            Filter = Filter with { Loader = initial.Loader, Version = initial.Version };
         }
         else
         {
@@ -310,9 +307,7 @@ public partial class ExplorerPageModel : ViewModelBase
                     var tasks = rv
                                .Select(x =>
                                 {
-                                    var existing = PendingPackagesSource.Lookup(new ProjectIdentifier(x.Label,
-                                                                                                     x.Namespace,
-                                                                                                     x.Pid));
+                                    var existing = PendingPackagesSource.Lookup(new(x.Label, x.Namespace, x.Pid));
                                     if (existing.HasValue)
                                     {
                                         existing.Value.IsFavorite =
@@ -368,8 +363,7 @@ public partial class ExplorerPageModel : ViewModelBase
         catch (Exception ex)
         {
             _notificationService.PopMessage(ex,
-                                            Resources
-                                               .ExplorerPage_LoadProjectInformationDangerNotificationTitle,
+                                            Resources.ExplorerPage_LoadProjectInformationDangerNotificationTitle,
                                             GrowlLevel.Warning,
                                             exhibit.Thumbnail);
         }

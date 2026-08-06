@@ -5,7 +5,8 @@
 - Add an auto-scroll toggle to the instance log view that follows new log lines and pauses when scrolling up
 - Add download, import, and migration shortcuts to the empty instances page
 - Add customizable interface, code, and log fonts selectable from installed system fonts or external font files
-- Rework the marketplace entry copy with a download-resource label on the sidebar button and completed search placeholders
+- Rework the marketplace entry copy with a download-resource label on the sidebar button and completed search
+  placeholders
 - Add a searchable package picker for browsing repositories and adding packages to a recipe
 
 ### Fixed
@@ -29,7 +30,8 @@
 
 - Improve the instance list layout so cards stretch to fill the page width
 - Update the marketplace search filter placeholders to clarify the unfiltered state
-- Rework the marketplace entry copy with a download-resource label on the sidebar button and completed search placeholders
+- Rework the marketplace entry copy with a download-resource label on the sidebar button and completed search
+  placeholders
 - Change the default background style to None
 
 ### Removed

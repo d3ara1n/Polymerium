@@ -220,8 +220,7 @@
                             SelectedIndex="{Binding CornerStyle, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="husk:CornerStyle">
-                                    <TextBlock
-                                        Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedCornerStyle}}" />
+                                    <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedCornerStyle}}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
@@ -300,8 +299,8 @@
                                     Selection="{Binding MainFontSelection}" />
                                 <Button
                                     Grid.Column="1"
-                                    Padding="6"
                                     Classes="Small"
+                                    Padding="6"
                                     Command="{Binding OpenMainFontPickerCommand}"
                                     Theme="{StaticResource GhostButtonTheme}">
                                     <fi:SymbolIcon
@@ -426,8 +425,7 @@
                             </NumericUpDown.InnerRightContent>
                         </NumericUpDown>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_JavaAdditionalArgumentsLabelText}">
+                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_JavaAdditionalArgumentsLabelText}">
                         <TextBox
                             PlaceholderText="{x:Static lang:Resources.SettingsPage_JavaAdditionalArgumentsPlaceholder}"
                             Text="{Binding JavaAdditionalArguments, Mode=TwoWay}" />
@@ -496,8 +494,7 @@
                                     Padding="8"
                                     Background="{StaticResource OverlaySolidBackgroundBrush}">
                                     <Border.CornerRadius>
-                                        <MultiBinding
-                                            Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
+                                        <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
                                             <Binding
                                                 Path="CornerRadius"
                                                 RelativeSource="{RelativeSource Mode=FindAncestor,
@@ -560,8 +557,7 @@
                                                 Classes="Small Primary"
                                                 Command="{Binding ViewReleaseCommand}"
                                                 CommandParameter="{Binding UpdateTarget}">
-                                                <TextBlock
-                                                    Text="{x:Static lang:Resources.SettingsPage_UpdatesViewButtonText}" />
+                                                <TextBlock Text="{x:Static lang:Resources.SettingsPage_UpdatesViewButtonText}" />
                                             </Button>
                                         </DockPanel>
                                     </husk:SwitchCase>
@@ -570,8 +566,7 @@
                                             Classes="Small"
                                             Command="{Binding CheckUpdatesCommand}"
                                             Theme="{StaticResource OutlineButtonTheme}">
-                                            <TextBlock
-                                                Text="{x:Static lang:Resources.SettingsPage_UpdatesCheckButtonText}" />
+                                            <TextBlock Text="{x:Static lang:Resources.SettingsPage_UpdatesCheckButtonText}" />
                                         </Button>
                                     </husk:SwitchCase>
                                 </husk:SwitchContainer>
@@ -768,11 +763,12 @@
                     <app:SettingsEntryItem
                         Description="{x:Static lang:Resources.SettingsPage_StorageManagementDescription}"
                         Header="{x:Static lang:Resources.SettingsPage_StorageManagementLabelText}">
-                        <Button HorizontalAlignment="Right"
-                                Classes="Small"
-                                Command="{Binding NavigateCommand}"
-                                CommandParameter="{x:Type app:MaintenanceStoragePage}"
-                                Theme="{StaticResource OutlineButtonTheme}">
+                        <Button
+                            Classes="Small"
+                            HorizontalAlignment="Right"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="{x:Type app:MaintenanceStoragePage}"
+                            Theme="{StaticResource OutlineButtonTheme}">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
                                 Symbol="ArrowRight" />
@@ -781,10 +777,11 @@
                     <app:SettingsEntryItem
                         Description="{x:Static lang:Resources.SettingsPage_MigrateFromLauncherDescription}"
                         Header="{x:Static lang:Resources.SettingsPage_MigrateFromLauncherLabelText}">
-                        <Button HorizontalAlignment="Right"
-                                Classes="Small"
-                                Command="{Binding OpenMigrateCommand}"
-                                Theme="{StaticResource OutlineButtonTheme}">
+                        <Button
+                            Classes="Small"
+                            HorizontalAlignment="Right"
+                            Command="{Binding OpenMigrateCommand}"
+                            Theme="{StaticResource OutlineButtonTheme}">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
                                 Symbol="ArrowRight" />
@@ -793,10 +790,11 @@
                     <app:SettingsEntryItem
                         Description="{x:Static lang:Resources.SettingsPage_GarbageCollectDescription}"
                         Header="{x:Static lang:Resources.SettingsPage_GarbageCollectButtonText}">
-                        <Button HorizontalAlignment="Right"
-                                Classes="Small"
-                                Command="{Binding GarbageCollectCommand}"
-                                Theme="{StaticResource OutlineButtonTheme}">
+                        <Button
+                            Classes="Small"
+                            HorizontalAlignment="Right"
+                            Command="{Binding GarbageCollectCommand}"
+                            Theme="{StaticResource OutlineButtonTheme}">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
                                 Symbol="Checkmark" />
@@ -806,10 +804,11 @@
                     <app:SettingsEntryItem
                         Description="{x:Static lang:Resources.SettingsPage_ClearStatisticsDescription}"
                         Header="{x:Static lang:Resources.SettingsPage_ClearStatisticsButtonText}">
-                        <Button HorizontalAlignment="Right"
-                                Classes="Small"
-                                Command="{Binding ClearStatisticsCommand}"
-                                Theme="{StaticResource OutlineButtonTheme}">
+                        <Button
+                            Classes="Small"
+                            HorizontalAlignment="Right"
+                            Command="{Binding ClearStatisticsCommand}"
+                            Theme="{StaticResource OutlineButtonTheme}">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{StaticResource ControlDangerForegroundBrush}"
@@ -819,10 +818,11 @@
                     <app:SettingsEntryItem
                         Description="{x:Static lang:Resources.SettingsPage_ClearRecordsDescription}"
                         Header="{x:Static lang:Resources.SettingsPage_ClearRecordsButtonText}">
-                        <Button HorizontalAlignment="Right"
-                                Classes="Small"
-                                Command="{Binding ClearRecordsCommand}"
-                                Theme="{StaticResource OutlineButtonTheme}">
+                        <Button
+                            Classes="Small"
+                            HorizontalAlignment="Right"
+                            Command="{Binding ClearRecordsCommand}"
+                            Theme="{StaticResource OutlineButtonTheme}">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{StaticResource ControlDangerForegroundBrush}"

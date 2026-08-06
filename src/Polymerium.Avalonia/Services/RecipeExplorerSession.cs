@@ -5,27 +5,23 @@ using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Exceptions;
-using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Modals;
+using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
-using TridentCore.Abstractions.Utilities;
 using TridentCore.Pref;
 
 namespace Polymerium.Avalonia.Services;
 
 public sealed class RecipeExplorerSession : ExplorerSession
 {
-    private readonly string _recipeId;
-    private readonly PersistenceService _persistenceService;
     private readonly DataService _dataService;
     private readonly OverlayService _overlayService;
-    private string _title = string.Empty;
+    private readonly PersistenceService _persistenceService;
+    private readonly string _recipeId;
     private HashSet<ProjectIdentifier> _knownItems = [];
-
-    public override Bitmap? Background => null;
+    private string _title = string.Empty;
 
     public RecipeExplorerSession(
         string recipeId,
@@ -39,6 +35,12 @@ public sealed class RecipeExplorerSession : ExplorerSession
         _overlayService = overlayService;
     }
 
+    public override Bitmap? Background => null;
+
+    public override string Title => _title;
+
+    public override Filter? InitialFilter => null;
+
     public override void Validate()
     {
         _title = _persistenceService.GetRecipe(_recipeId)?.Name ?? string.Empty;
@@ -48,10 +50,6 @@ public sealed class RecipeExplorerSession : ExplorerSession
             throw new PageNotReachedException(typeof(ExplorerPage), "The recipe is not found");
         }
     }
-
-    public override string Title => _title;
-
-    public override Filter? InitialFilter => null;
 
     public override ExhibitModel BuildExhibit(Exhibit hit) =>
         new(hit.Label,
@@ -73,9 +71,10 @@ public sealed class RecipeExplorerSession : ExplorerSession
     public override void RevertState(ExhibitModel exhibit) =>
         exhibit.State = IsKnown(exhibit.Label, exhibit.Namespace, exhibit.ProjectId) ? ExhibitState.Editable : null;
 
-    public override async Task ViewExhibitAsync(ExhibitModel exhibit,
-                                                Action<ExhibitModel> modifyPending,
-                                                Func<ProjectIdentifier, ExhibitModel?> findExisting)
+    public override async Task ViewExhibitAsync(
+        ExhibitModel exhibit,
+        Action<ExhibitModel> modifyPending,
+        Func<ProjectIdentifier, ExhibitModel?> findExisting)
     {
         var project = await _dataService.QueryProjectAsync(new(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
 
@@ -115,29 +114,29 @@ public sealed class RecipeExplorerSession : ExplorerSession
             switch (model)
             {
                 case { State: ExhibitState.Adding }:
-                {
-                    _persistenceService.AddRecipeItem(_recipeId,
-                                                      new ProjectIdentifier(model.Label,
-                                                                            PersistenceService.NormalizeNamespace(model.Namespace),
-                                                                            model.ProjectId),
-                                                      [],
-                                                      null);
-                    model.State = ExhibitState.Editable;
-                    break;
-                }
-                case { State: ExhibitState.Removing }:
-                {
-                    var identifier = new ProjectIdentifier(model.Label,
-                                                           PersistenceService.NormalizeNamespace(model.Namespace),
-                                                           model.ProjectId);
-                    if (_knownItems.Remove(identifier))
                     {
-                        _persistenceService.RemoveRecipeItem(_recipeId, identifier);
+                        _persistenceService.AddRecipeItem(_recipeId,
+                                                          new(model.Label,
+                                                              PersistenceService.NormalizeNamespace(model.Namespace),
+                                                              model.ProjectId),
+                                                          [],
+                                                          null);
+                        model.State = ExhibitState.Editable;
+                        break;
                     }
+                case { State: ExhibitState.Removing }:
+                    {
+                        var identifier = new ProjectIdentifier(model.Label,
+                                                               PersistenceService.NormalizeNamespace(model.Namespace),
+                                                               model.ProjectId);
+                        if (_knownItems.Remove(identifier))
+                        {
+                            _persistenceService.RemoveRecipeItem(_recipeId, identifier);
+                        }
 
-                    model.State = null;
-                    break;
-                }
+                        model.State = null;
+                        break;
+                    }
             }
         }
 
@@ -146,14 +145,11 @@ public sealed class RecipeExplorerSession : ExplorerSession
     }
 
     private bool IsKnown(string label, string? @namespace, string projectId) =>
-        _knownItems.Contains(new ProjectIdentifier(label,
-                                                    PersistenceService.NormalizeNamespace(@namespace),
-                                                    projectId));
+        _knownItems.Contains(new(label, PersistenceService.NormalizeNamespace(@namespace), projectId));
 
     private HashSet<ProjectIdentifier> LoadItems() =>
-        _persistenceService.GetRecipeItems(_recipeId)
-                           .Select(x => new ProjectIdentifier(x.Label,
-                                                              PersistenceService.NormalizeNamespace(x.Namespace),
-                                                              x.ProjectId))
-                           .ToHashSet();
+        _persistenceService
+           .GetRecipeItems(_recipeId)
+           .Select(x => new ProjectIdentifier(x.Label, PersistenceService.NormalizeNamespace(x.Namespace), x.ProjectId))
+           .ToHashSet();
 }

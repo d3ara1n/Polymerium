@@ -182,7 +182,7 @@
                             Grid.Column="1"
                             Padding="4"
                             HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Left"
+                            HorizontalContentAlignment="Stretch"
                             Background="Transparent"
                             BorderThickness="0"
                             Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ActivateGroupHeaderCommand, FallbackValue={x:Null}}"
@@ -197,11 +197,14 @@
                                             Content="{Binding}">
                                             <ContentControl.DataTemplates>
                                                 <DataTemplate DataType="app:ModpackGroupInfoModel">
-                                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8">
-                                                        <Border Grid.Column="0"
-                                                                Width="32"
-                                                                Height="32"
-                                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                    <Grid
+                                                        ColumnDefinitions="Auto,*,Auto,Auto"
+                                                        ColumnSpacing="8">
+                                                        <Border
+                                                            Grid.Column="0"
+                                                            Width="32"
+                                                            Height="32"
+                                                            CornerRadius="{StaticResource SmallCornerRadius}">
                                                             <Border.Background>
                                                                 <ImageBrush
                                                                     async:ImageBrushLoader.Source="{Binding Thumbnail}"
@@ -215,7 +218,8 @@
                                                             FontWeight="{StaticResource ControlStrongFontWeight}"
                                                             Text="{Binding Name, FallbackValue=Modpack}"
                                                             TextTrimming="CharacterEllipsis" />
-                                                        <husk:IconLabel Grid.Column="2"
+                                                        <husk:IconLabel
+                                                            Grid.Column="2"
                                                             VerticalAlignment="Center"
                                                             FontSize="{StaticResource SmallFontSize}"
                                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -225,14 +229,16 @@
                                                             Grid.Column="3"
                                                             VerticalAlignment="Center"
                                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                                            <TextBlock
-                                                                Text="{x:Static lang:Resources.InstanceSetupPage_ModpackGroupTagText}" />
+                                                            <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ModpackGroupTagText}" />
                                                         </husk:Tag>
                                                     </Grid>
                                                 </DataTemplate>
                                                 <DataTemplate DataType="app:RecipeGroupInfoModel">
-                                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8">
-                                                        <Border Grid.Column="0"
+                                                    <Grid
+                                                        ColumnDefinitions="Auto,*,Auto,Auto"
+                                                        ColumnSpacing="8">
+                                                        <Border
+                                                            Grid.Column="0"
                                                             Width="32"
                                                             Height="32"
                                                             Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
@@ -262,8 +268,7 @@
                                                             Grid.Column="3"
                                                             VerticalAlignment="Center"
                                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                                            <TextBlock
-                                                                Text="{x:Static lang:Resources.InstanceSetupPage_RecipeGroupTagText}" />
+                                                            <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_RecipeGroupTagText}" />
                                                         </husk:Tag>
                                                     </Grid>
                                                 </DataTemplate>
@@ -456,8 +461,7 @@
                             <StackPanel
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
-                                <TextBlock
-                                    Text="{x:Static lang:Resources.InstanceSetupPage_ReferenceUnavailableLabelText}" />
+                                <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ReferenceUnavailableLabelText}" />
                                 <Button
                                     IsVisible="False"
                                     Content="Retry" />
@@ -536,15 +540,13 @@
                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                                 Symbol="Open" />
                                                         </Grid>
-                                                        <TextBlock
-                                                            Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
+                                                        <TextBlock Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
                                                     </StackPanel>
                                                 </ToolTip.Tip>
                                                 <StackPanel
                                                     Orientation="Horizontal"
                                                     Spacing="4">
-                                                    <TextBlock
-                                                        Text="{Binding Label, FallbackValue=LABEL, Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                                    <TextBlock Text="{Binding Label, FallbackValue=LABEL, Converter={x:Static husk:StringConverters.ToUpper}}" />
                                                     <fi:SymbolIcon
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Symbol="Open" />
@@ -740,24 +742,20 @@
                                                                 </ItemsPanelTemplate>
                                                             </ItemsControl.ItemsPanel>
                                                             <ItemsControl.ItemTemplate>
-                                                                <DataTemplate
-                                                                    x:DataType="app:InstancePackageFilterTagModel">
+                                                                <DataTemplate x:DataType="app:InstancePackageFilterTagModel">
                                                                     <Border
                                                                         Padding="8"
                                                                         BorderBrush="{StaticResource ControlBorderBrush}"
                                                                         BorderThickness="1"
                                                                         CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                        <CheckBox
-                                                                            IsChecked="{Binding IsSelected, Mode=TwoWay}">
+                                                                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
                                                                             <StackPanel
                                                                                 Orientation="Horizontal"
                                                                                 Spacing="4">
                                                                                 <TextBlock Text="{Binding Content}" />
-                                                                                <TextBlock
-                                                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                                                                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                                                                     <Run Text="(" />
-                                                                                    <Run
-                                                                                        Text="{Binding RefCount, Mode=OneWay}" />
+                                                                                    <Run Text="{Binding RefCount, Mode=OneWay}" />
                                                                                     <Run Text=")" />
                                                                                 </TextBlock>
                                                                             </StackPanel>
