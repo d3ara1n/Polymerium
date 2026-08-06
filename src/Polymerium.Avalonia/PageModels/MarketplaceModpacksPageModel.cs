@@ -26,7 +26,8 @@ using TridentCore.Core.Services;
 
 namespace Polymerium.Avalonia.PageModels;
 
-public partial class MarketplaceModpacksPageModel : ViewModelBase, IStatefulViewModel<MarketplaceModpacksPageModel.State>
+public partial class MarketplaceModpacksPageModel
+    : ViewModelBase, IStatefulViewModel<MarketplaceModpacksPageModel.State>
 {
     public MarketplaceModpacksPageModel(
         IViewContext<SearchArguments> context,

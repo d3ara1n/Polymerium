@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
+using System.Reactive.Disposables;
+using System.Reactive.Disposables.Fluent;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,10 +22,6 @@ using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
-using System.Reactive.Disposables;
-using System.Reactive.Disposables.Fluent;
-using System.Reactive.Linq;
-using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Pref;
 
@@ -37,51 +35,18 @@ public partial class RecipePageModel(
     NotificationService notificationService,
     OverlayService overlayService) : ViewModelBase
 {
-    public string Id { get; } = context.Parameter!;
-
     private readonly SourceCache<RecipeItemModel, ProjectIdentifier> _items = new(x => x.Identifier);
 
     private readonly CompositeDisposable _subscriptions = new();
+    public string Id { get; } = context.Parameter!;
 
     [ObservableProperty]
     public partial ReadOnlyObservableCollection<RecipeItemModel>? Items { get; set; }
 
     public IReadOnlyList<ResourceKind?> KindFilterOptions { get; } =
-        [null, .. Enum.GetValues<ResourceKind>().Where(k => k != ResourceKind.Unknown)];
-
-    #region Overrides
-
-    protected override async Task OnInitializeAsync(CancellationToken token)
-    {
-        var queryFilter = this.WhenValueChanged(x => x.QueryText).Select(BuildQueryFilter);
-        var kindFilter = this.WhenValueChanged(x => x.SelectedKind).Select(BuildKindFilter);
-        _items.CountChanged.Subscribe(c => TotalCount = c).DisposeWith(_subscriptions);
-        _items
-            .Connect()
-            .Filter(queryFilter)
-            .Filter(kindFilter)
-            .Bind(out var view)
-            .Subscribe()
-            .DisposeWith(_subscriptions);
-        Items = view;
-
-        var recipe = persistenceService.GetRecipe(Id);
-        if (recipe is not null)
-        {
-            Name = recipe.Name;
-            Description = recipe.Description;
-        }
-
-        await ReloadItemsAsync(token);
-    }
-
-    protected override Task OnDeinitializeAsync()
-    {
-        _subscriptions.Dispose();
-        return Task.CompletedTask;
-    }
-
-    #endregion
+    [
+        null, .. Enum.GetValues<ResourceKind>().Where(k => k != ResourceKind.Unknown)
+    ];
 
     private static Func<RecipeItemModel, bool> BuildQueryFilter(string? query)
     {
@@ -104,8 +69,10 @@ public partial class RecipePageModel(
     {
         var stored = persistenceService.GetRecipeItems(Id);
         var storedKeys = stored
-                         .Select(s => new ProjectIdentifier(s.Label, PersistenceService.NormalizeNamespace(s.Namespace), s.ProjectId))
-                         .ToHashSet();
+                        .Select(s => new ProjectIdentifier(s.Label,
+                                                           PersistenceService.NormalizeNamespace(s.Namespace),
+                                                           s.ProjectId))
+                        .ToHashSet();
 
         // toRemove: cache 有、DB 无
         _items.Remove([.. _items.Keys.Where(k => !storedKeys.Contains(k))]);
@@ -119,14 +86,14 @@ public partial class RecipePageModel(
             if (_items.Lookup(id) is { HasValue: true, Value: var existing })
             {
                 existing.Note = s.Note;
-                existing.Tags = new ObservableCollection<string>(RecipeHelper.DeserializeTags(s.Tags));
+                existing.Tags = new(RecipeHelper.DeserializeTags(s.Tags));
             }
             else
             {
                 toAdd.Add(new(Id, s.Label, ns, s.ProjectId)
                 {
                     Note = s.Note,
-                    Tags = new ObservableCollection<string>(RecipeHelper.DeserializeTags(s.Tags))
+                    Tags = new(RecipeHelper.DeserializeTags(s.Tags))
                 });
             }
         }
@@ -172,6 +139,40 @@ public partial class RecipePageModel(
         }
     }
 
+    #region Overrides
+
+    protected override async Task OnInitializeAsync(CancellationToken token)
+    {
+        var queryFilter = this.WhenValueChanged(x => x.QueryText).Select(BuildQueryFilter);
+        var kindFilter = this.WhenValueChanged(x => x.SelectedKind).Select(BuildKindFilter);
+        _items.CountChanged.Subscribe(c => TotalCount = c).DisposeWith(_subscriptions);
+        _items
+           .Connect()
+           .Filter(queryFilter)
+           .Filter(kindFilter)
+           .Bind(out var view)
+           .Subscribe()
+           .DisposeWith(_subscriptions);
+        Items = view;
+
+        var recipe = persistenceService.GetRecipe(Id);
+        if (recipe is not null)
+        {
+            Name = recipe.Name;
+            Description = recipe.Description;
+        }
+
+        await ReloadItemsAsync(token);
+    }
+
+    protected override Task OnDeinitializeAsync()
+    {
+        _subscriptions.Dispose();
+        return Task.CompletedTask;
+    }
+
+    #endregion
+
     #region Reactive
 
     [ObservableProperty]
@@ -193,9 +194,8 @@ public partial class RecipePageModel(
     [NotifyPropertyChangedFor(nameof(EmptyText))]
     public partial int TotalCount { get; private set; }
 
-    public string EmptyText => TotalCount == 0
-        ? Resources.RecipePage_NoPackagesText
-        : Resources.RecipePage_NoMatchesText;
+    public string EmptyText =>
+        TotalCount == 0 ? Resources.RecipePage_NoPackagesText : Resources.RecipePage_NoMatchesText;
 
     #endregion
 
@@ -228,10 +228,11 @@ public partial class RecipePageModel(
     }
 
     [RelayCommand]
-    private void AddItem() => navigationService.Navigate<ExplorerPage>(new RecipeExplorerSession(Id,
-                                                                                                persistenceService,
-                                                                                                dataService,
-                                                                                                overlayService));
+    private void AddItem() =>
+        navigationService.Navigate<ExplorerPage>(new RecipeExplorerSession(Id,
+                                                                           persistenceService,
+                                                                           dataService,
+                                                                           overlayService));
 
     [RelayCommand]
     private void RemoveItem(RecipeItemModel? item)
@@ -251,11 +252,7 @@ public partial class RecipePageModel(
             return;
         }
 
-        var dialog = new TagsEditorDialog
-        {
-            InitialTags = item.Tags.ToArray(),
-            Suggestions = item.Info?.Tags
-        };
+        var dialog = new TagsEditorDialog { InitialTags = item.Tags.ToArray(), Suggestions = item.Info?.Tags };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is IReadOnlyList<string> result)
         {
             item.Tags.Clear();
@@ -263,6 +260,7 @@ public partial class RecipePageModel(
             {
                 item.Tags.Add(tag);
             }
+
             persistenceService.UpdateRecipeItem(item.RecipeId, item.Identifier, result, item.Note);
         }
     }
@@ -298,25 +296,26 @@ public partial class RecipePageModel(
 
         var items = persistenceService.GetRecipeItems(Id);
         var document = RecipeHelper.ToDocument(recipe.Name,
-                                                recipe.Description,
-                                                items.Select(i => (i.Label,
-                                                                    PersistenceService.NormalizeNamespace(i.Namespace),
-                                                                    i.ProjectId,
-                                                                    RecipeHelper.DeserializeTags(i.Tags),
-                                                                    i.Note)));
+                                               recipe.Description,
+                                               items.Select(i => (i.Label,
+                                                                  PersistenceService.NormalizeNamespace(i.Namespace),
+                                                                  i.ProjectId, RecipeHelper.DeserializeTags(i.Tags),
+                                                                  i.Note)));
         var dialog = new RecipeExporterDialog { ItemCount = items.Count, RecipeName = recipe.Name };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
         {
             try
             {
                 await Task.Run(() => File.WriteAllText(path, RecipeHelper.Serialize(document)));
-                notificationService.PopMessage(Resources.RecipesPage_ExportSuccessNotificationMessage.Replace("{0}", path),
+                notificationService.PopMessage(Resources.RecipesPage_ExportSuccessNotificationMessage
+                                                        .Replace("{0}", path),
                                                Resources.RecipesPage_ExportSuccessNotificationTitle,
                                                GrowlLevel.Success);
             }
             catch (Exception)
             {
-                notificationService.PopMessage(Resources.RecipesPage_ExportDangerNotificationMessage.Replace("{0}", path),
+                notificationService.PopMessage(Resources.RecipesPage_ExportDangerNotificationMessage
+                                                        .Replace("{0}", path),
                                                Resources.RecipesPage_ExportDangerNotificationTitle,
                                                GrowlLevel.Danger);
             }

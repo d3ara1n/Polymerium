@@ -24,11 +24,6 @@ public class UpdateService(
 
     public AppUpdateModel? CurrentUpdate { get; private set; }
 
-    /// <summary>
-    ///     自动检查（启动时）发现新版本时触发；手动检查走各自的调用方反馈，不经过此事件。
-    /// </summary>
-    public event Action<AppUpdateModel>? UpdateFound;
-
     public bool IsUpdateChecked { get; private set; }
 
     public bool IsChecking { get; private set; }
@@ -55,6 +50,11 @@ public class UpdateService(
     }
 
     public ValueTask StopAsync(CancellationToken cancellationToken = default) => ValueTask.CompletedTask;
+
+    /// <summary>
+    ///     自动检查（启动时）发现新版本时触发；手动检查走各自的调用方反馈，不经过此事件。
+    /// </summary>
+    public event Action<AppUpdateModel>? UpdateFound;
 
     public async Task CheckUpdateAsync()
     {

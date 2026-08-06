@@ -2,8 +2,8 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
-    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:trident="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions">
@@ -81,10 +81,10 @@
                                             TextTrimming="CharacterEllipsis" />
                                         <ItemsControl
                                             Grid.Column="2"
+                                            MaxWidth="280"
                                             VerticalAlignment="Center"
                                             IsVisible="{Binding $parent[app:RecipeItemButton].((app:RecipeItemModel)DataContext).Tags.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
-                                            ItemsSource="{Binding $parent[app:RecipeItemButton].((app:RecipeItemModel)DataContext).Tags}"
-                                            MaxWidth="280">
+                                            ItemsSource="{Binding $parent[app:RecipeItemButton].((app:RecipeItemModel)DataContext).Tags}">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <StackPanel
@@ -103,9 +103,9 @@
                                         <TextBlock
                                             Grid.Column="2"
                                             VerticalAlignment="Center"
+                                            IsVisible="{Binding $parent[app:RecipeItemButton].((app:RecipeItemModel)DataContext).Tags.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
                                             FontSize="{StaticResource SmallFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            IsVisible="{Binding $parent[app:RecipeItemButton].((app:RecipeItemModel)DataContext).Tags.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
                                             Text="{x:Static lang:Resources.RecipeItemButton_NoTagsText}" />
                                     </Grid>
                                     <Grid
@@ -116,26 +116,26 @@
                                         <TextBlock
                                             Grid.Column="0"
                                             VerticalAlignment="Center"
+                                            IsVisible="{Binding $parent[app:RecipeItemButton].((app:RecipeItemModel)DataContext).Note, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                             FontSize="{StaticResource SmallFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            IsVisible="{Binding $parent[app:RecipeItemButton].((app:RecipeItemModel)DataContext).Note, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                             Text="{Binding $parent[app:RecipeItemButton].((app:RecipeItemModel)DataContext).Note}"
                                             TextTrimming="CharacterEllipsis" />
                                         <TextBlock
                                             Grid.Column="0"
                                             VerticalAlignment="Center"
+                                            IsVisible="{Binding $parent[app:RecipeItemButton].((app:RecipeItemModel)DataContext).Note, Converter={x:Static StringConverters.IsNullOrEmpty}}"
                                             FontSize="{StaticResource SmallFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            IsVisible="{Binding $parent[app:RecipeItemButton].((app:RecipeItemModel)DataContext).Note, Converter={x:Static StringConverters.IsNullOrEmpty}}"
                                             Text="{x:Static lang:Resources.RecipeItemButton_NoNoteText}" />
                                         <TextBlock
                                             Grid.Column="1"
+                                            MaxWidth="160"
                                             VerticalAlignment="Center"
                                             FontSize="{StaticResource SmallFontSize}"
                                             FontWeight="{StaticResource ControlStrongFontWeight}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Text="{Binding Author, StringFormat={}@{0}}"
-                                            MaxWidth="160"
                                             TextTrimming="CharacterEllipsis" />
                                     </Grid>
                                 </Grid>
@@ -178,10 +178,10 @@
                                             TextTrimming="CharacterEllipsis" />
                                         <ItemsControl
                                             Grid.Column="1"
+                                            MaxWidth="280"
                                             VerticalAlignment="Center"
                                             IsVisible="{Binding Tags.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
-                                            ItemsSource="{Binding Tags}"
-                                            MaxWidth="280">
+                                            ItemsSource="{Binding Tags}">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <StackPanel
@@ -200,9 +200,9 @@
                                         <TextBlock
                                             Grid.Column="1"
                                             VerticalAlignment="Center"
+                                            IsVisible="{Binding Tags.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
                                             FontSize="{StaticResource SmallFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            IsVisible="{Binding Tags.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
                                             Text="{x:Static lang:Resources.RecipeItemButton_NoTagsText}" />
                                     </Grid>
                                     <TextBlock

@@ -31,9 +31,10 @@ public partial class MarketplacePortalPageModel(
             }
         }
 
-        navigationService.Navigate<MarketplaceModpacksPage>(new MarketplaceModpacksPageModel.SearchArguments(query, null));
+        navigationService.Navigate<MarketplaceModpacksPage>(new MarketplaceModpacksPageModel.SearchArguments(query,
+                                                                null));
     }
-    
+
     [RelayCommand]
     private void GotoModpacks() => navigationService.Navigate<MarketplaceModpacksPage>();
 

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
@@ -11,8 +13,6 @@ using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
-using System.IO;
-using System.Linq;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Pref;
 
@@ -87,12 +87,7 @@ public partial class RecipesPageModel(
         {
             var name = string.IsNullOrWhiteSpace(result.Name) ? "Untitled" : result.Name;
             var recipe = persistenceService.InsertRecipe(name, result.Description);
-            Items.Add(new(recipe.Id)
-            {
-                Name = recipe.Name,
-                Description = recipe.Description,
-                ItemCount = 0
-            });
+            Items.Add(new(recipe.Id) { Name = recipe.Name, Description = recipe.Description, ItemCount = 0 });
         }
     }
 
@@ -112,25 +107,26 @@ public partial class RecipesPageModel(
 
         var items = persistenceService.GetRecipeItems(card.Id);
         var document = RecipeHelper.ToDocument(recipe.Name,
-                                                recipe.Description,
-                                                items.Select(i => (i.Label,
-                                                                    PersistenceService.NormalizeNamespace(i.Namespace),
-                                                                    i.ProjectId,
-                                                                    RecipeHelper.DeserializeTags(i.Tags),
-                                                                    i.Note)));
+                                               recipe.Description,
+                                               items.Select(i => (i.Label,
+                                                                  PersistenceService.NormalizeNamespace(i.Namespace),
+                                                                  i.ProjectId, RecipeHelper.DeserializeTags(i.Tags),
+                                                                  i.Note)));
         var dialog = new RecipeExporterDialog { ItemCount = items.Count, RecipeName = recipe.Name };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is string path)
         {
             try
             {
                 await Task.Run(() => File.WriteAllText(path, RecipeHelper.Serialize(document)));
-                notificationService.PopMessage(Resources.RecipesPage_ExportSuccessNotificationMessage.Replace("{0}", path),
+                notificationService.PopMessage(Resources.RecipesPage_ExportSuccessNotificationMessage
+                                                        .Replace("{0}", path),
                                                Resources.RecipesPage_ExportSuccessNotificationTitle,
                                                GrowlLevel.Success);
             }
             catch (Exception)
             {
-                notificationService.PopMessage(Resources.RecipesPage_ExportDangerNotificationMessage.Replace("{0}", path),
+                notificationService.PopMessage(Resources.RecipesPage_ExportDangerNotificationMessage
+                                                        .Replace("{0}", path),
                                                Resources.RecipesPage_ExportDangerNotificationTitle,
                                                GrowlLevel.Danger);
             }
@@ -188,12 +184,7 @@ public partial class RecipesPageModel(
             added++;
         }
 
-        Items.Add(new(recipe.Id)
-        {
-            Name = recipe.Name,
-            Description = recipe.Description,
-            ItemCount = added
-        });
+        Items.Add(new(recipe.Id) { Name = recipe.Name, Description = recipe.Description, ItemCount = added });
         notificationService.PopMessage(Resources.RecipesPage_ImportSuccessNotificationMessage,
                                        recipe.Name,
                                        GrowlLevel.Success);
@@ -213,7 +204,9 @@ public partial class RecipesPageModel(
             var body = string.Join(Environment.NewLine, references.Select(r => $" - {r.Name}"));
             notificationService.PopMessage(Resources.RecipesPage_DeleteBlockedByReferencesWarningNotificationMessage
                                                     .Replace("{0}", references.Count.ToString())
-                                         + ":" + Environment.NewLine + body,
+                                         + ":"
+                                         + Environment.NewLine
+                                         + body,
                                            Resources.RecipesPage_DeleteBlockedByReferencesWarningNotificationTitle,
                                            GrowlLevel.Warning);
             return;

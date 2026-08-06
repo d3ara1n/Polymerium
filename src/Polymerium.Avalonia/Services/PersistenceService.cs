@@ -7,8 +7,8 @@ using NanoidDotNet;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
-using TridentCore.Pref;
 using TridentCore.Core.Accounts;
+using TridentCore.Pref;
 
 namespace Polymerium.Avalonia.Services;
 
@@ -648,12 +648,13 @@ public class PersistenceService(IFreeSql freeSql)
     public void RemoveRecipeItem(string recipeId, ProjectIdentifier project)
     {
         var ns = project.Namespace ?? string.Empty;
-        freeSql.Delete<RecipeItem>()
-               .Where(x => x.RecipeId == recipeId
-                        && x.Label == project.Repository
-                        && x.Namespace == ns
-                        && x.ProjectId == project.Identity)
-               .ExecuteAffrows();
+        freeSql
+           .Delete<RecipeItem>()
+           .Where(x => x.RecipeId == recipeId
+                    && x.Label == project.Repository
+                    && x.Namespace == ns
+                    && x.ProjectId == project.Identity)
+           .ExecuteAffrows();
         TouchRecipe(recipeId);
     }
 

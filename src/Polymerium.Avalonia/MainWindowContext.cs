@@ -80,6 +80,13 @@ public partial class MainWindowContext : ObservableObject
 
     #endregion
 
+    #region Other reactive
+
+    // NotificationService 的事件假定在 UI 线程触发（见服务注释），此处直接赋值即可
+    private void OnUnreadCountChanged(int count) => UnreadNotificationCount = count;
+
+    #endregion
+
     #region Fields
 
     private readonly CompositeDisposable _disposables = new();
@@ -292,9 +299,10 @@ public partial class MainWindowContext : ObservableObject
                                                       update.Version),
                                         Resources.MainWindow_UpdateFoundNotificationTitle,
                                         GrowlLevel.Success,
-                                        actions: [new GrowlAction(Resources.SettingsPage_UpdatesViewButtonText,
-                                                                  ViewUpdateCommand,
-                                                                  update)]);
+                                        actions:
+                                        [
+                                            new(Resources.SettingsPage_UpdatesViewButtonText, ViewUpdateCommand, update)
+                                        ]);
 
     private bool CanViewUpdate(AppUpdateModel? update) => update != null;
 
@@ -313,6 +321,7 @@ public partial class MainWindowContext : ObservableObject
             NotificationService = _notificationService
         });
     }
+
     [RelayCommand]
     private async Task OpenGitHubAsync()
     {
@@ -323,13 +332,6 @@ public partial class MainWindowContext : ObservableObject
                                             new(Program.RepositoryUrl),
                                             Resources.MainWindow_OpenGitHubDangerNotificationTitle);
     }
-
-    #endregion
-
-    #region Other reactive
-
-    // NotificationService 的事件假定在 UI 线程触发（见服务注释），此处直接赋值即可
-    private void OnUnreadCountChanged(int count) => UnreadNotificationCount = count;
 
     #endregion
 

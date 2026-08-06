@@ -8,9 +8,9 @@
     xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:sys="clr-namespace:System;assembly=System.Runtime"
     Title="{x:Static lang:Resources.FontPickerDialog_Title}"
-    ScrollViewer.VerticalScrollBarVisibility="Disabled"
     Width="380"
-    IsPrimaryButtonVisible="True">
+    IsPrimaryButtonVisible="True"
+    ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <Grid
         RowDefinitions="Auto,Auto,Auto,*"
         RowSpacing="12">

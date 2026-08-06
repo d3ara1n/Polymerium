@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Facilities;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Pref;
+
 namespace Polymerium.Avalonia.Models;
 
 public sealed partial class RecipeItemModel(string recipeId, string label, string? ns, string projectId) : ModelBase

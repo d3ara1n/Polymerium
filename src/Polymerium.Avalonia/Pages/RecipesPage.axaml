@@ -27,8 +27,7 @@
                 VerticalAlignment="Center"
                 Orientation="Horizontal"
                 Spacing="4">
-                <Button
-                    Command="{Binding ImportCommand}">
+                <Button Command="{Binding ImportCommand}">
                     <husk:IconLabel
                         Icon="ArrowImport"
                         Text="{x:Static lang:Resources.RecipesPage_ImportButtonText}" />
