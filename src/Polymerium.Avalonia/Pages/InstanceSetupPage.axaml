@@ -856,7 +856,7 @@
                                     <MenuItem
                                         Command="{Binding ImportFromRecipeCommand}"
                                         Header="{x:Static lang:Resources.InstanceSetupPage_ImportRecipeMenuText}"
-                                        Icon="{fie:SymbolIcon Symbol=Bookmark,
+                                        Icon="{fie:SymbolIcon Symbol=ListBar,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
                                         Command="{Binding ImportListCommand}"
