@@ -1830,11 +1830,85 @@ public partial class InstanceSetupPageModel(
 
     private bool CanRemoveGroup(GroupModel? group) =>
         group is { Source: not null } && PackageSourceHelper.CanDelete(group.Source, Basic.Source);
+    // NOTE: SourceOrders 末项 = 最高覆盖力（POLY-116），因此提升优先级表现为向列表尾部移动
+    [RelayCommand(CanExecute = nameof(CanRaiseGroupPriority))]
+    private async Task RaiseGroupPriorityAsync(GroupModel? group) => await MoveGroupAsync(group, +1);
+
+    [RelayCommand(CanExecute = nameof(CanLowerGroupPriority))]
+    private async Task LowerGroupPriorityAsync(GroupModel? group) => await MoveGroupAsync(group, -1);
+
+    private bool CanRaiseGroupPriority(GroupModel? group) => CanMoveGroup(group, +1);
+
+    private bool CanLowerGroupPriority(GroupModel? group) => CanMoveGroup(group, -1);
+
+    private bool CanMoveGroup(GroupModel? group, int delta)
+    {
+        if (group?.Source is null)
+        {
+            return false;
+        }
+
+        var order = BuildGroupOrder();
+        var index = order.FindIndex(g => ReferenceEquals(g, group));
+        var target = index + delta;
+        return index >= 0 && target >= 0 && target < order.Count;
+    }
+
+    private async Task MoveGroupAsync(GroupModel? group, int delta)
+    {
+        if (group?.Source is null)
+        {
+            return;
+        }
+
+        var order = BuildGroupOrder();
+        var index = order.FindIndex(g => ReferenceEquals(g, group));
+        if (index < 0)
+        {
+            return;
+        }
+
+        var target = index + delta;
+        if (target < 0 || target >= order.Count)
+        {
+            return;
+        }
+
+        (order[index], order[target]) = (order[target], order[index]);
+
+        if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
+        {
+            // NOTE: 未入列的组随首次移动显式化进 SourceOrders（列进即声明显式覆盖层，POLY-116），
+            //  因此移动总是落全量新序，而非只交换已列项
+            var orders = guard.Value.Setup.SourceOrders;
+            orders.Clear();
+            foreach (var source in order.Select(g => g.Source!))
+            {
+                orders.Add(source);
+            }
+
+            await guard.DisposeAsync();
+        }
+    }
+
+    private List<GroupModel> BuildGroupOrder()
+    {
+        if (!ProfileManager.TryGetImmutable(Basic.Key, out var profile))
+        {
+            return [];
+        }
+
+        var headers = _flat.Items.OfType<PackageListItemBase.Header>().ToList();
+        headers.Sort(new PackageListItemComparer(profile.Setup.SourceOrders));
+        return [.. headers.Select(h => h.Group)];
+    }
 
     private void NotifyGroupCommandStates()
     {
         DisbandGroupCommand.NotifyCanExecuteChanged();
         RemoveGroupCommand.NotifyCanExecuteChanged();
+        RaiseGroupPriorityCommand.NotifyCanExecuteChanged();
+        LowerGroupPriorityCommand.NotifyCanExecuteChanged();
     }
 
     [RelayCommand]

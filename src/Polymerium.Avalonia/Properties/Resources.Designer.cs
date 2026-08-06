@@ -1839,6 +1839,18 @@ namespace Polymerium.Avalonia.Properties {
             }
         }
         
+        public static string InstanceSetupPage_RaiseGroupPriorityMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_RaiseGroupPriorityMenuText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_LowerGroupPriorityMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_LowerGroupPriorityMenuText", resourceCulture);
+            }
+        }
+        
         public static string InstanceSetupPage_DisbandGroupConfirmTitle {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_DisbandGroupConfirmTitle", resourceCulture);
