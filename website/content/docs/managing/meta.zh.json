@@ -5,6 +5,7 @@
     "import-export",
     "snapshots",
     "tags",
+    "recipes",
     "java"
   ]
 }

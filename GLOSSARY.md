@@ -18,6 +18,7 @@ This glossary defines the canonical user-facing terms for Polymerium. Use these 
 | dependency | 依赖 | A package required by another package. |
 | dependent package | 依赖者 / 被依赖包 | A package that depends on the package currently being inspected. |
 | tag | 标签 | A user-defined label used to organize packages or target deployment rules. |
+| recipe | 配方 | A user-curated, shareable list of package references with optional per-item tags and notes, applicable to an instance during setup. A recipe holds references only — no files, configuration, or Minecraft version and loader — unlike a modpack. |
 
 ## Instance Lifecycle
 
@@ -69,6 +70,7 @@ Use the product label followed by the physical directory on first mention, for e
 | Model Context Protocol (MCP) | 模型上下文协议（MCP） | The protocol through which AI tools can operate Polymerium. Expand the name on first use. |
 | export | 导出 | Produce a distributable modpack archive or another supported format from an instance. |
 | import | 导入 | Create or update an instance from a modpack archive or supported format. Do not use this bare term as the name of the `import/` directory. |
+| migration | 迁移 | Import instances and their files from another launcher's data directory. Direct migration supports MultiMC, Prism Launcher, the CurseForge App, ATLauncher, and the Modrinth App; other launchers migrate manually. |
 
 ## Writing Rules
 
