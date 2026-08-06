@@ -1271,7 +1271,7 @@ public partial class InstanceSetupPageModel(
                 {
                     await using (guard)
                     {
-                        var source = InternalUriHelper.Recipe(recipeId);
+                        var source = RecipeHelper.ToUri(recipeId);
                         var setup = guard.Value.Setup;
                         foreach (var item in items)
                         {
@@ -1860,7 +1860,7 @@ public partial class InstanceSetupPageModel(
     {
         if (group is { Kind: PackageSourceHelper.Kind.Recipe, Source: not null })
         {
-            navigationService.Navigate<RecipePage>(group.Source["recipe://".Length..]);
+            navigationService.Navigate<RecipePage>(RecipeHelper.GetId(group.Source));
             return;
         }
 
@@ -1928,7 +1928,7 @@ public partial class InstanceSetupPageModel(
                 // NOTE: Recipe 信息同步可得——能解析即赋 Info，解析不出则 Info 留空，
                 //  与 Modpack 网络 IO 失败合并为同一「Info 未赋值 = 失败」语义，交公共层渲染重试。
                 g.IsLoaded = true;
-                var recipe = persistenceService.GetRecipe(source["recipe://".Length..]);
+                var recipe = persistenceService.GetRecipe(RecipeHelper.GetId(source));
                 if (recipe is not null)
                 {
                     g.Info = new RecipeGroupInfoModel(recipe.Name);

@@ -43,19 +43,13 @@ public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer render
     /// </summary>
     public async Task<Bitmap?> RenderAsync(string url)
     {
-        if (!InternalUriHelper.IsKind(url, "skin"))
+        if (!SkinHelper.TryGetQuery(url, out var type, out var src))
         {
             return null;
         }
 
         try
         {
-            var query = ParseQuery(url);
-            if (!query.TryGetValue("type", out var type) || !query.TryGetValue("src", out var src))
-            {
-                return null;
-            }
-
             using var skin = await LoadSkinAsync(src).ConfigureAwait(false);
             return skin is null ? null : RenderToBitmap(type, skin);
         }
@@ -146,28 +140,5 @@ public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer render
             logger.LogWarning(ex, "Built-in skin asset unavailable: {Uri}", uri);
             return null;
         }
-    }
-
-    private static Dictionary<string, string> ParseQuery(string url)
-    {
-        var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        var q = url.IndexOf('?');
-        if (q < 0)
-        {
-            return result;
-        }
-
-        foreach (var pair in url.Substring(q + 1).Split('&', StringSplitOptions.RemoveEmptyEntries))
-        {
-            var eq = pair.IndexOf('=');
-            if (eq <= 0)
-            {
-                continue;
-            }
-
-            result[Uri.UnescapeDataString(pair[..eq])] = Uri.UnescapeDataString(pair[(eq + 1)..]);
-        }
-
-        return result;
     }
 }
