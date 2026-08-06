@@ -897,6 +897,42 @@
     <data name="InstanceSetupPage_ActiveMenuText" xml:space="preserve">
         <value>Active</value>
     </data>
+    <data name="InstanceSetupPage_GroupExpandedMenuText" xml:space="preserve">
+        <value>Expand</value>
+    </data>
+    <data name="InstanceSetupPage_ViewGroupDetailsMenuText" xml:space="preserve">
+        <value>View Details</value>
+    </data>
+    <data name="InstanceSetupPage_ModpackGroupTagText" xml:space="preserve">
+        <value>Modpack</value>
+    </data>
+    <data name="InstanceSetupPage_RecipeGroupTagText" xml:space="preserve">
+        <value>Recipe</value>
+    </data>
+    <data name="InstanceSetupPage_EnableGroupMenuText" xml:space="preserve">
+        <value>Enable Whole Group</value>
+    </data>
+    <data name="InstanceSetupPage_DisableGroupMenuText" xml:space="preserve">
+        <value>Disable Whole Group</value>
+    </data>
+    <data name="InstanceSetupPage_DisbandGroupMenuText" xml:space="preserve">
+        <value>Disband Group</value>
+    </data>
+    <data name="InstanceSetupPage_RemoveGroupMenuText" xml:space="preserve">
+        <value>Remove Group</value>
+    </data>
+    <data name="InstanceSetupPage_DisbandGroupConfirmTitle" xml:space="preserve">
+        <value>Disband Group</value>
+    </data>
+    <data name="InstanceSetupPage_DisbandGroupConfirmMessage" xml:space="preserve">
+        <value>Type the code to confirm disbanding this group. Its packages will become standalone.</value>
+    </data>
+    <data name="InstanceSetupPage_RemoveGroupConfirmTitle" xml:space="preserve">
+        <value>Remove Group</value>
+    </data>
+    <data name="InstanceSetupPage_RemoveGroupConfirmMessage" xml:space="preserve">
+        <value>Type the code to confirm removing this group and all its packages from the instance.</value>
+    </data>
     <data name="InstanceSetupPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>Open Website</value>
     </data>

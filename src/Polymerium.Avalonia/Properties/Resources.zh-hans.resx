@@ -888,6 +888,42 @@
     <data name="InstanceSetupPage_ActiveMenuText" xml:space="preserve">
         <value>激活</value>
     </data>
+    <data name="InstanceSetupPage_GroupExpandedMenuText" xml:space="preserve">
+        <value>展开</value>
+    </data>
+    <data name="InstanceSetupPage_ViewGroupDetailsMenuText" xml:space="preserve">
+        <value>查看详情</value>
+    </data>
+    <data name="InstanceSetupPage_ModpackGroupTagText" xml:space="preserve">
+        <value>整合包</value>
+    </data>
+    <data name="InstanceSetupPage_RecipeGroupTagText" xml:space="preserve">
+        <value>配方</value>
+    </data>
+    <data name="InstanceSetupPage_EnableGroupMenuText" xml:space="preserve">
+        <value>启用整组</value>
+    </data>
+    <data name="InstanceSetupPage_DisableGroupMenuText" xml:space="preserve">
+        <value>禁用整组</value>
+    </data>
+    <data name="InstanceSetupPage_DisbandGroupMenuText" xml:space="preserve">
+        <value>解散组</value>
+    </data>
+    <data name="InstanceSetupPage_RemoveGroupMenuText" xml:space="preserve">
+        <value>移除组</value>
+    </data>
+    <data name="InstanceSetupPage_DisbandGroupConfirmTitle" xml:space="preserve">
+        <value>解散组</value>
+    </data>
+    <data name="InstanceSetupPage_DisbandGroupConfirmMessage" xml:space="preserve">
+        <value>输入验证码以确认解散该组，组内包将变为散装包。</value>
+    </data>
+    <data name="InstanceSetupPage_RemoveGroupConfirmTitle" xml:space="preserve">
+        <value>移除组</value>
+    </data>
+    <data name="InstanceSetupPage_RemoveGroupConfirmMessage" xml:space="preserve">
+        <value>输入验证码以确认从该实例移除该组及其全部包。</value>
+    </data>
     <data name="InstanceSetupPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>前往网站</value>
     </data>

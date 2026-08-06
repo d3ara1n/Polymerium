@@ -38,7 +38,7 @@ public sealed class PackageListItemComparer(IList<string> sourceOrders) : ICompa
         return IntraIndexOf(x).CompareTo(IntraIndexOf(y));
     }
 
-    private int CompareGroup(GroupModelBase x, GroupModelBase y)
+    private int CompareGroup(GroupModel x, GroupModel y)
     {
         if (ReferenceEquals(x, y))
         {
@@ -92,7 +92,7 @@ public sealed class PackageListItemComparer(IList<string> sourceOrders) : ICompa
     }
 
     // 不在 SourceOrders 里的组：Recipe 排在 Modpack 前（POLY-116 默认档位）
-    private static int TierOf(GroupModelBase g) => g.Kind == PackageSourceHelper.Kind.Recipe ? 0 : 1;
+    private static int TierOf(GroupModel g) => g.Kind == PackageSourceHelper.Kind.Recipe ? 0 : 1;
 
     private static int RankOf(PackageListItemBase item) => item is PackageListItemBase.Header ? 0 : 1;
 

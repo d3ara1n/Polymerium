@@ -1094,81 +1094,97 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("SettingsPage_FontLabelText", resourceCulture);
             }
         }
+        
         public static string SettingsPage_FontTitle {
             get {
                 return ResourceManager.GetString("SettingsPage_FontTitle", resourceCulture);
             }
         }
+        
         public static string SettingsPage_FontSubtitle {
             get {
                 return ResourceManager.GetString("SettingsPage_FontSubtitle", resourceCulture);
             }
         }
+        
         public static string SettingsPage_MainFontLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_MainFontLabelText", resourceCulture);
             }
         }
+        
         public static string SettingsPage_CodeFontLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_CodeFontLabelText", resourceCulture);
             }
         }
+        
         public static string SettingsPage_LogFontLabelText {
             get {
                 return ResourceManager.GetString("SettingsPage_LogFontLabelText", resourceCulture);
             }
         }
+        
         public static string SettingsPage_FontDefaultText {
             get {
                 return ResourceManager.GetString("SettingsPage_FontDefaultText", resourceCulture);
             }
         }
+        
         public static string FontPickerDialog_Title {
             get {
                 return ResourceManager.GetString("FontPickerDialog_Title", resourceCulture);
             }
         }
+        
         public static string FontPickerDialog_UnavailableText {
             get {
                 return ResourceManager.GetString("FontPickerDialog_UnavailableText", resourceCulture);
             }
         }
+        
         public static string FontPickerDialog_CurrentFontLabelText {
             get {
                 return ResourceManager.GetString("FontPickerDialog_CurrentFontLabelText", resourceCulture);
             }
         }
+        
         public static string FontPickerDialog_NoneSelectedText {
             get {
                 return ResourceManager.GetString("FontPickerDialog_NoneSelectedText", resourceCulture);
             }
         }
+        
         public static string FontPickerDialog_ChooseFileButtonText {
             get {
                 return ResourceManager.GetString("FontPickerDialog_ChooseFileButtonText", resourceCulture);
             }
         }
+        
         public static string FontPickerDialog_ChooseFileTitle {
             get {
                 return ResourceManager.GetString("FontPickerDialog_ChooseFileTitle", resourceCulture);
             }
         }
+        
         public static string FontPickerDialog_FontFileFilter {
             get {
                 return ResourceManager.GetString("FontPickerDialog_FontFileFilter", resourceCulture);
             }
         }
+        
         public static string FontPickerDialog_SampleText {
             get {
                 return ResourceManager.GetString("FontPickerDialog_SampleText", resourceCulture);
             }
         }
+        
         public static string FontPickerDialog_UseDefaultButtonText {
             get {
                 return ResourceManager.GetString("FontPickerDialog_UseDefaultButtonText", resourceCulture);
             }
         }
+        
         public static string FontPickerDialog_SearchPlaceholderText {
             get {
                 return ResourceManager.GetString("FontPickerDialog_SearchPlaceholderText", resourceCulture);
@@ -1772,6 +1788,78 @@ namespace Polymerium.Avalonia.Properties {
         public static string InstanceSetupPage_ActiveMenuText {
             get {
                 return ResourceManager.GetString("InstanceSetupPage_ActiveMenuText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_GroupExpandedMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_GroupExpandedMenuText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_ViewGroupDetailsMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_ViewGroupDetailsMenuText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_ModpackGroupTagText {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_ModpackGroupTagText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_RecipeGroupTagText {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_RecipeGroupTagText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_EnableGroupMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_EnableGroupMenuText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_DisableGroupMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_DisableGroupMenuText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_DisbandGroupMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_DisbandGroupMenuText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_RemoveGroupMenuText {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_RemoveGroupMenuText", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_DisbandGroupConfirmTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_DisbandGroupConfirmTitle", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_DisbandGroupConfirmMessage {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_DisbandGroupConfirmMessage", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_RemoveGroupConfirmTitle {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_RemoveGroupConfirmTitle", resourceCulture);
+            }
+        }
+        
+        public static string InstanceSetupPage_RemoveGroupConfirmMessage {
+            get {
+                return ResourceManager.GetString("InstanceSetupPage_RemoveGroupConfirmMessage", resourceCulture);
             }
         }
         
@@ -6646,6 +6734,7 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("AppMenu_StorageText", resourceCulture);
             }
         }
+        
         public static string AppMenu_InstancesText {
             get {
                 return ResourceManager.GetString("AppMenu_InstancesText", resourceCulture);
@@ -7113,6 +7202,7 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("MainWindow_InstancesButtonText", resourceCulture);
             }
         }
+        
         public static string MainWindow_RecipesButtonText {
             get {
                 return ResourceManager.GetString("MainWindow_RecipesButtonText", resourceCulture);
@@ -7376,31 +7466,31 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("RecipeExporterDialog_Title", resourceCulture);
             }
         }
-
+        
         public static string RecipeExporterDialog_Prompt {
             get {
                 return ResourceManager.GetString("RecipeExporterDialog_Prompt", resourceCulture);
             }
         }
-
+        
         public static string RecipeExporterDialog_ItemCountLabelText {
             get {
                 return ResourceManager.GetString("RecipeExporterDialog_ItemCountLabelText", resourceCulture);
             }
         }
-
+        
         public static string RecipeExporterDialog_PathLabelText {
             get {
                 return ResourceManager.GetString("RecipeExporterDialog_PathLabelText", resourceCulture);
             }
         }
-
+        
         public static string RecipeExporterDialog_PathBarPlaceholder {
             get {
                 return ResourceManager.GetString("RecipeExporterDialog_PathBarPlaceholder", resourceCulture);
             }
         }
-
+        
         public static string RecipesPage_Title {
             get {
                 return ResourceManager.GetString("RecipesPage_Title", resourceCulture);
@@ -7502,43 +7592,43 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("RecipesPage_ImportSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string RecipesPage_ImportDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("RecipesPage_ImportDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string RecipesPage_ImportDangerNotificationMessage {
             get {
                 return ResourceManager.GetString("RecipesPage_ImportDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string RecipesPage_ExportSuccessNotificationMessage {
             get {
                 return ResourceManager.GetString("RecipesPage_ExportSuccessNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string RecipesPage_ExportSuccessNotificationTitle {
             get {
                 return ResourceManager.GetString("RecipesPage_ExportSuccessNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string RecipesPage_ExportDangerNotificationMessage {
             get {
                 return ResourceManager.GetString("RecipesPage_ExportDangerNotificationMessage", resourceCulture);
             }
         }
-
+        
         public static string RecipesPage_ExportDangerNotificationTitle {
             get {
                 return ResourceManager.GetString("RecipesPage_ExportDangerNotificationTitle", resourceCulture);
             }
         }
-
+        
         public static string RecipePage_EditButtonText {
             get {
                 return ResourceManager.GetString("RecipePage_EditButtonText", resourceCulture);
@@ -7556,7 +7646,6 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("RecipePage_ExportButtonText", resourceCulture);
             }
         }
-        
         
         public static string RecipePage_AddPackageButtonText {
             get {
@@ -7617,6 +7706,7 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("RecipeItemButton_NoNoteText", resourceCulture);
             }
         }
+        
         public static string RecipeItemModal_SummaryLabelText {
             get {
                 return ResourceManager.GetString("RecipeItemModal_SummaryLabelText", resourceCulture);
@@ -7676,7 +7766,6 @@ namespace Polymerium.Avalonia.Properties {
                 return ResourceManager.GetString("RecipeEditorDialog_EditTitle", resourceCulture);
             }
         }
-        
         
         public static string InstanceSetupPage_ImportRecipeMenuText {
             get {

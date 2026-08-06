@@ -108,33 +108,186 @@
                 Icon="{fie:SymbolIcon Symbol=Delete,
                                       FontSize={StaticResource MediumFontSize}}" />
         </MenuFlyout>
+        <MenuFlyout
+            x:Key="GroupHeaderContextFlyout"
+            x:DataType="app:PackageListItemBase+Header">
+            <MenuItem
+                Header="{x:Static lang:Resources.InstanceSetupPage_GroupExpandedMenuText}"
+                Icon="{fie:SymbolIcon Symbol=ChevronUpDown,
+                                      FontSize={StaticResource MediumFontSize}}"
+                IsChecked="{Binding Group.IsExpanded, Mode=TwoWay}"
+                ToggleType="CheckBox" />
+            <MenuItem Header="-" />
+            <MenuItem
+                Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewGroupDetailsCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding Group}"
+                Header="{x:Static lang:Resources.InstanceSetupPage_ViewGroupDetailsMenuText}"
+                Icon="{fie:SymbolIcon Symbol=Info,
+                                      FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem Header="-" />
+            <MenuItem
+                Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).EnableGroupCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding Group}"
+                Header="{x:Static lang:Resources.InstanceSetupPage_EnableGroupMenuText}"
+                Icon="{fie:SymbolIcon Symbol=CheckmarkCircle,
+                                      FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem
+                Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).DisableGroupCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding Group}"
+                Header="{x:Static lang:Resources.InstanceSetupPage_DisableGroupMenuText}"
+                Icon="{fie:SymbolIcon Symbol=DismissCircle,
+                                      FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem Header="-" />
+            <MenuItem
+                Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).DisbandGroupCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding Group}"
+                Header="{x:Static lang:Resources.InstanceSetupPage_DisbandGroupMenuText}"
+                Icon="{fie:SymbolIcon Symbol=GroupDismiss,
+                                      FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem
+                Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RemoveGroupCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding Group}"
+                Foreground="{StaticResource ControlDangerForegroundBrush}"
+                Header="{x:Static lang:Resources.InstanceSetupPage_RemoveGroupMenuText}"
+                Icon="{fie:SymbolIcon Symbol=Delete,
+                                      FontSize={StaticResource MediumFontSize}}" />
+        </MenuFlyout>
         <app:PackageListItemTemplateSelector x:Key="PackageListItemTemplate">
             <app:PackageListItemTemplateSelector.HeaderTemplate>
                 <DataTemplate x:DataType="app:PackageListItemBase+Header">
                     <Grid
                         Margin="0,8,0,4"
-                        ColumnDefinitions="Auto,*,Auto"
-                        ColumnSpacing="8">
-                        <ContentControl
-                            Grid.Column="0"
-                            Content="{Binding Group}"
-                            ContentTemplate="{StaticResource ModpackGroupContentTemplate}" />
+                        ColumnDefinitions="Auto,*"
+                        ColumnSpacing="4">
                         <Button
-                            Grid.Column="2"
+                            Grid.Column="0"
                             Padding="8"
                             Background="Transparent"
                             BorderThickness="0"
                             Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ToggleGroupExpandedCommand, FallbackValue={x:Null}}"
                             CommandParameter="{Binding Group}"
-                            CornerRadius="{StaticResource FullCornerRadius}">
-                            <Panel>
-                                <fi:SymbolIcon
-                                    IsVisible="{Binding Group.IsExpanded}"
-                                    Symbol="ChevronDown" />
-                                <fi:SymbolIcon
-                                    IsVisible="{Binding !Group.IsExpanded}"
-                                    Symbol="ChevronRight" />
-                            </Panel>
+                            CornerRadius="{StaticResource SmallCornerRadius}">
+                            <husk:SwitchContainer
+                                TargetType="x:Boolean"
+                                Value="{Binding Group.IsExpanded, Mode=OneWay}">
+                                <husk:SwitchCase Value="True">
+                                    <fi:SymbolIcon Symbol="ChevronDown" />
+                                </husk:SwitchCase>
+                                <husk:SwitchCase Value="False">
+                                    <fi:SymbolIcon Symbol="ChevronRight" />
+                                </husk:SwitchCase>
+                            </husk:SwitchContainer>
+                        </Button>
+                        <Button
+                            Grid.Column="1"
+                            Padding="4"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ActivateGroupHeaderCommand, FallbackValue={x:Null}}"
+                            CommandParameter="{Binding Group}"
+                            ContextFlyout="{StaticResource GroupHeaderContextFlyout}"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
+                            <husk:PlaceholderContainer Source="{Binding Group.Info}">
+                                <husk:PlaceholderContainer.SourceTemplate>
+                                    <DataTemplate DataType="app:GroupInfoModelBase">
+                                        <ContentControl
+                                            HorizontalAlignment="Stretch"
+                                            Content="{Binding}">
+                                            <ContentControl.DataTemplates>
+                                                <DataTemplate DataType="app:ModpackGroupInfoModel">
+                                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8">
+                                                        <Border Grid.Column="0"
+                                                                Width="32"
+                                                                Height="32"
+                                                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <Border.Background>
+                                                                <ImageBrush
+                                                                    async:ImageBrushLoader.Source="{Binding Thumbnail}"
+                                                                    Stretch="UniformToFill" />
+                                                            </Border.Background>
+                                                        </Border>
+                                                        <TextBlock
+                                                            Grid.Column="1"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="{StaticResource MediumFontSize}"
+                                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                            Text="{Binding Name, FallbackValue=Modpack}"
+                                                            TextTrimming="CharacterEllipsis" />
+                                                        <husk:IconLabel Grid.Column="2"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Icon="Box"
+                                                            Text="{Binding $parent[Button].((app:PackageListItemBase)DataContext).Group.Count, FallbackValue=0}" />
+                                                        <husk:Tag
+                                                            Grid.Column="3"
+                                                            VerticalAlignment="Center"
+                                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <TextBlock
+                                                                Text="{x:Static lang:Resources.InstanceSetupPage_ModpackGroupTagText}" />
+                                                        </husk:Tag>
+                                                    </Grid>
+                                                </DataTemplate>
+                                                <DataTemplate DataType="app:RecipeGroupInfoModel">
+                                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8">
+                                                        <Border Grid.Column="0"
+                                                            Width="32"
+                                                            Height="32"
+                                                            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <fi:SymbolIcon
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="{StaticResource LargeFontSize}"
+                                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                Symbol="ListBar" />
+                                                        </Border>
+                                                        <TextBlock
+                                                            Grid.Column="1"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="{StaticResource MediumFontSize}"
+                                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                            Text="{Binding Name, FallbackValue=Recipe}"
+                                                            TextTrimming="CharacterEllipsis" />
+                                                        <husk:IconLabel
+                                                            Grid.Column="2"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Icon="Box"
+                                                            Text="{Binding $parent[Button].((app:PackageListItemBase)DataContext).Group.Count, FallbackValue=0}" />
+                                                        <husk:Tag
+                                                            Grid.Column="3"
+                                                            VerticalAlignment="Center"
+                                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                                            <TextBlock
+                                                                Text="{x:Static lang:Resources.InstanceSetupPage_RecipeGroupTagText}" />
+                                                        </husk:Tag>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ContentControl.DataTemplates>
+                                        </ContentControl>
+                                    </DataTemplate>
+                                </husk:PlaceholderContainer.SourceTemplate>
+                                <husk:PlaceholderContainer.Placeholder>
+                                    <husk:SkeletonContainer
+                                        CornerRadius="{StaticResource SmallCornerRadius}"
+                                        IsLoading="{Binding !Group.IsLoaded}">
+                                        <StackPanel
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal"
+                                            Spacing="6">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Text="{x:Static lang:Resources.InstancePackageButton_LoadFailedTitleText}" />
+                                            <fi:SymbolIcon Symbol="ArrowCounterclockwise" />
+                                        </StackPanel>
+                                    </husk:SkeletonContainer>
+                                </husk:PlaceholderContainer.Placeholder>
+                            </husk:PlaceholderContainer>
                         </Button>
                     </Grid>
                 </DataTemplate>
@@ -175,66 +328,6 @@
                 </DataTemplate>
             </app:PackageListItemTemplateSelector.EntryTemplate>
         </app:PackageListItemTemplateSelector>
-        <DataTemplate
-            x:Key="ModpackGroupContentTemplate"
-            x:DataType="app:ModpackGroupModel">
-            <husk:PlaceholderContainer Source="{Binding Info}">
-                <husk:PlaceholderContainer.SourceTemplate>
-                    <DataTemplate x:DataType="app:ModpackGroupInfoModel">
-                        <Button
-                            Padding="4"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewGroupDetailsCommand, FallbackValue={x:Null}}"
-                            CommandParameter="{Binding Owner}"
-                            CornerRadius="{StaticResource SmallCornerRadius}">
-                            <Grid
-                                ColumnDefinitions="Auto,*"
-                                ColumnSpacing="8">
-                                <Border
-                                    Width="32"
-                                    Height="32"
-                                    CornerRadius="{StaticResource SmallCornerRadius}">
-                                    <Border.Background>
-                                        <ImageBrush
-                                            async:ImageBrushLoader.Source="{Binding Thumbnail}"
-                                            Stretch="UniformToFill" />
-                                    </Border.Background>
-                                </Border>
-                                <TextBlock
-                                    Grid.Column="1"
-                                    VerticalAlignment="Center"
-                                    FontSize="{StaticResource MediumFontSize}"
-                                    FontWeight="{StaticResource ControlStrongFontWeight}"
-                                    Text="{Binding Name, FallbackValue=Modpack}"
-                                    TextTrimming="CharacterEllipsis" />
-                            </Grid>
-                        </Button>
-                    </DataTemplate>
-                </husk:PlaceholderContainer.SourceTemplate>
-                <husk:PlaceholderContainer.Placeholder>
-                    <husk:SkeletonContainer
-                        CornerRadius="{StaticResource SmallCornerRadius}"
-                        IsLoading="{Binding !IsLoaded}">
-                        <Button
-                            Padding="4"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RefreshPackagesCommand, FallbackValue={x:Null}}"
-                            CornerRadius="{StaticResource SmallCornerRadius}">
-                            <StackPanel
-                                Orientation="Horizontal"
-                                Spacing="6">
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    Text="{x:Static lang:Resources.InstancePackageButton_LoadFailedTitleText}" />
-                                <fi:SymbolIcon Symbol="ArrowCounterclockwise" />
-                            </StackPanel>
-                        </Button>
-                    </husk:SkeletonContainer>
-                </husk:PlaceholderContainer.Placeholder>
-            </husk:PlaceholderContainer>
-        </DataTemplate>
     </app:Subpage.Resources>
     <husk:BusyContainer>
         <husk:BusyContainer.IsBusy>
@@ -363,7 +456,8 @@
                             <StackPanel
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
-                                <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ReferenceUnavailableLabelText}" />
+                                <TextBlock
+                                    Text="{x:Static lang:Resources.InstanceSetupPage_ReferenceUnavailableLabelText}" />
                                 <Button
                                     IsVisible="False"
                                     Content="Retry" />
@@ -442,13 +536,15 @@
                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                                 Symbol="Open" />
                                                         </Grid>
-                                                        <TextBlock Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
+                                                        <TextBlock
+                                                            Text="{Binding $parent[HyperlinkButton].NavigateUri}" />
                                                     </StackPanel>
                                                 </ToolTip.Tip>
                                                 <StackPanel
                                                     Orientation="Horizontal"
                                                     Spacing="4">
-                                                    <TextBlock Text="{Binding Label, FallbackValue=LABEL, Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                                    <TextBlock
+                                                        Text="{Binding Label, FallbackValue=LABEL, Converter={x:Static husk:StringConverters.ToUpper}}" />
                                                     <fi:SymbolIcon
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Symbol="Open" />
@@ -644,20 +740,24 @@
                                                                 </ItemsPanelTemplate>
                                                             </ItemsControl.ItemsPanel>
                                                             <ItemsControl.ItemTemplate>
-                                                                <DataTemplate x:DataType="app:InstancePackageFilterTagModel">
+                                                                <DataTemplate
+                                                                    x:DataType="app:InstancePackageFilterTagModel">
                                                                     <Border
                                                                         Padding="8"
                                                                         BorderBrush="{StaticResource ControlBorderBrush}"
                                                                         BorderThickness="1"
                                                                         CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
+                                                                        <CheckBox
+                                                                            IsChecked="{Binding IsSelected, Mode=TwoWay}">
                                                                             <StackPanel
                                                                                 Orientation="Horizontal"
                                                                                 Spacing="4">
                                                                                 <TextBlock Text="{Binding Content}" />
-                                                                                <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
+                                                                                <TextBlock
+                                                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                                                                                     <Run Text="(" />
-                                                                                    <Run Text="{Binding RefCount, Mode=OneWay}" />
+                                                                                    <Run
+                                                                                        Text="{Binding RefCount, Mode=OneWay}" />
                                                                                     <Run Text=")" />
                                                                                 </TextBlock>
                                                                             </StackPanel>
