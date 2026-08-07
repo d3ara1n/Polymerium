@@ -15,6 +15,7 @@
         <Project Path="submodules\Trident.Net\src\TridentCore.Cli\TridentCore.Cli.csproj"/>
         <Project Path="submodules\Trident.Net\src\TridentCore.Core\TridentCore.Core.csproj"/>
         <Project Path="submodules\Trident.Net\src\TridentCore.Pref\TridentCore.Pref.csproj"/>
+        <Project Path="submodules\Trident.Net\src\TridentCore.Text\TridentCore.Text.csproj"/>
     </Folder>
     <Project Path="src\Polymerium.Avalonia\Polymerium.Avalonia.csproj"/>
 </Solution>

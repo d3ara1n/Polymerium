@@ -29,7 +29,7 @@ public partial class AssetServerModel(string sourceFilePath, Bitmap icon, AssetS
 
     public void ApplyLiveStatus(MinecraftServerStatusHelper.ServerStatusResult status)
     {
-        Description = status.Description;
+        Description = status.RawDescription;
         VersionName = status.VersionName;
         OnlinePlayers = status.OnlinePlayers;
         MaxPlayers = status.MaxPlayers;

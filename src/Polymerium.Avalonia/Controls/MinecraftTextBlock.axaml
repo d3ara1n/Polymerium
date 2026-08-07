@@ -1,0 +1,21 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium">
+    <ControlTheme
+        x:Key="{x:Type app:MinecraftTextBlock}"
+        TargetType="app:MinecraftTextBlock">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <TextBlock
+                    Name="PART_TextBlock"
+                    FontFamily="{TemplateBinding FontFamily}"
+                    FontSize="{TemplateBinding FontSize}"
+                    Foreground="{TemplateBinding Foreground}"
+                    MaxLines="{TemplateBinding MaxLines}"
+                    TextTrimming="{TemplateBinding TextTrimming}"
+                    TextWrapping="{TemplateBinding TextWrapping}" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

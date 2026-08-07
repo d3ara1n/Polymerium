@@ -95,5 +95,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\submodules\Trident.Net\src\TridentCore.Core\TridentCore.Core.csproj"/>
+        <ProjectReference Include="..\..\submodules\Trident.Net\src\TridentCore.Text\TridentCore.Text.csproj"/>
     </ItemGroup>
 </Project>
