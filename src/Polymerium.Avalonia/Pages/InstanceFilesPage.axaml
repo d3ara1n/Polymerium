@@ -307,7 +307,7 @@
                                                     </DockPanel>
 
                                                     <!--  描述  -->
-                                                    <TextBlock
+                                                    <app:MinecraftTextBlock
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                         MaxLines="1"
@@ -441,7 +441,7 @@
                                                 <TextBlock
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
                                                     Text="{x:Static lang:Resources.InstanceFilesPage_DescriptionLabelText}" />
-                                                <TextBlock
+                                                <app:MinecraftTextBlock
                                                     Text="{Binding Metadata.Description, FallbackValue=No description available}"
                                                     TextWrapping="Wrap" />
                                             </StackPanel>
@@ -695,7 +695,7 @@
                                                 Padding="12,8"
                                                 Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <TextBlock
+                                                <app:MinecraftTextBlock
                                                     Text="{Binding Description}"
                                                     TextWrapping="Wrap" />
                                             </Border>
@@ -883,7 +883,7 @@
                                                 </DockPanel>
 
                                                 <!--  描述  -->
-                                                <TextBlock
+                                                <app:MinecraftTextBlock
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                     MaxLines="1"
@@ -1009,7 +1009,7 @@
                                             <TextBlock
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
                                                 Text="{x:Static lang:Resources.InstanceFilesPage_DescriptionLabelText}" />
-                                            <TextBlock
+                                        <app:MinecraftTextBlock
                                                 Text="{Binding Metadata.Description, FallbackValue=No description available}"
                                                 TextWrapping="Wrap" />
                                         </StackPanel>
@@ -1233,7 +1233,7 @@
                                                 </DockPanel>
 
                                                 <!--  描述  -->
-                                                <TextBlock
+                                                <app:MinecraftTextBlock
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                     MaxLines="1"
@@ -1361,7 +1361,7 @@
                                             <TextBlock
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
                                                 Text="Description" />
-                                            <TextBlock
+                                            <app:MinecraftTextBlock
                                                 Text="{Binding Metadata.Description, FallbackValue=No description available}"
                                                 TextWrapping="Wrap" />
                                         </StackPanel>
@@ -1924,7 +1924,7 @@
                                                                     </DockPanel>
 
                                                                     <!--  描述  -->
-                                                                    <TextBlock
+                                                                    <app:MinecraftTextBlock
                                                                         FontSize="{StaticResource SmallFontSize}"
                                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                                                         MaxLines="1"
