@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -49,7 +48,7 @@
                     CommandParameter="https://polymerium.dearain.dev/docs/concepts/directory-model">
                     <husk:IconLabel
                         Icon="BookQuestionMark"
-                        Text="{x:Static lang:Resources.InstanceStoragePage_OpenWikiButtonText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_OpenWikiButtonText}}" />
                 </HyperlinkButton>
                 <Button
                     Classes="Small"
@@ -58,7 +57,7 @@
                     Theme="{StaticResource OutlineButtonTheme}">
                     <husk:IconLabel
                         Icon="FolderOpen"
-                        Text="{x:Static lang:Resources.InstanceStoragePage_OpenFolderButtonText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_OpenFolderButtonText}}" />
                 </Button>
                 <Button
                     Classes="Small"
@@ -68,7 +67,7 @@
                     Theme="{StaticResource OutlineButtonTheme}">
                     <husk:IconLabel
                         Icon="Library"
-                        Text="{x:Static lang:Resources.InstanceStoragePage_GotoExplorerButtonText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_GotoExplorerButtonText}}" />
                 </Button>
             </StackPanel>
         </Grid>
@@ -80,7 +79,7 @@
             <TextBlock
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.InstanceStoragePage_BreakdownLabelText}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_BreakdownLabelText}}" />
             <Grid
                 ColumnDefinitions="*,*,*,*"
                 ColumnSpacing="12">
@@ -98,15 +97,15 @@
                             <HyperlinkButton
                                 Command="{Binding OpenBuildFolderCommand}"
                                 CommandParameter="mods"
-                                Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_BuildFolderLinkText}}" />
                             <HyperlinkButton
                                 Command="{Binding OpenImportFolderCommand}"
                                 CommandParameter="mods"
-                                Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_ImportFolderLinkText}}" />
                             <HyperlinkButton
                                 Command="{Binding OpenPersistFolderCommand}"
                                 CommandParameter="mods"
-                                Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_PersistFolderLinkText}}" />
                         </StackPanel>
                         <fi:SymbolIcon
                             Grid.Row="0"
@@ -122,7 +121,7 @@
                             Grid.ColumnSpan="2"
                             FontSize="{StaticResource LargeFontSize}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.AssetKind_Mod}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_Mod}}" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="0"
@@ -164,15 +163,15 @@
                             <HyperlinkButton
                                 Command="{Binding OpenBuildFolderCommand}"
                                 CommandParameter="resourcepacks"
-                                Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_BuildFolderLinkText}}" />
                             <HyperlinkButton
                                 Command="{Binding OpenImportFolderCommand}"
                                 CommandParameter="resourcepacks"
-                                Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_ImportFolderLinkText}}" />
                             <HyperlinkButton
                                 Command="{Binding OpenPersistFolderCommand}"
                                 CommandParameter="resourcepacks"
-                                Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_PersistFolderLinkText}}" />
                         </StackPanel>
                         <fi:SymbolIcon
                             Grid.Row="0"
@@ -188,7 +187,7 @@
                             Grid.ColumnSpan="2"
                             FontSize="{StaticResource LargeFontSize}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.AssetKind_ResourcePack}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_ResourcePack}}" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="0"
@@ -230,15 +229,15 @@
                             <HyperlinkButton
                                 Command="{Binding OpenBuildFolderCommand}"
                                 CommandParameter="shaderpacks"
-                                Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_BuildFolderLinkText}}" />
                             <HyperlinkButton
                                 Command="{Binding OpenImportFolderCommand}"
                                 CommandParameter="shaderpacks"
-                                Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_ImportFolderLinkText}}" />
                             <HyperlinkButton
                                 Command="{Binding OpenPersistFolderCommand}"
                                 CommandParameter="shaderpacks"
-                                Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_PersistFolderLinkText}}" />
                         </StackPanel>
                         <fi:SymbolIcon
                             Grid.Row="0"
@@ -254,7 +253,7 @@
                             Grid.ColumnSpan="2"
                             FontSize="{StaticResource LargeFontSize}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.AssetKind_ShaderPack}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_ShaderPack}}" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="0"
@@ -296,15 +295,15 @@
                             <HyperlinkButton
                                 Command="{Binding OpenBuildFolderCommand}"
                                 CommandParameter="saves"
-                                Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_BuildFolderLinkText}}" />
                             <HyperlinkButton
                                 Command="{Binding OpenImportFolderCommand}"
                                 CommandParameter="saves"
-                                Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_ImportFolderLinkText}}" />
                             <HyperlinkButton
                                 Command="{Binding OpenPersistFolderCommand}"
                                 CommandParameter="saves"
-                                Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_PersistFolderLinkText}}" />
                         </StackPanel>
                         <fi:SymbolIcon
                             Grid.Row="0"
@@ -320,7 +319,7 @@
                             Grid.ColumnSpan="2"
                             FontSize="{StaticResource LargeFontSize}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.AssetKind_Save}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_Save}}" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="0"
@@ -358,7 +357,7 @@
                     <TextBlock
                         FontSize="{StaticResource LargeFontSize}"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.InstanceStoragePage_AdditionalLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_AdditionalLabelText}}" />
                     <Grid
                         ColumnDefinitions="*,*"
                         ColumnSpacing="12"
@@ -386,7 +385,7 @@
                                     VerticalAlignment="Center">
                                     <TextBlock
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                        Text="{x:Static lang:Resources.AssetKind_Screenshot}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_Screenshot}}" />
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
@@ -406,15 +405,15 @@
                                     <HyperlinkButton
                                         Command="{Binding OpenBuildFolderCommand}"
                                         CommandParameter="screenshots"
-                                        Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_BuildFolderLinkText}}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenImportFolderCommand}"
                                         CommandParameter="screenshots"
-                                        Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_ImportFolderLinkText}}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenPersistFolderCommand}"
                                         CommandParameter="screenshots"
-                                        Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_PersistFolderLinkText}}" />
                                 </TextBlock>
                                 <ProgressBar
                                     Name="ScreenshotsProgressBar"
@@ -447,7 +446,7 @@
                                     VerticalAlignment="Center">
                                     <TextBlock
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                        Text="{x:Static lang:Resources.AssetKind_Log}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_Log}}" />
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
@@ -467,15 +466,15 @@
                                     <HyperlinkButton
                                         Command="{Binding OpenBuildFolderCommand}"
                                         CommandParameter="logs"
-                                        Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_BuildFolderLinkText}}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenImportFolderCommand}"
                                         CommandParameter="logs"
-                                        Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_ImportFolderLinkText}}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenPersistFolderCommand}"
                                         CommandParameter="logs"
-                                        Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_PersistFolderLinkText}}" />
                                 </TextBlock>
                                 <ProgressBar
                                     Name="LogsProgressBar"
@@ -507,7 +506,7 @@
                                     VerticalAlignment="Center">
                                     <TextBlock
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                        Text="{x:Static lang:Resources.AssetKind_CrashReport}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_CrashReport}}" />
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
@@ -527,15 +526,15 @@
                                     <HyperlinkButton
                                         Command="{Binding OpenBuildFolderCommand}"
                                         CommandParameter="crash-reports"
-                                        Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_BuildFolderLinkText}}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenImportFolderCommand}"
                                         CommandParameter="crash-reports"
-                                        Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_ImportFolderLinkText}}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenPersistFolderCommand}"
                                         CommandParameter="crash-reports"
-                                        Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_PersistFolderLinkText}}" />
                                 </TextBlock>
                                 <ProgressBar
                                     Name="CrashReportsProgressBar"
@@ -567,7 +566,7 @@
                                     VerticalAlignment="Center">
                                     <TextBlock
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                        Text="{x:Static lang:Resources.AssetKind_Config}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_Config}}" />
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
@@ -587,15 +586,15 @@
                                     <HyperlinkButton
                                         Command="{Binding OpenBuildFolderCommand}"
                                         CommandParameter="config"
-                                        Content="{x:Static lang:Resources.InstanceStoragePage_BuildFolderLinkText}" />
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_BuildFolderLinkText}}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenImportFolderCommand}"
                                         CommandParameter="config"
-                                        Content="{x:Static lang:Resources.InstanceStoragePage_ImportFolderLinkText}" />
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_ImportFolderLinkText}}" />
                                     <HyperlinkButton
                                         Command="{Binding OpenPersistFolderCommand}"
                                         CommandParameter="config"
-                                        Content="{x:Static lang:Resources.InstanceStoragePage_PersistFolderLinkText}" />
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_PersistFolderLinkText}}" />
                                 </TextBlock>
                                 <ProgressBar
                                     Name="ConfigProgressBar"
@@ -627,7 +626,7 @@
                                     VerticalAlignment="Center">
                                     <TextBlock
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                        Text="{x:Static lang:Resources.InstanceStoragePage_OtherLabelText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceStoragePage_OtherLabelText}}" />
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">

@@ -7,12 +7,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:SettingsPageModel"
-    Header="{x:Static lang:Resources.SettingsPage_Title}"
+    Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_Title}}"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <husk:Page.Resources>
@@ -100,26 +99,26 @@
                 Spacing="20">
                 <!--  Super Power  -->
                 <app:SettingsEntry
-                    Title="{x:Static lang:Resources.SettingsPage_SuperPowerTitle}"
+                    Title="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_SuperPowerTitle}}"
                     Icon="Beaker"
-                    Summary="{x:Static lang:Resources.SettingsPage_SuperPowerSubtitle}">
+                    Summary="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_SuperPowerSubtitle}}">
                     <app:SettingsEntryItem
                         HorizontalContentAlignment="Right"
-                        Header="{x:Static lang:Resources.SettingsPage_SuperPowerLabelText}">
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_SuperPowerLabelText}}">
                         <ToggleSwitch IsChecked="{Binding SuperPowerActivated, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                 </app:SettingsEntry>
                 <!--  Display  -->
                 <app:SettingsEntry
-                    Title="{x:Static lang:Resources.SettingsPage_DisplayTitle}"
+                    Title="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_DisplayTitle}}"
                     Icon="LocalLanguage"
-                    Summary="{x:Static lang:Resources.SettingsPage_DisplaySubtitle}">
+                    Summary="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_DisplaySubtitle}}">
                     <app:SettingsEntryItem
                         HorizontalContentAlignment="Right"
-                        Header="{x:Static lang:Resources.SettingsPage_TitleBarVisibilityLabelText}">
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_TitleBarVisibilityLabelText}}">
                         <ToggleSwitch IsChecked="{Binding TitleBarVisibility, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_SidebarPlacementLabelText}">
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_SidebarPlacementLabelText}}">
                         <TabStrip
                             ItemsPanel="{StaticResource EqualWidthTabStripPanel}"
                             SelectedIndex="{Binding SidebarPlacement, Mode=TwoWay}">
@@ -134,7 +133,7 @@
                                     <husk:Divider Orientation="Vertical" />
                                     <TextBlock
                                         VerticalAlignment="Center"
-                                        Text="{x:Static lang:Resources.SettingsPage_SidebarPlacementLeftText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_SidebarPlacementLeftText}}" />
                                 </StackPanel>
                             </TabStripItem>
                             <TabStripItem>
@@ -143,7 +142,7 @@
                                     Spacing="4">
                                     <TextBlock
                                         VerticalAlignment="Center"
-                                        Text="{x:Static lang:Resources.SettingsPage_SidebarPlacementRightText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_SidebarPlacementRightText}}" />
                                     <husk:Divider Orientation="Vertical" />
                                     <fi:SymbolIcon
                                         VerticalAlignment="Center"
@@ -153,7 +152,7 @@
                             </TabStripItem>
                         </TabStrip>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_ThemeVariantLabelText}">
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ThemeVariantLabelText}}">
                         <TabStrip
                             ItemsPanel="{StaticResource EqualWidthTabStripPanel}"
                             SelectedIndex="{Binding DarkMode, Mode=TwoWay}">
@@ -165,7 +164,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="{StaticResource MediumFontSize}"
                                         Symbol="System" />
-                                    <TextBlock Text="{x:Static lang:Resources.SettingsPage_ThemeVariantSystemText}" />
+                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ThemeVariantSystemText}}" />
                                 </StackPanel>
                             </TabStripItem>
                             <TabStripItem>
@@ -176,7 +175,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="{StaticResource MediumFontSize}"
                                         Symbol="WeatherSunny" />
-                                    <TextBlock Text="{x:Static lang:Resources.SettingsPage_ThemeVariantLightText}" />
+                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ThemeVariantLightText}}" />
                                 </StackPanel>
                             </TabStripItem>
                             <TabStripItem>
@@ -187,12 +186,12 @@
                                         VerticalAlignment="Center"
                                         FontSize="{StaticResource MediumFontSize}"
                                         Symbol="WeatherMoon" />
-                                    <TextBlock Text="{x:Static lang:Resources.SettingsPage_ThemeVariantDarkText}" />
+                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ThemeVariantDarkText}}" />
                                 </StackPanel>
                             </TabStripItem>
                         </TabStrip>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_AccentColorLabelText}">
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_AccentColorLabelText}}">
                         <ComboBox
                             ItemsSource="{Binding AccentColors}"
                             SelectedIndex="{Binding AccentColor, Mode=TwoWay}">
@@ -214,18 +213,18 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_CornerStyleLabelText}">
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_CornerStyleLabelText}}">
                         <ComboBox
                             ItemsSource="{Binding CornerStyles}"
                             SelectedIndex="{Binding CornerStyle, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="husk:CornerStyle">
-                                    <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedCornerStyle}}" />
+                                    <TextBlock Text="{app:LocalizedEnum {Binding}}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_BackgroundStyleLabelText}">
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_BackgroundStyleLabelText}}">
                         <ComboBox
                             ItemsSource="{Binding BackgroundStyles}"
                             SelectedItem="{Binding BackgroundMode, Mode=TwoWay}">
@@ -256,8 +255,7 @@
                         </ComboBox>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Description="{x:Static lang:Resources.SettingsPage_RestartRequiredLabelText}"
-                        Header="{x:Static lang:Resources.SettingsPage_LanguageLabelText}">
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_LanguageLabelText}}">
                         <ComboBox
                             ItemsSource="{Binding Languages}"
                             SelectedItem="{Binding Language, Mode=TwoWay}">
@@ -282,10 +280,10 @@
                 </app:SettingsEntry>
                 <!--  Font  -->
                 <app:SettingsEntry
-                    Title="{x:Static lang:Resources.SettingsPage_FontTitle}"
+                    Title="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_FontTitle}}"
                     Icon="TextFont"
-                    Summary="{x:Static lang:Resources.SettingsPage_FontSubtitle}">
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_MainFontLabelText}">
+                    Summary="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_FontSubtitle}}">
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_MainFontLabelText}}">
                         <Border
                             Padding="3"
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
@@ -310,7 +308,7 @@
                             </Grid>
                         </Border>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_CodeFontLabelText}">
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_CodeFontLabelText}}">
                         <Border
                             Padding="3"
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
@@ -335,7 +333,7 @@
                             </Grid>
                         </Border>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_LogFontLabelText}">
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_LogFontLabelText}}">
                         <Border
                             Padding="3"
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
@@ -363,39 +361,39 @@
                 </app:SettingsEntry>
                 <!--  Java  -->
                 <app:SettingsEntry
-                    Title="{x:Static lang:Resources.SettingsPage_JavaTitle}"
+                    Title="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_JavaTitle}}"
                     Icon="DrinkCoffee"
-                    Summary="{x:Static lang:Resources.SettingsPage_JavaSubtitle}">
+                    Summary="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_JavaSubtitle}}">
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_Java8LabelText}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_Java8LabelText}}"
                         Orientation="Vertical">
                         <app:JavaHomeContainer
                             Home="{Binding JavaHome8, Mode=TwoWay}"
                             OverlayService="{Binding OverlayService}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_Java11LabelText}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_Java11LabelText}}"
                         Orientation="Vertical">
                         <app:JavaHomeContainer
                             Home="{Binding JavaHome11, Mode=TwoWay}"
                             OverlayService="{Binding OverlayService}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_Java17LabelText}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_Java17LabelText}}"
                         Orientation="Vertical">
                         <app:JavaHomeContainer
                             Home="{Binding JavaHome17, Mode=TwoWay}"
                             OverlayService="{Binding OverlayService}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_Java21LabelText}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_Java21LabelText}}"
                         Orientation="Vertical">
                         <app:JavaHomeContainer
                             Home="{Binding JavaHome21, Mode=TwoWay}"
                             OverlayService="{Binding OverlayService}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_Java25LabelText}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_Java25LabelText}}"
                         Orientation="Vertical">
                         <app:JavaHomeContainer
                             Home="{Binding JavaHome25, Mode=TwoWay}"
@@ -404,14 +402,14 @@
                 </app:SettingsEntry>
                 <!--  Game Defaults  -->
                 <app:SettingsEntry
-                    Title="{x:Static lang:Resources.SettingsPage_GameDefaultsTitle}"
+                    Title="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_GameDefaultsTitle}}"
                     Icon="Joystick"
-                    Summary="{x:Static lang:Resources.SettingsPage_GameDefaultsSubtitle}">
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_JavaMaxMemoryLabelText}">
+                    Summary="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_GameDefaultsSubtitle}}">
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_JavaMaxMemoryLabelText}}">
                         <NumericUpDown
                             Increment="512"
                             Minimum="0"
-                            PlaceholderText="{x:Static lang:Resources.SettingsPage_JavaMaxMemoryPlaceholder}"
+                            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_JavaMaxMemoryPlaceholder}}"
                             Value="{Binding JavaMaxMemory, Mode=TwoWay}">
                             <NumericUpDown.InnerRightContent>
                                 <StackPanel Orientation="Horizontal">
@@ -420,24 +418,24 @@
                                         Margin="8,0"
                                         VerticalAlignment="Center"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.SettingsPage_JavaMaxMemoryUnitText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_JavaMaxMemoryUnitText}}" />
                                 </StackPanel>
                             </NumericUpDown.InnerRightContent>
                         </NumericUpDown>
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_JavaAdditionalArgumentsLabelText}">
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_JavaAdditionalArgumentsLabelText}}">
                         <TextBox
-                            PlaceholderText="{x:Static lang:Resources.SettingsPage_JavaAdditionalArgumentsPlaceholder}"
+                            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_JavaAdditionalArgumentsPlaceholder}}"
                             Text="{Binding JavaAdditionalArguments, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Description="{x:Static lang:Resources.SettingsPage_CommandWrapperDescriptionText}"
-                        Header="{x:Static lang:Resources.SettingsPage_CommandWrapperLabelText}">
+                        Description="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_CommandWrapperDescriptionText}}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_CommandWrapperLabelText}}">
                         <TextBox
-                            PlaceholderText="{x:Static lang:Resources.SettingsPage_CommandWrapperPlaceholder}"
+                            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_CommandWrapperPlaceholder}}"
                             Text="{Binding CommandWrapper, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_WindowInitialSizeLabelText}">
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_WindowInitialSizeLabelText}}">
                         <Grid
                             ColumnDefinitions="*,*"
                             ColumnSpacing="6">
@@ -451,7 +449,7 @@
                                             Margin="8,0"
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.SettingsPage_WindowWidthLabelText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_WindowWidthLabelText}}" />
                                         <husk:Divider Orientation="Vertical" />
                                     </StackPanel>
                                 </TextBox.InnerLeftContent>
@@ -466,7 +464,7 @@
                                             Margin="8,0"
                                             VerticalAlignment="Center"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.SettingsPage_WindowHeightLabelText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_WindowHeightLabelText}}" />
                                         <husk:Divider Orientation="Vertical" />
                                     </StackPanel>
                                 </TextBox.InnerLeftContent>
@@ -476,12 +474,12 @@
                 </app:SettingsEntry>
                 <!--  Network  -->
                 <app:SettingsEntry
-                    Title="{x:Static lang:Resources.SettingsPage_NetworkTitle}"
+                    Title="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_NetworkTitle}}"
                     Icon="TopSpeed"
-                    Summary="{x:Static lang:Resources.SettingsPage_NetworkSubtitle}">
+                    Summary="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_NetworkSubtitle}}">
                     <app:SettingsEntryItem
-                        Description="{x:Static lang:Resources.SettingsPage_RestartRequiredLabelText}"
-                        Header="{x:Static lang:Resources.SettingsPage_ProxyEnabledLabelText}">
+                        Description="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_RestartRequiredLabelText}}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ProxyEnabledLabelText}}">
                         <Border
                             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                             CornerRadius="{StaticResource MediumCornerRadius}">
@@ -509,7 +507,7 @@
                                         <TextBlock
                                             FontSize="{StaticResource SmallFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.SettingsPage_ProxyCurrentStatusLabelText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ProxyCurrentStatusLabelText}}" />
                                         <TextBlock
                                             FontWeight="{StaticResource ControlStrongFontWeight}"
                                             Text="{Binding ProxyStatusText}" />
@@ -530,11 +528,11 @@
                 </app:SettingsEntry>
                 <!--  Maintenance  -->
                 <app:SettingsEntry
-                    Title="{x:Static lang:Resources.SettingsPage_MaintenanceTitle}"
+                    Title="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_MaintenanceTitle}}"
                     Icon="Wrench"
-                    Summary="{x:Static lang:Resources.SettingsPage_MaintenanceSubtitle}">
+                    Summary="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_MaintenanceSubtitle}}">
                     <app:SettingsEntryItem
-                        Header="{x:Static lang:Resources.SettingsPage_VersionLabelText}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_VersionLabelText}}"
                         Orientation="Vertical">
                         <app:Plaque>
                             <app:Plaque.Header>
@@ -557,7 +555,7 @@
                                                 Classes="Small Primary"
                                                 Command="{Binding ViewReleaseCommand}"
                                                 CommandParameter="{Binding UpdateTarget}">
-                                                <TextBlock Text="{x:Static lang:Resources.SettingsPage_UpdatesViewButtonText}" />
+                                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_UpdatesViewButtonText}}" />
                                             </Button>
                                         </DockPanel>
                                     </husk:SwitchCase>
@@ -566,7 +564,7 @@
                                             Classes="Small"
                                             Command="{Binding CheckUpdatesCommand}"
                                             Theme="{StaticResource OutlineButtonTheme}">
-                                            <TextBlock Text="{x:Static lang:Resources.SettingsPage_UpdatesCheckButtonText}" />
+                                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_UpdatesCheckButtonText}}" />
                                         </Button>
                                     </husk:SwitchCase>
                                 </husk:SwitchContainer>
@@ -628,7 +626,7 @@
                                                 VerticalAlignment="Top">
                                                 <husk:IconLabel
                                                     Icon="DismissCircle"
-                                                    Text="{x:Static lang:Resources.SettingsPage_UpdatesUnavailableLabelText}"
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_UpdatesUnavailableLabelText}}"
                                                     Variant="Filled" />
                                             </husk:Tag>
                                         </husk:SwitchCase>
@@ -639,7 +637,7 @@
                                                 VerticalAlignment="Top">
                                                 <husk:IconLabel
                                                     Icon="CheckmarkCircle"
-                                                    Text="{x:Static lang:Resources.SettingsPage_UpdatesNotFoundLabelText}"
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_UpdatesNotFoundLabelText}}"
                                                     Variant="Filled" />
                                             </husk:Tag>
                                         </husk:SwitchCase>
@@ -650,7 +648,7 @@
                                                 VerticalAlignment="Top">
                                                 <husk:IconLabel
                                                     Icon="SparkleCircle"
-                                                    Text="{x:Static lang:Resources.SettingsPage_UpdatesFoundLabelText}"
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_UpdatesFoundLabelText}}"
                                                     Variant="Filled" />
                                             </husk:Tag>
                                         </husk:SwitchCase>
@@ -700,10 +698,10 @@
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
                         HorizontalContentAlignment="Right"
-                        Header="{x:Static lang:Resources.SettingsPage_UpdateAutoCheckLabelText}">
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_UpdateAutoCheckLabelText}}">
                         <ToggleSwitch IsChecked="{Binding AutoCheckUpdates, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
-                    <app:SettingsEntryItem Header="{x:Static lang:Resources.SettingsPage_UpdateSourceLabelText}">
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_UpdateSourceLabelText}}">
                         <TabStrip
                             ItemsPanel="{StaticResource EqualWidthTabStripPanel}"
                             SelectedIndex="{Binding UpdateSource, Mode=TwoWay}">
@@ -718,7 +716,7 @@
                                     <husk:Divider Orientation="Vertical" />
                                     <TextBlock
                                         VerticalAlignment="Center"
-                                        Text="{x:Static lang:Resources.SettingsPage_UpdateSourceGithubText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_UpdateSourceGithubText}}" />
                                 </StackPanel>
                             </TabStripItem>
                             <TabStripItem>
@@ -732,17 +730,17 @@
                                     <husk:Divider Orientation="Vertical" />
                                     <TextBlock
                                         VerticalAlignment="Center"
-                                        Text="{x:Static lang:Resources.SettingsPage_UpdateSourceMirrorChyanText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_UpdateSourceMirrorChyanText}}" />
                                 </StackPanel>
                             </TabStripItem>
                         </TabStrip>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
                         IsVisible="{Binding UpdateSource, Converter={x:Static husk:ObjectConverters.Match}, ConverterParameter=1}"
-                        Header="{x:Static lang:Resources.SettingsPage_MirrorChyanCdkLabelText}">
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_MirrorChyanCdkLabelText}}">
                         <TextBox
                             PasswordChar="*"
-                            PlaceholderText="{x:Static lang:Resources.SettingsPage_MirrorChyanCdkPlaceholder}"
+                            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_MirrorChyanCdkPlaceholder}}"
                             Text="{Binding MirrorChyanCdk, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
                     <TextBlock
@@ -751,7 +749,7 @@
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         TextWrapping="Wrap">
                         <Run Text="☕" />
-                        <Run Text="{x:Static lang:Resources.SettingsPage_MirrorChyanCdkHint}" />
+                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_MirrorChyanCdkHint}}" />
                         <HyperlinkButton
                             Padding="0"
                             VerticalAlignment="Bottom"
@@ -759,10 +757,10 @@
                             FontSize="{StaticResource SmallFontSize}"
                             NavigateUri="https://mirrorchyan.com" />
                     </TextBlock>
-                    <husk:Divider Content="{x:Static lang:Resources.SettingsPage_ToolsGroupTitle}" />
+                    <husk:Divider Content="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ToolsGroupTitle}}" />
                     <app:SettingsEntryItem
-                        Description="{x:Static lang:Resources.SettingsPage_StorageManagementDescription}"
-                        Header="{x:Static lang:Resources.SettingsPage_StorageManagementLabelText}">
+                        Description="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_StorageManagementDescription}}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_StorageManagementLabelText}}">
                         <Button
                             Classes="Small"
                             HorizontalAlignment="Right"
@@ -775,8 +773,8 @@
                         </Button>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Description="{x:Static lang:Resources.SettingsPage_MigrateFromLauncherDescription}"
-                        Header="{x:Static lang:Resources.SettingsPage_MigrateFromLauncherLabelText}">
+                        Description="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_MigrateFromLauncherDescription}}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_MigrateFromLauncherLabelText}}">
                         <Button
                             Classes="Small"
                             HorizontalAlignment="Right"
@@ -788,8 +786,8 @@
                         </Button>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Description="{x:Static lang:Resources.SettingsPage_GarbageCollectDescription}"
-                        Header="{x:Static lang:Resources.SettingsPage_GarbageCollectButtonText}">
+                        Description="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_GarbageCollectDescription}}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_GarbageCollectButtonText}}">
                         <Button
                             Classes="Small"
                             HorizontalAlignment="Right"
@@ -800,10 +798,10 @@
                                 Symbol="Checkmark" />
                         </Button>
                     </app:SettingsEntryItem>
-                    <husk:Divider Content="{x:Static lang:Resources.SettingsPage_DangerZoneDividerText}" />
+                    <husk:Divider Content="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_DangerZoneDividerText}}" />
                     <app:SettingsEntryItem
-                        Description="{x:Static lang:Resources.SettingsPage_ClearStatisticsDescription}"
-                        Header="{x:Static lang:Resources.SettingsPage_ClearStatisticsButtonText}">
+                        Description="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ClearStatisticsDescription}}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ClearStatisticsButtonText}}">
                         <Button
                             Classes="Small"
                             HorizontalAlignment="Right"
@@ -816,8 +814,8 @@
                         </Button>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem
-                        Description="{x:Static lang:Resources.SettingsPage_ClearRecordsDescription}"
-                        Header="{x:Static lang:Resources.SettingsPage_ClearRecordsButtonText}">
+                        Description="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ClearRecordsDescription}}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ClearRecordsButtonText}}">
                         <Button
                             Classes="Small"
                             HorizontalAlignment="Right"
@@ -832,7 +830,7 @@
                 </app:SettingsEntry>
                 <!--  About  -->
                 <app:SettingsEntry
-                    Title="{x:Static lang:Resources.SettingsPage_AboutTitle}"
+                    Title="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_AboutTitle}}"
                     Icon="Info">
                     <Grid
                         ColumnDefinitions="*,Auto"

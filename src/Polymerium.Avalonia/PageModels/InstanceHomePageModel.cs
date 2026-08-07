@@ -29,7 +29,6 @@ using TridentCore.Core.Igniters;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
 using TridentCore.Core.Utilities;
-using Resources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.PageModels;
 
@@ -138,7 +137,7 @@ public partial class InstanceHomePageModel(
         base.OnInstanceDeploying(tracker);
         _subscription?.Dispose();
         _subscription = new();
-        DeployingMessage = GetStageTitle(tracker.CurrentStage);
+        DeployingMessage = tracker.CurrentStage;
         tracker
            .ProgressStream.Sample(TimeSpan.FromSeconds(1))
            .Subscribe(x =>
@@ -154,28 +153,13 @@ public partial class InstanceHomePageModel(
         tracker
            .StageStream.Subscribe(stage =>
             {
-                DeployingMessage = GetStageTitle(stage);
+                DeployingMessage = stage;
                 DeployingPending = true;
                 HasDeployingFileCount = false;
             })
            .DisposeWith(tracker)
            .DisposeWith(_subscription);
     }
-
-    private string GetStageTitle(DeployStage stage) =>
-        stage switch
-        {
-            DeployStage.LoadLock => Resources.DeployStage_LoadLock,
-            DeployStage.InstallVanilla => Resources.DeployStage_InstallVanilla,
-            DeployStage.ProcessLoader => Resources.DeployStage_ProcessLoader,
-            DeployStage.SyncPackages => Resources.DeployStage_SyncPackages,
-            DeployStage.FlattenPackages => Resources.DeployStage_FlattenPackages,
-            DeployStage.PersistLock => Resources.DeployStage_PersistLock,
-            DeployStage.EnsureRuntime => Resources.DeployStage_EnsureRuntime,
-            DeployStage.GenerateManifest => Resources.DeployStage_GenerateManifest,
-            DeployStage.SolidifyManifest => Resources.DeployStage_SolidifyManifest,
-            _ => throw new ArgumentOutOfRangeException(nameof(stage), stage, null)
-        };
 
     protected override void OnInstanceLaunched(LaunchTracker tracker)
     {
@@ -227,29 +211,28 @@ public partial class InstanceHomePageModel(
         }
         catch (AccountNotFoundException)
         {
-            notificationService.PopMessage(Resources.InstanceHomePage_AccountNotFoundDangerNotificationMessage,
-                                           Resources.InstanceHomePage_AccountNotFoundDangerNotificationTitle,
+            notificationService.PopMessage(LanguageManager.Instance.InstanceHomePage_AccountNotFoundDangerNotificationMessage.Current(),
+                                           LanguageManager.Instance.InstanceHomePage_AccountNotFoundDangerNotificationTitle.Current(),
                                            GrowlLevel.Danger,
                                            thumbnail:
                                            SelectedAccount?.FaceUrl ?? ThumbnailHelper.ForInstance(Basic.Key),
                                            actions:
                                            [
-                                               new(Resources
-                                                      .InstanceHomePage_AccountNotFoundDangerNotificationSelectActionText,
+                                               new(LanguageManager.Instance.InstanceHomePage_AccountNotFoundDangerNotificationSelectActionText.Current(),
                                                    SwitchAccountCommand)
                                            ]);
         }
         catch (AccountException ex)
         {
             notificationService.PopMessage(ex,
-                                           Resources.InstanceHomePage_AccountAuthenticationDangerNotificationTitle,
+                                           LanguageManager.Instance.InstanceHomePage_AccountAuthenticationDangerNotificationTitle.Current(),
                                            thumbnail: SelectedAccount?.FaceUrl
                                                    ?? ThumbnailHelper.ForInstance(Basic.Key));
         }
         catch (Exception ex)
         {
             notificationService.PopMessage(ex,
-                                           Resources.InstanceHomePage_DeployDangerNotificationTitle,
+                                           LanguageManager.Instance.InstanceHomePage_DeployDangerNotificationTitle.Current(),
                                            thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
         }
     }
@@ -327,7 +310,7 @@ public partial class InstanceHomePageModel(
     public partial bool HasDeployingFileCount { get; set; }
 
     [ObservableProperty]
-    public partial string DeployingMessage { get; set; } = string.Empty;
+    public partial DeployStage DeployingMessage { get; set; }
 
     [ObservableProperty]
     public partial bool DeployingPending { get; set; }

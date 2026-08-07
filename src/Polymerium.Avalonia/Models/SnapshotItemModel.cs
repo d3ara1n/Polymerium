@@ -1,4 +1,3 @@
-using Polymerium.Avalonia.Properties;
 using TridentCore.Abstractions.Snapshots;
 
 namespace Polymerium.Avalonia.Models;
@@ -9,7 +8,7 @@ public class SnapshotItemModel
     public required SnapshotItemModel? Previous { get; init; }
 
     public string DisplayLabel =>
-        string.IsNullOrEmpty(Source.Label) ? Resources.Snapshot_UntitledLabelText : Source.Label;
+        string.IsNullOrEmpty(Source.Label) ? LanguageManager.Instance.Snapshot_UntitledLabelText.Current() : Source.Label;
 
     public string CreatedAtText => Source.CreatedAt.ToString("yyyy-MM-dd HH:mm");
 

@@ -40,7 +40,7 @@ public partial class AboutModal : Modal
         {
             return TopLevelHelper.LaunchUriAsync(TopLevel.GetTopLevel(this),
                                                  uri,
-                                                 Properties.Resources.AboutModal_OpenLinkDangerNotificationTitle);
+                                                 LanguageManager.Instance.AboutModal_OpenLinkDangerNotificationTitle.Current());
         }
 
         return Task.CompletedTask;

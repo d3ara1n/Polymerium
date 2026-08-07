@@ -6,12 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:SnapshotPortalPageModel"
-    Header="{x:Static lang:Resources.SnapshotPortalPage_Title}"
+    Header="{Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_Title}}"
     IsHeaderVisible="False"
     mc:Ignorable="d">
     <Grid
@@ -23,10 +22,10 @@
             <TextBlock
                 FontSize="{StaticResource ExtraLargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.SnapshotPortalPage_Title}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_Title}}" />
             <TextBlock
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.SnapshotPortalPage_Subtitle}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_Subtitle}}" />
         </StackPanel>
 
         <Grid
@@ -53,11 +52,11 @@
                         Grid.Row="1"
                         FontSize="{StaticResource LargeFontSize}"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.SnapshotPortalPage_CreateTitle}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_CreateTitle}}" />
                     <TextBlock
                         Grid.Row="2"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.SnapshotPortalPage_CreateDescription}"
+                        Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_CreateDescription}}"
                         TextWrapping="Wrap" />
                     <husk:Divider Grid.Row="3" />
                     <StackPanel
@@ -66,10 +65,10 @@
                         Spacing="6">
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.SnapshotPortalPage_CreateLastTimeLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_CreateLastTimeLabelText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{Binding LatestTimeText, TargetNullValue={x:Static lang:Resources.SnapshotPortalPage_CreateNeverText}}" />
+                            Text="{Binding LatestTimeText, TargetNullValue={Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_CreateNeverText}}}" />
                     </StackPanel>
                 </Grid>
             </Button>
@@ -94,11 +93,11 @@
                         Grid.Row="1"
                         FontSize="{StaticResource LargeFontSize}"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.SnapshotPortalPage_ViewTitle}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_ViewTitle}}" />
                     <TextBlock
                         Grid.Row="2"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.SnapshotPortalPage_ViewDescription}"
+                        Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_ViewDescription}}"
                         TextWrapping="Wrap" />
                     <husk:Divider Grid.Row="3" />
                     <StackPanel
@@ -107,7 +106,7 @@
                         Spacing="6">
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.SnapshotPortalPage_ViewCountLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_ViewCountLabelText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding SnapshotCount, FallbackValue=0}" />
@@ -119,7 +118,7 @@
                         Spacing="6">
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.SnapshotPortalPage_LatestLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_LatestLabelText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding LatestTimeText}" />
@@ -143,7 +142,7 @@
                     Grid.Column="1"
                     FontStyle="Italic"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.SnapshotPortalPage_Hint}"
+                    Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_Hint}}"
                     TextWrapping="Wrap" />
             </Grid>
         </StackPanel>

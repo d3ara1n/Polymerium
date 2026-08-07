@@ -6,14 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="{x:Static lang:Resources.TagPickerDialog_Title}"
+    Title="{Translate {x:Static app:LanguageManager+Keys.TagPickerDialog_Title}}"
     Width="360"
     d:DesignHeight="400"
     d:DesignWidth="360"
     IsPrimaryButtonVisible="True"
-    Message="{x:Static lang:Resources.TagPickerDialog_Prompt}"
+    Message="{Translate {x:Static app:LanguageManager+Keys.TagPickerDialog_Prompt}}"
     mc:Ignorable="d">
     <Grid
         RowDefinitions="Auto,Auto,*"
@@ -21,7 +20,7 @@
         <!--  输入框  -->
         <TextBox
             Grid.Row="0"
-            PlaceholderText="{x:Static lang:Resources.TagPickerDialog_InputTextBoxPlaceholder}"
+            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.TagPickerDialog_InputTextBoxPlaceholder}}"
             Text="{Binding $parent[app:TagPickerDialog].Result, Mode=TwoWay}" />
 
         <!--  现有标签标题  -->
@@ -30,7 +29,7 @@
             IsVisible="{Binding $parent[app:TagPickerDialog].HasExistingTags}"
             FontSize="{StaticResource SmallFontSize}"
             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-            Text="{x:Static lang:Resources.TagPickerDialog_ExistingTagsLabelText}" />
+            Text="{Translate {x:Static app:LanguageManager+Keys.TagPickerDialog_ExistingTagsLabelText}}" />
 
         <!--  现有标签列表  -->
         <ScrollViewer
@@ -51,7 +50,7 @@
                         HorizontalAlignment="Center"
                         FontSize="{StaticResource MediumFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.TagPickerDialog_NoExistingTagsLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.TagPickerDialog_NoExistingTagsLabelText}}" />
                 </StackPanel>
 
                 <!--  标签列表  -->

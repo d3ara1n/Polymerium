@@ -4,7 +4,6 @@ using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.Avalonia.Facilities;
-using Resources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Models;
 
@@ -53,7 +52,7 @@ public partial class AssetWorldModel : ModelBase
             1 => "Creative",
             2 => "Adventure",
             3 => "Spectator",
-            _ => Resources.Enum_Unknown
+            _ => LanguageManager.Instance.Enum_Unknown.Current()
         };
 
     public string Difficulty =>
@@ -63,7 +62,7 @@ public partial class AssetWorldModel : ModelBase
             1 => "Easy",
             2 => "Normal",
             3 => "Hard",
-            _ => Resources.Enum_Unknown
+            _ => LanguageManager.Instance.Enum_Unknown.Current()
         };
 
     public bool Hardcore => Metadata.Hardcore;
@@ -71,7 +70,7 @@ public partial class AssetWorldModel : ModelBase
     public long DayTime => Metadata.DayTime;
     public long GameTime => Metadata.Time;
     public int DayCount => (int)(GameTime / 24000);
-    public string Version => Metadata.VersionName ?? Resources.Enum_Unknown;
+    public string Version => Metadata.VersionName ?? LanguageManager.Instance.Enum_Unknown.Current();
 
     #endregion
 }

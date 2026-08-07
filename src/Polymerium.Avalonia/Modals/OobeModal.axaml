@@ -5,7 +5,6 @@
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="520"
     mc:Ignorable="d">
@@ -18,7 +17,7 @@
                 Grid.Column="0"
                 IsVisible="{Binding $parent[app:OobeModal].IsBackAvailable, FallbackValue=False}"
                 Command="{Binding $parent[app:OobeModal].GoBackCommand}">
-                <TextBlock Text="{x:Static lang:Resources.OobeModal_BackButtonText}" />
+                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.OobeModal_BackButtonText}}" />
             </Button>
             <husk:ModalActionPanel
                 Grid.Column="1"
@@ -30,20 +29,20 @@
                     IsVisible="{Binding $parent[app:OobeModal].IsLast, Converter={x:Static BoolConverters.Not}, FallbackValue=True}"
                     Command="{Binding $parent[app:OobeModal].GoNextCommand}"
                     IsDefault="True">
-                    <TextBlock Text="{x:Static lang:Resources.OobeModal_NextButtonText}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.OobeModal_NextButtonText}}" />
                 </Button>
                 <Button
                     Classes="Primary"
                     IsVisible="{Binding $parent[app:OobeModal].IsLast, FallbackValue=False}"
                     Command="{Binding $parent[app:OobeModal].GoFinishCommand}"
                     IsDefault="True">
-                    <TextBlock Text="{x:Static lang:Resources.OobeModal_FinishButtonText}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.OobeModal_FinishButtonText}}" />
                 </Button>
                 <Button
                     IsVisible="{Binding $parent[app:OobeModal].IsLast, Converter={x:Static BoolConverters.Not}, FallbackValue=True}"
                     Command="{Binding $parent[app:OobeModal].SkipCommand}"
                     IsCancel="True">
-                    <TextBlock Text="{x:Static lang:Resources.OobeModal_SkipButtonText}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.OobeModal_SkipButtonText}}" />
                 </Button>
             </husk:ModalActionPanel>
         </Grid>

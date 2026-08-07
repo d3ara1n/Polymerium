@@ -7,10 +7,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resources="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions"
-    Title="{x:Static lang:Resources.AssetImporterDialog_Title}"
+    Title="{Translate {x:Static app:LanguageManager+Keys.AssetImporterDialog_Title}}"
     Width="420"
     IsPrimaryButtonVisible="True"
     mc:Ignorable="d">
@@ -43,7 +42,7 @@
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
                                                 NavigateUri="{Binding Reference}" />
                                             <RadioButton IsChecked="{Binding $parent[app:AssetImporterDialog].IsPackageSelected, Mode=TwoWay}">
-                                                <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsPackageLabelText}" />
+                                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AssetImporterDialog_AsPackageLabelText}}" />
                                             </RadioButton>
                                         </DockPanel>
                                         <Border
@@ -91,7 +90,7 @@
                                     FontSize="{StaticResource LargeFontSize}"
                                     Symbol="Warning" />
                                 <TextBlock
-                                    Text="{x:Static lang:Resources.AssetImporterDialog_PackageNotFoundLabelText}"
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.AssetImporterDialog_PackageNotFoundLabelText}}"
                                     TextWrapping="Wrap" />
                             </StackPanel>
                         </Border>
@@ -107,10 +106,10 @@
                                 <CheckBox
                                     DockPanel.Dock="Right"
                                     IsChecked="{Binding Persist.IsInImportMode, Mode=TwoWay}">
-                                    <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_PortableLabelText}" />
+                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AssetImporterDialog_PortableLabelText}}" />
                                 </CheckBox>
                                 <RadioButton IsChecked="{Binding $parent[app:AssetImporterDialog].IsAssetSelected, Mode=TwoWay}">
-                                    <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetLabelText}" />
+                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AssetImporterDialog_AsAssetLabelText}}" />
                                 </RadioButton>
                             </DockPanel>
                             <TabStrip
@@ -118,17 +117,17 @@
                                 SelectedItem="{Binding Persist.Kind, Mode=TwoWay}">
                                 <TabStrip.ItemTemplate>
                                     <DataTemplate DataType="resources:ResourceKind">
-                                        <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                        <TextBlock Text="{app:LocalizedEnum {Binding}}" />
                                     </DataTemplate>
                                 </TabStrip.ItemTemplate>
                             </TabStrip>
                             <StackPanel Spacing="4">
                                 <TextBlock
-                                    Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetDescription}"
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.AssetImporterDialog_AsAssetDescription}}"
                                     TextWrapping="Wrap" />
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.AssetImporterDialog_AsAssetPrompt}"
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.AssetImporterDialog_AsAssetPrompt}}"
                                     TextWrapping="Wrap" />
                             </StackPanel>
                         </StackPanel>
@@ -137,7 +136,7 @@
                         Grid.Row="2"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
-                        Content="{x:Static lang:Resources.AssetImporterDialog_Prompt}" />
+                        Content="{Translate {x:Static app:LanguageManager+Keys.AssetImporterDialog_Prompt}}" />
                 </Grid>
             </DataTemplate>
         </husk:PlaceholderContainer.SourceTemplate>
@@ -162,7 +161,7 @@
                                 Height="32"
                                 HorizontalAlignment="Center"
                                 IsIndeterminate="True" />
-                            <TextBlock Text="{x:Static lang:Resources.AssetImporterDialog_IdentifyingLabelText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AssetImporterDialog_IdentifyingLabelText}}" />
                         </StackPanel>
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="{x:False}">
@@ -176,11 +175,11 @@
                                     IconVariant="Filled"
                                     Symbol="Attach" />
                                 <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                                    <Run Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}" />
+                                    <Run Text="{Translate {x:Static app:LanguageManager+Keys.FilePickerDialog_DropZonePrompt}}" />
                                     <HyperlinkButton
                                         Name="BrowseButton"
                                         Click="BrowseButton_OnClick"
-                                        Content="{x:Static lang:Resources.FilePickerDialog_BrowseButtonText}"
+                                        Content="{Translate {x:Static app:LanguageManager+Keys.FilePickerDialog_BrowseButtonText}}"
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
                                         Foreground="{StaticResource ControlAccentForegroundBrush}" />
                                 </TextBlock>
@@ -190,7 +189,7 @@
                                 HorizontalAlignment="Center"
                                 IsHitTestVisible="False"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.FilePickerDialog_AlertPrompt}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.FilePickerDialog_AlertPrompt}}" />
                         </StackPanel>
                     </husk:SwitchCase>
                 </husk:SwitchContainer>

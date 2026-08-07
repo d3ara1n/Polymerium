@@ -12,7 +12,6 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Mvvm.Activation;
 using ObservableCollections;
 using Polymerium.Avalonia.Models;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
@@ -260,8 +259,7 @@ public partial class InstanceDashboardPageModel(
                         catch (Exception ex)
                         {
                             notificationService.PopMessage(ex,
-                                                           Resources
-                                                              .InstanceDashboardPage_ReadLogDangerNotificationTitle);
+                                                           LanguageManager.Instance.InstanceDashboardPage_ReadLogDangerNotificationTitle.Current());
                         }
                     }
                 }
@@ -459,8 +457,7 @@ public partial class InstanceDashboardPageModel(
         {
             return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
                                                            new(dir),
-                                                           Resources
-                                                              .InstanceDashboardPage_OpenLogsFolderDangerNotificationTitle,
+                                                           LanguageManager.Instance.InstanceDashboardPage_OpenLogsFolderDangerNotificationTitle.Current(),
                                                            notificationService);
         }
 
@@ -475,8 +472,7 @@ public partial class InstanceDashboardPageModel(
         {
             return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
                                                            new(dir),
-                                                           Resources
-                                                              .InstanceDashboardPage_OpenCrashReportsFolderDangerNotificationTitle,
+                                                           LanguageManager.Instance.InstanceDashboardPage_OpenCrashReportsFolderDangerNotificationTitle.Current(),
                                                            notificationService);
         }
 

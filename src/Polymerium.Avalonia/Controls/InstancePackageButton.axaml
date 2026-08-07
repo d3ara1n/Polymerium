@@ -3,8 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
     <Design.PreviewWith>
         <Panel>
             <StackPanel
@@ -62,7 +61,7 @@
                             FontSize="36"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             RenderTransform="scaleX(1.2)"
-                            Text="{x:Static lang:Resources.InstancePackageButton_DisabledLabelText}">
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_DisabledLabelText}}">
                             <TextBlock.Opacity>
                                 <MultiBinding Converter="{x:Static app:InternalConverters.ZeroOr}">
                                     <Binding
@@ -114,10 +113,10 @@
                                                     CornerRadius="{StaticResource SmallCornerRadius}">
                                                     <husk:IconLabel
                                                         Icon="LockClosed"
-                                                        Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_ImportTagText}}" />
                                                 </husk:Tag>
                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                                    <TextBlock Text="{Binding Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}, FallbackValue=Kind}" />
+                                                    <TextBlock Text="{app:LocalizedEnum {Binding Kind}, FallbackValue=Kind}" />
                                                 </husk:Tag>
                                             </StackPanel>
                                             <TextBlock
@@ -182,7 +181,7 @@
                                                             <StackPanel
                                                                 Orientation="Horizontal"
                                                                 Spacing="4">
-                                                                <TextBlock Text="{x:Static lang:Resources.InstancePackageButton_AutoVersionTagText}" />
+                                                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_AutoVersionTagText}}" />
                                                                 <fi:SymbolIcon
                                                                     VerticalAlignment="Center"
                                                                     FontSize="{StaticResource SmallFontSize}"
@@ -217,10 +216,10 @@
                                                 Background="Transparent"
                                                 Orientation="Horizontal"
                                                 Spacing="4"
-                                                ToolTip.Tip="{x:Static lang:Resources.InstancePackageButton_LoadFailedToolTipText}">
+                                                ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_LoadFailedToolTipText}}">
                                                 <TextBlock
                                                     FontSize="{StaticResource LargeFontSize}"
-                                                    Text="{x:Static lang:Resources.InstancePackageButton_LoadFailedTitleText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_LoadFailedTitleText}}" />
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource LargeFontSize}"
                                                     Symbol="Info" />
@@ -244,7 +243,7 @@
                                                 Theme="{StaticResource GhostButtonTheme}">
                                                 <husk:IconLabel
                                                     Icon="ArrowCounterclockwise"
-                                                    Text="{x:Static lang:Resources.InstancePackageButton_RetryButtonText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_RetryButtonText}}" />
                                             </Button>
                                             <Button
                                                 Grid.Row="1"
@@ -255,7 +254,7 @@
                                                 Theme="{StaticResource GhostButtonTheme}">
                                                 <husk:IconLabel
                                                     Icon="Edit"
-                                                    Text="{x:Static lang:Resources.InstancePackageButton_EditPrefButtonText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_EditPrefButtonText}}" />
                                             </Button>
                                             <Button
                                                 Grid.Row="1"
@@ -266,7 +265,7 @@
                                                 Theme="{StaticResource GhostButtonTheme}">
                                                 <husk:IconLabel
                                                     Icon="Delete"
-                                                    Text="{x:Static lang:Resources.InstancePackageButton_RemoveEntryButtonText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_RemoveEntryButtonText}}" />
                                             </Button>
                                         </Grid>
                                     </Grid>
@@ -353,7 +352,7 @@
                                         Theme="{StaticResource GhostButtonTheme}">
                                         <husk:IconLabel
                                             Icon="ArrowCounterclockwise"
-                                            Text="{x:Static lang:Resources.InstancePackageButton_RetryButtonText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_RetryButtonText}}" />
                                     </Button>
                                     <Button
                                         Classes="Small"
@@ -362,7 +361,7 @@
                                         Theme="{StaticResource GhostButtonTheme}">
                                         <husk:IconLabel
                                             Icon="Edit"
-                                            Text="{x:Static lang:Resources.InstancePackageButton_EditPrefButtonText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_EditPrefButtonText}}" />
                                     </Button>
                                     <Button
                                         Classes="Small Danger"
@@ -371,7 +370,7 @@
                                         Theme="{StaticResource GhostButtonTheme}">
                                         <husk:IconLabel
                                             Icon="Delete"
-                                            Text="{x:Static lang:Resources.InstancePackageButton_RemoveEntryButtonText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_RemoveEntryButtonText}}" />
                                     </Button>
                                 </StackPanel>
                             </husk:SkeletonContainer>

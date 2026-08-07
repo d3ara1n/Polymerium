@@ -19,7 +19,6 @@ using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Repositories.Resources;
@@ -195,7 +194,7 @@ public partial class RecipePageModel(
     public partial int TotalCount { get; private set; }
 
     public string EmptyText =>
-        TotalCount == 0 ? Resources.RecipePage_NoPackagesText : Resources.RecipePage_NoMatchesText;
+        TotalCount == 0 ? LanguageManager.Instance.RecipePage_NoPackagesText.Current() : LanguageManager.Instance.RecipePage_NoMatchesText.Current();
 
     #endregion
 
@@ -215,7 +214,7 @@ public partial class RecipePageModel(
     {
         var dialog = new RecipeEditorDialog
         {
-            Title = Resources.RecipeEditorDialog_EditTitle,
+            Title = LanguageManager.Instance.RecipeEditorDialog_EditTitle.Current(),
             RecipeName = Name,
             RecipeDescription = Description
         };
@@ -273,7 +272,7 @@ public partial class RecipePageModel(
             return;
         }
 
-        var input = await overlayService.RequestInputAsync(title: Resources.RecipePage_EditNoteMenuText,
+        var input = await overlayService.RequestInputAsync(title: LanguageManager.Instance.RecipePage_EditNoteMenuText.Current(),
                                                            placeholder: item.Note,
                                                            multiLine: true);
         if (input is null)
@@ -307,16 +306,16 @@ public partial class RecipePageModel(
             try
             {
                 await Task.Run(() => File.WriteAllText(path, RecipeHelper.Serialize(document)));
-                notificationService.PopMessage(Resources.RecipesPage_ExportSuccessNotificationMessage
+                notificationService.PopMessage(LanguageManager.Instance.RecipesPage_ExportSuccessNotificationMessage.Current()
                                                         .Replace("{0}", path),
-                                               Resources.RecipesPage_ExportSuccessNotificationTitle,
+                                               LanguageManager.Instance.RecipesPage_ExportSuccessNotificationTitle.Current(),
                                                GrowlLevel.Success);
             }
             catch (Exception)
             {
-                notificationService.PopMessage(Resources.RecipesPage_ExportDangerNotificationMessage
+                notificationService.PopMessage(LanguageManager.Instance.RecipesPage_ExportDangerNotificationMessage.Current()
                                                         .Replace("{0}", path),
-                                               Resources.RecipesPage_ExportDangerNotificationTitle,
+                                               LanguageManager.Instance.RecipesPage_ExportDangerNotificationTitle.Current(),
                                                GrowlLevel.Danger);
             }
         }

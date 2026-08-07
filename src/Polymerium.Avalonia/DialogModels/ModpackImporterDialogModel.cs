@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Utilities;
-using AppResources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.DialogModels;
 
@@ -53,6 +52,6 @@ public partial class ModpackImporterDialogModel : ViewModelBase
         }
 
         Result = ModpackUrlDetectionHelper.Detect(input);
-        Hint = Result is null ? AppResources.ModpackImporterDialog_UnrecognizedHint : null;
+        Hint = Result is null ? LanguageManager.Instance.ModpackImporterDialog_UnrecognizedHint.Current() : null;
     }
 }

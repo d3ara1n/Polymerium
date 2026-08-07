@@ -7,7 +7,6 @@
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{x:Static app:Program.Brand}"
     Width="1111"
@@ -40,63 +39,63 @@
     </husk:AppWindow.Resources>
     <NativeMenu.Menu>
         <NativeMenu>
-            <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_FileText}">
+            <NativeMenuItem Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_FileText}}">
                 <NativeMenuItem.Menu>
                     <NativeMenu>
                         <NativeMenuItem
                             Command="{Binding NewInstanceCommand}"
                             Gesture="Cmd+N"
-                            Header="{x:Static lang:Resources.AppMenu_NewInstanceText}" />
+                            Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_NewInstanceText}}" />
                         <NativeMenuItemSeparator />
                         <NativeMenuItem
                             Command="{Binding GoSettingsCommand}"
                             Gesture="Cmd+,"
-                            Header="{x:Static lang:Resources.AppMenu_SettingsText}" />
+                            Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_SettingsText}}" />
                     </NativeMenu>
                 </NativeMenuItem.Menu>
             </NativeMenuItem>
-            <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_ViewText}">
+            <NativeMenuItem Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_ViewText}}">
                 <NativeMenuItem.Menu>
                     <NativeMenu>
                         <NativeMenuItem
                             Command="{Binding GoHomeCommand}"
-                            Header="{x:Static lang:Resources.AppMenu_HomeText}" />
+                            Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_HomeText}}" />
                         <NativeMenuItem
                             Command="{Binding GoMarketplaceCommand}"
-                            Header="{x:Static lang:Resources.AppMenu_MarketplaceText}" />
+                            Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_MarketplaceText}}" />
                         <NativeMenuItem
                             Command="{Binding GoRecipesCommand}"
-                            Header="{x:Static lang:Resources.AppMenu_RecipesText}" />
+                            Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_RecipesText}}" />
                         <NativeMenuItem
                             Command="{Binding GoInstancesCommand}"
-                            Header="{x:Static lang:Resources.AppMenu_InstancesText}" />
+                            Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_InstancesText}}" />
                         <NativeMenuItem
                             Command="{Binding GoAccountsCommand}"
-                            Header="{x:Static lang:Resources.AppMenu_AccountsText}" />
+                            Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_AccountsText}}" />
                         <NativeMenuItem
                             Command="{Binding GoStorageCommand}"
-                            Header="{x:Static lang:Resources.AppMenu_StorageText}" />
+                            Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_StorageText}}" />
                         <NativeMenuItemSeparator />
                         <NativeMenuItem
                             Command="{Binding ToggleFullScreenCommand}"
                             Gesture="F11"
-                            Header="{x:Static lang:Resources.AppMenu_FullScreenText}" />
+                            Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_FullScreenText}}" />
                     </NativeMenu>
                 </NativeMenuItem.Menu>
             </NativeMenuItem>
-            <NativeMenuItem Header="{x:Static lang:Resources.AppMenu_HelpText}">
+            <NativeMenuItem Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_HelpText}}">
                 <NativeMenuItem.Menu>
                     <NativeMenu>
                         <NativeMenuItem
                             Command="{Binding AboutCommand}"
-                            Header="{x:Static lang:Resources.AppMenu_AboutText}" />
+                            Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_AboutText}}" />
                         <NativeMenuItemSeparator />
                         <NativeMenuItem
                             Command="{Binding CheckForUpdatesCommand}"
-                            Header="{x:Static lang:Resources.AppMenu_CheckForUpdatesText}" />
+                            Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_CheckForUpdatesText}}" />
                         <NativeMenuItem
                             Command="{Binding OpenGitHubCommand}"
-                            Header="{x:Static lang:Resources.AppMenu_FeedbackText}" />
+                            Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_FeedbackText}}" />
                     </NativeMenu>
                 </NativeMenuItem.Menu>
             </NativeMenuItem>
@@ -246,7 +245,7 @@
                                 Symbol="Home" />
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.MainWindow_HomeButtonText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.MainWindow_HomeButtonText}}" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -278,11 +277,11 @@
                             <StackPanel
                                 VerticalAlignment="Center"
                                 Spacing="0">
-                                <TextBlock Text="{x:Static lang:Resources.MainWindow_MarketplaceButtonText}" />
+                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.MainWindow_MarketplaceButtonText}}" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
                                     Opacity="0.7"
-                                    Text="{x:Static lang:Resources.MainWindow_MarketplaceButtonSubText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.MainWindow_MarketplaceButtonSubText}}" />
                             </StackPanel>
                         </StackPanel>
                     </Button>
@@ -292,7 +291,7 @@
                         Command="{Binding NavigateCommand}"
                         CommandParameter="{x:Type app:RecipesPage}"
                         Theme="{StaticResource OutlineButtonTheme}"
-                        ToolTip.Tip="{x:Static lang:Resources.MainWindow_RecipesButtonText}">
+                        ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.MainWindow_RecipesButtonText}}">
                         <fi:SymbolIcon
                             FontSize="18"
                             IconVariant="Color"
@@ -313,7 +312,7 @@
                                 Symbol="Apps" />
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.MainWindow_InstancesButtonText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.MainWindow_InstancesButtonText}}" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -322,7 +321,7 @@
                         Command="{Binding NavigateCommand}"
                         CommandParameter="{x:Type app:AccountsPage}"
                         Theme="{StaticResource OutlineButtonTheme}"
-                        ToolTip.Tip="{x:Static lang:Resources.MainWindow_AccountButtonText}">
+                        ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.MainWindow_AccountButtonText}}">
                         <fi:SymbolIcon
                             FontSize="18"
                             IconVariant="Color"
@@ -365,7 +364,7 @@
                         <app:EmptyContainer
                             Icon="Apps"
                             IsEmpty="{Binding View.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
-                            Text="{x:Static lang:Resources.MainWindow_EmptyInstanceListText}">
+                            Text="{Translate {x:Static app:LanguageManager+Keys.MainWindow_EmptyInstanceListText}}">
                             <ScrollViewer>
                                 <ItemsControl ItemsSource="{Binding View}">
                                     <ItemsControl.ItemTemplate>
@@ -379,39 +378,39 @@
                                                         <MenuItem
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).PlayCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
-                                                            Header="{x:Static lang:Resources.MainWindow_PlayMenuText}"
+                                                            Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_PlayMenuText}}"
                                                             Icon="{fie:SymbolIcon Symbol=Rocket,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).DeployCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
-                                                            Header="{x:Static lang:Resources.MainWindow_DeployMenuText}"
+                                                            Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_DeployMenuText}}"
                                                             Icon="{fie:SymbolIcon Symbol=SettingsCogMultiple,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem Header="-" />
                                                         <MenuItem
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
-                                                            Header="{x:Static lang:Resources.MainWindow_ExportModpackMenuText}"
+                                                            Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_ExportModpackMenuText}}"
                                                             Icon="{fie:SymbolIcon Symbol=FolderZip,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
-                                                            Header="{x:Static lang:Resources.MainWindow_OpenFolderMenuText}"
+                                                            Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_OpenFolderMenuText}}"
                                                             Icon="{fie:SymbolIcon Symbol=FolderOpen,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem Header="-" />
                                                         <MenuItem
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).GotoSetupCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
-                                                            Header="{x:Static lang:Resources.MainWindow_SetupMenuText}"
+                                                            Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_SetupMenuText}}"
                                                             Icon="{fie:SymbolIcon Symbol=BoxMultiple,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).GotoPropertiesCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
-                                                            Header="{x:Static lang:Resources.MainWindow_PropertiesMenuText}"
+                                                            Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_PropertiesMenuText}}"
                                                             Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem Header="-" />
@@ -419,14 +418,14 @@
                                                             IsVisible="{Binding !IsPinned}"
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).PinCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
-                                                            Header="{x:Static lang:Resources.MainWindow_PinMenuText}"
+                                                            Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_PinMenuText}}"
                                                             Icon="{fie:SymbolIcon Symbol=Pin,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             IsVisible="{Binding IsPinned}"
                                                             Command="{Binding $parent[app:MainWindow].((app:MainWindowContext)DataContext).UnpinCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding Basic.Key}"
-                                                            Header="{x:Static lang:Resources.MainWindow_UnpinMenuText}"
+                                                            Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_UnpinMenuText}}"
                                                             Icon="{fie:SymbolIcon Symbol=PinOff,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                     </MenuFlyout>
@@ -463,7 +462,7 @@
                                 Symbol="Settings" />
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.MainWindow_SettingsButtonText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.MainWindow_SettingsButtonText}}" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -474,7 +473,7 @@
                         husk:BadgeService.IsVisible="{Binding UnreadNotificationCount, Mode=OneWay, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=0}"
                         Command="{Binding OpenNotificationSidebarCommand}"
                         Theme="{StaticResource OutlineButtonTheme}"
-                        ToolTip.Tip="{x:Static lang:Resources.NotificationSidebar_NotificationsLabelText}">
+                        ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_NotificationsLabelText}}">
 
                         <fi:SymbolIcon
                             FontSize="18"

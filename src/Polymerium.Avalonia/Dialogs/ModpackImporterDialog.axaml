@@ -6,13 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="{x:Static lang:Resources.ModpackImporterDialog_Title}"
+    Title="{Translate {x:Static app:LanguageManager+Keys.ModpackImporterDialog_Title}}"
     Width="420"
     x:DataType="app:ModpackImporterDialogModel"
     IsPrimaryButtonVisible="True"
-    Message="{x:Static lang:Resources.ModpackImporterDialog_Prompt}"
+    Message="{Translate {x:Static app:LanguageManager+Keys.ModpackImporterDialog_Prompt}}"
     Result="{Binding Result}"
     mc:Ignorable="d">
     <StackPanel Spacing="12">
@@ -31,11 +30,11 @@
                         IconVariant="Filled"
                         Symbol="Attach" />
                     <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                        <Run Text="{x:Static lang:Resources.FilePickerDialog_DropZonePrompt}" />
+                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.FilePickerDialog_DropZonePrompt}}" />
                         <HyperlinkButton
                             Name="BrowseButton"
                             Click="BrowseButton_OnClick"
-                            Content="{x:Static lang:Resources.FilePickerDialog_BrowseButtonText}"
+                            Content="{Translate {x:Static app:LanguageManager+Keys.FilePickerDialog_BrowseButtonText}}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Foreground="{StaticResource ControlAccentForegroundBrush}" />
                     </TextBlock>
@@ -44,7 +43,7 @@
                     HorizontalAlignment="Center"
                     IsHitTestVisible="False"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.ModpackImporterDialog_DropHint}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackImporterDialog_DropHint}}" />
             </StackPanel>
         </husk:DropZone>
         <DockPanel>
@@ -58,7 +57,7 @@
                     Symbol="Checkmark" />
             </Button>
             <TextBox
-                PlaceholderText="{x:Static lang:Resources.ModpackImporterDialog_InputPlaceholder}"
+                PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.ModpackImporterDialog_InputPlaceholder}}"
                 Text="{Binding Input, Mode=TwoWay}" />
         </DockPanel>
         <TextBlock

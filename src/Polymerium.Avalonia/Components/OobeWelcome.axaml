@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="400"
     d:DesignWidth="480"
@@ -40,12 +39,12 @@
                 HorizontalAlignment="Center"
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.OobeWelcome_Title}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.OobeWelcome_Title}}" />
             <TextBlock
                 MaxWidth="360"
                 HorizontalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.OobeWelcome_Subtitle}"
+                Text="{Translate {x:Static app:LanguageManager+Keys.OobeWelcome_Subtitle}}"
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
         </StackPanel>
@@ -56,7 +55,7 @@
             HorizontalAlignment="Center"
             FontSize="{StaticResource SmallFontSize}"
             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-            Text="{x:Static lang:Resources.OobeWelcome_Description}"
+            Text="{Translate {x:Static app:LanguageManager+Keys.OobeWelcome_Description}}"
             TextAlignment="Center"
             TextWrapping="Wrap" />
     </StackPanel>

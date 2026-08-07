@@ -6,9 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="{x:Static lang:Resources.PackagePickerDialog_Title}"
+    Title="{Translate {x:Static app:LanguageManager+Keys.PackagePickerDialog_Title}}"
     Width="600"
     d:DesignHeight="500"
     d:DesignWidth="450"
@@ -20,7 +19,7 @@
         <!--  Search Box  -->
         <TextBox
             Grid.Row="0"
-            PlaceholderText="{x:Static lang:Resources.PackagePickerDialog_SearchPlaceholder}"
+            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.PackagePickerDialog_SearchPlaceholder}}"
             Text="{Binding $parent[app:PackagePickerDialog].FilterText, Mode=TwoWay}">
             <TextBox.InnerLeftContent>
                 <StackPanel Orientation="Horizontal">
@@ -100,7 +99,7 @@
                                     Spacing="8">
                                     <husk:Tag
                                         IsVisible="{Binding Info, Converter={x:Static ObjectConverters.IsNotNull}}"
-                                        Content="{Binding Info.Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}, FallbackValue=Unknown}"
+                                        Content="{app:LocalizedEnum {Binding Info.Kind}, FallbackValue=Unknown}"
                                         CornerRadius="{StaticResource SmallCornerRadius}" />
                                     <husk:Tag
                                         Content="{Binding Info.Label, Converter={x:Static husk:StringConverters.ToUpper}, FallbackValue=N/A}"

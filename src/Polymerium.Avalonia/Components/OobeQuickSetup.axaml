@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="380"
     d:DesignWidth="520"
@@ -37,11 +36,11 @@
                 HorizontalAlignment="Center"
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.OobeQuickSetup_Title}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.OobeQuickSetup_Title}}" />
             <TextBlock
                 HorizontalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.OobeQuickSetup_Subtitle}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.OobeQuickSetup_Subtitle}}" />
         </StackPanel>
 
         <!--  Settings Cards - Horizontal Layout  -->
@@ -61,7 +60,7 @@
                         Grid.Column="2"
                         VerticalAlignment="Center"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.OobeQuickSetup_LanguageLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.OobeQuickSetup_LanguageLabelText}}" />
                     <StackPanel Grid.Column="4">
                         <ComboBox
                             MinWidth="160"
@@ -87,7 +86,7 @@
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.SettingsPage_RestartRequiredLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_RestartRequiredLabelText}}" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -107,7 +106,7 @@
                         Grid.Column="2"
                         VerticalAlignment="Center"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.OobeQuickSetup_ThemeLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.OobeQuickSetup_ThemeLabelText}}" />
                     <TabStrip
                         Grid.Column="4"
                         SelectedIndex="{Binding $parent[app:OobeQuickSetup].DarkModeIndex, Mode=TwoWay}"
@@ -122,7 +121,7 @@
                                     Symbol="System" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
-                                    Text="{x:Static lang:Resources.SettingsPage_ThemeVariantSystemText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ThemeVariantSystemText}}" />
                             </StackPanel>
                         </TabStripItem>
                         <TabStripItem>
@@ -136,7 +135,7 @@
                                     Symbol="WeatherSunny" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
-                                    Text="{x:Static lang:Resources.SettingsPage_ThemeVariantLightText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ThemeVariantLightText}}" />
                             </StackPanel>
                         </TabStripItem>
                         <TabStripItem>
@@ -149,7 +148,7 @@
                                     Symbol="WeatherMoon" />
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
-                                    Text="{x:Static lang:Resources.SettingsPage_ThemeVariantDarkText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ThemeVariantDarkText}}" />
                             </StackPanel>
                         </TabStripItem>
                     </TabStrip>
@@ -171,7 +170,7 @@
                         Grid.Column="2"
                         VerticalAlignment="Center"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.OobeQuickSetup_AccentColorLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.OobeQuickSetup_AccentColorLabelText}}" />
                     <ComboBox
                         Grid.Column="4"
                         MinWidth="120"
@@ -201,7 +200,7 @@
                         Grid.Column="2"
                         VerticalAlignment="Center"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.OobeQuickSetup_ProxyLabel}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.OobeQuickSetup_ProxyLabel}}" />
                     <TextBlock
                         Grid.Column="4"
                         HorizontalAlignment="Right"

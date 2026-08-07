@@ -105,12 +105,10 @@ public partial class FontPickerDialog : Dialog
 
         var result = await storage.OpenFilePickerAsync(new()
         {
-            Title = Properties.Resources
-                              .FontPickerDialog_ChooseFileTitle,
+            Title = LanguageManager.Instance.FontPickerDialog_ChooseFileTitle.Current(),
             FileTypeFilter =
             [
-                new(Properties.Resources
-                              .FontPickerDialog_FontFileFilter)
+                new(LanguageManager.Instance.FontPickerDialog_FontFileFilter.Current())
                 {
                     Patterns = ["*.ttf", "*.otf", "*.ttc"]
                 }

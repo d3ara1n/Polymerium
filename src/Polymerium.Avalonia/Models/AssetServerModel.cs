@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Core.Utilities;
-using Resources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Models;
 
@@ -16,9 +15,9 @@ public partial class AssetServerModel(string sourceFilePath, Bitmap icon, AssetS
 
     public AssetServerMetadataModel Metadata { get; } = metadata;
 
-    public string DisplayName => Metadata.Name ?? Resources.Enum_Unknown;
+    public string DisplayName => Metadata.Name ?? LanguageManager.Instance.Enum_Unknown.Current();
 
-    public string Address => Metadata.Ip ?? Resources.Enum_Unknown;
+    public string Address => Metadata.Ip ?? LanguageManager.Instance.Enum_Unknown.Current();
 
     public bool HasLiveStatus =>
         !string.IsNullOrWhiteSpace(Description)

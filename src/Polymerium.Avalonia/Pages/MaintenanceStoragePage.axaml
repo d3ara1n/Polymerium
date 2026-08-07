@@ -6,12 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:MaintenanceStoragePageModel"
-    Header="{x:Static lang:Resources.MaintenanceStoragePage_Title}"
+    Header="{Translate {x:Static app:LanguageManager+Keys.MaintenanceStoragePage_Title}}"
     mc:Ignorable="d">
     <!-- <husk:Card HorizontalAlignment="Left" VerticalAlignment="Top"> -->
     <!--     <StackPanel Spacing="12"> -->
@@ -35,7 +34,7 @@
             <StackPanel
                 Grid.Column="0"
                 Spacing="4">
-                <husk:Tag Content="{x:Static lang:Resources.MaintenanceStoragePage_TotalLabelText}" />
+                <husk:Tag Content="{Translate {x:Static app:LanguageManager+Keys.MaintenanceStoragePage_TotalLabelText}}" />
                 <TextBlock>
                     <Run
                         FontSize="36"
@@ -53,7 +52,7 @@
                 <StackPanel Spacing="4">
                     <husk:Tag
                         Background="#FFD19A"
-                        Content="{x:Static lang:Resources.MaintenanceStoragePage_CacheLabelText}"
+                        Content="{Translate {x:Static app:LanguageManager+Keys.MaintenanceStoragePage_CacheLabelText}}"
                         Foreground="#CC4E00" />
                     <TextBlock>
                         <Run
@@ -71,7 +70,7 @@
                 <StackPanel Spacing="4">
                     <husk:Tag
                         Background="#F2D1F3"
-                        Content="{x:Static lang:Resources.MaintenanceStoragePage_InstancesLabelText}"
+                        Content="{Translate {x:Static app:LanguageManager+Keys.MaintenanceStoragePage_InstancesLabelText}}"
                         Foreground="#953EA3" />
                     <TextBlock>
                         <Run
@@ -94,7 +93,7 @@
                 <TextBlock
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
-                    Text="{x:Static lang:Resources.MaintenanceStoragePage_CacheTitle}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.MaintenanceStoragePage_CacheTitle}}" />
                 <Button
                     Grid.Column="1"
                     Classes="Small"
@@ -102,7 +101,7 @@
                     Theme="{StaticResource GhostButtonTheme}">
                     <husk:IconLabel
                         Icon="DeleteLines"
-                        Text="{x:Static lang:Resources.MaintenanceStoragePage_PurgeButtonText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.MaintenanceStoragePage_PurgeButtonText}}" />
                 </Button>
             </Grid>
             <Grid
@@ -116,7 +115,7 @@
                             Symbol="Box" />
                         <TextBlock
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.MaintenanceStoragePage_PackagesLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.MaintenanceStoragePage_PackagesLabelText}}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run Text="{Binding PackageSize, Mode=OneWay, StringFormat=F1, Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
@@ -142,7 +141,7 @@
                             Symbol="Library" />
                         <TextBlock
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.MaintenanceStoragePage_LibrariesLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.MaintenanceStoragePage_LibrariesLabelText}}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run Text="{Binding LibrarySize, Mode=OneWay, StringFormat=F1, Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
@@ -163,7 +162,7 @@
                             Symbol="DocumentFlowchart" />
                         <TextBlock
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.MaintenanceStoragePage_AssetsLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.MaintenanceStoragePage_AssetsLabelText}}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run Text="{Binding AssetSize, Mode=OneWay, StringFormat=F1, Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
@@ -184,7 +183,7 @@
                             Symbol="HexagonThree" />
                         <TextBlock
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.MaintenanceStoragePage_RuntimesLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.MaintenanceStoragePage_RuntimesLabelText}}" />
                         <TextBlock Foreground="{StaticResource ControlSecondaryForegroundBrush}">
                             <Run Text="{Binding RuntimeSize, Mode=OneWay, StringFormat=F1, Converter={x:Static app:InternalConverters.UnsignedLongToGiBDoubleConverter}, Mode=OneWay, FallbackValue=12.4}" />
                             <Run Text="GiB" />
@@ -211,7 +210,7 @@
                 </TextBlock>
                 <TextBlock
                     FontSize="{StaticResource LargeFontSize}"
-                    Text="{x:Static lang:Resources.MaintenanceStoragePage_InstancesTitle}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.MaintenanceStoragePage_InstancesTitle}}" />
             </DockPanel>
             <ItemsControl ItemsSource="{Binding Instances}">
                 <ItemsControl.ItemTemplate>

@@ -5,18 +5,17 @@
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="320"
     IsPrimaryButtonVisible="True"
-    PrimaryText="{x:Static lang:Resources.Dialog_ConfirmButtonText}"
+    PrimaryText="{Translate {x:Static app:LanguageManager+Keys.Dialog_ConfirmButtonText}}"
     Result="{Binding $self.TypedCode, Mode=OneWay}"
     mc:Ignorable="d">
     <StackPanel Spacing="12">
         <TextBlock
             FontSize="{StaticResource SmallFontSize}"
             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-            Text="{x:Static lang:Resources.DangerConfirmDialog_PromptText}"
+            Text="{Translate {x:Static app:LanguageManager+Keys.DangerConfirmDialog_PromptText}}"
             TextWrapping="Wrap" />
         <Border
             Padding="24,10"
@@ -34,7 +33,7 @@
             x:Name="CodeInput"
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Center"
-            PlaceholderText="{x:Static lang:Resources.DangerConfirmDialog_InputPlaceholderText}"
+            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.DangerConfirmDialog_InputPlaceholderText}}"
             Text="{Binding $parent[app:DangerConfirmDialog].TypedCode, Mode=TwoWay}" />
     </StackPanel>
 </husk:Dialog>

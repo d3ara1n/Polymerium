@@ -14,7 +14,6 @@ using Huskui.Avalonia.Mvvm.States;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Toasts;
 using Polymerium.Avalonia.Utilities;
@@ -229,12 +228,12 @@ public partial class MarketplaceModpacksPageModel
                 }
                 catch (ApiException ex)
                 {
-                    _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+                    _notificationService.PopMessage(ex, LanguageManager.Instance.Error_BadNetwork.Current(), GrowlLevel.Warning);
                     Debug.WriteLine(ex);
                 }
                 catch (HttpRequestException ex)
                 {
-                    _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+                    _notificationService.PopMessage(ex, LanguageManager.Instance.Error_BadNetwork.Current(), GrowlLevel.Warning);
                     Debug.WriteLine(ex);
                 }
 
@@ -244,12 +243,12 @@ public partial class MarketplaceModpacksPageModel
         }
         catch (ApiException ex)
         {
-            _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+            _notificationService.PopMessage(ex, LanguageManager.Instance.Error_BadNetwork.Current(), GrowlLevel.Warning);
             Debug.WriteLine(ex);
         }
         catch (HttpRequestException ex)
         {
-            _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+            _notificationService.PopMessage(ex, LanguageManager.Instance.Error_BadNetwork.Current(), GrowlLevel.Warning);
             Debug.WriteLine(ex);
         }
     }
@@ -260,7 +259,7 @@ public partial class MarketplaceModpacksPageModel
         if (exhibit is not null)
         {
             _instanceManager.Install(exhibit.ProjectName, exhibit.Label, exhibit.Namespace, exhibit.ProjectId, null);
-            _notificationService.PopMessage(Resources.MarketplaceModpacksPage_ModpackInstallingNotificationMessage
+            _notificationService.PopMessage(LanguageManager.Instance.MarketplaceModpacksPage_ModpackInstallingNotificationMessage.Current()
                                                      .Replace("{0}", exhibit.ProjectName),
                                             exhibit.ProjectName,
                                             thumbnail: exhibit.Thumbnail);
@@ -330,7 +329,7 @@ public partial class MarketplaceModpacksPageModel
             catch (Exception ex)
             {
                 _notificationService.PopMessage(ex,
-                                                Resources.MarketplaceModpacksPage_ModpackLoadingDangerNotificationTitle,
+                                                LanguageManager.Instance.MarketplaceModpacksPage_ModpackLoadingDangerNotificationTitle.Current(),
                                                 GrowlLevel.Warning);
             }
         }
@@ -343,8 +342,7 @@ public partial class MarketplaceModpacksPageModel
         {
             return TopLevelHelper.LaunchUriAsync(TopLevelHelper.GetTopLevel(),
                                                  exhibit.Reference,
-                                                 Resources
-                                                    .MarketplaceModpacksPage_OpenProjectWebsiteDangerNotificationTitle,
+                                                 LanguageManager.Instance.MarketplaceModpacksPage_OpenProjectWebsiteDangerNotificationTitle.Current(),
                                                  _notificationService,
                                                  thumbnail: exhibit.Thumbnail);
         }
@@ -362,7 +360,7 @@ public partial class MarketplaceModpacksPageModel
                                      version.Namespace,
                                      version.ProjectId,
                                      version.VersionId);
-            _notificationService.PopMessage(Resources.MarketplaceModpacksPage_ModpackInstallingNotificationMessage
+            _notificationService.PopMessage(LanguageManager.Instance.MarketplaceModpacksPage_ModpackInstallingNotificationMessage.Current()
                                                      .Replace("{0}", version.VersionName),
                                             version.ProjectName);
         }

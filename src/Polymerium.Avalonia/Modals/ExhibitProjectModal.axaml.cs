@@ -10,7 +10,6 @@ using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Repositories.Resources;
-using AppResources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Modals;
 
@@ -168,8 +167,7 @@ public partial class ExhibitProjectModal : Modal
             var rev = new Uri(url, UriKind.RelativeOrAbsolute);
             return TopLevelHelper.LaunchUriAsync(TopLevel.GetTopLevel(this),
                                                  rev.IsAbsoluteUri ? rev : new(Package.Reference, rev),
-                                                 AppResources
-                                                    .ExhibitPackageModal_OpenPackageLinkDangerNotificationTitle);
+                                                 LanguageManager.Instance.ExhibitPackageModal_OpenPackageLinkDangerNotificationTitle.Current());
         }
 
         return Task.CompletedTask;

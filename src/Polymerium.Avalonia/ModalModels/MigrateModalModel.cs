@@ -13,7 +13,6 @@ using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Adapters;
@@ -59,9 +58,9 @@ public partial class MigrateModalModel(
     public partial bool? AllSelected { get; set; }
 
     public string SelectedSummary =>
-        string.Format(Resources.MigrateModal_SelectedCountFormat, SelectedCount, TotalCount);
+        string.Format(LanguageManager.Instance.MigrateModal_SelectedCountFormat.Current(), SelectedCount, TotalCount);
 
-    public string MigrateLabel => string.Format(Resources.MigrateModal_MigrateWithCount, SelectedCount);
+    public string MigrateLabel => string.Format(LanguageManager.Instance.MigrateModal_MigrateWithCount.Current(), SelectedCount);
 
     partial void OnAllSelectedChanged(bool? value)
     {
@@ -122,7 +121,7 @@ public partial class MigrateModalModel(
             return;
         }
 
-        var folders = await top.StorageProvider.OpenFolderPickerAsync(new() { Title = Resources.MigrateModal_Title });
+        var folders = await top.StorageProvider.OpenFolderPickerAsync(new() { Title = LanguageManager.Instance.MigrateModal_Title.Current() });
         var path = folders.FirstOrDefault()?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(path))
         {
@@ -135,7 +134,7 @@ public partial class MigrateModalModel(
     {
         if (SelectedLauncher is null || string.IsNullOrWhiteSpace(DataDirectory) || !Directory.Exists(DataDirectory))
         {
-            notificationService.PopMessage(Resources.Migrate_DirectoryMissing, Resources.Migrate_Title);
+            notificationService.PopMessage(LanguageManager.Instance.Migrate_DirectoryMissing.Current(), LanguageManager.Instance.Migrate_Title.Current());
             return;
         }
 
@@ -160,7 +159,7 @@ public partial class MigrateModalModel(
         }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, Resources.Migrate_ScanFailed);
+            notificationService.PopMessage(ex, LanguageManager.Instance.Migrate_ScanFailed.Current());
         }
         finally
         {
@@ -189,17 +188,17 @@ public partial class MigrateModalModel(
 
         var total = selected.Count;
         using var cts = new CancellationTokenSource();
-        var handle = notificationService.PopProgress(Resources.Migrate_Preparing, Resources.Migrate_Title);
+        var handle = notificationService.PopProgress(LanguageManager.Instance.Migrate_Preparing.Current(), LanguageManager.Instance.Migrate_Title.Current());
         // NOTE: cancel-only action — it cancels the migrate CTS but keeps the notification visible so
         //  the user sees progress until the summary lands.
-        handle.AddAction(new(Resources.Migrate_CancelButton, new RelayCommand(cts.Cancel)));
+        handle.AddAction(new(LanguageManager.Instance.Migrate_CancelButton.Current(), new RelayCommand(cts.Cancel)));
         self.Dismiss();
 
         var progress = new Progress<MigrateProgress>(p =>
         {
             if (p.CurrentPhase == MigrateProgress.Phase.Identifying)
             {
-                handle.Report(Resources.Migrate_Identifying);
+                handle.Report(LanguageManager.Instance.Migrate_Identifying.Current());
             }
             else
             {
@@ -218,7 +217,7 @@ public partial class MigrateModalModel(
             GrowlLevel level;
             if (failed.Count == 0 && !cancelled)
             {
-                summary = string.Format(Resources.Migrate_SummarySuccess, succeeded);
+                summary = string.Format(LanguageManager.Instance.Migrate_SummarySuccess.Current(), succeeded);
                 level = GrowlLevel.Success;
             }
             else
@@ -226,16 +225,16 @@ public partial class MigrateModalModel(
                 var failedList = failed.Count > 0
                                      ? "\n" + string.Join("\n", failed.Select(f => $"- {f.Name}: {f.Failure}"))
                                      : string.Empty;
-                summary = string.Format(Resources.Migrate_SummaryPartial, succeeded, total, failedList);
+                summary = string.Format(LanguageManager.Instance.Migrate_SummaryPartial.Current(), succeeded, total, failedList);
                 level = succeeded > 0 ? GrowlLevel.Warning : cancelled ? GrowlLevel.Information : GrowlLevel.Danger;
             }
 
-            notificationService.PopMessage(summary, Resources.Migrate_Title, level);
+            notificationService.PopMessage(summary, LanguageManager.Instance.Migrate_Title.Current(), level);
         }
         catch (OperationCanceledException) { }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, Resources.Migrate_Failed);
+            notificationService.PopMessage(ex, LanguageManager.Instance.Migrate_Failed.Current());
         }
         finally
         {

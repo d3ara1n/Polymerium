@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="520"
     MaxHeight="600"
@@ -60,7 +59,7 @@
                 Margin="24,0"
                 HorizontalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.AboutModal_Slogan}"
+                Text="{Translate {x:Static app:LanguageManager+Keys.AboutModal_Slogan}}"
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
 
@@ -87,7 +86,7 @@
                     Grid.Row="0"
                     Grid.Column="0"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.AboutModal_CommitLabel}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.AboutModal_CommitLabel}}" />
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="1"
@@ -97,7 +96,7 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.AboutModal_RuntimeLabel}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.AboutModal_RuntimeLabel}}" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="1"
@@ -107,7 +106,7 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.AboutModal_PlatformLabel}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.AboutModal_PlatformLabel}}" />
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="1"
@@ -129,7 +128,7 @@
                         <fi:SymbolIcon
                             FontSize="{StaticResource MediumFontSize}"
                             Symbol="Branch" />
-                        <TextBlock Text="{x:Static lang:Resources.AboutModal_RepositoryLabel}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AboutModal_RepositoryLabel}}" />
                     </StackPanel>
                 </Button>
                 <Button
@@ -141,7 +140,7 @@
                         <fi:SymbolIcon
                             FontSize="{StaticResource MediumFontSize}"
                             Symbol="Document" />
-                        <TextBlock Text="{x:Static lang:Resources.AboutModal_DocumentationLabel}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AboutModal_DocumentationLabel}}" />
                     </StackPanel>
                 </Button>
                 <Button
@@ -153,7 +152,7 @@
                         <fi:SymbolIcon
                             FontSize="{StaticResource MediumFontSize}"
                             Symbol="Question" />
-                        <TextBlock Text="{x:Static lang:Resources.AboutModal_IssuesLabel}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AboutModal_IssuesLabel}}" />
                     </StackPanel>
                 </Button>
                 <Button
@@ -165,7 +164,7 @@
                         <fi:SymbolIcon
                             FontSize="{StaticResource MediumFontSize}"
                             Symbol="LockClosed" />
-                        <TextBlock Text="{x:Static lang:Resources.AboutModal_LicenseLabel}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AboutModal_LicenseLabel}}" />
                     </StackPanel>
                 </Button>
             </WrapPanel>

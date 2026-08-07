@@ -5,7 +5,6 @@
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:trident="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions">
     <Design.PreviewWith>
         <Panel>
@@ -70,7 +69,7 @@
                                             Grid.Column="0"
                                             VerticalAlignment="Center"
                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <TextBlock Text="{Binding Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                            <TextBlock Text="{app:LocalizedEnum {Binding Kind}}" />
                                         </husk:Tag>
                                         <TextBlock
                                             Grid.Column="1"
@@ -106,7 +105,7 @@
                                             IsVisible="{Binding $parent[app:RecipeItemButton].((app:RecipeItemModel)DataContext).Tags.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
                                             FontSize="{StaticResource SmallFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.RecipeItemButton_NoTagsText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.RecipeItemButton_NoTagsText}}" />
                                     </Grid>
                                     <Grid
                                         Grid.Row="1"
@@ -127,7 +126,7 @@
                                             IsVisible="{Binding $parent[app:RecipeItemButton].((app:RecipeItemModel)DataContext).Note, Converter={x:Static StringConverters.IsNullOrEmpty}}"
                                             FontSize="{StaticResource SmallFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.RecipeItemButton_NoNoteText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.RecipeItemButton_NoNoteText}}" />
                                         <TextBlock
                                             Grid.Column="1"
                                             MaxWidth="160"
@@ -203,7 +202,7 @@
                                             IsVisible="{Binding Tags.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
                                             FontSize="{StaticResource SmallFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.RecipeItemButton_NoTagsText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.RecipeItemButton_NoTagsText}}" />
                                     </Grid>
                                     <TextBlock
                                         Grid.Row="1"

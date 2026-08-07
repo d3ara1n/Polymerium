@@ -15,7 +15,6 @@ using Huskui.Avalonia.Mvvm.Activation;
 using Microsoft.Extensions.Logging;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Models;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Toasts;
 using Polymerium.Avalonia.Utilities;
@@ -534,7 +533,7 @@ public partial class InstanceFilesPageModel(
         {
             return TopLevelHelper.LaunchFileInfoAsync(TopLevelHelper.GetTopLevel(),
                                                       new(model.Image.LocalPath),
-                                                      Resources.InstanceFilesPage_OpenScreenshotDangerNotificationTitle,
+                                                      LanguageManager.Instance.InstanceFilesPage_OpenScreenshotDangerNotificationTitle.Current(),
                                                       notificationService,
                                                       thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
         }
@@ -552,8 +551,7 @@ public partial class InstanceFilesPageModel(
             {
                 return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
                                                                new(dir),
-                                                               Resources
-                                                                  .Shared_FailedToOpenFolderDangerNotificationTitle,
+                                                               LanguageManager.Instance.Shared_FailedToOpenFolderDangerNotificationTitle.Current(),
                                                                notificationService,
                                                                thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
             }
@@ -570,8 +568,7 @@ public partial class InstanceFilesPageModel(
         if (model != null
          && ScreenshotGroups is not null
          && File.Exists(model.Image.LocalPath)
-         && await overlayService.RequestConfirmationAsync(Resources
-                                                             .InstanceFilesPage_DeleteScreenshotConfirmationMessage))
+         && await overlayService.RequestConfirmationAsync(LanguageManager.Instance.InstanceFilesPage_DeleteScreenshotConfirmationMessage.Current()))
         {
             try
             {
@@ -588,7 +585,7 @@ public partial class InstanceFilesPageModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, Resources.InstanceFilesPage_DeleteScreenshotDangerNotificationTitle);
+                notificationService.PopMessage(ex, LanguageManager.Instance.InstanceFilesPage_DeleteScreenshotDangerNotificationTitle.Current());
             }
         }
     }
@@ -599,7 +596,7 @@ public partial class InstanceFilesPageModel(
 
     [RelayCommand(CanExecute = nameof(CanToggleMod))]
     private void ToggleMod(AssetModModel? model) =>
-        ToggleAsset(model, Resources.InstanceFilesPage_ToggleModDangerNotificationTitle);
+        ToggleAsset(model, LanguageManager.Instance.InstanceFilesPage_ToggleModDangerNotificationTitle.Current());
 
     private bool CanDeleteMod(AssetModModel? model) => model is { IsLocked: false };
 
@@ -609,7 +606,7 @@ public partial class InstanceFilesPageModel(
         if (model != null
          && Mods is not null
          && File.Exists(model.FilePath)
-         && await overlayService.RequestConfirmationAsync(Resources.InstanceFilesPage_DeleteModConfirmationMessage
+         && await overlayService.RequestConfirmationAsync(LanguageManager.Instance.InstanceFilesPage_DeleteModConfirmationMessage.Current()
                                                                    .Replace("{0}", model.DisplayName)))
         {
             try
@@ -621,13 +618,13 @@ public partial class InstanceFilesPageModel(
                     SelectedMod = null;
                 }
 
-                notificationService.PopMessage(Resources.InstanceFilesPage_DeleteModSuccessNotificationMessage
+                notificationService.PopMessage(LanguageManager.Instance.InstanceFilesPage_DeleteModSuccessNotificationMessage.Current()
                                                         .Replace("{0}", model.DisplayName),
-                                               Resources.InstanceFilesPage_DeleteModSuccessNotificationTitle);
+                                               LanguageManager.Instance.InstanceFilesPage_DeleteModSuccessNotificationTitle.Current());
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, Resources.InstanceFilesPage_DeleteModDangerNotificationTitle);
+                notificationService.PopMessage(ex, LanguageManager.Instance.InstanceFilesPage_DeleteModDangerNotificationTitle.Current());
             }
         }
     }
@@ -636,7 +633,7 @@ public partial class InstanceFilesPageModel(
 
     [RelayCommand(CanExecute = nameof(CanToggleResourcePack))]
     private void ToggleResourcePack(AssetResourcePackModel? model) =>
-        ToggleAsset(model, Resources.InstanceFilesPage_ToggleResourcePackDangerNotificationTitle);
+        ToggleAsset(model, LanguageManager.Instance.InstanceFilesPage_ToggleResourcePackDangerNotificationTitle.Current());
 
     private bool CanDeleteResourcePack(AssetResourcePackModel? model) => model is { IsLocked: false };
 
@@ -646,8 +643,7 @@ public partial class InstanceFilesPageModel(
         if (model != null
          && ResourcePacks is not null
          && File.Exists(model.FilePath)
-         && await overlayService.RequestConfirmationAsync(Resources
-                                                         .InstanceFilesPage_DeleteResourcePackConfirmationMessage
+         && await overlayService.RequestConfirmationAsync(LanguageManager.Instance.InstanceFilesPage_DeleteResourcePackConfirmationMessage.Current()
                                                          .Replace("{0}", model.DisplayName)))
         {
             try
@@ -659,14 +655,14 @@ public partial class InstanceFilesPageModel(
                     SelectedResourcePack = null;
                 }
 
-                notificationService.PopMessage(Resources.InstanceFilesPage_DeleteResourcePackSuccessNotificationMessage
+                notificationService.PopMessage(LanguageManager.Instance.InstanceFilesPage_DeleteResourcePackSuccessNotificationMessage.Current()
                                                         .Replace("{0}", model.DisplayName),
-                                               Resources.InstanceFilesPage_DeleteResourcePackSuccessNotificationTitle);
+                                               LanguageManager.Instance.InstanceFilesPage_DeleteResourcePackSuccessNotificationTitle.Current());
             }
             catch (Exception ex)
             {
                 notificationService.PopMessage(ex,
-                                               Resources.InstanceFilesPage_DeleteResourcePackDangerNotificationTitle);
+                                               LanguageManager.Instance.InstanceFilesPage_DeleteResourcePackDangerNotificationTitle.Current());
             }
         }
     }
@@ -675,7 +671,7 @@ public partial class InstanceFilesPageModel(
 
     [RelayCommand(CanExecute = nameof(CanToggleDataPack))]
     private void ToggleDataPack(AssetDataPackModel? model) =>
-        ToggleAsset(model, Resources.InstanceFilesPage_ToggleDataPackDangerNotificationTitle);
+        ToggleAsset(model, LanguageManager.Instance.InstanceFilesPage_ToggleDataPackDangerNotificationTitle.Current());
 
     private void ToggleAsset(FileAssetModel? model, string dangerTitle)
     {
@@ -707,7 +703,7 @@ public partial class InstanceFilesPageModel(
         if (model != null
          && DataPacks is not null
          && File.Exists(model.FilePath)
-         && await overlayService.RequestConfirmationAsync(Resources.InstanceFilesPage_DeleteDataPackConfirmationMessage
+         && await overlayService.RequestConfirmationAsync(LanguageManager.Instance.InstanceFilesPage_DeleteDataPackConfirmationMessage.Current()
                                                                    .Replace("{0}", model.DisplayName)))
         {
             try
@@ -719,13 +715,13 @@ public partial class InstanceFilesPageModel(
                     SelectedDataPack = null;
                 }
 
-                notificationService.PopMessage(Resources.InstanceFilesPage_DeleteDataPackSuccessNotificationMessage
+                notificationService.PopMessage(LanguageManager.Instance.InstanceFilesPage_DeleteDataPackSuccessNotificationMessage.Current()
                                                         .Replace("{0}", model.DisplayName),
-                                               Resources.InstanceFilesPage_DeleteDataPackSuccessNotificationTitle);
+                                               LanguageManager.Instance.InstanceFilesPage_DeleteDataPackSuccessNotificationTitle.Current());
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, Resources.InstanceFilesPage_DeleteDataPackDangerNotificationTitle);
+                notificationService.PopMessage(ex, LanguageManager.Instance.InstanceFilesPage_DeleteDataPackDangerNotificationTitle.Current());
             }
         }
     }

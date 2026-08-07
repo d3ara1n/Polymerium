@@ -3,8 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
     <ControlTheme
         x:Key="ExhibitPackageDependencyButtonTheme"
         TargetType="app:PackageDependencyButton">
@@ -65,7 +64,7 @@
                                 <husk:Tag
                                     VerticalAlignment="Center"
                                     IsVisible="{Binding IsRequired}"
-                                    Content="{x:Static lang:Resources.ExhibitDependencyButton_RequiredTagText}" />
+                                    Content="{Translate {x:Static app:LanguageManager+Keys.ExhibitDependencyButton_RequiredTagText}}" />
                                 <app:ExhibitStatePresenter
                                     IsVisible="{TemplateBinding IsChecked}"
                                     State="{Binding Exhibit.State}" />

@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="400"
     d:DesignWidth="480"
@@ -37,11 +36,11 @@
                 HorizontalAlignment="Center"
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.OobePrivilege_Title}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivilege_Title}}" />
             <TextBlock
                 HorizontalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.OobePrivilege_Subtitle}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivilege_Subtitle}}" />
         </StackPanel>
 
         <!--  Status Card - Changes based on privilege state  -->
@@ -66,11 +65,11 @@
                             VerticalAlignment="Center">
                             <TextBlock
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                Text="{x:Static lang:Resources.OobePrivilege_StatusGrantedTitle}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivilege_StatusGrantedTitle}}" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.OobePrivilege_StatusGrantedMessage}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivilege_StatusGrantedMessage}}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>
@@ -95,11 +94,11 @@
                             VerticalAlignment="Center">
                             <TextBlock
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                Text="{x:Static lang:Resources.OobePrivilege_StatusRequiredTitle}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivilege_StatusRequiredTitle}}" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.OobePrivilege_StatusRequiredMessage}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivilege_StatusRequiredMessage}}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                         <Button
@@ -124,11 +123,11 @@
             <StackPanel Spacing="8">
                 <TextBlock
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.OobePrivilege_InstructionsTitle}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivilege_InstructionsTitle}}" />
                 <TextBlock
                     FontSize="{StaticResource SmallFontSize}"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.OobePrivilege_InstructionsDescription}"
+                    Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivilege_InstructionsDescription}}"
                     TextWrapping="Wrap" />
                 <HyperlinkButton
                     HorizontalAlignment="Left"
@@ -139,7 +138,7 @@
                         <fi:SymbolIcon
                             FontSize="{StaticResource SmallFontSize}"
                             Symbol="Open" />
-                        <TextBlock Text="{x:Static lang:Resources.OobePrivilege_OpenSettingsButtonText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivilege_OpenSettingsButtonText}}" />
                     </StackPanel>
                 </HyperlinkButton>
             </StackPanel>
@@ -154,10 +153,10 @@
             TextAlignment="Center"
             TextWrapping="Wrap">
             <Run
-                Text="{x:Static lang:Resources.OobePrivilege_SafetyNote}"
+                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivilege_SafetyNote}}"
                 TextDecorations="Underline" />
             <LineBreak />
-            <Run Text="{x:Static lang:Resources.OobePrivilege_SafetyDescription}" />
+            <Run Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivilege_SafetyDescription}}" />
         </TextBlock>
     </StackPanel>
 </app:OobeStep>

@@ -6,9 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="{x:Static lang:Resources.ModpackExporterDialog_Title}"
+    Title="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_Title}}"
     Width="450"
     d:DesignHeight="600"
     IsPrimaryButtonVisible="True"
@@ -18,7 +17,7 @@
         <StackPanel Spacing="8">
             <TextBlock
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.ModpackExporterDialog_FormatLabelText}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_FormatLabelText}}" />
             <ScrollViewer
                 HorizontalScrollBarVisibility="Auto"
                 VerticalScrollBarVisibility="Disabled">
@@ -52,8 +51,8 @@
                                         </MultiBinding>
                                     </husk:Tag.IsVisible>
                                     <TextBlock>
-                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_TypeLabelText}" />
-                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_OfflineTagText}" />
+                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_TypeLabelText}}" />
+                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineTagText}}" />
                                     </TextBlock>
                                 </husk:Tag>
                                 <husk:Tag
@@ -66,8 +65,8 @@
                                         </MultiBinding>
                                     </husk:Tag.IsVisible>
                                     <TextBlock>
-                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_TypeLabelText}" />
-                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_OnlineTagText}" />
+                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_TypeLabelText}}" />
+                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OnlineTagText}}" />
                                     </TextBlock>
                                 </husk:Tag>
                                 <husk:Tag
@@ -80,10 +79,10 @@
                                         </MultiBinding>
                                     </husk:Tag.IsVisible>
                                     <TextBlock>
-                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_TypeLabelText}" />
-                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_OnlineTagText}" />
+                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_TypeLabelText}}" />
+                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OnlineTagText}}" />
                                         <Run Text="/" />
-                                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_OfflineTagText}" />
+                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineTagText}}" />
                                     </TextBlock>
                                 </husk:Tag>
                             </Grid>
@@ -96,7 +95,7 @@
         <StackPanel Spacing="8">
             <TextBlock
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.ModpackExporterDialog_NameLabelText}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_NameLabelText}}" />
             <TextBox
                 PlaceholderText="{Binding $parent[app:ModpackExporterDialog].NameOriginal, FallbackValue=Unknown}"
                 Text="{Binding $parent[app:ModpackExporterDialog].NameOverride, Mode=TwoWay, FallbackValue={x:Null}}">
@@ -114,7 +113,7 @@
             </TextBox>
             <TextBlock
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.ModpackExporterDialog_AuthorLabelText}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_AuthorLabelText}}" />
             <TextBox
                 PlaceholderText="{Binding $parent[app:ModpackExporterDialog].AuthorOriginal, FallbackValue=Unknown}"
                 Text="{Binding $parent[app:ModpackExporterDialog].AuthorOverride, Mode=TwoWay, FallbackValue={x:Null}}">
@@ -132,7 +131,7 @@
             </TextBox>
             <TextBlock
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.ModpackExporterDialog_VersionLabelText}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_VersionLabelText}}" />
             <TextBox
                 PlaceholderText="{Binding $parent[app:ModpackExporterDialog].VersionOriginal, FallbackValue=Unknown}"
                 Text="{Binding $parent[app:ModpackExporterDialog].VersionOverride, Mode=TwoWay, FallbackValue={x:Null}}">
@@ -150,7 +149,7 @@
             </TextBox>
         </StackPanel>
         <!--  额外选项  -->
-        <Expander Header="{x:Static lang:Resources.ModpackExporterDialog_AdvancedOptionsLabelText}">
+        <Expander Header="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_AdvancedOptionsLabelText}}">
             <StackPanel Spacing="8">
                 <DockPanel>
                     <ToggleSwitch
@@ -161,14 +160,14 @@
                         Spacing="6">
                         <TextBlock
                             VerticalAlignment="Center"
-                            Text="{x:Static lang:Resources.ModpackExporterDialog_OfflineModeLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineModeLabelText}}" />
                         <fi:SymbolIcon
                             VerticalAlignment="Center"
                             Background="Transparent"
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Symbol="Info"
-                            ToolTip.Tip="{x:Static lang:Resources.ModpackExporterDialog_OfflineModeToolTip}" />
+                            ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineModeToolTip}}" />
                     </StackPanel>
                 </DockPanel>
                 <DockPanel>
@@ -179,12 +178,12 @@
                         Theme="{StaticResource GhostButtonTheme}">
                         <husk:IconLabel
                             Icon="Add"
-                            Text="{x:Static lang:Resources.InstancePackageModal_AddTagButtonText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_AddTagButtonText}}" />
                     </Button>
                     <TextBlock
                         VerticalAlignment="Center"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.ModpackExporterDialog_ExcludedTagsLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ExcludedTagsLabelText}}" />
                 </DockPanel>
                 <app:EmptyContainer
                     Icon="TagMultiple"
@@ -231,16 +230,16 @@
                 <TextBlock
                     FontSize="{StaticResource SmallFontSize}"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.ModpackExporterDialog_ExcludedTagsDescriptionText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ExcludedTagsDescriptionText}}" />
             </StackPanel>
         </Expander>
         <!--  Trident 专属选项  -->
-        <Expander Header="{x:Static lang:Resources.ModpackExporterDialog_TridentOptionsLabelText}">
+        <Expander Header="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_TridentOptionsLabelText}}">
             <StackPanel Spacing="8">
                 <husk:InfoBar
                     Classes="Warning"
                     IsVisible="{Binding $parent[app:ModpackExporterDialog].SelectedExporterLabel, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=trident}"
-                    Content="{x:Static lang:Resources.ModpackExporterDialog_TridentOptionsInfoBarText}" />
+                    Content="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_TridentOptionsInfoBarText}}" />
                 <DockPanel>
                     <ToggleSwitch
                         DockPanel.Dock="Right"
@@ -250,14 +249,14 @@
                         Spacing="6">
                         <TextBlock
                             VerticalAlignment="Center"
-                            Text="{x:Static lang:Resources.ModpackExporterDialog_IncludingSourceLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_IncludingSourceLabelText}}" />
                         <fi:SymbolIcon
                             VerticalAlignment="Center"
                             Background="Transparent"
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Symbol="Info"
-                            ToolTip.Tip="{x:Static lang:Resources.ModpackExporterDialog_IncludingSourceToolTip}" />
+                            ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_IncludingSourceToolTip}}" />
                     </StackPanel>
                 </DockPanel>
                 <DockPanel>
@@ -266,7 +265,7 @@
                         IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.IncludingTags, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.ModpackExporterDialog_IncludingTagsLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_IncludingTagsLabelText}}" />
                 </DockPanel>
                 <DockPanel>
                     <ToggleSwitch
@@ -274,7 +273,7 @@
                         IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.ConnectServer, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.ModpackExporterDialog_ConnectServerText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ConnectServerText}}" />
                 </DockPanel>
                 <DockPanel>
                     <ToggleSwitch
@@ -282,7 +281,7 @@
                         IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.JavaMaxMemory, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.ModpackExporterDialog_JavaMaxMemoryLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_JavaMaxMemoryLabelText}}" />
                 </DockPanel>
                 <DockPanel>
                     <ToggleSwitch
@@ -290,7 +289,7 @@
                         IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.JavaAdditionalArguments, FallbackValue=false}" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.ModpackExporterDialog_JavaAdditionalArgumentsLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_JavaAdditionalArgumentsLabelText}}" />
                 </DockPanel>
 
             </StackPanel>
@@ -299,7 +298,7 @@
         <StackPanel Spacing="8">
             <TextBlock
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsLabelText}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_AttachmentsLabelText}}" />
             <Border
                 Padding="3"
                 Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
@@ -335,7 +334,7 @@
                             <StackPanel Grid.Column="1">
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.ModpackExporterDialog_PackagesLabelText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_PackagesLabelText}}" />
                                 <TextBlock
                                     FontSize="{StaticResource LargeFontSize}"
                                     Text="{Binding $parent[app:ModpackExporterDialog].PackageCount, FallbackValue=Unknown}" />
@@ -347,7 +346,7 @@
                         <StackPanel Grid.Column="2">
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.ModpackExporterDialog_ModLoaderLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ModLoaderLabelText}}" />
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 Text="{Binding $parent[app:ModpackExporterDialog].LoaderLabel, FallbackValue=Unknown}" />
@@ -367,7 +366,7 @@
                         FontSize="{StaticResource SmallFontSize}"
                         FontStyle="Italic"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                        <Run Text="{x:Static lang:Resources.ModpackExporterDialog_AttachmentsPrompt}" />
+                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_AttachmentsPrompt}}" />
                         <HyperlinkButton Command="{Binding $parent[app:ModpackExporterDialog].OpenImportFolderCommand}">
                             <TextBlock Text="./import" />
                         </HyperlinkButton>
@@ -381,7 +380,7 @@
                     <husk:IconLabel
                         FontSize="{StaticResource SmallFontSize}"
                         Icon="BookQuestionMark"
-                        Text="{x:Static lang:Resources.ModpackExporterDialog_OpenWikiButtonText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OpenWikiButtonText}}" />
                 </HyperlinkButton>
             </StackPanel>
         </StackPanel>

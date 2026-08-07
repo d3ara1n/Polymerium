@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="520"
     Padding="0"
@@ -27,12 +26,12 @@
                     Classes="Primary"
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Center">
-                    <TextBlock Text="{x:Static lang:Resources.GameCrashReportModal_ExportButtonText}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_ExportButtonText}}" />
                     <DropDownButton.Flyout>
                         <MenuFlyout>
                             <MenuItem
                                 Command="{Binding $parent[app:GameCrashReportModal].ExportDiagnosticPackageCommand}"
-                                Header="{x:Static lang:Resources.GameCrashReportModal_ExportDiagnosticPackageMenuText}">
+                                Header="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_ExportDiagnosticPackageMenuText}}">
                                 <MenuItem.Icon>
                                     <fi:SymbolIcon
                                         FontSize="{StaticResource MediumFontSize}"
@@ -41,7 +40,7 @@
                             </MenuItem>
                             <MenuItem
                                 Command="{Binding $parent[app:GameCrashReportModal].ExportAnalysisPackageCommand}"
-                                Header="{x:Static lang:Resources.GameCrashReportModal_ExportAnalysisPackageMenuText}">
+                                Header="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_ExportAnalysisPackageMenuText}}">
                                 <MenuItem.Icon>
                                     <fi:SymbolIcon
                                         FontSize="{StaticResource MediumFontSize}"
@@ -57,7 +56,7 @@
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Center"
                     Command="{Binding $parent[app:GameCrashReportModal].Dismiss}">
-                    <TextBlock Text="{x:Static lang:Resources.GameCrashReportModal_CloseButtonText}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_CloseButtonText}}" />
                 </Button>
             </Grid>
         </StackPanel>
@@ -81,7 +80,7 @@
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             LetterSpacing="2"
-                            Text="{x:Static lang:Resources.GameCrashReportModal_Title}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_Title}}" />
                     </Border>
 
                     <!--  Title  -->
@@ -90,7 +89,7 @@
                         FontSize="{StaticResource ExtraLargeFontSize}"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
                         Foreground="{StaticResource ControlDangerForegroundBrush}"
-                        Text="{x:Static lang:Resources.GameCrashReportModal_Subtitle}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_Subtitle}}" />
 
                     <!--  Subtitle / Divider  -->
                     <StackPanel
@@ -144,7 +143,7 @@
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Icon="Warning"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_ExitCodeLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_ExitCodeLabelText}}" />
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -167,7 +166,7 @@
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Icon="Clock"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_PlayTimeLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_PlayTimeLabelText}}" />
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -189,7 +188,7 @@
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Icon="Games"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_MinecraftVersionLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_MinecraftVersionLabelText}}" />
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -211,7 +210,7 @@
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Icon="AppsAddIn"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_ModLoaderLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_ModLoaderLabelText}}" />
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -237,7 +236,7 @@
                                 Symbol="Desktop" />
                             <TextBlock
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_SystemEnvironmentTitle}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_SystemEnvironmentTitle}}" />
                         </StackPanel>
                         <Grid
                             ColumnDefinitions="120,*"
@@ -248,7 +247,7 @@
                                 Grid.Column="0"
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_OperatingSystemLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_OperatingSystemLabelText}}" />
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="1"
@@ -260,7 +259,7 @@
                                 Grid.Column="0"
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_InstalledMemoryLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_InstalledMemoryLabelText}}" />
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="1"
@@ -272,7 +271,7 @@
                                 Grid.Column="0"
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_AllocatedMemoryLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_AllocatedMemoryLabelText}}" />
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="1"
@@ -284,7 +283,7 @@
                                 Grid.Column="0"
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_JavaVersionLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_JavaVersionLabelText}}" />
                             <TextBlock
                                 Grid.Row="3"
                                 Grid.Column="1"
@@ -296,7 +295,7 @@
                                 Grid.Column="0"
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_JavaPathLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_JavaPathLabelText}}" />
                             <TextBlock
                                 Grid.Row="4"
                                 Grid.Column="1"
@@ -325,7 +324,7 @@
                                 Symbol="Document" />
                             <TextBlock
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_LastLogOutputTitle}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_LastLogOutputTitle}}" />
                         </StackPanel>
                         <ScrollViewer
                             MaxHeight="240"
@@ -362,7 +361,7 @@
                                 Symbol="Document" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_OpenLatestLogButtonText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_OpenLatestLogButtonText}}" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -380,7 +379,7 @@
                                 Symbol="DocumentError" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_OpenCrashReportButtonText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_OpenCrashReportButtonText}}" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -397,7 +396,7 @@
                                 Symbol="Folder" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_OpenGameDirectoryButtonText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_OpenGameDirectoryButtonText}}" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -414,7 +413,7 @@
                                 Symbol="Copy" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
-                                Text="{x:Static lang:Resources.GameCrashReportModal_CopyReportButtonText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.GameCrashReportModal_CopyReportButtonText}}" />
                         </StackPanel>
                     </Button>
                 </Grid>

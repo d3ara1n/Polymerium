@@ -5,7 +5,6 @@
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     HorizontalAlignment="Stretch"
     VerticalAlignment="Stretch"
@@ -20,7 +19,7 @@
             Orientation="Horizontal">
             <Button
                 Command="{Binding $parent[app:WorkspaceDiffModal].Dismiss}"
-                Content="{x:Static lang:Resources.Dialog_DismissButtonText}" />
+                Content="{Translate {x:Static app:LanguageManager+Keys.Dialog_DismissButtonText}}" />
         </StackPanel>
         <Grid
             RowDefinitions="Auto,Auto,*"
@@ -61,12 +60,12 @@
                                 <TextBlock
                                     HorizontalAlignment="Right"
                                     Foreground="{StaticResource ControlWarningForegroundBrush}"
-                                    Text="{x:Static lang:Resources.WorkspaceDiffModal_DifferentTitle}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.WorkspaceDiffModal_DifferentTitle}}" />
                                 <TextBlock
                                     HorizontalAlignment="Right"
                                     FontSize="{StaticResource SmallFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.WorkspaceDiffModal_ContentBasedPrompt}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.WorkspaceDiffModal_ContentBasedPrompt}}" />
                             </StackPanel>
                         </Border>
                     </husk:SwitchCase>
@@ -81,12 +80,12 @@
                                 <TextBlock
                                     HorizontalAlignment="Right"
                                     Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                    Text="{x:Static lang:Resources.WorkspaceDiffModal_IdenticalTitle}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.WorkspaceDiffModal_IdenticalTitle}}" />
                                 <TextBlock
                                     HorizontalAlignment="Right"
                                     FontSize="{StaticResource SmallFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.WorkspaceDiffModal_ContentBasedPrompt}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.WorkspaceDiffModal_ContentBasedPrompt}}" />
                             </StackPanel>
                         </Border>
                     </husk:SwitchCase>
@@ -104,11 +103,11 @@
                         <Run Text="{Binding #DiffView.LeftLineCount}" />
                         <Run Text="/" />
                         <Run Text="{Binding #DiffView.TotalLineCount}" />
-                        <Run Text="{x:Static lang:Resources.WorkspaceDiffModal_LineCountSuffix}" />
+                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.WorkspaceDiffModal_LineCountSuffix}}" />
                     </TextBlock>
                     <husk:Tag
                         Classes="Primary"
-                        Content="{x:Static lang:Resources.WorkspaceDiffModal_LiveTagText}" />
+                        Content="{Translate {x:Static app:LanguageManager+Keys.WorkspaceDiffModal_LiveTagText}}" />
                 </DockPanel>
                 <DockPanel Grid.Column="1">
                     <TextBlock
@@ -118,11 +117,11 @@
                         <Run Text="{Binding #DiffView.RightLineCount}" />
                         <Run Text="/" />
                         <Run Text="{Binding #DiffView.TotalLineCount}" />
-                        <Run Text="{x:Static lang:Resources.WorkspaceDiffModal_LineCountSuffix}" />
+                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.WorkspaceDiffModal_LineCountSuffix}}" />
                     </TextBlock>
                     <husk:Tag
                         Classes="Primary"
-                        Content="{x:Static lang:Resources.WorkspaceDiffModal_ImportTagText}" />
+                        Content="{Translate {x:Static app:LanguageManager+Keys.WorkspaceDiffModal_ImportTagText}}" />
                 </DockPanel>
             </Grid>
             <husk:DiffView

@@ -31,7 +31,6 @@ using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Toasts;
 using Polymerium.Avalonia.Utilities;
@@ -403,7 +402,7 @@ public partial class InstanceSetupPageModel(
         catch (Exception ex)
         {
             notificationService.PopMessage(ex.Message,
-                                           Resources.InstanceSetupPage_ParsePrefDangerNotificationTitle,
+                                           LanguageManager.Instance.InstanceSetupPage_ParsePrefDangerNotificationTitle.Current(),
                                            GrowlLevel.Danger,
                                            thumbnail: GetNotificationThumbnail());
         }
@@ -488,7 +487,7 @@ public partial class InstanceSetupPageModel(
         }
         else
         {
-            LoaderLabel = Resources.Enum_None;
+            LoaderLabel = "Enum_None";
         }
 
         // 即使正在 Update 或 Deploy 也会 Trigger
@@ -845,8 +844,7 @@ public partial class InstanceSetupPageModel(
             catch (Exception ex)
             {
                 notificationService.PopMessage(ex,
-                                               Resources
-                                                  .InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
+                                               LanguageManager.Instance.InstanceSetupPage_LoadProjectInformationDangerNotificationTitle.Current(),
                                                GrowlLevel.Warning,
                                                GetNotificationThumbnail());
             }
@@ -897,15 +895,13 @@ public partial class InstanceSetupPageModel(
                              .ToList();
                 var total = staging.Count;
                 var progress =
-                    notificationService.PopProgress(Resources
-                                                   .InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage
+                    notificationService.PopProgress(LanguageManager.Instance.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage.Current()
                                                    .Replace("{0}", "0")
                                                    .Replace("{1}", staging.Count.ToString()),
-                                                    Resources
-                                                       .InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle,
+                                                    LanguageManager.Instance.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle.Current(),
                                                     thumbnail: GetNotificationThumbnail());
 
-                progress.AddAction(new(Resources.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText,
+                progress.AddAction(new(LanguageManager.Instance.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText.Current(),
                                        new RelayCommand(Cancel)));
 
                 var filter = new Filter(Kind: null,
@@ -929,8 +925,7 @@ public partial class InstanceSetupPageModel(
                 catch (Exception ex)
                 {
                     notificationService.PopMessage(ex,
-                                                   Resources
-                                                      .InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
+                                                   LanguageManager.Instance.InstanceSetupPage_LoadProjectInformationDangerNotificationTitle.Current(),
                                                    GrowlLevel.Warning,
                                                    GetNotificationThumbnail());
                 }
@@ -943,15 +938,12 @@ public partial class InstanceSetupPageModel(
                 // 调用 Dismiss 会让 Token 进入 Cancel 状态，导致 Notification 显示“过期”，Growl 直接消失
                 progress.Dispose();
 
-                notificationService.PopMessage(Resources
-                                                  .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle,
-                                               Resources
-                                                  .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage
+                notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle.Current(),
+                                               LanguageManager.Instance.InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage.Current()
                                                   .Replace("{0}", updates.Count.ToString()),
                                                thumbnail: GetNotificationThumbnail(),
                                                actions: new
-                                                   GrowlAction(Resources
-                                                                  .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText,
+                                                   GrowlAction(LanguageManager.Instance.InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText.Current(),
                                                                new AsyncRelayCommand(ReviewAsync, CanReview)));
                 return;
 
@@ -1013,8 +1005,7 @@ public partial class InstanceSetupPageModel(
                     Dispatcher.UIThread.Post(() =>
                     {
                         handle.Report(Math.Min(100d, 100d * (StageCount - total) / StageCount));
-                        handle.Report(Resources
-                                     .InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage
+                        handle.Report(LanguageManager.Instance.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage.Current()
                                      .Replace("{0}", updates.Count.ToString())
                                      .Replace("{1}", total.ToString()));
                     });
@@ -1097,9 +1088,8 @@ public partial class InstanceSetupPageModel(
 
                     if (importedEntries.Count == 0)
                     {
-                        notificationService.PopMessage(Resources
-                                                          .InstanceSetupPage_ImportListNoPackagesWarningNotificationMessage,
-                                                       Resources.InstanceSetupPage_ImportListWarningNotificationTitle,
+                        notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_ImportListNoPackagesWarningNotificationMessage.Current(),
+                                                       LanguageManager.Instance.InstanceSetupPage_ImportListWarningNotificationTitle.Current(),
                                                        GrowlLevel.Warning,
                                                        thumbnail: GetNotificationThumbnail());
                         return;
@@ -1208,14 +1198,13 @@ public partial class InstanceSetupPageModel(
                 }
 
                 // 显示结果通知
-                var resultMessage = Resources
-                                   .InstanceSetupPage_ImportListSuccessNotificationMessage
+                var resultMessage = LanguageManager.Instance.InstanceSetupPage_ImportListSuccessNotificationMessage.Current()
                                    .Replace("{0}", addedCount.ToString())
                                    .Replace("{1}", updatedCount.ToString())
                                    .Replace("{2}", failedCount.ToString());
                 var level = failedCount > 0 ? GrowlLevel.Warning : GrowlLevel.Success;
                 notificationService.PopMessage(resultMessage,
-                                               Resources.InstanceSetupPage_ImportListSuccessNotificationTitle,
+                                               LanguageManager.Instance.InstanceSetupPage_ImportListSuccessNotificationTitle.Current(),
                                                level,
                                                thumbnail: GetNotificationThumbnail());
             }
@@ -1223,7 +1212,7 @@ public partial class InstanceSetupPageModel(
             {
                 logger.LogError(ex, "Failed to import package list from file: {path}", filePath);
                 notificationService.PopMessage(ex,
-                                               Resources.InstanceSetupPage_ImportListDangerNotificationTitle,
+                                               LanguageManager.Instance.InstanceSetupPage_ImportListDangerNotificationTitle.Current(),
                                                thumbnail: GetNotificationThumbnail());
             }
         }
@@ -1240,8 +1229,8 @@ public partial class InstanceSetupPageModel(
         var items = persistenceService.GetRecipeItems(recipeId);
         if (items.Count == 0)
         {
-            notificationService.PopMessage(Resources.InstanceSetupPage_ApplyRecipeEmptyWarningNotificationMessage,
-                                           Resources.InstanceSetupPage_ImportListWarningNotificationTitle,
+            notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_ApplyRecipeEmptyWarningNotificationMessage.Current(),
+                                           LanguageManager.Instance.InstanceSetupPage_ImportListWarningNotificationTitle.Current(),
                                            GrowlLevel.Warning,
                                            thumbnail: GetNotificationThumbnail());
             return;
@@ -1305,9 +1294,9 @@ public partial class InstanceSetupPageModel(
                 }
             });
 
-            notificationService.PopMessage(Resources.InstanceSetupPage_ApplyRecipeSuccessNotificationMessage
+            notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_ApplyRecipeSuccessNotificationMessage.Current()
                                                     .Replace("{0}", addedCount.ToString()),
-                                           Resources.InstanceSetupPage_ApplyRecipeSuccessNotificationTitle,
+                                           LanguageManager.Instance.InstanceSetupPage_ApplyRecipeSuccessNotificationTitle.Current(),
                                            GrowlLevel.Success,
                                            thumbnail: GetNotificationThumbnail());
         }
@@ -1315,7 +1304,7 @@ public partial class InstanceSetupPageModel(
         {
             logger.LogError(ex, "Failed to apply recipe {id}", recipeId);
             notificationService.PopMessage(ex,
-                                           Resources.InstanceSetupPage_ApplyRecipeDangerNotificationTitle,
+                                           LanguageManager.Instance.InstanceSetupPage_ApplyRecipeDangerNotificationTitle.Current(),
                                            thumbnail: GetNotificationThumbnail());
         }
     }
@@ -1326,8 +1315,8 @@ public partial class InstanceSetupPageModel(
         var recipes = persistenceService.GetRecipes();
         if (recipes.Count == 0)
         {
-            notificationService.PopMessage(Resources.InstanceSetupPage_ImportRecipeNoRecipesWarningNotificationMessage,
-                                           Resources.InstanceSetupPage_ImportListWarningNotificationTitle,
+            notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_ImportRecipeNoRecipesWarningNotificationMessage.Current(),
+                                           LanguageManager.Instance.InstanceSetupPage_ImportListWarningNotificationTitle.Current(),
                                            GrowlLevel.Warning,
                                            thumbnail: GetNotificationThumbnail());
             return;
@@ -1410,7 +1399,7 @@ public partial class InstanceSetupPageModel(
                             .Distinct()
                             .ToArray();
                 notificationService.PopMessage(string.Join(Environment.NewLine, failed),
-                                               Resources.InstanceSetupPage_FetchingInformationDangerNotificationTitle,
+                                               LanguageManager.Instance.InstanceSetupPage_FetchingInformationDangerNotificationTitle.Current(),
                                                GrowlLevel.Warning,
                                                thumbnail: GetNotificationThumbnail());
                 progress.Dispose();
@@ -1420,7 +1409,7 @@ public partial class InstanceSetupPageModel(
             {
                 logger.LogError(ex, "Failed to export");
                 notificationService.PopMessage(ex,
-                                               Resources.InstanceSetupPage_FetchingInformationDangerNotificationTitle,
+                                               LanguageManager.Instance.InstanceSetupPage_FetchingInformationDangerNotificationTitle.Current(),
                                                GrowlLevel.Warning,
                                                GetNotificationThumbnail());
                 progress.Dispose();
@@ -1444,19 +1433,18 @@ public partial class InstanceSetupPageModel(
                     csv.WriteRecords(output);
                 });
 
-                notificationService.PopMessage(Resources.InstanceSetupPage_ExportListSuccessNotificationMessage
+                notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_ExportListSuccessNotificationMessage.Current()
                                                         .Replace("{0}", path),
-                                               Resources.InstanceSetupPage_ExportListSuccessNotificationTitle,
+                                               LanguageManager.Instance.InstanceSetupPage_ExportListSuccessNotificationTitle.Current(),
                                                GrowlLevel.Success,
                                                thumbnail: GetNotificationThumbnail());
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(Resources
-                                              .InstanceSetupPage_ExportListDangerNotificationMessage
+                notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_ExportListDangerNotificationMessage.Current()
                                               .Replace("{0}", path)
                                               .Replace("{1}", ex.Message),
-                                               Resources.InstanceSetupPage_ExportListDangerNotificationTitle,
+                                               LanguageManager.Instance.InstanceSetupPage_ExportListDangerNotificationTitle.Current(),
                                                GrowlLevel.Danger,
                                                thumbnail: GetNotificationThumbnail());
             }
@@ -1502,14 +1490,14 @@ public partial class InstanceSetupPageModel(
             {
                 logger.LogError(ex, "Failed to check update: {}", reference.Pref);
                 notificationService.PopMessage(ex,
-                                               Resources.InstanceSetupPage_CheckUpdateDangerNotificationTitle,
+                                               LanguageManager.Instance.InstanceSetupPage_CheckUpdateDangerNotificationTitle.Current(),
                                                thumbnail: GetNotificationThumbnail(reference.Thumbnail));
             }
             catch (HttpRequestException ex)
             {
                 logger.LogError(ex, "Failed to check update: {}", reference.Pref);
                 notificationService.PopMessage(ex,
-                                               Resources.InstanceSetupPage_CheckUpdateDangerNotificationTitle,
+                                               LanguageManager.Instance.InstanceSetupPage_CheckUpdateDangerNotificationTitle.Current(),
                                                thumbnail: GetNotificationThumbnail(reference.Thumbnail));
             }
         }
@@ -1532,7 +1520,7 @@ public partial class InstanceSetupPageModel(
         catch (Exception ex)
         {
             notificationService.PopMessage(ex,
-                                           Resources.InstanceSetupPage_UpdateDangerNotificationTitle,
+                                           LanguageManager.Instance.InstanceSetupPage_UpdateDangerNotificationTitle.Current(),
                                            thumbnail: GetNotificationThumbnail());
         }
     }
@@ -1547,8 +1535,7 @@ public partial class InstanceSetupPageModel(
                                     version.Namespace,
                                     version.ProjectId,
                                     version.VersionId);
-            notificationService.PopMessage(Resources
-                                          .InstanceSetupPage_InstallVersionNotificationMessage
+            notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_InstallVersionNotificationMessage.Current()
                                           .Replace("{0}", version.ProjectName)
                                           .Replace("{1}", version.VersionName),
                                            thumbnail: GetNotificationThumbnail());
@@ -1583,8 +1570,8 @@ public partial class InstanceSetupPageModel(
                         .ToList();
         if (candidates.Count == 0)
         {
-            notificationService.PopMessage(Resources.InstanceSetupPage_BatchEnableNothingNotificationMessage,
-                                           Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+            notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_BatchEnableNothingNotificationMessage.Current(),
+                                           LanguageManager.Instance.InstanceSetupPage_BatchManagementNotificationTitle.Current(),
                                            GrowlLevel.Warning,
                                            thumbnail: GetNotificationThumbnail());
             return;
@@ -1600,9 +1587,9 @@ public partial class InstanceSetupPageModel(
                 item.Source.IsEnabled = true;
             }
 
-            notificationService.PopMessage(Resources.InstanceSetupPage_BatchEnableSucceededNotificationMessage
+            notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_BatchEnableSucceededNotificationMessage.Current()
                                                     .Replace("{0}", selected.Count.ToString()),
-                                           Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+                                           LanguageManager.Instance.InstanceSetupPage_BatchManagementNotificationTitle.Current(),
                                            GrowlLevel.Success,
                                            thumbnail: GetNotificationThumbnail());
         }
@@ -1618,8 +1605,8 @@ public partial class InstanceSetupPageModel(
                         .ToList();
         if (candidates.Count == 0)
         {
-            notificationService.PopMessage(Resources.InstanceSetupPage_BatchDisableNothingNotificationMessage,
-                                           Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+            notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_BatchDisableNothingNotificationMessage.Current(),
+                                           LanguageManager.Instance.InstanceSetupPage_BatchManagementNotificationTitle.Current(),
                                            GrowlLevel.Warning,
                                            thumbnail: GetNotificationThumbnail());
             return;
@@ -1635,9 +1622,9 @@ public partial class InstanceSetupPageModel(
                 item.Source.IsEnabled = false;
             }
 
-            notificationService.PopMessage(Resources.InstanceSetupPage_BatchDisableSucceededNotificationMessage
+            notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_BatchDisableSucceededNotificationMessage.Current()
                                                     .Replace("{0}", selected.Count.ToString()),
-                                           Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+                                           LanguageManager.Instance.InstanceSetupPage_BatchManagementNotificationTitle.Current(),
                                            GrowlLevel.Success,
                                            thumbnail: GetNotificationThumbnail());
         }
@@ -1653,8 +1640,8 @@ public partial class InstanceSetupPageModel(
                         .ToList();
         if (candidates.Count == 0)
         {
-            notificationService.PopMessage(Resources.InstanceSetupPage_BatchRemoveNothingNotificationMessage,
-                                           Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+            notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_BatchRemoveNothingNotificationMessage.Current(),
+                                           LanguageManager.Instance.InstanceSetupPage_BatchManagementNotificationTitle.Current(),
                                            GrowlLevel.Warning,
                                            thumbnail: GetNotificationThumbnail());
             return;
@@ -1665,11 +1652,9 @@ public partial class InstanceSetupPageModel(
         if (await overlayService.PopDialogAsync(dialog)
          && dialog.Result is IReadOnlyList<SelectablePackageModel> { Count: > 0 } selected)
         {
-            if (!await overlayService.RequestStrongConfirmationAsync(Resources
-                                                                    .InstanceSetupPage_BatchRemoveConfirmMessage
+            if (!await overlayService.RequestStrongConfirmationAsync(LanguageManager.Instance.InstanceSetupPage_BatchRemoveConfirmMessage.Current()
                                                                     .Replace("{0}", selected.Count.ToString()),
-                                                                     Resources
-                                                                        .InstanceSetupPage_BatchRemoveConfirmTitle))
+                                                                     LanguageManager.Instance.InstanceSetupPage_BatchRemoveConfirmTitle.Current()))
             {
                 return;
             }
@@ -1691,9 +1676,9 @@ public partial class InstanceSetupPageModel(
 
                 TriggerPackageMerge();
 
-                notificationService.PopMessage(Resources.InstanceSetupPage_BatchRemoveSucceededNotificationMessage
+                notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_BatchRemoveSucceededNotificationMessage.Current()
                                                         .Replace("{0}", selected.Count.ToString()),
-                                               Resources.InstanceSetupPage_BatchManagementNotificationTitle,
+                                               LanguageManager.Instance.InstanceSetupPage_BatchManagementNotificationTitle.Current(),
                                                GrowlLevel.Success,
                                                thumbnail: GetNotificationThumbnail());
             }
@@ -1765,8 +1750,8 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        if (!await overlayService.RequestStrongConfirmationAsync(Resources.InstanceSetupPage_DisbandGroupConfirmMessage,
-                                                                 Resources.InstanceSetupPage_DisbandGroupConfirmTitle))
+        if (!await overlayService.RequestStrongConfirmationAsync(LanguageManager.Instance.InstanceSetupPage_DisbandGroupConfirmMessage.Current(),
+                                                                 LanguageManager.Instance.InstanceSetupPage_DisbandGroupConfirmTitle.Current()))
         {
             return;
         }
@@ -1805,8 +1790,8 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        if (!await overlayService.RequestStrongConfirmationAsync(Resources.InstanceSetupPage_RemoveGroupConfirmMessage,
-                                                                 Resources.InstanceSetupPage_RemoveGroupConfirmTitle))
+        if (!await overlayService.RequestStrongConfirmationAsync(LanguageManager.Instance.InstanceSetupPage_RemoveGroupConfirmMessage.Current(),
+                                                                 LanguageManager.Instance.InstanceSetupPage_RemoveGroupConfirmTitle.Current()))
         {
             return;
         }
@@ -1970,8 +1955,7 @@ public partial class InstanceSetupPageModel(
             catch (Exception ex)
             {
                 notificationService.PopMessage(ex,
-                                               Resources
-                                                  .InstanceSetupPage_LoadProjectInformationDangerNotificationTitle,
+                                               LanguageManager.Instance.InstanceSetupPage_LoadProjectInformationDangerNotificationTitle.Current(),
                                                GrowlLevel.Warning,
                                                GetNotificationThumbnail());
             }

@@ -1,6 +1,5 @@
 using Avalonia.Media.Imaging;
 using Polymerium.Avalonia.Facilities;
-using Resources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Models;
 
@@ -35,8 +34,8 @@ public class AssetWorldDataPackModel : ModelBase
     public bool IsEnabled { get; }
 
     public string DisplayName => Name;
-    public string PackFormatText => PackFormat?.ToString() ?? Resources.Enum_Unknown;
-    public string DescriptionText => Description ?? Resources.Enum_Unknown;
+    public string PackFormatText => PackFormat?.ToString() ?? LanguageManager.Instance.Enum_Unknown.Current();
+    public string DescriptionText => Description ?? LanguageManager.Instance.Enum_Unknown.Current();
 
     #endregion
 }

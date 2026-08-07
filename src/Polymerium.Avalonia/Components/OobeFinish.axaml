@@ -5,7 +5,6 @@
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="400"
     d:DesignWidth="480"
@@ -35,14 +34,14 @@
             HorizontalAlignment="Center"
             FontSize="24"
             FontWeight="{StaticResource ControlStrongFontWeight}"
-            Text="{x:Static lang:Resources.OobeFinish_Title}" />
+            Text="{Translate {x:Static app:LanguageManager+Keys.OobeFinish_Title}}" />
 
         <!--  Description  -->
         <TextBlock
             MaxWidth="360"
             HorizontalAlignment="Center"
             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-            Text="{x:Static lang:Resources.OobeFinish_Description}"
+            Text="{Translate {x:Static app:LanguageManager+Keys.OobeFinish_Description}}"
             TextAlignment="Center"
             TextWrapping="Wrap" />
 
@@ -63,7 +62,7 @@
                     MaxWidth="320"
                     FontSize="{StaticResource SmallFontSize}"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.OobeFinish_Tip}"
+                    Text="{Translate {x:Static app:LanguageManager+Keys.OobeFinish_Tip}}"
                     TextWrapping="Wrap" />
             </StackPanel>
         </Border>

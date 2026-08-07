@@ -1,4 +1,3 @@
-using Polymerium.Avalonia.Properties;
 
 namespace Polymerium.Avalonia.Models;
 
@@ -57,8 +56,8 @@ public class ProxySettingsModel
     public string GetStatusDisplayText() =>
         Mode switch
         {
-            ProxyMode.Auto => Resources.SettingsPage_ProxyStatusAutoText,
-            ProxyMode.Disabled => Resources.SettingsPage_ProxyStatusDisabledText,
+            ProxyMode.Auto => LanguageManager.Instance.SettingsPage_ProxyStatusAutoText.Current(),
+            ProxyMode.Disabled => LanguageManager.Instance.SettingsPage_ProxyStatusDisabledText.Current(),
             ProxyMode.Manual => Protocol == ProxyProtocol.Socks5 ? $"socks5://{Address}:{Port}" : $"{Address}:{Port}",
             _ => string.Empty
         };

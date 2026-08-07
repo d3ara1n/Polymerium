@@ -7,7 +7,6 @@
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resources="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions"
     Padding="0"
@@ -24,13 +23,13 @@
             <MenuItem
                 Command="{Binding $parent[app:ExplorerPage].((app:ExplorerPageModel)DataContext).InstallPackageCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
-                Header="{x:Static lang:Resources.ExplorerPage_InstallMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_InstallMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=ArrowDownload,
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem
                 Command="{Binding $parent[app:ExplorerPage].((app:ExplorerPageModel)DataContext).FavoritePackageCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
-                Header="{x:Static lang:Resources.ExplorerPage_FavoriteMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_FavoriteMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=CollectionsAdd,
                                       FontSize={StaticResource MediumFontSize}}"
                 IsChecked="{Binding IsFavorite, Mode=OneWay}"
@@ -43,7 +42,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.ExplorerPage_RepositoryMenuText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_RepositoryMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Label, FallbackValue=Repository}" />
@@ -57,7 +56,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.ExplorerPage_NamespaceMenuText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_NamespaceMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Namespace, FallbackValue=Namespace}" />
@@ -71,7 +70,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ProjectNameMenuText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectNameMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding ProjectName, FallbackValue=Project Name}" />
@@ -85,7 +84,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ProjectIdMenuText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectIdMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding ProjectId, FallbackValue=Pid}" />
@@ -96,7 +95,7 @@
             <MenuItem
                 Command="{x:Static app:InternalCommands.OpenUriCommand}"
                 CommandParameter="{Binding Reference, FallbackValue={x:Null}}"
-                Header="{x:Static lang:Resources.InstanceSetupPage_OpenWebsiteMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_OpenWebsiteMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=Open,
                                       FontSize={StaticResource MediumFontSize}}" />
         </MenuFlyout>
@@ -106,7 +105,7 @@
             <MenuItem
                 Command="{Binding $parent[app:ExplorerPage].((app:ExplorerPageModel)DataContext).FavoritePackageCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
-                Header="{x:Static lang:Resources.ExplorerPage_FavoriteMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_FavoriteMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=CollectionsAdd,
                                       FontSize={StaticResource MediumFontSize}}"
                 IsChecked="{Binding IsFavorite, Mode=OneWay}"
@@ -119,7 +118,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ProjectNameMenuText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectNameMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding ProjectName, FallbackValue=Project Name}" />
@@ -133,7 +132,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ProjectIdMenuText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectIdMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding ProjectId, FallbackValue=Pid}" />
@@ -147,7 +146,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.ExplorerPage_RepositoryMenuText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_RepositoryMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Label, FallbackValue=Repository}" />
@@ -161,7 +160,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.ExplorerPage_NamespaceMenuText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_NamespaceMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Namespace, FallbackValue=Namespace}" />
@@ -172,14 +171,14 @@
             <MenuItem
                 Command="{x:Static app:InternalCommands.OpenUriCommand}"
                 CommandParameter="{Binding Reference, FallbackValue={x:Null}}"
-                Header="{x:Static lang:Resources.InstanceSetupPage_OpenWebsiteMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_OpenWebsiteMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=Open,
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem Header="-" />
             <MenuItem
                 Command="{Binding $parent[app:ExplorerPage].((app:ExplorerPageModel)DataContext).RemoveFromPendingCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
-                Header="{x:Static lang:Resources.ExplorerPage_RemoveFromPendingMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_RemoveFromPendingMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=Delete,
                                       FontSize={StaticResource MediumFontSize}}" />
         </MenuFlyout>
@@ -215,7 +214,7 @@
                         Symbol="Drawer" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.ExplorerPage_PendingLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_PendingLabelText}}" />
                 </StackPanel>
             </Border>
             <ScrollViewer
@@ -226,7 +225,7 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="6">
-                            <TextBlock Text="{x:Static lang:Resources.ExplorerPage_AddLabelText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_AddLabelText}}" />
                         </StackPanel>
                     </husk:Divider>
                     <Panel>
@@ -235,7 +234,7 @@
                             HorizontalAlignment="Center"
                             IsVisible="{Binding AddingPackagesView.Count, Mode=OneWay, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=False}"
                             Opacity="0.5"
-                            Text="{x:Static lang:Resources.ExplorerPage_EmptyLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_EmptyLabelText}}" />
                         <ItemsControl
                             ClipToBounds="False"
                             ItemTemplate="{StaticResource ExhibitModelTemplate}"
@@ -251,7 +250,7 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="6">
-                            <TextBlock Text="{x:Static lang:Resources.ExplorerPage_ModifyLabelText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_ModifyLabelText}}" />
                         </StackPanel>
                     </husk:Divider>
                     <Panel>
@@ -260,7 +259,7 @@
                             HorizontalAlignment="Center"
                             IsVisible="{Binding ModifyingPackagesView.Count, Mode=OneWay, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=False}"
                             Opacity="0.5"
-                            Text="{x:Static lang:Resources.ExplorerPage_EmptyLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_EmptyLabelText}}" />
                         <ItemsControl
                             ClipToBounds="False"
                             ItemTemplate="{StaticResource ExhibitModelTemplate}"
@@ -276,7 +275,7 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="6">
-                            <TextBlock Text="{x:Static lang:Resources.ExplorerPage_RemoveLabelText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_RemoveLabelText}}" />
                         </StackPanel>
                     </husk:Divider>
                     <Panel>
@@ -285,7 +284,7 @@
                             HorizontalAlignment="Center"
                             IsVisible="{Binding RemovingPackagesView.Count, Mode=OneWay, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=False}"
                             Opacity="0.5"
-                            Text="{x:Static lang:Resources.ExplorerPage_EmptyLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_EmptyLabelText}}" />
                         <ItemsControl
                             ClipToBounds="False"
                             ItemTemplate="{StaticResource ExhibitModelTemplate}"
@@ -327,7 +326,7 @@
                         <fi:SymbolIcon
                             FontSize="{StaticResource LargeFontSize}"
                             Symbol="BoxMultipleArrowLeft" />
-                        <TextBlock Text="{x:Static lang:Resources.ExplorerPage_CollectButtonText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_CollectButtonText}}" />
                     </StackPanel>
                 </Button>
                 <Button
@@ -353,7 +352,7 @@
                         <fi:SymbolIcon
                             FontSize="{StaticResource LargeFontSize}"
                             Symbol="DrawerDismiss" />
-                        <TextBlock Text="{x:Static lang:Resources.Dialog_DismissButtonText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.Dialog_DismissButtonText}}" />
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -404,7 +403,7 @@
                         ColumnSpacing="8">
                         <TextBox
                             Grid.Column="0"
-                            PlaceholderText="{x:Static lang:Resources.ExplorerPage_SearchBarPlaceholder}"
+                            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_SearchBarPlaceholder}}"
                             Text="{Binding QueryText}">
                             <TextBox.InnerRightContent>
                                 <StackPanel Orientation="Horizontal">
@@ -423,7 +422,7 @@
                                             Orientation="Horizontal"
                                             Spacing="4">
                                             <husk:Tag
-                                                Content="{Binding FilterLoaderLabel, FallbackValue=Type}"
+                                                Content="{app:LocalizedKey {Binding FilterLoaderLabel}, FallbackValue=Type}"
                                                 FontSize="{StaticResource MediumFontSize}" />
                                             <husk:Tag
                                                 Content="{Binding FilterVersionLabel, FallbackValue=Version}"
@@ -464,7 +463,7 @@
                                 </husk:SwitchContainer>
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Text="{x:Static lang:Resources.ExplorerPage_SearchButtonText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_SearchButtonText}}" />
                             </StackPanel>
                         </Button>
                     </Grid>
@@ -481,7 +480,7 @@
                                 Theme="{StaticResource SegmentedTabStripTheme}">
                                 <TabStrip.ItemTemplate>
                                     <DataTemplate x:DataType="resources:ResourceKind">
-                                        <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                        <TextBlock Text="{app:LocalizedEnum {Binding}}" />
                                     </DataTemplate>
                                 </TabStrip.ItemTemplate>
                             </TabStrip>
@@ -539,7 +538,7 @@
                     HorizontalAlignment="Center"
                     FontSize="{StaticResource LargeFontSize}"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
             </StackPanel>
             <husk:InfiniteScrollView
                 Padding="12"
@@ -563,7 +562,7 @@
                             ShowProgressText="False" />
                         <TextBlock
                             HorizontalAlignment="Center"
-                            Text="{x:Static lang:Resources.Shared_FetchingLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.Shared_FetchingLabelText}}" />
                     </StackPanel>
                 </husk:InfiniteScrollView.PendingContent>
                 <husk:InfiniteScrollView.ItemTemplate>

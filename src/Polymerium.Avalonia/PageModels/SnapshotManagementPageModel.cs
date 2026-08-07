@@ -18,7 +18,6 @@ using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.ModalModels;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using TridentCore.Abstractions.Extensions;
 using TridentCore.Abstractions.Snapshots;
@@ -59,8 +58,7 @@ public partial class SnapshotManagementPageModel : ViewModelBase
                 catch (Exception ex)
                 {
                     _notificationService.PopMessage(ex,
-                                                    Resources
-                                                       .SnapshotManagementPage_ComputeDiffDangerNotificationTitle);
+                                                    LanguageManager.Instance.SnapshotManagementPage_ComputeDiffDangerNotificationTitle.Current());
                 }
             }
 
@@ -156,7 +154,7 @@ public partial class SnapshotManagementPageModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, Resources.SnapshotManagementPage_LoadSnapshotsDangerNotificationTitle);
+            _notificationService.PopMessage(ex, LanguageManager.Instance.SnapshotManagementPage_LoadSnapshotsDangerNotificationTitle.Current());
         }
 
         return Task.CompletedTask;
@@ -184,9 +182,9 @@ public partial class SnapshotManagementPageModel : ViewModelBase
 
         var label = target.DisplayLabel;
         var confirmed =
-            await _overlayService.RequestConfirmationAsync(Resources.SnapshotManagementPage_DeleteConfirmationMessage
+            await _overlayService.RequestConfirmationAsync(LanguageManager.Instance.SnapshotManagementPage_DeleteConfirmationMessage.Current()
                                                                     .Replace("{0}", label),
-                                                           Resources.SnapshotManagementPage_DeleteConfirmationTitle);
+                                                           LanguageManager.Instance.SnapshotManagementPage_DeleteConfirmationTitle.Current());
         if (!confirmed)
         {
             return;
@@ -210,14 +208,14 @@ public partial class SnapshotManagementPageModel : ViewModelBase
             });
 
             SelectedSnapshot = null;
-            _notificationService.PopMessage(Resources.SnapshotManagementPage_DeleteSuccessNotificationMessage
+            _notificationService.PopMessage(LanguageManager.Instance.SnapshotManagementPage_DeleteSuccessNotificationMessage.Current()
                                                      .Replace("{0}", label),
-                                            Resources.SnapshotManagementPage_DeleteSuccessNotificationTitle,
+                                            LanguageManager.Instance.SnapshotManagementPage_DeleteSuccessNotificationTitle.Current(),
                                             GrowlLevel.Success);
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, Resources.SnapshotManagementPage_DeleteDangerNotificationTitle);
+            _notificationService.PopMessage(ex, LanguageManager.Instance.SnapshotManagementPage_DeleteDangerNotificationTitle.Current());
         }
     }
 
@@ -231,9 +229,9 @@ public partial class SnapshotManagementPageModel : ViewModelBase
 
         var label = target.DisplayLabel;
         var confirmed =
-            await _overlayService.RequestConfirmationAsync(Resources.SnapshotManagementPage_RestoreConfirmationMessage
+            await _overlayService.RequestConfirmationAsync(LanguageManager.Instance.SnapshotManagementPage_RestoreConfirmationMessage.Current()
                                                                     .Replace("{0}", label),
-                                                           Resources.SnapshotManagementPage_RestoreConfirmationTitle);
+                                                           LanguageManager.Instance.SnapshotManagementPage_RestoreConfirmationTitle.Current());
         if (!confirmed)
         {
             return;
@@ -241,7 +239,7 @@ public partial class SnapshotManagementPageModel : ViewModelBase
 
         var progress = new ProgressModal
         {
-            Title = Resources.SnapshotManagementPage_RestoreProgressTitle,
+            Title = LanguageManager.Instance.SnapshotManagementPage_RestoreProgressTitle.Current(),
             IsIndeterminate = false
         };
         _overlayService.PopModal(progress);
@@ -250,8 +248,7 @@ public partial class SnapshotManagementPageModel : ViewModelBase
         {
             var restored =
                 new Progress<int>(x => Dispatcher.UIThread.Post(() => progress.StatusText =
-                                                                          Resources
-                                                                             .SnapshotManagementPage_RestoreProgressStatusFormat
+                                                                          LanguageManager.Instance.SnapshotManagementPage_RestoreProgressStatusFormat.Current()
                                                                              .Replace("{0}", x.ToString())));
             await Context.Handle.RestoreAsync(target.Source.Id, restored);
 
@@ -261,14 +258,14 @@ public partial class SnapshotManagementPageModel : ViewModelBase
                 await guard.DisposeAsync();
             }
 
-            _notificationService.PopMessage(Resources.SnapshotManagementPage_RestoreSuccessNotificationMessage
+            _notificationService.PopMessage(LanguageManager.Instance.SnapshotManagementPage_RestoreSuccessNotificationMessage.Current()
                                                      .Replace("{0}", label),
-                                            Resources.SnapshotManagementPage_RestoreSuccessNotificationTitle,
+                                            LanguageManager.Instance.SnapshotManagementPage_RestoreSuccessNotificationTitle.Current(),
                                             GrowlLevel.Success);
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, Resources.SnapshotManagementPage_RestoreDangerNotificationTitle);
+            _notificationService.PopMessage(ex, LanguageManager.Instance.SnapshotManagementPage_RestoreDangerNotificationTitle.Current());
         }
         finally
         {

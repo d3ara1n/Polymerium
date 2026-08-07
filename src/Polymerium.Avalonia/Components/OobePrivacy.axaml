@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="400"
     d:DesignWidth="480"
@@ -37,11 +36,11 @@
                 HorizontalAlignment="Center"
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.OobePrivacy_Title}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_Title}}" />
             <TextBlock
                 HorizontalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.OobePrivacy_Subtitle}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_Subtitle}}" />
         </StackPanel>
 
         <!--  What We Collect Card  -->
@@ -62,12 +61,12 @@
                     Spacing="4">
                     <TextBlock
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.OobePrivacy_WhatWeCollectTitle}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_WhatWeCollectTitle}}" />
                     <TextBlock
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         TextWrapping="Wrap">
-                        <Run Text="{x:Static lang:Resources.OobePrivacy_WhatWeCollectDescription}" />
+                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_WhatWeCollectDescription}}" />
                         <HyperlinkButton
                             FontSize="{StaticResource SmallFontSize}"
                             NavigateUri="https://sentry.io/privacy">
@@ -88,7 +87,7 @@
             <StackPanel Spacing="12">
                 <TextBlock
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.OobePrivacy_OurPromiseTitle}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_OurPromiseTitle}}" />
                 <StackPanel Spacing="8">
                     <!--  Promise 1: No Personal Data  -->
                     <Grid ColumnDefinitions="Auto,8,*">
@@ -104,11 +103,11 @@
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                Text="{x:Static lang:Resources.OobePrivacy_Promise1Title}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_Promise1Title}}" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.OobePrivacy_Promise1Description}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_Promise1Description}}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>
@@ -126,11 +125,11 @@
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                Text="{x:Static lang:Resources.OobePrivacy_Promise2Title}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_Promise2Title}}" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.OobePrivacy_Promise2Description}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_Promise2Description}}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>
@@ -148,11 +147,11 @@
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                Text="{x:Static lang:Resources.OobePrivacy_Promise3Title}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_Promise3Title}}" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.OobePrivacy_Promise3Description}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_Promise3Description}}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </Grid>
@@ -166,7 +165,7 @@
             HorizontalAlignment="Center"
             FontSize="{StaticResource SmallFontSize}"
             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-            Text="{x:Static lang:Resources.OobePrivacy_AgreementNote}"
+            Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_AgreementNote}}"
             TextAlignment="Center"
             TextWrapping="Wrap" />
     </StackPanel>

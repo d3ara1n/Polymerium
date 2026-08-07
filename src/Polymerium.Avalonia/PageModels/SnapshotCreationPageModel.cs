@@ -10,7 +10,6 @@ using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.ModalModels;
 using Polymerium.Avalonia.Models;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using TridentCore.Abstractions.Snapshots;
 
@@ -26,7 +25,7 @@ public partial class SnapshotCreationPageModel(
 
     #endregion
 
-    #region Partition Building
+    #region Partitions
 
     private static IReadOnlyList<FilePartitionModel> BuildPartitions(IReadOnlyList<ReferenceInfo> references)
     {
@@ -65,9 +64,9 @@ public partial class SnapshotCreationPageModel(
         var primaryOtherCount = 0;
         var primaryOtherSize = 0L;
         var primaryOtherCategories = new List<FileCategoryEntryModel>();
-        var otherLabel = Resources.InstanceStoragePage_OtherLabelText;
+        var otherLabel = "InstanceStoragePage_OtherLabelText";
 
-        foreach (var primary in PrimaryOrder)
+        foreach (var primary in PRIMARY_ORDER)
         {
             if (!buckets.TryGetValue(primary, out var secondaries))
             {
@@ -84,9 +83,9 @@ public partial class SnapshotCreationPageModel(
             {
                 totalCount += count;
                 totalSize += size;
-                if (SecondaryAliases.TryGetValue(key, out var alias))
+                if (SECONDARY_ALIASES.TryGetValue(key, out var alias))
                 {
-                    categories.Add(new(alias(), count, size));
+                    categories.Add(new(alias, count, size));
                 }
                 else
                 {
@@ -100,13 +99,13 @@ public partial class SnapshotCreationPageModel(
                 categories.Add(new(otherLabel, otherCount, otherSize));
             }
 
-            var primaryLabel = PrimaryAliases.TryGetValue(primary, out var primaryAlias) ? primaryAlias() : primary;
+            var primaryLabel = PRIMARY_ALIASES.GetValueOrDefault(primary, primary);
             result.Add(new(primaryLabel, totalCount, totalSize, categories));
         }
 
         foreach (var (primary, secondaries) in buckets)
         {
-            if (PrimaryOrder.Contains(primary, StringComparer.OrdinalIgnoreCase))
+            if (PRIMARY_ORDER.Contains(primary, StringComparer.OrdinalIgnoreCase))
             {
                 continue;
             }
@@ -121,9 +120,9 @@ public partial class SnapshotCreationPageModel(
             {
                 totalCount += count;
                 totalSize += size;
-                if (SecondaryAliases.TryGetValue(key, out var alias))
+                if (SECONDARY_ALIASES.TryGetValue(key, out var alias))
                 {
-                    categories.Add(new(alias(), count, size));
+                    categories.Add(new(alias, count, size));
                 }
                 else
                 {
@@ -154,33 +153,33 @@ public partial class SnapshotCreationPageModel(
 
     #region Constants
 
-    private static readonly FrozenDictionary<string, Func<string>> SecondaryAliases =
-        new Dictionary<string, Func<string>>(StringComparer.OrdinalIgnoreCase)
+    private static readonly FrozenDictionary<string, string> SECONDARY_ALIASES =
+        new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-            ["mods"] = () => Resources.AssetKind_Mod,
-            ["resourcepacks"] = () => Resources.AssetKind_ResourcePack,
-            ["shaderpacks"] = () => Resources.AssetKind_ShaderPack,
-            ["saves"] = () => Resources.AssetKind_Save,
-            ["world"] = () => Resources.AssetKind_Save,
-            ["config"] = () => Resources.AssetKind_Config,
-            ["logs"] = () => Resources.AssetKind_Log,
-            ["crash-reports"] = () => Resources.AssetKind_CrashReport,
-            ["screenshots"] = () => Resources.AssetKind_Screenshot,
-            ["textures"] = () => Resources.AssetKind_Texture,
-            ["libraries"] = () => Resources.AssetKind_Library,
-            ["versions"] = () => Resources.AssetKind_Version,
-            ["assets"] = () => Resources.AssetKind_Asset
+            ["mods"] = "AssetKind_Mod",
+            ["resourcepacks"] = "AssetKind_ResourcePack",
+            ["shaderpacks"] = "AssetKind_ShaderPack",
+            ["saves"] = "AssetKind_Save",
+            ["world"] = "AssetKind_Save",
+            ["config"] = "AssetKind_Config",
+            ["logs"] = "AssetKind_Log",
+            ["crash-reports"] = "AssetKind_CrashReport",
+            ["screenshots"] = "AssetKind_Screenshot",
+            ["textures"] = "AssetKind_Texture",
+            ["libraries"] = "AssetKind_Library",
+            ["versions"] = "AssetKind_Version",
+            ["assets"] = "AssetKind_Asset"
         }.ToFrozenDictionary();
 
-    private static readonly FrozenDictionary<string, Func<string>> PrimaryAliases =
-        new Dictionary<string, Func<string>>(StringComparer.OrdinalIgnoreCase)
+    private static readonly FrozenDictionary<string, string> PRIMARY_ALIASES =
+        new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-            ["build"] = () => Resources.InstanceStoragePage_BuildFolderLinkText,
-            ["import"] = () => Resources.InstanceStoragePage_ImportFolderLinkText,
-            ["persist"] = () => Resources.InstanceStoragePage_PersistFolderLinkText
+            ["build"] = "InstanceStoragePage_BuildFolderLinkText",
+            ["import"] = "InstanceStoragePage_ImportFolderLinkText",
+            ["persist"] = "InstanceStoragePage_PersistFolderLinkText"
         }.ToFrozenDictionary();
 
-    private static readonly string[] PrimaryOrder = ["build", "import", "persist"];
+    private static readonly string[] PRIMARY_ORDER = ["build", "import", "persist"];
 
     #endregion
 
@@ -230,7 +229,7 @@ public partial class SnapshotCreationPageModel(
         catch (OperationCanceledException) { }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, Resources.SnapshotCreationPage_TakeDangerNotificationTitle);
+            notificationService.PopMessage(ex, LanguageManager.Instance.SnapshotCreationPage_TakeDangerNotificationTitle.Current());
         }
         finally
         {
@@ -265,16 +264,16 @@ public partial class SnapshotCreationPageModel(
             IsCreating = true;
             TotalCommitted = 0;
             await Context.Handle.CommitAsync(snapshot, references, committed);
-            notificationService.PopMessage(Resources.SnapshotCreationPage_CreateSuccessNotificationMessage
+            notificationService.PopMessage(LanguageManager.Instance.SnapshotCreationPage_CreateSuccessNotificationMessage.Current()
                                                     .Replace("{0}", snapshot.Label),
-                                           Resources.SnapshotCreationPage_CreateSuccessNotificationTitle,
+                                           LanguageManager.Instance.SnapshotCreationPage_CreateSuccessNotificationTitle.Current(),
                                            GrowlLevel.Success);
             Context.BackHandler.Invoke();
         }
         catch (OperationCanceledException) { }
         catch (Exception ex)
         {
-            notificationService.PopMessage(ex, Resources.SnapshotCreationPage_CreateDangerNotificationTitle);
+            notificationService.PopMessage(ex, LanguageManager.Instance.SnapshotCreationPage_CreateDangerNotificationTitle.Current());
         }
         finally
         {

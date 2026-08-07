@@ -6,7 +6,6 @@
     xmlns:controls="clr-namespace:Polymerium.Avalonia.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="300"
     mc:Ignorable="d">
@@ -18,7 +17,7 @@
                 Grid.Column="0"
                 IsVisible="{Binding $parent[app:AccountCreationModal].IsBackAvailable, FallbackValue=True}"
                 Command="{Binding $parent[app:AccountCreationModal].GoBackCommand}">
-                <TextBlock Text="{x:Static lang:Resources.AccountCreationModal_BackButtonText}" />
+                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationModal_BackButtonText}}" />
             </Button>
             <husk:ModalActionPanel
                 Grid.Column="1"
@@ -31,19 +30,19 @@
                     IsVisible="{Binding $parent[app:AccountCreationModal].IsLast, Converter={x:Static BoolConverters.Not}, FallbackValue=False}"
                     Command="{Binding $parent[app:AccountCreationModal].GoNextCommand}"
                     IsDefault="True">
-                    <TextBlock Text="{x:Static lang:Resources.AccountCreationModal_NextButtonText}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationModal_NextButtonText}}" />
                 </Button>
                 <Button
                     Classes="Primary"
                     IsVisible="{Binding $parent[app:AccountCreationModal].IsLast, FallbackValue=True}"
                     Command="{Binding $parent[app:AccountCreationModal].GoFinishCommand}"
                     IsDefault="True">
-                    <TextBlock Text="{x:Static lang:Resources.AccountCreationModal_FinishButtonText}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationModal_FinishButtonText}}" />
                 </Button>
                 <Button
                     Command="{Binding $parent[app:AccountCreationModal].Dismiss}"
                     IsCancel="True">
-                    <TextBlock Text="{x:Static lang:Resources.Dialog_DismissButtonText}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.Dialog_DismissButtonText}}" />
                 </Button>
             </husk:ModalActionPanel>
         </Grid>

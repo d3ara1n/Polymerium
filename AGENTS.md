@@ -114,9 +114,16 @@ Version-numbering convention: **`minor` increments mark milestones, not individu
 
 ## Localization
 
-- Localized strings live in `src/Polymerium.Avalonia/Properties/Resources.resx` (English, the source) and `Resources.zh-hans.resx` (Chinese). Both files use the same set of resource keys.
-- `Resources.Designer.cs` holds the `public static string` accessors that XAML references as `{x:Static lang:Resources.KeyName}`. It mirrors the keys in `Resources.resx` one-to-one.
-- Every change to a localized string — add, rename, edit a value, or delete — must be applied to all three files: `Resources.resx`, `Resources.zh-hans.resx`, and `Resources.Designer.cs`. Apply it to the two `.resx` files first (same key, localized value each), then to `Designer.cs`. Do not expect the IDE or any codegen to sync them; the agent does it by hand each time. Renaming or deleting a key means updating every `{x:Static}` reference too.
+- Localization is powered by [Irihi.Lingua](https://github.com/irihitech/Irihi.Lingua). Strings live in `Properties/Resources.resx` (English, the source) and `Resources.zh-hans.resx` (Chinese), declared as `AdditionalFiles`; the Lingua source generator bakes them into `LanguageManager` at compile time. There is no `Designer.cs` and no runtime `ResourceManager`.
+- The active language is set at startup (`Program.cs` → `LanguageManager.Instance.UpdateCulture`) and switched live from `SettingsPageModel.OnLanguageChanged` — no restart required.
+- Add or edit a localized string by updating **all** `.resx` files (same key, localized value each) — English in `Resources.resx` is the source, every other language file mirrors it. Rebuild regenerates `LanguageManager`; no third file to sync.
+- **Consumption patterns** — pick by where the string appears:
+  - XAML UI text (the common case): `{Translate {x:Static app:LanguageManager+Keys.KeyName}}` — observable-backed, hot-switches with language.
+  - Enum display: `{app:LocalizedEnum {Binding Xxx}}` — the converter resolves the value by convention `{EnumType.Name}_{Value}` (e.g. `ResourceKind_Mod`); just add the resx key, no converter or XAML change.
+  - POCO/ViewModel holding a key string: `{app:LocalizedKey {Binding Key}}` — looks up by name, returns the literal as-is when no key matches (for brand names like `Fabric`).
+  - C# one-shot values (toasts, notifications, progress dialogs): `LanguageManager.Instance.KeyName.Current()` — reads the value for the current language at call time.
+- `{Translate}`, `{app:LocalizedEnum}`, and `{app:LocalizedKey}` bind to `AvaloniaProperty` only — never assign them to a POCO `string` property (use `LocalizedKey` or `.Current()` instead).
+- The `EnumName_Value` key convention for enum localization is canonical; follow it when adding new enums.
 
 ## Expected Build Noise
 

@@ -5,8 +5,7 @@
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
-    Header="{x:Static lang:Resources.AccountCreationAuthlib_Title}">
+    Header="{Translate {x:Static app:LanguageManager+Keys.AccountCreationAuthlib_Title}}">
     <StackPanel Spacing="12">
         <husk:DropZone
             Padding="12"
@@ -22,7 +21,7 @@
                         Symbol="ArrowImport" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.AccountCreationAuthlib_DropHint}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationAuthlib_DropHint}}" />
                 </StackPanel>
                 <husk:Divider />
                 <WrapPanel
@@ -49,17 +48,17 @@
             </StackPanel>
         </husk:DropZone>
         <StackPanel>
-            <TextBlock Text="{x:Static lang:Resources.AccountCreationAuthlib_ServerUrl}" />
+            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationAuthlib_ServerUrl}}" />
             <TextBox
                 PlaceholderText="https://example.com/api/yggdrasil"
                 Text="{Binding $parent[app:AccountCreationAuthlibInjector].ServerUrl, Mode=TwoWay}" />
         </StackPanel>
         <StackPanel>
-            <TextBlock Text="{x:Static lang:Resources.AccountCreationAuthlib_Username}" />
+            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationAuthlib_Username}}" />
             <TextBox Text="{Binding $parent[app:AccountCreationAuthlibInjector].Username, Mode=TwoWay}" />
         </StackPanel>
         <StackPanel>
-            <TextBlock Text="{x:Static lang:Resources.AccountCreationAuthlib_Password}" />
+            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationAuthlib_Password}}" />
             <TextBox
                 PasswordChar="*"
                 Text="{Binding $parent[app:AccountCreationAuthlibInjector].Password, Mode=TwoWay}" />
@@ -68,7 +67,7 @@
             Classes="Primary"
             HorizontalAlignment="Stretch"
             Command="{Binding $parent[app:AccountCreationAuthlibInjector].LoginCommand}"
-            Content="{x:Static lang:Resources.AccountCreationAuthlib_Login}" />
+            Content="{Translate {x:Static app:LanguageManager+Keys.AccountCreationAuthlib_Login}}" />
         <husk:InfoBar
             Classes="Success"
             IsVisible="{Binding $parent[app:AccountCreationAuthlibInjector].SuccessMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}, FallbackValue={x:False}}"

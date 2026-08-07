@@ -10,7 +10,6 @@ using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Toasts;
 using Polymerium.Avalonia.Utilities;
@@ -94,7 +93,7 @@ public partial class LandingPageModel(
                 LoaderLabel =
                     profile.Setup.Loader is not null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
                         ? LoaderHelper.ToDisplayName(loader.Identity)
-                        : Resources.Enum_Vanilla,
+                        : "Enum_Vanilla",
                 Thumbnail = icon,
                 LastPlayedRaw = DateTimeHelper.FromPersistedLocalDateTime(last.End),
                 LastPlayTimeRaw = last.End - last.Begin,
@@ -151,7 +150,7 @@ public partial class LandingPageModel(
             var dir = PathDef.Default.DirectoryOfHome(key);
             return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
                                                            new(dir),
-                                                           Resources.Shared_FailedToOpenFolderDangerNotificationTitle,
+                                                           LanguageManager.Instance.Shared_FailedToOpenFolderDangerNotificationTitle.Current(),
                                                            notificationService,
                                                            thumbnail: ThumbnailHelper.ForInstance(key));
         }
@@ -198,7 +197,7 @@ public partial class LandingPageModel(
         catch (Exception ex)
         {
             notificationService.PopMessage(ex,
-                                           Resources.LandingPage_InstanceLaunchingDangerNotificationTitle
+                                           LanguageManager.Instance.LandingPage_InstanceLaunchingDangerNotificationTitle.Current()
                                                     .Replace("{0}", key),
                                            thumbnail: ThumbnailHelper.ForInstance(key));
         }
@@ -236,7 +235,7 @@ public partial class LandingPageModel(
             catch (Exception ex)
             {
                 notificationService.PopMessage(ex,
-                                               Resources.LandingPage_LoadModpackDetailsDangerNotificationTitle,
+                                               LanguageManager.Instance.LandingPage_LoadModpackDetailsDangerNotificationTitle.Current(),
                                                thumbnail: modpack.Thumbnail);
             }
         }
@@ -252,7 +251,7 @@ public partial class LandingPageModel(
                                     version.Namespace,
                                     version.ProjectId,
                                     version.VersionId);
-            notificationService.PopMessage(Resources.MarketplaceModpacksPage_ModpackInstallingNotificationMessage
+            notificationService.PopMessage(LanguageManager.Instance.MarketplaceModpacksPage_ModpackInstallingNotificationMessage.Current()
                                                     .Replace("{0}", version.VersionName),
                                            version.ProjectName);
         }

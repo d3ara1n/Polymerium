@@ -58,7 +58,7 @@
                                     <TextBlock
                                         Grid.Column="0"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{Binding TypeName, FallbackValue=Type}" />
+                                        Text="{app:LocalizedKey {Binding TypeName}, FallbackValue=Type}" />
                                     <fi:SymbolIcon
                                         Grid.Column="1"
                                         IsVisible="{Binding IsDefault, Mode=OneWay, FallbackValue=False}"

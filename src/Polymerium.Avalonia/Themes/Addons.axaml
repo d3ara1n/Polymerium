@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
+    xmlns:app="https://github.com/d3ara1n/Polymerium">
 
     <Style Selector="TextBox">
         <Setter Property="ContextFlyout">
@@ -11,21 +11,21 @@
                 <MenuItem
                     IsEnabled="{Binding $parent[TextBox].CanCut}"
                     Command="{Binding $parent[TextBox].Cut}"
-                    Header="{x:Static lang:Resources.Shared_Cut}"
+                    Header="{Translate {x:Static app:LanguageManager+Keys.Shared_Cut}}"
                     Icon="{fie:SymbolIcon Symbol=Cut,
                                           FontSize={StaticResource MediumFontSize}}"
                     InputGesture="{x:Static TextBox.CutGesture}" />
                 <MenuItem
                     IsEnabled="{Binding $parent[TextBox].CanCopy}"
                     Command="{Binding $parent[TextBox].Copy}"
-                    Header="{x:Static lang:Resources.Shared_Copy}"
+                    Header="{Translate {x:Static app:LanguageManager+Keys.Shared_Copy}}"
                     Icon="{fie:SymbolIcon Symbol=Copy,
                                           FontSize={StaticResource MediumFontSize}}"
                     InputGesture="{x:Static TextBox.CopyGesture}" />
                 <MenuItem
                     IsEnabled="{Binding $parent[TextBox].CanPaste}"
                     Command="{Binding $parent[TextBox].Paste}"
-                    Header="{x:Static lang:Resources.Shared_Paste}"
+                    Header="{Translate {x:Static app:LanguageManager+Keys.Shared_Paste}}"
                     Icon="{fie:SymbolIcon Symbol=ClipboardPaste,
                                           FontSize={StaticResource MediumFontSize}}"
                     InputGesture="{x:Static TextBox.PasteGesture}" />
@@ -34,11 +34,11 @@
     </Style>
 
     <Style Selector="husk|Dialog">
-        <Setter Property="PrimaryText" Value="{x:Static lang:Resources.Dialog_ConfirmButtonText}" />
-        <Setter Property="SecondaryText" Value="{x:Static lang:Resources.Dialog_CancelButtonText}" />
+        <Setter Property="PrimaryText" Value="{Translate {x:Static app:LanguageManager+Keys.Dialog_ConfirmButtonText}}" />
+        <Setter Property="SecondaryText" Value="{Translate {x:Static app:LanguageManager+Keys.Dialog_CancelButtonText}}" />
     </Style>
     <Style Selector="ToggleSwitch">
-        <Setter Property="OffContent" Value="{x:Static lang:Resources.Enum_Off}" />
-        <Setter Property="OnContent" Value="{x:Static lang:Resources.Enum_On}" />
+        <Setter Property="OffContent" Value="{Translate {x:Static app:LanguageManager+Keys.Enum_Off}}" />
+        <Setter Property="OnContent" Value="{Translate {x:Static app:LanguageManager+Keys.Enum_On}}" />
     </Style>
 </Styles>

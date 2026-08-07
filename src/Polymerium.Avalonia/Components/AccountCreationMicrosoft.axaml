@@ -6,10 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignWidth="256"
-    Header="{x:Static lang:Resources.AccountCreationMicrosoft_Title}"
+    Header="{Translate {x:Static app:LanguageManager+Keys.AccountCreationMicrosoft_Title}}"
     IsNextAvailable="{Binding $self.Account, Converter={x:Static ObjectConverters.IsNotNull}}"
     mc:Ignorable="d">
     <husk:SwitchContainer
@@ -27,7 +26,7 @@
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="{StaticResource LargeFontSize}"
-                        Text="{x:Static lang:Resources.AccountCreationMicrosoft_UnavailableLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationMicrosoft_UnavailableLabelText}}" />
                 </StackPanel>
                 <TextBlock
                     HorizontalAlignment="Center"
@@ -40,7 +39,7 @@
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="10">
-                        <TextBlock Text="{x:Static lang:Resources.AccountCreationMicrosoft_RetryButtonText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationMicrosoft_RetryButtonText}}" />
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -61,12 +60,12 @@
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="{x:Static lang:Resources.AccountCreationMicrosoft_DoneTitle}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationMicrosoft_DoneTitle}}" />
                         </StackPanel>
                         <TextBlock
                             HorizontalAlignment="Center"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.AccountCreationMicrosoft_DoneSubtitle}"
+                            Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationMicrosoft_DoneSubtitle}}"
                             TextWrapping="Wrap" />
                     </StackPanel>
                 </husk:SwitchCase>
@@ -99,7 +98,7 @@
                             </Border>
                             <StackPanel>
                                 <TextBlock
-                                    Text="{x:Static lang:Resources.AccountCreationMicrosoft_Prompt}"
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationMicrosoft_Prompt}}"
                                     TextWrapping="Wrap" />
                                 <TextBlock
                                     FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -110,7 +109,7 @@
                                 Classes="Primary"
                                 Command="{Binding Source={x:Static app:InternalCommands.OpenUriCommand}}"
                                 CommandParameter="{Binding $parent[app:AccountCreationMicrosoft].Model.VerificationUri, FallbackValue={x:Null}}"
-                                Content="{x:Static lang:Resources.AccountCreationMicrosoft_OpenLinkButtonText}" />
+                                Content="{Translate {x:Static app:LanguageManager+Keys.AccountCreationMicrosoft_OpenLinkButtonText}}" />
                         </StackPanel>
                     </husk:SkeletonContainer>
                 </husk:SwitchCase>

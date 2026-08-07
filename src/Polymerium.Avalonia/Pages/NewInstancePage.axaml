@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Padding="0"
     HorizontalAlignment="Center"
@@ -48,7 +47,7 @@
                 </Button>
                 <TextBlock
                     Grid.Column="2"
-                    Text="{x:Static lang:Resources.NewInstancePage_Title}"
+                    Text="{Translate {x:Static app:LanguageManager+Keys.NewInstancePage_Title}}"
                     Theme="{StaticResource PageHeaderTextBlockTheme}" />
             </Grid>
             <StackPanel
@@ -120,7 +119,7 @@
                         VerticalAlignment="Center"
                         Spacing="12">
                         <StackPanel>
-                            <TextBlock Text="{x:Static lang:Resources.NewInstancePage_NameLabelText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.NewInstancePage_NameLabelText}}" />
                             <TextBox
                                 PlaceholderText="{Binding VersionName}"
                                 Text="{Binding DisplayName, Mode=TwoWay}">
@@ -138,7 +137,7 @@
                             </TextBox>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="{x:Static lang:Resources.NewInstancePage_VersionLabelText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.NewInstancePage_VersionLabelText}}" />
                             <TextBox
                                 IsEnabled="{Binding ImportedPack, Converter={x:Static ObjectConverters.IsNull}}"
                                 Text="{Binding VersionName, Mode=TwoWay}">
@@ -207,7 +206,7 @@
                                     <StackPanel Grid.Column="1">
                                         <TextBlock
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.NewInstancePage_PackageCountLabelText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.NewInstancePage_PackageCountLabelText}}" />
                                         <TextBlock
                                             FontSize="{StaticResource LargeFontSize}"
                                             Text="{Binding ImportedPack.PackageCount, FallbackValue=114514}" />
@@ -219,7 +218,7 @@
                                 <StackPanel Grid.Column="2">
                                     <TextBlock
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.NewInstancePage_ModLoaderLabelText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.NewInstancePage_ModLoaderLabelText}}" />
                                     <TextBlock
                                         FontSize="{StaticResource LargeFontSize}"
                                         Text="{Binding ImportedPack.LoaderLabel, FallbackValue=None}" />
@@ -240,10 +239,10 @@
                             Symbol="SquareAdd" />
                         <TextBlock
                             VerticalAlignment="Center"
-                            Text="{x:Static lang:Resources.NewInstancePage_CreateButtonText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.NewInstancePage_CreateButtonText}}" />
                     </StackPanel>
                 </Button>
-                <husk:Divider Content="{x:Static lang:Resources.NewInstancePage_SeparatorLabelText}" />
+                <husk:Divider Content="{Translate {x:Static app:LanguageManager+Keys.NewInstancePage_SeparatorLabelText}}" />
                 <Grid ColumnDefinitions="*,12,*">
                     <Button
                         Grid.Column="0"
@@ -258,7 +257,7 @@
                                 Symbol="FolderZip" />
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.NewInstancePage_ImportButtonText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.NewInstancePage_ImportButtonText}}" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -274,7 +273,7 @@
                                 Symbol="Gift" />
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.NewInstancePage_DownloadButtonText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.NewInstancePage_DownloadButtonText}}" />
                         </StackPanel>
                     </Button>
                 </Grid>

@@ -8,7 +8,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Padding="{StaticResource PageHeaderlessContentMargin}"
     d:DesignHeight="600"
@@ -78,7 +77,7 @@
                             Grid.Column="1"
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.LandingPage_OverviewInstancesLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_OverviewInstancesLabelText}}" />
                     </Grid>
                 </husk:Card>
                 <husk:Card
@@ -105,7 +104,7 @@
                             Grid.Column="1"
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.LandingPage_OverviewAccountsLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_OverviewAccountsLabelText}}" />
                     </Grid>
                 </husk:Card>
             </Grid>
@@ -183,7 +182,7 @@
                                                 CommandParameter="{Binding Key}">
                                                 <husk:IconLabel
                                                     Icon="Play"
-                                                    Text="{x:Static lang:Resources.LandingPage_RecentPlayButtonText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_RecentPlayButtonText}}" />
                                             </Button>
                                             <Button
                                                 Classes="Small"
@@ -247,12 +246,12 @@
                                                             <TextBlock
                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                                Text="{x:Static lang:Resources.LandingPage_RecentPlayPackagesText}" />
+                                                                Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_RecentPlayPackagesText}}" />
                                                             <StackPanel
                                                                 Orientation="Horizontal"
                                                                 Spacing="6">
                                                                 <husk:Tag Content="{Binding Version}" />
-                                                                <husk:Tag Content="{Binding LoaderLabel}" />
+                                                                <husk:Tag Content="{app:LocalizedKey {Binding LoaderLabel}}" />
                                                             </StackPanel>
                                                         </StackPanel>
                                                     </Grid>
@@ -268,7 +267,7 @@
                                                             <TextBlock
                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                Text="{x:Static lang:Resources.LandingPage_RecentPlayPlayTimeText}" />
+                                                                Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_RecentPlayPlayTimeText}}" />
                                                             <TextBlock
                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -282,7 +281,7 @@
                                                             <TextBlock
                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                Text="{x:Static lang:Resources.LandingPage_RecentPlaySessionsText}" />
+                                                                Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_RecentPlaySessionsText}}" />
                                                             <TextBlock
                                                                 FontSize="{StaticResource MediumFontSize}"
                                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -313,7 +312,7 @@
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.LandingPage_NoRecentPlayLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_NoRecentPlayLabelText}}" />
                         </StackPanel>
                     </husk:Card>
                 </husk:PlaceholderContainer.Placeholder>
@@ -338,10 +337,10 @@
                         Grid.Column="1">
                         <TextBlock
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.LandingPage_RandomPlayTitle}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_RandomPlayTitle}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.LandingPage_RandomPlaySubtitle}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_RandomPlaySubtitle}}" />
                     </StackPanel>
                     <Button
                         Grid.Row="1"
@@ -352,7 +351,7 @@
                         Theme="{StaticResource OutlineButtonTheme}">
                         <husk:IconLabel
                             Icon="HandWave"
-                            Text="{x:Static lang:Resources.LandingPage_RandomPlayButtonText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_RandomPlayButtonText}}" />
                     </Button>
                 </Grid>
             </husk:Card>
@@ -367,7 +366,7 @@
                         <TextBlock
                             FontSize="{StaticResource MediumFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.LandingPage_StatisticsHoursLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_StatisticsHoursLabelText}}" />
                         <TextBlock
                             FontSize="{StaticResource ExtraLargeFontSize}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -388,7 +387,7 @@
                             <TextBlock
                                 FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.LandingPage_StatisticsSessionsLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_StatisticsSessionsLabelText}}" />
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -401,7 +400,7 @@
                             <TextBlock
                                 FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.LandingPage_StatisticsActiveDaysLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_StatisticsActiveDaysLabelText}}" />
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -452,7 +451,7 @@
                 DockPanel.Dock="Top"
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.LandingPage_MinecraftNewsLabelText}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_MinecraftNewsLabelText}}" />
             <husk:LazyContainer
                 MinHeight="220"
                 Source="{Binding MinecraftNews}">
@@ -501,7 +500,7 @@
                                                     <HyperlinkButton
                                                         DockPanel.Dock="Right"
                                                         Padding="0"
-                                                        Content="{x:Static lang:Resources.LandingPage_ReadMinecraftNewsButtonText}"
+                                                        Content="{Translate {x:Static app:LanguageManager+Keys.LandingPage_ReadMinecraftNewsButtonText}}"
                                                         NavigateUri="{Binding ReadMoreLink}" />
                                                     <husk:IconLabel
                                                         FontSize="{StaticResource SmallFontSize}"
@@ -526,7 +525,7 @@
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.LandingPage_MinecraftNewsErrorText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_MinecraftNewsErrorText}}" />
                             <Button
                                 Classes="Small"
                                 HorizontalAlignment="Center"
@@ -534,7 +533,7 @@
                                 Theme="{StaticResource OutlineButtonTheme}">
                                 <husk:IconLabel
                                     Icon="ArrowClockwise"
-                                    Text="{x:Static lang:Resources.LandingPage_RetryButtonText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_RetryButtonText}}" />
                             </Button>
                         </StackPanel>
                     </husk:Card>

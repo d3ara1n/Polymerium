@@ -5,20 +5,19 @@
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="360"
     IsPrimaryButtonVisible="True"
-    Message="{x:Static lang:Resources.RecipeEditorDialog_Prompt}"
+    Message="{Translate {x:Static app:LanguageManager+Keys.RecipeEditorDialog_Prompt}}"
     mc:Ignorable="d">
     <StackPanel Spacing="8">
         <TextBox
-            PlaceholderText="{x:Static lang:Resources.RecipeEditorDialog_NameWatermark}"
+            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.RecipeEditorDialog_NameWatermark}}"
             Text="{Binding $parent[app:RecipeEditorDialog].RecipeName, Mode=TwoWay}" />
         <TextBox
             MinHeight="72"
             AcceptsReturn="True"
-            PlaceholderText="{x:Static lang:Resources.RecipeEditorDialog_DescriptionWatermark}"
+            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.RecipeEditorDialog_DescriptionWatermark}}"
             Text="{Binding $parent[app:RecipeEditorDialog].RecipeDescription, Mode=TwoWay}"
             TextWrapping="Wrap" />
     </StackPanel>

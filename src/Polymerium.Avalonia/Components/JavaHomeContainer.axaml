@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Border
@@ -56,7 +55,7 @@
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Source="{Binding $parent[app:JavaHomeContainer].Vendor}">
-                                    <TextBlock Text="{x:Static lang:Resources.JavaHomeContainer_UnknownLabelText}" />
+                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.JavaHomeContainer_UnknownLabelText}}" />
                                     <husk:PlaceholderContainer.SourceTemplate>
                                         <DataTemplate x:DataType="x:String">
                                             <TextBlock Text="{Binding}" />
@@ -106,7 +105,7 @@
                         VerticalAlignment="Center"
                         FontSize="{StaticResource MediumFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.JavaHomeContainer_Prompt}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.JavaHomeContainer_Prompt}}" />
                     <Button
                         Classes="Small"
                         IsVisible="{OnPlatform Default={x:False},
@@ -120,7 +119,7 @@
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
                                 Symbol="FolderSearch" />
-                            <TextBlock Text="{x:Static lang:Resources.JavaHomeContainer_DetectButtonText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.JavaHomeContainer_DetectButtonText}}" />
                         </StackPanel>
                     </Button>
                     <Button
@@ -133,7 +132,7 @@
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
                                 Symbol="DocumentSearch" />
-                            <TextBlock Text="{x:Static lang:Resources.JavaHomeContainer_BrowseButtonText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.JavaHomeContainer_BrowseButtonText}}" />
                         </StackPanel>
                     </Button>
                 </StackPanel>

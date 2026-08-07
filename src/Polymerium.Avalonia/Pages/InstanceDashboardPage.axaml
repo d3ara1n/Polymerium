@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:launching="clr-namespace:TridentCore.Core.Engines.Launching;assembly=TridentCore.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:trident="using:TridentCore.Abstractions"
@@ -30,7 +29,7 @@
                         Symbol="Live" />
                     <TextBlock
                         Grid.Column="1"
-                        Text="{x:Static lang:Resources.InstanceDashboardPage_LiveLogLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_LiveLogLabelText}}" />
                     <husk:Tag
                         Grid.Column="2"
                         Classes="Small Success"
@@ -131,7 +130,7 @@
                                     FontSize="{StaticResource LargeFontSize}"
                                     FontWeight="{StaticResource ControlStrongFontWeight}"
                                     Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceDashboardPage_RunningLabelText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_RunningLabelText}}" />
                             </StackPanel>
                         </Border>
                     </husk:SwitchCase>
@@ -150,7 +149,7 @@
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceDashboardPage_DeployingLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_DeployingLabelText}}" />
                         </StackPanel>
                     </husk:SwitchCase>
                     <!--  Updating 状态  -->
@@ -168,7 +167,7 @@
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceDashboardPage_UpdatingLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_UpdatingLabelText}}" />
                         </StackPanel>
                     </husk:SwitchCase>
                     <!--  Idle 状态  -->
@@ -186,7 +185,7 @@
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceDashboardPage_IdleLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_IdleLabelText}}" />
                         </StackPanel>
                     </husk:SwitchCase>
                 </husk:SwitchContainer>
@@ -209,7 +208,7 @@
                             </TextBlock>
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceDashboardPage_CpuUsageLabelText}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_CpuUsageLabelText}}"
                                 TextAlignment="Center" />
                         </StackPanel>
                     </husk:SwitchCase>
@@ -229,7 +228,7 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceDashboardPage_SessionCountLabelText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_SessionCountLabelText}}" />
                             </StackPanel>
                             <Button
                                 Grid.Row="1"
@@ -243,7 +242,7 @@
                                     <fi:SymbolIcon
                                         FontSize="{StaticResource MediumFontSize}"
                                         Symbol="FolderOpen" />
-                                    <TextBlock Text="{x:Static lang:Resources.InstanceDashboardPage_LogsButtonText}" />
+                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_LogsButtonText}}" />
                                 </StackPanel>
                             </Button>
                         </Grid>
@@ -279,7 +278,7 @@
                             </TextBlock>
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceDashboardPage_MemoryUsageLabelText}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_MemoryUsageLabelText}}"
                                 TextAlignment="Center" />
                         </StackPanel>
                     </husk:SwitchCase>
@@ -299,7 +298,7 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceDashboardPage_CrashCountLabelText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_CrashCountLabelText}}" />
                             </StackPanel>
                             <Button
                                 Grid.Row="1"
@@ -313,7 +312,7 @@
                                     <fi:SymbolIcon
                                         FontSize="{StaticResource MediumFontSize}"
                                         Symbol="FolderOpen" />
-                                    <TextBlock Text="{x:Static lang:Resources.InstanceDashboardPage_CrashReportsButtonText}" />
+                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_CrashReportsButtonText}}" />
                                 </StackPanel>
                             </Button>
                         </Grid>
@@ -334,7 +333,7 @@
                                 TextAlignment="Center" />
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceDashboardPage_UptimeLabelText}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_UptimeLabelText}}"
                                 TextAlignment="Center" />
                         </StackPanel>
                     </husk:SwitchCase>
@@ -355,7 +354,7 @@
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.InstanceDashboardPage_NoDataLabelText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_NoDataLabelText}}" />
                                 </StackPanel>
                             </husk:SwitchCase>
                             <husk:SwitchCase>
@@ -376,7 +375,7 @@
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.InstanceDashboardPage_SuccessRateLabelText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_SuccessRateLabelText}}" />
                                 </StackPanel>
                             </husk:SwitchCase>
                         </husk:SwitchContainer>
@@ -409,7 +408,7 @@
                     <!--  搜索框  -->
                     <TextBox
                         Grid.Column="1"
-                        PlaceholderText="{x:Static lang:Resources.InstanceDashboardPage_SearchPlaceholder}"
+                        PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_SearchPlaceholder}}"
                         Text="{Binding FilterText, Mode=TwoWay}">
                         <TextBox.InnerLeftContent>
                             <StackPanel Orientation="Horizontal">
@@ -466,7 +465,7 @@
                                     Height="{StaticResource MediumFontSize}"
                                     Background="{StaticResource ControlBackgroundBrush}"
                                     CornerRadius="{StaticResource FullCornerRadius}" />
-                                <TextBlock Text="{x:Static lang:Resources.InstanceDashboardPage_FilterInformationText}" />
+                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_FilterInformationText}}" />
                             </StackPanel>
                         </ToggleButton>
                         <!--  Warning 过滤  -->
@@ -487,7 +486,7 @@
                                     Height="{StaticResource MediumFontSize}"
                                     Background="{StaticResource ControlWarningBackgroundBrush}"
                                     CornerRadius="{StaticResource FullCornerRadius}" />
-                                <TextBlock Text="{x:Static lang:Resources.InstanceDashboardPage_FilterWarningText}" />
+                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_FilterWarningText}}" />
                             </StackPanel>
                         </ToggleButton>
                         <!--  Error 过滤  -->
@@ -508,7 +507,7 @@
                                     Height="{StaticResource MediumFontSize}"
                                     Background="{StaticResource ControlDangerBackgroundBrush}"
                                     CornerRadius="{StaticResource FullCornerRadius}" />
-                                <TextBlock Text="{x:Static lang:Resources.InstanceDashboardPage_FilterErrorText}" />
+                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_FilterErrorText}}" />
                             </StackPanel>
                         </ToggleButton>
                         <husk:Divider Orientation="Vertical" />
@@ -516,7 +515,7 @@
                         <ToggleButton
                             Classes="Small"
                             IsChecked="{Binding $parent[app:InstanceDashboardPage].IsAutoScroll, Mode=TwoWay}"
-                            ToolTip.Tip="{x:Static lang:Resources.InstanceDashboardPage_AutoScrollToolTipText}">
+                            ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_AutoScrollToolTipText}}">
                             <ToggleButton.Styles>
                                 <Style Selector="ToggleButton:checked">
                                     <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />

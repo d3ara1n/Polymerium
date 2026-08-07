@@ -8,7 +8,6 @@ using CommunityToolkit.Mvvm.Input;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using TridentCore.Abstractions;
 using TridentCore.Core.Services;
@@ -66,8 +65,7 @@ public partial class MaintenanceStoragePageModel(
     [RelayCommand]
     private async Task PurgeCache()
     {
-        if (await overlayService.RequestConfirmationAsync(Resources
-                                                             .MaintenanceStoragePage_PurgeCacheConfirmationMessage))
+        if (await overlayService.RequestConfirmationAsync(LanguageManager.Instance.MaintenanceStoragePage_PurgeCacheConfirmationMessage.Current()))
         {
             try
             {
@@ -75,7 +73,7 @@ public partial class MaintenanceStoragePageModel(
             }
             catch (Exception ex)
             {
-                notificationService.PopMessage(ex, Resources.MaintenanceStoragePage_PurgeCacheDangerNotificationTitle);
+                notificationService.PopMessage(ex, LanguageManager.Instance.MaintenanceStoragePage_PurgeCacheDangerNotificationTitle.Current());
             }
 
             Calculate();

@@ -9,7 +9,6 @@
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resources="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions"
     Padding="0"
@@ -23,7 +22,7 @@
             x:Key="InstancePackageButtonFlyout"
             x:DataType="app:InstancePackageModel">
             <MenuItem
-                Header="{x:Static lang:Resources.InstanceSetupPage_ActiveMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ActiveMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=Star,
                                       FontSize={StaticResource MediumFontSize}}"
                 IsChecked="{Binding IsEnabled, Mode=TwoWay}"
@@ -36,7 +35,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ProjectNameMenuText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectNameMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Info.ProjectName, FallbackValue=Project Name}" />
@@ -50,7 +49,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ProjectIdMenuText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectIdMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Info.ProjectId, FallbackValue=Pid}" />
@@ -65,7 +64,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_VersionNameMenuText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_VersionNameMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Info.((app:InstancePackageVersionModel)Version).Name, FallbackValue=Version Name}" />
@@ -80,7 +79,7 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_VersionIdMenuText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_VersionIdMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Info.((app:InstancePackageVersionModel)Version).Id, FallbackValue=Vid}" />
@@ -91,7 +90,7 @@
             <MenuItem
                 Command="{x:Static app:InternalCommands.OpenUriCommand}"
                 CommandParameter="{Binding Info.Reference, FallbackValue={x:Null}}"
-                Header="{x:Static lang:Resources.InstanceSetupPage_OpenWebsiteMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_OpenWebsiteMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=Open,
                                       FontSize={StaticResource MediumFontSize}}" />
             <!--  <MenuItem Header="Add to Favorites"  -->
@@ -104,7 +103,7 @@
                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RemovePackageCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding}"
                 Foreground="{StaticResource ControlDangerForegroundBrush}"
-                Header="{x:Static lang:Resources.InstanceSetupPage_RemoveMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_RemoveMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=Delete,
                                       FontSize={StaticResource MediumFontSize}}" />
         </MenuFlyout>
@@ -112,7 +111,7 @@
             x:Key="GroupHeaderContextFlyout"
             x:DataType="app:PackageListItemBase+Header">
             <MenuItem
-                Header="{x:Static lang:Resources.InstanceSetupPage_GroupExpandedMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_GroupExpandedMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=ChevronUpDown,
                                       FontSize={StaticResource MediumFontSize}}"
                 IsChecked="{Binding Group.IsExpanded, Mode=TwoWay}"
@@ -121,47 +120,47 @@
             <MenuItem
                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewGroupDetailsCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding Group}"
-                Header="{x:Static lang:Resources.InstanceSetupPage_ViewGroupDetailsMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ViewGroupDetailsMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=Info,
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem Header="-" />
             <MenuItem
                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).EnableGroupCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding Group}"
-                Header="{x:Static lang:Resources.InstanceSetupPage_EnableGroupMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_EnableGroupMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=CheckmarkCircle,
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem
                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).DisableGroupCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding Group}"
-                Header="{x:Static lang:Resources.InstanceSetupPage_DisableGroupMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_DisableGroupMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=DismissCircle,
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem Header="-" />
             <MenuItem
                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).LowerGroupPriorityCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding Group}"
-                Header="{x:Static lang:Resources.InstanceSetupPage_LowerGroupPriorityMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_LowerGroupPriorityMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=ArrowUp,
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem
                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RaiseGroupPriorityCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding Group}"
-                Header="{x:Static lang:Resources.InstanceSetupPage_RaiseGroupPriorityMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_RaiseGroupPriorityMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=ArrowDown,
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem Header="-" />
             <MenuItem
                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).DisbandGroupCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding Group}"
-                Header="{x:Static lang:Resources.InstanceSetupPage_DisbandGroupMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_DisbandGroupMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=GroupDismiss,
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem
                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RemoveGroupCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding Group}"
                 Foreground="{StaticResource ControlDangerForegroundBrush}"
-                Header="{x:Static lang:Resources.InstanceSetupPage_RemoveGroupMenuText}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_RemoveGroupMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=Delete,
                                       FontSize={StaticResource MediumFontSize}}" />
         </MenuFlyout>
@@ -241,7 +240,7 @@
                                                             Grid.Column="3"
                                                             VerticalAlignment="Center"
                                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                                            <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ModpackGroupTagText}" />
+                                                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ModpackGroupTagText}}" />
                                                         </husk:Tag>
                                                     </Grid>
                                                 </DataTemplate>
@@ -280,7 +279,7 @@
                                                             Grid.Column="3"
                                                             VerticalAlignment="Center"
                                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                                            <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_RecipeGroupTagText}" />
+                                                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_RecipeGroupTagText}}" />
                                                         </husk:Tag>
                                                     </Grid>
                                                 </DataTemplate>
@@ -299,7 +298,7 @@
                                             Spacing="6">
                                             <TextBlock
                                                 VerticalAlignment="Center"
-                                                Text="{x:Static lang:Resources.InstancePackageButton_LoadFailedTitleText}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_LoadFailedTitleText}}" />
                                             <fi:SymbolIcon Symbol="ArrowCounterclockwise" />
                                         </StackPanel>
                                     </husk:SkeletonContainer>
@@ -393,7 +392,7 @@
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{x:Static lang:Resources.InstanceSetupPage_InoperableLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_InoperableLabelText}}" />
                 </StackPanel>
             </husk:Card>
         </husk:BusyContainer.PendingContent>
@@ -425,7 +424,7 @@
                             <StackPanel Margin="12,6">
                                 <TextBlock
                                     Foreground="{StaticResource ControlAccentForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceSetupPage_VersionLabelText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_VersionLabelText}}" />
                                 <TextBlock
                                     FontSize="{StaticResource LargeFontSize}"
                                     Text="{Binding Basic.Version, FallbackValue=Version}" />
@@ -452,10 +451,10 @@
                                 <StackPanel Margin="12,6">
                                     <TextBlock
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.InstanceSetupPage_LoaderLabelText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_LoaderLabelText}}" />
                                     <TextBlock
                                         FontSize="{StaticResource LargeFontSize}"
-                                        Text="{Binding LoaderLabel, FallbackValue=None}" />
+                                        Text="{app:LocalizedKey {Binding LoaderLabel}, FallbackValue=None}" />
                                 </StackPanel>
                             </DockPanel>
                         </Border>
@@ -473,7 +472,7 @@
                             <StackPanel
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
-                                <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_ReferenceUnavailableLabelText}" />
+                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ReferenceUnavailableLabelText}}" />
                                 <Button
                                     IsVisible="False"
                                     Content="Retry" />
@@ -507,7 +506,7 @@
                                                 Grid.Column="2"
                                                 Classes="Small"
                                                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).CheckUpdateCommand, FallbackValue={x:Null}}"
-                                                Content="{x:Static lang:Resources.InstanceSetupPage_SwitchVersionButtonText}"
+                                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_SwitchVersionButtonText}}"
                                                 Theme="{StaticResource OutlineButtonTheme}" />
                                         </Grid>
                                     </app:Plaque.Header>
@@ -545,7 +544,7 @@
                                                                 Grid.Column="0"
                                                                 FontSize="{StaticResource SmallFontSize}"
                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}" />
+                                                                Text="{Translate {x:Static app:LanguageManager+Keys.Shared_ExternalLinkLabelText}}" />
                                                             <fi:SymbolIcon
                                                                 Grid.Column="1"
                                                                 FontSize="{StaticResource SmallFontSize}"
@@ -595,7 +594,7 @@
                     <TextBox
                         Grid.Column="0"
                         MinWidth="168"
-                        PlaceholderText="{x:Static lang:Resources.InstanceSetupPage_FilterBarPlaceholder}"
+                        PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_FilterBarPlaceholder}}"
                         Text="{Binding FilterText, Mode=OneWayToSource}"
                         ToolTip.Tip="@Author #Summary !Id Names">
                         <TextBox.InnerRightContent>
@@ -621,7 +620,7 @@
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceSetupPage_FilterLabelText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_FilterLabelText}}" />
                                                 <Grid
                                                     Grid.Row="1"
                                                     ColumnDefinitions="*,Auto"
@@ -629,24 +628,24 @@
                                                     <TextBlock
                                                         Grid.Column="0"
                                                         VerticalAlignment="Bottom"
-                                                        Text="{x:Static lang:Resources.InstanceSetupPage_StatusFilterText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_StatusFilterText}}" />
                                                     <TabStrip
                                                         Grid.Column="1"
                                                         SelectedItem="{Binding FilterEnability, Mode=TwoWay}"
                                                         Theme="{StaticResource SegmentedTabStripTheme}">
                                                         <TabStrip.ItemTemplate>
                                                             <DataTemplate DataType="app:FilterModel">
-                                                                <TextBlock Text="{Binding Label}" />
+                                                                <TextBlock Text="{app:LocalizedKey {Binding Label}}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.Enum_All}"
+                                                            Label="Enum_All"
                                                             Value="{x:Null}" />
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.Enum_Enabled}"
+                                                            Label="Enum_Enabled"
                                                             Value="{x:True}" />
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.Enum_Disabled}"
+                                                            Label="Enum_Disabled"
                                                             Value="{x:False}" />
                                                     </TabStrip>
                                                 </Grid>
@@ -658,24 +657,24 @@
                                                     <TextBlock
                                                         Grid.Column="0"
                                                         VerticalAlignment="Bottom"
-                                                        Text="{x:Static lang:Resources.InstanceSetupPage_SourceFilterText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_SourceFilterText}}" />
                                                     <TabStrip
                                                         Grid.Column="1"
                                                         SelectedItem="{Binding FilterLockility, Mode=TwoWay}"
                                                         Theme="{StaticResource SegmentedTabStripTheme}">
                                                         <TabStrip.ItemTemplate>
                                                             <DataTemplate DataType="app:FilterModel">
-                                                                <TextBlock Text="{Binding Label}" />
+                                                                <TextBlock Text="{app:LocalizedKey {Binding Label}}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.Enum_All}"
+                                                            Label="Enum_All"
                                                             Value="{x:Null}" />
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.InstanceSetupPage_SourceImportText}"
+                                                            Label="InstanceSetupPage_SourceImportText"
                                                             Value="{x:True}" />
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.InstanceSetupPage_SourceLocalText}"
+                                                            Label="InstanceSetupPage_SourceLocalText"
                                                             Value="{x:False}" />
                                                     </TabStrip>
                                                 </Grid>
@@ -687,30 +686,30 @@
                                                     <TextBlock
                                                         Grid.Column="0"
                                                         VerticalAlignment="Bottom"
-                                                        Text="{x:Static lang:Resources.InstanceSetupPage_TypeFilterText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_TypeFilterText}}" />
                                                     <TabStrip
                                                         Grid.Column=" 1"
                                                         SelectedItem="{Binding FilterKind, Mode=TwoWay}"
                                                         Theme="{StaticResource SegmentedTabStripTheme}">
                                                         <TabStrip.ItemTemplate>
                                                             <DataTemplate DataType="app:FilterModel">
-                                                                <TextBlock Text="{Binding Label}" />
+                                                                <TextBlock Text="{app:LocalizedKey {Binding Label}}" />
                                                             </DataTemplate>
                                                         </TabStrip.ItemTemplate>
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.Enum_All}"
+                                                            Label="Enum_All"
                                                             Value="{x:Null}" />
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.ResourceKind_Mod}"
+                                                            Label="ResourceKind_Mod"
                                                             Value="{x:Static resources:ResourceKind.Mod}" />
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.ResourceKind_ResourcePack}"
+                                                            Label="ResourceKind_ResourcePack"
                                                             Value="{x:Static resources:ResourceKind.ResourcePack}" />
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.ResourceKind_ShaderPack}"
+                                                            Label="ResourceKind_ShaderPack"
                                                             Value="{x:Static resources:ResourceKind.ShaderPack}" />
                                                         <app:FilterModel
-                                                            Label="{x:Static lang:Resources.ResourceKind_DataPack}"
+                                                            Label="ResourceKind_DataPack"
                                                             Value="{x:Static resources:ResourceKind.DataPack}" />
                                                     </TabStrip>
                                                 </Grid>
@@ -724,7 +723,7 @@
                                                         VerticalAlignment="Center"
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceSetupPage_TagFilterText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_TagFilterText}}" />
                                                 </Grid>
                                                 <Panel
                                                     Grid.Row="8"
@@ -742,7 +741,7 @@
                                                             HorizontalAlignment="Center"
                                                             FontSize="{StaticResource LargeFontSize}"
                                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                            Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
                                                     </StackPanel>
                                                     <ScrollViewer>
                                                         <ItemsControl ItemsSource="{Binding TagsView}">
@@ -791,7 +790,7 @@
                     <TextBlock Grid.Column="1">
                         <Run
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.InstanceSetupPage_ResultCountLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ResultCountLabelText}}" />
                         <LineBreak />
                         <Run Text="{Binding FilteredCount, Mode=OneWay, FallbackValue=0}" />
                         <Run
@@ -809,7 +808,7 @@
                                 Height="16"
                                 HorizontalAlignment="Center"
                                 IsIndeterminate="{Binding IsRefreshing}" />
-                            <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_RefreshingLabelText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_RefreshingLabelText}}" />
                         </StackPanel>
                         <Border
                             Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
@@ -820,7 +819,7 @@
                                     VerticalAlignment="Center">
                                     <Run
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.InstanceSetupPage_RuleCountLabelText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_RuleCountLabelText}}" />
                                     <Run
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
                                         Text="{Binding Rules.Count, Mode=OneWay, FallbackValue=0}" />
@@ -845,44 +844,44 @@
                                 <MenuFlyout>
                                     <MenuItem
                                         Command="{Binding UpdateBatchCommand}"
-                                        Header="{x:Static lang:Resources.InstanceSetupPage_BatchUpdateMenuText}"
+                                        Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_BatchUpdateMenuText}}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowTurnRightUp,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
                                         Command="{Binding GotoDependencyGraphCommand}"
-                                        Header="{x:Static lang:Resources.InstanceSetupPage_DependencyGraphMenuText}"
+                                        Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_DependencyGraphMenuText}}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowSplit,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
                                         Command="{Binding ImportFromRecipeCommand}"
-                                        Header="{x:Static lang:Resources.InstanceSetupPage_ImportRecipeMenuText}"
+                                        Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ImportRecipeMenuText}}"
                                         Icon="{fie:SymbolIcon Symbol=ListBar,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
                                         Command="{Binding ImportListCommand}"
-                                        Header="{x:Static lang:Resources.InstanceSetupPage_ImportListMenuText}"
+                                        Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ImportListMenuText}}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowImport,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
                                         Command="{Binding ExportListCommand}"
-                                        Header="{x:Static lang:Resources.InstanceSetupPage_ExportListMenuText}"
+                                        Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ExportListMenuText}}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowExport,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem Header="-" />
                                     <MenuItem
                                         Command="{Binding BatchEnableCommand}"
-                                        Header="{x:Static lang:Resources.InstanceSetupPage_BatchEnableMenuText}"
+                                        Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_BatchEnableMenuText}}"
                                         Icon="{fie:SymbolIcon Symbol=CheckmarkCircle,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
                                         Command="{Binding BatchDisableCommand}"
-                                        Header="{x:Static lang:Resources.InstanceSetupPage_BatchDisableMenuText}"
+                                        Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_BatchDisableMenuText}}"
                                         Icon="{fie:SymbolIcon Symbol=DismissCircle,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                     <MenuItem
                                         Command="{Binding BatchDeleteCommand}"
                                         Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                        Header="{x:Static lang:Resources.InstanceSetupPage_BatchDeleteMenuText}"
+                                        Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_BatchDeleteMenuText}}"
                                         Icon="{fie:SymbolIcon Symbol=Delete,
                                                               FontSize={StaticResource MediumFontSize}}" />
                                 </MenuFlyout>
@@ -894,7 +893,7 @@
                                     VerticalAlignment="Center"
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="Wand" />
-                                <TextBlock Text="{x:Static lang:Resources.InstanceSetupPage_GetMoreButtonText}" />
+                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_GetMoreButtonText}}" />
                             </StackPanel>
                         </SplitButton>
                     </StackPanel>
@@ -915,7 +914,7 @@
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource LargeFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
                     </StackPanel>
                     <ScrollViewer>
                         <ItemsControl

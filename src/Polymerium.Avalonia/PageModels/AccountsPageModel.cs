@@ -7,7 +7,6 @@ using Huskui.Avalonia.Models;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Accounts;
@@ -38,8 +37,8 @@ public partial class AccountsPageModel(
         var found = persistenceService.GetAccount(account.Uuid);
         if (found != null)
         {
-            notificationService.PopMessage(Resources.AccountsPage_AccountAddingDangerNotificationMessage,
-                                           Resources.AccountsPage_AccountAddingDangerNotificationTitle,
+            notificationService.PopMessage(LanguageManager.Instance.AccountsPage_AccountAddingDangerNotificationMessage.Current(),
+                                           LanguageManager.Instance.AccountsPage_AccountAddingDangerNotificationTitle.Current(),
                                            GrowlLevel.Danger,
                                            thumbnail: AccountHelper.GetFaceUrl(AccountHelper.BuildSkinSource(account)));
             return false;

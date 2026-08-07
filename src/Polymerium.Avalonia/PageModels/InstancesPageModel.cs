@@ -17,7 +17,6 @@ using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.FileModels;
@@ -119,18 +118,18 @@ public partial class InstancesPageModel(
     {
         _filters.Add(new MultiSelectInstanceFilter(_cards.Connect(),
                                                    GetLoaderValues,
-                                                   Resources.InstancesPage_FilterLoaderLabel));
+                                                   "InstancesPage_FilterLoaderLabel"));
 
         _filters.Add(new MultiSelectInstanceFilter(_cards.Connect(),
                                                    card => card.Tags,
-                                                   Resources.InstancesPage_FilterTagsLabel));
+                                                   "InstancesPage_FilterTagsLabel"));
     }
 
     private static IEnumerable<string> GetLoaderValues(InstanceCardModel card)
     {
         yield return LoaderHelper.TryParse(card.Basic.Loader, out var result)
                          ? LoaderHelper.ToDisplayName(result.Identity)
-                         : Resources.Enum_Vanilla;
+                         : "Enum_Vanilla";
     }
 
     private void RebuildPipeline()

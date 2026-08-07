@@ -8,7 +8,6 @@
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:fie="using:FluentIcons.Avalonia.Markup"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="380"
     Padding="0"
@@ -27,7 +26,7 @@
                 VerticalAlignment="Center"
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.NotificationSidebar_NotificationsLabelText}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_NotificationsLabelText}}" />
             <Button
                 Grid.Column="1"
                 Classes="Small"
@@ -36,7 +35,7 @@
                 Theme="{StaticResource OutlineButtonTheme}">
                 <husk:IconLabel
                     Icon="Checkmark"
-                    Text="{x:Static lang:Resources.NotificationSidebar_MarkAllAsReadButtonText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_MarkAllAsReadButtonText}}" />
             </Button>
             <Button
                 Grid.Column="2"
@@ -68,11 +67,11 @@
                     HorizontalAlignment="Center"
                     FontSize="{StaticResource MediumFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.NotificationSidebar_EmptyTitle}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_EmptyTitle}}" />
                 <TextBlock
                     HorizontalAlignment="Center"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.NotificationSidebar_EmptyPrompt}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_EmptyPrompt}}" />
             </StackPanel>
             <ScrollViewer IsVisible="{Binding Notifications.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}">
                 <ItemsControl
@@ -211,12 +210,12 @@
                                                     Classes="Small Primary"
                                                     Margin="8,0,0,0"
                                                     IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
-                                                    Content="{x:Static lang:Resources.NotificationSidebar_UnreadTagText}" />
+                                                    Content="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_UnreadTagText}}" />
                                                 <husk:Tag
                                                     Classes="Small"
                                                     Margin="8,0,0,0"
                                                     IsVisible="{Binding IsCancelled}"
-                                                    Content="{x:Static lang:Resources.NotificationSidebar_CancelledTagText}" />
+                                                    Content="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_CancelledTagText}}" />
                                             </StackPanel>
                                             <TextBlock
                                                 Grid.Row="0"
@@ -244,20 +243,20 @@
                                                             IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
                                                             Command="{Binding $parent[app:NotificationSidebar].((app:NotificationSidebarModel)DataContext).MarkAsReadCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
-                                                            Header="{x:Static lang:Resources.NotificationSidebar_MarkAsReadMenuText}"
+                                                            Header="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_MarkAsReadMenuText}}"
                                                             Icon="{fie:SymbolIcon CheckmarkCircle,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             IsVisible="{Binding IsRead}"
                                                             Command="{Binding $parent[app:NotificationSidebar].((app:NotificationSidebarModel)DataContext).MarkAsUnreadCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
-                                                            Header="{x:Static lang:Resources.NotificationSidebar_MarkAsUnreadMenuText}"
+                                                            Header="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_MarkAsUnreadMenuText}}"
                                                             Icon="{fie:SymbolIcon CheckmarkCircleHint,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                         <MenuItem
                                                             Command="{Binding $parent[app:NotificationSidebar].((app:NotificationSidebarModel)DataContext).RemoveNotificationCommand, FallbackValue={x:Null}}"
                                                             CommandParameter="{Binding}"
-                                                            Header="{x:Static lang:Resources.NotificationSidebar_RemoveMenuText}"
+                                                            Header="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_RemoveMenuText}}"
                                                             Icon="{fie:SymbolIcon DismissCircle,
                                                                                   FontSize={StaticResource MediumFontSize}}" />
                                                     </MenuFlyout>

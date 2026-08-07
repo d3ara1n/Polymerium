@@ -18,7 +18,6 @@ using Huskui.Avalonia.Mvvm.Activation;
 using LibGit2Sharp;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using TridentCore.Abstractions;
 using TridentCore.Core.Services;
@@ -226,11 +225,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                               FullPath = fullPath,
                               IsDirectory = isDirectory,
                               FileType = isDirectory
-                                             ? Resources.InstanceWorkspacePage_FolderFileTypeText
+                                             ? LanguageManager.Instance.InstanceWorkspacePage_FolderFileTypeText.Current()
                                              :
                                              string.IsNullOrWhiteSpace(Path.GetExtension(path))
                                                  ?
-                                                 Resources.InstanceWorkspacePage_FileFileTypeText
+                                                 LanguageManager.Instance.InstanceWorkspacePage_FileFileTypeText.Current()
                                                  : Path.GetExtension(path).TrimStart('.').ToUpperInvariant(),
                               FileSizeRaw = info is FileInfo file ? file.Length : 0,
                               FileLastModifiedRaw = info.LastWriteTime
@@ -483,8 +482,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         if (!TryOpenGitRepository(out var repository))
         {
             await ResetGitStatusAsync();
-            _notificationService.PopMessage(Resources.InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage,
-                                            Resources.InstanceWorkspacePage_GitErrorWarningNotificationTitle,
+            _notificationService.PopMessage(LanguageManager.Instance.InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage.Current(),
+                                            LanguageManager.Instance.InstanceWorkspacePage_GitErrorWarningNotificationTitle.Current(),
                                             GrowlLevel.Warning);
             return;
         }
@@ -545,7 +544,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     }
 
     private static string BuildRestoreConfirmationMessage(int unstagedCount) =>
-        Resources.InstanceWorkspacePage_GitRestoreConfirmationMessage.Replace("{0}", unstagedCount.ToString());
+        LanguageManager.Instance.InstanceWorkspacePage_GitRestoreConfirmationMessage.Current().Replace("{0}", unstagedCount.ToString());
 
     private IEnumerable<string> ScanFolder(string folder, CancellationToken token)
     {
@@ -653,8 +652,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     [RelayCommand(CanExecute = nameof(CanAddImportEntry))]
     private async Task AddImportEntryAsync()
     {
-        var filePath = await _overlayService.RequestFileAsync(Resources.InstanceWorkspacePage_AddImportFilePrompt,
-                                                              Resources.InstanceWorkspacePage_AddImportFileTitle,
+        var filePath = await _overlayService.RequestFileAsync(LanguageManager.Instance.InstanceWorkspacePage_AddImportFilePrompt.Current(),
+                                                              LanguageManager.Instance.InstanceWorkspacePage_AddImportFileTitle.Current(),
                                                               GetPreferredImportPickerDirectoryPath());
         if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
         {
@@ -670,10 +669,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             var targetPath = Path.Combine(directory, fileName);
             if (FileHelper.IsPathEquivalent(filePath, targetPath))
             {
-                _notificationService.PopMessage(Resources
-                                                   .InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationMessage,
-                                                Resources
-                                                   .InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationTitle,
+                _notificationService.PopMessage(LanguageManager.Instance.InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationMessage.Current(),
+                                                LanguageManager.Instance.InstanceWorkspacePage_AddImportFileAlreadyExistsWarningNotificationTitle.Current(),
                                                 GrowlLevel.Warning);
                 return;
             }
@@ -682,11 +679,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             if (File.Exists(targetPath))
             {
                 overwrite =
-                    await _overlayService.RequestConfirmationAsync(Resources
-                                                                  .InstanceWorkspacePage_AddImportFileOverwriteConfirmationMessage
+                    await _overlayService.RequestConfirmationAsync(LanguageManager.Instance.InstanceWorkspacePage_AddImportFileOverwriteConfirmationMessage.Current()
                                                                   .Replace("{0}", fileName),
-                                                                   Resources
-                                                                      .InstanceWorkspacePage_AddImportFileOverwriteConfirmationTitle);
+                                                                   LanguageManager.Instance.InstanceWorkspacePage_AddImportFileOverwriteConfirmationTitle.Current());
                 if (!overwrite)
                 {
                     return;
@@ -701,9 +696,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                                                                        targetPath),
                                                                    StringComparison.OrdinalIgnoreCase));
 
-            _notificationService.PopMessage(Resources.InstanceWorkspacePage_AddImportFileSuccessNotificationMessage
+            _notificationService.PopMessage(LanguageManager.Instance.InstanceWorkspacePage_AddImportFileSuccessNotificationMessage.Current()
                                                      .Replace("{0}", fileName),
-                                            Resources.InstanceWorkspacePage_AddImportFileSuccessNotificationTitle,
+                                            LanguageManager.Instance.InstanceWorkspacePage_AddImportFileSuccessNotificationTitle.Current(),
                                             GrowlLevel.Success);
         }
         catch (Exception ex)
@@ -744,14 +739,11 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
 
         var confirmed =
-            await _overlayService.RequestConfirmationAsync(Resources
-                                                          .InstanceWorkspacePage_RemoveImportEntryConfirmationMessage
+            await _overlayService.RequestConfirmationAsync(LanguageManager.Instance.InstanceWorkspacePage_RemoveImportEntryConfirmationMessage.Current()
                                                           .Replace("{0}", model.Name),
                                                            model.IsDirectory
-                                                               ? Resources
-                                                                  .InstanceWorkspacePage_RemoveImportDirectoryConfirmationTitle
-                                                               : Resources
-                                                                  .InstanceWorkspacePage_RemoveImportFileConfirmationTitle);
+                                                               ? LanguageManager.Instance.InstanceWorkspacePage_RemoveImportDirectoryConfirmationTitle.Current()
+                                                               : LanguageManager.Instance.InstanceWorkspacePage_RemoveImportFileConfirmationTitle.Current());
         if (!confirmed)
         {
             return;
@@ -770,9 +762,9 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
             SelectedImportEntry = null;
             await RefreshImportAsync();
-            _notificationService.PopMessage(Resources.InstanceWorkspacePage_RemoveImportEntrySuccessNotificationMessage
+            _notificationService.PopMessage(LanguageManager.Instance.InstanceWorkspacePage_RemoveImportEntrySuccessNotificationMessage.Current()
                                                      .Replace("{0}", model.Name),
-                                            Resources.InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle,
+                                            LanguageManager.Instance.InstanceWorkspacePage_RemoveImportEntrySuccessNotificationTitle.Current(),
                                             GrowlLevel.Success);
         }
         catch (Exception ex)
@@ -789,8 +781,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         if (model != null)
         {
             if (model.FileSizeRaw > 1024 * 1024 * 1024
-             && !await _overlayService.RequestConfirmationAsync(Resources
-                                                                   .InstanceWorkspacePage_LargeDiffConfirmationMessage))
+             && !await _overlayService.RequestConfirmationAsync(LanguageManager.Instance.InstanceWorkspacePage_LargeDiffConfirmationMessage.Current()))
             {
                 // 文件大且用户拒绝
                 return;
@@ -811,7 +802,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        if (!await _overlayService.RequestConfirmationAsync(Resources.InstanceWorkspacePage_StageConfirmationMessage))
+        if (!await _overlayService.RequestConfirmationAsync(LanguageManager.Instance.InstanceWorkspacePage_StageConfirmationMessage.Current()))
         {
             return;
         }
@@ -827,7 +818,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, Resources.InstanceWorkspacePage_FileStagingDangerNotificationTitle);
+                _notificationService.PopMessage(ex, LanguageManager.Instance.InstanceWorkspacePage_FileStagingDangerNotificationTitle.Current());
             }
         }
         else
@@ -840,7 +831,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, Resources.InstanceWorkspacePage_FileStagingDangerNotificationTitle);
+                _notificationService.PopMessage(ex, LanguageManager.Instance.InstanceWorkspacePage_FileStagingDangerNotificationTitle.Current());
             }
         }
 
@@ -861,7 +852,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
-        if (!await _overlayService.RequestConfirmationAsync(Resources.InstanceWorkspacePage_RestoreConfirmationMessage))
+        if (!await _overlayService.RequestConfirmationAsync(LanguageManager.Instance.InstanceWorkspacePage_RestoreConfirmationMessage.Current()))
         {
             return;
         }
@@ -885,7 +876,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             }
             catch (Exception ex)
             {
-                _notificationService.PopMessage(ex, Resources.InstanceWorkspacePage_FileStagingDangerNotificationTitle);
+                _notificationService.PopMessage(ex, LanguageManager.Instance.InstanceWorkspacePage_FileStagingDangerNotificationTitle.Current());
             }
         }
 
@@ -900,26 +891,23 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     [RelayCommand(CanExecute = nameof(CanCommitGit))]
     private async Task CommitGit() =>
-        await RunGitOperationAsync(Resources.InstanceWorkspacePage_GitCommitDangerNotificationTitle,
+        await RunGitOperationAsync(LanguageManager.Instance.InstanceWorkspacePage_GitCommitDangerNotificationTitle.Current(),
                                    async repository =>
                                    {
                                        var signature = repository.Config.BuildSignature(DateTimeOffset.Now);
                                        if (signature is null)
                                        {
-                                           _notificationService.PopMessage(Resources
-                                                                              .InstanceWorkspacePage_GitCommitNoIdentityWarningNotificationMessage,
-                                                                           Resources
-                                                                              .InstanceWorkspacePage_GitCommitDangerNotificationTitle,
+                                           _notificationService.PopMessage(LanguageManager.Instance.InstanceWorkspacePage_GitCommitNoIdentityWarningNotificationMessage.Current(),
+                                                                           LanguageManager.Instance.InstanceWorkspacePage_GitCommitDangerNotificationTitle.Current(),
                                                                            GrowlLevel.Warning);
                                            return;
                                        }
 
                                        var message =
                                            await Dispatcher.UIThread.InvokeAsync(async () =>
-                                               await _overlayService.RequestInputAsync(Resources
-                                                      .InstanceWorkspacePage_GitCommitPrompt,
-                                                   Resources.InstanceWorkspacePage_GitCommitPromptTitle,
-                                                   Resources.InstanceWorkspacePage_GitCommitDefaultMessage
+                                               await _overlayService.RequestInputAsync(LanguageManager.Instance.InstanceWorkspacePage_GitCommitPrompt.Current(),
+                                                   LanguageManager.Instance.InstanceWorkspacePage_GitCommitPromptTitle.Current(),
+                                                   LanguageManager.Instance.InstanceWorkspacePage_GitCommitDefaultMessage.Current()
                                                             .Replace("{0}", Basic.Name),
                                                    true));
                                        if (message is null)
@@ -930,10 +918,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                                        var trimmedMessage = message.Trim();
                                        if (string.IsNullOrEmpty(trimmedMessage))
                                        {
-                                           _notificationService.PopMessage(Resources
-                                                                              .InstanceWorkspacePage_GitCommitEmptyWarningNotificationMessage,
-                                                                           Resources
-                                                                              .InstanceWorkspacePage_GitCommitDangerNotificationTitle,
+                                           _notificationService.PopMessage(LanguageManager.Instance.InstanceWorkspacePage_GitCommitEmptyWarningNotificationMessage.Current(),
+                                                                           LanguageManager.Instance.InstanceWorkspacePage_GitCommitDangerNotificationTitle.Current(),
                                                                            GrowlLevel.Warning);
                                            return;
                                        }
@@ -949,21 +935,17 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                                                   .ToArray();
                                        if (paths.Length == 0)
                                        {
-                                           _notificationService.PopMessage(Resources
-                                                                              .InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage,
-                                                                           Resources
-                                                                              .InstanceWorkspacePage_GitCommitPromptTitle);
+                                           _notificationService.PopMessage(LanguageManager.Instance.InstanceWorkspacePage_GitCommitNoChangesInformationNotificationMessage.Current(),
+                                                                           LanguageManager.Instance.InstanceWorkspacePage_GitCommitPromptTitle.Current());
                                            return;
                                        }
 
                                        Commands.Stage(repository, paths);
 
                                        var commit = repository.Commit(trimmedMessage, signature, signature);
-                                       _notificationService.PopMessage(Resources
-                                                                      .InstanceWorkspacePage_GitCommitSuccessNotificationMessage
+                                       _notificationService.PopMessage(LanguageManager.Instance.InstanceWorkspacePage_GitCommitSuccessNotificationMessage.Current()
                                                                       .Replace("{0}", commit.Sha[..7]),
-                                                                       Resources
-                                                                          .InstanceWorkspacePage_GitCommitSuccessNotificationTitle,
+                                                                       LanguageManager.Instance.InstanceWorkspacePage_GitCommitSuccessNotificationTitle.Current(),
                                                                        GrowlLevel.Success);
                                    });
 
@@ -973,13 +955,12 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     private async Task RestoreGitChanges()
     {
         if (!await _overlayService.RequestConfirmationAsync(BuildRestoreConfirmationMessage(GitUnstagedCount),
-                                                            Resources
-                                                               .InstanceWorkspacePage_GitRestoreConfirmationTitle))
+                                                            LanguageManager.Instance.InstanceWorkspacePage_GitRestoreConfirmationTitle.Current()))
         {
             return;
         }
 
-        await RunGitOperationAsync(Resources.InstanceWorkspacePage_GitRestoreDangerNotificationTitle,
+        await RunGitOperationAsync(LanguageManager.Instance.InstanceWorkspacePage_GitRestoreDangerNotificationTitle.Current(),
                                    repository =>
                                    {
                                        var status = repository.RetrieveStatus(new StatusOptions
@@ -1022,10 +1003,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                                            DeleteWorkingTreeEntry(repository.Info.WorkingDirectory, relativePath);
                                        }
 
-                                       _notificationService.PopMessage(Resources
-                                                                          .InstanceWorkspacePage_GitRestoreSuccessNotificationMessage,
-                                                                       Resources
-                                                                          .InstanceWorkspacePage_GitRestoreSuccessNotificationTitle,
+                                       _notificationService.PopMessage(LanguageManager.Instance.InstanceWorkspacePage_GitRestoreSuccessNotificationMessage.Current(),
+                                                                       LanguageManager.Instance.InstanceWorkspacePage_GitRestoreSuccessNotificationTitle.Current(),
                                                                        GrowlLevel.Success);
                                        return Task.CompletedTask;
                                    });

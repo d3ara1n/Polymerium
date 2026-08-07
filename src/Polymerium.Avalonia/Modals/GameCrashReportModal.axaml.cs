@@ -21,7 +21,6 @@ using Polymerium.Avalonia.Utilities;
 using Refit;
 using TridentCore.Core.Clients;
 using TridentCore.Core.Models.MclogsApi;
-using AppResources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Modals;
 
@@ -60,8 +59,7 @@ public partial class GameCrashReportModal : Modal
 
         await TopLevelHelper.CopyToClipboardAsync(TopLevel.GetTopLevel(this),
                                                   text,
-                                                  AppResources
-                                                     .GameCrashReportModal_CopyCrashReportDangerNotificationTitle,
+                                                  LanguageManager.Instance.GameCrashReportModal_CopyCrashReportDangerNotificationTitle.Current(),
                                                   _notificationService);
     }
 
@@ -72,7 +70,7 @@ public partial class GameCrashReportModal : Modal
         {
             return TopLevelHelper.LaunchFileInfoAsync(TopLevel.GetTopLevel(this),
                                                       new(Report.LogFilePath),
-                                                      AppResources.Shared_FailedToOpenLogFileDangerNotificationTitle,
+                                                      LanguageManager.Instance.Shared_FailedToOpenLogFileDangerNotificationTitle.Current(),
                                                       _notificationService);
         }
 
@@ -86,8 +84,7 @@ public partial class GameCrashReportModal : Modal
         {
             return TopLevelHelper.LaunchFileInfoAsync(TopLevel.GetTopLevel(this),
                                                       new(Report.CrashReportPath),
-                                                      AppResources
-                                                         .GameCrashReportModal_OpenCrashReportDangerNotificationTitle,
+                                                      LanguageManager.Instance.GameCrashReportModal_OpenCrashReportDangerNotificationTitle.Current(),
                                                       _notificationService);
         }
 
@@ -101,8 +98,7 @@ public partial class GameCrashReportModal : Modal
         {
             return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(this),
                                                            new(Report.GameDirectory),
-                                                           AppResources
-                                                              .GameCrashReportModal_OpenGameDirectoryDangerNotificationTitle,
+                                                           LanguageManager.Instance.GameCrashReportModal_OpenGameDirectoryDangerNotificationTitle.Current(),
                                                            _notificationService);
         }
 
@@ -129,8 +125,7 @@ public partial class GameCrashReportModal : Modal
             var file = await top.StorageProvider.SaveFilePickerAsync(new()
             {
                 Title =
-                    AppResources
-                       .GameCrashReportModal_ExportDialogTitle,
+                    LanguageManager.Instance.GameCrashReportModal_ExportDialogTitle.Current(),
                 SuggestedFileName = fileName,
                 SuggestedStartLocation =
                     await top.StorageProvider
@@ -139,8 +134,7 @@ public partial class GameCrashReportModal : Modal
                 DefaultExtension = "zip",
                 FileTypeChoices =
                 [
-                    new(AppResources
-                           .Shared_ZipArchiveFileTypeText)
+                    new(LanguageManager.Instance.Shared_ZipArchiveFileTypeText.Current())
                     {
                         Patterns = ["*.zip"]
                     }
@@ -241,8 +235,8 @@ public partial class GameCrashReportModal : Modal
         var crashReportContent = GetCrashReportContentForAiExport();
         if (string.IsNullOrWhiteSpace(logContent) && string.IsNullOrWhiteSpace(crashReportContent))
         {
-            _notificationService?.PopMessage(AppResources.GameCrashReportModal_AiExportLogUnavailableMessage,
-                                             AppResources.GameCrashReportModal_AiExportLogUnavailableTitle,
+            _notificationService?.PopMessage(LanguageManager.Instance.GameCrashReportModal_AiExportLogUnavailableMessage.Current(),
+                                             LanguageManager.Instance.GameCrashReportModal_AiExportLogUnavailableTitle.Current(),
                                              GrowlLevel.Danger);
             return;
         }
@@ -252,8 +246,8 @@ public partial class GameCrashReportModal : Modal
             CreateLogResponse? crashReportUpload = null;
             CreateLogResponse? logUpload = null;
             using (var uploadProgress =
-                   _notificationService?.PopProgress(AppResources.GameCrashReportModal_AiExportUploadingMessage,
-                                                     AppResources.GameCrashReportModal_AiExportUploadingTitle))
+                   _notificationService?.PopProgress(LanguageManager.Instance.GameCrashReportModal_AiExportUploadingMessage.Current(),
+                                                     LanguageManager.Instance.GameCrashReportModal_AiExportUploadingTitle.Current()))
             {
                 if (!string.IsNullOrWhiteSpace(crashReportContent))
                 {
@@ -270,8 +264,8 @@ public partial class GameCrashReportModal : Modal
             {
                 _notificationService?.PopMessage(crashReportUpload?.Error
                                               ?? logUpload?.Error
-                                              ?? AppResources.GameCrashReportModal_AiExportUploadFailedMessage,
-                                                 AppResources.GameCrashReportModal_AiExportUploadFailedTitle,
+                                              ?? LanguageManager.Instance.GameCrashReportModal_AiExportUploadFailedMessage.Current(),
+                                                 LanguageManager.Instance.GameCrashReportModal_AiExportUploadFailedTitle.Current(),
                                                  GrowlLevel.Danger);
                 return;
             }
@@ -286,8 +280,7 @@ public partial class GameCrashReportModal : Modal
             var file = await top.StorageProvider.SaveFilePickerAsync(new()
             {
                 Title =
-                    AppResources
-                       .GameCrashReportModal_AiExportDialogTitle,
+                    LanguageManager.Instance.GameCrashReportModal_AiExportDialogTitle.Current(),
                 SuggestedFileName = fileName,
                 SuggestedStartLocation =
                     await top.StorageProvider
@@ -312,8 +305,8 @@ public partial class GameCrashReportModal : Modal
             try
             {
                 exportProgress =
-                    _notificationService?.PopProgress(AppResources.GameCrashReportModal_AiExportWritingMessage,
-                                                      AppResources.GameCrashReportModal_AiExportWritingTitle);
+                    _notificationService?.PopProgress(LanguageManager.Instance.GameCrashReportModal_AiExportWritingMessage.Current(),
+                                                      LanguageManager.Instance.GameCrashReportModal_AiExportWritingTitle.Current());
 
                 await using var stream = await file.OpenWriteAsync();
                 await using var writer = new StreamWriter(stream, new UTF8Encoding(false));
@@ -324,15 +317,15 @@ public partial class GameCrashReportModal : Modal
                 exportProgress?.Dispose();
             }
 
-            _notificationService?.PopMessage(AppResources.GameCrashReportModal_AiExportSuccessMessage,
-                                             AppResources.GameCrashReportModal_AiExportSuccessTitle,
+            _notificationService?.PopMessage(LanguageManager.Instance.GameCrashReportModal_AiExportSuccessMessage.Current(),
+                                             LanguageManager.Instance.GameCrashReportModal_AiExportSuccessTitle.Current(),
                                              GrowlLevel.Success,
                                              true);
         }
         catch (Exception ex)
         {
             _notificationService?.PopMessage(Program.IsDebug ? ex.ToString() : ex.Message,
-                                             AppResources.GameCrashReportModal_AiExportFailedTitle,
+                                             LanguageManager.Instance.GameCrashReportModal_AiExportFailedTitle.Current(),
                                              GrowlLevel.Danger);
         }
     }

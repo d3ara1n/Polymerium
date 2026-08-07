@@ -17,7 +17,6 @@ using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using Polymerium.Avalonia.Widgets;
@@ -77,7 +76,7 @@ public partial class InstancePageModel : ViewModelBase, IStatefulViewModel<Insta
         else
         {
             throw new PageNotReachedException(typeof(InstancePage),
-                                              Resources.InstancePage_KeyNotFoundExceptionMessage.Replace("{0}", key));
+                                              LanguageManager.Instance.InstancePage_KeyNotFoundExceptionMessage.Current().Replace("{0}", key));
         }
     }
 
@@ -148,8 +147,7 @@ public partial class InstancePageModel : ViewModelBase, IStatefulViewModel<Insta
                                                              .EditPackage,
                                     New = pref
                                 });
-                                _notificationService.PopMessage(Resources
-                                                               .InstancePage_ImportPackageSuccessNotificationMessage
+                                _notificationService.PopMessage(LanguageManager.Instance.InstancePage_ImportPackageSuccessNotificationMessage.Current()
                                                                .Replace("{0}", package.Package.ProjectName)
                                                                .Replace("{1}", package.Package.ProjectId),
                                                                 guard.Key,
@@ -157,12 +155,10 @@ public partial class InstancePageModel : ViewModelBase, IStatefulViewModel<Insta
                             }
                             else
                             {
-                                _notificationService.PopMessage(Resources
-                                                               .InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage
+                                _notificationService.PopMessage(LanguageManager.Instance.InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage.Current()
                                                                .Replace("{0}", package.Package.ProjectName)
                                                                .Replace("{1}", package.Package.ProjectId),
-                                                                Resources
-                                                                   .InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle,
+                                                                LanguageManager.Instance.InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle.Current(),
                                                                 GrowlLevel.Danger,
                                                                 thumbnail: package.Thumbnail);
                             }
@@ -186,7 +182,7 @@ public partial class InstancePageModel : ViewModelBase, IStatefulViewModel<Insta
                         }
 
                         File.Copy(persist.Path, target, false);
-                        _notificationService.PopMessage(Resources.InstancePage_ImportFileSuccessNotificationMessage
+                        _notificationService.PopMessage(LanguageManager.Instance.InstancePage_ImportFileSuccessNotificationMessage.Current()
                                                                  .Replace("{0}", target),
                                                         Basic.Key,
                                                         thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
@@ -194,11 +190,9 @@ public partial class InstancePageModel : ViewModelBase, IStatefulViewModel<Insta
                     else
                     {
                         var relative = Path.GetRelativePath(PathDef.Default.DirectoryOfHome(Basic.Key), target);
-                        _notificationService.PopMessage(Resources
-                                                       .InstancePage_ImportFileAlreadyExistsDangerNotificationMessage
+                        _notificationService.PopMessage(LanguageManager.Instance.InstancePage_ImportFileAlreadyExistsDangerNotificationMessage.Current()
                                                        .Replace("{0}", relative),
-                                                        Resources
-                                                           .InstancePage_ImportFileAlreadyExistsDangerNotificationTitle,
+                                                        LanguageManager.Instance.InstancePage_ImportFileAlreadyExistsDangerNotificationTitle.Current(),
                                                         GrowlLevel.Danger,
                                                         thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
                     }
@@ -286,23 +280,23 @@ public partial class InstancePageModel : ViewModelBase, IStatefulViewModel<Insta
     public ObservableCollection<InstanceSubpageEntryModel> PageEntries { get; } =
     [
         // Home
-        new(typeof(InstanceHomePage), Symbol.Home, Resources.InstancePage_HomePageText),
+        new(typeof(InstanceHomePage), Symbol.Home, "InstancePage_HomePageText"),
         // Dashboard
-        new(typeof(InstanceDashboardPage), Symbol.PulseSquare, Resources.InstancePage_DashboardPageText),
+        new(typeof(InstanceDashboardPage), Symbol.PulseSquare, "InstancePage_DashboardPageText"),
         // Setup
-        new(typeof(InstanceSetupPage), Symbol.Apps, Resources.InstancePage_SetupPageText),
+        new(typeof(InstanceSetupPage), Symbol.Apps, "InstancePage_SetupPageText"),
         // Files
-        new(typeof(InstanceFilesPage), Symbol.DocumentFolder, Resources.InstancePage_FilesPageText),
+        new(typeof(InstanceFilesPage), Symbol.DocumentFolder, "InstancePage_FilesPageText"),
         // Workspace
-        new(typeof(InstanceWorkspacePage), Symbol.ArrowSyncCircle, Resources.InstancePage_WorkspacePageText),
+        new(typeof(InstanceWorkspacePage), Symbol.ArrowSyncCircle, "InstancePage_WorkspacePageText"),
         // Widgets
-        new(typeof(InstanceWidgetsPage), Symbol.AppFolder, Resources.InstancePage_WidgetsPageText),
+        new(typeof(InstanceWidgetsPage), Symbol.AppFolder, "InstancePage_WidgetsPageText"),
         // Statistics
-        new(typeof(InstanceActivitiesPage), Symbol.DataArea, Resources.InstancePage_StatisticsPageText),
+        new(typeof(InstanceActivitiesPage), Symbol.DataArea, "InstancePage_StatisticsPageText"),
         // Storage
-        new(typeof(InstanceStoragePage), Symbol.ChartMultiple, Resources.InstancePage_StoragePageText),
+        new(typeof(InstanceStoragePage), Symbol.ChartMultiple, "InstancePage_StoragePageText"),
         // Properties
-        new(typeof(InstancePropertiesPage), Symbol.Wrench, Resources.InstancePage_PropertiesPageText)
+        new(typeof(InstancePropertiesPage), Symbol.Wrench, "InstancePage_PropertiesPageText")
     ];
 
     [ObservableProperty]

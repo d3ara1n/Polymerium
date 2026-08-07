@@ -7,7 +7,6 @@ using Huskui.Avalonia.Controls;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Services;
 using Velopack;
-using AppResources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Modals;
 
@@ -55,7 +54,7 @@ public partial class AppUpdateModal : Modal
         catch (Exception ex)
         {
             IsDownloading = false;
-            NotificationService.PopMessage(ex, AppResources.AppUpdateModal_DownloadUpdateDangerNotificationTitle);
+            NotificationService.PopMessage(ex, LanguageManager.Instance.AppUpdateModal_DownloadUpdateDangerNotificationTitle.Current());
         }
     }
 

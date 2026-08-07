@@ -5,7 +5,6 @@
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="400"
     d:DesignWidth="480"
@@ -36,11 +35,11 @@
                 HorizontalAlignment="Center"
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.OobeFeatures_Title}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.OobeFeatures_Title}}" />
             <TextBlock
                 HorizontalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.OobeFeatures_Subtitle}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.OobeFeatures_Subtitle}}" />
         </StackPanel>
 
         <!--  Feature Cards Grid  -->

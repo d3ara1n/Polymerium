@@ -7,7 +7,6 @@
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -20,7 +19,7 @@
             <TextBlock
                 Grid.Column="0"
                 VerticalAlignment="Center"
-                Text="{x:Static lang:Resources.RecipesPage_Title}"
+                Text="{Translate {x:Static app:LanguageManager+Keys.RecipesPage_Title}}"
                 Theme="{StaticResource PageHeaderTextBlockTheme}" />
             <StackPanel
                 Grid.Column="1"
@@ -30,14 +29,14 @@
                 <Button Command="{Binding ImportCommand}">
                     <husk:IconLabel
                         Icon="ArrowImport"
-                        Text="{x:Static lang:Resources.RecipesPage_ImportButtonText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.RecipesPage_ImportButtonText}}" />
                 </Button>
                 <Button
                     Classes="Primary"
                     Command="{Binding NewCommand}">
                     <husk:IconLabel
                         Icon="Add"
-                        Text="{x:Static lang:Resources.RecipesPage_NewButtonText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.RecipesPage_NewButtonText}}" />
                 </Button>
             </StackPanel>
         </Grid>
@@ -57,18 +56,18 @@
                 <TextBlock
                     HorizontalAlignment="Center"
                     FontSize="{StaticResource LargeFontSize}"
-                    Text="{x:Static lang:Resources.RecipesPage_EmptyTitleText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.RecipesPage_EmptyTitleText}}" />
                 <TextBlock
                     HorizontalAlignment="Center"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.RecipesPage_EmptySubtitleText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.RecipesPage_EmptySubtitleText}}" />
                 <Button
                     Classes="Primary"
                     HorizontalAlignment="Center"
                     Command="{Binding NewCommand}">
                     <husk:IconLabel
                         Icon="Add"
-                        Text="{x:Static lang:Resources.RecipesPage_NewButtonText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.RecipesPage_NewButtonText}}" />
                 </Button>
             </StackPanel>
             <ScrollViewer IsVisible="{Binding Items.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}">
@@ -121,7 +120,7 @@
                                                 VerticalAlignment="Center"
                                                 FontSize="{StaticResource SmallFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.RecipesPage_ItemCountSuffix}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.RecipesPage_ItemCountSuffix}}" />
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>
@@ -130,19 +129,19 @@
                                         <MenuItem
                                             Command="{Binding $parent[app:RecipesPage].((app:RecipesPageModel)DataContext).OpenCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}"
-                                            Header="{x:Static lang:Resources.RecipesPage_OpenMenuText}"
+                                            Header="{Translate {x:Static app:LanguageManager+Keys.RecipesPage_OpenMenuText}}"
                                             Icon="{fie:SymbolIcon Symbol=Open,
                                                                   FontSize={StaticResource MediumFontSize}}" />
                                         <MenuItem
                                             Command="{Binding $parent[app:RecipesPage].((app:RecipesPageModel)DataContext).EditCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}"
-                                            Header="{x:Static lang:Resources.RecipesPage_EditMenuText}"
+                                            Header="{Translate {x:Static app:LanguageManager+Keys.RecipesPage_EditMenuText}}"
                                             Icon="{fie:SymbolIcon Symbol=Edit,
                                                                   FontSize={StaticResource MediumFontSize}}" />
                                         <MenuItem
                                             Command="{Binding $parent[app:RecipesPage].((app:RecipesPageModel)DataContext).ExportCommand, FallbackValue={x:Null}}"
                                             CommandParameter="{Binding}"
-                                            Header="{x:Static lang:Resources.RecipesPage_ExportMenuText}"
+                                            Header="{Translate {x:Static app:LanguageManager+Keys.RecipesPage_ExportMenuText}}"
                                             Icon="{fie:SymbolIcon Symbol=ArrowExport,
                                                                   FontSize={StaticResource MediumFontSize}}" />
                                         <MenuItem Header="-" />
@@ -152,7 +151,7 @@
                                             <MenuItem.Header>
                                                 <TextBlock
                                                     Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.RecipesPage_DeleteMenuText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.RecipesPage_DeleteMenuText}}" />
                                             </MenuItem.Header>
                                             <MenuItem.Icon>
                                                 <fi:SymbolIcon

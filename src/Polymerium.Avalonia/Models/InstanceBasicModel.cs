@@ -2,7 +2,6 @@ using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Facilities;
-using Polymerium.Avalonia.Properties;
 using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Utilities;
 
@@ -43,7 +42,7 @@ public partial class InstanceBasicModel : ModelBase
     public partial string Version { get; set; }
 
     [ObservableProperty]
-    public partial string LoaderLabel { get; set; } = Resources.Enum_Vanilla;
+    public partial string LoaderLabel { get; set; } = "Enum_Vanilla";
 
     [ObservableProperty]
     public partial string SourceLabel { get; set; } = "local";
@@ -73,7 +72,7 @@ public partial class InstanceBasicModel : ModelBase
         }
         else
         {
-            LoaderLabel = Resources.Enum_Vanilla;
+            LoaderLabel = "Enum_Vanilla";
         }
     }
 

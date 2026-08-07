@@ -12,7 +12,6 @@ using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
@@ -111,7 +110,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         catch (Exception ex)
         {
             _notificationService.PopMessage(ex,
-                                            Resources.InstancePropertiesPage_ThumbnailSavingDangerNotificationTitle,
+                                            LanguageManager.Instance.InstancePropertiesPage_ThumbnailSavingDangerNotificationTitle.Current(),
                                             thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
         }
     }
@@ -138,14 +137,14 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         #region Update Overrides & Perferences
 
         JavaHomeOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_HOME);
-        JavaHomeWatermark = Resources.InstancePropertiesPage_JavaHomePlaceholder;
+        JavaHomeWatermark = LanguageManager.Instance.InstancePropertiesPage_JavaHomePlaceholder.Current();
         JavaMaxMemoryOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_MAX_MEMORY);
         JavaMaxMemoryWatermark = _configurationService.Value.GameJavaMaxMemory.ToString();
         JavaAdditionalArgumentsOverride = AccessOverrideString(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS);
         JavaAdditionalArgumentsWatermark =
             !string.IsNullOrEmpty(_configurationService.Value.GameJavaAdditionalArguments)
                 ? _configurationService.Value.GameJavaAdditionalArguments
-                : Resources.InstancePropertiesPage_JavaAdditionalArgumentsPlaceholder;
+                : LanguageManager.Instance.InstancePropertiesPage_JavaAdditionalArgumentsPlaceholder.Current();
         CommandWrapperOverride = AccessOverrideString(Profile.OVERRIDE_BEHAVIOR_COMMAND_WRAPPER);
         CommandWrapperWatermark = !string.IsNullOrEmpty(_configurationService.Value.GameCommandWrapper)
                                       ? _configurationService.Value.GameCommandWrapper
@@ -157,7 +156,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         BehaviorDeployFastMode = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE);
         BehaviorResolveDependency = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY);
         QuickConnectAddressOverride = AccessOverrideString(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER);
-        QuickConnectAddressWatermark = Resources.InstancePropertiesPage_QuickConnectPlaceholder;
+        QuickConnectAddressWatermark = LanguageManager.Instance.InstancePropertiesPage_QuickConnectPlaceholder.Current();
 
         #endregion
 
@@ -195,8 +194,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     {
         if (box != null)
         {
-            var path = await _overlayService.RequestFileAsync(Resources.InstancePropertiesPage_RequestJavaPrompt,
-                                                              Resources.InstancePropertiesPage_RequestJavaTitle);
+            var path = await _overlayService.RequestFileAsync(LanguageManager.Instance.InstancePropertiesPage_RequestJavaPrompt.Current(),
+                                                              LanguageManager.Instance.InstancePropertiesPage_RequestJavaTitle.Current());
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));
@@ -227,10 +226,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     [RelayCommand]
     private async Task DeleteInstanceAsync()
     {
-        if (!await _overlayService.RequestStrongConfirmationAsync(Resources
-                                                                     .InstancePropertiesPage_DeleteConfirmationMessage,
-                                                                  Resources
-                                                                     .InstancePropertiesPage_DeleteConfirmationTitle))
+        if (!await _overlayService.RequestStrongConfirmationAsync(LanguageManager.Instance.InstancePropertiesPage_DeleteConfirmationMessage.Current(),
+                                                                  LanguageManager.Instance.InstancePropertiesPage_DeleteConfirmationTitle.Current()))
         {
             return;
         }
@@ -260,10 +257,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     [RelayCommand]
     private async Task UnlockInstanceAsync()
     {
-        if (!await _overlayService.RequestStrongConfirmationAsync(Resources
-                                                                     .InstancePropertiesPage_UnlockConfirmationMessage,
-                                                                  Resources
-                                                                     .InstancePropertiesPage_UnlockConfirmationTitle))
+        if (!await _overlayService.RequestStrongConfirmationAsync(LanguageManager.Instance.InstancePropertiesPage_UnlockConfirmationMessage.Current(),
+                                                                  LanguageManager.Instance.InstancePropertiesPage_UnlockConfirmationTitle.Current()))
         {
             return;
         }
@@ -278,7 +273,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
             Kind = PersistenceService.ActionKind.Unlock,
             Old = oldSource
         });
-        _notificationService.PopMessage(Resources.InstancePropertiesPage_UnlockingSuccessNotificationMessage,
+        _notificationService.PopMessage(LanguageManager.Instance.InstancePropertiesPage_UnlockingSuccessNotificationMessage.Current(),
                                         Basic.Key,
                                         GrowlLevel.Success,
                                         thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
@@ -294,8 +289,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     [RelayCommand]
     private async Task SelectThumbnailAsync()
     {
-        var path = await _overlayService.RequestFileAsync(Resources.InstancePropertiesPage_RequestThumbnailPrompt,
-                                                          Resources.InstancePropertiesPage_RequestThumbnailTitle);
+        var path = await _overlayService.RequestFileAsync(LanguageManager.Instance.InstancePropertiesPage_RequestThumbnailPrompt.Current(),
+                                                          LanguageManager.Instance.InstancePropertiesPage_RequestThumbnailTitle.Current());
         if (path != null)
         {
             if (FileHelper.IsBitmapFile(path))
@@ -305,10 +300,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
             }
             else
             {
-                _notificationService.PopMessage(Resources
-                                                   .InstancePropertiesPage_ThumbnailSettingDangerNotificationMessage,
-                                                Resources
-                                                   .InstancePropertiesPage_ThumbnailSettingDangerNotificationTitle,
+                _notificationService.PopMessage(LanguageManager.Instance.InstancePropertiesPage_ThumbnailSettingDangerNotificationMessage.Current(),
+                                                LanguageManager.Instance.InstancePropertiesPage_ThumbnailSettingDangerNotificationTitle.Current(),
                                                 GrowlLevel.Warning,
                                                 thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
             }
@@ -318,8 +311,8 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     [RelayCommand]
     private async Task RenameInstance()
     {
-        var name = await _overlayService.RequestInputAsync(Resources.InstancePropertiesPage_RequestNamePrompt,
-                                                           Resources.InstancePropertiesPage_RequestNameTitle,
+        var name = await _overlayService.RequestInputAsync(LanguageManager.Instance.InstancePropertiesPage_RequestNamePrompt.Current(),
+                                                           LanguageManager.Instance.InstancePropertiesPage_RequestNameTitle.Current(),
                                                            Basic.Name);
         if (name != null && _owned != null && !string.Equals(name, Basic.Name))
         {

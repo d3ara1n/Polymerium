@@ -12,7 +12,6 @@ using Huskui.Avalonia.Controls;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Services;
 using TridentCore.Abstractions.Repositories;
-using AppResources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Dialogs;
 
@@ -144,7 +143,7 @@ public partial class AssetImporterDialog : Dialog
             {
                 Model = null;
                 NotificationService.PopMessage(ex,
-                                               AppResources.AssetImporterDialog_IdentifyFileDangerNotificationTitle);
+                                               LanguageManager.Instance.AssetImporterDialog_IdentifyFileDangerNotificationTitle.Current());
             });
         }
     }

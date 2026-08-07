@@ -7,7 +7,6 @@
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="600"
     d:DesignWidth="800"
@@ -30,7 +29,7 @@
                 Command="{Binding EditCommand}">
                 <husk:IconLabel
                     Icon="Edit"
-                    Text="{x:Static lang:Resources.RecipePage_EditButtonText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.RecipePage_EditButtonText}}" />
             </Button>
             <Button
                 Grid.Column="2"
@@ -38,7 +37,7 @@
                 Command="{Binding ExportCommand}">
                 <husk:IconLabel
                     Icon="ArrowExport"
-                    Text="{x:Static lang:Resources.RecipePage_ExportButtonText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.RecipePage_ExportButtonText}}" />
             </Button>
             <Button
                 Grid.Column="3"
@@ -47,7 +46,7 @@
                 Command="{Binding AddItemCommand}">
                 <husk:IconLabel
                     Icon="Add"
-                    Text="{x:Static lang:Resources.RecipePage_AddPackageButtonText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.RecipePage_AddPackageButtonText}}" />
             </Button>
         </Grid>
     </husk:Page.Header>
@@ -68,7 +67,7 @@
                 <TextBlock
                     FontSize="{StaticResource SmallFontSize}"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.RecipePage_NoDescriptionText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.RecipePage_NoDescriptionText}}" />
             </husk:SwitchCase>
         </husk:SwitchContainer>
         <Grid
@@ -78,7 +77,7 @@
             <TextBox
                 Grid.Column="0"
                 MinWidth="168"
-                PlaceholderText="{x:Static lang:Resources.RecipePage_SearchPlaceholderText}"
+                PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.RecipePage_SearchPlaceholderText}}"
                 Text="{Binding QueryText}">
                 <TextBox.InnerRightContent>
                     <Button
@@ -92,7 +91,7 @@
             <TextBlock Grid.Column="1">
                 <Run
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.RecipePage_PackageCountLabelText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.RecipePage_PackageCountLabelText}}" />
                 <LineBreak />
                 <Run Text="{Binding Items.Count, Mode=OneWay, FallbackValue=0}" />
                 <Run
@@ -110,7 +109,7 @@
                         Height="16"
                         HorizontalAlignment="Center"
                         IsIndeterminate="{Binding IsRefreshing}" />
-                    <TextBlock Text="{x:Static lang:Resources.Shared_FetchingLabelText}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.Shared_FetchingLabelText}}" />
                 </StackPanel>
                 <ComboBox
                     MinWidth="120"
@@ -118,7 +117,7 @@
                     SelectedItem="{Binding SelectedKind, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}, TargetNullValue={x:Static lang:Resources.RecipePage_KindFilterAllText}}" />
+                            <TextBlock Text="{app:LocalizedEnum {Binding}, TargetNullValue={Translate {x:Static app:LanguageManager+Keys.RecipePage_KindFilterAllText}}}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
@@ -148,13 +147,13 @@
                                         <MenuItem
                                             Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).EditItemTagsCommand}"
                                             CommandParameter="{Binding}"
-                                            Header="{x:Static lang:Resources.RecipeItemModal_EditTagsButtonText}"
+                                            Header="{Translate {x:Static app:LanguageManager+Keys.RecipeItemModal_EditTagsButtonText}}"
                                             Icon="{fie:SymbolIcon Symbol=Tag,
                                                                   FontSize={StaticResource MediumFontSize}}" />
                                         <MenuItem
                                             Command="{Binding $parent[app:RecipePage].((app:RecipePageModel)DataContext).EditItemNoteCommand}"
                                             CommandParameter="{Binding}"
-                                            Header="{x:Static lang:Resources.RecipePage_EditNoteMenuText}"
+                                            Header="{Translate {x:Static app:LanguageManager+Keys.RecipePage_EditNoteMenuText}}"
                                             Icon="{fie:SymbolIcon Symbol=Edit,
                                                                   FontSize={StaticResource MediumFontSize}}" />
                                         <MenuItem Header="-" />
@@ -164,7 +163,7 @@
                                             <MenuItem.Header>
                                                 <TextBlock
                                                     Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.RecipePage_RemoveItemMenuText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.RecipePage_RemoveItemMenuText}}" />
                                             </MenuItem.Header>
                                             <MenuItem.Icon>
                                                 <fi:SymbolIcon

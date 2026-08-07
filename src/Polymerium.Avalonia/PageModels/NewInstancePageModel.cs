@@ -13,7 +13,6 @@ using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using TridentCore.Abstractions;
 using TridentCore.Abstractions.FileModels;
@@ -77,7 +76,7 @@ public partial class NewInstancePageModel(
         }
         catch (Exception e)
         {
-            notificationService.PopMessage(e, Resources.NewInstancePage_ImportDangerNotificationTitle);
+            notificationService.PopMessage(e, LanguageManager.Instance.NewInstancePage_ImportDangerNotificationTitle.Current());
         }
     }
 
@@ -102,8 +101,8 @@ public partial class NewInstancePageModel(
     [RelayCommand]
     private async Task OpenImportDialog()
     {
-        var path = await overlayService.RequestFileAsync(Resources.NewInstancePage_RequestFilePrompt,
-                                                         Resources.NewInstancePage_RequestFileTitle);
+        var path = await overlayService.RequestFileAsync(LanguageManager.Instance.NewInstancePage_RequestFilePrompt.Current(),
+                                                         LanguageManager.Instance.NewInstancePage_RequestFileTitle.Current());
         if (path != null)
         {
             await TryImportFromFileAsync(path);
@@ -162,8 +161,7 @@ public partial class NewInstancePageModel(
             catch (Exception ex)
             {
                 Dispatcher.UIThread.Post(() => notificationService.PopMessage(ex,
-                                                                              Resources
-                                                                                 .NewInstancePage_IconSavingDangerNotificationTitle));
+                                                                              LanguageManager.Instance.NewInstancePage_IconSavingDangerNotificationTitle.Current()));
             }
         }
 

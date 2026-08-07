@@ -9,7 +9,6 @@ using Polymerium.Avalonia.Exceptions;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Repositories;
@@ -62,7 +61,7 @@ public sealed class InstanceExplorerSession : ExplorerSession
         if (!_profileManager.TryGetImmutable(_key, out var profile))
         {
             throw new PageNotReachedException(typeof(ExplorerPage),
-                                              Resources.InstancePage_KeyNotFoundExceptionMessage.Replace("{0}", _key));
+                                              LanguageManager.Instance.InstancePage_KeyNotFoundExceptionMessage.Current().Replace("{0}", _key));
         }
 
         _profile = profile;

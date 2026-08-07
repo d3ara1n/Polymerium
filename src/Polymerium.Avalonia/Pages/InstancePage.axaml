@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Padding="0"
     d:DesignHeight="600"
@@ -114,11 +113,11 @@
                                     <Setter Property="ClipToBounds" Value="False" />
                                     <Setter Property="Template">
                                         <ControlTemplate>
-                                            <Panel
+                                            <Panel x:DataType="app:InstanceSubpageEntryModel"
                                                 Background="{StaticResource TransparentBrush}"
                                                 ToolTip.HorizontalOffset="5"
                                                 ToolTip.Placement="Right"
-                                                ToolTip.Tip="{Binding Label, RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:InstanceSubpageEntryModel}"
+                                                ToolTip.Tip="{app:LocalizedKey {Binding Label}}"
                                                 ToolTip.VerticalOffset="0">
                                                 <Border
                                                     Name="Indicator"
@@ -171,7 +170,7 @@
                                                         Margin="10,0,12,0"
                                                         VerticalAlignment="Center"
                                                         IsVisible="{Binding $parent[app:InstancePage].((app:InstancePageModel)DataContext).ViewState.IsSidebarExpanded, FallbackValue={x:False}}"
-                                                        Text="{Binding Label, RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:InstanceSubpageEntryModel}"
+                                                        Text="{app:LocalizedKey {Binding Label}}"
                                                         TextTrimming="CharacterEllipsis" />
                                                 </Grid>
                                             </Panel>
@@ -206,7 +205,7 @@
                             <Button
                                 HorizontalContentAlignment="Stretch"
                                 Command="{Binding ImportFromFileCommand}"
-                                ToolTip.Tip="{x:Static lang:Resources.InstancePage_ImportAssetToolTipText}">
+                                ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstancePage_ImportAssetToolTipText}}">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                                         <Binding
@@ -239,7 +238,7 @@
                                         VerticalAlignment="Center"
                                         IsVisible="{Binding ViewState?.IsSidebarExpanded, FallbackValue={x:False}}"
                                         FontSize="{StaticResource SmallFontSize}"
-                                        Text="{x:Static lang:Resources.InstancePage_ImportAssetLabelText}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstancePage_ImportAssetLabelText}}"
                                         TextTrimming="CharacterEllipsis" />
                                 </Grid>
                             </Button>
@@ -247,7 +246,7 @@
                                 HorizontalContentAlignment="Stretch"
                                 Command="{Binding ExportInstanceCommand}"
                                 CornerRadius="{StaticResource ExtraSmallCornerRadius}"
-                                ToolTip.Tip="{x:Static lang:Resources.InstancePage_ExportModpackToolTipText}">
+                                ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstancePage_ExportModpackToolTipText}}">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                                         <Binding
@@ -274,7 +273,7 @@
                                         VerticalAlignment="Center"
                                         IsVisible="{Binding ViewState?.IsSidebarExpanded, FallbackValue={x:False}}"
                                         FontSize="{StaticResource SmallFontSize}"
-                                        Text="{x:Static lang:Resources.InstancePage_ExportModpackLabelText}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstancePage_ExportModpackLabelText}}"
                                         TextTrimming="CharacterEllipsis" />
                                 </Grid>
                             </Button>
@@ -282,7 +281,7 @@
                                 HorizontalContentAlignment="Stretch"
                                 Command="{Binding ManageSnapshotsAsyncCommand, FallbackValue={x:Null}}"
                                 CornerRadius="{StaticResource ExtraSmallCornerRadius}"
-                                ToolTip.Tip="{x:Static lang:Resources.InstancePage_ManageSnapshotsToolTipText}">
+                                ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstancePage_ManageSnapshotsToolTipText}}">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
                                         <Binding
@@ -305,14 +304,14 @@
                                         VerticalAlignment="Center"
                                         IsVisible="{Binding ViewState?.IsSidebarExpanded, FallbackValue={x:False}}"
                                         FontSize="{StaticResource SmallFontSize}"
-                                        Text="{x:Static lang:Resources.InstancePage_ManageSnapshotsLabelText}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstancePage_ManageSnapshotsLabelText}}"
                                         TextTrimming="CharacterEllipsis" />
                                 </Grid>
                             </Button>
                             <Button
                                 HorizontalContentAlignment="Stretch"
                                 Command="{Binding OpenFolderCommand}"
-                                ToolTip.Tip="{x:Static lang:Resources.InstancePage_OpenFolderToolTipText}">
+                                ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstancePage_OpenFolderToolTipText}}">
                                 <Button.CornerRadius>
                                     <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.TopBottomCombinedMulti}">
                                         <StaticResource ResourceKey="ExtraSmallCornerRadius" />
@@ -333,7 +332,7 @@
                                         VerticalAlignment="Center"
                                         IsVisible="{Binding ViewState?.IsSidebarExpanded, FallbackValue={x:False}}"
                                         FontSize="{StaticResource SmallFontSize}"
-                                        Text="{x:Static lang:Resources.InstancePage_OpenFolderLabelText}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstancePage_OpenFolderLabelText}}"
                                         TextTrimming="CharacterEllipsis" />
                                 </Grid>
                             </Button>

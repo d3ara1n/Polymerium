@@ -13,7 +13,6 @@ using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Abstractions.Utilities;
-using AppResources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Toasts;
 
@@ -164,8 +163,7 @@ public partial class ExhibitModpackToast : Toast
             var rev = new Uri(url, UriKind.RelativeOrAbsolute);
             return TopLevelHelper.LaunchUriAsync(TopLevel.GetTopLevel(this),
                                                  rev.IsAbsoluteUri ? rev : new(Modpack.Reference, rev),
-                                                 AppResources
-                                                    .ExhibitModpackToast_OpenModpackLinkDangerNotificationTitle);
+                                                 LanguageManager.Instance.ExhibitModpackToast_OpenModpackLinkDangerNotificationTitle.Current());
         }
 
         return Task.CompletedTask;

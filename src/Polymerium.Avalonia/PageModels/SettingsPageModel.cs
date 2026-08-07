@@ -10,7 +10,6 @@ using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Velopack;
 
@@ -134,7 +133,7 @@ public partial class SettingsPageModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, Resources.SettingsPage_CheckUpdatesDangerNotificationTitle);
+            _notificationService.PopMessage(ex, LanguageManager.Instance.SettingsPage_CheckUpdatesDangerNotificationTitle.Current());
         }
 
         SyncUpdateState();
@@ -164,10 +163,8 @@ public partial class SettingsPageModel : ViewModelBase
     private async Task ClearStatisticsAsync()
     {
         var confirmed =
-            await OverlayService.RequestStrongConfirmationAsync(Resources
-                                                                   .SettingsPage_ClearStatisticsConfirmationMessage,
-                                                                Resources
-                                                                   .SettingsPage_ClearStatisticsConfirmationTitle);
+            await OverlayService.RequestStrongConfirmationAsync(LanguageManager.Instance.SettingsPage_ClearStatisticsConfirmationMessage.Current(),
+                                                                LanguageManager.Instance.SettingsPage_ClearStatisticsConfirmationTitle.Current());
         if (confirmed)
         {
             _persistenceService.ClearAllActivities();
@@ -178,8 +175,8 @@ public partial class SettingsPageModel : ViewModelBase
     private async Task ClearRecordsAsync()
     {
         var confirmed =
-            await OverlayService.RequestStrongConfirmationAsync(Resources.SettingsPage_ClearRecordsConfirmationMessage,
-                                                                Resources.SettingsPage_ClearRecordsConfirmationTitle);
+            await OverlayService.RequestStrongConfirmationAsync(LanguageManager.Instance.SettingsPage_ClearRecordsConfirmationMessage.Current(),
+                                                                LanguageManager.Instance.SettingsPage_ClearRecordsConfirmationTitle.Current());
         if (confirmed)
         {
             _persistenceService.ClearAllActions();
@@ -190,8 +187,8 @@ public partial class SettingsPageModel : ViewModelBase
     private async Task GarbageCollectAsync()
     {
         var confirmed =
-            await OverlayService.RequestConfirmationAsync(Resources.SettingsPage_GarbageCollectConfirmationMessage,
-                                                          Resources.SettingsPage_GarbageCollectConfirmationTitle);
+            await OverlayService.RequestConfirmationAsync(LanguageManager.Instance.SettingsPage_GarbageCollectConfirmationMessage.Current(),
+                                                          LanguageManager.Instance.SettingsPage_GarbageCollectConfirmationTitle.Current());
         if (!confirmed)
         {
             return;
@@ -199,8 +196,8 @@ public partial class SettingsPageModel : ViewModelBase
 
         var progress = new ProgressModal
         {
-            Title = Resources.SettingsPage_GarbageCollectProgressTitle,
-            StatusText = Resources.SettingsPage_GarbageCollectProgressScanningText,
+            Title = LanguageManager.Instance.SettingsPage_GarbageCollectProgressTitle.Current(),
+            StatusText = LanguageManager.Instance.SettingsPage_GarbageCollectProgressScanningText.Current(),
             IsIndeterminate = true
         };
         OverlayService.PopModal(progress);
@@ -210,7 +207,7 @@ public partial class SettingsPageModel : ViewModelBase
             if (v.HasValue)
             {
                 progress.IsIndeterminate = false;
-                progress.StatusText = Resources.SettingsPage_GarbageCollectProgressCleaningText;
+                progress.StatusText = LanguageManager.Instance.SettingsPage_GarbageCollectProgressCleaningText.Current();
                 progress.ProgressValue = (int)(v.Value * 100);
             }
             else
@@ -223,14 +220,14 @@ public partial class SettingsPageModel : ViewModelBase
         {
             await Task.Run(() => _garbageCollector.Execute(reporter));
             progress.Dismiss();
-            _notificationService.PopMessage(Resources.SettingsPage_GarbageCollectSuccessMessage,
-                                            Resources.SettingsPage_GarbageCollectSuccessTitle,
+            _notificationService.PopMessage(LanguageManager.Instance.SettingsPage_GarbageCollectSuccessMessage.Current(),
+                                            LanguageManager.Instance.SettingsPage_GarbageCollectSuccessTitle.Current(),
                                             GrowlLevel.Success);
         }
         catch (Exception ex)
         {
             progress.Dismiss();
-            _notificationService.PopMessage(ex, Resources.SettingsPage_GarbageCollectDangerTitle);
+            _notificationService.PopMessage(ex, LanguageManager.Instance.SettingsPage_GarbageCollectDangerTitle.Current());
         }
     }
 
@@ -347,11 +344,11 @@ public partial class SettingsPageModel : ViewModelBase
 
     public BackgroundStyleModel[] BackgroundStyles { get; } =
     [
-        new(0, Resources.SettingsPage_BackgroundStyleAutoText),
-        new(1, Resources.SettingsPage_BackgroundStyleMicaText, "Windows 11+"),
-        new(2, Resources.SettingsPage_BackgroundStyleAcrylicText, "Windows 10+/macOS"),
-        new(3, Resources.SettingsPage_BackgroundStyleBlurText, "Linux"),
-        new(4, Resources.SettingsPage_BackgroundStyleNoneText)
+        new(0, LanguageManager.Instance.SettingsPage_BackgroundStyleAutoText.Current()),
+        new(1, LanguageManager.Instance.SettingsPage_BackgroundStyleMicaText.Current(), "Windows 11+"),
+        new(2, LanguageManager.Instance.SettingsPage_BackgroundStyleAcrylicText.Current(), "Windows 10+/macOS"),
+        new(3, LanguageManager.Instance.SettingsPage_BackgroundStyleBlurText.Current(), "Linux"),
+        new(4, LanguageManager.Instance.SettingsPage_BackgroundStyleNoneText.Current())
     ];
 
     #endregion
@@ -375,7 +372,11 @@ public partial class SettingsPageModel : ViewModelBase
     [ObservableProperty]
     public partial LanguageModel Language { get; set; }
 
-    partial void OnLanguageChanged(LanguageModel value) => _configurationService.Value.ApplicationLanguage = value.Id;
+    partial void OnLanguageChanged(LanguageModel value)
+    {
+        _configurationService.Value.ApplicationLanguage = value.Id;
+        LanguageManager.Instance.UpdateCulture(CultureInfo.GetCultureInfo(value.Id));
+    }
 
     #endregion
 
@@ -519,10 +520,9 @@ public partial class SettingsPageModel : ViewModelBase
     private void UpdateProxyStatusText() =>
         ProxyStatusText = ProxyMode switch
         {
-            ProxyMode.Auto => Resources.SettingsPage_ProxyStatusAutoText,
-            ProxyMode.Disabled => Resources.SettingsPage_ProxyStatusDisabledText,
-            ProxyMode.Manual => Resources
-                               .SettingsPage_ProxyStatusManualText.Replace("{0}", ProxyProtocol.ToString().ToLower())
+            ProxyMode.Auto => LanguageManager.Instance.SettingsPage_ProxyStatusAutoText.Current(),
+            ProxyMode.Disabled => LanguageManager.Instance.SettingsPage_ProxyStatusDisabledText.Current(),
+            ProxyMode.Manual => LanguageManager.Instance.SettingsPage_ProxyStatusManualText.Current().Replace("{0}", ProxyProtocol.ToString().ToLower())
                                .Replace("{1}", ProxyAddress)
                                .Replace("{2}", ProxyPort.ToString()),
             _ => string.Empty

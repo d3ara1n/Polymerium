@@ -4,8 +4,7 @@
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:conv="clr-namespace:Polymerium.Avalonia.Converters"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
 
     <ControlTheme
         x:Key="{x:Type app:InstanceEntryButton}"
@@ -109,7 +108,7 @@
                                                 Width="6"
                                                 Height="6"
                                                 Fill="{Binding $parent[husk:Tag].Foreground}" />
-                                            <TextBlock Text="{x:Static lang:Resources.InstanceEntryButton_InstallTagText}" />
+                                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceEntryButton_InstallTagText}}" />
                                         </StackPanel>
                                     </husk:Tag>
                                     <husk:Tag
@@ -122,7 +121,7 @@
                                                 Width="6"
                                                 Height="6"
                                                 Fill="{Binding $parent[husk:Tag].Foreground}" />
-                                            <TextBlock Text="{x:Static lang:Resources.InstanceEntryButton_UpdatingTagText}" />
+                                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceEntryButton_UpdatingTagText}}" />
                                         </StackPanel>
                                     </husk:Tag>
                                     <husk:Tag
@@ -135,7 +134,7 @@
                                                 Width="6"
                                                 Height="6"
                                                 Fill="{Binding $parent[husk:Tag].Foreground}" />
-                                            <TextBlock Text="{x:Static lang:Resources.InstanceEntryButton_PreparingTagText}" />
+                                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceEntryButton_PreparingTagText}}" />
                                         </StackPanel>
                                     </husk:Tag>
                                     <husk:Tag
@@ -148,7 +147,7 @@
                                                 Width="6"
                                                 Height="6"
                                                 Fill="{Binding $parent[husk:Tag].Foreground}" />
-                                            <TextBlock Text="{x:Static lang:Resources.InstanceEntryButton_RunningTagText}" />
+                                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceEntryButton_RunningTagText}}" />
                                         </StackPanel>
                                     </husk:Tag>
                                     <StackPanel
@@ -157,7 +156,7 @@
                                         Spacing="8">
                                         <husk:Tag
                                             Classes="Status"
-                                            Content="{Binding Basic.LoaderLabel, FallbackValue=Unknown}" />
+                                            Content="{app:LocalizedKey {Binding Basic.LoaderLabel}, FallbackValue=Unknown}" />
                                         <husk:Tag
                                             Classes="Status"
                                             Content="{Binding Basic.Version, FallbackValue=Unknown}" />

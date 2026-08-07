@@ -7,7 +7,6 @@
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -35,17 +34,17 @@
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="{x:Static lang:Resources.InstanceWorkspacePage_GitBarTitleText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_GitBarTitleText}}" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceWorkspacePage_GitBarSubtitleText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_GitBarSubtitleText}}" />
                         </StackPanel>
                         <husk:Divider Orientation="Vertical" />
                         <StackPanel
                             VerticalAlignment="Center"
                             Spacing="2">
-                            <TextBlock Text="{x:Static lang:Resources.InstanceWorkspacePage_GitCommitSectionText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_GitCommitSectionText}}" />
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{Binding GitHeadSummary}" />
@@ -54,16 +53,16 @@
                         <StackPanel
                             VerticalAlignment="Center"
                             Spacing="2">
-                            <TextBlock Text="{x:Static lang:Resources.InstanceWorkspacePage_GitWorkingTreeSectionText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_GitWorkingTreeSectionText}}" />
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="8">
                                 <TextBlock Foreground="{StaticResource ControlSuccessForegroundBrush}">
-                                    <Run Text="{x:Static lang:Resources.InstanceWorkspacePage_GitStagedCountLabelText}" />
+                                    <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_GitStagedCountLabelText}}" />
                                     <Run Text="{Binding GitStagedCount}" />
                                 </TextBlock>
                                 <TextBlock Foreground="{StaticResource ControlDangerForegroundBrush}">
-                                    <Run Text="{x:Static lang:Resources.InstanceWorkspacePage_GitUnstagedCountLabelText}" />
+                                    <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_GitUnstagedCountLabelText}}" />
                                     <Run Text="{Binding GitUnstagedCount}" />
                                 </TextBlock>
                             </StackPanel>
@@ -72,7 +71,7 @@
                         <StackPanel
                             VerticalAlignment="Center"
                             Spacing="2">
-                            <TextBlock Text="{x:Static lang:Resources.InstanceWorkspacePage_GitSyncSectionText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_GitSyncSectionText}}" />
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="8">
@@ -97,18 +96,18 @@
                         <SplitButton
                             Classes="Primary"
                             Command="{Binding CommitGitCommand}"
-                            ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_GitCommitButtonToolTip}">
+                            ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_GitCommitButtonToolTip}}">
                             <husk:IconLabel
                                 Icon="Checkmark"
-                                Text="{x:Static lang:Resources.InstanceWorkspacePage_GitCommitButtonText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_GitCommitButtonText}}" />
                             <SplitButton.Flyout>
                                 <MenuFlyout>
                                     <MenuItem
                                         Command="{Binding RestoreGitChangesCommand}"
-                                        Header="{x:Static lang:Resources.InstanceWorkspacePage_GitRestoreMenuText}"
+                                        Header="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_GitRestoreMenuText}}"
                                         Icon="{fie:SymbolIcon Symbol=ArrowReset,
                                                               FontSize={StaticResource MediumFontSize}}"
-                                        ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_GitRestoreMenuToolTip}" />
+                                        ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_GitRestoreMenuToolTip}}" />
                                 </MenuFlyout>
                             </SplitButton.Flyout>
                         </SplitButton>
@@ -119,7 +118,7 @@
             <husk:InfoBar
                 Classes="Warning"
                 IsVisible="{Binding IsLocked}"
-                Content="{x:Static lang:Resources.InstanceWorkspacePage_LockedInfoBarText}" />
+                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_LockedInfoBarText}}" />
         </StackPanel>
         <TabControl>
             <TabItem>
@@ -128,10 +127,10 @@
                         Background="Transparent"
                         Orientation="Horizontal"
                         Spacing="4"
-                        ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_ChangesTabToolTip}">
+                        ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_ChangesTabToolTip}}">
                         <husk:IconLabel
                             Icon="DocumentLandscapeSplitHint"
-                            Text="{x:Static lang:Resources.InstanceWorkspacePage_ChangesTabText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_ChangesTabText}}" />
                     </StackPanel>
                 </TabItem.Header>
                 <Grid
@@ -148,10 +147,10 @@
                                 Command="{Binding RefreshChangesCommand}">
                                 <husk:IconLabel
                                     Icon="ArrowCounterclockwise"
-                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_RefreshButtonText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_RefreshButtonText}}" />
                             </Button>
                             <TextBox
-                                PlaceholderText="{x:Static lang:Resources.InstanceWorkspacePage_SearchPlaceholder}"
+                                PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_SearchPlaceholder}}"
                                 Text="{Binding FilterText, Mode=TwoWay}">
                                 <TextBox.InnerRightContent>
                                     <StackPanel Orientation="Horizontal">
@@ -196,25 +195,25 @@
                                                 <husk:SwitchCase Value="Same">
                                                     <husk:Tag
                                                         Classes="Primary"
-                                                        Content="{x:Static lang:Resources.InstanceWorkspacePage_SameTagText}" />
+                                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_SameTagText}}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="Outdated">
                                                     <husk:Tag
                                                         Classes="Warning"
-                                                        Content="{x:Static lang:Resources.InstanceWorkspacePage_OutdatedTagText}"
-                                                        ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_OutdatedTagToolTip}" />
+                                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_OutdatedTagText}}"
+                                                        ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_OutdatedTagToolTip}}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="Updated">
                                                     <husk:Tag
                                                         Classes="Success"
-                                                        Content="{x:Static lang:Resources.InstanceWorkspacePage_UpdatedTagText}"
-                                                        ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_UpdatedTagToolTip}" />
+                                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_UpdatedTagText}}"
+                                                        ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_UpdatedTagToolTip}}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="Deleted">
                                                     <husk:Tag
                                                         Classes="Danger"
-                                                        Content="{x:Static lang:Resources.InstanceWorkspacePage_DeletedTagText}"
-                                                        ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_DeletedTagToolTip}" />
+                                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_DeletedTagText}}"
+                                                        ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_DeletedTagToolTip}}" />
                                                 </husk:SwitchCase>
                                             </husk:SwitchContainer>
                                             <TextBlock
@@ -291,22 +290,22 @@
                                                             <husk:SwitchCase Value="Updated">
                                                                 <husk:Tag
                                                                     Classes="Success"
-                                                                    Content="{x:Static lang:Resources.InstanceWorkspacePage_UpdatedTagText}" />
+                                                                    Content="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_UpdatedTagText}}" />
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="Outdated">
                                                                 <husk:Tag
                                                                     Classes="Warning"
-                                                                    Content="{x:Static lang:Resources.InstanceWorkspacePage_OutdatedTagText}" />
+                                                                    Content="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_OutdatedTagText}}" />
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="Deleted">
                                                                 <husk:Tag
                                                                     Classes="Danger"
-                                                                    Content="{x:Static lang:Resources.InstanceWorkspacePage_DeletedTagText}" />
+                                                                    Content="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_DeletedTagText}}" />
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="Same">
                                                                 <husk:Tag
                                                                     Classes="Primary"
-                                                                    Content="{x:Static lang:Resources.InstanceWorkspacePage_SameTagText}" />
+                                                                    Content="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_SameTagText}}" />
                                                             </husk:SwitchCase>
                                                         </husk:SwitchContainer>
                                                     </WrapPanel>
@@ -318,7 +317,7 @@
                                             <StackPanel Spacing="12">
                                                 <TextBlock
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_QuickInfoTitle}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_QuickInfoTitle}}" />
                                                 <Grid
                                                     ColumnDefinitions="Auto,*"
                                                     ColumnSpacing="16"
@@ -328,7 +327,7 @@
                                                         Grid.Row="0"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceWorkspacePage_FileTypeLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_FileTypeLabelText}}" />
                                                     <TextBlock
                                                         Grid.Row="0"
                                                         Grid.Column="1"
@@ -338,7 +337,7 @@
                                                         Grid.Row="1"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceWorkspacePage_LastModifiedLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_LastModifiedLabelText}}" />
                                                     <TextBlock
                                                         Grid.Row="1"
                                                         Grid.Column="1">
@@ -355,7 +354,7 @@
                                                         Grid.Row="2"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceWorkspacePage_FileSizeLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_FileSizeLabelText}}" />
                                                     <TextBlock
                                                         Grid.Row="2"
                                                         Grid.Column="1"
@@ -368,7 +367,7 @@
                                             <StackPanel Spacing="10">
                                                 <TextBlock
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_SuggestedActionsTitle}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_SuggestedActionsTitle}}" />
                                                 <husk:SwitchContainer
                                                     TargetType="app:WorkspaceChangeKind"
                                                     Value="{Binding Kind}">
@@ -386,7 +385,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="SplitVertical"
-                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_ViewDiffButtonText}" />
+                                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_ViewDiffButtonText}}" />
                                                             </Button>
                                                             <Button
                                                                 Grid.Row="1"
@@ -396,7 +395,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="ArrowExport"
-                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_ApplyButtonText}" />
+                                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_ApplyButtonText}}" />
                                                             </Button>
                                                             <Button
                                                                 Grid.Row="1"
@@ -406,7 +405,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="ArrowImport"
-                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_DiscardButtonText}" />
+                                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_DiscardButtonText}}" />
                                                             </Button>
                                                         </Grid>
                                                     </husk:SwitchCase>
@@ -424,7 +423,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="SplitVertical"
-                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_ViewDiffButtonText}" />
+                                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_ViewDiffButtonText}}" />
                                                             </Button>
                                                             <Button
                                                                 Grid.Row="1"
@@ -434,7 +433,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="ArrowExport"
-                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_OverwriteButtonText}" />
+                                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_OverwriteButtonText}}" />
                                                             </Button>
                                                             <Button
                                                                 Grid.Row="1"
@@ -444,7 +443,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="ArrowImport"
-                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_UpdateButtonText}" />
+                                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_UpdateButtonText}}" />
                                                             </Button>
                                                         </Grid>
                                                     </husk:SwitchCase>
@@ -456,7 +455,7 @@
                                                                 CommandParameter="{Binding}">
                                                                 <husk:IconLabel
                                                                     Icon="ArrowExport"
-                                                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_DiscardButtonText}" />
+                                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_DiscardButtonText}}" />
                                                             </Button>
                                                         </StackPanel>
                                                     </husk:SwitchCase>
@@ -468,14 +467,14 @@
                                                         CommandParameter="{Binding LivePath}">
                                                         <husk:IconLabel
                                                             Icon="FolderOpen"
-                                                            Text="{x:Static lang:Resources.InstanceWorkspacePage_OpenLocationButtonText}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_OpenLocationButtonText}}" />
                                                     </Button>
                                                     <Button
                                                         Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
                                                         CommandParameter="{Binding RelativePath}">
                                                         <husk:IconLabel
                                                             Icon="DocumentCopy"
-                                                            Text="{x:Static lang:Resources.InstanceWorkspacePage_CopyPathButtonText}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_CopyPathButtonText}}" />
                                                     </Button>
                                                 </husk:ButtonGroup>
                                             </StackPanel>
@@ -490,10 +489,10 @@
                                 <TextBlock
                                     FontSize="{StaticResource LargeFontSize}"
                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_SelectFileTitle}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_SelectFileTitle}}" />
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceWorkspacePage_SelectFilePrompt}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_SelectFilePrompt}}" />
                             </StackPanel>
                         </husk:PlaceholderContainer>
                     </ScrollViewer>
@@ -505,10 +504,10 @@
                         Background="Transparent"
                         Orientation="Horizontal"
                         Spacing="4"
-                        ToolTip.Tip="{x:Static lang:Resources.InstanceWorkspacePage_FilesTabToolTip}">
+                        ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_FilesTabToolTip}}">
                         <husk:IconLabel
                             Icon="FolderList"
-                            Text="{x:Static lang:Resources.InstanceWorkspacePage_FilesTabText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceWorkspacePage_FilesTabText}}" />
                     </StackPanel>
                 </TabItem.Header>
                 <husk:Card BorderThickness="0">

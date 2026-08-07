@@ -11,7 +11,6 @@ using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Pref;
@@ -67,7 +66,7 @@ public partial class RecipesPageModel(
 
         var dialog = new RecipeEditorDialog
         {
-            Title = Resources.RecipeEditorDialog_EditTitle,
+            Title = LanguageManager.Instance.RecipeEditorDialog_EditTitle.Current(),
             RecipeName = card.Name,
             RecipeDescription = card.Description
         };
@@ -82,7 +81,7 @@ public partial class RecipesPageModel(
     [RelayCommand]
     private async Task NewAsync()
     {
-        var dialog = new RecipeEditorDialog { Title = Resources.RecipesPage_NewDialogTitle };
+        var dialog = new RecipeEditorDialog { Title = LanguageManager.Instance.RecipesPage_NewDialogTitle.Current() };
         if (await overlayService.PopDialogAsync(dialog) && dialog.Result is RecipeEditorResultModel result)
         {
             var name = string.IsNullOrWhiteSpace(result.Name) ? "Untitled" : result.Name;
@@ -118,16 +117,16 @@ public partial class RecipesPageModel(
             try
             {
                 await Task.Run(() => File.WriteAllText(path, RecipeHelper.Serialize(document)));
-                notificationService.PopMessage(Resources.RecipesPage_ExportSuccessNotificationMessage
+                notificationService.PopMessage(LanguageManager.Instance.RecipesPage_ExportSuccessNotificationMessage.Current()
                                                         .Replace("{0}", path),
-                                               Resources.RecipesPage_ExportSuccessNotificationTitle,
+                                               LanguageManager.Instance.RecipesPage_ExportSuccessNotificationTitle.Current(),
                                                GrowlLevel.Success);
             }
             catch (Exception)
             {
-                notificationService.PopMessage(Resources.RecipesPage_ExportDangerNotificationMessage
+                notificationService.PopMessage(LanguageManager.Instance.RecipesPage_ExportDangerNotificationMessage.Current()
                                                         .Replace("{0}", path),
-                                               Resources.RecipesPage_ExportDangerNotificationTitle,
+                                               LanguageManager.Instance.RecipesPage_ExportDangerNotificationTitle.Current(),
                                                GrowlLevel.Danger);
             }
         }
@@ -149,16 +148,16 @@ public partial class RecipesPageModel(
         }
         catch (Exception)
         {
-            notificationService.PopMessage(Resources.RecipesPage_ImportDangerNotificationMessage,
-                                           Resources.RecipesPage_ImportDangerNotificationTitle,
+            notificationService.PopMessage(LanguageManager.Instance.RecipesPage_ImportDangerNotificationMessage.Current(),
+                                           LanguageManager.Instance.RecipesPage_ImportDangerNotificationTitle.Current(),
                                            GrowlLevel.Danger);
             return;
         }
 
         if (!RecipeHelper.TryDeserialize(text, out var document))
         {
-            notificationService.PopMessage(Resources.RecipesPage_ImportDangerNotificationMessage,
-                                           Resources.RecipesPage_ImportDangerNotificationTitle,
+            notificationService.PopMessage(LanguageManager.Instance.RecipesPage_ImportDangerNotificationMessage.Current(),
+                                           LanguageManager.Instance.RecipesPage_ImportDangerNotificationTitle.Current(),
                                            GrowlLevel.Danger);
             return;
         }
@@ -185,7 +184,7 @@ public partial class RecipesPageModel(
         }
 
         Items.Add(new(recipe.Id) { Name = recipe.Name, Description = recipe.Description, ItemCount = added });
-        notificationService.PopMessage(Resources.RecipesPage_ImportSuccessNotificationMessage,
+        notificationService.PopMessage(LanguageManager.Instance.RecipesPage_ImportSuccessNotificationMessage.Current(),
                                        recipe.Name,
                                        GrowlLevel.Success);
     }
@@ -202,25 +201,25 @@ public partial class RecipesPageModel(
         if (references.Count > 0)
         {
             var body = string.Join(Environment.NewLine, references.Select(r => $" - {r.Name}"));
-            notificationService.PopMessage(Resources.RecipesPage_DeleteBlockedByReferencesWarningNotificationMessage
+            notificationService.PopMessage(LanguageManager.Instance.RecipesPage_DeleteBlockedByReferencesWarningNotificationMessage.Current()
                                                     .Replace("{0}", references.Count.ToString())
                                          + ":"
                                          + Environment.NewLine
                                          + body,
-                                           Resources.RecipesPage_DeleteBlockedByReferencesWarningNotificationTitle,
+                                           LanguageManager.Instance.RecipesPage_DeleteBlockedByReferencesWarningNotificationTitle.Current(),
                                            GrowlLevel.Warning);
             return;
         }
 
-        if (!await overlayService.RequestStrongConfirmationAsync(Resources.RecipesPage_DeleteConfirmationMessage,
-                                                                 Resources.RecipesPage_DeleteConfirmationTitle))
+        if (!await overlayService.RequestStrongConfirmationAsync(LanguageManager.Instance.RecipesPage_DeleteConfirmationMessage.Current(),
+                                                                 LanguageManager.Instance.RecipesPage_DeleteConfirmationTitle.Current()))
         {
             return;
         }
 
         persistenceService.DeleteRecipe(card.Id);
         Items.Remove(card);
-        notificationService.PopMessage(Resources.RecipesPage_DeleteSuccessNotificationMessage,
+        notificationService.PopMessage(LanguageManager.Instance.RecipesPage_DeleteSuccessNotificationMessage.Current(),
                                        card.Name,
                                        GrowlLevel.Success);
     }

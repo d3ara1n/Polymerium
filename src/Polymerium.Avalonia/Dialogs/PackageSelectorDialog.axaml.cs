@@ -12,7 +12,6 @@ using DynamicData;
 using Huskui.Avalonia.Controls;
 using Polymerium.Avalonia.Models;
 using TridentCore.Abstractions.Repositories.Resources;
-using Res = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Dialogs;
 
@@ -219,17 +218,16 @@ public partial class PackageSelectorDialog : Dialog
     {
         var selected = _items.Items.Where(x => x.IsSelected).ToList();
         Result = selected;
-        SelectionSummary = Res
-                          .PackageSelectorDialog_SelectedCountText.Replace("{0}", selected.Count.ToString())
+        SelectionSummary = LanguageManager.Instance.PackageSelectorDialog_SelectedCountText.Current().Replace("{0}", selected.Count.ToString())
                           .Replace("{1}", _totalCount.ToString());
     }
 
     private void ApplyIntent() =>
         (Title, PrimaryText) = _intent switch
         {
-            SelectionIntent.Remove => (Res.PackageSelectorDialog_RemoveTitle, Res.PackageSelectorDialog_RemoveText),
-            SelectionIntent.Enable => (Res.PackageSelectorDialog_EnableTitle, Res.PackageSelectorDialog_EnableText),
-            SelectionIntent.Disable => (Res.PackageSelectorDialog_DisableTitle, Res.PackageSelectorDialog_DisableText),
+            SelectionIntent.Remove => (LanguageManager.Instance.PackageSelectorDialog_RemoveTitle.Current(), LanguageManager.Instance.PackageSelectorDialog_RemoveText.Current()),
+            SelectionIntent.Enable => (LanguageManager.Instance.PackageSelectorDialog_EnableTitle.Current(), LanguageManager.Instance.PackageSelectorDialog_EnableText.Current()),
+            SelectionIntent.Disable => (LanguageManager.Instance.PackageSelectorDialog_DisableTitle.Current(), LanguageManager.Instance.PackageSelectorDialog_DisableText.Current()),
             _ => (Title, PrimaryText)
         };
 

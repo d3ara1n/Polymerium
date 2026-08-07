@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:trident="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions"
     MinWidth="360"
@@ -72,7 +71,7 @@
                                                         Grid.Column="0"
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.Shared_ExternalLinkLabelText}}" />
                                                     <fi:SymbolIcon
                                                         Grid.Column="1"
                                                         FontSize="{StaticResource MediumFontSize}"
@@ -146,7 +145,7 @@
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.RecipeItemModal_SummaryLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.RecipeItemModal_SummaryLabelText}}" />
                         <TextBlock
                             Text="{Binding Item.Info.Summary}"
                             TextWrapping="Wrap" />
@@ -156,11 +155,11 @@
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.RecipeItemModal_NoteLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.RecipeItemModal_NoteLabelText}}" />
                         <TextBox
                             MinHeight="80"
                             AcceptsReturn="True"
-                            PlaceholderText="{x:Static lang:Resources.RecipeItemModal_NoteWatermarkText}"
+                            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.RecipeItemModal_NoteWatermarkText}}"
                             Text="{Binding NoteDraft, Mode=TwoWay}"
                             TextWrapping="Wrap" />
                     </StackPanel>
@@ -174,13 +173,13 @@
                                 Theme="{StaticResource GhostButtonTheme}">
                                 <husk:IconLabel
                                     Icon="Edit"
-                                    Text="{x:Static lang:Resources.RecipeItemModal_EditTagsButtonText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.RecipeItemModal_EditTagsButtonText}}" />
                             </Button>
                             <TextBlock
                                 VerticalAlignment="Center"
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.RecipeItemModal_TagsLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.RecipeItemModal_TagsLabelText}}" />
                         </DockPanel>
                         <ItemsControl ItemsSource="{Binding TagsDraft}">
                             <ItemsControl.ItemsPanel>
@@ -206,7 +205,7 @@
                             Theme="{StaticResource GhostButtonTheme}">
                             <husk:IconLabel
                                 Icon="Add"
-                                Text="{x:Static lang:Resources.RecipeItemModal_EditTagsButtonText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.RecipeItemModal_EditTagsButtonText}}" />
                         </Button>
                     </StackPanel>
                 </StackPanel>
@@ -219,13 +218,13 @@
                 Spacing="8">
                 <Button
                     Command="{Binding $parent[app:RecipeItemModal].Dismiss}"
-                    Content="{x:Static lang:Resources.Dialog_DismissButtonText}"
+                    Content="{Translate {x:Static app:LanguageManager+Keys.Dialog_DismissButtonText}}"
                     IsCancel="True" />
                 <Button
                     Classes="Primary"
                     Command="{Binding SaveCommand}"
                     CommandParameter="{Binding $parent[app:RecipeItemModal]}"
-                    Content="{x:Static lang:Resources.RecipeItemModal_SaveButtonText}" />
+                    Content="{Translate {x:Static app:LanguageManager+Keys.RecipeItemModal_SaveButtonText}}" />
             </StackPanel>
         </Grid>
     </husk:ConstrainedBox>

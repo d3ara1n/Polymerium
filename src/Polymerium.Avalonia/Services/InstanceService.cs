@@ -12,7 +12,6 @@ using Polymerium.Avalonia.Exceptions;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.PageModels;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
 using TridentCore.Abstractions.Accounts;
@@ -161,7 +160,7 @@ public class InstanceService
         catch (Exception ex)
         {
             _notificationService.PopMessage(ex,
-                                            Resources.MainWindow_InstanceLaunchingDangerNotificationTitle
+                                            LanguageManager.Instance.MainWindow_InstanceLaunchingDangerNotificationTitle.Current()
                                                      .Replace("{0}", key),
                                             thumbnail: ThumbnailHelper.ForInstance(key));
         }
@@ -177,7 +176,7 @@ public class InstanceService
         catch (Exception ex)
         {
             _notificationService.PopMessage(ex,
-                                            Resources.MainWindow_InstanceDeployingDangerNotificationTitle
+                                            LanguageManager.Instance.MainWindow_InstanceDeployingDangerNotificationTitle.Current()
                                                      .Replace("{0}", key),
                                             thumbnail: ThumbnailHelper.ForInstance(key));
         }
@@ -185,18 +184,16 @@ public class InstanceService
 
     public async Task ResetAsync(string key)
     {
-        if (!await _overlayService.RequestStrongConfirmationAsync(Resources
-                                                                     .InstancePropertiesPage_ResetConfirmationMessage,
-                                                                  Resources
-                                                                     .InstancePropertiesPage_ResetConfirmationTitle))
+        if (!await _overlayService.RequestStrongConfirmationAsync(LanguageManager.Instance.InstancePropertiesPage_ResetConfirmationMessage.Current(),
+                                                                  LanguageManager.Instance.InstancePropertiesPage_ResetConfirmationTitle.Current()))
         {
             return;
         }
 
         if (_instanceManager.IsInUse(key))
         {
-            _notificationService.PopMessage(Resources.InstancePropertiesPage_ResetInUseWarningNotificationMessage,
-                                            Resources.InstancePropertiesPage_ResetInUseWarningNotificationTitle
+            _notificationService.PopMessage(LanguageManager.Instance.InstancePropertiesPage_ResetInUseWarningNotificationMessage.Current(),
+                                            LanguageManager.Instance.InstancePropertiesPage_ResetInUseWarningNotificationTitle.Current()
                                                      .Replace("{0}", key),
                                             GrowlLevel.Warning,
                                             thumbnail: ThumbnailHelper.ForInstance(key));
@@ -218,7 +215,7 @@ public class InstanceService
             }
 
             _persistenceService.AppendAction(new() { Key = key, Kind = PersistenceService.ActionKind.Reset });
-            _notificationService.PopMessage(Resources.InstancePropertiesPage_ResetSuccessNotificationMessage,
+            _notificationService.PopMessage(LanguageManager.Instance.InstancePropertiesPage_ResetSuccessNotificationMessage.Current(),
                                             key,
                                             GrowlLevel.Success,
                                             thumbnail: ThumbnailHelper.ForInstance(key));
@@ -236,7 +233,7 @@ public class InstanceService
             var dir = PathDef.Default.DirectoryOfHome(key);
             return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
                                                            new(dir),
-                                                           Resources.Shared_FailedToOpenFolderDangerNotificationTitle,
+                                                           LanguageManager.Instance.Shared_FailedToOpenFolderDangerNotificationTitle.Current(),
                                                            _notificationService,
                                                            thumbnail: ThumbnailHelper.ForInstance(key));
         }
@@ -296,7 +293,7 @@ public class InstanceService
             catch (Exception ex)
             {
                 _notificationService.PopMessage(ex,
-                                                Resources.MainWindow_ReadPackConfigDangerNotificationTitle,
+                                                LanguageManager.Instance.MainWindow_ReadPackConfigDangerNotificationTitle.Current(),
                                                 GrowlLevel.Warning,
                                                 ThumbnailHelper.ForInstance(key));
             }
@@ -341,8 +338,7 @@ public class InstanceService
                         DefaultExtension = "zip",
                         FileTypeChoices =
                         [
-                            new(Resources
-                                   .Shared_ZipArchiveFileTypeText)
+                            new(LanguageManager.Instance.Shared_ZipArchiveFileTypeText.Current())
                             {
                                 Patterns = ["*.zip"]
                             }
@@ -354,8 +350,7 @@ public class InstanceService
                         profile.SetOverride(Profile.OVERRIDE_MODPACK_AUTHOR, author);
                         profile.SetOverride(Profile.OVERRIDE_MODPACK_VERSION, version);
                         var notification = _notificationService.PopProgress(name,
-                                                                            Resources
-                                                                               .MainWindow_ExportModpackProgressingNotificationMessage,
+                                                                            LanguageManager.Instance.MainWindow_ExportModpackProgressingNotificationMessage.Current(),
                                                                             thumbnail: ThumbnailHelper
                                                                                .ForInstance(key));
                         try
@@ -375,14 +370,14 @@ public class InstanceService
                             notification.Report(100);
                             await Task.Delay(TimeSpan.FromSeconds(1));
                             var path = storageItem.TryGetLocalPath();
-                            _notificationService.PopMessage(path ?? Resources.Enum_Unknown,
-                                                            Resources.MainWindow_ExportModpackSuccessNotificationTitle,
+                            _notificationService.PopMessage(path ?? LanguageManager.Instance.Enum_Unknown.Current(),
+                                                            LanguageManager.Instance.MainWindow_ExportModpackSuccessNotificationTitle.Current(),
                                                             thumbnail: ThumbnailHelper.ForInstance(key));
                         }
                         catch (Exception ex)
                         {
                             _notificationService.PopMessage(ex,
-                                                            Resources.MainWindow_ExportModpackDangerNotificationTitle,
+                                                            LanguageManager.Instance.MainWindow_ExportModpackDangerNotificationTitle.Current(),
                                                             thumbnail: ThumbnailHelper.ForInstance(key));
                         }
                         finally
@@ -406,7 +401,7 @@ public class InstanceService
             catch (Exception ex)
             {
                 _notificationService.PopMessage(ex,
-                                                Resources.MainWindow_SavePackConfigDangerNotificationTitle,
+                                                LanguageManager.Instance.MainWindow_SavePackConfigDangerNotificationTitle.Current(),
                                                 thumbnail: ThumbnailHelper.ForInstance(key));
             }
         }

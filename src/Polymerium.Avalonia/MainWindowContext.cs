@@ -17,7 +17,6 @@ using Huskui.Avalonia.Models;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
@@ -187,13 +186,13 @@ public partial class MainWindowContext : ObservableObject
             {
                 return TopLevelHelper.LaunchFileInfoAsync(TopLevelHelper.GetTopLevel(),
                                                           new(path),
-                                                          Resources.Shared_FailedToOpenLogFileDangerNotificationTitle,
+                                                          LanguageManager.Instance.Shared_FailedToOpenLogFileDangerNotificationTitle.Current(),
                                                           _notificationService,
                                                           thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
             }
 
-            _notificationService.PopMessage(Resources.MainWindow_LogFileNotFoundWarningNotificationMessage,
-                                            Resources.Shared_FailedToOpenLogFileDangerNotificationTitle,
+            _notificationService.PopMessage(LanguageManager.Instance.MainWindow_LogFileNotFoundWarningNotificationMessage.Current(),
+                                            LanguageManager.Instance.Shared_FailedToOpenLogFileDangerNotificationTitle.Current(),
                                             GrowlLevel.Warning,
                                             thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
         }
@@ -273,20 +272,20 @@ public partial class MainWindowContext : ObservableObject
             switch (_updateService.UpdateState)
             {
                 case AppUpdateState.Found when _updateService.CurrentUpdate is { } update:
-                    _notificationService.PopMessage(string.Format(Resources.MainWindow_UpdateFoundNotificationMessage,
+                    _notificationService.PopMessage(string.Format(LanguageManager.Instance.MainWindow_UpdateFoundNotificationMessage.Current(),
                                                                   update.Version),
-                                                    Resources.MainWindow_UpdateFoundNotificationTitle,
+                                                    LanguageManager.Instance.MainWindow_UpdateFoundNotificationTitle.Current(),
                                                     GrowlLevel.Success);
                     break;
                 case AppUpdateState.Latest:
-                    _notificationService.PopMessage(Resources.MainWindow_UpdateLatestNotificationMessage,
-                                                    Resources.MainWindow_UpdateLatestNotificationTitle);
+                    _notificationService.PopMessage(LanguageManager.Instance.MainWindow_UpdateLatestNotificationMessage.Current(),
+                                                    LanguageManager.Instance.MainWindow_UpdateLatestNotificationTitle.Current());
                     break;
             }
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, Resources.MainWindow_CheckForUpdatesDangerNotificationTitle);
+            _notificationService.PopMessage(ex, LanguageManager.Instance.MainWindow_CheckForUpdatesDangerNotificationTitle.Current());
         }
 
         CheckForUpdatesCommand.NotifyCanExecuteChanged();
@@ -295,13 +294,13 @@ public partial class MainWindowContext : ObservableObject
     private bool CanCheckForUpdates => _updateService.CanCheckUpdate;
 
     private void OnUpdateFound(AppUpdateModel update) =>
-        _notificationService.PopMessage(string.Format(Resources.MainWindow_UpdateFoundNotificationMessage,
+        _notificationService.PopMessage(string.Format(LanguageManager.Instance.MainWindow_UpdateFoundNotificationMessage.Current(),
                                                       update.Version),
-                                        Resources.MainWindow_UpdateFoundNotificationTitle,
+                                        LanguageManager.Instance.MainWindow_UpdateFoundNotificationTitle.Current(),
                                         GrowlLevel.Success,
                                         actions:
                                         [
-                                            new(Resources.SettingsPage_UpdatesViewButtonText, ViewUpdateCommand, update)
+                                            new(LanguageManager.Instance.SettingsPage_UpdatesViewButtonText.Current(), ViewUpdateCommand, update)
                                         ]);
 
     private bool CanViewUpdate(AppUpdateModel? update) => update != null;
@@ -330,7 +329,7 @@ public partial class MainWindowContext : ObservableObject
                                ?.MainWindow);
         await TopLevelHelper.LaunchUriAsync(topLevel,
                                             new(Program.RepositoryUrl),
-                                            Resources.MainWindow_OpenGitHubDangerNotificationTitle);
+                                            LanguageManager.Instance.MainWindow_OpenGitHubDangerNotificationTitle.Current());
     }
 
     #endregion

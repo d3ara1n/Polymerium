@@ -120,7 +120,7 @@ public partial class AccountCreationAuthlibInjector : AccountCreationStep
             var result = await YggdrasilService.AuthenticateAsync(ServerUrl, Username, Password, _cts.Token);
 
             Account = result.Account;
-            SuccessMessage = Properties.Resources.AccountCreationAuthlib_DoneSubtitle;
+            SuccessMessage = LanguageManager.Instance.AccountCreationAuthlib_DoneSubtitle.Current();
             IsNextAvailable = true;
         }
         catch (OperationCanceledException) { }
