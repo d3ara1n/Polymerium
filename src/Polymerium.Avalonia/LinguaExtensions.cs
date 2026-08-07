@@ -6,5 +6,5 @@ namespace Polymerium.Avalonia;
 public static class LinguaExtensions
 {
     public static string Current(this IObservable<string?> observable) =>
-        ((LinguaObservableString)observable).CurrentValue ?? string.Empty;
+        observable is LinguaObservable<string?> s ? s.CurrentValue ?? string.Empty : string.Empty;
 }

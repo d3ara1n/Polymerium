@@ -42,7 +42,7 @@ public partial class SettingsPage : Page
         {
             if (child is SettingsEntry entry && !string.IsNullOrEmpty(entry.Title))
             {
-                _sections.Add(new() { Title = entry.Title, Icon = entry.Icon, Target = entry });
+                _sections.Add(new() { Icon = entry.Icon, Target = entry });
             }
         }
     }

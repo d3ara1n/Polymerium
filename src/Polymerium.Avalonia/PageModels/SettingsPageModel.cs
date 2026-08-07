@@ -344,11 +344,11 @@ public partial class SettingsPageModel : ViewModelBase
 
     public BackgroundStyleModel[] BackgroundStyles { get; } =
     [
-        new(0, LanguageManager.Instance.SettingsPage_BackgroundStyleAutoText.Current()),
-        new(1, LanguageManager.Instance.SettingsPage_BackgroundStyleMicaText.Current(), "Windows 11+"),
-        new(2, LanguageManager.Instance.SettingsPage_BackgroundStyleAcrylicText.Current(), "Windows 10+/macOS"),
-        new(3, LanguageManager.Instance.SettingsPage_BackgroundStyleBlurText.Current(), "Linux"),
-        new(4, LanguageManager.Instance.SettingsPage_BackgroundStyleNoneText.Current())
+        new(0, "SettingsPage_BackgroundStyleAutoText"),
+        new(1, "SettingsPage_BackgroundStyleMicaText", "Windows 11+"),
+        new(2, "SettingsPage_BackgroundStyleAcrylicText", "Windows 10+/macOS"),
+        new(3, "SettingsPage_BackgroundStyleBlurText", "Linux"),
+        new(4, "SettingsPage_BackgroundStyleNoneText")
     ];
 
     #endregion

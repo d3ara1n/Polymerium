@@ -83,7 +83,7 @@
                             Symbol="{Binding Icon}" />
                         <TextBlock
                             VerticalAlignment="Center"
-                            Text="{Binding Title}" />
+                            Text="{Binding Target.Title}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -236,7 +236,7 @@
                                             Classes="Small"
                                             IsVisible="{Binding Applicable, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                             Content="{Binding Applicable}" />
-                                        <TextBlock Text="{Binding Display}" />
+                                        <TextBlock Text="{app:LocalizedKey {Binding Display}}" />
                                     </DockPanel>
                                 </DataTemplate>
                             </ComboBox.SelectionBoxItemTemplate>
@@ -248,7 +248,7 @@
                                             Classes="Small"
                                             IsVisible="{Binding Applicable, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                             Content="{Binding Applicable}" />
-                                        <TextBlock Text="{Binding Display}" />
+                                        <TextBlock Text="{app:LocalizedKey {Binding Display}}" />
                                     </DockPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
