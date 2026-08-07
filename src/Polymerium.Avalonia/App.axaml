@@ -11,9 +11,9 @@
         <StyleInclude Source="avares://Polymerium/Themes/Bundle.axaml" />
         <StyleInclude Source="avares://Huskui.Avalonia/Themes/Addons.InlineUIContainerAlignment.axaml" />
         <StyleInclude Source="avares://Huskui.Avalonia/Themes/Addons.NoAutoScrollToSelectedItem.axaml" />
-        <Style Selector=":is(Control)">
-            <Setter Property="TextElement.FontFamily" Value="{DynamicResource MainFontFamily}" />
-        </Style>
+        <!-- <Style Selector=":is(Control)"> -->
+        <!--     <Setter Property="TextElement.FontFamily" Value="{DynamicResource MainFontFamily}" /> -->
+        <!-- </Style> -->
     </Application.Styles>
     <Application.Resources>
         <ResourceDictionary>

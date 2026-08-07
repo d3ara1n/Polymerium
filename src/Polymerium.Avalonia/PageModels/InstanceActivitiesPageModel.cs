@@ -21,8 +21,8 @@ using SkiaSharp;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Abstractions.Utilities;
-using TridentCore.Pref;
 using TridentCore.Core.Services;
+using TridentCore.Pref;
 
 namespace Polymerium.Avalonia.PageModels;
 
@@ -69,10 +69,10 @@ public partial class InstanceActivitiesPageModel(
             // 批量解析会把失败项单独放进 Failed，不会因为单条失败连累整页。
             var prefToId = new Dictionary<string, PackageIdentifier>();
             foreach (var pref in valid
-                               .SelectMany(x => new[] { x.Old, x.New })
-                               .Where(s => !string.IsNullOrEmpty(s))
-                               .Select(s => s!)
-                               .Distinct())
+                                .SelectMany(x => new[] { x.Old, x.New })
+                                .Where(s => !string.IsNullOrEmpty(s))
+                                .Select(s => s!)
+                                .Distinct())
             {
                 if (PackageHelper.TryParse(pref, out var id))
                 {
@@ -84,19 +84,19 @@ public partial class InstanceActivitiesPageModel(
 
             Package? ResolveByPref(string? pref) =>
                 pref is not null
-                && prefToId.TryGetValue(pref, out var id)
-                && batch.Successful.TryGetValue(id, out var pkg)
+             && prefToId.TryGetValue(pref, out var id)
+             && batch.Successful.TryGetValue(id, out var pkg)
                     ? pkg
                     : null;
 
             // 预取缩略图（每个 Uri 一次），单张失败不连累整页
             var thumbnails = new Dictionary<Uri, Bitmap>();
             var thumbnailUris = valid
-                                .Select(x => ResolveByPref(x.New) ?? ResolveByPref(x.Old))
-                                .Where(p => p?.Thumbnail != null)
-                                .Select(p => p!.Thumbnail!)
-                                .Distinct()
-                                .ToList();
+                               .Select(x => ResolveByPref(x.New) ?? ResolveByPref(x.Old))
+                               .Where(p => p?.Thumbnail != null)
+                               .Select(p => p!.Thumbnail!)
+                               .Distinct()
+                               .ToList();
 
             if (thumbnailUris.Count > 0)
             {
@@ -114,36 +114,33 @@ public partial class InstanceActivitiesPageModel(
             }
 
             var results = valid
-                          .Select(x =>
-                           {
-                               var newPkg = ResolveByPref(x.New);
-                               var oldPkg = ResolveByPref(x.Old);
-                               var primary = newPkg ?? oldPkg;
+                         .Select(x =>
+                          {
+                              var newPkg = ResolveByPref(x.New);
+                              var oldPkg = ResolveByPref(x.Old);
+                              var primary = newPkg ?? oldPkg;
 
-                               var model = new InstanceActionModel(
-                                   x.Old,
-                                   x.New,
-                                   DateTimeHelper.FromPersistedLocalDateTime(x.At),
-                                   false);
+                              var model = new InstanceActionModel(x.Old,
+                                                                  x.New,
+                                                                  DateTimeHelper.FromPersistedLocalDateTime(x.At),
+                                                                  false);
 
-                               if (primary != null)
-                               {
-                                   model.IsLoaded = true;
-                                   var thumbUri = newPkg?.Thumbnail ?? oldPkg?.Thumbnail;
-                                   var thumbnail = thumbUri is not null
-                                                  && thumbnails.TryGetValue(thumbUri, out var bmp)
-                                       ? bmp
-                                       : AssetUriIndex.DirtImageBitmap;
-                                   model.Info = new InstanceActionInfoModel(
-                                       primary.ProjectName,
-                                       oldPkg?.VersionName,
-                                       newPkg?.VersionName,
-                                       thumbnail);
-                               }
+                              if (primary != null)
+                              {
+                                  model.IsLoaded = true;
+                                  var thumbUri = newPkg?.Thumbnail ?? oldPkg?.Thumbnail;
+                                  var thumbnail = thumbUri is not null && thumbnails.TryGetValue(thumbUri, out var bmp)
+                                                      ? bmp
+                                                      : AssetUriIndex.DirtImageBitmap;
+                                  model.Info = new(primary.ProjectName,
+                                                   oldPkg?.VersionName,
+                                                   newPkg?.VersionName,
+                                                   thumbnail);
+                              }
 
-                               return model;
-                           })
-                          .ToList();
+                              return model;
+                          })
+                         .ToList();
 
             return new InstanceActionCollection(results);
         });

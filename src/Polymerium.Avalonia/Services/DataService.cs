@@ -46,14 +46,14 @@ public class DataService(
     public Task<Package> ResolvePackageAsync(PackageIdentifier id, Filter filter, bool cachedEnabled = true) =>
         agent.ResolveAsync(id, filter, cachedEnabled);
 
-    public Task<BatchResolveResult<PackageIdentifier, Package>> ResolvePackagesAsync(
+    public Task<BatchResult<PackageIdentifier, Package>> ResolvePackagesAsync(
         IEnumerable<PackageIdentifier> batch,
         Filter filter) =>
         agent.ResolveBatchAsync(batch, filter);
 
     public Task<Project> QueryProjectAsync(ProjectIdentifier id) => agent.QueryAsync(id);
 
-    public Task<BatchResolveResult<ProjectIdentifier, Project>> QueryProjectsAsync(
+    public Task<BatchResult<ProjectIdentifier, Project>> QueryProjectsAsync(
         IEnumerable<ProjectIdentifier> batch) =>
         agent.QueryBatchAsync(batch);
 

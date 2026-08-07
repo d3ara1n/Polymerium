@@ -97,13 +97,13 @@ public class FavoriteRepository(
 
     public Task<Project> QueryAsync(ScopedProjectIdentifier id) => throw new NotImplementedException();
 
-    public Task<BatchResolveResult<ScopedProjectIdentifier, Project>> QueryBatchAsync(
+    public Task<BatchResult<ScopedProjectIdentifier, Project>> QueryBatchAsync(
         IEnumerable<ScopedProjectIdentifier> batch) =>
         throw new NotImplementedException();
 
     public Task<Package> ResolveAsync(ScopedPackageIdentifier id, Filter filter) => throw new NotImplementedException();
 
-    public Task<BatchResolveResult<ScopedPackageIdentifier, Package>> ResolveBatchAsync(
+    public Task<BatchResult<ScopedPackageIdentifier, Package>> ResolveBatchAsync(
         IEnumerable<ScopedPackageIdentifier> batch,
         Filter filter) =>
         throw new NotImplementedException();
@@ -118,7 +118,7 @@ public class FavoriteRepository(
     public Task<PackageIdentifier> RecognizeAsync(Uri uri, CancellationToken cancellationToken = default) =>
         throw new NotSupportedException("favorite repositories cannot recognize urls");
 
-    public Task<BatchResolveResult<Uri, PackageIdentifier>> RecognizeBatchAsync(
+    public Task<BatchResult<Uri, PackageIdentifier>> RecognizeBatchAsync(
         IEnumerable<Uri> uris,
         CancellationToken cancellationToken = default) =>
         throw new NotSupportedException("favorite repositories cannot recognize urls");

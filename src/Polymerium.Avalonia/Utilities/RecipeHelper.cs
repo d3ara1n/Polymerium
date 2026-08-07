@@ -10,12 +10,12 @@ public static class RecipeHelper
 {
     private const int CurrentVersion = 1;
 
-    private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
-
 
     public const string Scheme = "recipe";
 
     private const string RecipePrefix = Scheme + "://";
+
+    private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
 
     public static string ToUri(string id) => RecipePrefix + id;
 
@@ -33,6 +33,7 @@ public static class RecipeHelper
 
     public static string GetId(string s) =>
         TryGetId(s, out var id) ? id : throw new FormatException($"Not a recipe uri: {s}");
+
     public static string Serialize(RecipeDocument document) => JsonSerializer.Serialize(document, JsonOptions);
 
     public static bool TryDeserialize(string text, [NotNullWhen(true)] out RecipeDocument? document)

@@ -21,7 +21,7 @@ public class MinecraftTextBlock : TemplatedControl
 
     public static readonly StyledProperty<TextTrimming> TextTrimmingProperty =
         AvaloniaProperty.Register<MinecraftTextBlock, TextTrimming>(nameof(TextTrimming),
-                                                                     TextTrimming.CharacterEllipsis);
+                                                                    TextTrimming.CharacterEllipsis);
 
     public static readonly StyledProperty<int?> MaxLinesProperty =
         AvaloniaProperty.Register<MinecraftTextBlock, int?>(nameof(MaxLines));
@@ -63,50 +63,73 @@ public class MinecraftTextBlock : TemplatedControl
     {
         base.OnPropertyChanged(change);
         if (change.Property == TextProperty)
+        {
             Render();
+        }
     }
 
     private void Render()
     {
         if (_textBlock is null)
+        {
             return;
+        }
 
         // NOTE: MinecraftTextReader.TryParse is strict only for JSON (syntax error -> false);
         // legacy § strings always parse. On JSON failure the raw text is shown verbatim,
         // matching MinecraftTextBlock's TryParse ? BuildInlines : BuildText contract.
         if (MinecraftTextReader.TryParse(Text, out var model))
+        {
             BuildInlines(model);
+        }
         else
+        {
             _textBlock.Text = Text;
+        }
     }
 
     private void BuildInlines(MinecraftText model)
     {
         if (_textBlock is not { } textBlock || textBlock.Inlines is not { } inlines)
+        {
             return;
+        }
 
         // NOTE: TextBlock renders Inlines when non-empty and setting Text clears Inlines,
         // so populate Inlines and drop Text to make Inlines the single source here.
         inlines.Clear();
         textBlock.Text = null;
         foreach (var run in model.Runs)
+        {
             inlines.Add(ToInline(run));
+        }
     }
 
     private static Run ToInline(MinecraftTextRun run)
     {
         var style = run.Style;
-        var text = style.Obfuscated == true ? new string('\u2588', run.Text.Length) : run.Text;
+        var text = style.Obfuscated == true ? new('\u2588', run.Text.Length) : run.Text;
         var inline = new Run { Text = text };
 
         if (style.Color is { } color)
+        {
             inline.Foreground = new SolidColorBrush(Color.FromRgb(color.R, color.G, color.B));
+        }
+
         if (style.Bold == true)
+        {
             inline.FontWeight = FontWeight.Bold;
+        }
+
         if (style.Italic == true)
+        {
             inline.FontStyle = FontStyle.Italic;
+        }
+
         if (style.Underlined == true || style.Strikethrough == true)
+        {
             inline.TextDecorations = DecorationsFor(style);
+        }
 
         return inline;
     }
@@ -115,11 +138,21 @@ public class MinecraftTextBlock : TemplatedControl
     {
         var decos = new TextDecorationCollection();
         if (style.Underlined == true)
+        {
             foreach (var d in TextDecorations.Underline)
+            {
                 decos.Add(d);
+            }
+        }
+
         if (style.Strikethrough == true)
+        {
             foreach (var d in TextDecorations.Strikethrough)
+            {
                 decos.Add(d);
+            }
+        }
+
         return decos;
     }
 }

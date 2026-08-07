@@ -1382,7 +1382,7 @@ public partial class InstanceSetupPageModel(
                     }
                 }
 
-                new BatchResolveResult<(PackageIdentifier Id, string? Source), Package>(successful, failed)
+                new BatchResult<(PackageIdentifier Id, string? Source), Package>(successful, failed)
                    .ThrowIfFailures();
 
                 foreach (var item in items)
@@ -1400,7 +1400,7 @@ public partial class InstanceSetupPageModel(
                                    string.Join("|", item.Entry.Tags)));
                 }
             }
-            catch (BatchResolveException<(PackageIdentifier Id, string? Source)> ex)
+            catch (BatchResultException<(PackageIdentifier Id, string? Source)> ex)
             {
                 var failed = ex
                             .Failures.Keys
@@ -1830,6 +1830,7 @@ public partial class InstanceSetupPageModel(
 
     private bool CanRemoveGroup(GroupModel? group) =>
         group is { Source: not null } && PackageSourceHelper.CanDelete(group.Source, Basic.Source);
+
     // NOTE: SourceOrders 末项 = 最高覆盖力（POLY-116），因此提升优先级表现为向列表尾部移动
     [RelayCommand(CanExecute = nameof(CanRaiseGroupPriority))]
     private async Task RaiseGroupPriorityAsync(GroupModel? group) => await MoveGroupAsync(group, +1);
