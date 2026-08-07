@@ -5,6 +5,10 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium">
 
+    <Style Selector=":is(Window)">
+        <Setter Property="TextElement.FontFamily" Value="{DynamicResource MainFontFamily}" />
+    </Style>
+
     <Style Selector="TextBox">
         <Setter Property="ContextFlyout">
             <MenuFlyout>
@@ -32,6 +36,17 @@
             </MenuFlyout>
         </Setter>
     </Style>
+
+    <Style Selector="husk|CodeViewer">
+        <Setter Property="FontFamily" Value="{DynamicResource CodeFontFamily}" />
+    </Style>
+    <Style Selector="husk|DiffView">
+        <Setter Property="FontFamily" Value="{DynamicResource CodeFontFamily}" />
+    </Style>
+    <Style Selector="husk|HighlightBlock">
+        <Setter Property="FontFamily" Value="{DynamicResource CodeFontFamily}" />
+    </Style>
+
 
     <Style Selector="husk|Dialog">
         <Setter Property="PrimaryText" Value="{Translate {x:Static app:LanguageManager+Keys.Dialog_ConfirmButtonText}}" />

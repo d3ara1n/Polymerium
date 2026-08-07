@@ -18,7 +18,6 @@
     x:DataType="app:MainWindowContext"
     Icon="/Assets/Icon.App.ico"
     Loaded="Control_OnLoaded"
-    TextElement.FontFamily="{DynamicResource MainFontFamily}"
     Unloaded="Control_OnUnloaded"
     mc:Ignorable="d">
     <husk:AppWindow.Resources>
