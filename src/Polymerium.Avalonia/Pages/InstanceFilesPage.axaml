@@ -1009,7 +1009,7 @@
                                             <TextBlock
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
                                                 Text="{x:Static lang:Resources.InstanceFilesPage_DescriptionLabelText}" />
-                                        <app:MinecraftTextBlock
+                                            <app:MinecraftTextBlock
                                                 Text="{Binding Metadata.Description, FallbackValue=No description available}"
                                                 TextWrapping="Wrap" />
                                         </StackPanel>

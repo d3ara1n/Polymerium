@@ -19,7 +19,10 @@ public static class SkinHelper
     public static string ToUri(string type, string src) =>
         Prefix + "?type=" + Uri.EscapeDataString(type) + "&src=" + Uri.EscapeDataString(src);
 
-    public static bool TryGetQuery(string? s, [MaybeNullWhen(false)] out string type, [MaybeNullWhen(false)] out string src)
+    public static bool TryGetQuery(
+        string? s,
+        [MaybeNullWhen(false)] out string type,
+        [MaybeNullWhen(false)] out string src)
     {
         string? t = null;
         string? sr = null;
