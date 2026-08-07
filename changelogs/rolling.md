@@ -6,7 +6,7 @@
 
 ### Fixed
 
--
+- Fix the code font setting not applying to code blocks in descriptions and release notes
 
 ### Added
 

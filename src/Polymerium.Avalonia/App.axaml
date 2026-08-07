@@ -18,8 +18,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <FontFamily x:Key="MainFontFamily">fonts:AlimamaFangYuanTi#AlimamaFangYuanTi</FontFamily>
-            <FontFamily x:Key="CodeFontFamily">Cascadia Code, Consolas, Courier New, monospace</FontFamily>
-            <FontFamily x:Key="LogFontFamily">Cascadia Code, Consolas, monospace</FontFamily>
+            <FontFamily x:Key="CodeFontFamily">Cascadia Code, Menlo, Consolas, Courier New, monospace</FontFamily>
+            <FontFamily x:Key="LogFontFamily">Cascadia Code, Menlo, Consolas, monospace</FontFamily>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
                     <ImageBrush
