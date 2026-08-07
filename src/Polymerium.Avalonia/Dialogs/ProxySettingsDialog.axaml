@@ -6,9 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="{x:Static lang:Resources.ProxySettingsDialog_Title}"
+    Title="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_Title}}"
     Width="420"
     IsPrimaryButtonVisible="True"
     mc:Ignorable="d">
@@ -24,7 +23,7 @@
                         Symbol="Globe" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.ProxySettingsDialog_ModeAutoTitle}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_ModeAutoTitle}}" />
                 </StackPanel>
             </TabStripItem>
             <TabStripItem>
@@ -36,7 +35,7 @@
                         Symbol="Settings" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.ProxySettingsDialog_ModeManualTitle}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_ModeManualTitle}}" />
                 </StackPanel>
             </TabStripItem>
             <TabStripItem>
@@ -48,7 +47,7 @@
                         Symbol="Prohibited" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        Text="{x:Static lang:Resources.ProxySettingsDialog_ModeDisabledTitle}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_ModeDisabledTitle}}" />
                 </StackPanel>
             </TabStripItem>
         </TabStrip>
@@ -75,12 +74,12 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.ProxySettingsDialog_AutoDescription}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_AutoDescription}}" />
                         <TextBlock
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.ProxySettingsDialog_AutoSubtitle}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_AutoSubtitle}}" />
                     </StackPanel>
                 </Border>
             </husk:SwitchCase>
@@ -103,7 +102,7 @@
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.ProxySettingsDialog_ProtocolLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_ProtocolLabelText}}" />
                             <ComboBox
                                 Grid.Row="0"
                                 Grid.Column="1"
@@ -119,7 +118,7 @@
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.ProxySettingsDialog_AddressLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_AddressLabelText}}" />
                             <TextBox
                                 Grid.Row="1"
                                 Grid.Column="1"
@@ -131,7 +130,7 @@
                                 Grid.Row="2"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.ProxySettingsDialog_PortLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_PortLabelText}}" />
                             <TextBox
                                 Grid.Row="2"
                                 Grid.Column="1"
@@ -144,7 +143,7 @@
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.ProxySettingsDialog_AuthenticationTitle}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_AuthenticationTitle}}" />
 
                         <!--  Authentication Grid  -->
                         <Grid
@@ -157,11 +156,11 @@
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.ProxySettingsDialog_UsernameLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_UsernameLabelText}}" />
                             <TextBox
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                PlaceholderText="{x:Static lang:Resources.ProxySettingsDialog_UsernamePlaceholder}"
+                                PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_UsernamePlaceholder}}"
                                 Text="{Binding $parent[app:ProxySettingsDialog].ProxyUsername, Mode=TwoWay}" />
 
                             <!--  Password  -->
@@ -169,12 +168,12 @@
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
-                                Text="{x:Static lang:Resources.ProxySettingsDialog_PasswordLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_PasswordLabelText}}" />
                             <TextBox
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 PasswordChar="●"
-                                PlaceholderText="{x:Static lang:Resources.SettingsPage_ProxyPasswordPlaceholder}"
+                                PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_ProxyPasswordPlaceholder}}"
                                 Text="{Binding $parent[app:ProxySettingsDialog].ProxyPassword, Mode=TwoWay}" />
                         </Grid>
 
@@ -190,7 +189,7 @@
                                 Command="{Binding $parent[app:ProxySettingsDialog].TestConnectionCommand}">
                                 <husk:IconLabel
                                     Icon="PlugConnected"
-                                    Text="{x:Static lang:Resources.ProxySettingsDialog_TestConnectionButtonText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_TestConnectionButtonText}}" />
                             </Button>
 
                             <!--  Test Result Display  -->
@@ -215,7 +214,7 @@
                                             IsIndeterminate="True" />
                                         <TextBlock
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.ProxySettingsDialog_TestingLabelText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_TestingLabelText}}" />
                                     </StackPanel>
                                 </husk:SwitchCase>
 
@@ -276,12 +275,12 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.ProxySettingsDialog_DisabledDescription}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_DisabledDescription}}" />
                         <TextBlock
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.ProxySettingsDialog_DisabledSubtitle}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_DisabledSubtitle}}" />
                     </StackPanel>
                 </Border>
             </husk:SwitchCase>
@@ -296,7 +295,7 @@
                     FontSize="{StaticResource SmallFontSize}"
                     Symbol="Info" />
                 <TextBlock
-                    Text="{x:Static lang:Resources.ProxySettingsDialog_RestartRequiredLabelText}"
+                    Text="{Translate {x:Static app:LanguageManager+Keys.ProxySettingsDialog_RestartRequiredLabelText}}"
                     TextWrapping="Wrap" />
             </DockPanel>
         </husk:InfoBar>

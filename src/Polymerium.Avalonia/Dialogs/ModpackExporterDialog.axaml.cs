@@ -11,7 +11,6 @@ using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
 using TridentCore.Abstractions.FileModels;
-using AppResources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Dialogs;
 
@@ -178,8 +177,7 @@ public partial class ModpackExporterDialog : Dialog
         {
             return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevel.GetTopLevel(this),
                                                            new(PathDef.Default.DirectoryOfImport(model.Key)),
-                                                           AppResources
-                                                              .ModpackExporterDialog_OpenImportFolderDangerNotificationTitle);
+                                                           LanguageManager.Instance.ModpackExporterDialog_OpenImportFolderDangerNotificationTitle.Current());
         }
 
         return Task.CompletedTask;

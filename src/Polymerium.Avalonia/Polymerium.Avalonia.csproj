@@ -41,6 +41,7 @@
         <PackageReference Include="Huskui.Avalonia.Code" Version="1.4.0"/>
         <PackageReference Include="Huskui.Avalonia.Markdown" Version="1.4.0"/>
         <PackageReference Include="Huskui.Avalonia.Mvvm" Version="1.3.4"/>
+        <PackageReference Include="Irihi.Lingua" Version="1.0.0"/>
         <PackageReference Include="JetBrains.Annotations" Version="2026.2.0"/>
         <PackageReference Include="LibGit2Sharp" Version="0.32.0"/>
         <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.1.0-dev-798"/>
@@ -82,15 +83,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Properties\Resources.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Resources.resx</DependentUpon>
-        </Compile>
-        <EmbeddedResource Update="Properties\Resources.resx">
-            <Generator>PublicResXFileCodeGenerator</Generator>
-            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
+        <AdditionalFiles Include="Properties\Resources.resx"/>
+        <AdditionalFiles Include="Properties\Resources.zh-hans.resx"/>
     </ItemGroup>
 
     <ItemGroup>

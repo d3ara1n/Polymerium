@@ -1,6 +1,5 @@
 using System.IO;
 using Avalonia.Media.Imaging;
-using Resources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Models;
 
@@ -9,9 +8,9 @@ public class AssetModModel(FileInfo file, Bitmap icon, AssetModeMetadataModel me
 {
     public override string DisplayName => Metadata.Name ?? base.DisplayName;
 
-    public string Version => Metadata.Version ?? Resources.Enum_Unknown;
-    public string Description => Metadata.Description ?? Resources.Enum_Unknown;
+    public string Version => Metadata.Version ?? LanguageManager.Instance.Enum_Unknown.Current();
+    public string Description => Metadata.Description ?? LanguageManager.Instance.Enum_Unknown.Current();
 
     public string Author =>
-        Metadata.Authors is { Length: > 0 } ? string.Join(", ", Metadata.Authors) : Resources.Enum_Unknown;
+        Metadata.Authors is { Length: > 0 } ? string.Join(", ", Metadata.Authors) : LanguageManager.Instance.Enum_Unknown.Current();
 }

@@ -21,7 +21,6 @@ using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Engines.Deploying;
 using TridentCore.Core.Services.Profiles;
 using TridentCore.Core.Utilities;
-using AppResources = Polymerium.Avalonia.Properties.Resources;
 using Version = TridentCore.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Avalonia.Modals;
@@ -659,9 +658,9 @@ public partial class InstancePackageModal : Modal
     private async Task Build()
     {
         var progress =
-            NotificationService.PopProgress(string.Format(AppResources.InstancePackageModal_BuildProgressTitle,
+            NotificationService.PopProgress(string.Format(LanguageManager.Instance.InstancePackageModal_BuildProgressTitle.Current(),
                                                           Model.ProjectName),
-                                            AppResources.InstancePackageModal_BuildProgressMessage);
+                                            LanguageManager.Instance.InstancePackageModal_BuildProgressMessage.Current());
         try
         {
             var loader = LoaderHelper.TryParse(Guard.Value.Setup.Loader, out var result) ? result.Identity : null;
@@ -682,8 +681,7 @@ public partial class InstancePackageModal : Modal
                 var realPath = Path.Combine(PathDef.Default.DirectoryOfBuild(Guard.Key), plan.RelativeTargetPath);
                 if (!FileHelper.IsInDirectory(realPath, PathDef.Default.DirectoryOfBuild(Guard.Key)))
                 {
-                    throw new InvalidOperationException(AppResources
-                                                           .InstancePackageModal_BuildTargetOutsideBuildDirectoryError);
+                    throw new InvalidOperationException(LanguageManager.Instance.InstancePackageModal_BuildTargetOutsideBuildDirectoryError.Current());
                 }
 
                 var create = false;
@@ -711,16 +709,16 @@ public partial class InstancePackageModal : Modal
                     File.CreateSymbolicLink(realPath, symPath);
                 }
 
-                NotificationService.PopMessage(string.Format(AppResources.InstancePackageModal_BuildSuccessMessage,
+                NotificationService.PopMessage(string.Format(LanguageManager.Instance.InstancePackageModal_BuildSuccessMessage.Current(),
                                                              Model.ProjectName,
                                                              plan.RelativeTargetPath),
-                                               AppResources.InstancePackageModal_BuildSuccessTitle,
+                                               LanguageManager.Instance.InstancePackageModal_BuildSuccessTitle.Current(),
                                                GrowlLevel.Success);
             }
         }
         catch (Exception ex)
         {
-            NotificationService.PopMessage(ex, AppResources.InstancePackageModal_BuildFailedTitle);
+            NotificationService.PopMessage(ex, LanguageManager.Instance.InstancePackageModal_BuildFailedTitle.Current());
         }
         finally
         {

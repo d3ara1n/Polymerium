@@ -6,12 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:SnapshotManagementPageModel"
-    Header="{x:Static lang:Resources.SnapshotManagementPage_Title}"
+    Header="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_Title}}"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
     <Grid ColumnDefinitions="4*,Auto,6*">
@@ -22,7 +21,7 @@
                 ColumnDefinitions="*,Auto">
                 <TextBox
                     Grid.Column="0"
-                    PlaceholderText="{x:Static lang:Resources.SnapshotManagementPage_SearchPlaceholder}"
+                    PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_SearchPlaceholder}}"
                     Text="{Binding SearchText, Mode=TwoWay}">
                     <TextBox.InnerRightContent>
                         <Button
@@ -81,7 +80,7 @@
                     <TextBlock
                         HorizontalAlignment="Center"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.SnapshotManagementPage_EmptyListLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_EmptyListLabelText}}" />
                 </StackPanel>
             </Panel>
         </DockPanel>
@@ -129,7 +128,7 @@
                                         IsVisible="{Binding Remark, Converter={x:Static StringConverters.IsNullOrEmpty}}"
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.SnapshotManagementPage_NoRemarkText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_NoRemarkText}}" />
                                 </StackPanel>
                             </Border>
 
@@ -152,7 +151,7 @@
                                             HorizontalAlignment="Center"
                                             FontSize="{StaticResource CaptionFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.SnapshotManagementPage_PackageCountLabelText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_PackageCountLabelText}}" />
                                     </StackPanel>
                                 </Border>
                                 <Border
@@ -170,7 +169,7 @@
                                             HorizontalAlignment="Center"
                                             FontSize="{StaticResource CaptionFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.SnapshotManagementPage_FileCountLabelText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_FileCountLabelText}}" />
                                     </StackPanel>
                                 </Border>
                                 <Border
@@ -188,7 +187,7 @@
                                             HorizontalAlignment="Center"
                                             FontSize="{StaticResource CaptionFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.SnapshotManagementPage_TotalSizeLabelText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_TotalSizeLabelText}}" />
                                     </StackPanel>
                                 </Border>
                             </Grid>
@@ -204,7 +203,7 @@
                                         FontSize="{StaticResource SmallFontSize}"
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.SnapshotManagementPage_DiffSectionLabelText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_DiffSectionLabelText}}" />
                                     <Grid
                                         ColumnDefinitions="*,*"
                                         ColumnSpacing="8"
@@ -217,7 +216,7 @@
                                             <TextBlock
                                                 FontSize="{StaticResource CaptionFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.SnapshotManagementPage_FilesAddedLabelText}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_FilesAddedLabelText}}" />
                                             <TextBlock
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -231,7 +230,7 @@
                                             <TextBlock
                                                 FontSize="{StaticResource CaptionFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.SnapshotManagementPage_FilesRemovedLabelText}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_FilesRemovedLabelText}}" />
                                             <TextBlock
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -245,7 +244,7 @@
                                             <TextBlock
                                                 FontSize="{StaticResource CaptionFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.SnapshotManagementPage_PackagesAddedLabelText}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_PackagesAddedLabelText}}" />
                                             <TextBlock
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -259,7 +258,7 @@
                                             <TextBlock
                                                 FontSize="{StaticResource CaptionFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.SnapshotManagementPage_PackagesRemovedLabelText}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_PackagesRemovedLabelText}}" />
                                             <TextBlock
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -278,7 +277,7 @@
                                     FontSize="{StaticResource SmallFontSize}"
                                     FontWeight="{StaticResource ControlStrongFontWeight}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.SnapshotManagementPage_ConfigInfoLabelText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_ConfigInfoLabelText}}" />
                                 <Grid
                                     ColumnDefinitions="Auto,*"
                                     ColumnSpacing="8"
@@ -288,7 +287,7 @@
                                         Grid.Row="0"
                                         Grid.Column="0"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.SnapshotManagementPage_GameVersionLabelText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_GameVersionLabelText}}" />
                                     <TextBlock
                                         Grid.Row="0"
                                         Grid.Column="1"
@@ -297,7 +296,7 @@
                                         Grid.Row="1"
                                         Grid.Column="0"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.SnapshotManagementPage_LoaderLabelText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_LoaderLabelText}}" />
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="1"
@@ -316,7 +315,7 @@
                                     Command="{Binding $parent[app:SnapshotManagementPage].((app:SnapshotManagementPageModel)DataContext).RestoreCommand}">
                                     <husk:IconLabel
                                         Icon="ArrowReset"
-                                        Text="{x:Static lang:Resources.SnapshotManagementPage_RestoreButtonText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_RestoreButtonText}}" />
                                 </Button>
                                 <Button
                                     Grid.Column="1"
@@ -324,7 +323,7 @@
                                     Command="{Binding $parent[app:SnapshotManagementPage].((app:SnapshotManagementPageModel)DataContext).DeleteCommand}">
                                     <husk:IconLabel
                                         Icon="Delete"
-                                        Text="{x:Static lang:Resources.SnapshotManagementPage_DeleteButtonText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_DeleteButtonText}}" />
                                 </Button>
                             </Grid>
                         </StackPanel>
@@ -345,7 +344,7 @@
                 <TextBlock
                     HorizontalAlignment="Center"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.SnapshotManagementPage_SelectToViewLabelText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotManagementPage_SelectToViewLabelText}}" />
             </StackPanel>
         </husk:PlaceholderContainer>
     </Grid>

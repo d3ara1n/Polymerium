@@ -4,9 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Header="{x:Static lang:Resources.AccountCreationTrial_Title}"
+    Header="{Translate {x:Static app:LanguageManager+Keys.AccountCreationTrial_Title}}"
     IsNextAvailable="True"
     mc:Ignorable="d">
     <TabStrip Name="RoleSelectBox">

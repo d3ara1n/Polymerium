@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:modalModels="clr-namespace:Polymerium.Avalonia.ModalModels"
     xmlns:models="clr-namespace:Polymerium.Avalonia.Models"
@@ -48,12 +47,12 @@
                         <husk:Tag
                             Classes="Status Danger"
                             IsVisible="{Binding IsMissing}">
-                            <TextBlock Text="{x:Static lang:Resources.InstanceDependencyGraphModal_MissingTagText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDependencyGraphModal_MissingTagText}}" />
                         </husk:Tag>
                         <husk:Tag
                             Classes="Status"
                             IsVisible="{Binding IsRequired}">
-                            <TextBlock Text="{x:Static lang:Resources.InstanceDependencyGraphModal_RequiredTagText}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDependencyGraphModal_RequiredTagText}}" />
                         </husk:Tag>
                     </StackPanel>
                 </Grid>
@@ -214,10 +213,10 @@
                     Orientation="Horizontal"
                     Spacing="6">
                     <husk:Tag>
-                        <TextBlock Text="{Binding SelectedNode?.Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                        <TextBlock Text="{app:LocalizedEnum {Binding SelectedNode?.Kind}}" />
                     </husk:Tag>
                     <husk:Tag>
-                        <TextBlock Text="{Binding SelectedNode?.ReleaseType, Converter={x:Static app:LocalizedEnumConverters.LocalizedReleaseType}}" />
+                        <TextBlock Text="{app:LocalizedEnum {Binding SelectedNode?.ReleaseType}}" />
                     </husk:Tag>
                 </StackPanel>
 
@@ -230,7 +229,7 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <TextBlock Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependenciesTitle}" />
+                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDependencyGraphModal_DependenciesTitle}}" />
                                 <husk:Tag Classes="Status">
                                     <TextBlock Text="{Binding SelectedDependencies.Count}" />
                                 </husk:Tag>
@@ -247,7 +246,7 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 Spacing="4">
-                                <TextBlock Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependentsTitle}" />
+                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDependencyGraphModal_DependentsTitle}}" />
                                 <husk:Tag Classes="Status">
                                     <TextBlock Text="{Binding SelectedDependents.Count}" />
                                 </husk:Tag>
@@ -313,7 +312,7 @@
                         FontSize="{StaticResource SmallFontSize}"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
                         Foreground="{StaticResource ControlAccentForegroundBrush}"
-                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_VisiblePackagesLabel}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDependencyGraphModal_VisiblePackagesLabel}}" />
                 </StackPanel>
                 <StackPanel Spacing="2">
                     <TextBlock
@@ -323,7 +322,7 @@
                     <TextBlock
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_TotalPackagesLabel}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDependencyGraphModal_TotalPackagesLabel}}" />
                 </StackPanel>
                 <StackPanel Spacing="2">
                     <TextBlock
@@ -333,7 +332,7 @@
                     <TextBlock
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_HiddenPackagesLabel}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDependencyGraphModal_HiddenPackagesLabel}}" />
                 </StackPanel>
                 <StackPanel Spacing="2">
                     <TextBlock
@@ -343,7 +342,7 @@
                     <TextBlock
                         FontSize="{StaticResource SmallFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_DependencyCountLabel}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDependencyGraphModal_DependencyCountLabel}}" />
                 </StackPanel>
                 <StackPanel Spacing="2">
                     <TextBlock
@@ -355,7 +354,7 @@
                         FontSize="{StaticResource SmallFontSize}"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
                         Foreground="{StaticResource ControlDangerForegroundBrush}"
-                        Text="{x:Static lang:Resources.InstanceDependencyGraphModal_MissingCountLabel}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDependencyGraphModal_MissingCountLabel}}" />
                 </StackPanel>
             </StackPanel>
         </Border>

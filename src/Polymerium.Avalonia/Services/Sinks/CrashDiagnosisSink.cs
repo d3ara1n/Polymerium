@@ -7,7 +7,6 @@ using DynamicData;
 using Huskui.Avalonia.Models;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
 using TridentCore.Abstractions.Tasks;
@@ -57,14 +56,14 @@ public class CrashDiagnosisSink(
             return;
         }
 
-        notificationService.PopMessage(Resources.MainWindow_InstanceCrashedDangerNotificationMessage.Replace("{0}",
+        notificationService.PopMessage(LanguageManager.Instance.MainWindow_InstanceCrashedDangerNotificationMessage.Current().Replace("{0}",
                                            launcher.Key),
-                                       Resources.MainWindow_InstanceCrashedDangerNotificationTitle,
+                                       LanguageManager.Instance.MainWindow_InstanceCrashedDangerNotificationTitle.Current(),
                                        GrowlLevel.Danger,
                                        thumbnail: ThumbnailHelper.ForInstance(launcher.Key),
                                        actions:
                                        [
-                                           new(Resources.MainWindow_InstanceLaunchingDangerNotificationDiagnoseText,
+                                           new(LanguageManager.Instance.MainWindow_InstanceLaunchingDangerNotificationDiagnoseText.Current(),
                                                new RelayCommand(() => Diagnose(launcher)))
                                        ]);
     }
@@ -85,7 +84,7 @@ public class CrashDiagnosisSink(
 
         var loaderLabel = profile?.Setup.Loader != null && LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
                               ? LoaderHelper.ToDisplayLabel(loader.Identity, loader.Version)
-                              : Resources.Enum_Vanilla;
+                              : LanguageManager.Instance.Enum_Vanilla.Current();
 
         var javaVersion = tracker.JavaVersion?.ToString();
         var javaPath = tracker.JavaHome;

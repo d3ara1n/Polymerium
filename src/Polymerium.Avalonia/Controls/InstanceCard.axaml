@@ -100,7 +100,7 @@
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 TextTrimming="CharacterEllipsis">
                                 <Run Text="..." />
-                                <Run Text="{Binding Basic.LoaderLabel, FallbackValue=Vanilla}" />
+                                <Run Text="{app:LocalizedKey {Binding Basic.LoaderLabel}, FallbackValue=Vanilla}" />
                                 <Run Text="·" />
                                 <Run Text="{Binding Basic.Version, FallbackValue=Unknown}" />
                             </TextBlock>

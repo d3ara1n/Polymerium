@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="540"
     Padding="0"
@@ -45,7 +44,7 @@
                         Text="{Binding UserName, FallbackValue=Name}" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{Binding TypeName, FallbackValue=Type}" />
+                        Text="{app:LocalizedKey {Binding TypeName}, FallbackValue=Type}" />
                 </StackPanel>
                 <Button
                     Classes="Small"
@@ -83,7 +82,7 @@
                     Spacing="2">
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.AccountEntryModal_UuidLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.AccountEntryModal_UuidLabelText}}" />
                     <TextBlock
                         Text="{Binding Uuid, FallbackValue=069a79f444e94726a5befca90e38aaf5}"
                         TextTrimming="CharacterEllipsis" />
@@ -98,7 +97,7 @@
                         Text="{Binding EnrolledAtRaw, StringFormat={}{0:g}, FallbackValue=2025/12/13 02:03}" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.AccountEntryModal_EnrolledLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.AccountEntryModal_EnrolledLabelText}}" />
                 </DockPanel>
                 <DockPanel>
                     <TextBlock
@@ -106,7 +105,7 @@
                         Text="{Binding LastUsedAt, FallbackValue=never}" />
                     <TextBlock
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.AccountEntryModal_LastUsedLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.AccountEntryModal_LastUsedLabelText}}" />
                 </DockPanel>
             </StackPanel>
 
@@ -122,10 +121,10 @@
                         <StackPanel Spacing="8">
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="{Binding TypeName, FallbackValue=Family}" />
+                                Text="{app:LocalizedKey {Binding TypeName}, FallbackValue=Family}" />
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.AccountEntryModal_TrialPrompt}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.AccountEntryModal_TrialPrompt}}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </husk:SwitchCase>
@@ -133,10 +132,10 @@
                         <StackPanel Spacing="8">
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="{Binding TypeName, FallbackValue=Offline}" />
+                                Text="{app:LocalizedKey {Binding TypeName}, FallbackValue=Offline}" />
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.AccountEntryModal_OfflinePrompt}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.AccountEntryModal_OfflinePrompt}}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </husk:SwitchCase>
@@ -144,10 +143,10 @@
                         <StackPanel Spacing="8">
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="{Binding TypeName, FallbackValue=Microsoft}" />
+                                Text="{app:LocalizedKey {Binding TypeName}, FallbackValue=Microsoft}" />
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.AccountEntryModal_MicrosoftPrompt}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.AccountEntryModal_MicrosoftPrompt}}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </husk:SwitchCase>
@@ -155,11 +154,11 @@
                         <StackPanel Spacing="8">
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="{Binding TypeName, FallbackValue=Authlib}" />
+                                Text="{app:LocalizedKey {Binding TypeName}, FallbackValue=Authlib}" />
                             <StackPanel>
                                 <TextBlock
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.AccountEntryModal_AuthlibServerUrlLabel}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.AccountEntryModal_AuthlibServerUrlLabel}}" />
                                 <TextBlock
                                     Text="{Binding AuthlibServerUrl, FallbackValue=https://example.com}"
                                     TextWrapping="Wrap" />

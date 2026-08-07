@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignWidth="460"
     IsPrimaryButtonVisible="True"
@@ -68,7 +67,7 @@
                 </Border>
                 <TextBlock
                     Grid.Row="2"
-                    Text="{x:Static lang:Resources.LoaderEditorDialog_VersionLabelText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.LoaderEditorDialog_VersionLabelText}}" />
                 <husk:LazyContainer
                     Grid.Row="4"
                     MinHeight="36"
@@ -105,7 +104,7 @@
                         <ComboBox
                             IsEnabled="False"
                             SelectedIndex="0">
-                            <ComboBoxItem Content="{x:Static lang:Resources.Error_BadNetwork}" />
+                            <ComboBoxItem Content="{Translate {x:Static app:LanguageManager+Keys.Error_BadNetwork}}" />
                         </ComboBox>
                     </husk:LazyContainer.FaultContent>
                 </husk:LazyContainer>
@@ -124,11 +123,11 @@
                         Symbol="VehicleTractor" />
                     <TextBlock
                         HorizontalAlignment="Center"
-                        Text="{x:Static lang:Resources.LoaderEditorDialog_NoLoaderText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.LoaderEditorDialog_NoLoaderText}}" />
                     <TextBlock
                         HorizontalAlignment="Center"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.LoaderEditorDialog_NoLoaderPrompt}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.LoaderEditorDialog_NoLoaderPrompt}}" />
                 </StackPanel>
                 <Button
                     Name="AddLoaderButton"
@@ -141,7 +140,7 @@
                         <fi:SymbolIcon
                             FontSize="{StaticResource MediumFontSize}"
                             Symbol="Add" />
-                        <TextBlock Text="{x:Static lang:Resources.LoaderEditorDialog_AddLoaderButtonText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.LoaderEditorDialog_AddLoaderButtonText}}" />
                     </StackPanel>
                 </Button>
             </Grid>

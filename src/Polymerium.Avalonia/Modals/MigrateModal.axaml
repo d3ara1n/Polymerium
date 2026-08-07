@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="560"
     Height="540"
@@ -40,7 +39,7 @@
                     VerticalAlignment="Center"
                     FontSize="{StaticResource LargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.MigrateModal_Title}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.MigrateModal_Title}}" />
             </StackPanel>
         </DockPanel>
 
@@ -58,7 +57,7 @@
                                     <fi:SymbolIcon
                                         FontSize="{StaticResource MediumFontSize}"
                                         Symbol="ArrowLeft" />
-                                    <TextBlock Text="{x:Static lang:Resources.MigrateModal_BackButtonText}" />
+                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.MigrateModal_BackButtonText}}" />
                                 </StackPanel>
                             </Button>
                             <Button
@@ -75,7 +74,7 @@
                             <CheckBox
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
-                                Content="{x:Static lang:Resources.MigrateModal_SelectAll}"
+                                Content="{Translate {x:Static app:LanguageManager+Keys.MigrateModal_SelectAll}}"
                                 IsChecked="{Binding $parent[app:MigrateModal].((app:MigrateModalModel)DataContext)?.AllSelected}"
                                 IsThreeState="True" />
                             <TextBlock
@@ -134,7 +133,7 @@
                                                             IsVisible="{Binding Instance.CorruptReason, Converter={x:Static ObjectConverters.IsNotNull}}">
                                                             <TextBlock
                                                                 FontSize="{StaticResource SmallFontSize}"
-                                                                Text="{Binding Instance.CorruptReason, Converter={x:Static app:LocalizedEnumConverters.LocalizedCorruptReason}}" />
+                                                                Text="{app:LocalizedEnum {Binding Instance.CorruptReason}}" />
                                                         </husk:Tag>
                                                     </Grid>
                                                 </CheckBox>
@@ -171,7 +170,7 @@
                                 IsVisible="{Binding IsScanning}"
                                 IsIndeterminate="True"
                                 Theme="{StaticResource SolidProgressRingTheme}" />
-                            <TextBlock Text="{x:Static lang:Resources.MigrateModal_Scan}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.MigrateModal_Scan}}" />
                         </StackPanel>
                     </Button>
                 </husk:ModalActionPanel>
@@ -180,7 +179,7 @@
                     Spacing="12">
                     <TextBlock
                         Opacity="0.7"
-                        Text="{x:Static lang:Resources.MigrateModal_Description}"
+                        Text="{Translate {x:Static app:LanguageManager+Keys.MigrateModal_Description}}"
                         TextWrapping="Wrap" />
                     <TabStrip
                         HorizontalAlignment="Stretch"
@@ -200,7 +199,7 @@
                         <TabStrip.ItemTemplate>
                             <DataTemplate x:DataType="app:MigrateLauncherKindModel">
                                 <StackPanel Spacing="2">
-                                    <TextBlock Text="{Binding Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedLauncherKind}}" />
+                                    <TextBlock Text="{app:LocalizedEnum {Binding Kind}}" />
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
@@ -215,7 +214,7 @@
                         ColumnSpacing="8">
                         <TextBox
                             Grid.Column="0"
-                            PlaceholderText="{x:Static lang:Resources.MigrateModal_DirectoryWatermark}"
+                            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.MigrateModal_DirectoryWatermark}}"
                             Text="{Binding DataDirectory}" />
                         <Button
                             Grid.Column="1"

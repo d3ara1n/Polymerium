@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:trident="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions"
     MinWidth="360"
@@ -65,7 +64,7 @@
                                             Grid.Column="0"
                                             FontSize="{StaticResource SmallFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.Shared_ExternalLinkLabelText}}" />
                                         <fi:SymbolIcon
                                             Grid.Column="1"
                                             FontSize="{StaticResource MediumFontSize}"
@@ -97,7 +96,7 @@
                         <Setter Property="Margin" Value="0" />
                     </Style>
                 </TabControl.Styles>
-                <TabItem Header="{x:Static lang:Resources.InstancePackageModal_BasicsTabText}">
+                <TabItem Header="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_BasicsTabText}}">
                     <DockPanel>
                         <StackPanel
                             DockPanel.Dock="Bottom"
@@ -125,13 +124,13 @@
                                                         <fi:SymbolIcon
                                                             FontSize="{StaticResource MediumFontSize}"
                                                             Symbol="Filter" />
-                                                        <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_AppliedRulesLabelText}" />
+                                                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_AppliedRulesLabelText}}" />
                                                     </StackPanel>
                                                 </DockPanel>
                                                 <TextBlock
                                                     IsVisible="{Binding Matched, Converter={x:Static BoolConverters.Not}}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstancePackageModal_NoRulesLabelText}"
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_NoRulesLabelText}}"
                                                     TextAlignment="Center" />
                                                 <StackPanel
                                                     IsVisible="{Binding Matched}"
@@ -147,7 +146,7 @@
                                                             TextTrimming="LeadingCharacterEllipsis" />
                                                         <TextBlock
                                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                            Text="{x:Static lang:Resources.ProfileRuleModal_DestinationLabelText}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRuleModal_DestinationLabelText}}" />
                                                     </DockPanel>
                                                     <DockPanel>
                                                         <husk:SwitchContainer
@@ -158,18 +157,18 @@
                                                                 <husk:Tag
                                                                     Classes="Danger"
                                                                     CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                    <TextBlock Text="{x:Static lang:Resources.Shared_Yes}" />
+                                                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.Shared_Yes}}" />
                                                                 </husk:Tag>
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="{x:False}">
                                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                    <TextBlock Text="{x:Static lang:Resources.Shared_No}" />
+                                                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.Shared_No}}" />
                                                                 </husk:Tag>
                                                             </husk:SwitchCase>
                                                         </husk:SwitchContainer>
                                                         <TextBlock
                                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                            Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRuleModal_SkippingLabelText}}" />
                                                     </DockPanel>
                                                     <DockPanel>
                                                         <husk:SwitchContainer
@@ -178,18 +177,18 @@
                                                             Value="{Binding Normalizing}">
                                                             <husk:SwitchCase Value="True">
                                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                    <TextBlock Text="{x:Static lang:Resources.Shared_Yes}" />
+                                                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.Shared_Yes}}" />
                                                                 </husk:Tag>
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="False">
                                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                    <TextBlock Text="{x:Static lang:Resources.Shared_No}" />
+                                                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.Shared_No}}" />
                                                                 </husk:Tag>
                                                             </husk:SwitchCase>
                                                         </husk:SwitchContainer>
                                                         <TextBlock
                                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                            Text="{x:Static lang:Resources.ProfileRuleModal_NormalizingLabelText}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRuleModal_NormalizingLabelText}}" />
                                                     </DockPanel>
                                                 </StackPanel>
                                             </StackPanel>
@@ -214,7 +213,7 @@
                                                         Value="{Binding IsSkipped}">
                                                         <husk:SwitchCase Value="{x:True}">
                                                             <husk:Tag Classes="Status">
-                                                                <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_SkippedStatusText}" />
+                                                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_SkippedStatusText}}" />
                                                             </husk:Tag>
                                                         </husk:SwitchCase>
                                                         <husk:SwitchCase Value="{x:False}">
@@ -223,7 +222,7 @@
                                                                 Value="{Binding IsBuilt}">
                                                                 <husk:SwitchCase Value="{x:True}">
                                                                     <husk:Tag Classes="Status Success">
-                                                                        <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_BuiltStatusText}" />
+                                                                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_BuiltStatusText}}" />
                                                                     </husk:Tag>
                                                                 </husk:SwitchCase>
                                                                 <husk:SwitchCase Value="{x:False}">
@@ -231,7 +230,7 @@
                                                                         Orientation="Horizontal"
                                                                         Spacing="4">
                                                                         <husk:Tag Classes="Status">
-                                                                            <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_NotBuiltStatusText}" />
+                                                                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_NotBuiltStatusText}}" />
                                                                         </husk:Tag>
                                                                         <Button
                                                                             Classes="Small"
@@ -239,7 +238,7 @@
                                                                             Command="{Binding BuildCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=app:InstancePackageModal}}">
                                                                             <husk:IconLabel
                                                                                 Icon="DrawerArrowDownload"
-                                                                                Text="{x:Static lang:Resources.InstancePackageModal_BuildButtonText}" />
+                                                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_BuildButtonText}}" />
                                                                         </Button>
                                                                     </StackPanel>
                                                                 </husk:SwitchCase>
@@ -253,7 +252,7 @@
                                                         <fi:SymbolIcon
                                                             FontSize="{StaticResource MediumFontSize}"
                                                             Symbol="Storage" />
-                                                        <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_DeploymentStatusLabelText}" />
+                                                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_DeploymentStatusLabelText}}" />
                                                     </StackPanel>
                                                 </DockPanel>
                                                 <StackPanel Spacing="4">
@@ -267,7 +266,7 @@
                                                             TextTrimming="LeadingCharacterEllipsis" />
                                                         <TextBlock
                                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                            Text="{x:Static lang:Resources.InstancePackageModal_TargetPathLabelText}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_TargetPathLabelText}}" />
                                                     </DockPanel>
                                                 </StackPanel>
                                             </StackPanel>
@@ -285,7 +284,7 @@
                         </ScrollViewer>
                     </DockPanel>
                 </TabItem>
-                <TabItem Header="{x:Static lang:Resources.InstancePackageModal_TagsTabText}">
+                <TabItem Header="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_TagsTabText}}">
                     <Border
                         BorderBrush="{StaticResource ControlBorderBrush}"
                         BorderThickness="1"
@@ -317,7 +316,7 @@
                                                 <fi:SymbolIcon
                                                     FontSize="{Binding $parent[Button].FontSize}"
                                                     Symbol="Add" />
-                                                <TextBlock Text="{x:Static lang:Resources.InstancePackageModal_AddTagButtonText}" />
+                                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_AddTagButtonText}}" />
                                             </StackPanel>
                                         </Button>
                                     </DockPanel>
@@ -337,7 +336,7 @@
                                         HorizontalAlignment="Center"
                                         FontSize="{StaticResource LargeFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                        Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
                                 </StackPanel>
                                 <ItemsControl
                                     Margin="12"
@@ -383,7 +382,7 @@
                         </Grid>
                     </Border>
                 </TabItem>
-                <TabItem Header="{x:Static lang:Resources.InstancePackageModal_VersionsTabText}">
+                <TabItem Header="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_VersionsTabText}}">
                     <Grid
                         RowDefinitions="Auto,*"
                         RowSpacing="8">
@@ -411,13 +410,13 @@
                                                 Grid.Row="0"
                                                 Grid.Column="1"
                                                 FontSize="{StaticResource LargeFontSize}"
-                                                Text="{x:Static lang:Resources.InstancePackageModal_VersionBoxUnspecificTitle}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_VersionBoxUnspecificTitle}}" />
                                             <TextBlock
                                                 Grid.Row="1"
                                                 Grid.Column="1"
                                                 FontSize="{StaticResource SmallFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.InstancePackageModal_VersionBoxUnspecificSubtitle}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_VersionBoxUnspecificSubtitle}}" />
                                         </Grid>
                                     </DataTemplate>
                                     <DataTemplate DataType="app:InstancePackageVersionModel">
@@ -433,7 +432,7 @@
                                                     <TextBlock
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstancePackageModal_VersionBoxLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_VersionBoxLabelText}}" />
                                                     <TextBlock Text="{Binding Name}" />
                                                 </StackPanel>
                                             </Border>
@@ -469,7 +468,7 @@
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         FontSize="{StaticResource LargeFontSize}"
-                                        Text="{x:Static lang:Resources.InstancePackageModal_LockedVersionLabelText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_LockedVersionLabelText}}" />
                                 </StackPanel>
                             </husk:SwitchCase>
                             <husk:SwitchCase Value="False">
@@ -485,7 +484,7 @@
                                                     ColumnDefinitions="*,Auto">
                                                     <CheckBox
                                                         Grid.Column="0"
-                                                        Content="{x:Static lang:Resources.InstancePackageModal_FilterLabelText}"
+                                                        Content="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_FilterLabelText}}"
                                                         IsChecked="{Binding $parent[app:InstancePackageModal].IsFilterEnabled, Mode=TwoWay}" />
                                                     <Button
                                                         Grid.Column="1"
@@ -515,21 +514,21 @@
                                                                             <husk:Tag
                                                                                 Classes="Success"
                                                                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                                <TextBlock Text="{x:Static lang:Resources.ReleaseType_Release}" />
+                                                                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ReleaseType_Release}}" />
                                                                             </husk:Tag>
                                                                         </husk:SwitchCase>
                                                                         <husk:SwitchCase Value="Beta">
                                                                             <husk:Tag
                                                                                 Classes="Warning"
                                                                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                                <TextBlock Text="{x:Static lang:Resources.ReleaseType_Beta}" />
+                                                                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ReleaseType_Beta}}" />
                                                                             </husk:Tag>
                                                                         </husk:SwitchCase>
                                                                         <husk:SwitchCase Value="Alpha">
                                                                             <husk:Tag
                                                                                 Classes="Danger"
                                                                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                                <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
+                                                                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ReleaseType_Alpha}}" />
                                                                             </husk:Tag>
                                                                         </husk:SwitchCase>
                                                                     </husk:SwitchContainer>
@@ -590,7 +589,7 @@
                         </husk:SwitchContainer>
                     </Grid>
                 </TabItem>
-                <TabItem Header="{x:Static lang:Resources.InstancePackageModal_DependenciesTabText}">
+                <TabItem Header="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_DependenciesTabText}}">
                     <husk:LazyContainer Source="{Binding $parent[app:InstancePackageModal].LazyDependencies}">
                         <husk:LazyContainer.SourceTemplate>
                             <DataTemplate DataType="app:InstancePackageDependencyCollection">
@@ -609,7 +608,7 @@
                                                 Grid.Column="0"
                                                 Margin="8,0"
                                                 VerticalAlignment="Center"
-                                                Text="{x:Static lang:Resources.InstancePackageModal_OverviewLabelText}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_OverviewLabelText}}" />
                                             <Border
                                                 Grid.Column="1"
                                                 Padding="8,4"
@@ -644,7 +643,7 @@
                                                 HorizontalAlignment="Center"
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
                                         </StackPanel>
                                         <ScrollViewer>
                                             <ItemsControl ItemsSource="{Binding Mode=OneWay}">
@@ -665,7 +664,7 @@
                         </husk:LazyContainer.SourceTemplate>
                     </husk:LazyContainer>
                 </TabItem>
-                <TabItem Header="{x:Static lang:Resources.InstancePackageModal_DependantsTabText}">
+                <TabItem Header="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_DependantsTabText}}">
                     <husk:LazyContainer Source="{Binding $parent[app:InstancePackageModal].LazyDependants}">
                         <husk:LazyContainer.SourceTemplate>
                             <DataTemplate DataType="app:InstancePackageDependencyCollection">
@@ -684,7 +683,7 @@
                                                 Grid.Column="0"
                                                 Margin="8,0"
                                                 VerticalAlignment="Center"
-                                                Text="{x:Static lang:Resources.InstancePackageModal_OverviewLabelText}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_OverviewLabelText}}" />
                                             <Border
                                                 Grid.Column="1"
                                                 Padding="8,4"
@@ -719,7 +718,7 @@
                                                 HorizontalAlignment="Center"
                                                 FontSize="{StaticResource LargeFontSize}"
                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
                                         </StackPanel>
                                         <ScrollViewer>
                                             <ItemsControl ItemsSource="{Binding Mode=OneWay}">
@@ -740,7 +739,7 @@
                         </husk:LazyContainer.SourceTemplate>
                     </husk:LazyContainer>
                 </TabItem>
-                <TabItem Header="{x:Static lang:Resources.InstancePackageModal_HistoryTabText}">
+                <TabItem Header="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_HistoryTabText}}">
                     <husk:LazyContainer Source="{Binding $parent[app:InstancePackageModal].LazyHistory}">
                         <husk:LazyContainer.SourceTemplate>
                             <DataTemplate DataType="app:InstancePackageModificationCollection">
@@ -758,13 +757,13 @@
                                             HorizontalAlignment="Center"
                                             FontSize="{StaticResource LargeFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
                                     </StackPanel>
                                     <ScrollViewer IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue={x:False}}">
                                         <husk:TimelineControl
                                             ItemsSource="{Binding}"
-                                            NowContent="{x:Static lang:Resources.InstancePackageModal_NowTagText}"
-                                            PastContent="{x:Static lang:Resources.InstancePackageModal_PastTagText}">
+                                            NowContent="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_NowTagText}}"
+                                            PastContent="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_PastTagText}}">
                                             <husk:TimelineControl.HeaderTemplate>
                                                 <DataTemplate DataType="app:InstancePackageModificationModel">
                                                     <husk:SwitchContainer
@@ -850,7 +849,7 @@
                                                             Value="{Binding Kind}">
                                                             <husk:SwitchCase Value="AddUnversioned">
                                                                 <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_AddedLabelText}" />
+                                                                    <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_AddedLabelText}}" />
                                                                     <InlineUIContainer BaselineAlignment="Bottom">
                                                                         <Panel>
                                                                             <Rectangle
@@ -863,14 +862,14 @@
                                                                                 Margin="6,2"
                                                                                 FontSize="{StaticResource ExtraSmallFontSize}"
                                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                                Text="{x:Static lang:Resources.InstancePackageModal_AutoVersionLabelText}" />
+                                                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_AutoVersionLabelText}}" />
                                                                         </Panel>
                                                                     </InlineUIContainer>
                                                                 </TextBlock>
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="AddVersioned">
                                                                 <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_AddedLabelText}" />
+                                                                    <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_AddedLabelText}}" />
                                                                     <Run
                                                                         Foreground="{StaticResource ControlAccentForegroundBrush}"
                                                                         Text="{Binding VersionName}" />
@@ -878,12 +877,12 @@
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="Remove">
                                                                 <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_RemovedPackageText}" />
+                                                                    <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_RemovedPackageText}}" />
                                                                 </TextBlock>
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="Update">
                                                                 <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_UpdatedToLabelText}" />
+                                                                    <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_UpdatedToLabelText}}" />
                                                                     <Run
                                                                         Foreground="{StaticResource ControlAccentForegroundBrush}"
                                                                         Text="{Binding VersionName}" />
@@ -891,7 +890,7 @@
                                                             </husk:SwitchCase>
                                                             <husk:SwitchCase Value="Unset">
                                                                 <TextBlock FontWeight="{StaticResource ControlStrongFontWeight}">
-                                                                    <Run Text="{x:Static lang:Resources.InstancePackageModal_SetToLabelText}" />
+                                                                    <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_SetToLabelText}}" />
                                                                     <InlineUIContainer BaselineAlignment="Bottom">
                                                                         <Panel>
                                                                             <Rectangle
@@ -904,7 +903,7 @@
                                                                                 Margin="6,2"
                                                                                 FontSize="{StaticResource ExtraSmallFontSize}"
                                                                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                                                Text="{x:Static lang:Resources.InstancePackageModal_AutoVersionLabelText}" />
+                                                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_AutoVersionLabelText}}" />
                                                                         </Panel>
                                                                     </InlineUIContainer>
                                                                 </TextBlock>
@@ -956,7 +955,7 @@
                         Spacing="6">
                         <TextBlock
                             VerticalAlignment="Center"
-                            Text="{x:Static lang:Resources.InstancePackageModal_OperationLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_OperationLabelText}}" />
                         <husk:SwitchContainer
                             IsVisible="False"
                             TargetType="x:Boolean"
@@ -984,8 +983,8 @@
                         </husk:SwitchContainer>
                         <ToggleSwitch
                             IsChecked="{Binding Owner.IsEnabled, Mode=TwoWay}"
-                            OffContent="{x:Static lang:Resources.Enum_Disabled}"
-                            OnContent="{x:Static lang:Resources.Enum_Enabled}" />
+                            OffContent="{Translate {x:Static app:LanguageManager+Keys.Enum_Disabled}}"
+                            OnContent="{Translate {x:Static app:LanguageManager+Keys.Enum_Enabled}}" />
                     </StackPanel>
                 </Border>
                 <StackPanel
@@ -994,7 +993,7 @@
                     Spacing="6">
                     <Button
                         Command="{Binding $parent[app:InstancePackageModal].Dismiss}"
-                        Content="{x:Static lang:Resources.Dialog_DismissButtonText}"
+                        Content="{Translate {x:Static app:LanguageManager+Keys.Dialog_DismissButtonText}}"
                         IsCancel="True" />
                 </StackPanel>
             </Grid>

@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.Input;
 using Polymerium.Avalonia.Controls;
 using Polymerium.Avalonia.Services;
 using TridentCore.Abstractions;
-using AppResources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Components;
 
@@ -81,7 +80,7 @@ public partial class OobePrivilege : OobeStep
         }
         catch (Exception ex)
         {
-            NotificationService?.PopMessage(ex, AppResources.OobePrivilege_CreateSymlinkDangerNotificationTitle);
+            NotificationService?.PopMessage(ex, LanguageManager.Instance.OobePrivilege_CreateSymlinkDangerNotificationTitle.Current());
         }
 
         return true;

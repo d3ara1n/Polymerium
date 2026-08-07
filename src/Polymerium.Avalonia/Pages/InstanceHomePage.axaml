@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:trident="using:TridentCore.Abstractions"
     d:DesignHeight="660"
@@ -171,7 +170,7 @@
                     <husk:Tag
                         Grid.Row="0"
                         Grid.Column="0"
-                        Content="{x:Static lang:Resources.InstanceHomePage_OverviewTitle}" />
+                        Content="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_OverviewTitle}}" />
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="0"
@@ -243,7 +242,7 @@
                             Margin="4"
                             VerticalAlignment="Bottom"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.InstanceHomePage_PackageCountText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_PackageCountText}}" />
                     </StackPanel>
                     <Grid
                         Grid.Row="0"
@@ -258,7 +257,7 @@
                             Grid.Column="1"
                             FontSize="{StaticResource LargeFontSize}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                            Text="{x:Static lang:Resources.InstanceHomePage_SetupTitle}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_SetupTitle}}" />
                         <Button
                             Grid.Column="2"
                             Command="{Binding $parent[app:InstancePage].NavigateCommand}"
@@ -269,7 +268,7 @@
                                 Spacing="8">
                                 <TextBlock
                                     FontSize="{StaticResource SmallFontSize}"
-                                    Text="{x:Static lang:Resources.InstanceHomePage_SetupEditButtonText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_SetupEditButtonText}}" />
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource SmallFontSize}"
                                     Symbol="ArrowRight" />
@@ -302,13 +301,13 @@
                                 <TextBlock
                                     Grid.Row="0"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceHomePage_SetupTypeText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_SetupTypeText}}" />
                                 <TextBlock
                                     Grid.Row="1"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     FontSize="{StaticResource LargeFontSize}"
-                                    Text="{Binding Basic.LoaderLabel, FallbackValue=Type}" />
+                                    Text="{app:LocalizedKey {Binding Basic.LoaderLabel}, FallbackValue=Type}" />
                             </Grid>
                             <husk:Divider
                                 Grid.Column="1"
@@ -320,7 +319,7 @@
                                 <TextBlock
                                     Grid.Row="0"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceHomePage_SetupVersionText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_SetupVersionText}}" />
                                 <TextBlock
                                     Grid.Row="1"
                                     HorizontalAlignment="Center"
@@ -358,7 +357,7 @@
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.InstanceHomePage_ActivitiesTitle}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_ActivitiesTitle}}" />
                 <Button
                     Grid.Row="0"
                     Grid.Column="1"
@@ -370,7 +369,7 @@
                         Spacing="8">
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
-                            Text="{x:Static lang:Resources.InstanceHomePage_SeeMoreButtonText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_SeeMoreButtonText}}" />
                         <fi:SymbolIcon
                             FontSize="{StaticResource SmallFontSize}"
                             Symbol="ArrowRight" />
@@ -395,7 +394,7 @@
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock
                                 HorizontalAlignment="Center"
-                                Text="{x:Static lang:Resources.InstanceHomePage_HourCountText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_HourCountText}}" />
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 FontSize="{StaticResource ExtraLargeFontSize}"
@@ -478,7 +477,7 @@
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.InstanceHomePage_WidgetsTitle}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_WidgetsTitle}}" />
                 <Button
                     Grid.Row="0"
                     Grid.Column="1"
@@ -490,7 +489,7 @@
                         Spacing="8">
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
-                            Text="{x:Static lang:Resources.InstanceHomePage_SeeMoreButtonText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_SeeMoreButtonText}}" />
                         <fi:SymbolIcon
                             FontSize="{StaticResource SmallFontSize}"
                             Symbol="ArrowRight" />
@@ -511,7 +510,7 @@
                         HorizontalAlignment="Center"
                         FontSize="{StaticResource LargeFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
                 </StackPanel>
                 <ScrollViewer
                     HorizontalScrollBarVisibility="Auto"
@@ -570,7 +569,7 @@
                     Grid.Column="0"
                     FontSize="{StaticResource LargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.InstanceHomePage_LaunchPadTitle}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_LaunchPadTitle}}" />
                 <husk:Card
                     Grid.Row="1"
                     Grid.Column="0"
@@ -588,7 +587,7 @@
                                         VerticalAlignment="Center"
                                         Foreground="{StaticResource ControlSuccessForegroundBrush}"
                                         Icon="CheckmarkCircle"
-                                        Text="{x:Static lang:Resources.InstanceHomePage_ReadyLabelText}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_ReadyLabelText}}"
                                         TextBlock.TextWrapping="Wrap"
                                         Variant="Filled" />
                                 </husk:SwitchCase>
@@ -598,7 +597,7 @@
                                         VerticalAlignment="Center"
                                         Foreground="{StaticResource ControlDangerForegroundBrush}"
                                         Icon="DismissCircle"
-                                        Text="{x:Static lang:Resources.InstanceHomePage_NoAccountLabelText}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_NoAccountLabelText}}"
                                         TextBlock.TextWrapping="Wrap"
                                         Variant="Filled" />
                                 </husk:SwitchCase>
@@ -626,7 +625,7 @@
                                     VerticalAlignment="Center"
                                     Spacing="2">
                                     <TextBlock
-                                        Text="{Binding DeployingMessage, Mode=OneWay}"
+                                        Text="{app:LocalizedEnum {Binding DeployingMessage, Mode=OneWay}}"
                                         TextAlignment="Center" />
                                     <TextBlock
                                         IsVisible="{Binding HasDeployingFileCount, Mode=OneWay}"
@@ -740,7 +739,7 @@
                                         Symbol="Rocket" />
                                     <TextBlock
                                         HorizontalAlignment="Center"
-                                        Text="{x:Static lang:Resources.InstanceHomePage_LaunchButtonText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_LaunchButtonText}}" />
                                 </StackPanel>
                             </Button>
                             <DockPanel>
@@ -752,7 +751,7 @@
                                     Command="{Binding SwitchModeCommand}"
                                     CornerRadius="{husk:StaticResourceBinding MediumCornerRadius,
                                                                               Converter={x:Static husk:CornerRadiusConverters.Bottom}}">
-                                    <TextBlock Text="{Binding Mode, Converter={x:Static app:LocalizedEnumConverters.LocalizedLaunchMode}, FallbackValue=Mode}" />
+                                    <TextBlock Text="{app:LocalizedEnum {Binding Mode}, FallbackValue=Mode}" />
                                 </Button>
                                 <Button
                                     Margin="0,8,8,8"
@@ -778,13 +777,13 @@
                                                     Grid.Column="1"
                                                     FontSize="{StaticResource MediumFontSize}"
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="{x:Static lang:Resources.InstanceHomePage_AccountButtonTitle}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_AccountButtonTitle}}" />
                                                 <TextBlock
                                                     Grid.Row="1"
                                                     Grid.Column="1"
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceHomePage_AccountButtonSubtitle}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_AccountButtonSubtitle}}" />
                                             </Grid>
                                         </husk:PlaceholderContainer.Placeholder>
                                         <husk:PlaceholderContainer.SourceTemplate>
@@ -815,7 +814,7 @@
                                                         Grid.Column="1"
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding TypeName, FallbackValue=Legacy}" />
+                                                        Text="{app:LocalizedKey {Binding TypeName}, FallbackValue=Legacy}" />
                                                 </Grid>
                                             </DataTemplate>
                                         </husk:PlaceholderContainer.SourceTemplate>
@@ -838,7 +837,7 @@
                                     Symbol="Stop" />
                                 <TextBlock
                                     HorizontalAlignment="Center"
-                                    Text="{x:Static lang:Resources.InstanceHomePage_AbortButtonText}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_AbortButtonText}}" />
                             </StackPanel>
                         </Button>
                     </husk:SwitchCase>
@@ -860,7 +859,7 @@
                                         Symbol="Rocket" />
                                     <TextBlock
                                         HorizontalAlignment="Center"
-                                        Text="{x:Static lang:Resources.InstanceHomePage_KillButtonText}" />
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_KillButtonText}}" />
                                 </StackPanel>
                             </Button>
                             <Grid
@@ -871,7 +870,7 @@
                                     Classes="Small"
                                     Margin="0,8,8,0"
                                     Command="{Binding EjectCommand}">
-                                    <TextBlock Text="{x:Static lang:Resources.InstanceHomePage_DetachButtonText}" />
+                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_DetachButtonText}}" />
                                 </Button>
                                 <Button
                                     Grid.Row="1"
@@ -897,12 +896,12 @@
                                             Grid.Row="0"
                                             Grid.Column="2"
                                             FontWeight="{StaticResource ControlStrongFontWeight}"
-                                            Text="{x:Static lang:Resources.InstanceHomePage_DashboardButtonTitle}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_DashboardButtonTitle}}" />
                                         <TextBlock
                                             Grid.Row="2"
                                             Grid.Column="2"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.InstanceHomePage_DashboardButtonSubtitle}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_DashboardButtonSubtitle}}" />
                                     </Grid>
                                 </Button>
                             </Grid>

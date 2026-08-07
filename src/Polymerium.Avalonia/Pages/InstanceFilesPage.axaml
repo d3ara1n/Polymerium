@@ -9,7 +9,6 @@
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -22,7 +21,7 @@
                 <StackPanel
                     Orientation="Horizontal"
                     Spacing="4">
-                    <TextBlock Text="{x:Static lang:Resources.AssetKind_Mod}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_Mod}}" />
                     <husk:PlaceholderContainer Source="{Binding Mods}">
                         <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="collections:IList">
@@ -65,10 +64,10 @@
                         <StackPanel
                             Grid.Column="1"
                             VerticalAlignment="Center">
-                            <TextBlock Text="{x:Static lang:Resources.InstanceFilesPage_ModInfoBarTitle}" />
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_ModInfoBarTitle}}" />
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceFilesPage_ModInfoBarText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_ModInfoBarText}}" />
                         </StackPanel>
                         <Button
                             Grid.Column="2"
@@ -121,7 +120,7 @@
                                                         VerticalAlignment="Center"
                                                         FontSize="{StaticResource SmallFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceFilesPage_FilterLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_FilterLabelText}}" />
 
                                                     <!--  启用与禁用  -->
                                                     <Grid
@@ -130,24 +129,24 @@
                                                         <TextBlock
                                                             Grid.Column="0"
                                                             VerticalAlignment="Bottom"
-                                                            Text="{x:Static lang:Resources.InstanceFilesPage_StatusFilterText}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_StatusFilterText}}" />
                                                         <TabStrip
                                                             Grid.Column="1"
                                                             SelectedItem="{Binding ModFilterEnability, Mode=TwoWay}"
                                                             Theme="{StaticResource SegmentedTabStripTheme}">
                                                             <TabStrip.ItemTemplate>
                                                                 <DataTemplate DataType="app:FilterModel">
-                                                                    <TextBlock Text="{Binding Label}" />
+                                                                    <TextBlock Text="{app:LocalizedKey {Binding Label}}" />
                                                                 </DataTemplate>
                                                             </TabStrip.ItemTemplate>
                                                             <app:FilterModel
-                                                                Label="{x:Static lang:Resources.Enum_All}"
+                                                                Label="Enum_All"
                                                                 Value="{x:Null}" />
                                                             <app:FilterModel
-                                                                Label="{x:Static lang:Resources.Enum_Enabled}"
+                                                                Label="Enum_Enabled"
                                                                 Value="{x:True}" />
                                                             <app:FilterModel
-                                                                Label="{x:Static lang:Resources.Enum_Disabled}"
+                                                                Label="Enum_Disabled"
                                                                 Value="{x:False}" />
                                                         </TabStrip>
                                                     </Grid>
@@ -161,24 +160,24 @@
                                                         <TextBlock
                                                             Grid.Column="0"
                                                             VerticalAlignment="Bottom"
-                                                            Text="{x:Static lang:Resources.InstanceFilesPage_SourceFilterText}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_SourceFilterText}}" />
                                                         <TabStrip
                                                             Grid.Column="1"
                                                             SelectedItem="{Binding ModFilterLockility, Mode=TwoWay}"
                                                             Theme="{StaticResource SegmentedTabStripTheme}">
                                                             <TabStrip.ItemTemplate>
                                                                 <DataTemplate DataType="app:FilterModel">
-                                                                    <TextBlock Text="{Binding Label}" />
+                                                                    <TextBlock Text="{app:LocalizedKey {Binding Label}}" />
                                                                 </DataTemplate>
                                                             </TabStrip.ItemTemplate>
                                                             <app:FilterModel
-                                                                Label="{x:Static lang:Resources.Enum_All}"
+                                                                Label="Enum_All"
                                                                 Value="{x:Null}" />
                                                             <app:FilterModel
-                                                                Label="{x:Static lang:Resources.InstanceFilesPage_SourceImportText}"
+                                                                Label="InstanceFilesPage_SourceImportText"
                                                                 Value="{x:True}" />
                                                             <app:FilterModel
-                                                                Label="{x:Static lang:Resources.InstanceFilesPage_SourceLocalText}"
+                                                                Label="InstanceFilesPage_SourceLocalText"
                                                                 Value="{x:False}" />
                                                         </TabStrip>
                                                     </Grid>
@@ -192,18 +191,18 @@
                                                         <TextBlock
                                                             Grid.Column="0"
                                                             VerticalAlignment="Bottom"
-                                                            Text="{x:Static lang:Resources.InstanceFilesPage_LoaderFilterText}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_LoaderFilterText}}" />
                                                         <TabStrip
                                                             Grid.Column="1"
                                                             SelectedItem="{Binding ModFilterLoader, Mode=TwoWay}"
                                                             Theme="{StaticResource SegmentedTabStripTheme}">
                                                             <TabStrip.ItemTemplate>
                                                                 <DataTemplate DataType="app:FilterModel">
-                                                                    <TextBlock Text="{Binding Label}" />
+                                                                    <TextBlock Text="{app:LocalizedKey {Binding Label}}" />
                                                                 </DataTemplate>
                                                             </TabStrip.ItemTemplate>
                                                             <app:FilterModel
-                                                                Label="{x:Static lang:Resources.Enum_All}"
+                                                                Label="Enum_All"
                                                                 Value="{x:Null}" />
                                                             <app:FilterModel
                                                                 Label="Fabric"
@@ -386,7 +385,7 @@
                                                         IsVisible="{Binding IsLocked}">
                                                         <husk:IconLabel
                                                             Icon="LockClosed"
-                                                            Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_ImportTagText}}" />
                                                     </husk:Tag>
                                                     <husk:Tag
                                                         IsVisible="{Binding Metadata.LoaderType, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
@@ -407,12 +406,12 @@
                                                     <husk:SwitchCase Value="{x:True}">
                                                         <husk:IconLabel
                                                             Icon="Power"
-                                                            Text="{x:Static lang:Resources.Enum_Disabled}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.Enum_Disabled}}" />
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="{x:False}">
                                                         <husk:IconLabel
                                                             Icon="Power"
-                                                            Text="{x:Static lang:Resources.Enum_Enabled}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.Enum_Enabled}}" />
                                                     </husk:SwitchCase>
                                                 </husk:SwitchContainer>
                                             </Button>
@@ -440,7 +439,7 @@
                                             <StackPanel Spacing="8">
                                                 <TextBlock
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="{x:Static lang:Resources.InstanceFilesPage_DescriptionLabelText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_DescriptionLabelText}}" />
                                                 <app:MinecraftTextBlock
                                                     Text="{Binding Metadata.Description, FallbackValue=No description available}"
                                                     TextWrapping="Wrap" />
@@ -452,7 +451,7 @@
                                             <StackPanel Spacing="12">
                                                 <TextBlock
                                                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                    Text="{x:Static lang:Resources.InstanceFilesPage_DetailsLabelText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_DetailsLabelText}}" />
                                                 <Grid
                                                     ColumnDefinitions="Auto,*"
                                                     ColumnSpacing="16"
@@ -462,7 +461,7 @@
                                                         Grid.Row="0"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceFilesPage_AssetFileNameLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetFileNameLabelText}}" />
                                                     <TextBlock
                                                         Grid.Row="0"
                                                         Grid.Column="1"
@@ -474,7 +473,7 @@
                                                         Grid.Column="0"
                                                         IsVisible="{Binding Metadata.ModId, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceFilesPage_AssetModIdLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetModIdLabelText}}" />
                                                     <TextBlock
                                                         Grid.Row="1"
                                                         Grid.Column="1"
@@ -486,7 +485,7 @@
                                                         Grid.Column="0"
                                                         IsVisible="{Binding Metadata.License, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceFilesPage_AssetLicenseLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetLicenseLabelText}}" />
                                                     <TextBlock
                                                         Grid.Row="2"
                                                         Grid.Column="1"
@@ -497,7 +496,7 @@
                                                         Grid.Row="3"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceFilesPage_AssetFileSizeLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetFileSizeLabelText}}" />
                                                     <TextBlock
                                                         Grid.Row="3"
                                                         Grid.Column="1"
@@ -507,7 +506,7 @@
                                                         Grid.Row="4"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceFilesPage_AssetLastModifiedLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetLastModifiedLabelText}}" />
                                                     <TextBlock
                                                         Grid.Row="4"
                                                         Grid.Column="1"
@@ -517,7 +516,7 @@
                                                         Grid.Row="5"
                                                         Grid.Column="0"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{x:Static lang:Resources.InstanceFilesPage_AssetStatusLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetStatusLabelText}}" />
                                                     <husk:SwitchContainer
                                                         Grid.Row="5"
                                                         Grid.Column="1"
@@ -526,12 +525,12 @@
                                                         <husk:SwitchCase Value="{x:True}">
                                                             <TextBlock
                                                                 Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                                                Text="{x:Static lang:Resources.Enum_Enabled}" />
+                                                                Text="{Translate {x:Static app:LanguageManager+Keys.Enum_Enabled}}" />
                                                         </husk:SwitchCase>
                                                         <husk:SwitchCase Value="{x:False}">
                                                             <TextBlock
                                                                 Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                                Text="{x:Static lang:Resources.Enum_Disabled}" />
+                                                                Text="{Translate {x:Static app:LanguageManager+Keys.Enum_Disabled}}" />
                                                         </husk:SwitchCase>
                                                     </husk:SwitchContainer>
                                                 </Grid>
@@ -550,7 +549,7 @@
                                                     Spacing="8">
                                                     <husk:IconLabel
                                                         Icon="Open"
-                                                        Text="{x:Static lang:Resources.InstanceFilesPage_AssetVisitWebsiteButtonText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetVisitWebsiteButtonText}}" />
                                                 </StackPanel>
                                             </Button>
                                         </husk:Card>
@@ -571,7 +570,7 @@
                                 <TextBlock
                                     FontSize="{StaticResource LargeFontSize}"
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{x:Static lang:Resources.InstanceFilesPage_AssetEmptyPrompt}" />
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetEmptyPrompt}}" />
                             </StackPanel>
                         </husk:PlaceholderContainer>
                     </ScrollViewer>
@@ -583,7 +582,7 @@
                 <StackPanel
                     Orientation="Horizontal"
                     Spacing="4">
-                    <TextBlock Text="{x:Static lang:Resources.AssetKind_Server}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_Server}}" />
                     <husk:PlaceholderContainer Source="{Binding Servers}">
                         <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="collections:IList">
@@ -665,27 +664,27 @@
                                                     <husk:SwitchCase Value="{x:True}">
                                                         <husk:Tag>
                                                             <TextBlock>
-                                                                <Run Text="{x:Static lang:Resources.InstanceFilesPage_ServerResourcePackPreferenceLabelText}" />
+                                                                <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_ServerResourcePackPreferenceLabelText}}" />
                                                                 <Run Text=": " />
-                                                                <Run Text="{x:Static lang:Resources.InstanceFilesPage_ServerResourcePackAcceptText}" />
+                                                                <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_ServerResourcePackAcceptText}}" />
                                                             </TextBlock>
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="{x:False}">
                                                         <husk:Tag>
                                                             <TextBlock>
-                                                                <Run Text="{x:Static lang:Resources.InstanceFilesPage_ServerResourcePackPreferenceLabelText}" />
+                                                                <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_ServerResourcePackPreferenceLabelText}}" />
                                                                 <Run Text=": " />
-                                                                <Run Text="{x:Static lang:Resources.InstanceFilesPage_ServerResourcePackRejectText}" />
+                                                                <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_ServerResourcePackRejectText}}" />
                                                             </TextBlock>
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="{x:Null}">
                                                         <husk:Tag>
                                                             <TextBlock>
-                                                                <Run Text="{x:Static lang:Resources.InstanceFilesPage_ServerResourcePackPreferenceLabelText}" />
+                                                                <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_ServerResourcePackPreferenceLabelText}}" />
                                                                 <Run Text=": " />
-                                                                <Run Text="{x:Static lang:Resources.InstanceFilesPage_ServerResourcePackPromptText}" />
+                                                                <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_ServerResourcePackPromptText}}" />
                                                             </TextBlock>
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
@@ -737,7 +736,7 @@
                                                 TargetType="x:Boolean"
                                                 Value="{Binding IsStatusLoading}">
                                                 <husk:SwitchCase Value="{x:True}">
-                                                    <husk:Tag Content="{x:Static lang:Resources.InstanceFilesPage_ServerCheckingText}" />
+                                                    <husk:Tag Content="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_ServerCheckingText}}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="{x:False}">
                                                     <husk:SwitchContainer
@@ -751,7 +750,7 @@
                                                         <husk:SwitchCase Value="{x:False}">
                                                             <husk:Tag
                                                                 Classes="Danger"
-                                                                Content="{x:Static lang:Resources.InstanceFilesPage_ServerUnavailableText}" />
+                                                                Content="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_ServerUnavailableText}}" />
                                                         </husk:SwitchCase>
                                                     </husk:SwitchContainer>
                                                 </husk:SwitchCase>
@@ -770,7 +769,7 @@
                 <StackPanel
                     Orientation="Horizontal"
                     Spacing="4">
-                    <TextBlock Text="{x:Static lang:Resources.AssetKind_ResourcePack}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_ResourcePack}}" />
                     <husk:PlaceholderContainer Source="{Binding ResourcePacks}">
                         <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="collections:IList">
@@ -957,7 +956,7 @@
                                                     IsVisible="{Binding IsLocked}">
                                                     <husk:IconLabel
                                                         Icon="LockClosed"
-                                                        Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_ImportTagText}}" />
                                                 </husk:Tag>
                                                 <husk:Tag Content="{Binding PackFormat, StringFormat='Format {0}'}" />
                                             </StackPanel>
@@ -975,12 +974,12 @@
                                                 <husk:SwitchCase Value="{x:True}">
                                                     <husk:IconLabel
                                                         Icon="Power"
-                                                        Text="{x:Static lang:Resources.Enum_Disabled}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.Enum_Disabled}}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="{x:False}">
                                                     <husk:IconLabel
                                                         Icon="Power"
-                                                        Text="{x:Static lang:Resources.Enum_Enabled}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.Enum_Enabled}}" />
                                                 </husk:SwitchCase>
                                             </husk:SwitchContainer>
                                         </Button>
@@ -1008,7 +1007,7 @@
                                         <StackPanel Spacing="8">
                                             <TextBlock
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                Text="{x:Static lang:Resources.InstanceFilesPage_DescriptionLabelText}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_DescriptionLabelText}}" />
                                             <app:MinecraftTextBlock
                                                 Text="{Binding Metadata.Description, FallbackValue=No description available}"
                                                 TextWrapping="Wrap" />
@@ -1020,7 +1019,7 @@
                                         <StackPanel Spacing="12">
                                             <TextBlock
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                Text="{x:Static lang:Resources.InstanceFilesPage_DetailsLabelText}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_DetailsLabelText}}" />
                                             <Grid
                                                 ColumnDefinitions="Auto,*"
                                                 ColumnSpacing="16"
@@ -1030,7 +1029,7 @@
                                                     Grid.Row="0"
                                                     Grid.Column="0"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceFilesPage_AssetFileNameLabelText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetFileNameLabelText}}" />
                                                 <TextBlock
                                                     Grid.Row="0"
                                                     Grid.Column="1"
@@ -1041,7 +1040,7 @@
                                                     Grid.Row="1"
                                                     Grid.Column="0"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceFilesPage_AssetPackFormatLabelText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetPackFormatLabelText}}" />
                                                 <TextBlock
                                                     Grid.Row="1"
                                                     Grid.Column="1"
@@ -1051,7 +1050,7 @@
                                                     Grid.Row="2"
                                                     Grid.Column="0"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceFilesPage_AssetFileSizeLabelText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetFileSizeLabelText}}" />
                                                 <TextBlock
                                                     Grid.Row="2"
                                                     Grid.Column="1"
@@ -1061,7 +1060,7 @@
                                                     Grid.Row="3"
                                                     Grid.Column="0"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceFilesPage_AssetLastModifiedLabelText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetLastModifiedLabelText}}" />
                                                 <TextBlock
                                                     Grid.Row="3"
                                                     Grid.Column="1"
@@ -1071,7 +1070,7 @@
                                                     Grid.Row="4"
                                                     Grid.Column="0"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.InstanceFilesPage_AssetStatusLabelText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetStatusLabelText}}" />
                                                 <husk:SwitchContainer
                                                     Grid.Row="4"
                                                     Grid.Column="1"
@@ -1080,12 +1079,12 @@
                                                     <husk:SwitchCase Value="{x:True}">
                                                         <TextBlock
                                                             Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                                            Text="{x:Static lang:Resources.Enum_Enabled}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.Enum_Enabled}}" />
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="{x:False}">
                                                         <TextBlock
                                                             Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                            Text="{x:Static lang:Resources.Enum_Disabled}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.Enum_Disabled}}" />
                                                     </husk:SwitchCase>
                                                 </husk:SwitchContainer>
                                             </Grid>
@@ -1108,7 +1107,7 @@
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceFilesPage_AssetEmptyPrompt}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetEmptyPrompt}}" />
                         </StackPanel>
                     </husk:PlaceholderContainer>
                 </ScrollViewer>
@@ -1119,7 +1118,7 @@
                 <StackPanel
                     Orientation="Horizontal"
                     Spacing="4">
-                    <TextBlock Text="{x:Static lang:Resources.AssetKind_DataPack}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_DataPack}}" />
                     <husk:PlaceholderContainer Source="{Binding DataPacks}">
                         <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="collections:IList">
@@ -1307,7 +1306,7 @@
                                                     IsVisible="{Binding IsLocked}">
                                                     <husk:IconLabel
                                                         Icon="LockClosed"
-                                                        Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_ImportTagText}}" />
                                                 </husk:Tag>
                                                 <husk:Tag Content="{Binding PackFormat, StringFormat='Format {0}'}" />
                                             </StackPanel>
@@ -1325,12 +1324,12 @@
                                                 <husk:SwitchCase Value="{x:True}">
                                                     <husk:IconLabel
                                                         Icon="Power"
-                                                        Text="{x:Static lang:Resources.Enum_Disabled}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.Enum_Disabled}}" />
                                                 </husk:SwitchCase>
                                                 <husk:SwitchCase Value="{x:False}">
                                                     <husk:IconLabel
                                                         Icon="Power"
-                                                        Text="{x:Static lang:Resources.Enum_Enabled}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.Enum_Enabled}}" />
                                                 </husk:SwitchCase>
                                             </husk:SwitchContainer>
                                         </Button>
@@ -1435,12 +1434,12 @@
                                                     <husk:SwitchCase Value="{x:True}">
                                                         <TextBlock
                                                             Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                                            Text="{x:Static lang:Resources.Enum_Enabled}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.Enum_Enabled}}" />
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="{x:False}">
                                                         <TextBlock
                                                             Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                            Text="{x:Static lang:Resources.Enum_Disabled}" />
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.Enum_Disabled}}" />
                                                     </husk:SwitchCase>
                                                 </husk:SwitchContainer>
                                             </Grid>
@@ -1463,7 +1462,7 @@
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstanceFilesPage_AssetEmptyPrompt}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_AssetEmptyPrompt}}" />
                         </StackPanel>
                     </husk:PlaceholderContainer>
                 </ScrollViewer>
@@ -1474,7 +1473,7 @@
                 <StackPanel
                     Orientation="Horizontal"
                     Spacing="4">
-                    <TextBlock Text="{x:Static lang:Resources.AssetKind_Screenshot}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_Screenshot}}" />
                     <husk:PlaceholderContainer Source="{Binding ScreenshotGroups}">
                         <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="app:AssetScreenshotCollection">
@@ -1503,7 +1502,7 @@
                         HorizontalAlignment="Center"
                         FontSize="{StaticResource LargeFontSize}"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
                 </StackPanel>
                 <ScrollViewer
                     HorizontalScrollBarVisibility="Auto"
@@ -1635,7 +1634,7 @@
                                                                             IsVisible="{Binding IsLocked}">
                                                                             <husk:IconLabel
                                                                                 Icon="LockClosed"
-                                                                                Text="{x:Static lang:Resources.InstancePackageButton_ImportTagText}" />
+                                                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_ImportTagText}}" />
                                                                         </husk:Tag>
                                                                         <husk:Tag Content="{Binding Time}" />
                                                                     </StackPanel>
@@ -1659,7 +1658,7 @@
                 <StackPanel
                     Orientation="Horizontal"
                     Spacing="4">
-                    <TextBlock Text="{x:Static lang:Resources.AssetKind_Save}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AssetKind_Save}}" />
                     <husk:PlaceholderContainer Source="{Binding Worlds}">
                         <husk:PlaceholderContainer.SourceTemplate>
                             <DataTemplate DataType="collections:IList">
@@ -1793,7 +1792,7 @@
                                         <StackPanel Spacing="12">
                                             <TextBlock
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                Text="{x:Static lang:Resources.InstanceFilesPage_DetailsLabelText}" />
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_DetailsLabelText}}" />
                                             <Grid
                                                 ColumnDefinitions="Auto,*"
                                                 ColumnSpacing="16"
@@ -1860,7 +1859,7 @@
                                     <!--  数据包板块  -->
                                     <Expander
                                         Padding="0"
-                                        Header="{x:Static lang:Resources.InstanceFilesPage_DataPacksLabelText}"
+                                        Header="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_DataPacksLabelText}}"
                                         IsExpanded="True">
                                         <app:EmptyContainer IsEmpty="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).SelectedWorldDataPacks.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:False}}">
                                             <ScrollViewer MaxHeight="320">
@@ -1956,7 +1955,7 @@
 
                                     <!--  玩家板块  -->
                                     <Expander
-                                        Header="{x:Static lang:Resources.InstanceFilesPage_PlayersLabelText}"
+                                        Header="{Translate {x:Static app:LanguageManager+Keys.InstanceFilesPage_PlayersLabelText}}"
                                         IsExpanded="True">
                                         <app:EmptyContainer IsEmpty="{Binding $parent[app:InstanceFilesPage].((app:InstanceFilesPageModel)DataContext).SelectedWorldPlayers.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue={x:False}}">
                                             <Grid
@@ -2056,7 +2055,7 @@
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.Shared_EmptyListLabelText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
                         </StackPanel>
                     </husk:PlaceholderContainer>
                 </ScrollViewer>

@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resources="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions"
     Width="540"
@@ -40,7 +39,7 @@
                                 CommandParameter="{Binding}"
                                 CornerRadius="{StaticResource FullCornerRadius}"
                                 Theme="{StaticResource OutlineButtonTheme}">
-                                <TextBlock Text="{Binding Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                <TextBlock Text="{app:LocalizedEnum {Binding}}" />
                             </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -106,7 +105,7 @@
             ColumnSpacing="12">
             <TextBox
                 Grid.Column="0"
-                PlaceholderText="{x:Static lang:Resources.PackageSelectorDialog_SearchPlaceholder}"
+                PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.PackageSelectorDialog_SearchPlaceholder}}"
                 Text="{Binding $parent[app:PackageSelectorDialog].FilterText, Mode=TwoWay}">
                 <TextBox.InnerLeftContent>
                     <StackPanel Orientation="Horizontal">
@@ -138,10 +137,10 @@
                 Grid.Column="2"
                 Classes="Small"
                 Command="{Binding $parent[app:PackageSelectorDialog].ClearAllCommand}"
-                ToolTip.Tip="{x:Static lang:Resources.PackageSelectorDialog_ClearAllText}">
+                ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.PackageSelectorDialog_ClearAllText}}">
                 <husk:IconLabel
                     Icon="SelectAllOff"
-                    Text="{x:Static lang:Resources.PackageSelectorDialog_ClearAllText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.PackageSelectorDialog_ClearAllText}}" />
             </Button>
         </Grid>
 
@@ -156,7 +155,7 @@
                 Command="{Binding $parent[app:PackageSelectorDialog].SelectAllVisibleCommand}">
                 <husk:IconLabel
                     Icon="CheckmarkSquare"
-                    Text="{x:Static lang:Resources.PackageSelectorDialog_SelectAllVisibleText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.PackageSelectorDialog_SelectAllVisibleText}}" />
             </Button>
             <Button
                 Classes="Small"
@@ -164,7 +163,7 @@
                 Command="{Binding $parent[app:PackageSelectorDialog].ClearVisibleCommand}">
                 <husk:IconLabel
                     Icon="Square"
-                    Text="{x:Static lang:Resources.PackageSelectorDialog_ClearVisibleText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.PackageSelectorDialog_ClearVisibleText}}" />
             </Button>
         </StackPanel>
 
@@ -184,7 +183,7 @@
                     HorizontalAlignment="Center"
                     FontSize="{StaticResource LargeFontSize}"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{x:Static lang:Resources.PackageSelectorDialog_EmptyText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.PackageSelectorDialog_EmptyText}}" />
             </StackPanel>
             <ScrollViewer
                 MaxHeight="360"
@@ -248,7 +247,7 @@
                                         Grid.Column="3"
                                         VerticalAlignment="Center"
                                         IsVisible="{Binding Kind, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
-                                        Content="{Binding Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}"
+                                        Content="{app:LocalizedEnum {Binding Kind}}"
                                         CornerRadius="{StaticResource SmallCornerRadius}" />
                                 </Grid>
                             </Border>

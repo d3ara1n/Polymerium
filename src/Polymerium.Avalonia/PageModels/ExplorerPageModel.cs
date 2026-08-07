@@ -19,7 +19,6 @@ using Polymerium.Avalonia.Exceptions;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Refit;
 using TridentCore.Abstractions.Repositories;
@@ -56,7 +55,7 @@ public partial class ExplorerPageModel : ViewModelBase
             IsFilterEnabled = true;
             FilterLoaderLabel = initial.Loader != null && LoaderHelper.TryParse(initial.Loader, out var loader)
                                     ? LoaderHelper.ToDisplayName(loader.Identity)
-                                    : Resources.Enum_Vanilla;
+                                    : "Enum_Vanilla";
             FilterVersionLabel = initial.Version;
         }
 
@@ -322,12 +321,12 @@ public partial class ExplorerPageModel : ViewModelBase
                 }
                 catch (ApiException ex)
                 {
-                    _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+                    _notificationService.PopMessage(ex, LanguageManager.Instance.Error_BadNetwork.Current(), GrowlLevel.Warning);
                     Debug.WriteLine(ex);
                 }
                 catch (HttpRequestException ex)
                 {
-                    _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+                    _notificationService.PopMessage(ex, LanguageManager.Instance.Error_BadNetwork.Current(), GrowlLevel.Warning);
                     Debug.WriteLine(ex);
                 }
 
@@ -337,12 +336,12 @@ public partial class ExplorerPageModel : ViewModelBase
         }
         catch (ApiException ex)
         {
-            _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+            _notificationService.PopMessage(ex, LanguageManager.Instance.Error_BadNetwork.Current(), GrowlLevel.Warning);
             Debug.WriteLine(ex);
         }
         catch (HttpRequestException ex)
         {
-            _notificationService.PopMessage(ex, Resources.Error_BadNetwork, GrowlLevel.Warning);
+            _notificationService.PopMessage(ex, LanguageManager.Instance.Error_BadNetwork.Current(), GrowlLevel.Warning);
             Debug.WriteLine(ex);
         }
     }
@@ -363,7 +362,7 @@ public partial class ExplorerPageModel : ViewModelBase
         catch (Exception ex)
         {
             _notificationService.PopMessage(ex,
-                                            Resources.ExplorerPage_LoadProjectInformationDangerNotificationTitle,
+                                            LanguageManager.Instance.ExplorerPage_LoadProjectInformationDangerNotificationTitle.Current(),
                                             GrowlLevel.Warning,
                                             exhibit.Thumbnail);
         }

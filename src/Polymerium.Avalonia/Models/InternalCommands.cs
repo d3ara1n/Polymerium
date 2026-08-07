@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Utilities;
 
 namespace Polymerium.Avalonia.Models;
@@ -16,7 +15,7 @@ public static class InternalCommands
         {
             return TopLevelHelper.LaunchUriAsync(TopLevelHelper.GetTopLevel(),
                                                  uri,
-                                                 Resources.InternalCommands_OpenLinkDangerNotificationTitle);
+                                                 LanguageManager.Instance.InternalCommands_OpenLinkDangerNotificationTitle.Current());
         }
 
         return Task.CompletedTask;
@@ -28,7 +27,7 @@ public static class InternalCommands
         {
             return TopLevelHelper.LaunchUriAsync(TopLevelHelper.GetTopLevel(),
                                                  new(str),
-                                                 Resources.InternalCommands_OpenLinkDangerNotificationTitle);
+                                                 LanguageManager.Instance.InternalCommands_OpenLinkDangerNotificationTitle.Current());
         }
 
         return Task.CompletedTask;
@@ -45,7 +44,7 @@ public static class InternalCommands
         {
             return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
                                                            new(path),
-                                                           Resources.Shared_FailedToOpenFolderDangerNotificationTitle);
+                                                           LanguageManager.Instance.Shared_FailedToOpenFolderDangerNotificationTitle.Current());
         }
 
         return Task.CompletedTask;
@@ -60,6 +59,6 @@ public static class InternalCommands
 
         await TopLevelHelper.CopyToClipboardAsync(TopLevelHelper.GetTopLevel(),
                                                   text,
-                                                  Resources.InternalCommands_CopyTextDangerNotificationTitle);
+                                                  LanguageManager.Instance.InternalCommands_CopyTextDangerNotificationTitle.Current());
     });
 }

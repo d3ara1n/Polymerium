@@ -182,8 +182,8 @@ public partial class JavaHomeContainer : UserControl
     {
         if (OverlayService != null)
         {
-            var path = await OverlayService.RequestFileAsync(Properties.Resources.JavaHomeContainer_RequestJavaPrompt,
-                                                             Properties.Resources.JavaHomeContainer_ReqeustJavaTitle);
+            var path = await OverlayService.RequestFileAsync(LanguageManager.Instance.JavaHomeContainer_RequestJavaPrompt.Current(),
+                                                             LanguageManager.Instance.JavaHomeContainer_ReqeustJavaTitle.Current());
             if (path != null && File.Exists(path))
             {
                 var dir = Path.GetDirectoryName(Path.GetDirectoryName(path));

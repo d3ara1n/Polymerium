@@ -6,13 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Padding="0"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="app:MarketplacePortalPageModel"
-    Header="{x:Static lang:Resources.MarketplacePortalPage_Title}"
+    Header="{Translate {x:Static app:LanguageManager+Keys.MarketplacePortalPage_Title}}"
     mc:Ignorable="d">
     <Grid RowDefinitions="Auto,0">
         <Panel
@@ -26,7 +25,7 @@
                 <TextBlock
                     FontSize="{StaticResource ExtraLargeFontSize}"
                     FontWeight="{StaticResource ControlStrongFontWeight}"
-                    Text="{x:Static lang:Resources.MarketplacePortalPage_DiscoveryCenterTitle}"
+                    Text="{Translate {x:Static app:LanguageManager+Keys.MarketplacePortalPage_DiscoveryCenterTitle}}"
                     TextAlignment="Center">
                     <TextBlock.Effect>
                         <DropShadowEffect
@@ -49,7 +48,7 @@
                     HorizontalContentAlignment="Center"
                     BorderThickness="0,0,0,2"
                     Foreground="{StaticResource ControlAccentForegroundBrush}"
-                    PlaceholderText="{x:Static lang:Resources.MarketplacePortalPage_DiscoveryCenterSubtitle}"
+                    PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.MarketplacePortalPage_DiscoveryCenterSubtitle}}"
                     Theme="{StaticResource UnderlineTextBoxTheme}" />
                 <Button
                     Classes="Primary"
@@ -68,7 +67,7 @@
                             Symbol="Search" />
                         <TextBlock
                             VerticalAlignment="Center"
-                            Text="{x:Static lang:Resources.MarketplacePortalPage_SearchButtonText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.MarketplacePortalPage_SearchButtonText}}" />
                     </StackPanel>
                 </Button>
                 <Button
@@ -99,11 +98,11 @@
                             Spacing="2">
                             <TextBlock
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                Text="{x:Static lang:Resources.MarketplacePortalPage_ModpacksEntryTitle}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.MarketplacePortalPage_ModpacksEntryTitle}}" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Opacity="0.7"
-                                Text="{x:Static lang:Resources.MarketplacePortalPage_ModpacksEntryDescription}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.MarketplacePortalPage_ModpacksEntryDescription}}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                         <fi:SymbolIcon

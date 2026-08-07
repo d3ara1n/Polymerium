@@ -3,7 +3,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:local="clr-namespace:Polymerium.Avalonia.Controls"
     xmlns:models="clr-namespace:Polymerium.Avalonia.Models">
     <!--  Selection 恒非 null（DefaultFontModel 兜底），按派生类型直接匹配 DataTemplate。  -->
@@ -24,7 +24,7 @@
                     <TextBlock
                         VerticalAlignment="Center"
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Text="{x:Static lang:Resources.SettingsPage_FontDefaultText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_FontDefaultText}}" />
                 </StackPanel>
             </DataTemplate>
             <!--  系统字体：信息卡片  -->
@@ -37,7 +37,7 @@
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.FontPickerDialog_CurrentFontLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.FontPickerDialog_CurrentFontLabelText}}" />
                         <TextBlock
                             FontFamily="{Binding Preview}"
                             FontWeight="{StaticResource ControlStrongFontWeight}"
@@ -54,7 +54,7 @@
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource DangerForegroundBrush}"
-                                Text="{x:Static lang:Resources.FontPickerDialog_UnavailableText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.FontPickerDialog_UnavailableText}}" />
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -69,7 +69,7 @@
                         <TextBlock
                             FontSize="{StaticResource SmallFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{x:Static lang:Resources.FontPickerDialog_CurrentFontLabelText}" />
+                            Text="{Translate {x:Static app:LanguageManager+Keys.FontPickerDialog_CurrentFontLabelText}}" />
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="6">
@@ -100,7 +100,7 @@
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource DangerForegroundBrush}"
-                                Text="{x:Static lang:Resources.FontPickerDialog_UnavailableText}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.FontPickerDialog_UnavailableText}}" />
                         </StackPanel>
                     </StackPanel>
                 </Border>

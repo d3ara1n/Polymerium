@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     MinHeight="360"
     Margin="64"
@@ -98,7 +97,7 @@
                                                     Grid.Column="0"
                                                     FontSize="{StaticResource SmallFontSize}"
                                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                    Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}" />
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.Shared_ExternalLinkLabelText}}" />
                                                 <fi:SymbolIcon
                                                     Grid.Column="1"
                                                     FontSize="{StaticResource MediumFontSize}"
@@ -189,7 +188,7 @@
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource MediumFontSize}"
                                             Symbol="Add" />
-                                        <TextBlock Text="{x:Static lang:Resources.ExhibitProjectModal_AddButtonText}" />
+                                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitProjectModal_AddButtonText}}" />
                                     </StackPanel>
                                 </Button>
                             </Grid>
@@ -205,7 +204,7 @@
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource SmallFontSize}"
                                             Symbol="AddCircle" />
-                                        <TextBlock Text="{x:Static lang:Resources.ExhibitProjectModal_AddingTagText}" />
+                                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitProjectModal_AddingTagText}}" />
                                     </StackPanel>
                                 </husk:Tag>
                                 <Grid
@@ -252,7 +251,7 @@
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource SmallFontSize}"
                                             Symbol="Checkmark" />
-                                        <TextBlock Text="{x:Static lang:Resources.ExhibitProjectModal_InRecipeTagText}" />
+                                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitProjectModal_InRecipeTagText}}" />
                                     </StackPanel>
                                 </husk:Tag>
                                 <Grid
@@ -300,7 +299,7 @@
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource SmallFontSize}"
                                             Symbol="Delete" />
-                                        <TextBlock Text="{x:Static lang:Resources.ExhibitProjectModal_RemovingTagText}" />
+                                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitProjectModal_RemovingTagText}}" />
                                     </StackPanel>
                                 </husk:Tag>
                                 <Grid
@@ -335,7 +334,7 @@
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
                                                 Symbol="ArrowReset" />
-                                            <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_RestoreButtonText}" />
+                                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_RestoreButtonText}}" />
                                         </StackPanel>
                                     </Button>
                                 </Grid>

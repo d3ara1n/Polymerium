@@ -6,7 +6,6 @@ using Humanizer;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Core.Accounts;
-using Resources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Models;
 
@@ -29,25 +28,25 @@ public partial class AccountModel : ModelBase
         AuthlibServerUrl = authlibServerUrl;
         if (type.IsAssignableTo(typeof(MicrosoftAccount)))
         {
-            TypeName = Resources.Account_Microsoft;
+            TypeName = "Account_Microsoft";
             Color1 = Color.FromArgb(255, 131, 158, 255);
             Color2 = Color.FromArgb(255, 121, 255, 207);
         }
         else if (type.IsAssignableTo(typeof(AuthlibAccount)))
         {
-            TypeName = Resources.Account_AuthlibInjector;
+            TypeName = "Account_AuthlibInjector";
             Color1 = Color.FromArgb(255, 131, 200, 255);
             Color2 = Color.FromArgb(255, 180, 130, 255);
         }
         else if (type.IsAssignableTo(typeof(TrialAccount)))
         {
-            TypeName = Resources.Account_Trial;
+            TypeName = "Account_Trial";
             Color1 = Color.FromArgb(255, 253, 160, 133);
             Color2 = Color.FromArgb(255, 246, 211, 101);
         }
         else
         {
-            TypeName = Resources.Account_Offline;
+            TypeName = "Account_Offline";
             Color1 = Color.FromArgb(255, 134, 143, 150);
             Color2 = Color.FromArgb(255, 89, 97, 100);
         }

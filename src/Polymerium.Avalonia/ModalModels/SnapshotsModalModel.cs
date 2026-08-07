@@ -5,7 +5,6 @@ using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using TridentCore.Core.Services;
 
@@ -58,7 +57,7 @@ public class SnapshotsModalModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, Resources.SnapshotsModal_OpenDatabaseDangerNotificationTitle);
+            _notificationService.PopMessage(ex, LanguageManager.Instance.SnapshotsModal_OpenDatabaseDangerNotificationTitle.Current());
         }
 
         _navigateHandler!.Invoke(typeof(SnapshotPortalPage));

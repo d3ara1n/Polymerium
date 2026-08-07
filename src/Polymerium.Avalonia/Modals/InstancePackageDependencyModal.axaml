@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:m="using:Polymerium.Avalonia.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:trident="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions"
@@ -64,7 +63,7 @@
                                             Grid.Column="0"
                                             FontSize="{StaticResource SmallFontSize}"
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                            Text="{x:Static lang:Resources.Shared_ExternalLinkLabelText}" />
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.Shared_ExternalLinkLabelText}}" />
                                         <fi:SymbolIcon
                                             Grid.Column="1"
                                             FontSize="{StaticResource MediumFontSize}"
@@ -86,7 +85,7 @@
                         <husk:Tag
                             Classes="Warning"
                             IsVisible="{Binding IsRequired}"
-                            Content="{x:Static lang:Resources.InstancePackageDependencyButton_RequiredTagText}" />
+                            Content="{Translate {x:Static app:LanguageManager+Keys.InstancePackageDependencyButton_RequiredTagText}}" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -116,11 +115,11 @@
                             VerticalAlignment="Center">
                             <TextBlock
                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                Text="{x:Static lang:Resources.InstancePackageDependencyModal_AutoVersionTitle}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageDependencyModal_AutoVersionTitle}}" />
                             <TextBlock
                                 FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{x:Static lang:Resources.InstancePackageDependencyModal_AutoVersionSubtitle}" />
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageDependencyModal_AutoVersionSubtitle}}" />
                         </StackPanel>
                         <ToggleSwitch
                             Grid.Column="2"
@@ -133,7 +132,7 @@
                 <CheckBox
                     Grid.Row="1"
                     IsVisible="{Binding $parent[app:InstancePackageDependencyModal].IsAutoVersion, Converter={x:Static BoolConverters.Not}}"
-                    Content="{x:Static lang:Resources.InstancePackageModal_FilterLabelText}"
+                    Content="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_FilterLabelText}}"
                     IsChecked="{Binding $parent[app:InstancePackageDependencyModal].IsFilterEnabled, Mode=TwoWay}" />
                 <!--  Version ListBox  -->
                 <husk:LazyContainer
@@ -157,21 +156,21 @@
                                                         <husk:Tag
                                                             Classes="Success"
                                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                                            <TextBlock Text="{x:Static lang:Resources.ReleaseType_Release}" />
+                                                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ReleaseType_Release}}" />
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="Beta">
                                                         <husk:Tag
                                                             Classes="Warning"
                                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                                            <TextBlock Text="{x:Static lang:Resources.ReleaseType_Beta}" />
+                                                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ReleaseType_Beta}}" />
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
                                                     <husk:SwitchCase Value="Alpha">
                                                         <husk:Tag
                                                             Classes="Danger"
                                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                                            <TextBlock Text="{x:Static lang:Resources.ReleaseType_Alpha}" />
+                                                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ReleaseType_Alpha}}" />
                                                         </husk:Tag>
                                                     </husk:SwitchCase>
                                                 </husk:SwitchContainer>
@@ -231,13 +230,13 @@
                         <fi:SymbolIcon
                             FontSize="{StaticResource MediumFontSize}"
                             Symbol="Add" />
-                        <TextBlock Text="{x:Static lang:Resources.ExhibitPackageModal_AddButtonText}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_AddButtonText}}" />
                     </StackPanel>
                 </Button>
                 <Button
                     Grid.Column="1"
                     Command="{Binding $parent[app:InstancePackageDependencyModal].Dismiss}"
-                    Content="{x:Static lang:Resources.Dialog_DismissButtonText}"
+                    Content="{Translate {x:Static app:LanguageManager+Keys.Dialog_DismissButtonText}}"
                     IsCancel="True" />
             </Grid>
         </Grid>

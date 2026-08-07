@@ -9,7 +9,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Huskui.Avalonia.Mvvm.States;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Services.Sinks;
 using Sentry;
@@ -97,7 +96,7 @@ internal static class Program
         CultureInfo.CurrentUICulture = culture;
         CultureInfo.DefaultThreadCurrentCulture = culture;
         CultureInfo.DefaultThreadCurrentUICulture = culture;
-        Resources.Culture = culture;
+        LanguageManager.Instance.UpdateCulture(culture);
         var loader = new AppImageLoader(Services.GetRequiredService<HttpClient>(),
                                         Services.GetRequiredService<SkinRenderService>(),
                                         Services.GetRequiredService<ILogger<AppImageLoader>>());

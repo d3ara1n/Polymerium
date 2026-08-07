@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Padding="0"
     d:DesignHeight="600"
@@ -21,11 +20,11 @@
             <TextBlock
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{x:Static lang:Resources.ProfileRulesModal_Title}" />
+                Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRulesModal_Title}}" />
             <TextBlock
                 MaxWidth="{Binding $parent[Panel].Bounds.Width}"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{x:Static lang:Resources.ProfileRulesModal_Message}"
+                Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRulesModal_Message}}"
                 TextWrapping="Wrap" />
         </StackPanel>
         <app:EmptyContainer
@@ -67,14 +66,14 @@
                                                     Spacing="6">
                                                     <TextBlock
                                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="{x:Static lang:Resources.SelectorType_And}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.SelectorType_And}}" />
                                                     <husk:Divider
                                                         Margin="0,4"
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                        <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
+                                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRulesModal_RuleCountLabelText}}" />
                                                         <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
                                                     </TextBlock>
                                                 </StackPanel>
@@ -85,14 +84,14 @@
                                                     Spacing="6">
                                                     <TextBlock
                                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="{x:Static lang:Resources.SelectorType_Or}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.SelectorType_Or}}" />
                                                     <husk:Divider
                                                         Margin="0,4"
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                        <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
+                                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRulesModal_RuleCountLabelText}}" />
                                                         <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
                                                     </TextBlock>
                                                 </StackPanel>
@@ -103,14 +102,14 @@
                                                     Spacing="6">
                                                     <TextBlock
                                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="{x:Static lang:Resources.SelectorType_Not}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.SelectorType_Not}}" />
                                                     <husk:Divider
                                                         Margin="0,4"
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         FontSize="{StaticResource MediumFontSize}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                                                        <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
+                                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRulesModal_RuleCountLabelText}}" />
                                                         <Run Text="{Binding Selector.Children.Count, FallbackValue=N/A}" />
                                                     </TextBlock>
                                                 </StackPanel>
@@ -121,7 +120,7 @@
                                                     Spacing="6">
                                                     <TextBlock
                                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="{x:Static lang:Resources.SelectorType_Pref}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.SelectorType_Pref}}" />
                                                     <husk:Divider
                                                         Margin="0,4"
                                                         Orientation="Vertical" />
@@ -136,7 +135,7 @@
                                                     Spacing="6">
                                                     <TextBlock
                                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="{x:Static lang:Resources.SelectorType_Repository}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.SelectorType_Repository}}" />
                                                     <husk:Divider
                                                         Margin="0,4"
                                                         Orientation="Vertical" />
@@ -151,7 +150,7 @@
                                                     Spacing="6">
                                                     <TextBlock
                                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="{x:Static lang:Resources.SelectorType_Tag}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.SelectorType_Tag}}" />
                                                     <husk:Divider
                                                         Margin="0,4"
                                                         Orientation="Vertical" />
@@ -166,13 +165,13 @@
                                                     Spacing="6">
                                                     <TextBlock
                                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                        Text="{x:Static lang:Resources.SelectorType_Kind}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.SelectorType_Kind}}" />
                                                     <husk:Divider
                                                         Margin="0,4"
                                                         Orientation="Vertical" />
                                                     <TextBlock
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="{Binding Selector.Kind, Converter={x:Static app:LocalizedEnumConverters.LocalizedResourceKind}}" />
+                                                        Text="{app:LocalizedEnum {Binding Selector.Kind}}" />
                                                 </StackPanel>
                                             </husk:SwitchCase>
                                         </husk:SwitchContainer>
@@ -192,7 +191,7 @@
                                                         Symbol="Prohibited" />
                                                     <TextBlock
                                                         FontSize="{StaticResource SmallFontSize}"
-                                                        Text="{x:Static lang:Resources.ProfileRuleModal_SkippingLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRuleModal_SkippingLabelText}}" />
                                                 </StackPanel>
                                             </husk:Tag>
 
@@ -207,7 +206,7 @@
                                                         Symbol="TextEffectsSparkle" />
                                                     <TextBlock
                                                         FontSize="{StaticResource SmallFontSize}"
-                                                        Text="{x:Static lang:Resources.ProfileRuleModal_NormalizingLabelText}" />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRuleModal_NormalizingLabelText}}" />
                                                 </StackPanel>
                                             </husk:Tag>
 
@@ -286,7 +285,7 @@
                 Grid.Column="0"
                 VerticalAlignment="Center"
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                <Run Text="{x:Static lang:Resources.ProfileRulesModal_RuleCountLabelText}" />
+                <Run Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRulesModal_RuleCountLabelText}}" />
                 <Run Text="{Binding $parent[app:ProfileRulesModal].Rules.Count, FallbackValue=0}" />
             </TextBlock>
             <husk:ModalActionPanel
@@ -299,11 +298,11 @@
                     IsDefault="True">
                     <husk:IconLabel
                         Icon="Add"
-                        Text="{x:Static lang:Resources.ProfileRulesModal_AddRuleButtonText}" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRulesModal_AddRuleButtonText}}" />
                 </Button>
                 <Button
                     Command="{Binding $parent[husk:Modal].Dismiss}"
-                    Content="{x:Static lang:Resources.Dialog_DismissButtonText}" />
+                    Content="{Translate {x:Static app:LanguageManager+Keys.Dialog_DismissButtonText}}" />
             </husk:ModalActionPanel>
         </Grid>
     </Grid>

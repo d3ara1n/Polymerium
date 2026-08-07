@@ -253,7 +253,7 @@ public partial class ProxySettingsDialog : Dialog
             {
                 TestState = 2; // Success
                 TestResultMessage =
-                    $"{Properties.Resources.ProxySettingsDialog_TestSuccessLabelText} ({stopwatch.ElapsedMilliseconds}ms)";
+                    $"{LanguageManager.Instance.ProxySettingsDialog_TestSuccessLabelText.Current()} ({stopwatch.ElapsedMilliseconds}ms)";
             }
             else
             {

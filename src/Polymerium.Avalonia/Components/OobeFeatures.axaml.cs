@@ -29,38 +29,38 @@ public partial class OobeFeatures : OobeStep
         new()
         {
             Icon = Symbol.BranchFork,
-            Title = Properties.Resources.OobeFeatures_GitIntegration_Title,
-            Description = Properties.Resources.OobeFeatures_GitIntegration_Description
+            Title = LanguageManager.Instance.OobeFeatures_GitIntegration_Title.Current(),
+            Description = LanguageManager.Instance.OobeFeatures_GitIntegration_Description.Current()
         },
         new()
         {
             Icon = Symbol.Document,
-            Title = Properties.Resources.OobeFeatures_PortableMetadata_Title,
-            Description = Properties.Resources.OobeFeatures_PortableMetadata_Description
+            Title = LanguageManager.Instance.OobeFeatures_PortableMetadata_Title.Current(),
+            Description = LanguageManager.Instance.OobeFeatures_PortableMetadata_Description.Current()
         },
         new()
         {
             Icon = Symbol.Globe,
-            Title = Properties.Resources.OobeFeatures_MultiRepository_Title,
-            Description = Properties.Resources.OobeFeatures_MultiRepository_Description
+            Title = LanguageManager.Instance.OobeFeatures_MultiRepository_Title.Current(),
+            Description = LanguageManager.Instance.OobeFeatures_MultiRepository_Description.Current()
         },
         new()
         {
             Icon = Symbol.FolderLink,
-            Title = Properties.Resources.OobeFeatures_SmartResource_Title,
-            Description = Properties.Resources.OobeFeatures_SmartResource_Description
+            Title = LanguageManager.Instance.OobeFeatures_SmartResource_Title.Current(),
+            Description = LanguageManager.Instance.OobeFeatures_SmartResource_Description.Current()
         },
         new()
         {
             Icon = Symbol.ShieldCheckmark,
-            Title = Properties.Resources.OobeFeatures_IntegrityCheck_Title,
-            Description = Properties.Resources.OobeFeatures_IntegrityCheck_Description
+            Title = LanguageManager.Instance.OobeFeatures_IntegrityCheck_Title.Current(),
+            Description = LanguageManager.Instance.OobeFeatures_IntegrityCheck_Description.Current()
         },
         new()
         {
             Icon = Symbol.Rocket,
-            Title = Properties.Resources.OobeFeatures_OneClick_Title,
-            Description = Properties.Resources.OobeFeatures_OneClick_Description
+            Title = LanguageManager.Instance.OobeFeatures_OneClick_Title.Current(),
+            Description = LanguageManager.Instance.OobeFeatures_OneClick_Description.Current()
         }
     ];
 }

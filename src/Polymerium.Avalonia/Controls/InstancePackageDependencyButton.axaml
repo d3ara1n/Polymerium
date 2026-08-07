@@ -2,8 +2,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
-    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages">
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
     <ControlTheme
         x:Key="InstancePackageDependencyButtonTheme"
         TargetType="app:PackageDependencyButton">
@@ -64,10 +63,10 @@
                                 <husk:Tag
                                     VerticalAlignment="Center"
                                     IsVisible="{Binding IsRequired}"
-                                    Content="{x:Static lang:Resources.InstancePackageDependencyButton_RequiredTagText}" />
+                                    Content="{Translate {x:Static app:LanguageManager+Keys.InstancePackageDependencyButton_RequiredTagText}}" />
                                 <husk:Tag VerticalAlignment="Center">
                                     <TextBlock>
-                                        <Run Text="{x:Static lang:Resources.InstancePackageDependencyButton_RefCountTagText}" />
+                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageDependencyButton_RefCountTagText}}" />
                                         <Run Text="{Binding RefCount}" />
                                     </TextBlock>
                                 </husk:Tag>

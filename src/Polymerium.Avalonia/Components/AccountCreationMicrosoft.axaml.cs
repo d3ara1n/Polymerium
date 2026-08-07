@@ -13,7 +13,6 @@ using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Accounts;
 using TridentCore.Core.Accounts;
 using TridentCore.Core.Services;
-using AppResources = Polymerium.Avalonia.Properties.Resources;
 
 namespace Polymerium.Avalonia.Components;
 
@@ -132,7 +131,7 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
 
         await TopLevelHelper.CopyToClipboardAsync(TopLevel.GetTopLevel(this),
                                                   Model.UserCode,
-                                                  AppResources.AccountCreationMicrosoft_CopyCodeDangerNotificationTitle,
+                                                  LanguageManager.Instance.AccountCreationMicrosoft_CopyCodeDangerNotificationTitle.Current(),
                                                   NotificationService);
     }
 

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Mvvm.Activation;
-using Polymerium.Avalonia.Properties;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
@@ -164,7 +163,7 @@ public partial class InstanceStoragePageModel(
         {
             return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
                                                            new(dir),
-                                                           Resources.Shared_FailedToOpenFolderDangerNotificationTitle);
+                                                           LanguageManager.Instance.Shared_FailedToOpenFolderDangerNotificationTitle.Current());
         }
 
         return Task.CompletedTask;
@@ -198,8 +197,7 @@ public partial class InstanceStoragePageModel(
         {
             return TopLevelHelper.LaunchDirectoryInfoAsync(TopLevelHelper.GetTopLevel(),
                                                            new(dir),
-                                                           Resources
-                                                              .InstanceStoragePage_OpenFolderDangerNotificationTitle
+                                                           LanguageManager.Instance.InstanceStoragePage_OpenFolderDangerNotificationTitle.Current()
                                                               .Replace("{0}", folderName));
         }
 

@@ -5,9 +5,8 @@
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:controls="clr-namespace:Polymerium.Avalonia.Controls"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
-    xmlns:lang="https://github.com/d3ara1n/Polymerium/Languages"
     xmlns:sys="clr-namespace:System;assembly=System.Runtime"
-    Title="{x:Static lang:Resources.FontPickerDialog_Title}"
+    Title="{Translate {x:Static app:LanguageManager+Keys.FontPickerDialog_Title}}"
     Width="380"
     IsPrimaryButtonVisible="True"
     ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -34,7 +33,7 @@
                 Command="{Binding $parent[app:FontPickerDialog].UseDefaultCommand}">
                 <husk:IconLabel
                     Icon="ArrowReset"
-                    Text="{x:Static lang:Resources.FontPickerDialog_UseDefaultButtonText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.FontPickerDialog_UseDefaultButtonText}}" />
             </Button>
             <Button
                 Grid.Column="1"
@@ -42,14 +41,14 @@
                 Command="{Binding $parent[app:FontPickerDialog].ChooseFileCommand}">
                 <husk:IconLabel
                     Icon="DocumentAdd"
-                    Text="{x:Static lang:Resources.FontPickerDialog_ChooseFileButtonText}" />
+                    Text="{Translate {x:Static app:LanguageManager+Keys.FontPickerDialog_ChooseFileButtonText}}" />
             </Button>
         </Grid>
 
         <!--  搜索框  -->
         <TextBox
             Grid.Row="2"
-            PlaceholderText="{x:Static lang:Resources.FontPickerDialog_SearchPlaceholderText}"
+            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.FontPickerDialog_SearchPlaceholderText}}"
             Text="{Binding $parent[app:FontPickerDialog].SearchText, Mode=TwoWay}" />
 
         <!--  系统字体列表（左字体名 + 右样例预览，均用该字体渲染）  -->

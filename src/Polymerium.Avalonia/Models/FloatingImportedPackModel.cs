@@ -1,5 +1,4 @@
 using Polymerium.Avalonia.Facilities;
-using Polymerium.Avalonia.Properties;
 using TridentCore.Abstractions.Importers;
 using TridentCore.Abstractions.Utilities;
 
@@ -18,7 +17,7 @@ public class FloatingImportedPackModel(
     public string LoaderLabel { get; } =
         container.Profile.Setup.Loader != null && LoaderHelper.TryParse(container.Profile.Setup.Loader, out var result)
             ? LoaderHelper.ToDisplayLabel(result.Identity, result.Version)
-            : Resources.Enum_None;
+            : LanguageManager.Instance.Enum_None.Current();
 
     public CompressedProfilePack Pack => pack;
     public ImportedProfileContainer Container => container;
