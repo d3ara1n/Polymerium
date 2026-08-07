@@ -41,7 +41,6 @@
         <PackageReference Include="Huskui.Avalonia.Code" Version="1.4.0"/>
         <PackageReference Include="Huskui.Avalonia.Markdown" Version="1.4.0"/>
         <PackageReference Include="Huskui.Avalonia.Mvvm" Version="1.3.4"/>
-        <PackageReference Include="IconPacks.Avalonia.Lucide" Version="2.0.0"/>
         <PackageReference Include="JetBrains.Annotations" Version="2026.2.0"/>
         <PackageReference Include="LibGit2Sharp" Version="0.32.0"/>
         <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.1.0-dev-798"/>
@@ -70,9 +69,6 @@
         <PackageReference Include="Tomlyn" Version="2.10.1"/>
         <PackageReference Include="Velopack" Version="1.2.0"/>
         <PackageReference Include="VelopackExtension.MirrorChyan" Version="1.0.8"/>
-        <!-- Hot Reload -->
-        <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="12.1.1" PrivateAssets="All" Publish="True"/>
-        <PackageReference Include="HotAvalonia" Version="3.1.4" PrivateAssets="All" Publish="True"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -90,9 +86,6 @@
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>Resources.resx</DependentUpon>
-        </Compile>
-        <Compile Update="Views\InstanceFilesPage.axaml.cs">
-            <DependentUpon>InstanceFilesPage.axaml</DependentUpon>
         </Compile>
         <EmbeddedResource Update="Properties\Resources.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>

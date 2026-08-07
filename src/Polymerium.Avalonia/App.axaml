@@ -8,7 +8,6 @@
     <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
     <Application.Styles>
         <husk:HuskuiTheme />
-        <StyleInclude Source="avares://IconPacks.Avalonia.Lucide/Lucide.axaml" />
         <StyleInclude Source="avares://Polymerium/Themes/Bundle.axaml" />
         <StyleInclude Source="avares://Huskui.Avalonia/Themes/Addons.InlineUIContainerAlignment.axaml" />
         <StyleInclude Source="avares://Huskui.Avalonia/Themes/Addons.NoAutoScrollToSelectedItem.axaml" />
