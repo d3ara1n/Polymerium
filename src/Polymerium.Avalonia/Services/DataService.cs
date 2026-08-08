@@ -35,7 +35,7 @@ public class DataService(
     MojangService mojangService,
     IHttpClientFactory httpClientFactory)
 {
-    private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromHours(12);
+    private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromMinutes(5);
     private static readonly TimeSpan ICON_FILE_EXPIRED_IN = TimeSpan.FromDays(30);
 
     public async ValueTask<Package> IdentifyVersionAsync(string filePath) => await agent.IdentifyAsync(filePath);
@@ -66,9 +66,9 @@ public class DataService(
     // 以下为 DataService 独有的内存缓存，数据源不在 RepositoryAgent 中
     // 或经过额外处理（如 Bitmap 解码、版本数量截断）
 
-    public ValueTask<Bitmap> GetBitmapAsync(Uri url)
+    public ValueTask<Bitmap> GetBitmapAsync(Uri url, int maxWidth = 64)
     {
-        var key = $"bitmap:{url.AbsoluteUri}";
+        var key = $"bitmap:{maxWidth}:{url.AbsoluteUri}";
 
         // 第一层：内存缓存（包括进行中的 Task，天然去重）
         if (cache.TryGetValue(key, out var cached) && cached is Task<Bitmap> task)
@@ -76,9 +76,10 @@ public class DataService(
             return new(task);
         }
 
-        var rv = LoadOrDownloadBitmapAsync(url);
+        var rv = LoadOrDownloadBitmapAsync(url, maxWidth);
         var entry = cache.CreateEntry(key);
         entry.AbsoluteExpirationRelativeToNow = EXPIRED_IN;
+        entry.Size = 1;
         entry.Value = rv;
         // 缓存驱逐时不释放 Bitmap，因为 Bitmap 可能仍被 UI 引用，
         // 提前释放会导致 ObjectDisposedException。
@@ -87,7 +88,7 @@ public class DataService(
         return new(rv);
     }
 
-    private async Task<Bitmap> LoadOrDownloadBitmapAsync(Uri url)
+    private async Task<Bitmap> LoadOrDownloadBitmapAsync(Uri url, int maxWidth)
     {
         var hash = Convert.ToHexString(SHA1.HashData(Encoding.UTF8.GetBytes(url.AbsoluteUri))).ToLowerInvariant();
         var path = PathDef.Default.FileOfIconObject(hash);
@@ -112,7 +113,8 @@ public class DataService(
             File.Move(tmp, path, true);
         }
 
-        return new(new MemoryStream(bytes));
+        using var memory = new MemoryStream(bytes);
+        return Bitmap.DecodeToWidth(memory, maxWidth, BitmapInterpolationMode.LowQuality);
     }
 
     public ValueTask<IEnumerable<Version>> InspectVersionsAsync(string label, string? ns, string pid, Filter filter) =>
@@ -180,7 +182,11 @@ public class DataService(
         var rv = Task.Run(factory);
         if (cachedEnabled)
         {
-            cache.Set(key, rv, EXPIRED_IN);
+            cache.Set(key, rv, new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = EXPIRED_IN,
+                Size = 1
+            });
         }
 
         return new(rv);
