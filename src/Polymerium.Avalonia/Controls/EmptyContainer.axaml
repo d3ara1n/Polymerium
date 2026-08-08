@@ -6,6 +6,7 @@
     <ControlTheme
         x:Key="{x:Type app:EmptyContainer}"
         TargetType="app:EmptyContainer">
+        <Setter Property="Text" Value="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>
@@ -23,14 +24,8 @@
                             HorizontalAlignment="Center"
                             FontSize="{StaticResource LargeFontSize}"
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            TextWrapping="Wrap">
-                            <TextBlock.Text>
-                                <Binding
-                                    Path="Text"
-                                    RelativeSource="{RelativeSource TemplatedParent}"
-                                    TargetNullValue="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
-                            </TextBlock.Text>
-                        </TextBlock>
+                            Text="{TemplateBinding Text}"
+                            TextWrapping="Wrap" />
                     </StackPanel>
 
                     <ContentPresenter

@@ -68,7 +68,7 @@
                             Text="{Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_CreateLastTimeLabelText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{Binding LatestTimeText, TargetNullValue={Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_CreateNeverText}}}" />
+                            Text="{app:LocalizedFallback {Binding LatestTimeText}, Fallback={Translate {x:Static app:LanguageManager+Keys.SnapshotPortalPage_CreateNeverText}}}" />
                     </StackPanel>
                 </Grid>
             </Button>
