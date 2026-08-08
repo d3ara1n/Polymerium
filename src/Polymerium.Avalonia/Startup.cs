@@ -138,7 +138,10 @@ public static class Startup
             })
            .AddMemoryCache(options =>
             {
-                options.ExpirationScanFrequency = TimeSpan.FromMinutes(10);
+                // NOTE: SizeLimit 生效后每个 cache entry 必须设置 Size，否则写入时抛异常。
+                options.SizeLimit = 256;
+                options.CompactionPercentage = 0.10;
+                options.ExpirationScanFrequency = TimeSpan.FromMinutes(1);
                 options.TrackStatistics = true;
             })
            .AddFusionCache()
