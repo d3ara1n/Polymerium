@@ -26,13 +26,13 @@ public partial class GameVersionPickerDialog : Dialog
                                                                          o => o.FilterText,
                                                                          (o, v) => o.FilterText = v);
 
-    public static readonly DirectProperty<GameVersionPickerDialog, string> SelectedTypeProperty =
-        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string>(nameof(SelectedType),
+    public static readonly DirectProperty<GameVersionPickerDialog, MinecraftReleaseType> SelectedTypeProperty =
+        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, MinecraftReleaseType>(nameof(SelectedType),
                                                                          o => o.SelectedType,
                                                                          (o, v) => o.SelectedType = v);
 
-    public static readonly DirectProperty<GameVersionPickerDialog, string[]> TypesProperty =
-        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, string[]>(nameof(Types),
+    public static readonly DirectProperty<GameVersionPickerDialog, MinecraftReleaseType[]> TypesProperty =
+        AvaloniaProperty.RegisterDirect<GameVersionPickerDialog, MinecraftReleaseType[]>(nameof(Types),
                                                                            o => o.Types,
                                                                            (o, v) => o.Types = v);
 
@@ -69,13 +69,13 @@ public partial class GameVersionPickerDialog : Dialog
         set => SetAndRaise(FilterTextProperty, ref field, value);
     } = string.Empty;
 
-    public string SelectedType
+    public MinecraftReleaseType SelectedType
     {
         get;
         set => SetAndRaise(SelectedTypeProperty, ref field, value);
-    } = string.Empty;
+    } = MinecraftReleaseType.Release;
 
-    public string[] Types
+    public MinecraftReleaseType[] Types
     {
         get;
         set => SetAndRaise(TypesProperty, ref field, value);
@@ -83,7 +83,7 @@ public partial class GameVersionPickerDialog : Dialog
 
     public void SetItems(IReadOnlyList<GameVersionModel> versions)
     {
-        Types = [.. versions.Select(x => x.TypeRaw).Distinct()];
+        Types = [.. versions.Select(x => x.TypeRaw).Distinct().OrderBy(x => x)];
         _versions.Clear();
         _versions.AddOrUpdate(versions);
     }
@@ -99,6 +99,6 @@ public partial class GameVersionPickerDialog : Dialog
     private Func<GameVersionModel, bool> BuildFilterText(string filter) =>
         x => string.IsNullOrEmpty(filter) || x.Name.Contains(filter, StringComparison.InvariantCultureIgnoreCase);
 
-    private Func<GameVersionModel, bool> BuildFilterType(string type) =>
-        x => x.TypeRaw.Equals(type, StringComparison.InvariantCultureIgnoreCase);
+    private Func<GameVersionModel, bool> BuildFilterType(MinecraftReleaseType type) =>
+        x => x.TypeRaw == type;
 }
