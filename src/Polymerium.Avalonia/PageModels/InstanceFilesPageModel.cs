@@ -46,6 +46,20 @@ public partial class InstanceFilesPageModel(
         await Task.Run(LoadWorldsAsync, token);
     }
 
+    protected override Task OnDeinitializeAsync()
+    {
+        _modFilterSubscription?.Dispose();
+        _modFilterSubscription = null;
+        _resourcePackFilterSubscription?.Dispose();
+        _resourcePackFilterSubscription = null;
+        _dataPackFilterSubscription?.Dispose();
+        _dataPackFilterSubscription = null;
+        _modCache.Dispose();
+        _resourcePackCache.Dispose();
+        _dataPackCache.Dispose();
+        return Task.CompletedTask;
+    }
+
     #endregion
 
     #region Fields
