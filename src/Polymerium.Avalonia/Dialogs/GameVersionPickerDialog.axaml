@@ -33,8 +33,8 @@
             ItemsSource="{Binding $parent[app:GameVersionPickerDialog].Types}"
             SelectedValue="{Binding $parent[app:GameVersionPickerDialog].SelectedType}">
             <TabStrip.ItemTemplate>
-                <DataTemplate DataType="x:String">
-                    <TextBlock Text="{Binding}" />
+                <DataTemplate DataType="app:MinecraftReleaseType">
+                    <TextBlock Text="{app:LocalizedEnum {Binding}}" />
                 </DataTemplate>
             </TabStrip.ItemTemplate>
         </TabStrip>

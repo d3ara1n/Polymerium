@@ -1020,6 +1020,24 @@
     <data name="ReleaseType_Alpha" xml:space="preserve">
         <value>A测</value>
     </data>
+    <data name="MinecraftReleaseType_Release" xml:space="preserve">
+        <value>正式版</value>
+    </data>
+    <data name="MinecraftReleaseType_Snapshot" xml:space="preserve">
+        <value>快照</value>
+    </data>
+    <data name="MinecraftReleaseType_OldBeta" xml:space="preserve">
+        <value>旧版 Beta</value>
+    </data>
+    <data name="MinecraftReleaseType_OldAlpha" xml:space="preserve">
+        <value>旧版 Alpha</value>
+    </data>
+    <data name="MinecraftReleaseType_Experiment" xml:space="preserve">
+        <value>实验版</value>
+    </data>
+    <data name="MinecraftReleaseType_OldSnapshot" xml:space="preserve">
+        <value>旧快照</value>
+    </data>
     <data name="UserInputDialog_Title" xml:space="preserve">
         <value>输入点东西</value>
     </data>

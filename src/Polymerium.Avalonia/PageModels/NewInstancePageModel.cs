@@ -14,6 +14,7 @@ using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Importers;
@@ -47,7 +48,7 @@ public partial class NewInstancePageModel(
         }
 
         var game = await dataService.GetMinecraftVersionsAsync();
-        var versions = game.Versions.Select(x => new GameVersionModel(x.Version, x.Type, x.ReleaseTime)).ToList();
+        var versions = game.Versions.Select(x => new GameVersionModel(x.Version, MinecraftReleaseTypeHelper.FromComponentType(x.Type), x.ReleaseTime)).ToList();
 
         Versions = versions;
         var first = game.Versions.FirstOrDefault(x => x.Recommended);
