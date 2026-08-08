@@ -117,7 +117,14 @@
                     SelectedItem="{Binding SelectedKind, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{app:LocalizedEnum {Binding}, TargetNullValue={Translate {x:Static app:LanguageManager+Keys.RecipePage_KindFilterAllText}}}" />
+                            <Panel>
+                                <TextBlock
+                                    IsVisible="{Binding Converter={x:Static ObjectConverters.IsNotNull}}"
+                                    Text="{app:LocalizedEnum {Binding}}" />
+                                <TextBlock
+                                    IsVisible="{Binding Converter={x:Static ObjectConverters.IsNull}}"
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.RecipePage_KindFilterAllText}}" />
+                            </Panel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>

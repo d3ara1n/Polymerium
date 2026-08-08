@@ -38,7 +38,7 @@
                 VerticalAlignment="Center"
                 FontSize="{StaticResource LargeFontSize}"
                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                Text="{Binding #Frame.((husk:Page)Content)?.Header, FallbackValue={Translate {x:Static app:LanguageManager+Keys.SnapshotsModal_Title}}}" />
+                Text="{app:LocalizedFallback {Binding #Frame.((husk:Page)Content)?.Header}, Fallback={Translate {x:Static app:LanguageManager+Keys.SnapshotsModal_Title}}}" />
             <Button
                 Grid.Column="2"
                 Classes="Small"
