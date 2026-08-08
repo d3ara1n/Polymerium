@@ -155,6 +155,7 @@ public partial class InstanceDashboardPageModel(
     #region Fields
 
     private ISynchronizedView<ScrapModel, ScrapModel>? _collectionView;
+    private bool _isDisposed;
 
     private CancellationTokenSource? _monitoringTokenSource;
 
@@ -177,8 +178,12 @@ public partial class InstanceDashboardPageModel(
 
     protected override Task OnDeinitializeAsync()
     {
+        _isDisposed = true;
         CallCleanup();
-
+        FilteredLogCollection?.Dispose();
+        FilteredLogCollection = null;
+        _collectionView?.Dispose();
+        _collectionView = null;
         return Task.CompletedTask;
     }
 
@@ -207,6 +212,10 @@ public partial class InstanceDashboardPageModel(
 
     private void UpdateLogSource(LogSourceModelBase? source)
     {
+        if (_isDisposed)
+        {
+            return;
+        }
         if (!IsOnAir)
         {
             // 避免清空，因为运行中的 Collection 是共享的外部引入的集合

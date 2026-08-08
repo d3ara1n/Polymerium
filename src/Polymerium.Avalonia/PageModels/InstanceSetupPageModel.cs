@@ -608,6 +608,9 @@ public partial class InstanceSetupPageModel(
 
     protected override Task OnDeinitializeAsync()
     {
+        _pageCancellationTokenSource?.Cancel();
+        _pageCancellationTokenSource?.Dispose();
+        _pageCancellationTokenSource = null;
         _subscriptions.Dispose();
         return Task.CompletedTask;
     }
@@ -618,9 +621,13 @@ public partial class InstanceSetupPageModel(
 
     protected override void OnInstanceUpdating(UpdateTracker tracker)
     {
+        if (_pageCancellationTokenSource is null)
+        {
+            return;
+        }
         IsRefreshing = false;
-        _pageCancellationTokenSource?.Cancel();
-        _pageCancellationTokenSource?.Dispose();
+        _pageCancellationTokenSource.Cancel();
+        _pageCancellationTokenSource.Dispose();
         _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_lifetimeToken!.Value);
         TrackUpdateProgress(tracker);
         base.OnInstanceUpdating(tracker);
