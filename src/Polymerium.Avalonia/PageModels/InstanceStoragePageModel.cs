@@ -95,19 +95,16 @@ public partial class InstanceStoragePageModel(
     {
         var homeDir = PathDef.Default.DirectoryOfHome(Basic.Key);
 
-        // Calculate main categories
         (ModsSize, ModsCount) = CalculateDirectorySize("mods");
         (ResourcePacksSize, ResourcePacksCount) = CalculateDirectorySize("resourcepacks");
         (ShaderPacksSize, ShaderPacksCount) = CalculateDirectorySize("shaderpacks");
         (WorldsSize, WorldsCount) = CalculateDirectorySize("saves");
 
-        // Calculate additional folders
         (ScreenshotsSize, ScreenshotsCount) = CalculateDirectorySize("screenshots");
         (LogsSize, LogsCount) = CalculateDirectorySize("logs");
         (CrashReportsSize, CrashReportsCount) = CalculateDirectorySize("crash-reports");
         (ConfigSize, ConfigCount) = CalculateDirectorySize("config");
 
-        // Calculate total
         var calculatedTotalSize = ModsSize
                                 + ResourcePacksSize
                                 + ShaderPacksSize
@@ -126,7 +123,6 @@ public partial class InstanceStoragePageModel(
                                  + CrashReportsCount
                                  + ConfigCount;
 
-        // Calculate other files (total directory size minus calculated categories)
         var (totalDirSize, totalDirCount) = CalculateDirectorySize(homeDir);
         TotalSize = totalDirSize;
         OtherSize = totalDirSize > calculatedTotalSize ? totalDirSize - calculatedTotalSize : 0;

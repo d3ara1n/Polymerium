@@ -245,7 +245,7 @@ public partial class ProxySettingsDialog : Dialog
             var handler = CreateHttpClientHandler();
             using var client = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(10) };
 
-            // Use httpbin.org for testing, or a more reliable endpoint
+            // NOTE: 用 httpbin.org 或更稳定的端点做连通性测试。
             var response = await client.GetAsync("https://httpbin.org/get");
             stopwatch.Stop();
 

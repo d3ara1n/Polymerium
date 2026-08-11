@@ -5,9 +5,9 @@ using TridentCore.Pref.Parsing;
 
 namespace Polymerium.Avalonia.Utilities;
 
-// Classifies free-form importer input into a typed reference without any network access:
-// local files become File, pref:// URIs parse straight into a PackageIdentifier (Pref), and
-// http(s) URLs pass through as Uri for the consumer to resolve via RepositoryAgent.RecognizeAsync.
+// NOTE: Classifies free-form importer input into a typed reference without any network access:
+//  local files become File, pref:// URIs parse straight into a PackageIdentifier (Pref), and
+//  http(s) URLs pass through as Uri for the consumer to resolve via RepositoryAgent.RecognizeAsync.
 public static class ModpackUrlDetectionHelper
 {
     public static ModpackImporterResult? Detect(string input)

@@ -295,12 +295,8 @@ public partial class ExplorerPageModel : ViewModelBase
                 handle.PageIndex = (uint)(i < 0 ? 0 : i);
                 try
                 {
-                    // 具有三种状态
-                    // 锁定（存在于构建中但锁定而无法操作）
-                    // 已安装（存在于构建中且可以操作）
-                    // 待添加（不存在，但位于待定区）
-                    // 待移除（存在于构建，并位于待定区具有移除标记）
-                    // 待修改（存在于构建，并位于待定区具有不同版本选择）
+                    // NOTE: ExhibitState 语义：锁定=在构建中但被锁；已安装=在构建中可操作；
+                    //  待添加=不存在但已入待定区；待移除/待修改=在构建中且待定区有移除/改版标记。
 
                     var rv = await handle.FetchAsync(token);
                     var tasks = rv

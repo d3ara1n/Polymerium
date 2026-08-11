@@ -123,8 +123,8 @@ public partial class InstanceSetupPageModel(
 
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
-            // Entry 是 class，按地址比较；仍存在的包不动其 Entry 项（实例稳定），
-            // 信息是否陈旧由 RefreshMetadataAsync 现场重判，这里不预判
+            // NOTE: Entry 按地址比较，仍存在的包不动其 Entry 项（实例稳定）；信息是否陈旧由
+            //  RefreshMetadataAsync 现场重判，这里不预判。
             var lookup = profile.Setup.Packages.ToHashSet();
             var toRemove = new List<PackageListKey>();
             var entryCount = 0;
@@ -156,7 +156,7 @@ public partial class InstanceSetupPageModel(
                        .ToList();
             _flat.AddOrUpdate(toAdd);
 
-            // 同步组头：为每个有成员的非散装组确保恰好一个 Header，移除空组的 Header。
+            // NOTE: 组头同步的不变式：每个有成员的非散装组恰好一个 Header，空组无 Header。
             var presentGroups = _flat
                                .Items.OfType<PackageListItemBase.Entry>()
                                .Select(i => i.Group)
@@ -173,7 +173,6 @@ public partial class InstanceSetupPageModel(
                 _flat.AddOrUpdate(new PackageListItemBase.Header { Key = key, Group = bySource[key.Source] });
             }
 
-            // 统一入口：包与组的信息加载排成一队，RefreshMetadataAsync 现场重判待加载项、统一管 IsRefreshing
             _metadataTask = RefreshMetadataAsync(_metadataTask, token.Value);
         }
     }
@@ -186,7 +185,7 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        // Basic 是 InstancePageModel 维护的，理论上会先在 ProfileUpdated 时更新，但不可靠
+        // NOTE: Basic 由 InstancePageModel 维护，理论上 ProfileUpdated 会先更新，但不可靠。
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
             if (profile.Setup.Source is not null)
@@ -226,10 +225,9 @@ public partial class InstanceSetupPageModel(
         }
     }
 
-    // 包与组信息加载的统一入口：排队执行（不取消），现场重判待加载项；统一管理 IsRefreshing 与异常。
     private async Task RefreshMetadataAsync(Task previous, CancellationToken token)
     {
-        // 排队：等上一个完成；吞掉其异常，避免 faulted 任务卡死整条队列
+        // NOTE: 吞掉上一个任务的异常，避免 faulted 任务卡死整条队列。
         try
         {
             await previous;
@@ -238,7 +236,7 @@ public partial class InstanceSetupPageModel(
 
         token.ThrowIfCancellationRequested();
 
-        // 现场重判：排到时若前一个已把事情做完，这里为空，直接 no-op 完成
+        // NOTE: 排到时若前一个已完成全部加载，这里重判为空，直接 no-op 完成。
         var pendingPackages = _flat
                              .Items.OfType<PackageListItemBase.Entry>()
                              .Select(i => i.Package)
@@ -490,13 +488,12 @@ public partial class InstanceSetupPageModel(
             LoaderLabel = "Enum_None";
         }
 
-        // 即使正在 Update 或 Deploy 也会 Trigger
+        // NOTE: 正在 Update/Deploy 期间也照常触发这些刷新（有意为之）。
         Dispatcher.UIThread.Post(() =>
         {
             TriggerPackageMerge();
             TriggerReferenceRefresh();
             NotifyGroupCommandStates();
-            // 只需要一次，因为 Profile.Setup.Rules 总是同一个
             Rules ??= [with(profile.Setup.Rules, x => new(x), x => x.Owner)];
         });
 
@@ -509,7 +506,6 @@ public partial class InstanceSetupPageModel(
         _lifetimeToken = token;
         _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
 
-        // 包变更流（tags 与计数共用）：从拍平源取 Entry 项解包成 InstancePackageModel
         var packages = _flat
                       .Connect()
                       .Filter(item => item is PackageListItemBase.Entry)
@@ -551,9 +547,7 @@ public partial class InstanceSetupPageModel(
                            .CombineLatest(tags, (abc, d) => (Func<InstancePackageModel, bool>)(x => abc(x) && d(x)))
                            .CombineLatest(text, (abcd, e) => (Func<InstancePackageModel, bool>)(x => abcd(x) && e(x)));
 
-        // 总数：只数包（Entry），不含组头；merge 与批量删除自动同步
         packages.QueryWhenChanged(items => items.Count).Subscribe(c => StageCount = c).DisposeWith(_subscriptions);
-        // 组计数：按 Group 引用分桶，与 StageCount 同源派生
         _flat
            .Connect()
            .Filter(item => item is PackageListItemBase.Entry)
@@ -568,14 +562,12 @@ public partial class InstanceSetupPageModel(
             })
            .DisposeWith(_subscriptions);
 
-        // 计数：只数通过过滤的包，不受折叠与组头影响
         packages
            .Filter(packageFilter)
            .QueryWhenChanged(items => items.Count)
            .Subscribe(c => FilteredCount = c)
            .DisposeWith(_subscriptions);
 
-        // 列表：组头永远放行（独立于过滤），Entry 才套包过滤；折叠只藏 Entry 不藏组头
         var itemFilter =
             packageFilter.Select(pf => (Func<PackageListItemBase, bool>)(item => item is PackageListItemBase.Header
                                                                              || (item is PackageListItemBase.Entry e
@@ -641,8 +633,6 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        // OnModelUpdated 会负责刷新列表
-        // TriggerRefresh(_pageCancellationTokenSource.Token);
         base.OnInstanceUpdated(tracker);
     }
 
@@ -874,7 +864,6 @@ public partial class InstanceSetupPageModel(
     {
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
-            // 收集所有现有标签（去重，排除当前包已有的标签）
             var existingTags = profile.Setup.Packages.SelectMany(x => x.Tags).Distinct().OrderBy(t => t).ToList();
             var previewer = new PackageBulkUpdatePreviewerDialog
             {
@@ -920,9 +909,9 @@ public partial class InstanceSetupPageModel(
                 var updates = new ConcurrentBag<PackageBulkUpdateReviewerModel>();
                 try
                 {
-                    // 值设置太大会触发 API 限制
+                    // NOTE: 并发度设 2 是上限，再大触发 Modrinth API 限流。
                     var semaphore = new SemaphoreSlim(2);
-                    // 这里无法使用批量查询来优化，ResolveBatch 无版本限制会 Fallback 到获取所有版本并筛选合适的，这个无法避免
+                    // NOTE: 无法用批量查询优化——ResolveBatch 不带版本限制会拉全量版本再筛选。
                     // ReSharper disable once AccessToDisposedClosure
                     var tasks = staging.Select(x => UpdateAsync(x, semaphore, progress));
                     await Task.Run(async () => await Task.WhenAll(tasks));
@@ -942,7 +931,8 @@ public partial class InstanceSetupPageModel(
                     return;
                 }
 
-                // 调用 Dismiss 会让 Token 进入 Cancel 状态，导致 Notification 显示“过期”，Growl 直接消失
+                // NOTE: 用 Dismiss 会让 Token 置 Cancel、Notification 显示“过期”、Growl 直接消失，
+                //  故这里直接 Dispose。
                 progress.Dispose();
 
                 notificationService.PopMessage(LanguageManager.Instance.InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle.Current(),
@@ -1030,12 +1020,10 @@ public partial class InstanceSetupPageModel(
 
                 async Task ReviewAsync()
                 {
-                    // 这里有个性能 Trick，使用的是不可变 Profile 引用，这里不使用 ProfileGuard 是为了避免重复刷新
-                    // 由于 Profile 是单例的，实际改变已经被应用，只是没有用 guard.DisposeAsync 通知写入硬盘
-                    // 为什么不用 Guard：
-                    // 除了避免触发无效的刷新 diff 以外还有一个原因是这里涉及跨三个控制流且可以在任意一层中断
-                    // 导致 Guard 无法保证能被释放而出现泄露
-                    // 缺陷：可能会导致批量更新未能保存到硬盘，例如进程被杀的情况
+                    // NOTE: 直接改不可变 Profile 引用的性能 Trick：Profile 是单例，改动已生效，
+                    //  只是不经过 guard.DisposeAsync 落盘。不用 Guard 是避免无效刷新 diff，且本流程
+                    //  跨三个控制流、可在任意层中断，Guard 无法保证释放而可能泄露。缺陷：进程被杀时
+                    //  批量更新可能未保存到硬盘。
                     var dialog = new PackageBulkUpdateReviewerDialog { Result = updates.ToList() };
                     if (await overlayService.PopDialogAsync(dialog)
                      && dialog.Result is IReadOnlyList<PackageBulkUpdateReviewerModel> results)
@@ -1052,7 +1040,7 @@ public partial class InstanceSetupPageModel(
                                 model.NewVersionTimeRaw,
                                 model.Package.ReleaseType,
                                 model.Package.Dependencies);
-                            // 设置 Version 会同步到 Entry.Pref
+                            // NOTE: 给 Info.Version 赋值会同步写回 Entry.Pref。
                             persistenceService.AppendAction(new()
                             {
                                 Key = Basic.Key,
@@ -1083,7 +1071,6 @@ public partial class InstanceSetupPageModel(
                 {
                     var importedEntries = new List<ExportedEntry>();
 
-                    // 读取 CSV 文件
                     using (var reader = new StreamReader(filePath))
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
@@ -1116,7 +1103,6 @@ public partial class InstanceSetupPageModel(
                                         continue;
                                     }
 
-                                    // 查找是否已存在相同的包（基于 Label, Namespace, ProjectId）
                                     Profile.Rice.Entry? existingEntry = null;
                                     if (PackageHelper.TryParse(importedEntry.Pref, out var importedPref))
                                     {
@@ -1130,7 +1116,6 @@ public partial class InstanceSetupPageModel(
 
                                     if (existingEntry != null)
                                     {
-                                        // 更新现有包的版本
                                         var oldPref = existingEntry.Pref;
                                         existingEntry.Pref = importedEntry.Pref;
                                         existingEntry.Enabled = importedEntry.Enabled;
@@ -1162,7 +1147,6 @@ public partial class InstanceSetupPageModel(
                                     }
                                     else
                                     {
-                                        // 添加新包
                                         var newEntry = new Profile.Rice.Entry
                                         {
                                             Enabled = importedEntry.Enabled,
@@ -1204,7 +1188,6 @@ public partial class InstanceSetupPageModel(
                     }
                 }
 
-                // 显示结果通知
                 var resultMessage = LanguageManager.Instance.InstanceSetupPage_ImportListSuccessNotificationMessage.Current()
                                    .Replace("{0}", addedCount.ToString())
                                    .Replace("{1}", updatedCount.ToString())
@@ -1728,8 +1711,6 @@ public partial class InstanceSetupPageModel(
     [RelayCommand]
     private void DisableGroup(GroupModel? group) => SetGroupEnabled(group, false);
 
-    // NOTE: set 语义而非 toggle——整组统一落到目标值，不得对组内包逐包取反
-    //  与包级勾选（Active）的逐包翻转是两种不同的心智模型。
     private void SetGroupEnabled(GroupModel? group, bool value)
     {
         if (group is null)
@@ -1912,7 +1893,6 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        // 组头唯一按钮：Info 已赋值 → 查看详情；未赋值（加载失败）→ 触发 merge 重试
         if (group.Info is null)
         {
             TriggerPackageMerge();

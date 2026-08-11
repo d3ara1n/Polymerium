@@ -135,9 +135,8 @@ public partial class ModpackExporterDialog : Dialog
 
     protected override bool ValidateResult(object? result)
     {
-        // 由于 Avalonia 的 TabStrip 机制导致其根本没法用，所以需要写一大堆代理属性和验证代码
-        // 1. TabStrip 会在销毁后将 SelectedItem 设置为 null，导致 SelectedExporterLabel 为 null
-        // 2. TabStrip 不会在第一次选中时触发 SelectedItem 的变更通知，导致 SelectedExporterLabel 默认为空
+        // NOTE: Avalonia TabStrip 机制缺陷（销毁后置空 SelectedItem、首次选中不发变更通知），
+        //  故需要这些代理属性与验证代码。
         if (result is ModpackExporterModel model)
         {
             if (!string.IsNullOrEmpty(SelectedExporterLabel.Label))

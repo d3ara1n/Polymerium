@@ -18,7 +18,6 @@ public partial class OobePrivilege : OobeStep
     public OobePrivilege()
     {
         InitializeComponent();
-        // Perform initial check
         CheckPrivilege();
     }
 
@@ -36,11 +35,10 @@ public partial class OobePrivilege : OobeStep
     /// <returns>True if symlink creation is allowed, false otherwise.</returns>
     private bool Check()
     {
-        // Logic: Check if we can create a symlink from ~/.trident/.polymerium/symlink to first_run
+        // NOTE: 检查能否在 ~/.trident/.polymerium 下创建指向 first_run 的符号链接。
         var first = Path.Combine(PathDef.Default.PrivateDataDirectory(), "first_run");
         var symlink = Path.Combine(PathDef.Default.PrivateDataDirectory(), "symlink");
 
-        // If symlink already exists and points to first_run, we're good
         if (File.Exists(first)
          && File.Exists(symlink)
          && File.ResolveLinkTarget(symlink, false) is { FullName: { } file }
@@ -49,33 +47,29 @@ public partial class OobePrivilege : OobeStep
             return true;
         }
 
-        // Ensure directory exists
         var dir = Path.GetDirectoryName(first);
         if (dir != null && !Directory.Exists(dir))
         {
             Directory.CreateDirectory(dir);
         }
 
-        // Create first_run file if it doesn't exist
         if (!File.Exists(first))
         {
             File.WriteAllText(first, Program.MagicWords);
         }
 
-        // Remove existing symlink if present
         if (File.Exists(symlink))
         {
             File.Delete(symlink);
         }
 
-        // Try to create symlink
         try
         {
             File.CreateSymbolicLink(symlink, first);
         }
         catch (IOException io) when (io.HResult == -2147023582)
         {
-            // ERROR_PRIVILEGE_NOT_HELD - The user doesn't have the required privilege
+            // NOTE: ERROR_PRIVILEGE_NOT_HELD —— 用户缺少所需权限。
             return false;
         }
         catch (Exception ex)

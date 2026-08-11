@@ -44,11 +44,9 @@ public partial class OobeModal : StepWizardModalBase
     {
         base.OnLoaded(e);
 
-        // Initialize steps
         _steps.Add(new OobeWelcome());
         _steps.Add(new OobeFeatures());
 
-        // Add privilege step only on Windows
         if (OperatingSystem.IsWindows())
         {
             _steps.Add(new OobePrivilege { NotificationService = NotificationService });
@@ -63,10 +61,8 @@ public partial class OobeModal : StepWizardModalBase
         _steps.Add(new OobePrivacy());
         _steps.Add(new OobeFinish());
 
-        // Set step count for UI
         StepCount = _steps.Count;
 
-        // Dynamically add StepItems to the StepIndicator
         if (StepIndicator != null)
         {
             StepIndicator.Items.Clear();
@@ -76,7 +72,6 @@ public partial class OobeModal : StepWizardModalBase
             }
         }
 
-        // Set initial step
         StepIndex = 0;
         CurrentStep = _steps[0];
         IsBackAvailable = false;

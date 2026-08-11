@@ -37,7 +37,7 @@ public class AppImageLoader(HttpClient httpClient, SkinRenderService skinRendere
     {
         if (_cache.TryGetValue(url, out var cached))
         {
-            // 负缓存命中：加载过的失败结果在短期内直接返回 null，避免重复请求网络。
+            // NOTE: 负缓存命中——失败的加载结果短期内直接返回 null，避免重复请求网络。
             if (cached is NegativeMarker)
             {
                 return null;
@@ -73,8 +73,8 @@ public class AppImageLoader(HttpClient httpClient, SkinRenderService skinRendere
     }
 
     private void CacheNegative(string url) =>
-        // 负缓存用绝对过期（非滑动）：保证「网络恢复后最多 N 分钟自动重试」的上限确定，
-        // 不会因频繁访问该 URL 而被无限续期。不计入 SizeLimit，避免挤占成功条目配额。
+        // NOTE: 负缓存用绝对过期（非滑动），保证「网络恢复后最多 N 分钟自动重试」上限确定，
+        //  不因频繁访问被无限续期；不计入 SizeLimit，避免挤占成功条目配额。
         _cache.Set(url, new NegativeMarker(), new MemoryCacheEntryOptions().SetAbsoluteExpiration(NEGATIVE_EXPIRATION));
 
     protected override void Dispose(bool disposing)

@@ -14,8 +14,8 @@ using Polymerium.Avalonia.Models;
 
 namespace Polymerium.Avalonia.Services;
 
-// 门面服务：持有 app 级单例的 canonical 通知数据，对外只暴露命令式方法 + 状态事件。
-// 不继承 ObservableObject、不暴露可绑定集合/命令——View 侧的绑定一律经由 NotificationSidebarViewModel 投影。
+// NOTE: 门面服务：持有 app 级单例 canonical 通知数据，只暴露命令式方法与状态事件；
+//  不暴露可绑定集合/命令——View 绑定一律经 NotificationSidebarViewModel 投影。
 public class NotificationService
 {
     private const int MAX_NOTIFICATION_COUNT = 100;
@@ -38,7 +38,7 @@ public class NotificationService
         }
     };
 
-    // canonical 数据：app 级单例持有，不受窗口生命周期影响。仅本类管理方法可变更。
+    // NOTE: canonical 数据为 app 级单例，不受窗口生命周期影响；仅本类管理方法可变更。
     private readonly ObservableCollection<NotificationModel> _notifications = [];
     private Action<GrowlItem>? _growlHandler;
 
@@ -61,10 +61,9 @@ public class NotificationService
 
     private void Pop(NotificationModel model, GrowlItem item)
     {
-        // 持久通知记录：永远写，不受窗口生命周期影响
+        // NOTE: 持久通知记录永远写，不受窗口生命周期影响。
         _notificationHandler?.Invoke(model);
 
-        // growl 弹窗：通过网关检查是否有活跃 TopLevel
         // TODO(B): 无窗口时通过 TrayIcon / macOS Notification Center 发系统通知
         //   现状：无窗口时 growl 静默丢弃（持久记录照写），崩溃诊断也转持久记录
         if (_growlHandler is not null)
@@ -182,9 +181,7 @@ public class NotificationService
             if (!IsDisposed)
             {
                 IsDisposed = true;
-                // 前者时失效
                 model.Cancel();
-                // 后者消失
                 item.Dismiss();
             }
         }
@@ -239,7 +236,7 @@ public class NotificationService
 
         #region Other Setters
 
-        // 这个 Action 没法通过构造传入，因为 Action 里可能需要访问构造出来的 Handle 导致提前访问，所以只能用这个别扭的方式
+        // NOTE: Action 不能经构造传入——构造期内引用 Handle 属提前访问，只能事后挂载。
         public void AddAction(GrowlAction action) => actions.Add(action);
 
         public void SetThumbnail(Uri? source) => model.Thumbnail = source;
@@ -251,7 +248,7 @@ public class NotificationService
 
     #region Events
 
-    // 所有事件均假定在 UI 线程上触发（与本类管理方法的调用线程一致，PopMessage 已 marshal 到 UI 线程）。
+    // NOTE: 所有事件均假定在 UI 线程触发（PopMessage 已 marshal 到 UI 线程）。
     public event Action<NotificationModel>? NotificationAdded;
     public event Action<NotificationModel>? NotificationRemoved;
     public event Action<NotificationModel>? NotificationReadChanged;

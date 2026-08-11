@@ -13,11 +13,9 @@ public abstract class ViewModelBase : ObservableObject, IViewModel
     /// <param name="token"></param>
     /// <returns></returns>
     protected virtual Task OnInitializeAsync(CancellationToken token) =>
-        // Virtual function does nothing
         Task.CompletedTask;
 
     protected virtual Task OnDeinitializeAsync() =>
-        // Virtual function does nothing
         Task.CompletedTask;
 
     #region IViewModel Members

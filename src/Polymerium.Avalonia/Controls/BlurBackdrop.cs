@@ -52,7 +52,7 @@ public class BlurBackdrop : ContentControl
     public static readonly AttachedProperty<bool> UseBlurProperty =
         AvaloniaProperty.RegisterAttached<BlurBackdrop, Control, bool>("UseBlur", true);
 
-    // 重绘频率上限（15fps）。SceneInvalidated 频率远高于此，这里只做上限节流。
+    // NOTE: 重绘频率上限（15fps）——SceneInvalidated 频率远高于此，只做上限节流。
     private static readonly long MIN_INTERVAL_TICKS = TimeSpan.FromMilliseconds(66).Ticks;
 
     private static PropertyInfo? _topLevelRendererProperty;
@@ -66,7 +66,7 @@ public class BlurBackdrop : ContentControl
 
     private bool _detached;
 
-    // 是否已成功捕获过至少一帧。未就绪（首帧前）时 Render 透明跳过；就绪后 snapshot 缺失才视为失败走 Fallback。
+    // NOTE: 是否已成功捕获过至少一帧：未就绪（首帧前）Render 透明跳过；就绪后 snapshot 缺失才视为失败走 Fallback。
     private volatile bool _everCaptured;
     private long _lastCaptureTicksUtc;
     private ulong _lastHash;
@@ -148,7 +148,7 @@ public class BlurBackdrop : ContentControl
 
     public override void Render(DrawingContext context)
     {
-        // 未就绪（从未成功捕获）时透明跳过；这不是失败，是正常的启动首帧。
+        // NOTE: 未就绪（从未成功捕获）时透明跳过——这是正常启动首帧，不是失败。
         if (!_everCaptured || Bounds.Width <= 0 || Bounds.Height <= 0)
         {
             return;
@@ -173,7 +173,7 @@ public class BlurBackdrop : ContentControl
             return new(solid.Color.R, solid.Color.G, solid.Color.B, solid.Color.A);
         }
 
-        // 未显式设置 FallbackBrush 时退化为 tint 全不透明——保证失败可见，而非透明。
+        // NOTE: 未显式设置 FallbackBrush 时退化为 tint 全不透明——失败必须可见，而非透明。
         var tint = TintColor;
         return new(tint.R, tint.G, tint.B, tint.A);
     }
@@ -259,8 +259,8 @@ public class BlurBackdrop : ContentControl
 
     private void OnSceneInvalidated(object? sender, SceneInvalidatedEventArgs e)
     {
-        // DirtyRect 优化：这一帧重绘的区域若完全落在自身 bounds 内（典型是 Capture 末尾 InvalidateVisual
-        // 触发），说明只是自身重绘、后方内容没变 → 跳过捕获，省掉最贵的软件光栅化。脏区延伸到外部才捕获。
+        // NOTE: DirtyRect 优化——重绘区域若完全落在自身 bounds 内（典型是 Capture 末尾 InvalidateVisual 触发），
+        //  说明只是自身重绘、后方内容没变，跳过捕获省掉最贵的软件光栅化；脏区延伸到外部才捕获。
         if (_everCaptured && TryGetDirtyRect(e, out var dirtyRect) && IsSelfOnlyDirtyRect(dirtyRect))
         {
             return;
@@ -340,7 +340,7 @@ public class BlurBackdrop : ContentControl
             catch (Exception ex)
             {
                 Debug.WriteLine($"BlurBackdrop capture failed: {ex.Message}");
-                // 捕获链路失败：丢弃旧 snapshot，让 Render 走 Fallback——失败必须可观察。
+                // NOTE: 捕获链路失败时丢弃旧 snapshot，让 Render 走 Fallback——失败必须可观察。
                 var old = Interlocked.Exchange(ref _current, null);
                 old?.ReleaseLease();
                 InvalidateVisual();
@@ -375,7 +375,7 @@ public class BlurBackdrop : ContentControl
             return;
         }
 
-        // 只渲染控件区域（含 blurMargin），bitmap 尺寸 = captureRect 像素尺寸，省去整窗软件渲染。
+        // NOTE: 只渲染控件区域（含 blurMargin），bitmap 尺寸 = captureRect 像素尺寸，省去整窗软件渲染。
         PixelSize pixel = new((int)Math.Ceiling(captureRect.Width * scaling),
                               (int)Math.Ceiling(captureRect.Height * scaling));
         if (_scratch is null || _scratch.PixelSize != pixel)
@@ -394,8 +394,8 @@ public class BlurBackdrop : ContentControl
         var ch = pixel.Height;
         var rowBytes = cw * bpp;
 
-        // 先读 8 条采样行做 hash，匹配则跳过整图拷贝。计时器无论是否匹配都推进，保证 ConsiderCapture 的
-        // 15fps 节流覆盖整个捕获（含采样），否则静态内容会让采样每帧空转。
+        // NOTE: 先读 8 条采样行做 hash，匹配则跳过整图拷贝。计时器无论是否匹配都推进，
+        //  保证 15fps 节流覆盖整个捕获（含采样），否则静态内容会让采样每帧空转。
         var hash = SampleHash(_scratch, cw, ch, rowBytes);
         _lastCaptureTicksUtc = DateTime.UtcNow.Ticks;
         if (_everCaptured && hash == _lastHash)
@@ -406,8 +406,8 @@ public class BlurBackdrop : ContentControl
         _lastHash = hash;
 
         var length = rowBytes * ch;
-        // 复用 ArrayPool，避免每帧分配捕获区像素。Rent 返回的 buffer 可能长于 length，后续访问全部用
-        // cw/ch/rowBytes 限定，不触碰多余尾部。
+        // NOTE: 复用 ArrayPool 避免每帧分配像素；Rent 的 buffer 可能长于 length，后续访问全部用
+        //  cw/ch/rowBytes 限定，不触碰多余尾部。
         var pixels = ArrayPool<byte>.Shared.Rent(length);
         try
         {
@@ -513,7 +513,7 @@ public class BlurBackdrop : ContentControl
         public Vector ControlSizePx { get; }
         public double Scaling { get; }
 
-        // 渲染线程尝试租赁。已释放或正在释放时返回 false——调用方据此走 Fallback，绝不读到已释放的 SKImage。
+        // NOTE: 渲染线程尝试租赁；已释放或正在释放时返回 false，调用方据此走 Fallback，绝不读到已释放的 SKImage。
         public bool TryAddLease()
         {
             while (true)
@@ -588,8 +588,8 @@ public class BlurBackdrop : ContentControl
                                  (float)(snapshot.ControlOffsetPx.Y + snapshot.ControlSizePx.Y));
                 SKRect dst = new(0f, 0f, (float)bounds.Width, (float)bounds.Height);
 
-                // 把捕获的原始位图（含 blurMargin 余量）直接以 ImageFilter 方式画到 lease 的画布上，模糊由
-                // Skia 在 GPU 上执行；全程不创建自定义 GPU surface，规避 GRContext 生命周期问题。
+                // NOTE: 把捕获位图（含 blurMargin 余量）直接以 ImageFilter 画到 lease 画布上，模糊由 Skia 在 GPU 执行；
+                //  全程不创建自定义 GPU surface，规避 GRContext 生命周期问题。
                 var sigma = (float)(blurRadius * snapshot.Scaling);
                 using var blur = SKImageFilter.CreateBlur(sigma, sigma, SKShaderTileMode.Clamp, null);
                 using var paint = new SKPaint { ImageFilter = blur };
@@ -647,7 +647,7 @@ public class BlurBackdrop : ContentControl
             return visual.GetValue(ExcludeFromCaptureProperty);
         }
 
-        // 返回 true 表示已命中 target：调用方据此停止遍历后续兄弟（绘制顺序在 target 之上，不进捕获）。
+        // NOTE: 返回 true 表示已命中 target，调用方据此停止遍历后续兄弟（绘制顺序在 target 之上，不进捕获）。
         private static bool Render(
             DrawingContext context,
             Visual visual,

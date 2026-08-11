@@ -38,8 +38,8 @@ public static class PackageSourceHelper
             null => Kind.Manual,
             _ when InternalUriHelper.IsKind(source, RecipeHelper.Scheme) => Kind.Recipe,
             _ when InternalUriHelper.IsKind(source, "pref") => Kind.Modpack,
-            // COMPAT: legacy Purl-format Source from pre-rename modpacks; remove once on-disk
-            // profiles no longer carry old-format Source values.
+            // TODO: legacy Purl-format Source from pre-rename modpacks; remove once on-disk
+            //  profiles no longer carry old-format Source values.
             _ when PackageHelper.TryParse(source, out _) => Kind.Modpack,
             _ => throw new UnreachableException($"Unrecognized Entry.Source: {source}")
         };

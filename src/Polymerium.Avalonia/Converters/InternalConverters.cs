@@ -109,13 +109,9 @@ public static class InternalConverters
         {
             return status switch
             {
-                // 不可用: 红色 (Danger)
                 ConnectionTestStatus.Failed => Brushes.Red,
                 ConnectionTestStatus.Success => latency switch
                 {
-                    // 根据延迟返回不同颜色
-                    // < 1000ms: 绿色 (Success)
-                    // 100-300ms: 黄色 (Warning)
                     < 1000 => Application.Current?.TryGetResource("ControlSuccessBackgroundBrush",
                                                                   null,
                                                                   out var resource)

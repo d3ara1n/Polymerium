@@ -16,12 +16,11 @@ internal static class ErrorReporter
                                        scope =>
                                        {
                                            scope.Level = meta.Level;
-                                           // 可搜索、可筛选
+                                           // NOTE: 打标签便于 Sentry 搜索/筛选。
                                            scope.SetTag("polymerium.source", meta.Source.ToString());
                                            scope.SetTag("polymerium.phase", meta.Phase);
                                            scope.SetTag("polymerium.critical", meta.Critical ? "true" : "false");
                                            scope.SetTag("polymerium.likely_crash", meta.Terminating ? "true" : "false");
-                                           // 辅助信息
                                            scope.SetExtra("exception.type.full",
                                                           ex.GetType().FullName ?? ex.GetType().Name);
                                            scope.SetExtra("exception.message", ex.Message);
@@ -34,7 +33,7 @@ internal static class ErrorReporter
 
     private static void Dump(object core)
     {
-        // 只有调试模式才转储错误报告，而 Prod 模式有大概率文件目录是只读的
+        // NOTE: 仅调试模式转储错误报告——Prod 目录大概率只读。
         if (!Program.IsDebug)
         {
             return;

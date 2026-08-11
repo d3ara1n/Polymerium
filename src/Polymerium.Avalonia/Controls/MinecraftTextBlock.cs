@@ -75,9 +75,6 @@ public class MinecraftTextBlock : TemplatedControl
             return;
         }
 
-        // NOTE: MinecraftTextReader.TryParse is strict only for JSON (syntax error -> false);
-        // legacy § strings always parse. On JSON failure the raw text is shown verbatim,
-        // matching MinecraftTextBlock's TryParse ? BuildInlines : BuildText contract.
         if (MinecraftTextReader.TryParse(Text, out var model))
         {
             BuildInlines(model);
@@ -96,7 +93,7 @@ public class MinecraftTextBlock : TemplatedControl
         }
 
         // NOTE: TextBlock renders Inlines when non-empty and setting Text clears Inlines,
-        // so populate Inlines and drop Text to make Inlines the single source here.
+        //  so populate Inlines and drop Text to make Inlines the single source here.
         inlines.Clear();
         textBlock.Text = null;
         foreach (var run in model.Runs)

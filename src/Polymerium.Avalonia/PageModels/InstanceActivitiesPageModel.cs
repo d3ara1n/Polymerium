@@ -62,11 +62,9 @@ public partial class InstanceActivitiesPageModel(
             var actions = persistenceService.GetActions(Basic.Key, pageIndex, ActionPageSize, out var totalCount);
             ActionTotalCount = totalCount;
 
-            // 过滤掉 Old/New 全空的无效记录（无任何包引用，展示无意义）
             var valid = actions.Where(x => !(x.Old == null && x.New == null)).ToList();
 
-            // 收集页面内所有 Pref，解析为 identifier 后去重，一次性批量解析。
-            // 批量解析会把失败项单独放进 Failed，不会因为单条失败连累整页。
+            // NOTE: 一次性批量解析整页 Pref；批量结果把失败项单独放进 Failed，单条失败不连累整页。
             var prefToId = new Dictionary<string, PackageIdentifier>();
             foreach (var pref in valid
                                 .SelectMany(x => new[] { x.Old, x.New })
@@ -89,7 +87,6 @@ public partial class InstanceActivitiesPageModel(
                     ? pkg
                     : null;
 
-            // 预取缩略图（每个 Uri 一次），单张失败不连累整页
             var thumbnails = new Dictionary<Uri, Bitmap>();
             var thumbnailUris = valid
                                .Select(x => ResolveByPref(x.New) ?? ResolveByPref(x.Old))
@@ -108,7 +105,7 @@ public partial class InstanceActivitiesPageModel(
                     }
                     catch
                     {
-                        // 单张缩略图获取失败不阻塞整页，退化为默认图
+                        // NOTE: 单张缩略图获取失败不阻塞整页，退化为默认图。
                     }
                 }));
             }
@@ -254,53 +251,44 @@ public partial class InstanceActivitiesPageModel(
     [ObservableProperty]
     public partial IEnumerable<Axis>? YAxes { get; set; }
 
-    // 健康度相关属性
+    // NOTE: 以下属性服务「健康度」区块
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SuccessRate))]
     public partial int CrashCount { get; set; }
 
-    // 正常运行率（计算属性）
     public double SuccessRate => SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
 
-    // Statistics Tab 属性
-    // 最后一次游戏时间
+    // NOTE: 以下属性按 Statistics Tab 组织
     [ObservableProperty]
     public partial DateTime? LastPlayedAt { get; set; }
 
-    // 首次游戏时间
     [ObservableProperty]
     public partial DateTime? FirstPlayedAt { get; set; }
 
-    // 最长单次游戏时长
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(LongestSessionHours))]
     public partial TimeSpan LongestSessionRaw { get; set; }
 
     public double LongestSessionHours => LongestSessionRaw.TotalHours;
 
-    // 平均每次游戏时长（计算属性）
     public double AverageSessionMinutes => SessionCount > 0 ? TotalPlayTimeRaw.TotalMinutes / SessionCount : 0;
 
-    // Trends Tab 属性
-    // 占总游戏时间百分比
+    // NOTE: 以下属性按 Trends Tab 组织
     [ObservableProperty]
     public partial double PlaytimePercentage { get; set; }
 
-    // 本周游戏时间
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ThisWeekPlayTimeHours))]
     public partial TimeSpan ThisWeekPlayTimeRaw { get; set; }
 
     public double ThisWeekPlayTimeHours => ThisWeekPlayTimeRaw.TotalHours;
 
-    // 上周游戏时间
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(LastWeekPlayTimeHours))]
     public partial TimeSpan LastWeekPlayTimeRaw { get; set; }
 
     public double LastWeekPlayTimeHours => LastWeekPlayTimeRaw.TotalHours;
 
-    // 周对比变化率（计算属性）
     public double WeekChangePercentage =>
         LastWeekPlayTimeRaw.TotalHours > 0
             ?

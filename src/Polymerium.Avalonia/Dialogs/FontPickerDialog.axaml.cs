@@ -20,7 +20,7 @@ public partial class FontPickerDialog : Dialog
 
     public FontPickerDialog() => InitializeComponent();
 
-    // 列表数据源：实例不变，仅填充/清空内容，ObservableCollection 的增删通知 ListBox 更新。
+    // NOTE: 列表实例不变，仅填充/清空内容——ObservableCollection 增删通知 ListBox 更新。
     public ObservableCollection<string> FilteredSystemFonts { get; } = [];
 
     public string? SearchText
@@ -69,7 +69,7 @@ public partial class FontPickerDialog : Dialog
         }
     }
 
-    // 属性变化的副作用统一在此处理，保持各属性 setter 只剩 SetAndRaise。
+    // NOTE: 属性副作用统一在此处理，setter 只留 SetAndRaise。
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);

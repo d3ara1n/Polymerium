@@ -38,20 +38,17 @@ public static class NetworkCheckHelper
             using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             cts.CancelAfter(TIMEOUT_MILLISECONDS);
 
-            // 使用 HEAD 请求来减少数据传输
             using var request = new HttpRequestMessage(HttpMethod.Head, model.Endpoint);
             using var response =
                 await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token);
 
             stopwatch.Stop();
 
-            // 检查响应状态
             if (response.IsSuccessStatusCode
              || response.StatusCode == HttpStatusCode.MethodNotAllowed
              || response.StatusCode == HttpStatusCode.NotFound)
             {
-                // 某些服务器可能不支持 HEAD 请求，返回 405，但这仍然表示服务器可达
-                // 如果返回 404，对于 API 测试来说也行得通
+                // NOTE: 部分服务器不支持 HEAD，405/404 仍视为可达（对本工具而言 404 也证明链路通）。
                 model.Latency = stopwatch.Elapsed.TotalMilliseconds;
                 model.Status = ConnectionTestStatus.Success;
                 model.IsTesting = false;
@@ -116,7 +113,6 @@ public static class NetworkCheckHelper
                 successCount++;
             }
 
-            // 在测试之间添加小延迟，避免过于频繁的请求
             await Task.Delay(100, cancellationToken);
         }
 

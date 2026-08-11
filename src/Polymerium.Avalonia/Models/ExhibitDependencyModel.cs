@@ -16,7 +16,7 @@ public class ExhibitDependencyModel(
     ResourceKind kind,
     bool isRequired) : ModelBase
 {
-    // 就算提供了 VID，也只需要显示 ProjectName，不关心版本
+    // NOTE: 即使给了 VID 也只显示 ProjectName，不关心版本。
 
     #region Direct
 

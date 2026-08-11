@@ -17,7 +17,7 @@ public static class SkinGeometry
     /// </summary>
     private static readonly float[] CubeVerts =
     [
-        // back (z-)
+        // NOTE: back (z-)
         1,
         1,
         -1,
@@ -30,7 +30,7 @@ public static class SkinGeometry
         -1,
         1,
         -1,
-        // front (z+)
+        // NOTE: front (z+)
         -1,
         1,
         1,
@@ -43,7 +43,7 @@ public static class SkinGeometry
         1,
         1,
         1,
-        // left (x-)
+        // NOTE: left (x-)
         -1,
         1,
         -1,
@@ -56,7 +56,7 @@ public static class SkinGeometry
         -1,
         1,
         1,
-        // right (x+)
+        // NOTE: right (x+)
         1,
         1,
         1,
@@ -69,7 +69,7 @@ public static class SkinGeometry
         1,
         1,
         -1,
-        // top (y+)
+        // NOTE: top (y+)
         -1,
         1,
         -1,
@@ -82,7 +82,7 @@ public static class SkinGeometry
         1,
         1,
         -1,
-        // bottom (y-)
+        // NOTE: bottom (y-)
         1,
         -1,
         -1,
@@ -97,7 +97,7 @@ public static class SkinGeometry
         -1
     ];
 
-    // UV 模板（像素坐标，64×64 基准），面序与 CubeVerts 相同。
+    // NOTE: UV 模板（像素坐标，64×64 基准），面序与 CubeVerts 相同。
     private static readonly float[] HeadTex =
     [
         32,
@@ -314,7 +314,7 @@ public static class SkinGeometry
         var head = new PartSpec(0.5f, 0.5f, 0.5f, Vector3.Zero, HeadTex, 0, 0, 32, 0, true);
         var faces = new List<SkinFace>();
         AddPart(faces, head, false);
-        // 头部外层（hat）在所有格式中都存在。
+        // NOTE: 头部外层（hat）在所有格式中都存在。
         AddPart(faces, head, true);
         return faces;
     }
@@ -357,7 +357,7 @@ public static class SkinGeometry
 
     private static IEnumerable<PartSpec> LegacyParts()
     {
-        // 旧版无外层（head 除外），左右肢体镜像复用右侧贴图区。
+        // NOTE: 旧版无外层（head 除外），左右肢体镜像复用右侧贴图区。
         yield return new(0.5f, 0.5f, 0.5f, new(0, 1.25f, 0), HeadTex, 0, 0, 32, 0, true);
         yield return new(0.5f, 0.75f, 0.25f, Vector3.Zero, BodyTex, 16, 16, 0, 0, false);
         yield return new(0.25f, 0.75f, 0.25f, new(0.75f, 0, 0), LegArmTex, 40, 16, 0, 0, false);

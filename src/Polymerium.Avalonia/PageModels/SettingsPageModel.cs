@@ -546,7 +546,6 @@ public partial class SettingsPageModel : ViewModelBase
 
         if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is ProxySettingsModel newSettings)
         {
-            // Apply the new settings
             ProxyMode = newSettings.Mode;
             ProxyProtocol = newSettings.Protocol;
             ProxyAddress = newSettings.Address;

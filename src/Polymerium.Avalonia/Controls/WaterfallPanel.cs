@@ -59,17 +59,14 @@ public class WaterfallPanel : Panel
             return new(0, 0);
         }
 
-        // Calculate the number of columns that can fit in the available width.
         var columnCount = Math.Max(1, (int)Math.Floor((availableSize.Width + spacing) / (columnWidth + spacing)));
         var columnHeights = new double[columnCount];
 
-        // Measure each child and distribute them into columns.
         for (var i = 0; i < childCount; i++)
         {
             var child = children[i];
             child.Measure(new(columnWidth, double.PositiveInfinity));
 
-            // Find the shortest column.
             var shortestColumnIndex = 0;
             for (var j = 1; j < columnCount; j++)
             {
@@ -79,11 +76,9 @@ public class WaterfallPanel : Panel
                 }
             }
 
-            // Add the child's height to the shortest column.
             columnHeights[shortestColumnIndex] += child.DesiredSize.Height + spacing;
         }
 
-        // The desired height of the panel is the height of the tallest column.
         var desiredHeight = columnHeights.Max() - spacing; // Subtract last spacing
         var desiredWidth = columnCount * columnWidth + (columnCount - 1) * spacing;
 
@@ -107,16 +102,13 @@ public class WaterfallPanel : Panel
             return finalSize;
         }
 
-        // Calculate the number of columns.
         var columnCount = Math.Max(1, (int)Math.Floor((finalSize.Width + spacing) / (columnWidth + spacing)));
         var columnHeights = new double[columnCount];
 
-        // Arrange each child in its final position.
         for (var i = 0; i < childCount; i++)
         {
             var child = children[i];
 
-            // Find the shortest column.
             var shortestColumnIndex = 0;
             for (var j = 1; j < columnCount; j++)
             {
@@ -126,14 +118,12 @@ public class WaterfallPanel : Panel
                 }
             }
 
-            // Calculate the position for the child.
             var x = shortestColumnIndex * (columnWidth + spacing);
             var y = columnHeights[shortestColumnIndex];
 
             var arrangeRect = new Rect(x, y, columnWidth, child.DesiredSize.Height);
             child.Arrange(arrangeRect);
 
-            // Update the column height.
             columnHeights[shortestColumnIndex] += child.DesiredSize.Height + spacing;
         }
 

@@ -172,11 +172,9 @@ public partial class ExhibitPackageModal : Modal
     {
         base.OnLoaded(e);
 
-        // Trigger ConstructVersions
         IsFilterEnabled = true;
         IsFavorite = PersistenceService.IsFavoriteProject(Package.Label, Package.Namespace, Package.ProjectId);
 
-        // Initialize
         LazyDescription = ConstructDescription();
         LazyChangelog = ConstructChangelog();
         LazyDependencies = ConstructDependencies();
@@ -370,10 +368,8 @@ public partial class ExhibitPackageModal : Modal
                 return null;
             }
 
-            // 获取当前包的所有历史记录
             var actions = PersistenceService.GetActions(Key);
 
-            // 过滤出与当前包相关的记录
             var filteredActions = actions
                                  .Where(x => (x.Old is not null
                                            && PackageHelper.IsMatched(x.Old,
@@ -387,7 +383,6 @@ public partial class ExhibitPackageModal : Modal
                                                                       Package.ProjectId)))
                                  .ToArray();
 
-            // 解析包信息并创建 InstanceActionModel
             var tasks = filteredActions
                        .Select(async x =>
                         {
@@ -397,7 +392,7 @@ public partial class ExhibitPackageModal : Modal
                                 {
                                     if (x.Old is null)
                                     {
-                                        // null -> Project
+                                        // NOTE: null -> Project（AddUnversioned）
                                         return new()
                                         {
                                             Kind = InstancePackageModificationKind.AddUnversioned,
@@ -406,7 +401,7 @@ public partial class ExhibitPackageModal : Modal
                                         };
                                     }
 
-                                    // -> Project: Unset
+                                    // NOTE: -> Project: Unset
                                     return new()
                                     {
                                         Kind = InstancePackageModificationKind.Unset,
@@ -418,7 +413,7 @@ public partial class ExhibitPackageModal : Modal
                                 var package = await DataService.ResolvePackageAsync(result, Filter);
                                 if (x.Old is null)
                                 {
-                                    // null -> Package: Add
+                                    // NOTE: null -> Package: Add
                                     return new()
                                     {
                                         Kind = InstancePackageModificationKind.AddVersioned,
@@ -427,7 +422,7 @@ public partial class ExhibitPackageModal : Modal
                                     };
                                 }
 
-                                // Package -> Package: Update
+                                // NOTE: Package -> Package: Update
                                 return new()
                                 {
                                     Kind = InstancePackageModificationKind.Update,
@@ -469,7 +464,6 @@ public partial class ExhibitPackageModal : Modal
         {
             if (Exhibit.InstalledVersionId == SelectedVersion?.VersionId)
             {
-                // 未作出更改，Abort
                 Dismiss();
                 return;
             }
@@ -479,13 +473,11 @@ public partial class ExhibitPackageModal : Modal
 
         if (SelectedVersionMode == 0 && SelectedVersion != null)
         {
-            // 指定了版本
             Exhibit.PendingVersionId = SelectedVersion?.VersionId;
             Exhibit.PendingVersionName = SelectedVersion?.VersionName;
         }
         else
         {
-            // 未指定版本
             Exhibit.PendingVersionId = null;
             Exhibit.PendingVersionName = null;
         }

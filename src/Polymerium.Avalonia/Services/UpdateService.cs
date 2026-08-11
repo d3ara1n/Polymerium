@@ -45,7 +45,6 @@ public class UpdateService(
         }
         catch (Exception)
         {
-            // slient
         }
     }
 

@@ -12,9 +12,8 @@ public partial class DangerConfirmDialog : Dialog
         ChallengeCode = Random.Shared.Next(1000, 10000).ToString();
     }
 
-    // The primary button only lights up once the typed code matches the challenge,
-    // because Dialog.CanConfirm delegates to ValidateResult(Result) and TypedCode
-    // pushes every keystroke into Result.
+    // NOTE: 主按钮仅在输入与 challenge 一致时才亮——CanConfirm 委托给 ValidateResult，
+    //  TypedCode 每次击键都写入 Result。
     protected override bool ValidateResult(object? result) => result is string s && s == ChallengeCode;
 
     #region Avalonia Properties

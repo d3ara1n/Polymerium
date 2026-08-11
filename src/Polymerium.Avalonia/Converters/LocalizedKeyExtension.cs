@@ -6,8 +6,6 @@ using Avalonia.Styling;
 
 namespace Polymerium.Avalonia.Converters;
 
-// NOTE: 按字符串 key 查当前语言的值；查不到（如品牌名等字面）原样返回。
-// 用于 POCO/ViewModel 持有字符串 key、XAML 绑定显示并随语言热切换的场景。
 public sealed class LocalizedKeyExtension : MarkupExtension
 {
     public LocalizedKeyExtension() { }

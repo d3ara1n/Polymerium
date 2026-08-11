@@ -22,12 +22,7 @@ using Version = TridentCore.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Avalonia.Services;
 
-// Application 级别的数据整合服务，所有 API 和模型均为 UI 服务
-// 后续其他 VM 中用到的数据提供方都会切换为 nameof(DataService)
-
-// 提供全局的数据管理
-// 例如 Package Resolving 时可以从这里拿到 ValueTask
-// 由于状态是共享的，所以根本不需要取消
+// NOTE: Application 级数据整合服务，所有 API/模型统一经此提供；状态全局共享，故无需取消。
 public class DataService(
     IMemoryCache cache,
     RepositoryAgent agent,
@@ -40,9 +35,8 @@ public class DataService(
 
     public async ValueTask<Package> IdentifyVersionAsync(string filePath) => await agent.IdentifyAsync(filePath);
 
-    // Package / Project / Description / Changelog / Status 的缓存统一由
-    // Trident 仓库缓存层管理，此处直接委托。DataService 只缓存 UI hot data
-    // 和经过应用层加工的数据。
+    // NOTE: Package/Project/Description/Changelog/Status 缓存归 Trident 仓库缓存层管，此处直接委托；
+    //  DataService 只缓存 UI hot data 与应用层加工后的数据。
     public Task<Package> ResolvePackageAsync(PackageIdentifier id, Filter filter, bool cachedEnabled = true) =>
         agent.ResolveAsync(id, filter, cachedEnabled);
 
@@ -63,14 +57,13 @@ public class DataService(
 
     public Task<RepositoryStatus> CheckStatusAsync(string label) => agent.CheckStatusAsync(label);
 
-    // 以下为 DataService 独有的内存缓存，数据源不在 RepositoryAgent 中
-    // 或经过额外处理（如 Bitmap 解码、版本数量截断）
+    // NOTE: 以下为 DataService 独有的内存缓存——数据源不在 RepositoryAgent，或经过额外加工（Bitmap 解码、版本数截断）。
 
     public ValueTask<Bitmap> GetBitmapAsync(Uri url, int maxWidth = 64)
     {
         var key = $"bitmap:{maxWidth}:{url.AbsoluteUri}";
 
-        // 第一层：内存缓存（包括进行中的 Task，天然去重）
+        // NOTE: 第一层内存缓存——进行中的 Task 也在缓存里，天然去重。
         if (cache.TryGetValue(key, out var cached) && cached is Task<Bitmap> task)
         {
             return new(task);
@@ -81,9 +74,8 @@ public class DataService(
         entry.AbsoluteExpirationRelativeToNow = EXPIRED_IN;
         entry.Size = 1;
         entry.Value = rv;
-        // 缓存驱逐时不释放 Bitmap，因为 Bitmap 可能仍被 UI 引用，
-        // 提前释放会导致 ObjectDisposedException。
-        // GC 的 finalizer 会在所有引用消失后自行回收非托管资源。
+        // NOTE: 驱逐时不释放 Bitmap——UI 可能仍持有引用，提前释放抛 ObjectDisposedException；
+        //  非托管资源由 GC finalizer 在引用全部消失后回收。
         entry.Dispose();
         return new(rv);
     }
@@ -93,7 +85,6 @@ public class DataService(
         var hash = Convert.ToHexString(SHA1.HashData(Encoding.UTF8.GetBytes(url.AbsoluteUri))).ToLowerInvariant();
         var path = PathDef.Default.FileOfIconObject(hash);
 
-        // 第二层：文件缓存（30天有效期）
         byte[] bytes;
         if (File.Exists(path) && File.GetLastWriteTimeUtc(path) + ICON_FILE_EXPIRED_IN > DateTime.UtcNow)
         {
@@ -101,11 +92,10 @@ public class DataService(
         }
         else
         {
-            // 第三层：下载
             using var client = httpClientFactory.CreateClient();
             bytes = await client.GetByteArrayAsync(url);
 
-            // 写入临时文件再 rename，防止崩溃留下损坏文件
+            // NOTE: 先写临时文件再 rename，崩溃时不会留下损坏文件。
             var dir = Path.GetDirectoryName(path)!;
             Directory.CreateDirectory(dir);
             var tmp = path + ".tmp";
@@ -121,9 +111,7 @@ public class DataService(
         GetOrCreate($"versions:{label}:{PackageHelper.Identify(label, ns, pid, null, filter)}",
                     async () =>
                     {
-                        // DataService 一半都是前端调用
-                        // 真的需要拉取全部版本的情况下只有需要版本匹配的时候都会再次级进行处理
-                        // 此处进行限制避免遇到版本过多
+                        // NOTE: 调用以读展示数据为主，仅版本匹配需全量；此处设上限避免一次拉取过多。
                         const int LIMIT = 20;
                         var handle = await agent.InspectAsync(new(label, ns, pid), filter);
                         var rv = new List<Version>();

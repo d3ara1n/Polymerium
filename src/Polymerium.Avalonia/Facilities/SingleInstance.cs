@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace Polymerium.Avalonia.Facilities;
 
-// Named-Mutex single-instance guard. The second instance pings the first through a
-// one-way named pipe; messages are single-line JSON so future navigation forwarding
-// (polymerium://, args) only adds fields without touching the transport.
+// NOTE: Named-Mutex 单实例守卫——第二实例经单向命名管道 ping 第一实例；消息为单行 JSON，
+//  未来导航转发（polymerium://、args）只加字段、不动传输层。
 internal sealed class SingleInstance : IDisposable
 {
     private const string MUTEX_NAME = "dev.dearain.Polymerium.single-instance";
@@ -41,7 +40,7 @@ internal sealed class SingleInstance : IDisposable
             }
             catch
             {
-                // Listener teardown raced with shutdown — nothing to act on.
+                // NOTE: 监听器拆除与关闭竞态，无事可做。
             }
 
             _cts.Dispose();
@@ -132,8 +131,7 @@ internal sealed class SingleInstance : IDisposable
         }
         catch
         {
-            // Best effort: the second instance must never hang the user — if the first
-            // instance's server isn't reachable, just exit silently.
+            // NOTE: 尽力而为——第二实例绝不卡住用户，第一实例不可达时静默退出。
         }
     }
 

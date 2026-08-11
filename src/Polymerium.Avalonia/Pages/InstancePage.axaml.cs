@@ -101,7 +101,6 @@ public partial class InstancePage : ScopedPage
             {
                 EntryBox.SelectedIndex = found;
             }
-            // do nothing
         }
     }
 

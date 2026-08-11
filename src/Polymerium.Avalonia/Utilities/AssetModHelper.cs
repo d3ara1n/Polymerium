@@ -95,7 +95,6 @@ public static class AssetModHelper
             Description = GetJsonString(root, "description")
         };
 
-        // 解析作者
         if (root.TryGetProperty("authors", out var authorsElement))
         {
             metadata.Authors = authorsElement.ValueKind == JsonValueKind.Array
@@ -109,7 +108,6 @@ public static class AssetModHelper
                                    : [authorsElement.GetString() ?? ""];
         }
 
-        // 解析联系信息
         if (root.TryGetProperty("contact", out var contactElement))
         {
             var homepage = GetJsonString(contactElement, "homepage") ?? GetJsonString(contactElement, "sources");
@@ -120,10 +118,8 @@ public static class AssetModHelper
             };
         }
 
-        // 解析许可证
         metadata.License = GetJsonString(root, "license");
 
-        // 解析图标
         if (root.TryGetProperty("icon", out var iconElement))
         {
             metadata.LogoFile = iconElement.ValueKind == JsonValueKind.String ? iconElement.GetString() :
@@ -149,7 +145,7 @@ public static class AssetModHelper
         var doc = JsonDocument.Parse(json);
         var root = doc.RootElement;
 
-        // Quilt 的结构类似 Fabric，但在 quilt_loader 下
+        // NOTE: Quilt 元数据与 Fabric 同构，仅挂在 quilt_loader 节点下。
         if (root.TryGetProperty("quilt_loader", out var loaderElement))
         {
             var metadata = new AssetModeMetadataModel
@@ -212,7 +208,6 @@ public static class AssetModHelper
 
             var metadata = new AssetModeMetadataModel { LoaderType = guessKind };
 
-            // 检查是否为 NeoForge
             if (toml.ContainsKey("modLoader")
              && toml["modLoader"].ToString()?.Contains("neoforge", StringComparison.OrdinalIgnoreCase) is true)
             {
@@ -221,7 +216,6 @@ public static class AssetModHelper
 
             metadata.LoaderType ??= ModLoaderKind.Forge;
 
-            // 解析 mods 数组
             if (toml.ContainsKey("mods") && toml["mods"] is TomlTableArray { Count: > 0 } and [{ } modInfo])
             {
                 metadata.ModId = modInfo["modId"].ToString();
@@ -262,7 +256,7 @@ public static class AssetModHelper
             var doc = JsonDocument.Parse(json);
             var root = doc.RootElement;
 
-            // mcmod.info 可能是数组或对象
+            // NOTE: mcmod.info 可能是数组（多 mod）或单个对象。
             var modInfo = root.ValueKind == JsonValueKind.Array && root.GetArrayLength() > 0 ? root[0] : root;
 
             var homepage = GetJsonString(modInfo, "url");

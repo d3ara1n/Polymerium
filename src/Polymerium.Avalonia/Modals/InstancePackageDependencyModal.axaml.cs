@@ -106,7 +106,7 @@ public partial class InstancePackageDependencyModal : Modal
                                   },
                                   value =>
                                   {
-                                      // Auto-select the first (best) version after loading
+                                      // NOTE: 加载后自动选中第一个（最佳）版本。
                                       if (value is InstancePackageVersionCollection { Count: > 0 } versions)
                                       {
                                           Dispatcher.UIThread.Post(() =>
@@ -148,28 +148,24 @@ public partial class InstancePackageDependencyModal : Modal
     [RelayCommand(CanExecute = nameof(CanInstall))]
     private async Task Install()
     {
-        // 检查是否已安装
         var existing = Packages.FirstOrDefault(x => x.Info?.Label == Model.Label
                                                  && x.Info?.Namespace == Model.Namespace
                                                  && x.Info?.ProjectId == Model.ProjectId);
         if (existing is not null)
         {
-            // 已安装，直接关闭
             Dismiss();
             return;
         }
 
-        // 创建新的 Entry 并添加到 Profile
-        // 如果是自动版本，则不指定版本号（传 null）
+        // NOTE: 自动版本不指定版本号（传 null）。
         var versionId = IsAutoVersion ? null : SelectedVersion?.Id;
         var pref = PackageHelper.ToPref(Model.Label, Model.Namespace, Model.ProjectId, versionId);
         var entry = new Profile.Rice.Entry { Pref = pref, Enabled = true, Source = null };
 
-        // 加入 Profile，由 InstanceSetupPage 的 merge 造 Entry item 与实例并加载 Info
+        // NOTE: 加入 Profile 后由 InstanceSetupPage 的 merge 造 Entry item 并加载 Info。
         Guard.Value.Setup.Packages.Add(entry);
         Guard.NotifyChanged();
 
-        // 记录操作
         PersistenceService.AppendAction(new()
         {
             Key = Guard.Key,

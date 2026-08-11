@@ -16,8 +16,7 @@ public class UpdateSourceSelector(
 {
     private IUpdateSource Select()
     {
-        // 0 => Github
-        // 1 => MirrorChyan
+        // NOTE: 索引映射：0 => Github，1 => MirrorChyan。
         if (configurationService.Value.UpdateSource == 0)
         {
             return sources.OfType<GithubSource>().First();

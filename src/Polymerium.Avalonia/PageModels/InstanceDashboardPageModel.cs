@@ -193,8 +193,7 @@ public partial class InstanceDashboardPageModel(
 
     private void InitializeLogSources()
     {
-        // 由于内容是不变的，所以只需要添加一次
-        // 这里不在乎是否是哪个实际目录，因为最终都会出现在 build/logs 中
+        // NOTE: Live 源内容不变，只需添加一次；不关心具体目录，日志最终都会落在 build/logs。
         Sources.Clear();
         var live = new LiveLogSourceModel();
         Sources.Add(live);
@@ -218,7 +217,7 @@ public partial class InstanceDashboardPageModel(
         }
         if (!IsOnAir)
         {
-            // 避免清空，因为运行中的 Collection 是共享的外部引入的集合
+            // NOTE: 运行时不清空——LogCollection 是外部共享集合。
             LogCollection?.Clear();
         }
 
@@ -230,8 +229,6 @@ public partial class InstanceDashboardPageModel(
             case LiveLogSourceModel:
                 if (IsOnAir)
                 {
-                    // Attach
-                    // Bind
                     if (scrapService.TryGetBuffer(Basic.Key, out var buffer))
                     {
                         _collectionView = buffer.CreateView(x => x);
@@ -273,7 +270,6 @@ public partial class InstanceDashboardPageModel(
                     }
                 }
 
-                // Set
                 break;
         }
     }
@@ -301,7 +297,7 @@ public partial class InstanceDashboardPageModel(
 
     private Func<ScrapModel, bool>? BuildFilter()
     {
-        // 如果三个级别全部开启且没有搜索文本 → 无过滤
+        // NOTE: 三个级别全开且无搜索文本时不过滤（null = 全放行）。
         var allLevels = IsFilterError && IsFilterWarning && IsFilterInformation;
         var hasSearch = !string.IsNullOrWhiteSpace(FilterText);
 
@@ -391,7 +387,7 @@ public partial class InstanceDashboardPageModel(
             }
             catch (InvalidOperationException)
             {
-                // 针对进程未启动的情况给予三次三秒的宽限
+                // NOTE: 进程未启动（InvalidOperationException）给三次宽限再停止监控。
                 errorCount++;
                 if (errorCount > 3)
                 {
@@ -410,7 +406,7 @@ public partial class InstanceDashboardPageModel(
                 }
                 catch (OperationCanceledException) when (token.IsCancellationRequested)
                 {
-                    // 正常退出，不算错误
+                    // NOTE: 正常退出（token 取消），不算错误。
                 }
             }
         }
@@ -429,7 +425,7 @@ public partial class InstanceDashboardPageModel(
 
         process.Refresh();
 
-        // 这一行会因为进程未启动而触发 InvalidOperationException，被外围捕获并进入三秒的失败倒计时
+        // NOTE: 进程未启动时这行抛 InvalidOperationException，被外围捕获并进入失败倒计时。
         var cpuTime = process.TotalProcessorTime;
         var sampleTime = DateTime.Now;
 

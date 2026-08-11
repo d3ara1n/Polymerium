@@ -73,10 +73,10 @@ public partial class RecipePageModel(
                                                            s.ProjectId))
                         .ToHashSet();
 
-        // toRemove: cache 有、DB 无
+        // NOTE: 同步分桶——toRemove：cache 有、DB 无；
+        //  toAdd/toUpdate：Lookup 命中则刷新 Note/Tags，未命中则新建。
         _items.Remove([.. _items.Keys.Where(k => !storedKeys.Contains(k))]);
 
-        // toAdd / toUpdate: Lookup 命中则刷新 Note/Tags，未命中则新建
         var toAdd = new List<RecipeItemModel>();
         foreach (var s in stored)
         {

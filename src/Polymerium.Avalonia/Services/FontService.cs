@@ -5,8 +5,8 @@ using Polymerium.Avalonia.Models;
 
 namespace Polymerium.Avalonia.Services;
 
-// 字体配置的唯一应用点。启动 ApplyFromConfiguration 从 Configuration 加载三处字体应用到 Application.Resources；
-// 设置页调 Set 更新单个字体并持久化。三处资源键（Main/Code/Log）由 App.axaml 的全局 Style 与各控件 DynamicResource 消费。
+// NOTE: 字体配置的唯一应用点——启动 ApplyFromConfiguration 加载三处字体到 Application.Resources，
+//  设置页 Set 更新单个字体并持久化；Main/Code/Log 三键由 App.axaml 全局 Style 与控件 DynamicResource 消费。
 public sealed class FontService(ConfigurationService configurationService)
 {
     public const string MainKey = "MainFontFamily";
@@ -39,8 +39,8 @@ public sealed class FontService(ConfigurationService configurationService)
         ApplyResource(LogKey, _log);
     }
 
-    // DefaultFontModel 的 Preview 即 fallback，与 App.axaml 已声明的默认资源值一致——跳过赋值，
-    // 避免启动时无意义的全局 DynamicResource 刷新（所有 :is(Control) 控件重求值字体）造成卡顿。
+    // NOTE: DefaultFontModel.Preview 即 fallback 且与 App.axaml 默认资源一致，跳过赋值，
+    //  避免启动时全局 DynamicResource 刷新（所有 :is(Control) 重求值字体）造成卡顿。
     private static void ApplyResource(string key, FontModelBase selection)
     {
         if (selection is DefaultFontModel)

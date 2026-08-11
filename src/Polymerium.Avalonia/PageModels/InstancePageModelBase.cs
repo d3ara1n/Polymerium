@@ -113,7 +113,7 @@ public abstract partial class InstancePageModelBase : ViewModelBase
                                       }
                                       else
                                       {
-                                          // 只在 tracker 变化时调 hook（避免每次 snapshot 更新重复调）
+                                          // NOTE: 仅 tracker 变化时调 hook，避免每次 snapshot 更新重复调。
                                           if (!ReferenceEquals(snapshot.Tracker, _currentTracker))
                                           {
                                               _currentTracker = snapshot.Tracker;

@@ -78,7 +78,6 @@ public partial class PackageBulkUpdatePreviewerDialog : Dialog
 
     protected override bool ValidateResult(object? result)
     {
-        // 应用之前把数据写入 Result
         Result ??= new PackageBulkUpdatePreviewerModel();
         if (Result is PackageBulkUpdatePreviewerModel model)
         {

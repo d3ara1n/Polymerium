@@ -103,7 +103,7 @@ internal static class Program
         ImageLoader.AsyncImageLoader = loader;
         ImageBrushLoader.AsyncImageLoader = loader;
 
-        // 初始化 Sinks：订阅 Aggregator 的事件流（仅需一次，不依赖窗口生命周期）
+        // NOTE: 初始化 Sinks——订阅 Aggregator 事件流，仅需一次，不依赖窗口生命周期。
         Services.GetRequiredService<ActivitySink>().Attach();
         Services.GetRequiredService<NotificationSink>().Attach();
         Services.GetRequiredService<CrashDiagnosisSink>().Attach();
@@ -112,7 +112,6 @@ internal static class Program
 
         #region 2. Avalonia 启动窗口之后调用部分耗时服务
 
-        // PROCEDURE MOVED: Lifetime Services 在 App.OnFrameworkInitialized 中进行延迟初始化而不是 Program 收尾
 
         #endregion
 

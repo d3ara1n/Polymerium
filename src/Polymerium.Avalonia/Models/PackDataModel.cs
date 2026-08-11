@@ -68,10 +68,9 @@ public partial class PackDataModel : ModelBase
         var found = _pack.IncludedOverrides.FirstOrDefault(x => x.Key == key);
         if (found != null)
         {
-            // 但是设置为不启用并不会额外的去移除
+            // NOTE: 禁用只置 Enabled=false 不移除条目，启用时才新增条目。
             found.Enabled = value;
         }
-        // 只有设置为启用才会额外添加
         else if (value)
         {
             _pack.IncludedOverrides.Add(new() { Key = key, Enabled = value });

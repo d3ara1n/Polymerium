@@ -2,8 +2,7 @@ using Polymerium.Avalonia.Facilities;
 
 namespace Polymerium.Avalonia.Models;
 
-// 多态列表项：Header 渲染组，Entry 渲染包。两者都持有同一个 GroupModel 实例——
-// 这个 Group 既是分组依据（同组共享实例），又是组信息的载体。
+// NOTE: Header 渲染组、Entry 渲染包，两者持同一 GroupModel 实例——它既是分组依据（同组共享），又是组信息载体。
 public abstract class PackageListItemBase : ModelBase
 {
     public required PackageListKey Key { get; init; }

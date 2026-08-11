@@ -55,8 +55,8 @@ public partial class NotificationModel : ModelBase
 
     internal void OnRemoved()
     {
-        // Model 的生命周期是外部维护的(MainWindowContext)，和 UI 绑定，被移除时表示用户失去控制权，也就理所当然需要通知和这条通知有关的任务统统取消掉
-        // 自身不维护生命周期
+        // NOTE: 生命周期由外部（MainWindowContext）维护，被移除即用户失去控制权，
+        //  所以这里要连带取消与该通知相关的任务。
         if (!_cts.IsCancellationRequested)
         {
             _cts.Cancel();
@@ -67,7 +67,7 @@ public partial class NotificationModel : ModelBase
 
     public void Cancel()
     {
-        // 除了 Remove 时取消，也可以由用户（例如按钮事件）提前调用 Cancel，这会导致 Action 全部不可操作，UI上会显示一个“过期”
+        // NOTE: 除 Remove 外用户也可提前 Cancel（如按钮），此后 Action 全部不可用，UI 显示“过期”。
         if (!_cts.IsCancellationRequested)
         {
             _cts.Cancel();
