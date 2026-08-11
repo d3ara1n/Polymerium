@@ -61,7 +61,7 @@ public partial class LandingPageModel(
 
     protected override Task OnInitializeAsync(CancellationToken token)
     {
-        // This page is always the root page
+        // NOTE: 本页恒为根页。
         navigationService.ClearHistory();
 
         LoadMinecraftNews();

@@ -67,8 +67,8 @@ public sealed class SkinCamera
         var cx = (minx + maxx) * 0.5f;
         var cy = (miny + maxy) * 0.5f;
         var tx = Width * 0.5f - cx * scale;
-        // 屏幕坐标 Y 向下：screenY = trY - rY*scale。
-        // Center：模型中心(cy)对齐画布中心；Top：旋转后最高点(maxy)贴画布顶边(0)。
+        // NOTE: 屏幕坐标 Y 向下：screenY = trY - rY*scale。Center 对齐画布中心；
+        //  Top 让旋转后最高点贴画布顶边。
         var ty = Alignment == VerticalAlign.Top ? maxy * scale : Height * 0.5f + cy * scale;
         return (scale, new(tx, ty));
     }

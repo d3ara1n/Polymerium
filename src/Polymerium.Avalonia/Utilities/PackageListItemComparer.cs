@@ -3,7 +3,7 @@ using Polymerium.Avalonia.Models;
 
 namespace Polymerium.Avalonia.Utilities;
 
-// sorter 负责形状：组按 SourceOrders 档位排（散装恒末），组内 Header<Entry，再按 PersistentIndex。
+// NOTE: sorter 负责形状：组按 SourceOrders 档位排（散装恒末），组内 Header<Entry，再按 PersistentIndex。
 public sealed class PackageListItemComparer(IList<string> sourceOrders) : IComparer<PackageListItemBase>
 {
     public int Compare(PackageListItemBase? x, PackageListItemBase? y)
@@ -91,7 +91,7 @@ public sealed class PackageListItemComparer(IList<string> sourceOrders) : ICompa
         return -1;
     }
 
-    // 不在 SourceOrders 里的组：Recipe 排在 Modpack 前（POLY-116 默认档位）
+    // NOTE: 不在 SourceOrders 里的组：Recipe 排在 Modpack 前（POLY-116 默认档位）。
     private static int TierOf(GroupModel g) => g.Kind == PackageSourceHelper.Kind.Recipe ? 0 : 1;
 
     private static int RankOf(PackageListItemBase item) => item is PackageListItemBase.Header ? 0 : 1;

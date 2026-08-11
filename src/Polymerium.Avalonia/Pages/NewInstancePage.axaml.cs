@@ -38,7 +38,6 @@ public partial class NewInstancePage : ScopedPage
                 }
                 catch
                 {
-                    // do nothing
                 }
             }
         }

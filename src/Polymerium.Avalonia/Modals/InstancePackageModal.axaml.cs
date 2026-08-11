@@ -210,9 +210,8 @@ public partial class InstancePackageModal : Modal
         return lazy;
     }
 
-    // 依赖安装状态反应式：包源成员变化时按 pref 重判每个依赖的 Installed。
-    // 用 pref（而非 Info）匹配是为了在刚安装、Info 尚未加载时就能标上；
-    // 初始列表（ConstructDependencies）按 Info 匹配，因为已安装项的展示数据要取自 Info。
+    // NOTE: 依赖安装状态反应式——包源成员变化时按 pref 重判 Installed（pref 而非 Info 匹配，
+    //  保证刚安装、Info 未加载时就能标上）；初始列表按 Info 匹配，因已安装项展示数据取自 Info。
     private void SetupDependencyWatcher()
     {
         _dependencySubscription?.Dispose();
@@ -253,7 +252,7 @@ public partial class InstancePackageModal : Modal
                 return null;
             }
 
-            // dependants 的展示数据全部可由本地已加载的 Info 构造，无需再次网络解析
+            // NOTE: dependants 展示数据全部可由本地已加载 Info 构造，无需再网络解析。
             var models = Packages
                         .Where(x => x.Info is { Version: InstancePackageVersionModel version }
                                  && version.Dependencies.Any(y => y.Label == Model.Label
@@ -352,10 +351,8 @@ public partial class InstancePackageModal : Modal
                 return null;
             }
 
-            // 获取当前包的所有历史记录
             var actions = PersistenceService.GetActions(Guard.Key);
 
-            // 过滤出与当前包相关的记录
             var filteredActions = actions
                                  .Where(x => (x.Old is not null
                                            && PackageHelper.IsMatched(x.Old,
@@ -369,7 +366,6 @@ public partial class InstancePackageModal : Modal
                                                                       Model.ProjectId)))
                                  .ToArray();
 
-            // 解析包信息并创建 InstanceActionModel
             var tasks = filteredActions
                        .Select(async x =>
                         {
@@ -379,7 +375,7 @@ public partial class InstancePackageModal : Modal
                                 {
                                     if (x.Old is null)
                                     {
-                                        // null -> Project
+                                        // NOTE: null -> Project（AddUnversioned）
                                         return new()
                                         {
                                             Kind = InstancePackageModificationKind.AddUnversioned,
@@ -388,7 +384,7 @@ public partial class InstancePackageModal : Modal
                                         };
                                     }
 
-                                    // -> Project: Unset
+                                    // NOTE: -> Project: Unset
                                     return new()
                                     {
                                         Kind = InstancePackageModificationKind.Unset,
@@ -400,7 +396,7 @@ public partial class InstancePackageModal : Modal
                                 var package = await DataService.ResolvePackageAsync(result, Filter);
                                 if (x.Old is null)
                                 {
-                                    // null -> Package: Add
+                                    // NOTE: null -> Package: Add
                                     return new()
                                     {
                                         Kind = InstancePackageModificationKind.AddVersioned,
@@ -409,7 +405,7 @@ public partial class InstancePackageModal : Modal
                                     };
                                 }
 
-                                // Package -> Package: Update
+                                // NOTE: Package -> Package: Update
                                 return new()
                                 {
                                     Kind = InstancePackageModificationKind.Update,
@@ -464,7 +460,7 @@ public partial class InstancePackageModal : Modal
             }
 
             var loader = LoaderHelper.TryParse(Guard.Value.Setup.Loader, out var result) ? result.Identity : null;
-            // planner 会忽略 Enabled == false 的情况，这里也是
+            // NOTE: planner 会忽略 Enabled == false，这里保持一致。
             var plans = await PackagePlanner
                              .PlanAsync([Model.Owner.Entry],
                                         new([.. Guard.Value.Setup.Rules.Where(x => x.Enabled)],
@@ -572,7 +568,6 @@ public partial class InstancePackageModal : Modal
     [RelayCommand]
     private async Task AddTag()
     {
-        // 收集所有现有标签（去重，排除当前包已有的标签）
         var existingTags = Packages
                           .SelectMany(x => x.Tags)
                           .Distinct()
@@ -583,7 +578,6 @@ public partial class InstancePackageModal : Modal
         var dialog = new TagPickerDialog { ExistingTags = existingTags };
         if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is string tag && !string.IsNullOrEmpty(tag))
         {
-            // 避免添加重复标签
             if (!Model.Owner.Tags.Contains(tag))
             {
                 Model.Owner.Tags.Add(tag);
@@ -618,7 +612,6 @@ public partial class InstancePackageModal : Modal
 
         if (model.Installed is { Info: not null } installed)
         {
-            // 本地已安装的依赖，打开 InstancePackageModal
             OverlayService.PopModal(new InstancePackageModal
             {
                 DataContext = installed.Info,
@@ -635,7 +628,6 @@ public partial class InstancePackageModal : Modal
         }
         else
         {
-            // 在线依赖，打开 InstancePackageDependencyModal
             OverlayService.PopModal(new InstancePackageDependencyModal
             {
                 DataContext = model,

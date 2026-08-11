@@ -56,7 +56,7 @@ public partial class MainWindowContext : ObservableObject
         SubscribeProfileList(profileManager);
         SubscribeState(aggregator);
 
-        // 顶栏未读徽标：转发 app 级 NotificationService 的未读计数（数据归属仍在服务）
+        // NOTE: 顶栏未读徽标——转发 app 级 NotificationService 未读计数（数据归属仍在服务）。
         _notificationService.UnreadCountChanged += OnUnreadCountChanged;
         UnreadNotificationCount = _notificationService.UnreadCount;
 
@@ -81,7 +81,7 @@ public partial class MainWindowContext : ObservableObject
 
     #region Other reactive
 
-    // NotificationService 的事件假定在 UI 线程触发（见服务注释），此处直接赋值即可
+    // NOTE: NotificationService 事件均在 UI 线程触发（见服务注释），此处直接赋值即可。
     private void OnUnreadCountChanged(int count) => UnreadNotificationCount = count;
 
     #endregion
@@ -101,8 +101,7 @@ public partial class MainWindowContext : ObservableObject
     {
         _updateService.UpdateFound += OnUpdateFound;
 
-        // Show OOBE modal for first-time users
-        // OOBE now includes privilege check step on Windows
+        // NOTE: 首次使用展示 OOBE（Windows 上含权限检查步骤）。
         if (Program.FirstRun)
         {
             _overlayService.PopModal(new OobeModal
@@ -453,7 +452,7 @@ public partial class MainWindowContext : ObservableObject
         }
         else if (snapshot.State != InstanceState.Idle)
         {
-            // 未 pin 非 recent 的实例从 InstancesPage 启动：状态必须可见，拉进 _entries
+            // NOTE: 从 InstancesPage 启动的未 pin/非 recent 实例，状态必须可见，拉进 _entries。
             InstanceEntryModel entry = _profileManager.TryGetImmutable(snapshot.Key, out var profile)
                                            ? new(snapshot.Key,
                                                  profile.Name,

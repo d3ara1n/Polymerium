@@ -30,9 +30,8 @@ public partial class RotatingSkinView : UserControl
     public RotatingSkinView()
     {
         InitializeComponent();
-        // Wire the frames collection straight onto the two ItemsControls in code-behind. This
-        // avoids fragile element-name bindings (#Root.X) that depend on UserControl name-scope
-        // resolution and are easy to get silently wrong.
+        // NOTE: 直接在 code-behind 把帧集合接上两个 ItemsControl，避免依赖 UserControl 名称作用域的
+        //  元素名绑定（#Root.X），那种绑定容易静默出错。
         FramesList.ItemsSource = Frames;
         Indicators.ItemsSource = Frames;
 
@@ -94,7 +93,7 @@ public partial class RotatingSkinView : UserControl
         }
         else if (Fallback is not null)
         {
-            // No directional renders available (e.g. offline); fall back to a single static image.
+            // NOTE: 无方向渲染可用（如离线）时退化为单张静态图。
             Frames.Add(new(Fallback));
         }
 

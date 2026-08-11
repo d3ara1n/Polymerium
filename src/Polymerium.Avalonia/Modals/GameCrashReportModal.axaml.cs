@@ -213,7 +213,7 @@ public partial class GameCrashReportModal : Modal
         }
         catch
         {
-            // Ignore export failures for now.
+            // NOTE: 导出失败暂不阻断。
         }
     }
 
@@ -466,7 +466,7 @@ public partial class GameCrashReportModal : Modal
             }
             catch
             {
-                // Ignore and try the next candidate.
+                // NOTE: 忽略该候选，尝试下一个。
             }
         }
 

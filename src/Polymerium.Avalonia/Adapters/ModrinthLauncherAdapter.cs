@@ -11,9 +11,8 @@ using TridentCore.Core.Utilities;
 
 namespace Polymerium.Avalonia.Adapters;
 
-// Reads Modrinth App profile metadata from its SQLite store (app.db). Unlike the JSON-based launcher
-// adapters in Trident core, this one needs SQLite — which only the desktop layer already depends on —
-// so it lives here as a Polymerium augmentation over Trident's ILauncherAdapter contract.
+// NOTE: 读 Modrinth App 的 SQLite 元数据（app.db）。核心侧适配器基于 JSON，
+//  只有桌面层已依赖 SQLite，故此适配器作为 Polymerium 对 ILauncherAdapter 的增强放在这里。
 public class ModrinthLauncherAdapter : ILauncherAdapter
 {
     private const string INSTANCE_DB = "app.db";
@@ -27,7 +26,7 @@ public class ModrinthLauncherAdapter : ILauncherAdapter
 
     private static readonly string[] IDENTIFIABLE_SUBDIRS = ["mods", "resourcepacks", "shaderpacks"];
 
-    // mod_loader is stored lowercase (vanilla/forge/fabric/quilt/neoforge); vanilla yields no loader.
+    // NOTE: mod_loader 以小写存储（vanilla/forge/fabric/quilt/neoforge）；vanilla 无 loader。
     private static readonly Dictionary<string, string> LOADER_BY_NAME = new(StringComparer.OrdinalIgnoreCase)
     {
         ["forge"] = LoaderHelper.LOADERID_FORGE,
@@ -45,7 +44,7 @@ public class ModrinthLauncherAdapter : ILauncherAdapter
             return null;
         }
 
-        // Current builds store under ModrinthApp; pre-0.8.0 used the com.modrinth.theseus identifier.
+        // NOTE: 现行版本存于 ModrinthApp 目录；pre-0.8.0 用 com.modrinth.theseus 标识。
         return LauncherDataDirHelper.LocateUnderConventional("ModrinthApp", "com.modrinth.theseus");
     }
 
@@ -62,15 +61,14 @@ public class ModrinthLauncherAdapter : ILauncherAdapter
         var profilesDir = Path.Combine(rootDir, PROFILES_FOLDER);
         var results = new List<LauncherInstance>();
 
-        // One connection, one query, scoped to this scan and disposed at the end of the method — no
-        // handle held between scans. Read-only so a running Modrinth App's writes never conflict.
+        // NOTE: 单连接单查询，方法结束即释放，两次扫描之间不持有句柄；只读打开，
+        //  与运行中的 Modrinth App 写入不冲突。
         var connectionString = new SqliteConnectionStringBuilder { DataSource = dbPath, Mode = SqliteOpenMode.ReadOnly }
            .ToString();
         await using var connection = new SqliteConnection(connectionString);
         await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
 
-        // WAL means readers never block; this only covers the rollback-journal edge so a brief write
-        // lock is waited out instead of failing the scan at once.
+        // NOTE: WAL 下读不阻塞；busy timeout 只兜 rollback-journal 边角，短暂写锁等待而非立即失败。
         await using var timeout = connection.CreateCommand();
         timeout.CommandText = "PRAGMA busy_timeout=3000;";
         await timeout.ExecuteNonQueryAsync(cancellationToken).ConfigureAwait(false);
@@ -101,7 +99,7 @@ public class ModrinthLauncherAdapter : ILauncherAdapter
         var loaderName = reader.IsDBNull(3) ? null : reader.GetString(3);
         var loaderVersion = reader.IsDBNull(4) ? null : reader.GetString(4);
 
-        // The profile folder IS the game directory — Modrinth App has no nested .minecraft layer.
+        // NOTE: profile 文件夹即游戏目录——Modrinth App 没有嵌套 .minecraft 层。
         var profileDir = Path.Combine(profilesDir, path);
 
         return new()

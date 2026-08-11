@@ -39,19 +39,15 @@ public class NotificationSink(
     {
         switch (snapshot.Tracker)
         {
-            // Install
             case InstallTracker install:
                 HandleInstallCompleted(install);
                 break;
-            // Update
             case UpdateTracker update:
                 HandleUpdateCompleted(update);
                 break;
-            // Deploy
             case DeployTracker deploy:
                 HandleDeployCompleted(deploy);
                 break;
-            // Launch
             case LaunchTracker launch:
                 HandleLaunchCompleted(launch);
                 break;
@@ -149,7 +145,7 @@ public class NotificationSink(
                                                thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
             case TrackerState.Faulted when tracker.FailureReason is not OperationCanceledException:
-                // ProcessFaultedException 由 CrashDiagnosisSink 处理
+                // NOTE: ProcessFaultedException 由 CrashDiagnosisSink 处理。
                 if (IsProcessFaulted(tracker.FailureReason))
                 {
                     return;
@@ -161,7 +157,6 @@ public class NotificationSink(
                     return;
                 }
 
-                // AccountException 或其他错误
                 notificationService.PopMessage(tracker.FailureReason,
                                                tracker.Key,
                                                thumbnail: ThumbnailHelper.ForInstance(tracker.Key));

@@ -85,8 +85,8 @@ public sealed class SkinRenderer
         var type = SkinFormat.Detect(skin);
         var faces = SkinGeometry.BuildBody(type);
         const int w = 210, h = 420;
-        // 上半身理想比例为 0.625(头+躯干 2.5 / 全身 4.0)；在此基础上再收 15%，
-        // 截断点上移到大腿根部稍上方，少露腿，更像框住上半身的证件照。
+        // NOTE: 上半身理想比例为 0.625（头+躯干 2.5 / 全身 4.0），再收 15% 让截断点落在大腿根部上方，
+        //  少露腿，更像框住上半身的证件照。
         var crop = new SKRectI(0, 0, w, (int)MathF.Round(h * 0.53f));
         return Draw(skin, faces, 45f, 15f, w, h, SkinCamera.VerticalAlign.Top, crop);
     }
@@ -109,7 +109,6 @@ public sealed class SkinRenderer
         var canvas = surface.Canvas;
         canvas.Clear(SKColors.Transparent);
 
-        // 投影 + 背面剔除
         var visible = new List<ProjectedFace>(faces.Count);
         foreach (var f in faces)
         {
@@ -120,8 +119,8 @@ public sealed class SkinRenderer
             }
         }
 
-        // 本体先画（远→近），外层后画（远→近，叠加在本体之上）。
-        // Nearest 最近邻采样保留 Minecraft 像素艺术的锐利边缘；采样选项随 shader 而非 paint 传递。
+        // NOTE: 本体先画（远→近）、外层后画（远→近叠在本体之上）；Nearest 采样保留像素艺术锐边，
+        //  采样选项随 shader 而非 paint 传递。
         using var shader = skin.ToShader(SKShaderTileMode.Clamp,
                                          SKShaderTileMode.Clamp,
                                          new SKSamplingOptions(SKFilterMode.Nearest));
@@ -157,7 +156,7 @@ public sealed class SkinRenderer
 
     private static void DrawFace(SKCanvas canvas, SKBitmap skin, SkinFace f, SKPoint[] pts, SKPaint paint)
     {
-        // SKShader.CreateBitmap 的纹理坐标是像素坐标（直接索引 bitmap），无需归一化。
+        // NOTE: SKShader.CreateBitmap 的纹理坐标是像素坐标（直接索引 bitmap），无需归一化。
         var uvs = new[]
         {
             new SKPoint(f.U0.X, f.U0.Y),
@@ -169,7 +168,7 @@ public sealed class SkinRenderer
         canvas.DrawVertices(verts, SKBlendMode.SrcOver, paint);
     }
 
-    // 屏幕空间有符号面积（Skia Y 向下）：< 0 视为正面朝相机（与 CubeModel 顶点序匹配）。
+    // NOTE: 屏幕空间有符号面积（Skia Y 向下）：< 0 视为正面朝相机（与 CubeModel 顶点序匹配）。
     private static float SignedArea(SKPoint[] p)
     {
         var a = 0f;

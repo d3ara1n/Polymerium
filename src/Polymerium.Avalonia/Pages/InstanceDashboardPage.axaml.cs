@@ -50,7 +50,7 @@ public partial class InstanceDashboardPage : Subpage
 
     private void OnItemsChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        // Reset 覆盖过滤/搜索变化导致的视图整体重建，跟随开启时同样保持钉底。
+        // NOTE: Reset 覆盖过滤/搜索变化导致的视图重建，跟随开启时仍保持钉底。
         if (e.Action is not (NotifyCollectionChangedAction.Add or NotifyCollectionChangedAction.Reset))
         {
             return;
@@ -62,7 +62,7 @@ public partial class InstanceDashboardPage : Subpage
         }
     }
 
-    // 合并同一调度周期内的多次钉底请求：burst 新增只触发一次 ScrollToEnd，避免对每条日志都重排布局。
+    // NOTE: 合并同一调度周期内多次钉底请求——burst 新增只触发一次 ScrollToEnd，避免逐条重排布局。
     private void RequestScrollToEnd()
     {
         if (_scrollPending)
@@ -71,7 +71,7 @@ public partial class InstanceDashboardPage : Subpage
         }
 
         _scrollPending = true;
-        // 集合已变但 VirtualizingStackPanel 尚未重算 extent，同步 ScrollToEnd 会停在旧底部，故延后执行。
+        // NOTE: 集合已变但 VirtualizingStackPanel 尚未重算 extent，同步 ScrollToEnd 会停在旧底部，故延后。
         Dispatcher.UIThread.Post(() =>
         {
             _scrollPending = false;
@@ -88,7 +88,7 @@ public partial class InstanceDashboardPage : Subpage
         if (e.OffsetDelta.Y < 0 && !atBottom)
         {
             _disableDebounce++;
-            // 连续多次向上滚才判定为有意回看，避免惯性/触控板抖动误关跟随
+            // NOTE: 连续多次向上滚才判定为有意回看，避免惯性/触控板抖动误关跟随。
             if (_disableDebounce > 1)
             {
                 IsAutoScroll = false;

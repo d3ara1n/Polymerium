@@ -12,7 +12,6 @@ public class AssetWorldPlayerStatsModel
 {
     public Dictionary<string, long> Stats { get; set; } = new();
 
-    // 常用统计数据的便捷访问
     public long PlayTime => GetStat("minecraft:custom", "minecraft:play_time");
     public long Deaths => GetStat("minecraft:custom", "minecraft:deaths");
     public long MobKills => GetStat("minecraft:custom", "minecraft:mob_kills");

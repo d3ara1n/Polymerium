@@ -4,7 +4,7 @@ using Polymerium.Avalonia.Widgets;
 
 namespace Polymerium.Avalonia.Services;
 
-// 这不是什么插件化的模块，所有小工具都是一次性集中封装的，因此后端共用同一个服务，后缀 Host 表示一对多
+// NOTE: 非插件化模块——所有小工具一次性集中封装，后端共用同一服务；Host 后缀表示一对多。
 public class WidgetHostService(PersistenceService persistenceService, IServiceProvider provider)
 {
     #region Indicator Constants

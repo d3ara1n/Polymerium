@@ -102,7 +102,6 @@ public class CrashDiagnosisSink(
         }
         catch
         {
-            // Ignore
         }
 
         var osDescription = RuntimeInformation.OSDescription;

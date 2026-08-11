@@ -64,10 +64,8 @@ public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer render
         SKImage image;
         lock (renderer)
         {
-            // SkiaSharp 的位图/画布操作共享底层句柄，串行化渲染以避免并发句柄竞争。
-            // 皮肤图很小，锁开销可忽略。
-            // type 字符串直接对应 SkinViewType 枚举名（不区分大小写）；
-            // 不识别时回落 Body（等距全身），与历史默认行为一致。
+            // NOTE: SkiaSharp 位图/画布共享底层句柄，须串行渲染避免并发竞争；皮肤图小，锁开销可忽略。
+            // NOTE: type 字符串直接对应 SkinViewType 枚举名（不区分大小写）；不识别时回落 Body，与历史行为一致。
             var view = Enum.TryParse<SkinViewType>(type, true, out var v) ? v : SkinViewType.Body;
             image = renderer.Render(skin, view);
         }
@@ -103,7 +101,7 @@ public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer render
                 return TryLoadAsset(ResolveAssetUri(src["asset:".Length..]));
             }
 
-            // 裸 http(s) URL：直接下载原始皮肤展开图（Authlib 账户的 SkinUrl）。
+            // NOTE: 裸 http(s) URL 直接下载原始展开图（Authlib 账户的 SkinUrl）。
             return await httpClient.GetByteArrayAsync(src).ConfigureAwait(false);
         }
         catch (Exception ex)

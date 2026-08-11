@@ -61,11 +61,8 @@ public partial class SettingsPage : Page
         }
     }
 
-    // Aligns the section header to the top of the viewport, matching macOS System
-    // Settings / Windows Settings. Unlike BringIntoView — which is lazy and only scrolls
-    // enough to reveal an already-visible target — this always parks the header at the
-    // top, so the top-anchored spy below agrees with every click and the highlight never
-    // snaps back to a different section.
+    // NOTE: 始终把节头停靠在视口顶部（对齐 macOS/Windows 设置页）；BringIntoView 是惰性的，
+    //  只滚动到「恰好可见」，会与下方 top-anchored 的 spy 判定不一致导致高亮跳动。
     private void AlignToTop(Control target)
     {
         const double margin = 8d;
@@ -73,10 +70,8 @@ public partial class SettingsPage : Page
         Scroller.Offset = new(Scroller.Offset.X, Scroller.Offset.Y + delta);
     }
 
-    // Top-anchored: a section becomes active once its header reaches the anchor line and
-    // stays active until the next section's header arrives there. When the viewport
-    // bottoms out the last section wins, so short tails (whose headers can never reach
-    // the top) are still selectable.
+    // NOTE: Top-anchored——节头到达锚线即激活，直至下一节头到达；视口触底时最后一段胜出，
+    //  保证短尾节（头永远到不了顶）仍可选中。
     private void OnScrollChanged(object? sender, ScrollChangedEventArgs e)
     {
         const double anchor = 16d;

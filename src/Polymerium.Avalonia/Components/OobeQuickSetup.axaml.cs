@@ -140,7 +140,6 @@ public partial class OobeQuickSetup : OobeStep
     {
         base.OnLoaded(e);
 
-        // Load current settings
         var config = ConfigurationService.Value;
 
         SelectedLanguage = Languages.FirstOrDefault(x => x.Id == config.ApplicationLanguage) ?? Languages.First();

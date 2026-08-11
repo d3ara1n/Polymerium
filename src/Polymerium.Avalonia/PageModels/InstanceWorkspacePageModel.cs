@@ -570,7 +570,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private WorkspaceChangeKind Diff(string live, string import)
     {
-        // 这里使用 mtime 而不是哈希，工作副本是从 import 复制到 build 的实体，atime, ctime, mtime 都是相同的
+        // NOTE: 用 mtime 而非哈希——工作副本由 import 复制到 build，atime/ctime/mtime 全相同。
         if (File.Exists(import))
         {
             var liveTime = File.GetLastWriteTimeUtc(live);
@@ -783,7 +783,6 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             if (model.FileSizeRaw > 1024 * 1024 * 1024
              && !await _overlayService.RequestConfirmationAsync(LanguageManager.Instance.InstanceWorkspacePage_LargeDiffConfirmationMessage.Current()))
             {
-                // 文件大且用户拒绝
                 return;
             }
 
@@ -810,7 +809,6 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         var suc = false;
         if (File.Exists(model.ImportPath))
         {
-            // Overwrite
             try
             {
                 File.Copy(model.LivePath, model.ImportPath, true);
@@ -823,7 +821,6 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         }
         else
         {
-            // Is Deleted
             try
             {
                 File.Delete(model.LivePath);
@@ -860,7 +857,6 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         var suc = false;
         if (IsImportProjectionEntity(model.LivePath))
         {
-            // Restore
             try
             {
                 if (File.Exists(model.ImportPath))

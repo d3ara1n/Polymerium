@@ -35,12 +35,6 @@ public class BuiltinRepositoryProviderAccessor(IServiceProvider serviceProvider)
                                                                       null);
 
 
-        // var bbsmc = new IRepositoryProviderAccessor.ProviderProfile("bbsmc",
-        //                                                             IRepositoryProviderAccessor.ProviderProfile
-        //                                                                .DriverType.Modrinth,
-        //                                                             ModrinthHelper.FAKE_ENDPOINT,
-        //                                                             null,
-        //                                                             null);
 
         return [curseforge, modrinth, packwiz];
     }

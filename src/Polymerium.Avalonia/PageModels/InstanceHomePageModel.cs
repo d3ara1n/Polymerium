@@ -45,7 +45,6 @@ public partial class InstanceHomePageModel(
     InstanceService instanceService,
     WidgetHostService widgetHostService) : InstancePageModelBase(context, aggregator, instanceManager, profileManager)
 {
-    // Launch Lifecycle
     private CompositeDisposable? _subscription;
     private IDisposable? _timerSubscription;
 

@@ -5,7 +5,6 @@ namespace Polymerium.Avalonia.Models;
 
 public class CrashReportModel
 {
-    // Basic crash info
     public required string InstanceKey { get; init; }
     public required string InstanceName { get; init; }
     public required int ExitCode { get; init; }
@@ -13,25 +12,21 @@ public class CrashReportModel
     public required DateTimeOffset CrashTime { get; init; }
     public required string ExceptionMessage { get; init; }
 
-    // Game info
     public required string MinecraftVersion { get; init; }
     public required string LoaderLabel { get; init; }
     public required string GameDirectory { get; init; }
 
-    // System info
     public required string OperatingSystem { get; init; }
     public required string? InstalledMemory { get; init; }
     public required string JavaVersion { get; init; }
     public required string JavaPath { get; init; }
     public string? AllocatedMemory { get; init; }
 
-    // Log info
     public string? LogFilePath { get; init; }
     public string? CrashReportPath { get; init; }
     public string? LastLogLines { get; init; }
     public int ModCount { get; init; }
 
-    // Process
     public string? CommandLine { get; init; }
 
     #region Calculated

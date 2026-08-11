@@ -44,7 +44,6 @@ public partial class AssetWorldModel : ModelBase
     public string LastPlayed => LastPlayedRaw.Humanize();
     public string LastPlayedFormatted => LastPlayedRaw.ToString("g");
 
-    // 从 level.dat 获取的基本信息
     public string GameMode =>
         Metadata.GameType switch
         {

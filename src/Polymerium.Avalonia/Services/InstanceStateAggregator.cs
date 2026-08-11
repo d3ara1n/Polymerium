@@ -24,9 +24,9 @@ public class InstanceStateAggregator
 {
     private readonly InstanceManager _instanceManager;
 
-    // 内部扁平事件管道（非 SourceCache）：(key, snapshot) 语义为「此 key 当前态」；
-    // snapshot == null 表示该 key 回到 Idle（Remove）。真源是 InstanceManager._trackers，
-    // 此 Subject 仅做事件分发，不维护 key→state 映射。
+    // NOTE: 内部扁平事件管道（非 SourceCache）：(key, snapshot) 语义为「此 key 当前态」；
+    //  snapshot == null 表示回到 Idle（Remove）。真源是 InstanceManager._trackers，
+    //  此 Subject 只做事件分发，不维护 key→state 映射。
     private readonly Subject<(string Key, InstanceStateSnapshot? Snapshot)> _stream = new();
 
     /// <summary>
@@ -39,7 +39,6 @@ public class InstanceStateAggregator
         StateChangeStream = ObservableChangeSet
                            .Create<InstanceStateSnapshot, string>(cache =>
                                                                   {
-                                                                      // 把内部管道翻译成 cache 的 AddOrUpdate / Remove，让 DynamicData 的 .Bind/.Sort 可用。
                                                                       return _stream.Subscribe(kv =>
                                                                       {
                                                                           if (kv.Snapshot is null)
@@ -88,16 +87,16 @@ public class InstanceStateAggregator
 
     private void OnTracker<T>(object? sender, T tracker) where T : TrackerBase
     {
-        // 1) 立即推初始 snapshot（含子类 OnStart 报告的初始 Progress）
+        // NOTE: 1) 立即推初始 snapshot（含子类 OnStart 报告的初始 Progress）
         _stream.OnNext((tracker.Key, ToSnapshot(tracker)));
 
-        // 2) 进度节流更新（沿用现状 1s 策略）。Sample 期间值被合并，首个状态已由步骤 1 即时反映。
+        // NOTE: 2) 进度节流更新（沿用现状 1s 策略）；Sample 期间值被合并，首个状态已由步骤 1 反映。
         tracker
            .ProgressChanged.Sample(TimeSpan.FromSeconds(1))
            .Subscribe(_ => _stream.OnNext((tracker.Key, ToSnapshot(tracker))))
            .DisposeWith(tracker);
 
-        // 3) 完成信号 → Remove。StateUpdated 是 C# event，直接 += 订阅；tracker 完成后 Dispose。
+        // NOTE: 3) 完成信号 → Remove；tracker 完成后 Dispose。
         void OnStateUpdated(TrackerBase sender, TrackerState state)
         {
             if (state is TrackerState.Finished or TrackerState.Faulted)

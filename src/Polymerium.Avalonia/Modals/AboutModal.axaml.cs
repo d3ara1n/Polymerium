@@ -14,7 +14,7 @@ public partial class AboutModal : Modal
 
     #region Properties
 
-    // 这些值在构造时确定且永不变，get-only 属性即可被绑定读取一次
+    // NOTE: 构造时确定且永不变，get-only 即可。
     public string Brand => Program.Brand;
     public string Version => Program.Version;
     public string ReleaseDate => Program.ReleaseDate;

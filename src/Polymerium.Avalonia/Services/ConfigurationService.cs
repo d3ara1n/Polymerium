@@ -59,7 +59,6 @@ public sealed class ConfigurationService : IDisposable
         }
         catch
         {
-            // ignored
         }
     }
 

@@ -146,19 +146,17 @@ public partial class MainWindow : AppWindow
             ApplySidebarPlacement(mode);
         }
 
-        // IsTitleBarVisible 默认值是 false，此时连锁的连个属性也处于默认值，刚好
+        // NOTE: IsTitleBarVisible 默认 false，连带属性也在默认值，恰好无需额外处理。
         if (change.Property == IsTitleBarVisibleProperty)
         {
             var visible = change.GetNewValue<bool>();
             if (visible)
             {
                 ExtendClientAreaToDecorationsHint = true;
-                // ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
             }
             else
             {
                 ExtendClientAreaToDecorationsHint = false;
-                // ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.Default;
             }
         }
     }
@@ -166,7 +164,7 @@ public partial class MainWindow : AppWindow
     #region Navigation Service
 
     internal void Navigate(Type page, object? parameter, IPageTransition transition) =>
-        // NavigationService 会处理错误情况
+        // NOTE: NavigationService 会处理错误情况。
         Root.Navigate(page, parameter, transition);
 
     internal bool CanGoBack() => Root.CanGoBack;

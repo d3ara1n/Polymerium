@@ -163,8 +163,7 @@ public partial class InstanceDependencyGraphModalModel(
 
         token.ThrowIfCancellationRequested();
 
-        // 沿 required 依赖穿透整个闭包。optional 依赖不参与解析，
-        // 但其目标若被某条 required 链带入图内，仍会作为边保留。
+        // NOTE: 沿 required 依赖穿透整个闭包；optional 不参与解析，但若其目标被某条 required 链带入图内仍保留为边。
         var resolved = new Dictionary<string, Package>();
         var requested = new Dictionary<string, PackageIdentifier>();
         var visited = new HashSet<string>(installedKeys);
@@ -227,7 +226,7 @@ public partial class InstanceDependencyGraphModalModel(
             { IsMissing = !installedKeys.Contains(key) };
         }
 
-        // requested 记录所有发起过的解析请求，此处为解析失败的依赖兜底建节点
+        // NOTE: requested 记录所有发起过的解析请求，此处为解析失败的依赖兜底建节点。
         foreach (var (key, id) in requested)
         {
             if (nodes.ContainsKey(key))

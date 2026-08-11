@@ -52,7 +52,7 @@ public static class Startup
                                                    {
                                                        var handler = new HttpClientHandler();
 
-                                                       // Try to get configuration service to apply proxy settings
+                                                       // NOTE: 尝试取配置服务以应用代理设置（失败忽略，继续直连）。
                                                        var configService = serviceProvider
                                                           .GetService<ConfigurationService>();
                                                        try
@@ -105,7 +105,6 @@ public static class Startup
                                                        }
                                                        catch
                                                        {
-                                                           // ignore
                                                        }
 
                                                        return handler;
@@ -158,7 +157,6 @@ public static class Startup
            .WithNeueccMessagePackSerializer()
            .WithRegisteredDistributedCache();
 
-        // Trident
         // NOTE: AddAccountConfigurers depends on AddMicrosoft, AddXboxLive, AddMinecraft,
         //       AddYggdrasil, and AddAuthlibInjector being registered first.
         //       Do not reorder this chain without consulting the dependency graph.
@@ -201,7 +199,6 @@ public static class Startup
            .AddSingleton<NotificationSink>()
            .AddSingleton<CrashDiagnosisSink>();
 
-        // App
         services
            .AddViewModelActivation<SimpleViewActivator>()
            .AddViewState(builder => builder.WithStatePersistence<SimpleViewStatePersistence>())
@@ -250,8 +247,8 @@ public static class Startup
         _singleInstance.Received += OnIpcReceived;
         _singleInstance.StartServer();
 
-        // Huskui 的 OverlayHost SmokeMask 是半透明遮罩，进捕获会经模糊+tint 后整体偏黑。Huskui 以 NuGet
-        // 形式消费、无法挂 BlurBackdrop.ExcludeFromCapture，只能在此按名登记全局排除。
+        // NOTE: Huskui 的 OverlayHost SmokeMask 是半透明遮罩，进捕获会经模糊+tint 整体偏黑；
+        //  Huskui 以 NuGet 消费、无法挂 BlurBackdrop.ExcludeFromCapture，只能在此按名登记全局排除。
         BlurBackdrop.ExcludedRoots.Add("PART_SmokeMask");
 
         #region SentrySdk Init (only in Release)

@@ -13,8 +13,8 @@ public partial class InstanceActionModel(
 {
     #region Direct
 
-    // Kind 由 Old/New Pref 的存在性推导：同一次包变更里「从哪边来、到哪边去」是确定的，
-    // 与能否解析无关——解析失败的 Update 依然是 Update，只是退化为展示原始 Pref。
+    // NOTE: Kind 由 Old/New Pref 存在性推导，与能否解析无关——解析失败的 Update 仍是 Update，
+    //  只是退化为展示原始 Pref。
     public InstanceActionKind Kind =>
         (oldPref, newPref) switch
         {
@@ -24,7 +24,7 @@ public partial class InstanceActionModel(
             _ => InstanceActionKind.Unknown
         };
 
-    // 原始 Pref 始终可得（来自 Action 记录），是解析失败时的兜底展示。
+    // NOTE: 原始 Pref 始终可得（来自 Action 记录），是解析失败时的兜底展示。
     public string? OldPref => oldPref;
     public string? NewPref => newPref;
 
@@ -40,7 +40,7 @@ public partial class InstanceActionModel(
     [ObservableProperty]
     public partial bool IsLoaded { get; set; }
 
-    // Info 非空即「解析成功」，为 null 即「解析失败」——失败时卡片退化为展示原始 Pref。
+    // NOTE: Info 非空即解析成功，null 即失败——失败时卡片退化为展示原始 Pref。
     [ObservableProperty]
     public partial InstanceActionInfoModel? Info { get; set; }
 

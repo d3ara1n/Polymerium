@@ -22,7 +22,6 @@ public static class AssetArchiveHelper
         }
         catch
         {
-            // 解析失败，返回空元数据
         }
 
         return new();
@@ -50,7 +49,6 @@ public static class AssetArchiveHelper
         }
         catch
         {
-            // 图标提取失败
         }
 
         return null;

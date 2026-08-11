@@ -192,10 +192,8 @@ public partial class InstanceFilesPageModel(
                             .ScanNonSymlinkFiles(Basic.Key, "*.jar", ["mods"])
                             .Concat(AssetHelper.ScanNonSymlinkFiles(Basic.Key, "*.jar.disabled", ["mods"])))
         {
-            // 解析 jar 文件中的 mod 元数据
             var metadata = AssetModHelper.ParseMetadata(file.FullName);
 
-            // 尝试提取 Mod 图标
             Bitmap? icon = null;
             if (!string.IsNullOrEmpty(metadata.LogoFile))
             {
@@ -214,7 +212,6 @@ public partial class InstanceFilesPageModel(
 
         _modCache.AddOrUpdate(mods);
 
-        // 设置过滤器
         _modFilterSubscription?.Dispose();
         var searchFilter = this.WhenValueChanged(x => x.ModSearchText).Select(BuildSearchFilter);
         var enabilityFilter = this.WhenValueChanged(x => x.ModFilterEnability).Select(BuildEnabilityFilter);
@@ -245,10 +242,8 @@ public partial class InstanceFilesPageModel(
                             .ScanNonSymlinkFiles(Basic.Key, "*.zip", ["resourcepacks"])
                             .Concat(AssetHelper.ScanNonSymlinkFiles(Basic.Key, "*.zip.disabled", ["resourcepacks"])))
         {
-            // 解析 zip 文件中的资源包元数据
             var metadata = AssetResourcePackHelper.ParseMetadata(file.FullName);
 
-            // 尝试提取资源包图标
             var icon = AssetResourcePackHelper.ExtractIcon(file.FullName);
 
             var imported = sourced
@@ -263,7 +258,6 @@ public partial class InstanceFilesPageModel(
 
         _resourcePackCache.AddOrUpdate(resourcePacks);
 
-        // 设置过滤器
         _resourcePackFilterSubscription?.Dispose();
         var searchFilter = this
                           .WhenValueChanged(x => x.ResourcePackSearchText)
@@ -285,15 +279,12 @@ public partial class InstanceFilesPageModel(
         var sourced = Basic.Source != null;
         var dataPacks = new List<AssetDataPackModel>();
 
-        // 扫描 datapacks 目录下的 zip 文件
         foreach (var file in AssetHelper
                             .ScanNonSymlinkFiles(Basic.Key, "*.zip", ["datapacks"])
                             .Concat(AssetHelper.ScanNonSymlinkFiles(Basic.Key, "*.zip.disabled", ["datapacks"])))
         {
-            // 解析 zip 文件中的数据包元数据
             var metadata = AssetDataPackHelper.ParseMetadata(file.FullName);
 
-            // 尝试提取数据包图标
             var icon = AssetDataPackHelper.ExtractIcon(file.FullName);
 
             var imported = sourced
@@ -308,7 +299,6 @@ public partial class InstanceFilesPageModel(
 
         _dataPackCache.AddOrUpdate(dataPacks);
 
-        // 设置过滤器
         _dataPackFilterSubscription?.Dispose();
         var searchFilter = this
                           .WhenValueChanged(x => x.DataPackSearchText)
@@ -339,11 +329,9 @@ public partial class InstanceFilesPageModel(
             }
         }
 
-        // 按最后游玩时间排序
         worlds.Sort((a, b) => (int)(a.LastPlayedRaw - b.LastPlayedRaw).TotalSeconds);
         Worlds = worlds;
 
-        // 如果有存档，默认选中第一个
         if (Worlds.Count > 0)
         {
             SelectedWorld = Worlds[0];
@@ -447,11 +435,9 @@ public partial class InstanceFilesPageModel(
 
     private void LoadWorldDetails(AssetWorldModel world)
     {
-        // 加载数据包列表
         var dataPacks = AssetWorldHelper.ParseDataPacks(world.WorldPath, world.Metadata);
         SelectedWorldDataPacks = [.. dataPacks];
 
-        // 加载玩家列表（只包含在账号管理中的玩家）
         var accounts = persistenceService
                       .GetAccounts()
                       .Select(x =>
@@ -468,7 +454,6 @@ public partial class InstanceFilesPageModel(
         var players = AssetWorldHelper.ParsePlayers(world.WorldPath, accounts);
         SelectedWorldPlayers = [.. players];
 
-        // 如果有玩家，默认选中第一个
         if (SelectedWorldPlayers.Count > 0)
         {
             SelectedWorldPlayer = SelectedWorldPlayers[0];
@@ -483,7 +468,6 @@ public partial class InstanceFilesPageModel(
 
     private void LoadPlayerDetails(AssetWorldPlayerModel player)
     {
-        // 加载玩家统计数据
         var stats = player.Stats.GetDisplayStats();
         SelectedPlayerStats = [.. stats];
     }

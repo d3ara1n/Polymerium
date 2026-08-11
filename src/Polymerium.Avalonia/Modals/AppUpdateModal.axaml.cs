@@ -48,7 +48,6 @@ public partial class AppUpdateModal : Modal
 
             await UpdateManager.DownloadUpdatesAsync(Model.Update, Report);
 
-            // 下载完成后直接重启应用更新
             Program.Terminate(() => UpdateManager.ApplyUpdatesAndRestart(Model.Update));
         }
         catch (Exception ex)

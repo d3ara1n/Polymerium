@@ -6,8 +6,7 @@ using SkiaSharp;
 
 namespace Polymerium.Avalonia.Models;
 
-// 一个已解析、自包含可预览的字体选择，多态表示三种来源：默认、系统字体、文件字体。
-// FromConfig 永返回非 null——未设置即 DefaultFontModel，作为结果的一种而非空值特例。
+// NOTE: FromConfig 永返回非 null——未设置即 DefaultFontModel，作为结果的一种而非空值特例。
 public abstract class FontModelBase
 {
     private static HashSet<string>? _systemFamilies;
@@ -24,7 +23,7 @@ public abstract class FontModelBase
 
     public bool IsAvailable { get; }
 
-    // 系统已安装字体的 family name 集合（大小写不敏感，SkiaSharp 枚举，启动后不变）。
+    // NOTE: 系统已安装字体的 family name 集合（大小写不敏感，SkiaSharp 枚举，启动后不变）。
     public static ICollection<string> SystemFontFamilies => _systemFamilies ??= EnumerateSystemFonts();
 
     private static HashSet<string> EnumerateSystemFonts()
@@ -38,7 +37,7 @@ public abstract class FontModelBase
         return set;
     }
 
-    // 配置加载："" / null → DefaultFontModel（不是 null）。
+    // NOTE: 配置加载："" / null → DefaultFontModel（不是 null）。
     public static FontModelBase FromConfig(string? raw, FontFamily fallback)
     {
         if (string.IsNullOrEmpty(raw))
@@ -53,7 +52,7 @@ public abstract class FontModelBase
     public static SystemFontModel FromSystem(string familyName, FontFamily fallback)
     {
         var family = new FontFamily(familyName);
-        // 用 TryGetGlyphTypeface 单查而非枚举全部系统字体，避免启动时同步阻塞。
+        // NOTE: 用 TryGetGlyphTypeface 单查而非枚举全部系统字体，避免启动时同步阻塞。
         var available = FontManager.Current.TryGetGlyphTypeface(new(family), out _);
         return new(familyName, available ? family : fallback, available);
     }

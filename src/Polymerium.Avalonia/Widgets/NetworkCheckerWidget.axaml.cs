@@ -38,7 +38,6 @@ public partial class NetworkCheckerWidget : WidgetBase
 
     protected override Task OnInitializeAsync()
     {
-        // 初始化网站列表
         _cts = new();
         foreach (var (display, url) in _websites)
         {
@@ -50,7 +49,6 @@ public partial class NetworkCheckerWidget : WidgetBase
 
     protected override Task OnDeinitializeAsync()
     {
-        // 取消正在进行的测试
         _cts?.Cancel();
         _cts?.Dispose();
 
@@ -101,7 +99,6 @@ public partial class NetworkCheckerWidget : WidgetBase
     {
         if (IsTesting)
         {
-            // 取消当前测试
             _cts?.Cancel();
             _cts?.Dispose();
             _cts = new();
@@ -116,7 +113,6 @@ public partial class NetworkCheckerWidget : WidgetBase
         {
             NetworkCheckHelper.ResetAll(Sites);
 
-            // 从服务容器获取 HttpClientFactory
             var httpClientFactory = Program.Services?.GetService<IHttpClientFactory>();
             var httpClient = httpClientFactory?.CreateClient() ?? new HttpClient();
 

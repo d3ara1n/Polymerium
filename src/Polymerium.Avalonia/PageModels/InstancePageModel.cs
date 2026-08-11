@@ -110,11 +110,8 @@ public partial class InstancePageModel : ViewModelBase, IStatefulViewModel<Insta
     [RelayCommand]
     public async Task ImportFromFileAsync(string? initialPath)
     {
-        // 这里应该是 AssetImportDialog 才对
-        // AssetIdentificationModel { AssetIdentificationPackageModel, AssetIdentificationPersistModel { IsInImportMode: bool } }
-        // Result is AssetIdentificationPackageModel package
-        //  or AssetIdentificationPersistModel { IsInImportMode: false } persist
-        //  or AssetIdentificationPersistModel { IsInImportMode: true } import
+        // TODO: 这里应为 AssetImportDialog（返回 AssetIdentificationPackageModel / AssetIdentificationPersistModel），
+        //  目前暂用 AssetImporterDialog。
         var dialog = new AssetImporterDialog
         {
             PathAccepted = initialPath,
@@ -279,23 +276,14 @@ public partial class InstancePageModel : ViewModelBase, IStatefulViewModel<Insta
 
     public ObservableCollection<InstanceSubpageEntryModel> PageEntries { get; } =
     [
-        // Home
         new(typeof(InstanceHomePage), Symbol.Home, "InstancePage_HomePageText"),
-        // Dashboard
         new(typeof(InstanceDashboardPage), Symbol.PulseSquare, "InstancePage_DashboardPageText"),
-        // Setup
         new(typeof(InstanceSetupPage), Symbol.Apps, "InstancePage_SetupPageText"),
-        // Files
         new(typeof(InstanceFilesPage), Symbol.DocumentFolder, "InstancePage_FilesPageText"),
-        // Workspace
         new(typeof(InstanceWorkspacePage), Symbol.ArrowSyncCircle, "InstancePage_WorkspacePageText"),
-        // Widgets
         new(typeof(InstanceWidgetsPage), Symbol.AppFolder, "InstancePage_WidgetsPageText"),
-        // Statistics
         new(typeof(InstanceActivitiesPage), Symbol.DataArea, "InstancePage_StatisticsPageText"),
-        // Storage
         new(typeof(InstanceStoragePage), Symbol.ChartMultiple, "InstancePage_StoragePageText"),
-        // Properties
         new(typeof(InstancePropertiesPage), Symbol.Wrench, "InstancePage_PropertiesPageText")
     ];
 

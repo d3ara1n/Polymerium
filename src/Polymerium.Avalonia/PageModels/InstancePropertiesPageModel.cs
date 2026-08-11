@@ -241,7 +241,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
 
         File.WriteAllText(path, Program.MagicWords);
         ProfileManager.Remove(Basic.Key);
-        // 保留该 Key 避免单个会话中安装同一个整合包而导致 Key 被复用
+        // NOTE: 保留该 Key，避免同会话内重复安装同一整合包时 Key 被复用。
         ProfileManager.RequestKey(Basic.Key);
 
         if (_navigationService.CanGoBack)
