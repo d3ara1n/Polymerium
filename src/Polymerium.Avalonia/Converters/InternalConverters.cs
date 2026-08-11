@@ -188,4 +188,6 @@ public static class InternalConverters
 
     public static IValueConverter LoaderToDisplayLabel { get; } =
         new RelayConverter(v => v is string lurl ? LoaderHelper.ToDisplayLabel(lurl) : v);
+    public static IValueConverter LoaderIdToDisplayName { get; } =
+        new RelayConverter(v => v is string identity ? LoaderHelper.ToDisplayName(identity) : v);
 }

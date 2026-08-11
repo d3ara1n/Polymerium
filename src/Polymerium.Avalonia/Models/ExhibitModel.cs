@@ -67,6 +67,12 @@ public partial class ExhibitModel(
     public partial string? PendingVersionId { get; set; }
 
     [ObservableProperty]
+    public partial IReadOnlyList<string> Loaders { get; set; } = [];
+
+    [ObservableProperty]
+    public partial IReadOnlyList<string> Versions { get; set; } = [];
+
+    [ObservableProperty]
     public partial bool IsFavorite { get; set; }
 
     #endregion

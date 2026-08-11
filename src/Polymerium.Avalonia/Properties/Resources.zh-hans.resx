@@ -1212,6 +1212,18 @@
     <data name="ExhibitProjectModal_RemovingTagText" xml:space="preserve">
         <value>待移除</value>
     </data>
+    <data name="ExhibitProjectModal_AboutTabText" xml:space="preserve">
+        <value>关于</value>
+    </data>
+    <data name="ExhibitProjectModal_CompatibilityTabText" xml:space="preserve">
+        <value>兼容性</value>
+    </data>
+    <data name="ExhibitProjectModal_LoadersLabelText" xml:space="preserve">
+        <value>加载器</value>
+    </data>
+    <data name="ExhibitProjectModal_VersionsLabelText" xml:space="preserve">
+        <value>游戏版本</value>
+    </data>
     <data name="InstancePackageModal_VersionsTabText" xml:space="preserve">
         <value>版本</value>
     </data>

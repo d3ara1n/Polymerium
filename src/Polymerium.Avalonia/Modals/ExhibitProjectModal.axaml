@@ -279,10 +279,10 @@
                                     </Button>
                                     <Button
                                         Grid.Column="1"
+                                        Classes="Danger"
                                         Command="{Binding $parent[app:ExhibitProjectModal].RemoveCommand}">
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource MediumFontSize}"
-                                            Foreground="{StaticResource ControlDangerForegroundBrush}"
                                             Symbol="Delete" />
                                     </Button>
                                 </Grid>
@@ -353,44 +353,150 @@
                 BorderBrush="{StaticResource ControlBorderBrush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource MediumCornerRadius}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel>
-                        <husk:ConstrainedBox
-                            IsVisible="{Binding Gallery.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
-                            AspectRatio="1.78">
-                            <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
-                                <Panel>
-                                    <Carousel
-                                        Name="GalleryCarousel"
-                                        ItemsSource="{Binding Gallery}">
-                                        <Carousel.ItemTemplate>
-                                            <DataTemplate DataType="x:Uri">
-                                                <Image
-                                                    async:ImageLoader.Source="{Binding}"
-                                                    RenderOptions.BitmapInterpolationMode="HighQuality" />
+                <TabControl
+                    Padding="0"
+                    Theme="{StaticResource SolidTabControlTheme}">
+                    <TabControl.ItemContainerTheme>
+                        <ControlTheme
+                            BasedOn="{StaticResource SolidTabItemTheme}"
+                            TargetType="TabItem">
+                            <Setter Property="Margin" Value="0" />
+                            <Setter Property="FontSize" Value="{StaticResource MediumFontSize}" />
+                        </ControlTheme>
+                    </TabControl.ItemContainerTheme>
+                    <TabControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel
+                                Margin="12"
+                                Orientation="Horizontal"
+                                Spacing="4" />
+                        </ItemsPanelTemplate>
+                    </TabControl.ItemsPanel>
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="Home" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitProjectModal_AboutTabText}}" />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel>
+                                <husk:ConstrainedBox
+                                    IsVisible="{Binding Gallery.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                    AspectRatio="1.78">
+                                    <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
+                                        <Panel>
+                                            <Carousel
+                                                Name="GalleryCarousel"
+                                                ItemsSource="{Binding Gallery}">
+                                                <Carousel.ItemTemplate>
+                                                    <DataTemplate DataType="x:Uri">
+                                                        <Image
+                                                            async:ImageLoader.Source="{Binding}"
+                                                            RenderOptions.BitmapInterpolationMode="HighQuality" />
+                                                    </DataTemplate>
+                                                </Carousel.ItemTemplate>
+                                            </Carousel>
+                                            <husk:PipsPager
+                                                Margin="6"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Bottom"
+                                                ItemCount="{Binding #GalleryCarousel.ItemCount}"
+                                                SelectedIndex="{Binding #GalleryCarousel.SelectedIndex, Mode=TwoWay}" />
+                                        </Panel>
+                                    </Border>
+                                </husk:ConstrainedBox>
+                                <husk:LazyContainer Source="{Binding $parent[app:ExhibitProjectModal].LazyDescription}">
+                                    <husk:LazyContainer.SourceTemplate>
+                                        <DataTemplate DataType="x:String">
+                                            <husk:MarkdownViewer
+                                                Margin="12"
+                                                Markdown="{Binding}" />
+                                        </DataTemplate>
+                                    </husk:LazyContainer.SourceTemplate>
+                                </husk:LazyContainer>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <fi:SymbolIcon
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="Branch" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitProjectModal_CompatibilityTabText}}" />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel
+                                Margin="12"
+                                Spacing="12">
+                                <StackPanel
+                                    IsVisible="{Binding $parent[app:ExhibitProjectModal].Exhibit.Loaders.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                    Spacing="6">
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitProjectModal_LoadersLabelText}}" />
+                                    <ItemsControl ItemsSource="{Binding $parent[app:ExhibitProjectModal].Exhibit.Loaders}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel
+                                                    ItemSpacing="4"
+                                                    LineSpacing="4" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <husk:Tag
+                                                    CornerRadius="{StaticResource SmallCornerRadius}"
+                                                    Content="{Binding Converter={x:Static app:InternalConverters.LoaderIdToDisplayName}}" />
                                             </DataTemplate>
-                                        </Carousel.ItemTemplate>
-                                    </Carousel>
-                                    <husk:PipsPager
-                                        Margin="6"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Bottom"
-                                        ItemCount="{Binding #GalleryCarousel.ItemCount}"
-                                        SelectedIndex="{Binding #GalleryCarousel.SelectedIndex, Mode=TwoWay}" />
-                                </Panel>
-                            </Border>
-                        </husk:ConstrainedBox>
-                        <husk:LazyContainer Source="{Binding $parent[app:ExhibitProjectModal].LazyDescription}">
-                            <husk:LazyContainer.SourceTemplate>
-                                <DataTemplate DataType="x:String">
-                                    <husk:MarkdownViewer
-                                        Margin="12"
-                                        Markdown="{Binding}" />
-                                </DataTemplate>
-                            </husk:LazyContainer.SourceTemplate>
-                        </husk:LazyContainer>
-                    </StackPanel>
-                </ScrollViewer>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <StackPanel
+                                    IsVisible="{Binding $parent[app:ExhibitProjectModal].Exhibit.Versions.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                    Spacing="6">
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitProjectModal_VersionsLabelText}}" />
+                                    <ItemsControl ItemsSource="{Binding $parent[app:ExhibitProjectModal].Exhibit.Versions}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel
+                                                    ItemSpacing="4"
+                                                    LineSpacing="4" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <husk:Tag
+                                                    CornerRadius="{StaticResource SmallCornerRadius}"
+                                                    Content="{Binding}" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
             </app:BlurBackdrop>
         </husk:ConstrainedBox>
     </Grid>
