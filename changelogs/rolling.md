@@ -16,6 +16,7 @@
 - Add Minecraft color and style formatting to mod, resource pack, data pack, and server descriptions on the instance
   files page
 - Add localized labels for the Minecraft version types in the new instance version picker
+- Add a compatibility view to the project detail modal listing supported mod loaders and Minecraft versions (#POLY-142)
 
 ### Changed
 

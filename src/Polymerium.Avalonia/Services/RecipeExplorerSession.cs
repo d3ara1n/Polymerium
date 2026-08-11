@@ -65,7 +65,9 @@ public sealed class RecipeExplorerSession : ExplorerSession
             hit.Reference)
         {
             State = IsKnown(hit.Label, hit.Namespace, hit.Pid) ? ExhibitState.Editable : null,
-            IsFavorite = _persistenceService.IsFavoriteProject(hit.Label, hit.Namespace, hit.Pid)
+            IsFavorite = _persistenceService.IsFavoriteProject(hit.Label, hit.Namespace, hit.Pid),
+            Loaders = hit.Compatibility.Loaders,
+            Versions = hit.Compatibility.Versions
         };
 
     public override void RevertState(ExhibitModel exhibit) =>

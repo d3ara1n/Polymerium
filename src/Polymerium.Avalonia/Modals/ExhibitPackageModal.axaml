@@ -410,6 +410,7 @@
                                     </Button>
                                     <Button
                                         Grid.Column="2"
+                                        Classes="Danger"
                                         Command="{Binding $parent[app:ExhibitPackageModal].DeleteCommand}">
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource MediumFontSize}"

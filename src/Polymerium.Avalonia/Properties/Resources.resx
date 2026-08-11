@@ -1221,6 +1221,18 @@
     <data name="ExhibitProjectModal_RemovingTagText" xml:space="preserve">
         <value>Pending Remove</value>
     </data>
+    <data name="ExhibitProjectModal_AboutTabText" xml:space="preserve">
+        <value>About</value>
+    </data>
+    <data name="ExhibitProjectModal_CompatibilityTabText" xml:space="preserve">
+        <value>Compatibility</value>
+    </data>
+    <data name="ExhibitProjectModal_LoadersLabelText" xml:space="preserve">
+        <value>Loaders</value>
+    </data>
+    <data name="ExhibitProjectModal_VersionsLabelText" xml:space="preserve">
+        <value>Versions</value>
+    </data>
     <data name="InstancePackageModal_VersionsTabText" xml:space="preserve">
         <value>Versions</value>
     </data>
