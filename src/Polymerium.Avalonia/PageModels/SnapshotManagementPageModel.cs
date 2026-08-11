@@ -23,6 +23,7 @@ using TridentCore.Abstractions.Extensions;
 using TridentCore.Abstractions.Snapshots;
 using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Services;
+using TridentCore.Core.Utilities;
 
 namespace Polymerium.Avalonia.PageModels;
 
@@ -283,21 +284,21 @@ public partial class SnapshotManagementPageModel : ViewModelBase
         var previousRefs = Context.Handle.GetReferences(previous.Id);
 
         var currentPaths = new HashSet<string>(currentRefs.Select(x => x.RelativePath),
-                                               StringComparer.OrdinalIgnoreCase);
+                                               FileHelper.PathComparer);
         var previousPaths = new HashSet<string>(previousRefs.Select(x => x.RelativePath),
-                                                StringComparer.OrdinalIgnoreCase);
+                                                FileHelper.PathComparer);
 
         var currentPrefs = new HashSet<string>(current.Metadata.Packages.Select(x => x.Pref),
-                                               StringComparer.OrdinalIgnoreCase);
+                                               StringComparer.Ordinal);
         var previousPrefs = new HashSet<string>(previous.Metadata.Packages.Select(x => x.Pref),
-                                                StringComparer.OrdinalIgnoreCase);
+                                                StringComparer.Ordinal);
 
         return new()
         {
-            FilesAdded = currentPaths.Count - currentPaths.Intersect(previousPaths).Count(),
-            FilesRemoved = previousPaths.Count - previousPaths.Intersect(currentPaths).Count(),
-            PackagesAdded = currentPrefs.Count - currentPrefs.Intersect(previousPrefs).Count(),
-            PackagesRemoved = previousPrefs.Count - previousPrefs.Intersect(currentPrefs).Count()
+            FilesAdded = currentPaths.Count - currentPaths.Intersect(previousPaths, FileHelper.PathComparer).Count(),
+            FilesRemoved = previousPaths.Count - previousPaths.Intersect(currentPaths, FileHelper.PathComparer).Count(),
+            PackagesAdded = currentPrefs.Count - currentPrefs.Intersect(previousPrefs, StringComparer.Ordinal).Count(),
+            PackagesRemoved = previousPrefs.Count - previousPrefs.Intersect(currentPrefs, StringComparer.Ordinal).Count()
         };
     }
 
