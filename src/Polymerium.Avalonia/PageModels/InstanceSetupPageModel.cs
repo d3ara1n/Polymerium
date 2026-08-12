@@ -1311,7 +1311,7 @@ public partial class InstanceSetupPageModel(
             ? p.Setup.Packages
                .Select(e => e.Source)
                .OfType<string>()
-               .Where(s => InternalUriHelper.IsKind(s, CollectionHelper.Scheme))
+               .Where(s => InternalUriHelper.IsKind(s, CollectionHelper.SCHEME))
                .Select(s => CollectionHelper.TryGetName(s, out var n) ? new CollectionModel(n, s) : null)
                .OfType<CollectionModel>()
                .Distinct()
@@ -1835,6 +1835,90 @@ public partial class InstanceSetupPageModel(
     private bool CanRemoveGroup(GroupModel? group) =>
         group is { Source: not null } && PackageSourceHelper.CanDelete(group.Source, Basic.Source);
 
+    [RelayCommand(CanExecute = nameof(CanPromoteToRecipe))]
+    private async Task PromoteToRecipeAsync(GroupModel? group)
+    {
+        if (group is not { Kind: PackageSourceHelper.Kind.Collection, Source: not null }
+            || !CollectionHelper.TryGetName(group.Source, out var name))
+        {
+            return;
+        }
+
+        var items = _flat.Items.OfType<PackageListItemBase.Entry>().Where(i => i.Group == group).ToList();
+        if (items.Count == 0)
+        {
+            return;
+        }
+
+        if (!await overlayService.RequestConfirmationAsync(
+                LanguageManager.Instance.InstanceSetupPage_PromoteToRecipeConfirmMessage.Current(),
+                LanguageManager.Instance.InstanceSetupPage_PromoteToRecipeConfirmTitle.Current()))
+        {
+            return;
+        }
+
+        var recipe = persistenceService.InsertRecipe(name, null);
+        var source = RecipeHelper.ToUri(recipe.Id);
+        foreach (var item in items)
+        {
+            if (PackageHelper.TryParse(item.Package.Entry.Pref, out var id))
+            {
+                persistenceService.AddRecipeItem(recipe.Id,
+                                                 new(id.Repository, id.Namespace, id.Identity),
+                                                 [.. item.Package.Entry.Tags],
+                                                 null);
+            }
+
+            item.Package.Entry.Source = source;
+        }
+
+        _flat.Remove(items.Select(i => i.Key));
+        TriggerPackageMerge();
+    }
+
+    private bool CanPromoteToRecipe(GroupModel? group) =>
+        group is { Kind: PackageSourceHelper.Kind.Collection, Source: not null };
+
+    [RelayCommand(CanExecute = nameof(CanDemoteToCollection))]
+    private async Task DemoteToCollectionAsync(GroupModel? group)
+    {
+        if (group is not { Kind: PackageSourceHelper.Kind.Recipe, Source: not null })
+        {
+            return;
+        }
+
+        var items = _flat.Items.OfType<PackageListItemBase.Entry>().Where(i => i.Group == group).ToList();
+        if (items.Count == 0)
+        {
+            return;
+        }
+
+        var recipe = persistenceService.GetRecipe(RecipeHelper.GetId(group.Source));
+        if (recipe is null)
+        {
+            return;
+        }
+
+        if (!await overlayService.RequestConfirmationAsync(
+                LanguageManager.Instance.InstanceSetupPage_DemoteToCollectionConfirmMessage.Current(),
+                LanguageManager.Instance.InstanceSetupPage_DemoteToCollectionConfirmTitle.Current()))
+        {
+            return;
+        }
+
+        var source = CollectionHelper.ToUri(recipe.Name);
+        foreach (var item in items)
+        {
+            item.Package.Entry.Source = source;
+        }
+
+        _flat.Remove(items.Select(i => i.Key));
+        TriggerPackageMerge();
+    }
+
+    private bool CanDemoteToCollection(GroupModel? group) =>
+        group is { Kind: PackageSourceHelper.Kind.Recipe, Source: not null };
+
     // NOTE: SourceOrders 末项 = 最高覆盖力（POLY-116），因此提升优先级表现为向列表尾部移动
     [RelayCommand(CanExecute = nameof(CanRaiseGroupPriority))]
     private async Task RaiseGroupPriorityAsync(GroupModel? group) => await MoveGroupAsync(group, +1);
@@ -1914,6 +1998,8 @@ public partial class InstanceSetupPageModel(
         RemoveGroupCommand.NotifyCanExecuteChanged();
         RaiseGroupPriorityCommand.NotifyCanExecuteChanged();
         LowerGroupPriorityCommand.NotifyCanExecuteChanged();
+        PromoteToRecipeCommand.NotifyCanExecuteChanged();
+        DemoteToCollectionCommand.NotifyCanExecuteChanged();
     }
 
     [RelayCommand]

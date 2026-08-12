@@ -945,6 +945,24 @@
     <data name="InstanceSetupPage_RemoveGroupConfirmMessage" xml:space="preserve">
         <value>输入验证码以确认从该实例移除该组及其全部包。</value>
     </data>
+    <data name="InstanceSetupPage_PromoteToRecipeMenuText" xml:space="preserve">
+        <value>提升为配方</value>
+    </data>
+    <data name="InstanceSetupPage_PromoteToRecipeConfirmTitle" xml:space="preserve">
+        <value>提升为配方</value>
+    </data>
+    <data name="InstanceSetupPage_PromoteToRecipeConfirmMessage" xml:space="preserve">
+        <value>将此集合提升为配方？其中的包将归属到一个以集合名命名的新配方。你可以在配方管理页编辑该配方。</value>
+    </data>
+    <data name="InstanceSetupPage_DemoteToCollectionMenuText" xml:space="preserve">
+        <value>降级为集合</value>
+    </data>
+    <data name="InstanceSetupPage_DemoteToCollectionConfirmTitle" xml:space="preserve">
+        <value>降级为集合</value>
+    </data>
+    <data name="InstanceSetupPage_DemoteToCollectionConfirmMessage" xml:space="preserve">
+        <value>将此配方组降级为集合？其中的包将重新归属到一个以配方名命名的集合。配方本身不会改变，仍保留在配方管理页。</value>
+    </data>
     <data name="InstanceSetupPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>前往网站</value>
     </data>
