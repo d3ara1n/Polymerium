@@ -58,6 +58,7 @@ public partial class OobeQuickSetup : OobeStep
             if (SetAndRaise(SelectedLanguageProperty, ref field, value) && value != null)
             {
                 ConfigurationService.Value.ApplicationLanguage = value.Id;
+                LanguageManager.Instance.UpdateCulture(CultureInfo.GetCultureInfo(value.Id));
             }
         }
     }

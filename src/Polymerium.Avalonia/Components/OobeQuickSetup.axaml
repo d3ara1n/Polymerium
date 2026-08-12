@@ -61,8 +61,8 @@
                         VerticalAlignment="Center"
                         FontWeight="{StaticResource ControlStrongFontWeight}"
                         Text="{Translate {x:Static app:LanguageManager+Keys.OobeQuickSetup_LanguageLabelText}}" />
-                    <StackPanel Grid.Column="4">
                         <ComboBox
+                            Grid.Column="4"
                             MinWidth="160"
                             ItemsSource="{Binding $parent[app:OobeQuickSetup].Languages}"
                             SelectedItem="{Binding $parent[app:OobeQuickSetup].SelectedLanguage, Mode=TwoWay}">
@@ -83,11 +83,6 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <TextBlock
-                            FontSize="{StaticResource SmallFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_RestartRequiredLabelText}}" />
-                    </StackPanel>
                 </Grid>
             </Border>
 
