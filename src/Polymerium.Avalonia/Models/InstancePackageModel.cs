@@ -16,6 +16,11 @@ public partial class InstancePackageModel(Profile.Rice.Entry entry, bool canUpda
     ///     如果是 InstancePackageModel 中的修改（例如由 InstanceSetupPage 发起）是会同时修改两边的值避免触发刷新
     /// </summary>
     public string OldPrefCache { get; set; } = entry.Pref;
+    /// <summary>
+    ///     与 OldPrefCache 同理，用于判断 Entry.Source 是否在 InstancePackageModel 无法观测的地方被修改过。
+    ///     TriggerPackageMerge 据此原地换组：Source 变了就把 item.Group 指向新 Source 对应的共享 GroupModel。
+    /// </summary>
+    public string? OldSourceCache { get; set; } = entry.Source;
 
     #endregion
 
