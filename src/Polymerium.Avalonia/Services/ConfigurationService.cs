@@ -8,7 +8,7 @@ namespace Polymerium.Avalonia.Services;
 
 public sealed class ConfigurationService : IDisposable
 {
-    private readonly string _filePath = Path.Combine(PathDef.Default.PrivateConfigDirectory(), "settings.json");
+    private readonly string _filePath = PathDef.Default.FileOfConfiguration();
 
     #region Injected
 

@@ -36,8 +36,8 @@ public partial class OobePrivilege : OobeStep
     private bool Check()
     {
         // NOTE: 检查能否在 ~/.trident/.polymerium 下创建指向 first_run 的符号链接。
-        var first = Path.Combine(PathDef.Default.PrivateDataDirectory(), "first_run");
-        var symlink = Path.Combine(PathDef.Default.PrivateDataDirectory(), "symlink");
+        var first = PathDef.Default.FileOfFirstRun();
+        var symlink = PathDef.Default.FileOfSymlink();
 
         if (File.Exists(first)
          && File.Exists(symlink)

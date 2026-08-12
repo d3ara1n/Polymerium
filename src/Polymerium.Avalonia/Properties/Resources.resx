@@ -1641,6 +1641,18 @@
     <data name="SettingsPage_MaintenanceSubtitle" xml:space="preserve">
         <value>Check for updates, clear cache, etc.</value>
     </data>
+    <data name="SettingsPage_PrivacyTitle" xml:space="preserve">
+        <value>Privacy</value>
+    </data>
+    <data name="SettingsPage_PrivacySubtitle" xml:space="preserve">
+        <value>Control crash reporting and data collection.</value>
+    </data>
+    <data name="SettingsPage_CrashReportingLabelText" xml:space="preserve">
+        <value>Crash Reporting</value>
+    </data>
+    <data name="SettingsPage_CrashReportingDescription" xml:space="preserve">
+        <value>Send anonymous crash and error reports to help diagnose issues. No personal data is collected. Restart for changes to take effect.</value>
+    </data>
     <data name="SettingsPage_ToolsGroupTitle" xml:space="preserve">
         <value>Tools</value>
     </data>
@@ -2450,6 +2462,12 @@
     </data>
     <data name="OobePrivacy_AgreementNote" xml:space="preserve">
         <value>By continuing, you acknowledge and agree to the privacy terms above.</value>
+    </data>
+    <data name="OobePrivacy_CrashReportingToggleText" xml:space="preserve">
+        <value>Send crash and error reports</value>
+    </data>
+    <data name="OobePrivacy_CrashReportingToggleDescription" xml:space="preserve">
+        <value>Help us diagnose and fix issues. No personal data is collected. You can change this anytime in Settings; changes take effect after restarting.</value>
     </data>
     <!-- Maintenance Storage View -->
     <data name="MaintenanceStoragePage_Title" xml:space="preserve">
