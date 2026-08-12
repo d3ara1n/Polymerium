@@ -978,6 +978,15 @@
     <data name="InstanceSetupPage_MoveToCollectionMenuText" xml:space="preserve">
         <value>Move to Collection</value>
     </data>
+    <data name="InstanceSetupPage_RenameCollectionMenuText" xml:space="preserve">
+        <value>Rename Collection</value>
+    </data>
+    <data name="InstanceSetupPage_RenameCollectionPromptTitle" xml:space="preserve">
+        <value>Rename Collection</value>
+    </data>
+    <data name="InstanceSetupPage_RenameCollectionPromptMessage" xml:space="preserve">
+        <value>Enter a new name for this collection</value>
+    </data>
     <data name="InstanceSetupPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>Open Website</value>
     </data>

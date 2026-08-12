@@ -10,10 +10,14 @@ public partial class GroupModel : ModelBase
 {
     public required PackageSourceHelper.Kind Kind { get; init; }
 
-    public required string? Source { get; init; }
+    public bool IsCollection => Kind == PackageSourceHelper.Kind.Collection;
+
+    public bool IsRecipe => Kind == PackageSourceHelper.Kind.Recipe;
+
+    public required string? Source { get; set; }
 
     [ObservableProperty]
-    public partial bool IsExpanded { get; set; } = true;
+    public partial bool IsExpanded { get; set; } = false;
 
     [ObservableProperty]
     public partial int Count { get; set; }

@@ -154,12 +154,21 @@
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem Header="-" />
             <MenuItem
+                IsVisible="{Binding Group.IsCollection}"
+                Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RenameCollectionCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding Group}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_RenameCollectionMenuText}}"
+                Icon="{fie:SymbolIcon Symbol=Rename,
+                                      FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem
+                IsVisible="{Binding Group.IsCollection}"
                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).PromoteToRecipeCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding Group}"
                 Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_PromoteToRecipeMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=ArrowCircleUp,
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem
+                IsVisible="{Binding Group.IsRecipe}"
                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).DemoteToCollectionCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding Group}"
                 Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_DemoteToCollectionMenuText}}"

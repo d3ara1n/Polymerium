@@ -577,7 +577,7 @@ public partial class InstanceSetupPageModel(
            .Connect()
            .Filter(itemFilter)
            .AutoRefreshOnObservable(item => item.Group.WhenPropertyChanged(g => g.IsExpanded))
-           .Filter(item => item is PackageListItemBase.Header || item.Group.IsExpanded)
+           .Filter(item => item is PackageListItemBase.Header || item.Group is LooseGroupModel || item.Group.IsExpanded)
            .SortAndBind(out var flatView, comparer)
            .Subscribe()
            .DisposeWith(_subscriptions);
@@ -1944,6 +1944,43 @@ public partial class InstanceSetupPageModel(
     private bool CanDemoteToCollection(GroupModel? group) =>
         group is { Kind: PackageSourceHelper.Kind.Recipe, Source: not null };
 
+    [RelayCommand(CanExecute = nameof(CanRenameCollection))]
+    private async Task RenameCollectionAsync(GroupModel? group)
+    {
+        if (group is not { Kind: PackageSourceHelper.Kind.Collection, Source: not null }
+            || !CollectionHelper.TryGetName(group.Source, out var oldName))
+        {
+            return;
+        }
+
+        var newName = await overlayService.RequestInputAsync(
+            LanguageManager.Instance.InstanceSetupPage_RenameCollectionPromptMessage.Current(),
+            LanguageManager.Instance.InstanceSetupPage_RenameCollectionPromptTitle.Current(),
+            oldName);
+        if (string.IsNullOrWhiteSpace(newName) || newName == oldName)
+        {
+            return;
+        }
+
+        var newSource = CollectionHelper.ToUri(newName);
+
+        if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
+        {
+            foreach (var entry in profile.Setup.Packages.Where(e => e.Source == group.Source))
+            {
+                entry.Source = newSource;
+            }
+        }
+
+        _groupModels.Remove((group.Kind, group.Source));
+        group.Source = newSource;
+        group.Info = new CollectionGroupInfoModel(newName);
+        _groupModels[(group.Kind, newSource)] = group;
+    }
+
+    private bool CanRenameCollection(GroupModel? group) =>
+        group is { Kind: PackageSourceHelper.Kind.Collection, Source: not null };
+
     // NOTE: SourceOrders 末项 = 最高覆盖力（POLY-116），因此提升优先级表现为向列表尾部移动
     [RelayCommand(CanExecute = nameof(CanRaiseGroupPriority))]
     private async Task RaiseGroupPriorityAsync(GroupModel? group) => await MoveGroupAsync(group, +1);
@@ -2025,6 +2062,7 @@ public partial class InstanceSetupPageModel(
         LowerGroupPriorityCommand.NotifyCanExecuteChanged();
         PromoteToRecipeCommand.NotifyCanExecuteChanged();
         DemoteToCollectionCommand.NotifyCanExecuteChanged();
+        RenameCollectionCommand.NotifyCanExecuteChanged();
     }
 
     [RelayCommand]
