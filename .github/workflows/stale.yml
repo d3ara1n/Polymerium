@@ -1,0 +1,59 @@
+name: Close stale issues
+
+on:
+  schedule:
+    - cron: '30 0 * * *' # daily, 00:30 UTC
+  workflow_dispatch: # manual trigger for first-time validation
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  # General issues (no in-progress / awaiting-verification).
+  # Idle 30d -> "stale" label + reminder; idle 37d -> close as not planned.
+  stale-general:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v11
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          days-before-issue-stale: 30
+          days-before-issue-close: 7
+          days-before-pr-stale: -1
+          days-before-pr-close: -1
+          stale-issue-label: stale
+          exempt-issue-labels: in-progress,awaiting-verification
+          close-issue-reason: not_planned
+          operations-per-run: 60
+          stale-issue-message: >-
+            This issue has had no activity for 30 days and has been marked stale.
+            It will be closed as not planned in 7 days unless there is new activity.
+            Leave a comment to keep it open.
+          close-issue-message: >-
+            Closing as not planned due to inactivity. Reopen it if it is still relevant.
+
+  # Awaiting verification (reporter has not confirmed the fix; excluded while in-progress).
+  # Idle 30d -> "stale" label + reminder; idle 37d -> close as completed (verification assumed passed).
+  stale-verification:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v11
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          days-before-issue-stale: 30
+          days-before-issue-close: 7
+          days-before-pr-stale: -1
+          days-before-pr-close: -1
+          any-of-issue-labels: awaiting-verification
+          exempt-issue-labels: in-progress
+          stale-issue-label: stale
+          close-issue-reason: completed
+          operations-per-run: 60
+          stale-issue-message: >-
+            The fix for this issue is awaiting your verification. With no response
+            for 30 days it has been marked stale and will be closed as completed
+            in 7 days. Reply if the problem still occurs.
+          close-issue-message: >-
+            Closing as completed: no further response after the fix shipped, so
+            verification is assumed to have passed. Reopen if the issue persists.
