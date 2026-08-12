@@ -140,6 +140,19 @@
                                       FontSize={StaticResource MediumFontSize}}" />
             <MenuItem Header="-" />
             <MenuItem
+                Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).PromoteToRecipeCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding Group}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_PromoteToRecipeMenuText}}"
+                Icon="{fie:SymbolIcon Symbol=ArrowCircleUp,
+                                      FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem
+                Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).DemoteToCollectionCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding Group}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_DemoteToCollectionMenuText}}"
+                Icon="{fie:SymbolIcon Symbol=ArrowCircleDown,
+                                      FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem Header="-" />
+            <MenuItem
                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).LowerGroupPriorityCommand, FallbackValue={x:Null}}"
                 CommandParameter="{Binding Group}"
                 Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_LowerGroupPriorityMenuText}}"

@@ -954,6 +954,24 @@
     <data name="InstanceSetupPage_RemoveGroupConfirmMessage" xml:space="preserve">
         <value>Type the code to confirm removing this group and all its packages from the instance.</value>
     </data>
+    <data name="InstanceSetupPage_PromoteToRecipeMenuText" xml:space="preserve">
+        <value>Promote to Recipe</value>
+    </data>
+    <data name="InstanceSetupPage_PromoteToRecipeConfirmTitle" xml:space="preserve">
+        <value>Promote to Recipe</value>
+    </data>
+    <data name="InstanceSetupPage_PromoteToRecipeConfirmMessage" xml:space="preserve">
+        <value>Promote this collection to a recipe? Its packages will belong to a new recipe named after the collection. You can edit the recipe in the Recipes page.</value>
+    </data>
+    <data name="InstanceSetupPage_DemoteToCollectionMenuText" xml:space="preserve">
+        <value>Demote to Collection</value>
+    </data>
+    <data name="InstanceSetupPage_DemoteToCollectionConfirmTitle" xml:space="preserve">
+        <value>Demote to Collection</value>
+    </data>
+    <data name="InstanceSetupPage_DemoteToCollectionConfirmMessage" xml:space="preserve">
+        <value>Demote this recipe group to a collection? Its packages will be regrouped under a collection named after the recipe. The recipe itself is not changed and stays in the Recipes page.</value>
+    </data>
     <data name="InstanceSetupPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>Open Website</value>
     </data>
