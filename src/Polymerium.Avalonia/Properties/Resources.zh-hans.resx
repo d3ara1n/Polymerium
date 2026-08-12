@@ -1956,6 +1956,12 @@
     <data name="LandingPage_OverviewAccountsLabelText" xml:space="preserve">
         <value>账号</value>
     </data>
+    <data name="LandingPage_UpdateAvailableInfoBarTitle" xml:space="preserve">
+        <value>有可用更新</value>
+    </data>
+    <data name="LandingPage_UpdateAvailableInfoBarAction" xml:space="preserve">
+        <value>查看更新</value>
+    </data>
     <data name="LandingPage_OverviewInstancesLabelText" xml:space="preserve">
         <value>实例</value>
     </data>

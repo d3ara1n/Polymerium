@@ -110,8 +110,46 @@
             </Grid>
         </Grid>
 
-        <!--  Announcements  -->
-        <Panel IsVisible="False" />
+        <!--  Update notification  -->
+        <husk:InfoBar
+            Classes="Warning"
+            IsVisible="{Binding CurrentUpdate, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <Grid
+                ColumnDefinitions="Auto,*,Auto"
+                ColumnSpacing="12">
+                <Border
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    CornerRadius="{StaticResource SmallCornerRadius}">
+                    <fi:SymbolIcon
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IconVariant="Color"
+                        FontSize="{StaticResource ExtraLargeFontSize}"
+                        Symbol="LightbulbFilament" />
+                </Border>
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Spacing="2">
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_UpdateAvailableInfoBarTitle}}" />
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{Binding CurrentUpdate?.Version, StringFormat=v{0}}" />
+                </StackPanel>
+                <Button
+                    Grid.Column="2"
+                    Classes="Primary"
+                    Padding="12,6"
+                    VerticalAlignment="Center"
+                    Command="{Binding ViewUpdateCommand}"
+                    CommandParameter="{Binding CurrentUpdate}">
+                    <husk:IconLabel
+                        Icon="ArrowUp"
+                        Text="{Translate {x:Static app:LanguageManager+Keys.LandingPage_UpdateAvailableInfoBarAction}}" />
+                </Button>
+            </Grid>
+        </husk:InfoBar>
 
         <!--  Content Area  -->
         <Grid

@@ -55,6 +55,14 @@ public class UpdateService(
     /// </summary>
     public event Action<AppUpdateModel>? UpdateFound;
 
+    internal void ApplyMockUpdate(AppUpdateModel model)
+    {
+        CurrentUpdate = model;
+        UpdateState = AppUpdateState.Found;
+        IsUpdateChecked = true;
+        UpdateFound?.Invoke(model);
+    }
+
     public async Task CheckUpdateAsync()
     {
         if (IsChecking)
