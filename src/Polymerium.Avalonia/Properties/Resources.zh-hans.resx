@@ -2425,7 +2425,7 @@
         <value>我们可能收集的信息</value>
     </data>
     <data name="OobePrivacy_WhatWeCollectDescription" xml:space="preserve">
-        <value>当应用程序崩溃或遇到错误时，我们可能会收集错误信息和诊断数据，以帮助改进未来版本的用户体验。</value>
+        <value>当 Polymerium 崩溃或遇到意外错误时，会向我们的错误监控服务商 Sentry 发送报告：异常类型、消息、堆栈，以及少量诊断标签。此外每次启动还会发送一个轻量心跳，用于统计崩溃率。</value>
     </data>
     <data name="OobePrivacy_OurPromiseTitle" xml:space="preserve">
         <value>我们的承诺</value>
@@ -2440,7 +2440,7 @@
         <value>本地优先</value>
     </data>
     <data name="OobePrivacy_Promise2Description" xml:space="preserve">
-        <value>您所有的游戏数据都保存在本地计算机上。未经明确操作，不会上传任何内容。</value>
+        <value>您的配置、模组、存档和实例文件都留在您的电脑上。没有云同步——您创建的任何内容都不会被上传。</value>
     </data>
     <data name="OobePrivacy_Promise3Title" xml:space="preserve">
         <value>透明开源</value>
@@ -2452,10 +2452,10 @@
         <value>继续即表示您已阅读并同意上述隐私条款。</value>
     </data>
     <data name="OobePrivacy_CrashReportingToggleText" xml:space="preserve">
-        <value>发送崩溃与错误报告</value>
+        <value>发送崩溃报告和启动心跳</value>
     </data>
     <data name="OobePrivacy_CrashReportingToggleDescription" xml:space="preserve">
-        <value>帮助我们诊断和修复问题。不会收集个人数据。可随时在设置中更改，更改在重启后生效。</value>
+        <value>开启后，Polymerium 会向 Sentry 发送异常详情（类型、消息、堆栈）和一次启动心跳，用于统计崩溃率。关闭后所有遥测彻底停止。重启后生效。</value>
     </data>
     <!-- Maintenance Storage View -->
     <data name="MaintenanceStoragePage_Title" xml:space="preserve">

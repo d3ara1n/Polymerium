@@ -2437,7 +2437,7 @@
         <value>What We May Collect</value>
     </data>
     <data name="OobePrivacy_WhatWeCollectDescription" xml:space="preserve">
-        <value>When the application crashes or encounters errors, we may collect error information and diagnostic data to help improve the user experience in future updates.</value>
+        <value>When Polymerium crashes or hits an unexpected error, it sends a report to our error-monitoring provider Sentry: the exception type, message, stack trace, and a few diagnostic tags. It also sends a lightweight launch ping so we can track crash-free rates.</value>
     </data>
     <data name="OobePrivacy_OurPromiseTitle" xml:space="preserve">
         <value>Our Promise</value>
@@ -2452,7 +2452,7 @@
         <value>Local First</value>
     </data>
     <data name="OobePrivacy_Promise2Description" xml:space="preserve">
-        <value>All your game data stays on your computer. Nothing is uploaded without explicit action.</value>
+        <value>Your profiles, mods, saves, and instance files stay on your computer. There is no cloud sync — nothing you create is ever uploaded.</value>
     </data>
     <data name="OobePrivacy_Promise3Title" xml:space="preserve">
         <value>Open Source</value>
@@ -2464,10 +2464,10 @@
         <value>By continuing, you acknowledge and agree to the privacy terms above.</value>
     </data>
     <data name="OobePrivacy_CrashReportingToggleText" xml:space="preserve">
-        <value>Send crash and error reports</value>
+        <value>Send crash reports and launch pings</value>
     </data>
     <data name="OobePrivacy_CrashReportingToggleDescription" xml:space="preserve">
-        <value>Help us diagnose and fix issues. No personal data is collected. You can change this anytime in Settings; changes take effect after restarting.</value>
+        <value>When enabled, Polymerium sends exception details (type, message, stack trace) and a launch ping to Sentry to track crash-free rates. Disabling it stops all telemetry entirely. Takes effect after restart.</value>
     </data>
     <!-- Maintenance Storage View -->
     <data name="MaintenanceStoragePage_Title" xml:space="preserve">
