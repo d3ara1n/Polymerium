@@ -131,7 +131,14 @@ public partial class InstanceSetupPageModel(
             foreach (var item in _flat.Items.OfType<PackageListItemBase.Entry>())
             {
                 entryCount++;
-                if (!lookup.Remove(item.Package.Entry))
+                var entry = item.Package.Entry;
+                // NOTE: Source 被外部改过 → 原地换到新 Source 对应的共享 GroupModel，item 实例保持稳定。
+                if (item.Package.OldSourceCache != entry.Source)
+                {
+                    item.Group = GroupModelOf(item.Package);
+                    item.Package.OldSourceCache = entry.Source;
+                }
+                else if (!lookup.Remove(entry))
                 {
                     toRemove.Add(item.Key);
                 }
@@ -552,6 +559,7 @@ public partial class InstanceSetupPageModel(
            .Connect()
            .Filter(item => item is PackageListItemBase.Entry)
            .Transform(item => (PackageListItemBase.Entry)item)
+           .AutoRefresh(e => e.Group)
            .QueryWhenChanged(query => query.Items.GroupBy(e => e.Group).ToDictionary(g => g.Key, g => g.Count()))
            .Subscribe(counts =>
             {
@@ -576,6 +584,7 @@ public partial class InstanceSetupPageModel(
         _flat
            .Connect()
            .Filter(itemFilter)
+           .AutoRefresh(item => item.Group)
            .AutoRefreshOnObservable(item => item.Group.WhenPropertyChanged(g => g.IsExpanded))
            .Filter(item => item is PackageListItemBase.Header || item.Group is LooseGroupModel || item.Group.IsExpanded)
            .SortAndBind(out var flatView, comparer)
@@ -1331,13 +1340,6 @@ public partial class InstanceSetupPageModel(
 
         pkg.Entry.Source = collection.Uri;
 
-        // HACK: item.Group init-only 不可变，改 Source 后须先移除旧 item 让 TriggerPackageMerge 走新增分支重新归组
-        //  这里用反查的方式查询当前操作的 InstancePackageModel 所属的 PackageListItemBase 属于脆弱操作
-        var stale = _flat.Items.OfType<PackageListItemBase.Entry>().FirstOrDefault(i => ReferenceEquals(i.Package, pkg));
-        if (stale is not null)
-        {
-            _flat.Remove([stale.Key]);
-        }
         TriggerPackageMerge();
     }
 
@@ -1351,12 +1353,6 @@ public partial class InstanceSetupPageModel(
         }
 
         model.Entry.Source = null;
-
-        var stale = _flat.Items.OfType<PackageListItemBase.Entry>().FirstOrDefault(i => ReferenceEquals(i.Package, model));
-        if (stale is not null)
-        {
-            _flat.Remove([stale.Key]);
-        }
 
         TriggerPackageMerge();
     }
@@ -1811,9 +1807,6 @@ public partial class InstanceSetupPageModel(
             item.Package.Entry.Source = null;
         }
 
-        // HACK: merge 按 Entry 地址判存续，Source 置空后 Entry 仍在 profile 中，已存在的 item 不会重建，
-        //  而 item.Group 是 init-only 不可变——只能先删旧 item，让 merge 走新增分支重新归组到散装
-        _flat.Remove(items.Select(i => i.Key));
         TriggerPackageMerge();
     }
 
@@ -1897,7 +1890,6 @@ public partial class InstanceSetupPageModel(
             item.Package.Entry.Source = source;
         }
 
-        _flat.Remove(items.Select(i => i.Key));
         TriggerPackageMerge();
     }
 
@@ -1937,7 +1929,6 @@ public partial class InstanceSetupPageModel(
             item.Package.Entry.Source = source;
         }
 
-        _flat.Remove(items.Select(i => i.Key));
         TriggerPackageMerge();
     }
 
