@@ -41,6 +41,7 @@ namespace Polymerium.Avalonia;
 public static class Startup
 {
     private static SingleInstance? _singleInstance;
+    private static bool _sentryInitialized;
 
     public static void ConfigureServices(IServiceCollection services, bool debug)
     {
@@ -253,7 +254,7 @@ public static class Startup
 
         #region SentrySdk Init (only in Release)
 
-        if (!Program.IsDebug)
+        if (!Program.IsDebug && !File.Exists(PathDef.Default.FileOfTelemetrySwitch()))
         {
             SentrySdk.Init(options =>
             {
@@ -273,8 +274,9 @@ public static class Startup
 
                     return @event;
                 });
-                options.SendDefaultPii = true;
+                options.SendDefaultPii = false;
             });
+            _sentryInitialized = true;
         }
 
         #endregion
@@ -284,7 +286,7 @@ public static class Startup
 
     public static void DeinitializeUnhostedServices()
     {
-        if (!Program.IsDebug)
+        if (_sentryInitialized)
         {
             SentrySdk.Close();
         }

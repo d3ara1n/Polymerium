@@ -3,6 +3,7 @@
 ### ✨ Highlights ✨
 
 - Introduce live language switching that applies the selected language immediately without restart (Irihi.Lingua)
+- Add a toggle in onboarding and settings to opt out of sending anonymous crash and error reports
 
 ### Fixed
 
@@ -17,6 +18,7 @@
   files page
 - Add localized labels for the Minecraft version types in the new instance version picker
 - Add a compatibility view to the project detail modal listing supported mod loaders and Minecraft versions (#POLY-142)
+- Add a toggle in onboarding and settings to opt out of sending anonymous crash and error reports (#79)
 
 ### Changed
 

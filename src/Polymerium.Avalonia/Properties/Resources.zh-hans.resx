@@ -1632,6 +1632,18 @@
     <data name="SettingsPage_MaintenanceSubtitle" xml:space="preserve">
         <value>检查更新、清理缓存之类的杂七杂八</value>
     </data>
+    <data name="SettingsPage_PrivacyTitle" xml:space="preserve">
+        <value>隐私</value>
+    </data>
+    <data name="SettingsPage_PrivacySubtitle" xml:space="preserve">
+        <value>控制崩溃报告与数据收集。</value>
+    </data>
+    <data name="SettingsPage_CrashReportingLabelText" xml:space="preserve">
+        <value>崩溃报告</value>
+    </data>
+    <data name="SettingsPage_CrashReportingDescription" xml:space="preserve">
+        <value>发送匿名的崩溃与错误报告以帮助诊断问题。不会收集任何个人数据。重启后更改生效。</value>
+    </data>
     <data name="SettingsPage_ToolsGroupTitle" xml:space="preserve">
         <value>工具</value>
     </data>
@@ -2438,6 +2450,12 @@
     </data>
     <data name="OobePrivacy_AgreementNote" xml:space="preserve">
         <value>继续即表示您已阅读并同意上述隐私条款。</value>
+    </data>
+    <data name="OobePrivacy_CrashReportingToggleText" xml:space="preserve">
+        <value>发送崩溃与错误报告</value>
+    </data>
+    <data name="OobePrivacy_CrashReportingToggleDescription" xml:space="preserve">
+        <value>帮助我们诊断和修复问题。不会收集个人数据。可随时在设置中更改，更改在重启后生效。</value>
     </data>
     <!-- Maintenance Storage View -->
     <data name="MaintenanceStoragePage_Title" xml:space="preserve">

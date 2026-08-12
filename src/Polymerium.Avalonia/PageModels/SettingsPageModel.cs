@@ -1,16 +1,19 @@
 using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
 using Huskui.Avalonia.Models;
+using Microsoft.Extensions.Logging;
 using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Services;
+using TridentCore.Abstractions;
 using Velopack;
 
 namespace Polymerium.Avalonia.PageModels;
@@ -18,6 +21,7 @@ namespace Polymerium.Avalonia.PageModels;
 public partial class SettingsPageModel : ViewModelBase
 {
     public SettingsPageModel(
+        ILogger<SettingsPageModel> logger,
         ConfigurationService configurationService,
         OverlayService overlayService,
         NavigationService navigationService,
@@ -29,6 +33,7 @@ public partial class SettingsPageModel : ViewModelBase
         ThemeService themeService,
         FontService fontService)
     {
+        _logger = logger;
         OverlayService = overlayService;
         _configurationService = configurationService;
         _navigationService = navigationService;
@@ -83,11 +88,13 @@ public partial class SettingsPageModel : ViewModelBase
         ProxyUsername = configurationService.Value.NetworkProxyUsername;
         ProxyPassword = configurationService.Value.NetworkProxyPassword;
 
-        UpdateProxyStatusText();
-
         MainFontSelection = _fontService.Main;
         CodeFontSelection = _fontService.Code;
         LogFontSelection = _fontService.Log;
+
+        CrashReportingEnabled = !File.Exists(PathDef.Default.FileOfTelemetrySwitch());
+
+        UpdateProxyStatusText();
         SyncUpdateState();
     }
 
@@ -108,6 +115,7 @@ public partial class SettingsPageModel : ViewModelBase
     private readonly GarbageCollector _garbageCollector;
     private readonly ThemeService _themeService;
     private readonly FontService _fontService;
+    private readonly ILogger _logger;
 
     #endregion
 
@@ -133,7 +141,9 @@ public partial class SettingsPageModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _notificationService.PopMessage(ex, LanguageManager.Instance.SettingsPage_CheckUpdatesDangerNotificationTitle.Current());
+            _notificationService.PopMessage(ex,
+                                            LanguageManager.Instance.SettingsPage_CheckUpdatesDangerNotificationTitle
+                                                           .Current());
         }
 
         SyncUpdateState();
@@ -163,8 +173,12 @@ public partial class SettingsPageModel : ViewModelBase
     private async Task ClearStatisticsAsync()
     {
         var confirmed =
-            await OverlayService.RequestStrongConfirmationAsync(LanguageManager.Instance.SettingsPage_ClearStatisticsConfirmationMessage.Current(),
-                                                                LanguageManager.Instance.SettingsPage_ClearStatisticsConfirmationTitle.Current());
+            await OverlayService.RequestStrongConfirmationAsync(LanguageManager.Instance
+                                                                   .SettingsPage_ClearStatisticsConfirmationMessage
+                                                                   .Current(),
+                                                                LanguageManager.Instance
+                                                                   .SettingsPage_ClearStatisticsConfirmationTitle
+                                                                   .Current());
         if (confirmed)
         {
             _persistenceService.ClearAllActivities();
@@ -175,8 +189,12 @@ public partial class SettingsPageModel : ViewModelBase
     private async Task ClearRecordsAsync()
     {
         var confirmed =
-            await OverlayService.RequestStrongConfirmationAsync(LanguageManager.Instance.SettingsPage_ClearRecordsConfirmationMessage.Current(),
-                                                                LanguageManager.Instance.SettingsPage_ClearRecordsConfirmationTitle.Current());
+            await OverlayService.RequestStrongConfirmationAsync(LanguageManager.Instance
+                                                                   .SettingsPage_ClearRecordsConfirmationMessage
+                                                                   .Current(),
+                                                                LanguageManager.Instance
+                                                                   .SettingsPage_ClearRecordsConfirmationTitle
+                                                                   .Current());
         if (confirmed)
         {
             _persistenceService.ClearAllActions();
@@ -187,8 +205,12 @@ public partial class SettingsPageModel : ViewModelBase
     private async Task GarbageCollectAsync()
     {
         var confirmed =
-            await OverlayService.RequestConfirmationAsync(LanguageManager.Instance.SettingsPage_GarbageCollectConfirmationMessage.Current(),
-                                                          LanguageManager.Instance.SettingsPage_GarbageCollectConfirmationTitle.Current());
+            await OverlayService.RequestConfirmationAsync(LanguageManager.Instance
+                                                                         .SettingsPage_GarbageCollectConfirmationMessage
+                                                                         .Current(),
+                                                          LanguageManager.Instance
+                                                                         .SettingsPage_GarbageCollectConfirmationTitle
+                                                                         .Current());
         if (!confirmed)
         {
             return;
@@ -207,7 +229,8 @@ public partial class SettingsPageModel : ViewModelBase
             if (v.HasValue)
             {
                 progress.IsIndeterminate = false;
-                progress.StatusText = LanguageManager.Instance.SettingsPage_GarbageCollectProgressCleaningText.Current();
+                progress.StatusText = LanguageManager.Instance.SettingsPage_GarbageCollectProgressCleaningText
+                                                     .Current();
                 progress.ProgressValue = (int)(v.Value * 100);
             }
             else
@@ -220,14 +243,16 @@ public partial class SettingsPageModel : ViewModelBase
         {
             await Task.Run(() => _garbageCollector.Execute(reporter));
             progress.Dismiss();
-            _notificationService.PopMessage(LanguageManager.Instance.SettingsPage_GarbageCollectSuccessMessage.Current(),
+            _notificationService.PopMessage(LanguageManager.Instance.SettingsPage_GarbageCollectSuccessMessage
+                                                           .Current(),
                                             LanguageManager.Instance.SettingsPage_GarbageCollectSuccessTitle.Current(),
                                             GrowlLevel.Success);
         }
         catch (Exception ex)
         {
             progress.Dismiss();
-            _notificationService.PopMessage(ex, LanguageManager.Instance.SettingsPage_GarbageCollectDangerTitle.Current());
+            _notificationService.PopMessage(ex,
+                                            LanguageManager.Instance.SettingsPage_GarbageCollectDangerTitle.Current());
         }
     }
 
@@ -258,6 +283,42 @@ public partial class SettingsPageModel : ViewModelBase
     public partial string MirrorChyanCdk { get; set; }
 
     partial void OnMirrorChyanCdkChanged(string value) => _configurationService.Value.UpdateMirrorChyanCdk = value;
+
+    #endregion
+
+    #region Privacy
+
+    [ObservableProperty]
+    public partial bool CrashReportingEnabled { get; set; }
+
+    partial void OnCrashReportingEnabledChanged(bool value)
+    {
+        var exist = File.Exists(PathDef.Default.FileOfTelemetrySwitch());
+        try
+        {
+            switch (value)
+            {
+                case true when exist:
+                    File.Delete(PathDef.Default.FileOfTelemetrySwitch());
+                    break;
+                case false when !exist:
+                {
+                    var dir = Path.GetDirectoryName(PathDef.Default.FileOfTelemetrySwitch());
+                    if (dir != null && !Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
+
+                    File.WriteAllText(PathDef.Default.FileOfTelemetrySwitch(), Program.MagicWords);
+                    break;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Switching NO_TELEMETRY failed");
+        }
+    }
 
     #endregion
 
@@ -522,7 +583,9 @@ public partial class SettingsPageModel : ViewModelBase
         {
             ProxyMode.Auto => LanguageManager.Instance.SettingsPage_ProxyStatusAutoText.Current(),
             ProxyMode.Disabled => LanguageManager.Instance.SettingsPage_ProxyStatusDisabledText.Current(),
-            ProxyMode.Manual => LanguageManager.Instance.SettingsPage_ProxyStatusManualText.Current().Replace("{0}", ProxyProtocol.ToString().ToLower())
+            ProxyMode.Manual => LanguageManager
+                               .Instance.SettingsPage_ProxyStatusManualText.Current()
+                               .Replace("{0}", ProxyProtocol.ToString().ToLower())
                                .Replace("{1}", ProxyAddress)
                                .Replace("{2}", ProxyPort.ToString()),
             _ => string.Empty

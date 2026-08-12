@@ -84,8 +84,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <AdditionalFiles Include="Properties\Resources.resx"/>
-        <AdditionalFiles Include="Properties\Resources.zh-hans.resx"/>
+        <AdditionalFiles Include="Properties\*.resx"/>
     </ItemGroup>
 
     <ItemGroup>

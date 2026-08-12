@@ -526,6 +526,18 @@
                         </Border>
                     </app:SettingsEntryItem>
                 </app:SettingsEntry>
+                <!--  Privacy  -->
+                <app:SettingsEntry
+                    Title="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_PrivacyTitle}}"
+                    Icon="Shield"
+                    Summary="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_PrivacySubtitle}}">
+                    <app:SettingsEntryItem
+                        HorizontalContentAlignment="Right"
+                        Description="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_CrashReportingDescription}}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_CrashReportingLabelText}}">
+                        <ToggleSwitch IsChecked="{Binding CrashReportingEnabled, Mode=TwoWay}" />
+                    </app:SettingsEntryItem>
+                </app:SettingsEntry>
                 <!--  Maintenance  -->
                 <app:SettingsEntry
                     Title="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_MaintenanceTitle}}"

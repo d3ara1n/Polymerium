@@ -158,6 +158,38 @@
                 </StackPanel>
             </StackPanel>
         </Border>
+        <!--  Crash Reporting Opt-Out Toggle  -->
+        <Border
+            Padding="16,12"
+            Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+            CornerRadius="{StaticResource MediumCornerRadius}">
+            <Grid ColumnDefinitions="Auto,12,*,8,Auto">
+                <fi:SymbolIcon
+                    Grid.Column="0"
+                    Margin="0,2,0,0"
+                    VerticalAlignment="Top"
+                    FontSize="20"
+                    Foreground="{StaticResource AccentFillColorDefaultBrush}"
+                    Symbol="CloudArrowUp" />
+                <StackPanel
+                    Grid.Column="2"
+                    Spacing="4">
+                    <TextBlock
+                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                        Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_CrashReportingToggleText}}" />
+                    <TextBlock
+                        FontSize="{StaticResource SmallFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{Translate {x:Static app:LanguageManager+Keys.OobePrivacy_CrashReportingToggleDescription}}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+                <ToggleSwitch
+                    Grid.Column="4"
+                    VerticalAlignment="Center"
+                    IsChecked="{Binding $parent[app:OobePrivacy].IsCrashReportingEnabled, Mode=TwoWay}" />
+            </Grid>
+        </Border>
+
 
         <!--  Agreement Note  -->
         <TextBlock
