@@ -1300,7 +1300,12 @@ public partial class InstanceSetupPageModel(
     }
 
     [RelayCommand]
-    private async Task AddToCollectionAsync(InstancePackageModel? pkg)
+    private async Task AddToCollectionAsync(InstancePackageModel? pkg) => await AssignToCollectionAsync(pkg);
+
+    [RelayCommand]
+    private async Task MoveToCollectionAsync(InstancePackageModel? pkg) => await AssignToCollectionAsync(pkg);
+
+    private async Task AssignToCollectionAsync(InstancePackageModel? pkg)
     {
         if (pkg?.Entry is null)
         {
@@ -1333,6 +1338,26 @@ public partial class InstanceSetupPageModel(
         {
             _flat.Remove([stale.Key]);
         }
+        TriggerPackageMerge();
+    }
+
+    [RelayCommand]
+    private void  RemoveFromCollection(InstancePackageModel? model)
+    {
+        if (model?.Entry is null
+            || PackageSourceHelper.Classify(model.Entry.Source) != PackageSourceHelper.Kind.Collection)
+        {
+            return;
+        }
+
+        model.Entry.Source = null;
+
+        var stale = _flat.Items.OfType<PackageListItemBase.Entry>().FirstOrDefault(i => ReferenceEquals(i.Package, model));
+        if (stale is not null)
+        {
+            _flat.Remove([stale.Key]);
+        }
+
         TriggerPackageMerge();
     }
 

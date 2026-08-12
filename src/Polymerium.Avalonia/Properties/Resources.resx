@@ -972,6 +972,12 @@
     <data name="InstanceSetupPage_DemoteToCollectionConfirmMessage" xml:space="preserve">
         <value>Demote this recipe group to a collection? Its packages will be regrouped under a collection named after the recipe. The recipe itself is not changed and stays in the Recipes page.</value>
     </data>
+    <data name="InstanceSetupPage_RemoveFromCollectionMenuText" xml:space="preserve">
+        <value>Remove from Collection</value>
+    </data>
+    <data name="InstanceSetupPage_MoveToCollectionMenuText" xml:space="preserve">
+        <value>Move to Collection</value>
+    </data>
     <data name="InstanceSetupPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>Open Website</value>
     </data>

@@ -99,6 +99,20 @@
                 Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_AddToCollectionMenuText}}"
                 Icon="{fie:SymbolIcon Symbol=CollectionsAdd,
                                       FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem
+                IsVisible="{Binding CanLeaveCollection}"
+                Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).MoveToCollectionCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_MoveToCollectionMenuText}}"
+                Icon="{fie:SymbolIcon Symbol=ArrowSwap,
+                                      FontSize={StaticResource MediumFontSize}}" />
+            <MenuItem
+                IsVisible="{Binding CanLeaveCollection}"
+                Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).RemoveFromCollectionCommand, FallbackValue={x:Null}}"
+                CommandParameter="{Binding}"
+                Header="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_RemoveFromCollectionMenuText}}"
+                Icon="{fie:SymbolIcon Symbol=ArrowExit,
+                                      FontSize={StaticResource MediumFontSize}}" />
             <MenuItem Header="-" />
             <MenuItem
                 IsEnabled="{Binding CanRemove}"

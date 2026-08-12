@@ -40,7 +40,7 @@ public static class PackageSourceHelper
         {
             null => Kind.Manual,
             _ when InternalUriHelper.IsKind(source, RecipeHelper.Scheme) => Kind.Recipe,
-            _ when InternalUriHelper.IsKind(source, CollectionHelper.Scheme) => Kind.Collection,
+            _ when InternalUriHelper.IsKind(source, CollectionHelper.SCHEME) => Kind.Collection,
             _ when InternalUriHelper.IsKind(source, "pref") => Kind.Modpack,
             // TODO: legacy Purl-format Source from pre-rename modpacks; remove once on-disk
             //  profiles no longer carry old-format Source values.
