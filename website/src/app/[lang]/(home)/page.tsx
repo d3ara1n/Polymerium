@@ -86,7 +86,7 @@ function getDict(lang: string) {
         },
         {
           title: '隐私优先',
-          desc: '无广告、无遥测、无数据收集，MIT 协议开源。',
+          desc: '无广告、无追踪。你的数据留在本机，崩溃报告可随时关闭。MIT 协议开源。',
         },
       ],
 
@@ -202,7 +202,7 @@ function getDict(lang: string) {
       },
       {
         title: 'Privacy First',
-        desc: 'No ads, no telemetry, no data collection. Open source under the MIT license.',
+        desc: 'No ads, no tracking. Your data stays on your machine, with crash reporting you can turn off anytime. Open source under the MIT license.',
       },
     ],
 

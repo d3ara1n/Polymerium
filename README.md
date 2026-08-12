@@ -257,8 +257,8 @@ These are upstream limitations in Avalonia and are not actionable within Polymer
 
 Polymerium respects your privacy:
 
-- **Minor Telemetry**: Collect least necessary data for debugging
-- **Local Storage**: All data stays on your machine
+- **Optional Crash Reporting**: Sends anonymous crash data to help fix bugs; can be turned off anytime
+- **Local Storage**: Your game data stays on your machine
 - **Minimal Footprint**: Clean uninstall leaves no traces
 - **Open Source**: Transparent, auditable codebase
 
