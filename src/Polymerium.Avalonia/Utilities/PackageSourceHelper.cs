@@ -23,12 +23,15 @@ public static class PackageSourceHelper
         Modpack,
 
         /// <summary>recipe 带来（<c>Source</c> 为 <c>recipe://</c>），锁组但不占版本。</summary>
-        Recipe
+        Recipe,
+
+        /// <summary>用户就地分组（<c>Source</c> 为 <c>collection://by-name/&lt;name&gt;</c>），锁组但不占版本，名字即身份。</summary>
+        Collection
     }
 
     /// <summary>
-    ///     把 <paramref name="source" /> 归入三种归属之一，经 <see cref="InternalUriHelper.IsKind" />
-    ///     按 scheme 显式判定而非 else 兜底：<c>recipe://</c>→Recipe，<c>pref://</c>→Modpack；
+    ///     把 <paramref name="source" /> 归入四种归属之一，经 <see cref="InternalUriHelper.IsKind" />
+    ///     按 scheme 显式判定而非 else 兜底：<c>recipe://</c>→Recipe，<c>pref://</c>→Modpack，<c>collection://</c>→Collection；
     ///     旧格式 Purl（无 scheme，如 <c>curseforge:...</c>）仍算 Modpack（兼容改名前的存量 Source）。
     ///     既非 null / recipe / 包标识的值视为非法，直接抛异常。
     /// </summary>
@@ -37,6 +40,7 @@ public static class PackageSourceHelper
         {
             null => Kind.Manual,
             _ when InternalUriHelper.IsKind(source, RecipeHelper.Scheme) => Kind.Recipe,
+            _ when InternalUriHelper.IsKind(source, CollectionHelper.Scheme) => Kind.Collection,
             _ when InternalUriHelper.IsKind(source, "pref") => Kind.Modpack,
             // TODO: legacy Purl-format Source from pre-rename modpacks; remove once on-disk
             //  profiles no longer carry old-format Source values.

@@ -909,6 +909,21 @@
     <data name="InstanceSetupPage_RecipeGroupTagText" xml:space="preserve">
         <value>Recipe</value>
     </data>
+    <data name="InstanceSetupPage_CollectionGroupTagText" xml:space="preserve">
+        <value>Collection</value>
+    </data>
+    <data name="InstanceSetupPage_AddToCollectionMenuText" xml:space="preserve">
+        <value>Add to Collection</value>
+    </data>
+    <data name="CollectionPickerDialog_Title" xml:space="preserve">
+        <value>Add to Collection</value>
+    </data>
+    <data name="CollectionPickerDialog_Prompt" xml:space="preserve">
+        <value>Enter a new collection name, or choose an existing one</value>
+    </data>
+    <data name="CollectionPickerDialog_Watermark" xml:space="preserve">
+        <value>Collection name</value>
+    </data>
     <data name="InstanceSetupPage_EnableGroupMenuText" xml:space="preserve">
         <value>Enable Whole Group</value>
     </data>

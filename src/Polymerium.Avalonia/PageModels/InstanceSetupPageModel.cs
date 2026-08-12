@@ -1300,6 +1300,43 @@ public partial class InstanceSetupPageModel(
     }
 
     [RelayCommand]
+    private async Task AddToCollectionAsync(InstancePackageModel? pkg)
+    {
+        if (pkg?.Entry is null)
+        {
+            return;
+        }
+
+        var existing = ProfileManager.TryGetImmutable(Basic.Key, out var p)
+            ? p.Setup.Packages
+               .Select(e => e.Source)
+               .OfType<string>()
+               .Where(s => InternalUriHelper.IsKind(s, CollectionHelper.Scheme))
+               .Select(s => CollectionHelper.TryGetName(s, out var n) ? new CollectionModel(n, s) : null)
+               .OfType<CollectionModel>()
+               .Distinct()
+               .ToList()
+            : new();
+
+        var dialog = new CollectionPickerDialog { ExistingCollections = existing };
+        if (!await overlayService.PopDialogAsync(dialog) || dialog.Result is not CollectionModel collection)
+        {
+            return;
+        }
+
+        pkg.Entry.Source = collection.Uri;
+
+        // HACK: item.Group init-only 不可变，改 Source 后须先移除旧 item 让 TriggerPackageMerge 走新增分支重新归组
+        //  这里用反查的方式查询当前操作的 InstancePackageModel 所属的 PackageListItemBase 属于脆弱操作
+        var stale = _flat.Items.OfType<PackageListItemBase.Entry>().FirstOrDefault(i => ReferenceEquals(i.Package, pkg));
+        if (stale is not null)
+        {
+            _flat.Remove([stale.Key]);
+        }
+        TriggerPackageMerge();
+    }
+
+    [RelayCommand]
     private async Task ImportFromRecipeAsync()
     {
         var recipes = persistenceService.GetRecipes();
@@ -1747,12 +1784,6 @@ public partial class InstanceSetupPageModel(
         foreach (var item in items)
         {
             item.Package.Entry.Source = null;
-            persistenceService.AppendAction(new()
-            {
-                Key = Basic.Key,
-                Kind = PersistenceService.ActionKind.EditPackage,
-                Old = item.Package.Entry.Pref
-            });
         }
 
         // HACK: merge 按 Entry 地址判存续，Source 置空后 Entry 仍在 profile 中，已存在的 item 不会重建，
@@ -1979,6 +2010,11 @@ public partial class InstanceSetupPageModel(
                 {
                     g.Info = new RecipeGroupInfoModel(recipe.Name);
                 }
+            }
+            if (kind == PackageSourceHelper.Kind.Collection && CollectionHelper.TryGetName(source, out var collectionName))
+            {
+                g.IsLoaded = true;
+                g.Info = new CollectionGroupInfoModel(collectionName);
             }
 
             _groupModels[(kind, source)] = g;
