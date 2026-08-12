@@ -963,6 +963,12 @@
     <data name="InstanceSetupPage_DemoteToCollectionConfirmMessage" xml:space="preserve">
         <value>将此配方组降级为集合？其中的包将重新归属到一个以配方名命名的集合。配方本身不会改变，仍保留在配方管理页。</value>
     </data>
+    <data name="InstanceSetupPage_RemoveFromCollectionMenuText" xml:space="preserve">
+        <value>移出集合</value>
+    </data>
+    <data name="InstanceSetupPage_MoveToCollectionMenuText" xml:space="preserve">
+        <value>移动到集合</value>
+    </data>
     <data name="InstanceSetupPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>前往网站</value>
     </data>

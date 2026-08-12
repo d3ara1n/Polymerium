@@ -32,12 +32,12 @@ public partial class MarketplacePortalPageModel(
                 var asset = new VelopackAsset
                 {
                     PackageId = Program.Brand,
-                    Version = new SemanticVersion(99, 0, 0),
+                    Version = new(99, 0, 0),
                     Type = VelopackAssetType.Full,
                     NotesMarkdown =
                         "# Mock Update\n\nThis is a simulated release for previewing the update flow.\n\n- Nothing will actually download\n- Reachable only with super power activated"
                 };
-                updateService.ApplyMockUpdate(new AppUpdateModel(new UpdateInfo(asset, isDowngrade: false)));
+                updateService.ApplyMockUpdate(new(new(asset, isDowngrade: false)));
                 navigationService.Navigate<LandingPage>();
                 return;
             }

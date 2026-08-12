@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Facilities;
+using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.FileModels;
 
 namespace Polymerium.Avalonia.Models;
@@ -23,6 +24,9 @@ public partial class InstancePackageModel(Profile.Rice.Entry entry, bool canUpda
     public Profile.Rice.Entry Entry => entry;
 
     public bool CanRemove => entry.Source is null;
+
+    public bool CanLeaveCollection => PackageSourceHelper.Classify(entry.Source)
+        == PackageSourceHelper.Kind.Collection;
 
     public int PersistentIndex { get; set; }
 
