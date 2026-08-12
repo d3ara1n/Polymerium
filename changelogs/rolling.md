@@ -23,7 +23,7 @@
 
 ### Changed
 
--
+- Replace the one-time startup update notification with a persistent banner on the home screen when the auto-check finds a new version
 
 ### Removed
 

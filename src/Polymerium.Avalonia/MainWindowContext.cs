@@ -23,7 +23,6 @@ using TridentCore.Abstractions;
 using TridentCore.Abstractions.Tasks;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
-using Velopack;
 using NotificationSidebar = Polymerium.Avalonia.Sidebars.NotificationSidebar;
 
 namespace Polymerium.Avalonia;
@@ -40,8 +39,7 @@ public partial class MainWindowContext : ObservableObject
         InstanceService instanceService,
         OverlayService overlayService,
         UpdateService updateService,
-        ConfigurationService configurationService,
-        UpdateManager updateManager)
+        ConfigurationService configurationService)
     {
         _profileManager = profileManager;
         _notificationService = notificationService;
@@ -51,7 +49,6 @@ public partial class MainWindowContext : ObservableObject
         _overlayService = overlayService;
         _updateService = updateService;
         _configurationService = configurationService;
-        _updateManager = updateManager;
 
         SubscribeProfileList(profileManager);
         SubscribeState(aggregator);
@@ -99,8 +96,6 @@ public partial class MainWindowContext : ObservableObject
 
     public void OnInitialize()
     {
-        _updateService.UpdateFound += OnUpdateFound;
-
         // NOTE: 首次使用展示 OOBE（Windows 上含权限检查步骤）。
         if (Program.FirstRun)
         {
@@ -117,7 +112,6 @@ public partial class MainWindowContext : ObservableObject
     {
         _notificationService.ClearAll();
         _notificationService.UnreadCountChanged -= OnUnreadCountChanged;
-        _updateService.UpdateFound -= OnUpdateFound;
 
         _disposables.Dispose();
 
@@ -138,7 +132,6 @@ public partial class MainWindowContext : ObservableObject
     private readonly UpdateService _updateService;
     private readonly ProfileManager _profileManager;
     private readonly ConfigurationService _configurationService;
-    private readonly UpdateManager _updateManager;
 
     #endregion
 
@@ -291,34 +284,6 @@ public partial class MainWindowContext : ObservableObject
     }
 
     private bool CanCheckForUpdates => _updateService.CanCheckUpdate;
-
-    private void OnUpdateFound(AppUpdateModel update) =>
-        _notificationService.PopMessage(string.Format(LanguageManager.Instance.MainWindow_UpdateFoundNotificationMessage.Current(),
-                                                      update.Version),
-                                        LanguageManager.Instance.MainWindow_UpdateFoundNotificationTitle.Current(),
-                                        GrowlLevel.Success,
-                                        actions:
-                                        [
-                                            new(LanguageManager.Instance.SettingsPage_UpdatesViewButtonText.Current(), ViewUpdateCommand, update)
-                                        ]);
-
-    private bool CanViewUpdate(AppUpdateModel? update) => update != null;
-
-    [RelayCommand(CanExecute = nameof(CanViewUpdate))]
-    private void ViewUpdate(AppUpdateModel? update)
-    {
-        if (update is null)
-        {
-            return;
-        }
-
-        _overlayService.PopModal(new AppUpdateModal
-        {
-            Model = update,
-            UpdateManager = _updateManager,
-            NotificationService = _notificationService
-        });
-    }
 
     [RelayCommand]
     private async Task OpenGitHubAsync()

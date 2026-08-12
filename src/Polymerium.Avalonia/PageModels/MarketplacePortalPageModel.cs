@@ -1,15 +1,18 @@
 using CommunityToolkit.Mvvm.Input;
 using Polymerium.Avalonia.Facilities;
+using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Services;
+using Velopack;
 
 namespace Polymerium.Avalonia.PageModels;
 
 public partial class MarketplacePortalPageModel(
     ConfigurationService configurationService,
     NavigationService navigationService,
-    OverlayService overlayService) : ViewModelBase
+    OverlayService overlayService,
+    UpdateService updateService) : ViewModelBase
 {
     #region Commands
 
@@ -21,6 +24,21 @@ public partial class MarketplacePortalPageModel(
             if (query == "/gamemode 1")
             {
                 navigationService.Navigate<UnknownPage>();
+                return;
+            }
+
+            if (query == "/weather clear")
+            {
+                var asset = new VelopackAsset
+                {
+                    PackageId = Program.Brand,
+                    Version = new SemanticVersion(99, 0, 0),
+                    Type = VelopackAssetType.Full,
+                    NotesMarkdown =
+                        "# Mock Update\n\nThis is a simulated release for previewing the update flow.\n\n- Nothing will actually download\n- Reachable only with super power activated"
+                };
+                updateService.ApplyMockUpdate(new AppUpdateModel(new UpdateInfo(asset, isDowngrade: false)));
+                navigationService.Navigate<LandingPage>();
                 return;
             }
 

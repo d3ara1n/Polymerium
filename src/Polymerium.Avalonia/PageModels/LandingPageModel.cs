@@ -3,12 +3,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
+using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Toasts;
@@ -18,6 +20,7 @@ using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Igniters;
 using TridentCore.Core.Services;
 using TridentCore.Core.Utilities;
+using Velopack;
 
 namespace Polymerium.Avalonia.PageModels;
 
@@ -30,7 +33,9 @@ public partial class LandingPageModel(
     InstanceService instanceService,
     OverlayService overlayService,
     NotificationService notificationService,
-    InstanceManager instanceManager) : ViewModelBase
+    InstanceManager instanceManager,
+    UpdateService updateService,
+    UpdateManager updateManager) : ViewModelBase
 {
     #region Reactive
 
@@ -55,6 +60,9 @@ public partial class LandingPageModel(
     [ObservableProperty]
     public partial RecentPlayModel? RecentPlay { get; set; }
 
+    [ObservableProperty]
+    public partial AppUpdateModel? CurrentUpdate { get; set; }
+
     #endregion
 
     #region Overrides
@@ -75,6 +83,9 @@ public partial class LandingPageModel(
 
         profileManager.ProfileAdded += OnProfileAdded;
         profileManager.ProfileRemoved += OnProfileRemoved;
+
+        CurrentUpdate = updateService.CurrentUpdate;
+        updateService.UpdateFound += OnUpdateFound;
 
         var last = persistenceService.GetLastActivity();
         if (last is not null && profileManager.TryGetImmutable(last.Key, out var profile))
@@ -111,6 +122,8 @@ public partial class LandingPageModel(
         profileManager.ProfileAdded -= OnProfileAdded;
         profileManager.ProfileRemoved -= OnProfileRemoved;
 
+        updateService.UpdateFound -= OnUpdateFound;
+
         return Task.CompletedTask;
     }
 
@@ -121,6 +134,9 @@ public partial class LandingPageModel(
     private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e) => InstanceCount--;
 
     private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e) => InstanceCount++;
+
+    // NOTE: UpdateService.StartAsync 的 await 之后线程不保证为 UI 线程，故切回 UI 线程赋值。
+    private void OnUpdateFound(AppUpdateModel update) => Dispatcher.UIThread.Post(() => CurrentUpdate = update);
 
     private void LoadMinecraftNews() =>
         MinecraftNews = new(async _ =>
@@ -141,6 +157,24 @@ public partial class LandingPageModel(
     #endregion
 
     #region Commands
+
+    private bool CanViewUpdate(AppUpdateModel? update) => update is not null;
+
+    [RelayCommand(CanExecute = nameof(CanViewUpdate))]
+    private void ViewUpdate(AppUpdateModel? update)
+    {
+        if (update is null)
+        {
+            return;
+        }
+
+        overlayService.PopModal(new AppUpdateModal
+        {
+            Model = update,
+            UpdateManager = updateManager,
+            NotificationService = notificationService
+        });
+    }
 
     [RelayCommand]
     private Task OpenInstanceFolder(string? key)
