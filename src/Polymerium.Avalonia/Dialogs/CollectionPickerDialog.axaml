@@ -1,0 +1,35 @@
+<husk:Dialog
+    x:Class="Polymerium.Avalonia.Dialogs.CollectionPickerDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{Translate {x:Static app:LanguageManager+Keys.CollectionPickerDialog_Title}}"
+    Width="320"
+    IsPrimaryButtonVisible="True"
+    Message="{Translate {x:Static app:LanguageManager+Keys.CollectionPickerDialog_Prompt}}"
+    mc:Ignorable="d">
+    <StackPanel Spacing="8">
+        <TextBox
+            PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.CollectionPickerDialog_Watermark}}"
+            Text="{Binding $parent[app:CollectionPickerDialog].Result, Mode=TwoWay, Converter={x:Static app:CollectionModelNameConverter.Instance}}" />
+        <husk:SwitchContainer
+            TargetType="x:Boolean"
+            Value="{Binding $parent[app:CollectionPickerDialog].ExistingCollections.Count, Mode=OneWay, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue={x:False}}">
+            <husk:SwitchCase Value="{x:True}">
+                <ListBox
+                    MaxHeight="220"
+                    ItemsSource="{Binding $parent[app:CollectionPickerDialog].ExistingCollections}"
+                    SelectedItem="{Binding $parent[app:CollectionPickerDialog].Result, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="app:CollectionModel">
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </husk:SwitchCase>
+        </husk:SwitchContainer>
+    </StackPanel>
+</husk:Dialog>

@@ -19,6 +19,7 @@ This glossary defines the canonical user-facing terms for Polymerium. Use these 
 | dependent package | 依赖者 / 被依赖包 | A package that depends on the package currently being inspected. |
 | tag | 标签 | A user-defined label used to organize packages or target deployment rules. |
 | recipe | 配方 | A user-curated, shareable list of package references with optional per-item tags and notes, applicable to an instance during setup. A recipe holds references only — no files, configuration, or Minecraft version and loader — unlike a modpack. |
+| collection | 集合 | An in-place grouping of packages within an instance, defined purely by a shared `collection://by-name/<name>` source stamp and carrying no external reference. The collection name is both the group's identity and its only data — packages with the same name merge into one group — so unlike a recipe, a collection needs no separate metadata or shareable artifact and travels fully inside the profile. |
 
 ## Instance Lifecycle
 

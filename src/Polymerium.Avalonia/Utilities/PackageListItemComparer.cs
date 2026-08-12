@@ -91,8 +91,13 @@ public sealed class PackageListItemComparer(IList<string> sourceOrders) : ICompa
         return -1;
     }
 
-    // NOTE: 不在 SourceOrders 里的组：Recipe 排在 Modpack 前（POLY-116 默认档位）。
-    private static int TierOf(GroupModel g) => g.Kind == PackageSourceHelper.Kind.Recipe ? 0 : 1;
+    // NOTE: 不在 SourceOrders 里的组默认档位：Recipe 顶、Modpack 中、Collection 近散装底（用户就地分组）。
+    private static int TierOf(GroupModel g) => g.Kind switch
+    {
+        PackageSourceHelper.Kind.Recipe => 0,
+        PackageSourceHelper.Kind.Collection => 2,
+        _ => 1
+    };
 
     private static int RankOf(PackageListItemBase item) => item is PackageListItemBase.Header ? 0 : 1;
 

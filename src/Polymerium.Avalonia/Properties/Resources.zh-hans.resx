@@ -900,6 +900,21 @@
     <data name="InstanceSetupPage_RecipeGroupTagText" xml:space="preserve">
         <value>配方</value>
     </data>
+    <data name="InstanceSetupPage_CollectionGroupTagText" xml:space="preserve">
+        <value>集合</value>
+    </data>
+    <data name="InstanceSetupPage_AddToCollectionMenuText" xml:space="preserve">
+        <value>添加到集合</value>
+    </data>
+    <data name="CollectionPickerDialog_Title" xml:space="preserve">
+        <value>添加到集合</value>
+    </data>
+    <data name="CollectionPickerDialog_Prompt" xml:space="preserve">
+        <value>输入新的集合名称，或从已有集合中选择</value>
+    </data>
+    <data name="CollectionPickerDialog_Watermark" xml:space="preserve">
+        <value>集合名称</value>
+    </data>
     <data name="InstanceSetupPage_EnableGroupMenuText" xml:space="preserve">
         <value>启用整组</value>
     </data>

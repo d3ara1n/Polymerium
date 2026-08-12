@@ -126,7 +126,7 @@
                         VerticalAlignment="Center"
                         IconVariant="Color"
                         FontSize="{StaticResource ExtraLargeFontSize}"
-                        Symbol="LightbulbFilament" />
+                        Symbol="MegaphoneLoud" />
                 </Border>
                 <StackPanel
                     Grid.Column="1"
