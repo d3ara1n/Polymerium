@@ -969,6 +969,15 @@
     <data name="InstanceSetupPage_MoveToCollectionMenuText" xml:space="preserve">
         <value>移动到集合</value>
     </data>
+    <data name="InstanceSetupPage_RenameCollectionMenuText" xml:space="preserve">
+        <value>重命名集合</value>
+    </data>
+    <data name="InstanceSetupPage_RenameCollectionPromptTitle" xml:space="preserve">
+        <value>重命名集合</value>
+    </data>
+    <data name="InstanceSetupPage_RenameCollectionPromptMessage" xml:space="preserve">
+        <value>输入集合的新名称</value>
+    </data>
     <data name="InstanceSetupPage_OpenWebsiteMenuText" xml:space="preserve">
         <value>前往网站</value>
     </data>
