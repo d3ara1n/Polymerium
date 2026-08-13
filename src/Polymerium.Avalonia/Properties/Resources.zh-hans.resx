@@ -2163,6 +2163,15 @@
     <data name="GameCrashReportModal_AiExportLogUnavailableMessage" xml:space="preserve">
     <value>未找到可用于 AI 分析导出的日志内容。</value>
   </data>
+    <data name="GameCrashReportModal_AiExportConfirmTitle" xml:space="preserve">
+      <value>导出 AI 分析包</value>
+  </data>
+    <data name="GameCrashReportModal_AiExportConfirmBodyText" xml:space="preserve">
+      <value>崩溃报告和游戏日志将被上传到第三方日志分享服务 mclo.gs 以生成可分享的链接。随后 Polymerium 会保存一份 Markdown 文件，其中包含这些链接、日志摘录、启动命令行与环境信息。Polymerium 会在上传前向你确认，并在本地对访问令牌、UUID 与用户名脱敏。将文件内容粘贴到 AI 助手（Claude、ChatGPT 等）中即可进行引导式故障排查。上传的日志可通过其链接被公开访问，并由 mclo.gs 保留。</value>
+  </data>
+    <data name="GameCrashReportModal_AiExportCancelActionText" xml:space="preserve">
+      <value>取消</value>
+  </data>
     <data name="AppUpdateModal_Title" xml:space="preserve">
     <value>发现新版本</value>
   </data>

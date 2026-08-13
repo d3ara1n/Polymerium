@@ -144,5 +144,6 @@ Your answer must:
 
 ## Summarized Last Log Lines
 
-```
+```text
 {{last_log_lines}}
+```

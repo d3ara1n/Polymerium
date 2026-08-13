@@ -6,6 +6,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -148,36 +149,35 @@ public partial class GameCrashReportModal : Modal
 
             await using var zipStream = await file.OpenWriteAsync();
             await using var archive = new ZipArchive(zipStream, ZipArchiveMode.Create);
+            var redactor = Redactor.Create();
 
             var summaryEntry = archive.CreateEntry("crash-report.txt");
             await using (var writer = new StreamWriter(await summaryEntry.OpenAsync()))
             {
-                await writer.WriteAsync(GenerateCrashReportText());
+                await writer.WriteAsync(redactor.Apply(GenerateCrashReportText()));
             }
 
             if (Report.CommandLine != null)
             {
                 var commandLineEntry = archive.CreateEntry("command-line.txt");
                 await using var writer = new StreamWriter(await commandLineEntry.OpenAsync());
-                await writer.WriteAsync(Report.CommandLine);
+                await writer.WriteAsync(redactor.Apply(Report.CommandLine));
             }
 
-            var debugLogPath = Path.Combine(Report.GameDirectory, "logs", "debug.log");
-            if (File.Exists(debugLogPath))
-            {
-                await archive.CreateEntryFromFileAsync(debugLogPath, "logs/debug.log");
-            }
-
-            var latestLogPath = Path.Combine(Report.GameDirectory, "logs", "latest.log");
-            if (File.Exists(latestLogPath))
-            {
-                await archive.CreateEntryFromFileAsync(latestLogPath, "logs/latest.log");
-            }
-
+            await AddRedactedEntryAsync(archive,
+                                        Path.Combine(Report.GameDirectory, "logs", "debug.log"),
+                                        "logs/debug.log",
+                                        redactor);
+            await AddRedactedEntryAsync(archive,
+                                        Path.Combine(Report.GameDirectory, "logs", "latest.log"),
+                                        "logs/latest.log",
+                                        redactor);
             if (Report.CrashReportPath != null)
             {
-                var crashFileName = Path.GetFileName(Report.CrashReportPath);
-                await archive.CreateEntryFromFileAsync(Report.CrashReportPath, $"crash-reports/{crashFileName}");
+                await AddRedactedEntryAsync(archive,
+                                            Report.CrashReportPath,
+                                            $"crash-reports/{Path.GetFileName(Report.CrashReportPath)}",
+                                            redactor);
             }
 
             var profilePath = Path.Combine(Path.GetDirectoryName(Report.GameDirectory) ?? string.Empty, "profile.json");
@@ -204,17 +204,35 @@ public partial class GameCrashReportModal : Modal
                 }
             }
 
-            var hsErrFiles = Directory.GetFiles(Report.GameDirectory, "hs_err_pid*.log");
-            foreach (var hsErrFile in hsErrFiles.Take(3))
+            foreach (var hsErrFile in Directory.GetFiles(Report.GameDirectory, "hs_err_pid*.log").Take(3))
             {
-                var hsFileName = Path.GetFileName(hsErrFile);
-                await archive.CreateEntryFromFileAsync(hsErrFile, $"jvm-crashes/{hsFileName}");
+                await AddRedactedEntryAsync(archive,
+                                            hsErrFile,
+                                            $"jvm-crashes/{Path.GetFileName(hsErrFile)}",
+                                            redactor);
             }
         }
         catch
         {
             // NOTE: 导出失败暂不阻断。
         }
+    }
+
+    // 读取文本文件，脱敏后写入 zip 条目；源文件不存在则跳过。
+    private static async Task AddRedactedEntryAsync(ZipArchive archive,
+                                                    string? sourcePath,
+                                                    string entryName,
+                                                    Redactor redactor)
+    {
+        if (string.IsNullOrEmpty(sourcePath) || !File.Exists(sourcePath))
+        {
+            return;
+        }
+
+        var entry = archive.CreateEntry(entryName);
+        await using var writer = new StreamWriter(await entry.OpenAsync());
+        var content = await File.ReadAllTextAsync(sourcePath);
+        await writer.WriteAsync(redactor.Apply(content));
     }
 
     [RelayCommand]
@@ -225,108 +243,173 @@ public partial class GameCrashReportModal : Modal
             return;
         }
 
+        var overlayService = Program.Services?.GetService<OverlayService>();
         var top = TopLevel.GetTopLevel(this);
-        if (top?.StorageProvider == null)
+        if (overlayService == null || top?.StorageProvider == null)
         {
             return;
         }
 
-        var logContent = GetBestLogContentForAiExport();
-        var crashReportContent = GetCrashReportContentForAiExport();
-        if (string.IsNullOrWhiteSpace(logContent) && string.IsNullOrWhiteSpace(crashReportContent))
+        // 确认对话框：说明将要上传到第三方、预估内容与使用方式，不做任何实际数据收集。
+        var confirmed = await overlayService.RequestConfirmationAsync(
+            LanguageManager.Instance.GameCrashReportModal_AiExportConfirmBodyText.Current(),
+            LanguageManager.Instance.GameCrashReportModal_AiExportConfirmTitle.Current());
+        if (!confirmed)
         {
-            _notificationService?.PopMessage(LanguageManager.Instance.GameCrashReportModal_AiExportLogUnavailableMessage.Current(),
-                                             LanguageManager.Instance.GameCrashReportModal_AiExportLogUnavailableTitle.Current(),
-                                             GrowlLevel.Danger);
             return;
         }
+
+        // 确定保存路径后才开始任何收集与上传。
+        var fileName = $"crash-ai-analysis-{Report.InstanceKey}-{DateTime.Now:yyyyMMdd-HHmmss}.md";
+        var file = await top.StorageProvider.SaveFilePickerAsync(new()
+        {
+            Title = LanguageManager.Instance.GameCrashReportModal_AiExportDialogTitle.Current(),
+            SuggestedFileName = fileName,
+            SuggestedStartLocation =
+                await top.StorageProvider.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads),
+            DefaultExtension = "md",
+            FileTypeChoices = [new("Markdown") { Patterns = ["*.md"] }]
+        });
+        if (file == null)
+        {
+            return;
+        }
+
+        var redactor = Redactor.Create();
+        var uploaded = new List<CreateLogResponse>();
 
         try
         {
+            // 收集原始内容，脱敏统一在出口进行：上传前对日志、写盘前对整份 Markdown。
+            var logContent = GetBestLogContentForAiExport();
+            var crashReportContent = GetCrashReportContentForAiExport();
+            if (string.IsNullOrWhiteSpace(logContent) && string.IsNullOrWhiteSpace(crashReportContent))
+            {
+                _notificationService?.PopMessage(
+                    LanguageManager.Instance.GameCrashReportModal_AiExportLogUnavailableMessage.Current(),
+                    LanguageManager.Instance.GameCrashReportModal_AiExportLogUnavailableTitle.Current(),
+                    GrowlLevel.Warning);
+                return;
+            }
+
             CreateLogResponse? crashReportUpload = null;
             CreateLogResponse? logUpload = null;
-            using (var uploadProgress =
-                   _notificationService?.PopProgress(LanguageManager.Instance.GameCrashReportModal_AiExportUploadingMessage.Current(),
-                                                     LanguageManager.Instance.GameCrashReportModal_AiExportUploadingTitle.Current()))
+            NotificationService.ProgressHandle? uploadProgress = null;
+            try
             {
+                uploadProgress =
+                    _notificationService?.PopProgress(
+                        LanguageManager.Instance.GameCrashReportModal_AiExportUploadingMessage.Current(),
+                        LanguageManager.Instance.GameCrashReportModal_AiExportUploadingTitle.Current());
+                // NOTE: Action 须在 Handle 创建后挂载，构造期内引用 Handle 属提前访问。
+                uploadProgress?.AddAction(new(
+                    LanguageManager.Instance.GameCrashReportModal_AiExportCancelActionText.Current(),
+                    new RelayCommand(() => uploadProgress?.Cancel())));
+                var token = uploadProgress?.Token ?? CancellationToken.None;
+
                 if (!string.IsNullOrWhiteSpace(crashReportContent))
                 {
-                    crashReportUpload = await UploadTextToMclogsAsync(crashReportContent, "crash-report");
+                    crashReportUpload = await UploadTextToMclogsAsync(redactor.Apply(crashReportContent), "crash-report", token);
+                    if (crashReportUpload is { Success: true })
+                    {
+                        uploaded.Add(crashReportUpload);
+                    }
                 }
+
+                token.ThrowIfCancellationRequested();
 
                 if (!string.IsNullOrWhiteSpace(logContent))
                 {
-                    logUpload = await UploadTextToMclogsAsync(logContent, "latest-log");
+                    logUpload = await UploadTextToMclogsAsync(redactor.Apply(logContent), "latest-log", token);
+                    if (logUpload is { Success: true })
+                    {
+                        uploaded.Add(logUpload);
+                    }
                 }
             }
-
-            if ((crashReportUpload == null || !crashReportUpload.Success) && (logUpload == null || !logUpload.Success))
+            catch (OperationCanceledException)
             {
-                _notificationService?.PopMessage(crashReportUpload?.Error
-                                              ?? logUpload?.Error
-                                              ?? LanguageManager.Instance.GameCrashReportModal_AiExportUploadFailedMessage.Current(),
-                                                 LanguageManager.Instance.GameCrashReportModal_AiExportUploadFailedTitle.Current(),
-                                                 GrowlLevel.Danger);
+                await RollbackUploadsAsync(uploaded);
+                return;
+            }
+            finally
+            {
+                uploadProgress?.Dispose();
+            }
+
+            if ((crashReportUpload == null || !crashReportUpload.Success)
+                && (logUpload == null || !logUpload.Success))
+            {
+                _notificationService?.PopMessage(
+                    crashReportUpload?.Error ?? logUpload?.Error
+                    ?? LanguageManager.Instance.GameCrashReportModal_AiExportUploadFailedMessage.Current(),
+                    LanguageManager.Instance.GameCrashReportModal_AiExportUploadFailedTitle.Current(),
+                    GrowlLevel.Danger);
                 return;
             }
 
-            var template = await LoadAiAnalysisTemplateAsync();
-            var markdown = GenerateAiAnalysisMarkdown(template,
-                                                      crashReportUpload,
-                                                      logUpload,
-                                                      crashReportContent,
-                                                      logContent);
-            var fileName = $"crash-ai-analysis-{Report.InstanceKey}-{DateTime.Now:yyyyMMdd-HHmmss}.md";
-            var file = await top.StorageProvider.SaveFilePickerAsync(new()
-            {
-                Title =
-                    LanguageManager.Instance.GameCrashReportModal_AiExportDialogTitle.Current(),
-                SuggestedFileName = fileName,
-                SuggestedStartLocation =
-                    await top.StorageProvider
-                             .TryGetWellKnownFolderAsync(WellKnownFolder
-                                                            .Downloads),
-                DefaultExtension = "md",
-                FileTypeChoices =
-                [
-                    new("Markdown")
-                    {
-                        Patterns = ["*.md"]
-                    }
-                ]
-            });
-
-            if (file == null)
-            {
-                return;
-            }
-
-            NotificationService.ProgressHandle? exportProgress = null;
             try
             {
-                exportProgress =
-                    _notificationService?.PopProgress(LanguageManager.Instance.GameCrashReportModal_AiExportWritingMessage.Current(),
-                                                      LanguageManager.Instance.GameCrashReportModal_AiExportWritingTitle.Current());
+                var template = await LoadAiAnalysisTemplateAsync();
+                var markdown =
+                    redactor.Apply(GenerateAiAnalysisMarkdown(template,
+                                                               crashReportUpload,
+                                                               logUpload,
+                                                               crashReportContent,
+                                                               logContent));
+
+                using var exportProgress =
+                    _notificationService?.PopProgress(
+                        LanguageManager.Instance.GameCrashReportModal_AiExportWritingMessage.Current(),
+                        LanguageManager.Instance.GameCrashReportModal_AiExportWritingTitle.Current());
 
                 await using var stream = await file.OpenWriteAsync();
                 await using var writer = new StreamWriter(stream, new UTF8Encoding(false));
                 await writer.WriteAsync(markdown);
             }
-            finally
+            catch
             {
-                exportProgress?.Dispose();
+                // NOTE: 上传已成功但后续写盘失败，回滚远端以免留下不可回收的公开日志。
+                await RollbackUploadsAsync(uploaded);
+                throw;
             }
 
-            _notificationService?.PopMessage(LanguageManager.Instance.GameCrashReportModal_AiExportSuccessMessage.Current(),
-                                             LanguageManager.Instance.GameCrashReportModal_AiExportSuccessTitle.Current(),
-                                             GrowlLevel.Success,
-                                             true);
+            _notificationService?.PopMessage(
+                LanguageManager.Instance.GameCrashReportModal_AiExportSuccessMessage.Current(),
+                LanguageManager.Instance.GameCrashReportModal_AiExportSuccessTitle.Current(),
+                GrowlLevel.Success,
+                true);
         }
         catch (Exception ex)
         {
             _notificationService?.PopMessage(Program.IsDebug ? ex.ToString() : ex.Message,
                                              LanguageManager.Instance.GameCrashReportModal_AiExportFailedTitle.Current(),
                                              GrowlLevel.Danger);
+        }
+    }
+
+    private async Task RollbackUploadsAsync(IEnumerable<CreateLogResponse> uploads)
+    {
+        if (_mclogsClient == null)
+        {
+            return;
+        }
+
+        foreach (var upload in uploads)
+        {
+            if (!upload.Success || string.IsNullOrEmpty(upload.Id) || string.IsNullOrEmpty(upload.Token))
+            {
+                continue;
+            }
+
+            try
+            {
+                await _mclogsClient.DeleteLogAsync(upload.Id, $"Bearer {upload.Token}");
+            }
+            catch
+            {
+                // 回滚失败不影响主流程：已尽力删除，剩余日志将在 mclo.gs TTL 后自动过期。
+            }
         }
     }
 
@@ -337,7 +420,9 @@ public partial class GameCrashReportModal : Modal
         return await reader.ReadToEndAsync();
     }
 
-    private async Task<CreateLogResponse?> UploadTextToMclogsAsync(string content, string contentKind)
+    private async Task<CreateLogResponse?> UploadTextToMclogsAsync(string content,
+                                                                  string contentKind,
+                                                                  CancellationToken cancellationToken)
     {
         if (_mclogsClient == null)
         {
@@ -364,7 +449,11 @@ public partial class GameCrashReportModal : Modal
                                                               new("operating_system",
                                                                   Report?.OperatingSystem,
                                                                   "Operating System")
-                                                          ]));
+                                                          ]), cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
         }
         catch (ApiException ex)
         {

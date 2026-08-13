@@ -174,6 +174,8 @@ public class NotificationService
 
         public CancellationToken Token => model.Token;
 
+        public void Cancel() => model.Cancel();
+
         #region IDisposable Members
 
         public void Dispose()

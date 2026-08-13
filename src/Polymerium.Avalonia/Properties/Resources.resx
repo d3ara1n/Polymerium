@@ -2175,6 +2175,15 @@
     <data name="GameCrashReportModal_AiExportLogUnavailableMessage" xml:space="preserve">
     <value>No usable crash log was found for AI analysis export.</value>
   </data>
+    <data name="GameCrashReportModal_AiExportConfirmTitle" xml:space="preserve">
+      <value>Export AI Analysis Package</value>
+  </data>
+    <data name="GameCrashReportModal_AiExportConfirmBodyText" xml:space="preserve">
+      <value>Your crash report and game log will be uploaded to mclo.gs, a third-party log-sharing service, to generate shareable links. Polymerium will then save a Markdown file with those links, a log excerpt, the launch command line, and environment information. Polymerium confirms with you before uploading and redacts access tokens, UUIDs, and usernames locally. Paste the file into an AI assistant (Claude, ChatGPT, etc.) for guided troubleshooting. The uploaded logs are publicly accessible via their links and retained by mclo.gs.</value>
+  </data>
+    <data name="GameCrashReportModal_AiExportCancelActionText" xml:space="preserve">
+      <value>Cancel</value>
+  </data>
     <data name="AppUpdateModal_Title" xml:space="preserve">
     <value>Update Available</value>
   </data>
