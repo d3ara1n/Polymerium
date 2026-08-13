@@ -59,26 +59,11 @@ public class DataService(
 
     // NOTE: 以下为 DataService 独有的内存缓存——数据源不在 RepositoryAgent，或经过额外加工（Bitmap 解码、版本数截断）。
 
-    public ValueTask<Bitmap> GetBitmapAsync(Uri url, int maxWidth = 64)
-    {
-        var key = $"bitmap:{maxWidth}:{url.AbsoluteUri}";
-
-        // NOTE: 第一层内存缓存——进行中的 Task 也在缓存里，天然去重。
-        if (cache.TryGetValue(key, out var cached) && cached is Task<Bitmap> task)
-        {
-            return new(task);
-        }
-
-        var rv = LoadOrDownloadBitmapAsync(url, maxWidth);
-        var entry = cache.CreateEntry(key);
-        entry.AbsoluteExpirationRelativeToNow = EXPIRED_IN;
-        entry.Size = 1;
-        entry.Value = rv;
-        // NOTE: 驱逐时不释放 Bitmap——UI 可能仍持有引用，提前释放抛 ObjectDisposedException；
-        //  非托管资源由 GC finalizer 在引用全部消失后回收。
-        entry.Dispose();
-        return new(rv);
-    }
+    // NOTE: 缩略图经 DecodeToWidth 下采样到 maxWidth（默认 64px，单张 ~16KB），解码后体量可控，
+    //  故直接缓存解码结果；全尺寸图由 AppImageLoader 走字节缓存。驱逐只丢 Task 不释放 Bitmap——
+    //  UI 可能仍引用，提前释放抛 ObjectDisposedException，非托管内存由 GC finalizer 在引用消失后回收。
+    public ValueTask<Bitmap> GetBitmapAsync(Uri url, int maxWidth = 64) =>
+        GetOrCreate($"bitmap:{maxWidth}:{url.AbsoluteUri}", () => LoadOrDownloadBitmapAsync(url, maxWidth));
 
     private async Task<Bitmap> LoadOrDownloadBitmapAsync(Uri url, int maxWidth)
     {
@@ -162,7 +147,13 @@ public class DataService(
 
     private ValueTask<T> GetOrCreate<T>(string key, Func<Task<T>> factory, bool cachedEnabled = true)
     {
-        if (cachedEnabled && cache.TryGetValue(key, out var cached) && cached is Task<T> task)
+        // NOTE: 缓存进行中的 Task 实现并发去重；已知失败/取消的 Task 不复用，让下次调用重试，
+        //  否则瞬态故障（网络抖动）会把异常钉死在缓存里直到过期。
+        if (cachedEnabled
+            && cache.TryGetValue(key, out var cached)
+            && cached is Task<T> task
+            && !task.IsFaulted
+            && !task.IsCanceled)
         {
             return new(task);
         }

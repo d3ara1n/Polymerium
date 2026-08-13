@@ -14,7 +14,7 @@
 
 ### Changed
 
--
+- Improve memory efficiency when browsing many image thumbnails
 
 ### Removed
 
