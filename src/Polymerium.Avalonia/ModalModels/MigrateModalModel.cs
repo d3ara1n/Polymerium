@@ -191,7 +191,7 @@ public partial class MigrateModalModel(
         var handle = notificationService.PopProgress(LanguageManager.Instance.Migrate_Preparing.Current(), LanguageManager.Instance.Migrate_Title.Current());
         // NOTE: cancel-only action — it cancels the migrate CTS but keeps the notification visible so
         //  the user sees progress until the summary lands.
-        handle.AddAction(new(LanguageManager.Instance.Migrate_CancelButton.Current(), new RelayCommand(cts.Cancel)));
+        handle.AddAction(new(LanguageManager.Instance.Dialog_CancelButtonText.Current(), new RelayCommand(cts.Cancel)));
         self.Dismiss();
 
         var progress = new Progress<MigrateProgress>(p =>

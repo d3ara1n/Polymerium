@@ -81,9 +81,6 @@
     <data name="SettingsPage_MigrateFromLauncherDescription" xml:space="preserve">
         <value>Import instances from another launcher&apos;s data directory.</value>
     </data>
-    <data name="Migrate_CancelButton" xml:space="preserve">
-        <value>Cancel</value>
-    </data>
     <data name="MigrateModal_Description" xml:space="preserve">
         <value>Pick a launcher and its data directory, then scan for importable instances.</value>
     </data>
@@ -1509,9 +1506,6 @@
     <data name="InstanceSetupPage_PackageBulkUpdatingProgressingNotificationMessage" xml:space="preserve">
         <value>Checking updates...({0}/{1})</value>
     </data>
-    <data name="InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText" xml:space="preserve">
-        <value>Cancel</value>
-    </data>
     <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle" xml:space="preserve">
         <value>Update packages in bulk</value>
     </data>
@@ -2181,15 +2175,9 @@
     <data name="GameCrashReportModal_AiExportConfirmBodyText" xml:space="preserve">
       <value>Your crash report and game log will be uploaded to mclo.gs, a third-party log-sharing service, to generate shareable links. Polymerium will then save a Markdown file with those links, a log excerpt, the launch command line, and environment information. Polymerium confirms with you before uploading and redacts access tokens, UUIDs, and usernames locally. Paste the file into an AI assistant (Claude, ChatGPT, etc.) for guided troubleshooting. The uploaded logs are publicly accessible via their links and retained by mclo.gs.</value>
   </data>
-    <data name="GameCrashReportModal_AiExportCancelActionText" xml:space="preserve">
-      <value>Cancel</value>
-  </data>
     <data name="AppUpdateModal_Title" xml:space="preserve">
     <value>Update Available</value>
   </data>
-    <data name="AppUpdateModal_CancelButtonText" xml:space="preserve">
-        <value>Cancel</value>
-    </data>
     <data name="AppUpdateModal_ConfirmButtonText" xml:space="preserve">
         <value>Update Now</value>
     </data>
@@ -3593,9 +3581,6 @@ Affected entries: {0}
     </data>
     <data name="JarInJarScannerModal_ScanningTitle" xml:space="preserve">
         <value>Scanning jar files...</value>
-    </data>
-    <data name="JarInJarScannerModal_CancelButton" xml:space="preserve">
-        <value>Cancel</value>
     </data>
     <data name="JarInJarScannerModal_EmptyTitle" xml:space="preserve">
         <value>No hidden mods found</value>

@@ -303,7 +303,7 @@ public partial class GameCrashReportModal : Modal
                         LanguageManager.Instance.GameCrashReportModal_AiExportUploadingTitle.Current());
                 // NOTE: Action 须在 Handle 创建后挂载，构造期内引用 Handle 属提前访问。
                 uploadProgress?.AddAction(new(
-                    LanguageManager.Instance.GameCrashReportModal_AiExportCancelActionText.Current(),
+                    LanguageManager.Instance.Dialog_CancelButtonText.Current(),
                     new RelayCommand(() => uploadProgress?.Cancel())));
                 var token = uploadProgress?.Token ?? CancellationToken.None;
 

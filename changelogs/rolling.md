@@ -6,6 +6,7 @@
 
 ### Fixed
 
+- Fix the AI analysis export uploading to mclo.gs before the save dialog and leaking access tokens and account paths in both the AI analysis and diagnostic packages (#82)
 - Fix disbanding a group being recorded as a package change
 
 ### Added

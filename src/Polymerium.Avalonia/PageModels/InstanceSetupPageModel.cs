@@ -906,7 +906,7 @@ public partial class InstanceSetupPageModel(
                                                     LanguageManager.Instance.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle.Current(),
                                                     thumbnail: GetNotificationThumbnail());
 
-                progress.AddAction(new(LanguageManager.Instance.InstanceSetupPage_PackageBulkUpdatingProgressingNotificationCancelText.Current(),
+                progress.AddAction(new(LanguageManager.Instance.Dialog_CancelButtonText.Current(),
                                        new RelayCommand(Cancel)));
 
                 var filter = new Filter(Kind: null,
