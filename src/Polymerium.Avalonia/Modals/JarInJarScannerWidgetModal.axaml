@@ -167,7 +167,7 @@
                         Classes="Small"
                         HorizontalAlignment="Center"
                         Command="{Binding CancelCommand}">
-                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.JarInJarScannerModal_CancelButton}}" />
+                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.Dialog_CancelButtonText}}" />
                     </Button>
                 </StackPanel>
             </husk:SwitchCase>

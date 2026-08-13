@@ -115,7 +115,7 @@
                 <Button
                     IsVisible="{Binding !$parent[app:AppUpdateModal].IsDownloading, FallbackValue=True}"
                     Command="{Binding $parent[app:AppUpdateModal].Dismiss}">
-                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AppUpdateModal_CancelButtonText}}" />
+                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.Dialog_CancelButtonText}}" />
                 </Button>
             </husk:ModalActionPanel>
         </Grid>
