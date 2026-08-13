@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Microsoft.Extensions.Logging;
 using Polymerium.Avalonia.Rendering;
@@ -13,7 +12,7 @@ namespace Polymerium.Avalonia.Services;
 
 /// <summary>
 ///     解析 <c>skin://?type=&amp;src=</c> 形态的 URI，按数据源路由取得原始皮肤 PNG，
-///     交由 <see cref="SkinRenderer" /> 本地离线渲染后产出 Avalonia <see cref="Bitmap" />。
+///     交由 <see cref="SkinRenderer" /> 本地离线渲染后返回 PNG 编码字节，由上层统一按字节缓存。
 ///     <para>
 ///         数据源三路：<c>mojang:{uuid}</c>（经第三方皮肤镜像下载原始皮肤 PNG）、
 ///         裸 http(s) URL（直接下载，供 Authlib 账户使用）、<c>asset:{key}</c>（内置默认皮肤）。
@@ -39,8 +38,9 @@ public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer render
 
     /// <summary>
     ///     渲染入口：仅处理 <c>skin://</c> URI，其余返回 null 交由上层走默认网络加载。
+    ///     返回 PNG 字节供统一字节缓存，命中时由上层解码为位图。
     /// </summary>
-    public async Task<Bitmap?> RenderAsync(string url)
+    public async Task<byte[]?> RenderPngAsync(string url)
     {
         if (!SkinHelper.TryGetQuery(url, out var type, out var src))
         {
@@ -50,7 +50,7 @@ public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer render
         try
         {
             using var skin = await LoadSkinAsync(src).ConfigureAwait(false);
-            return skin is null ? null : RenderToBitmap(type, skin);
+            return skin is null ? null : Encode(type, skin);
         }
         catch (Exception ex)
         {
@@ -59,7 +59,7 @@ public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer render
         }
     }
 
-    private Bitmap RenderToBitmap(string type, SKBitmap skin)
+    private byte[] Encode(string type, SKBitmap skin)
     {
         SKImage image;
         lock (renderer)
@@ -73,8 +73,7 @@ public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer render
         using (image)
         {
             using var data = image.Encode();
-            using var stream = data.AsStream();
-            return new(stream);
+            return data.ToArray();
         }
     }
 

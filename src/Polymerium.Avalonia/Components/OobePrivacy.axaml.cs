@@ -32,7 +32,7 @@ public partial class OobePrivacy : OobeStep
         base.OnPropertyChanged(change);
         if (change.Property == IsCrashReportingEnabledProperty)
         {
-            SyncTelemetrySwitch((bool)change.NewValue);
+            SyncTelemetrySwitch(change.GetNewValue<bool>());
         }
     }
 
