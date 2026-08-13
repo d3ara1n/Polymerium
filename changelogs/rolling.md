@@ -8,6 +8,9 @@
 
 - Fix the AI analysis export uploading to mclo.gs before the save dialog and leaking access tokens and account paths in both the AI analysis and diagnostic packages (#82)
 - Fix disbanding a group being recorded as a package change
+- Fix crafted modpack archives placing files outside the instance directory during import (#POLY-151)
+- Fix arbitrary program execution through command wrapper or Java home overrides in imported Trident packs (#POLY-152)
+- Fix deployment rule destinations creating symbolic links outside the instance directory (#POLY-150)
 
 ### Added
 
