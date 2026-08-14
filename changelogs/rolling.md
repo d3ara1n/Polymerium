@@ -7,6 +7,7 @@
 ### Fixed
 
 - Fix a failed modpack update partially deleting or corrupting the instance (#83, #POLY-153)
+- Fix updating an instance that has never been launched (#POLY-153)
 
 ### Added
 
