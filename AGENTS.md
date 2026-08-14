@@ -225,6 +225,10 @@ Rationale: a model that decorates couples the data shape to one presentation —
 
 This pairs with, but is distinct from, *View State Representation* above: that decides *which* property drives a region; this decides *what kind* of property a model may expose.
 
+## Property Setters
+
+A property setter assigns the value and raises the change — nothing else. Reactions to that change (derived state, cascades, side effects) live in the change callback, the single point that fires whether the value comes from two-way binding, code-behind, or initialization. Two carriers, one rule: custom controls (`AvaloniaObject` + `DirectProperty`/`StyledProperty`) override `OnPropertyChanged(change)` and dispatch on `change.Property`; ViewModels (`[ObservableProperty]`) implement `partial void OnXxxChanged(T value)`.
+
 ## External Tracking (Jira / GitHub / Sentry)
 
 Fixed parameters — reuse these directly when calling MCP, do not rediscover them each time:
