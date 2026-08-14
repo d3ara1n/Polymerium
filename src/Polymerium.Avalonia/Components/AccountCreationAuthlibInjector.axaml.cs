@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
@@ -46,6 +47,11 @@ public partial class AccountCreationAuthlibInjector : AccountCreationStep
             o => o.SuccessMessage,
             (o, v) => o.SuccessMessage = v);
 
+    public static readonly DirectProperty<AccountCreationAuthlibInjector, bool> IsServerUrlInsecureProperty =
+        AvaloniaProperty.RegisterDirect<AccountCreationAuthlibInjector, bool>(nameof(IsServerUrlInsecure),
+            o => o.IsServerUrlInsecure,
+            (o, v) => o.IsServerUrlInsecure = v);
+
     private CancellationTokenSource _cts = new();
 
     public AccountCreationAuthlibInjector() => InitializeComponent();
@@ -86,6 +92,12 @@ public partial class AccountCreationAuthlibInjector : AccountCreationStep
         set => SetAndRaise(SuccessMessageProperty, ref field, value);
     }
 
+    public bool IsServerUrlInsecure
+    {
+        get;
+        set => SetAndRaise(IsServerUrlInsecureProperty, ref field, value);
+    }
+
     public required YggdrasilService YggdrasilService { get; init; }
 
     public override object NextStep()
@@ -103,6 +115,32 @@ public partial class AccountCreationAuthlibInjector : AccountCreationStep
         base.OnUnloaded(e);
         _cts.Cancel();
         _cts.Dispose();
+    }
+
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == ServerUrlProperty)
+        {
+            IsServerUrlInsecure = EvaluateServerUrlInsecurity(ServerUrl);
+        }
+    }
+
+    private static bool EvaluateServerUrlInsecurity(string url)
+    {
+        if (!Uri.TryCreate(url, UriKind.Absolute, out var parsed) || parsed.Scheme != "http")
+        {
+            return false;
+        }
+
+        var host = parsed.Host;
+        if (host.Equals("localhost", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        return !IPAddress.TryParse(host, out var address) || !IPAddress.IsLoopback(address);
     }
 
     [RelayCommand]
