@@ -2,15 +2,15 @@
 
 ### ✨ Highlights ✨
 
--
+- Fix a failed modpack update partially deleting or corrupting the instance
 
 ### Fixed
 
--
+- Fix a failed modpack update partially deleting or corrupting the instance (#83, #POLY-153)
 
 ### Added
 
--
+- Add a modpack's bundled icon as the instance icon when the pack ships one
 
 ### Changed
 

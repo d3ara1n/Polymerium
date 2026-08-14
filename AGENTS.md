@@ -242,13 +242,12 @@ Fixed parameters — reuse these directly when calling MCP, do not rediscover th
   - Issue search uses `projectSlugOrId="polymerium"`.
   - Event search uses `projectSlug="polymerium"`.
 
-Bidirectional linking convention (follow when transcribing a GitHub issue to Jira):
+Linking convention (follow when transcribing a GitHub issue to Jira):
 
-- Embed the GitHub issue URL in the Jira issue description.
-- Add a `[POLY-XX](https://d3ara1n.atlassian.net/browse/POLY-XX)` comment on the GitHub issue linking back to Jira.
+- Embed the GitHub issue URL in the Jira issue description — the link runs Jira → GitHub only.
 - Prefix the fix commit's first line with `POLY-XX: type(scope): ...` (see Git Commit below).
 
-NOTE: the site URL / cloudId / project key are not secret on their own — without an API token nobody can call the Jira API, and the actually-sensitive token is held by the MCP layer, not written into this file. The Jira site is private by default; external GitHub users have no access, so progress must be synced back as a comment on the GitHub issue for the reporter to see.
+NOTE: the site URL / cloudId / project key are not secret on their own — without an API token nobody can call the Jira API, and the actually-sensitive token is held by the MCP layer, not written into this file. The Jira site is private; external GitHub users cannot read it, which is why a GitHub issue must never reference Jira — a back-link is useless to them. To keep a reporter informed of progress, post a plain status update on the GitHub issue itself; do not point them at Jira.
 
 ## Git Commit
 
