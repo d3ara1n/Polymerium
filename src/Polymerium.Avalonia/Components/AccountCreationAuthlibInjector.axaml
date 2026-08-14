@@ -53,6 +53,10 @@
                 PlaceholderText="https://example.com/api/yggdrasil"
                 Text="{Binding $parent[app:AccountCreationAuthlibInjector].ServerUrl, Mode=TwoWay}" />
         </StackPanel>
+        <husk:InfoBar
+            Classes="Warning"
+            IsVisible="{Binding $parent[app:AccountCreationAuthlibInjector].IsServerUrlInsecure}"
+            Content="{Translate {x:Static app:LanguageManager+Keys.AccountCreationAuthlib_InsecureServerUrlWarning}}" />
         <StackPanel>
             <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.AccountCreationAuthlib_Username}}" />
             <TextBox Text="{Binding $parent[app:AccountCreationAuthlibInjector].Username, Mode=TwoWay}" />

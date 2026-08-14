@@ -3456,6 +3456,9 @@
     <data name="AccountCreationAuthlib_DropHint" xml:space="preserve">
         <value>将认证服务器按钮拖到此处</value>
     </data>
+    <data name="AccountCreationAuthlib_InsecureServerUrlWarning" xml:space="preserve">
+        <value>此服务器地址未加密（HTTP），你的用户名、密码和登录令牌将以明文传输，可能被第三方截获。请确认你了解此风险后再继续。</value>
+    </data>
     <data name="AppMenu_AboutText" xml:space="preserve">
         <value>关于 Polymerium</value>
     </data>
