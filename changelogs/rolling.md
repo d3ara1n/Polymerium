@@ -3,6 +3,8 @@
 ### ✨ Highlights ✨
 
 - Fix a failed modpack update partially deleting or corrupting the instance
+- Reduce the installed size by over 40% through release-only trimming that keeps unannotated third-party assemblies intact
+- Improve memory efficiency when browsing many image thumbnails
 
 ### Fixed
 
@@ -17,6 +19,7 @@
 
 ### Changed
 
+- Reduce the installed size by over 40% through release-only trimming that keeps unannotated third-party assemblies intact
 - Improve memory efficiency when browsing many image thumbnails
 
 ### Removed

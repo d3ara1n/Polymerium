@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Mvvm.Activation;
@@ -13,7 +14,10 @@ public class SimpleViewActivator(IServiceProvider provider, IViewStateManager st
 {
     private static int activatorErrorCount;
 
-    public override object? Activate(Type viewType, object? parameter = null)
+    public override object? Activate(
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
+        Type viewType,
+        object? parameter = null)
     {
         try
         {
@@ -43,6 +47,7 @@ public class SimpleViewActivator(IServiceProvider provider, IViewStateManager st
         }
     }
 
+    [return: DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
     protected override Type FindViewModelType(Type view)
     {
         if (view.IsAssignableTo(typeof(Page)))
@@ -75,6 +80,11 @@ public class SimpleViewActivator(IServiceProvider provider, IViewStateManager st
                                               "Parameter view must be derived from Page/Dialog/Sidebar/Toast");
     }
 
+    // NOTE: 类型名由 Regex 从视图全名动态拼接而来，trimmer 无法静态追踪；partial 模式下 app 程序集
+    // 整体保留、入口全部是 Navigate/PopXxx 泛型调用点，故安全。full trim/AOT 前需重构为显式注册表。
+    [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2057",
+        Justification = "View types are rooted by the untrimmed app assembly under partial trim")]
+    [return: DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
     private static Type ResolveViewModelType(Type view, string suffix)
     {
         var pattern = $@"\.{suffix}s\.|(?<=\w){suffix}$";

@@ -10,8 +10,10 @@ using Avalonia.Threading;
 using Huskui.Avalonia.Mvvm;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+#if DEBUG
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
+#endif
 using NeoSmart.Caching.Sqlite;
 using Polly;
 using Polymerium.Avalonia.Adapters;
@@ -119,11 +121,16 @@ public static class Startup
                                                                                            TimeSpan.FromSeconds(Math
                                                                                               .Pow(2,
                                                                                                    retryAttempt)))))
-           .AddLogging(logging => logging
-                                 .AddConsole()
-                                 .AddDebug()
-                                 .AddFilter<ConsoleLoggerProvider>(null, debug ? LogLevel.Debug : LogLevel.Information)
-                                 .AddFilter<DebugLoggerProvider>(null, LogLevel.Trace))
+           .AddLogging(logging =>
+                        {
+#if DEBUG
+                            logging.AddConsole()
+                                   .AddDebug()
+                                   .AddFilter<ConsoleLoggerProvider>(null,
+                                       debug ? LogLevel.Debug : LogLevel.Information)
+                                   .AddFilter<DebugLoggerProvider>(null, LogLevel.Trace);
+#endif
+                        })
            .AddSqliteCache(setup =>
             {
                 setup.MemoryOnly = false;
