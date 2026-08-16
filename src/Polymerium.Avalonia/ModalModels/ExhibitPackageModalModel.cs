@@ -112,6 +112,8 @@ public partial class ExhibitPackageModalModel(
         ApplyCommand.NotifyCanExecuteChanged();
     }
 
+    partial void OnLazyDependenciesChanged(LazyObject? oldValue, LazyObject? newValue) => oldValue?.Cancel();
+
     #endregion
 
     #region Overrides
@@ -123,8 +125,13 @@ public partial class ExhibitPackageModalModel(
         LazyVersions = ConstructVersions();
         LazyDescription = ConstructDescription();
         LazyChangelog = ConstructChangelog();
-        LazyDependencies = ConstructDependencies();
         LazyHistory = ConstructHistory();
+        return Task.CompletedTask;
+    }
+
+    protected override Task OnDeinitializeAsync()
+    {
+        LazyDependencies?.Cancel();
         return Task.CompletedTask;
     }
 
@@ -162,8 +169,9 @@ public partial class ExhibitPackageModalModel(
             return await dataService.ReadChangelogAsync(new(package.Label, package.Namespace, package.ProjectId, vid));
         });
 
-    private LazyObject ConstructDependencies() =>
-        new(async t =>
+    private LazyObject ConstructDependencies()
+    {
+        var lazy = new LazyObject(async t =>
         {
             if (t.IsCancellationRequested)
             {
@@ -194,8 +202,27 @@ public partial class ExhibitPackageModalModel(
                         })
                        .ToArray();
             await Task.WhenAll(tasks);
-            return new ExhibitDependencyCollection(resolved.VersionName, resolved.VersionId, [.. tasks.Select(x => x.Result)]);
+            var items = tasks.Select(x => x.Result).ToList();
+            var missing = items.Count(x => x is { IsRequired: true, Exhibit.State: null or ExhibitState.Removing });
+            return new ExhibitDependencyCollection(resolved.VersionName, resolved.VersionId, items, missing);
         });
+        // NOTE: 缺失提醒和页签角标需要这份数据，因此打开 Modal 即预取，不等页签实例化；
+        //  预取的异常静默吞掉，失败态由页签内的 LazyContainer 在用户打开时重试并呈现。
+        _ = PrefetchAsync(lazy);
+        return lazy;
+    }
+
+    private static async Task PrefetchAsync(LazyObject lazy)
+    {
+        try
+        {
+            await lazy.FetchAsync();
+        }
+        catch
+        {
+            // 预取失败静默，见调用点 NOTE
+        }
+    }
 
     private LazyObject ConstructVersions() =>
         new(async t =>

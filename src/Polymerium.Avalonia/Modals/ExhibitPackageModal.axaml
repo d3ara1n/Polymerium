@@ -184,6 +184,7 @@
                                 Grid.Column="0"
                                 Classes="Small"
                                 BorderThickness="1"
+                                ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_DetailPanelToggleToolTip}}"
                                 IsChecked="{Binding ViewState.IsDetailPanelVisible, Mode=TwoWay}">
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource MediumFontSize}"
@@ -262,7 +263,7 @@
                 <Grid
                     Grid.Row="1"
                     Margin="18"
-                    RowDefinitions="Auto,*,Auto"
+                    RowDefinitions="Auto,*,Auto,Auto"
                     RowSpacing="12">
                     <TextBlock
                         Grid.Row="0"
@@ -288,8 +289,26 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
-                    <husk:SwitchContainer
+                    <husk:Tag
                         Grid.Row="2"
+                        Classes="Warning"
+                        IsVisible="{Binding LazyDependencies.((app:ExhibitDependencyCollection)Value).MissingRequiredCount, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue=False}">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Spacing="4">
+                            <fi:SymbolIcon
+                                VerticalAlignment="Center"
+                                FontSize="{StaticResource SmallFontSize}"
+                                Symbol="Warning" />
+                            <TextBlock VerticalAlignment="Center">
+                                <Run Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_MissingDependenciesPrefixText}}" />
+                                <Run Text="{Binding LazyDependencies.((app:ExhibitDependencyCollection)Value).MissingRequiredCount, FallbackValue=0}" />
+                                <Run Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_MissingDependenciesSuffixText}}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </husk:Tag>
+                    <husk:SwitchContainer
+                        Grid.Row="3"
                         TargetType="app:ExhibitState"
                         Value="{Binding Exhibit.State, Mode=OneWay, FallbackValue={x:Null}}">
                         <husk:SwitchCase Value="{x:Null}">
@@ -707,7 +726,7 @@
                 </Grid>
             </Grid>
         </app:BlurBackdrop>
-        <!--  即使这个面板没有打开也会触发懒加载，因为 IsEffectivelyVisible 不是依赖属性也没法跟踪值  -->
+        <!--  非当前页签的内容不会被实例化；依赖数据由 Model 在打开 Modal 时预取，页签容器只负责呈现与失败重试  -->
         <husk:ConstrainedBox
             Grid.Column="0"
             IsVisible="{Binding ViewState.IsDetailPanelVisible, Mode=OneWay}"
@@ -800,6 +819,11 @@
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_DependenciesTabText}}" />
+                                <husk:Tag
+                                    Classes="Small"
+                                    IsVisible="{Binding LazyDependencies.((app:ExhibitDependencyCollection)Value).Count, Converter={x:Static husk:NumberConverters.IsNonZero}, FallbackValue=False}">
+                                    <TextBlock Text="{Binding LazyDependencies.((app:ExhibitDependencyCollection)Value).Count, FallbackValue=0}" />
+                                </husk:Tag>
                             </StackPanel>
                         </TabItem.Header>
                         <Grid RowDefinitions="Auto,*">
@@ -843,7 +867,7 @@
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate x:DataType="app:ExhibitDependencyModel">
                                                             <app:PackageDependencyButton
-                                                                Command="{Binding $parent[app:ExhibitPackageModal].((app:ExhibitPackageModalModel)DataContext).ViewPackageCommand, Mode=OneWay}"
+                                                                Command="{Binding $parent[app:ExhibitPackageModal].((app:ExhibitPackageModalModel)DataContext)?.ViewPackageCommand, Mode=OneWay}"
                                                                 CommandParameter="{Binding Exhibit}"
                                                                 Theme="{StaticResource ExhibitPackageDependencyButtonTheme}">
                                                                 <app:PackageDependencyButton.IsChecked>
