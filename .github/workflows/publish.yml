@@ -74,8 +74,16 @@ jobs:
                   fi
 
             - name: Publish Application
+              env:
+                  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
               run: |
-                  dotnet publish -c Release --self-contained -r ${{ matrix.runtime }} src/Polymerium.Avalonia/Polymerium.Avalonia.csproj
+                  dotnet publish -c Release --self-contained -r ${{ matrix.runtime }} \
+                    -p:DebugType=portable -p:SentryOrg=gravitylab -p:SentryProject=polymerium -p:SentryUploadSymbols=true \
+                    src/Polymerium.Avalonia/Polymerium.Avalonia.csproj
+
+            - name: Strip Debug Symbols
+              run: |
+                  find "src/Polymerium.Avalonia/bin/Release/${{ steps.dotnet.outputs.dotnet_framework }}/${{ matrix.runtime }}/publish" -name '*.pdb' -delete
 
             - name: Determine Release Type
               id: get_version
