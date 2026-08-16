@@ -237,6 +237,7 @@ Fixed parameters — reuse these directly when calling MCP, do not rediscover th
 - **cloudId**: `88eb6a79-a7aa-49eb-8e71-5fffb7d4896b`
 - **Jira project key**: `POLY`
 - **Issue types** (pass the Chinese name as `issueTypeName`): 故障 (Bug)=`10070`, 任务 (Task)=`10001`, 长篇故事 (Epic)=`10002`, 子任务 (Sub-task)=`10003`
+- **fixVersion**: every newly created issue is attached to the latest unreleased version via `additional_fields: {"fixVersions": [{"name": "vX.Y.Z"}]}`. No MCP tool lists versions directly — find the current milestone with JQL `project = POLY AND fixVersion in unreleasedVersions() ORDER BY created DESC` and read it from the returned issues' fixVersions.
 - **GitHub**: owner=`d3ara1n`, repo=`Polymerium`
 - **Sentry**: organizationSlug=`gravitylab`, regionUrl=`https://us.sentry.io`, projectSlug=`polymerium`
   - Issue search uses `projectSlugOrId="polymerium"`.
