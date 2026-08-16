@@ -154,7 +154,6 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         WindowInitialWidthOverride = AccessOverrideString(Profile.OVERRIDE_WINDOW_WIDTH);
         WindowInitialWidthWatermark = _configurationService.Value.GameWindowInitialWidth.ToString();
         BehaviorDeployFastMode = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE);
-        BehaviorResolveDependency = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY);
         QuickConnectAddressOverride = AccessOverrideString(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER);
         QuickConnectAddressWatermark = LanguageManager.Instance.InstancePropertiesPage_QuickConnectPlaceholder.Current();
 
@@ -218,7 +217,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     }
 
     [RelayCommand]
-    private void CheckIntegrity() => _instanceService.Deploy(Basic.Key, false, BehaviorResolveDependency, true);
+    private void CheckIntegrity() => _instanceService.Deploy(Basic.Key, false, true);
 
     [RelayCommand]
     private Task ResetInstanceAsync() => _instanceService.ResetAsync(Basic.Key);
@@ -410,12 +409,6 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
 
     partial void OnQuickConnectAddressOverrideChanged(string value) =>
         WriteOverride(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, !string.IsNullOrEmpty(value) ? value : null);
-
-    [ObservableProperty]
-    public partial bool BehaviorResolveDependency { get; set; }
-
-    partial void OnBehaviorResolveDependencyChanged(bool value) =>
-        WriteOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, value);
 
     [ObservableProperty]
     public partial bool BehaviorDeployFastMode { get; set; }

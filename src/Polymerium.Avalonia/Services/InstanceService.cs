@@ -95,7 +95,6 @@ public class InstanceService
                 var profile = _profileManager.GetImmutable(key);
                 var locator = CreateJavaLocator(profile, _configurationService.Value);
                 var deploy = new DeployOptions(profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false),
-                                               profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false),
                                                false);
                 var launch =
                     new LaunchOptions(additionalArguments:
@@ -130,10 +129,9 @@ public class InstanceService
     {
         var profile = _profileManager.GetImmutable(key);
         fastMode ??= profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false);
-        resolveDependency ??= profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_RESOLVE_DEPENDENCY, false);
         fullCheckMode ??= false;
         var locator = CreateJavaLocator(profile, _configurationService.Value);
-        _instanceManager.Deploy(key, new(fastMode, resolveDependency, fullCheckMode), locator);
+        _instanceManager.Deploy(key, new(fastMode, fullCheckMode), locator);
     }
 
     private static JavaHomeLocatorDelegate CreateJavaLocator(Profile profile, Configuration configuration) =>
