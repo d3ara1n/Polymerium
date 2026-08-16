@@ -166,6 +166,21 @@ Polymerium 使用[符号链接](https://www.wikiwand.com/en/Symbolic_link)进行
 
 </details>
 
+<details>
+<summary>🐧 <strong>Linux</strong> —— 需要 glibc 2.34 或更新版本</summary>
+
+内置的 SQLite 原生库依赖 **glibc 2.34+**。在较旧的发行版（Ubuntu 20.04、Debian 11 及 Zorin OS 16、Pop!_OS 20.04、Linux Mint 20 等衍生版）上，应用会启动失败并报 `DllNotFoundException: e_sqlite3`。
+
+查看当前 glibc 版本：
+
+```bash
+ldd --version
+```
+
+请使用 Ubuntu 22.04+、Debian 12+ 或其他 glibc ≥ 2.34 的发行版。
+
+</details>
+
 | 平台                | 包类型     | 直达下载                                                                                        |
 |---------------------|------------|-------------------------------------------------------------------------------------------------|
 | Windows x64         | 安装器     | [下载](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-win-Setup.exe) |

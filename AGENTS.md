@@ -249,6 +249,18 @@ Linking convention (follow when transcribing a GitHub issue to Jira):
 
 NOTE: the site URL / cloudId / project key are not secret on their own — without an API token nobody can call the Jira API, and the actually-sensitive token is held by the MCP layer, not written into this file. The Jira site is private; external GitHub users cannot read it, which is why a GitHub issue must never reference Jira — a back-link is useless to them. To keep a reporter informed of progress, post a plain status update on the GitHub issue itself; do not point them at Jira.
 
+## Commit-message side effects
+
+Linking keywords are actions, not just references — they fire when the commit lands on `main`:
+
+- GitHub: `fixes/closes/resolves #nnn` in a commit message or PR description auto-closes the issue.
+- Sentry: `Fixes <ISSUE-SHORT-ID>` (e.g. `Fixes POLYMERIUM-2D`) auto-resolves the Sentry issue.
+
+Only use these when the commit actually eliminates the error. For environment-caused reports
+(e.g. below-minimum OS versions), set the Sentry issue to **Ignored** via the MCP API instead —
+Resolved would be reopened by the next matching event. Neither platform offers a keyword for
+Ignored; that status change is API/UI only.
+
 ## Git Commit
 
 - **Do not commit on your own initiative.** Make all the edits you need, then stop and wait for the user to explicitly tell you to commit (e.g. "提交"). Never auto-commit after editing without being asked.
