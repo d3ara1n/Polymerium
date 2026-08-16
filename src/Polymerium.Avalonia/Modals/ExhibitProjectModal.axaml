@@ -15,7 +15,7 @@
     app:BlurBackdrop.UseBlur="False"
     d:DesignHeight="660"
     d:DesignWidth="720"
-    x:DataType="app:ExhibitPackageModel"
+    x:DataType="app:ExhibitProjectModalModel"
     Background="{x:Null}"
     BorderBrush="{x:Null}"
     BorderThickness="0"
@@ -46,7 +46,7 @@
                                 Grid.Column="0"
                                 Classes="Small"
                                 BorderThickness="1"
-                                IsChecked="{Binding $parent[app:ExhibitProjectModal].IsDetailPanelVisible, Mode=TwoWay}">
+                                IsChecked="{Binding ViewState.IsDetailPanelVisible, Mode=TwoWay}">
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="PanelLeftText" />
@@ -74,20 +74,20 @@
                                 CornerRadius="{StaticResource MediumCornerRadius}">
                                 <Border.Background>
                                     <ImageBrush
-                                        async:ImageBrushLoader.Source="{Binding Thumbnail}"
+                                        async:ImageBrushLoader.Source="{Binding Package.Thumbnail}"
                                         Stretch="UniformToFill" />
                                 </Border.Background>
                             </Border>
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="{Binding ProjectName, FallbackValue=Project}"
+                                Text="{Binding Package.ProjectName, FallbackValue=Project}"
                                 TextAlignment="Center"
                                 TextWrapping="Wrap" />
                             <StackPanel
                                 HorizontalAlignment="Center"
                                 Orientation="Horizontal"
                                 Spacing="8">
-                                <HyperlinkButton NavigateUri="{Binding Reference}">
+                                <HyperlinkButton NavigateUri="{Binding Package.Reference}">
                                     <ToolTip.Tip>
                                         <StackPanel Spacing="2">
                                             <Grid
@@ -110,13 +110,13 @@
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="4">
-                                        <TextBlock Text="{Binding Label, FallbackValue=Label, Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                        <TextBlock Text="{Binding Package.Label, FallbackValue=Label, Converter={x:Static husk:StringConverters.ToUpper}}" />
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource MediumFontSize}"
                                             Symbol="Open" />
                                     </StackPanel>
                                 </HyperlinkButton>
-                                <TextBlock Text="{Binding AuthorName, StringFormat={}@{0}, FallbackValue=@Author}" />
+                                <TextBlock Text="{Binding Package.AuthorName, StringFormat={}@{0}, FallbackValue=@Author}" />
                             </StackPanel>
                         </StackPanel>
                     </Panel>
@@ -129,12 +129,12 @@
                     <TextBlock
                         Grid.Row="0"
                         MaxLines="4"
-                        Text="{Binding Summary, FallbackValue=Summary}"
+                        Text="{Binding Package.Summary, FallbackValue=Summary}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="Wrap" />
                     <ItemsControl
                         Grid.Row="1"
-                        ItemsSource="{Binding Tags}">
+                        ItemsSource="{Binding Package.Tags}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
                                 <husk:Tag
@@ -153,18 +153,18 @@
                     <husk:SwitchContainer
                         Grid.Row="2"
                         TargetType="app:ExhibitState"
-                        Value="{Binding $parent[app:ExhibitProjectModal].Exhibit.State, Mode=OneWay, FallbackValue={x:Null}}">
+                        Value="{Binding Exhibit.State, Mode=OneWay, FallbackValue={x:Null}}">
                         <husk:SwitchCase Value="{x:Null}">
                             <Grid
                                 ColumnDefinitions="Auto,*"
                                 ColumnSpacing="12">
                                 <Button
                                     Grid.Column="0"
-                                    Command="{Binding $parent[app:ExhibitProjectModal].FavoriteCommand}"
+                                    Command="{Binding FavoriteCommand}"
                                     Theme="{StaticResource OutlineButtonTheme}">
                                     <husk:SwitchContainer
                                         TargetType="x:Boolean"
-                                        Value="{Binding $parent[app:ExhibitProjectModal].IsFavorite, Mode=OneWay}">
+                                        Value="{Binding IsFavorite, Mode=OneWay}">
                                         <husk:SwitchCase Value="True">
                                             <fi:SymbolIcon
                                                 FontSize="{StaticResource MediumFontSize}"
@@ -181,7 +181,7 @@
                                 <Button
                                     Grid.Column="1"
                                     Classes="Primary"
-                                    Command="{Binding $parent[app:ExhibitProjectModal].AddCommand}">
+                                    Command="{Binding AddCommand}">
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="12">
@@ -213,11 +213,11 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
-                                        Command="{Binding $parent[app:ExhibitProjectModal].FavoriteCommand}"
+                                        Command="{Binding FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
                                         <husk:SwitchContainer
                                             TargetType="x:Boolean"
-                                            Value="{Binding $parent[app:ExhibitProjectModal].IsFavorite, Mode=OneWay}">
+                                            Value="{Binding IsFavorite, Mode=OneWay}">
                                             <husk:SwitchCase Value="True">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
@@ -232,7 +232,7 @@
                                     </Button>
                                     <Button
                                         Grid.Column="1"
-                                        Command="{Binding $parent[app:ExhibitProjectModal].UndoCommand}">
+                                        Command="{Binding UndoCommand}">
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource MediumFontSize}"
                                             Symbol="ArrowUndo" />
@@ -260,11 +260,11 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
-                                        Command="{Binding $parent[app:ExhibitProjectModal].FavoriteCommand}"
+                                        Command="{Binding FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
                                         <husk:SwitchContainer
                                             TargetType="x:Boolean"
-                                            Value="{Binding $parent[app:ExhibitProjectModal].IsFavorite, Mode=OneWay}">
+                                            Value="{Binding IsFavorite, Mode=OneWay}">
                                             <husk:SwitchCase Value="True">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
@@ -280,7 +280,7 @@
                                     <Button
                                         Grid.Column="1"
                                         Classes="Danger"
-                                        Command="{Binding $parent[app:ExhibitProjectModal].RemoveCommand}">
+                                        Command="{Binding RemoveCommand}">
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource MediumFontSize}"
                                             Symbol="Delete" />
@@ -308,11 +308,11 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
-                                        Command="{Binding $parent[app:ExhibitProjectModal].FavoriteCommand}"
+                                        Command="{Binding FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
                                         <husk:SwitchContainer
                                             TargetType="x:Boolean"
-                                            Value="{Binding $parent[app:ExhibitProjectModal].IsFavorite, Mode=OneWay}">
+                                            Value="{Binding IsFavorite, Mode=OneWay}">
                                             <husk:SwitchCase Value="True">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
@@ -327,7 +327,7 @@
                                     </Button>
                                     <Button
                                         Grid.Column="1"
-                                        Command="{Binding $parent[app:ExhibitProjectModal].UndoCommand}">
+                                        Command="{Binding UndoCommand}">
                                         <StackPanel
                                             Orientation="Horizontal"
                                             Spacing="12">
@@ -347,7 +347,7 @@
         <!--  即使这个面板没有打开也会触发懒加载，因为 IsEffectivelyVisible 不是依赖属性也没法跟踪值  -->
         <husk:ConstrainedBox
             Grid.Column="0"
-            IsVisible="{Binding $parent[app:ExhibitProjectModal].IsDetailPanelVisible, Mode=OneWay}"
+            IsVisible="{Binding ViewState.IsDetailPanelVisible, Mode=OneWay}"
             AspectRatio="0.8">
             <app:BlurBackdrop
                 BorderBrush="{StaticResource ControlBorderBrush}"
@@ -390,13 +390,13 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel>
                                 <husk:ConstrainedBox
-                                    IsVisible="{Binding Gallery.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                    IsVisible="{Binding Package.Gallery.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
                                     AspectRatio="1.78">
                                     <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
                                         <Panel>
                                             <Carousel
                                                 Name="GalleryCarousel"
-                                                ItemsSource="{Binding Gallery}">
+                                                ItemsSource="{Binding Package.Gallery}">
                                                 <Carousel.ItemTemplate>
                                                     <DataTemplate DataType="x:Uri">
                                                         <Image
@@ -414,7 +414,7 @@
                                         </Panel>
                                     </Border>
                                 </husk:ConstrainedBox>
-                                <husk:LazyContainer Source="{Binding $parent[app:ExhibitProjectModal].LazyDescription}">
+                                <husk:LazyContainer Source="{Binding LazyDescription}">
                                     <husk:LazyContainer.SourceTemplate>
                                         <DataTemplate DataType="x:String">
                                             <husk:MarkdownViewer
@@ -446,13 +446,13 @@
                                 Margin="12"
                                 Spacing="12">
                                 <StackPanel
-                                    IsVisible="{Binding $parent[app:ExhibitProjectModal].Exhibit.Loaders.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                    IsVisible="{Binding Exhibit.Loaders.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
                                     Spacing="6">
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                         Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitProjectModal_LoadersLabelText}}" />
-                                    <ItemsControl ItemsSource="{Binding $parent[app:ExhibitProjectModal].Exhibit.Loaders}">
+                                    <ItemsControl ItemsSource="{Binding Exhibit.Loaders}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <WrapPanel
@@ -470,13 +470,13 @@
                                     </ItemsControl>
                                 </StackPanel>
                                 <StackPanel
-                                    IsVisible="{Binding $parent[app:ExhibitProjectModal].Exhibit.Versions.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                    IsVisible="{Binding Exhibit.Versions.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
                                     Spacing="6">
                                     <TextBlock
                                         FontSize="{StaticResource SmallFontSize}"
                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                         Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitProjectModal_VersionsLabelText}}" />
-                                    <ItemsControl ItemsSource="{Binding $parent[app:ExhibitProjectModal].Exhibit.Versions}">
+                                    <ItemsControl ItemsSource="{Binding Exhibit.Versions}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <WrapPanel

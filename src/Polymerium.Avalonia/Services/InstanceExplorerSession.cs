@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Exceptions;
 using Polymerium.Avalonia.Modals;
+using Polymerium.Avalonia.ModalModels;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Utilities;
@@ -100,28 +101,23 @@ public sealed class InstanceExplorerSession : ExplorerSession
                                             project.UpdatedAt,
                                             [.. project.Gallery.Select(x => x.Url)]);
 
-        _overlayService.PopModal(new ExhibitPackageModal
-        {
-            Key = _key,
-            PersistenceService = _persistenceService,
-            DataContext = model,
-            Exhibit = exhibit,
-            DataService = _dataService,
-            Filter = new(_basic!.Version,
-                         _basic.Loader != null && LoaderHelper.TryParse(_basic.Loader, out var loader)
-                             ? loader.Identity
-                             : null,
-                         project.Kind),
-            ModifyPendingCallback = modifyPending,
-            UndoCallback = m =>
+        _overlayService.PopModal<ExhibitPackageModal>(new ExhibitPackageModalModel.Parameter(
+            _key,
+            exhibit,
+            model,
+            new(_basic!.Version,
+                _basic.Loader != null && LoaderHelper.TryParse(_basic.Loader, out var loader)
+                    ? loader.Identity
+                    : null,
+                project.Kind),
+            modifyPending,
+            m =>
             {
                 RevertState(m);
                 modifyPending(m);
             },
-            ViewPackageCommand =
-                new AsyncRelayCommand<ExhibitModel>(m => ViewExhibitAsync(m!, modifyPending, findExisting)),
-            LinkExhibitCallback = project => LinkExhibit(project, findExisting)
-        });
+            project => LinkExhibit(project, findExisting),
+            new AsyncRelayCommand<ExhibitModel>(m => ViewExhibitAsync(m!, modifyPending, findExisting))));
     }
 
     #endregion
