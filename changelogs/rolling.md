@@ -19,6 +19,7 @@
 
 ### Changed
 
+- Update the details panel of marketplace previews to expand by default and remember its visibility across sessions (#86)
 - Reduce the installed size by over 40% through release-only trimming that keeps unannotated third-party assemblies intact
 - Improve memory efficiency when browsing many image thumbnails
 

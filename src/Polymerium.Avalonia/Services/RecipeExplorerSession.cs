@@ -6,6 +6,7 @@ using Avalonia.Media.Imaging;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Exceptions;
 using Polymerium.Avalonia.Modals;
+using Polymerium.Avalonia.ModalModels;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using TridentCore.Abstractions.Repositories;
@@ -93,20 +94,16 @@ public sealed class RecipeExplorerSession : ExplorerSession
                                             project.UpdatedAt,
                                             [.. project.Gallery.Select(x => x.Url)]);
 
-        _overlayService.PopModal(new ExhibitProjectModal
-        {
-            PersistenceService = _persistenceService,
-            DataContext = model,
-            Exhibit = exhibit,
-            DataService = _dataService,
-            Kind = project.Kind,
-            ModifyPendingCallback = modifyPending,
-            UndoCallback = m =>
+        _overlayService.PopModal<ExhibitProjectModal>(new ExhibitProjectModalModel.Parameter(
+            exhibit,
+            model,
+            project.Kind,
+            modifyPending,
+            m =>
             {
                 RevertState(m);
                 modifyPending(m);
-            }
-        });
+            }));
     }
 
     public override Task<bool> CollectAsync(IReadOnlyList<ExhibitModel> pending)

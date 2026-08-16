@@ -16,14 +16,16 @@
     app:BlurBackdrop.UseBlur="False"
     d:DesignHeight="660"
     d:DesignWidth="720"
-    x:DataType="app:ExhibitPackageModel"
+    x:DataType="app:ExhibitPackageModalModel"
     Background="{x:Null}"
     BorderBrush="{x:Null}"
     BorderThickness="0"
     CornerRadius="0"
     mc:Ignorable="d">
     <husk:Modal.Resources>
-        <DataTemplate x:Key="VersionEditorTemplate">
+        <DataTemplate
+            x:Key="VersionEditorTemplate"
+            x:DataType="app:ExhibitPackageModalModel">
             <Border>
                 <Grid
                     RowDefinitions="Auto,Auto"
@@ -33,13 +35,13 @@
                         Padding="12,8"
                         Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                         CornerRadius="{StaticResource SmallCornerRadius}">
-                        <CheckBox IsChecked="{Binding $parent[app:ExhibitPackageModal].IsFilterEnabled, Mode=TwoWay}">
+                        <CheckBox IsChecked="{Binding IsFilterEnabled, Mode=TwoWay}">
                             <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_FilterLabelText}}" />
                         </CheckBox>
                     </Border>
                     <TabStrip
                         Grid.Row="1"
-                        SelectedIndex="{Binding $parent[app:ExhibitPackageModal].SelectedVersionMode, Mode=TwoWay}">
+                        SelectedIndex="{Binding SelectedVersionMode, Mode=TwoWay}">
                         <TabStrip.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Grid
@@ -52,7 +54,7 @@
                             Padding="0">
                             <husk:LazyContainer
                                 CornerRadius="{StaticResource SmallCornerRadius}"
-                                Source="{Binding $parent[app:ExhibitPackageModal].LazyVersions, Mode=OneWay}">
+                                Source="{Binding LazyVersions, Mode=OneWay}">
                                 <husk:LazyContainer.SourceTemplate>
                                     <DataTemplate DataType="app:ExhibitVersionCollection">
                                         <ComboBox
@@ -60,7 +62,7 @@
                                             VerticalContentAlignment="Center"
                                             ItemsSource="{Binding}"
                                             PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_VersionBoxPlaceholder}}"
-                                            SelectedItem="{Binding $parent[app:ExhibitPackageModal].SelectedVersion, Mode=TwoWay, FallbackValue={x:Null}}"
+                                            SelectedItem="{Binding $parent[app:ExhibitPackageModal].((app:ExhibitPackageModalModel)DataContext).SelectedVersion, Mode=TwoWay, FallbackValue={x:Null}}"
                                             Theme="{StaticResource GhostComboBoxTheme}">
                                             <ComboBox.SelectionBoxItemTemplate>
                                                 <DataTemplate DataType="app:ExhibitVersionModel">
@@ -182,7 +184,7 @@
                                 Grid.Column="0"
                                 Classes="Small"
                                 BorderThickness="1"
-                                IsChecked="{Binding $parent[app:ExhibitPackageModal].IsDetailPanelVisible, Mode=TwoWay}">
+                                IsChecked="{Binding ViewState.IsDetailPanelVisible, Mode=TwoWay}">
                                 <fi:SymbolIcon
                                     FontSize="{StaticResource MediumFontSize}"
                                     Symbol="PanelLeftText" />
@@ -210,20 +212,20 @@
                                 CornerRadius="{StaticResource MediumCornerRadius}">
                                 <Border.Background>
                                     <ImageBrush
-                                        async:ImageBrushLoader.Source="{Binding Thumbnail}"
+                                        async:ImageBrushLoader.Source="{Binding Package.Thumbnail}"
                                         Stretch="UniformToFill" />
                                 </Border.Background>
                             </Border>
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
-                                Text="{Binding ProjectName, FallbackValue=Project}"
+                                Text="{Binding Package.ProjectName, FallbackValue=Project}"
                                 TextAlignment="Center"
                                 TextWrapping="Wrap" />
                             <StackPanel
                                 HorizontalAlignment="Center"
                                 Orientation="Horizontal"
                                 Spacing="8">
-                                <HyperlinkButton NavigateUri="{Binding Reference}">
+                                <HyperlinkButton NavigateUri="{Binding Package.Reference}">
                                     <ToolTip.Tip>
                                         <StackPanel Spacing="2">
                                             <Grid
@@ -246,13 +248,13 @@
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="4">
-                                        <TextBlock Text="{Binding Label, FallbackValue=Label, Converter={x:Static husk:StringConverters.ToUpper}}" />
+                                        <TextBlock Text="{Binding Package.Label, FallbackValue=Label, Converter={x:Static husk:StringConverters.ToUpper}}" />
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource MediumFontSize}"
                                             Symbol="Open" />
                                     </StackPanel>
                                 </HyperlinkButton>
-                                <TextBlock Text="{Binding AuthorName, StringFormat={}@{0}, FallbackValue=@Author}" />
+                                <TextBlock Text="{Binding Package.AuthorName, StringFormat={}@{0}, FallbackValue=@Author}" />
                             </StackPanel>
                         </StackPanel>
                     </Panel>
@@ -265,12 +267,12 @@
                     <TextBlock
                         Grid.Row="0"
                         MaxLines="4"
-                        Text="{Binding Summary, FallbackValue=Summary}"
+                        Text="{Binding Package.Summary, FallbackValue=Summary}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="Wrap" />
                     <ItemsControl
                         Grid.Row="1"
-                        ItemsSource="{Binding Tags}">
+                        ItemsSource="{Binding Package.Tags}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
                                 <husk:Tag
@@ -289,7 +291,7 @@
                     <husk:SwitchContainer
                         Grid.Row="2"
                         TargetType="app:ExhibitState"
-                        Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.State, Mode=OneWay, FallbackValue={x:Null}}">
+                        Value="{Binding Exhibit.State, Mode=OneWay, FallbackValue={x:Null}}">
                         <husk:SwitchCase Value="{x:Null}">
                             <Grid
                                 RowDefinitions="Auto,Auto"
@@ -303,11 +305,11 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
+                                        Command="{Binding FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
                                         <husk:SwitchContainer
                                             TargetType="x:Boolean"
-                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            Value="{Binding IsFavorite, Mode=OneWay}">
                                             <husk:SwitchCase Value="True">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
@@ -324,7 +326,7 @@
                                     <Button
                                         Grid.Column="1"
                                         Classes="Primary"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].ApplyCommand}">
+                                        Command="{Binding ApplyCommand}">
                                         <StackPanel
                                             Orientation="Horizontal"
                                             Spacing="12">
@@ -342,7 +344,7 @@
                                 <husk:Tag
                                     Grid.Row="0"
                                     Classes="Success"
-                                    ToolTip.Tip="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName}">
+                                    ToolTip.Tip="{Binding Exhibit.InstalledVersionName}">
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="4">
@@ -351,11 +353,11 @@
                                             Symbol="MailInbox" />
                                         <husk:SwitchContainer
                                             TargetType="x:Boolean"
-                                            Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
+                                            Value="{Binding Exhibit.InstalledVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
                                             <husk:SwitchCase Value="True">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
                                                     <Run Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_InstalledVersionTagText}}" />
-                                                    <Run Text="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName, FallbackValue=Version}" />
+                                                    <Run Text="{Binding Exhibit.InstalledVersionName, FallbackValue=Version}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="False">
@@ -378,11 +380,11 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
+                                        Command="{Binding FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
                                         <husk:SwitchContainer
                                             TargetType="x:Boolean"
-                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            Value="{Binding IsFavorite, Mode=OneWay}">
                                             <husk:SwitchCase Value="True">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
@@ -398,7 +400,7 @@
                                     <Button
                                         Grid.Column="1"
                                         Classes="Primary"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].ApplyCommand}">
+                                        Command="{Binding ApplyCommand}">
                                         <StackPanel
                                             Orientation="Horizontal"
                                             Spacing="12">
@@ -411,7 +413,7 @@
                                     <Button
                                         Grid.Column="2"
                                         Classes="Danger"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].DeleteCommand}">
+                                        Command="{Binding DeleteCommand}">
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource MediumFontSize}"
                                             Symbol="Delete" />
@@ -438,9 +440,9 @@
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                             Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_LockedVersionLabelText}}" />
                                         <TextBlock
-                                            Text="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName, FallbackValue=LockedVersionName}"
+                                            Text="{Binding Exhibit.InstalledVersionName, FallbackValue=LockedVersionName}"
                                             TextTrimming="CharacterEllipsis"
-                                            ToolTip.Tip="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName}" />
+                                            ToolTip.Tip="{Binding Exhibit.InstalledVersionName}" />
                                     </StackPanel>
                                 </Grid>
                             </Border>
@@ -450,7 +452,7 @@
                                 <husk:Tag
                                     Grid.Row="0"
                                     Classes="Warning"
-                                    ToolTip.Tip="{Binding $parent[app:ExhibitPackageModal].SelectedVersion.VersionName, FallbackValue=Version}">
+                                    ToolTip.Tip="{Binding SelectedVersion.VersionName, FallbackValue=Version}">
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="4">
@@ -459,11 +461,11 @@
                                             Symbol="AddCircle" />
                                         <husk:SwitchContainer
                                             TargetType="x:Boolean"
-                                            Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.PendingVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
+                                            Value="{Binding Exhibit.PendingVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
                                             <husk:SwitchCase Value="True">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
                                                     <Run Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_AddingVersionTagText}}" />
-                                                    <Run Text="{Binding $parent[app:ExhibitPackageModal].Exhibit.PendingVersionName, FallbackValue=Version}" />
+                                                    <Run Text="{Binding Exhibit.PendingVersionName, FallbackValue=Version}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="False">
@@ -486,11 +488,11 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
+                                        Command="{Binding FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
                                         <husk:SwitchContainer
                                             TargetType="x:Boolean"
-                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            Value="{Binding IsFavorite, Mode=OneWay}">
                                             <husk:SwitchCase Value="True">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
@@ -506,7 +508,7 @@
                                     <Button
                                         Grid.Column="1"
                                         Classes="Primary"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].ApplyCommand}">
+                                        Command="{Binding ApplyCommand}">
                                         <StackPanel
                                             Orientation="Horizontal"
                                             Spacing="12">
@@ -518,7 +520,7 @@
                                     </Button>
                                     <Button
                                         Grid.Column="2"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].UndoCommand}">
+                                        Command="{Binding UndoCommand}">
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource MediumFontSize}"
                                             Symbol="ArrowUndo" />
@@ -531,7 +533,7 @@
                                 <husk:Tag
                                     Grid.Row="0"
                                     Classes="Success"
-                                    ToolTip.Tip="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName}">
+                                    ToolTip.Tip="{Binding Exhibit.InstalledVersionName}">
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="4">
@@ -540,11 +542,11 @@
                                             Symbol="MailInbox" />
                                         <husk:SwitchContainer
                                             TargetType="x:Boolean"
-                                            Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
+                                            Value="{Binding Exhibit.InstalledVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
                                             <husk:SwitchCase Value="True">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
                                                     <Run Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_InstalledVersionTagText}}" />
-                                                    <Run Text="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName, FallbackValue=Version}" />
+                                                    <Run Text="{Binding Exhibit.InstalledVersionName, FallbackValue=Version}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="False">
@@ -561,7 +563,7 @@
                                 <husk:Tag
                                     Grid.Row="2"
                                     Classes="Warning"
-                                    ToolTip.Tip="{Binding $parent[app:ExhibitPackageModal].SelectedVersion.VersionName, FallbackValue=Version}">
+                                    ToolTip.Tip="{Binding SelectedVersion.VersionName, FallbackValue=Version}">
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="4">
@@ -570,11 +572,11 @@
                                             Symbol="Pen" />
                                         <husk:SwitchContainer
                                             TargetType="x:Boolean"
-                                            Value="{Binding $parent[app:ExhibitPackageModal].Exhibit.PendingVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
+                                            Value="{Binding Exhibit.PendingVersionId, Mode=OneWay, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
                                             <husk:SwitchCase Value="True">
                                                 <TextBlock TextTrimming="CharacterEllipsis">
                                                     <Run Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_ModifyingTagText}}" />
-                                                    <Run Text="{Binding $parent[app:ExhibitPackageModal].Exhibit.PendingVersionName, FallbackValue=Version}" />
+                                                    <Run Text="{Binding Exhibit.PendingVersionName, FallbackValue=Version}" />
                                                 </TextBlock>
                                             </husk:SwitchCase>
                                             <husk:SwitchCase Value="False">
@@ -597,11 +599,11 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
+                                        Command="{Binding FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
                                         <husk:SwitchContainer
                                             TargetType="x:Boolean"
-                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            Value="{Binding IsFavorite, Mode=OneWay}">
                                             <husk:SwitchCase Value="True">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
@@ -617,7 +619,7 @@
                                     <Button
                                         Grid.Column="1"
                                         Classes="Primary"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].ApplyCommand}">
+                                        Command="{Binding ApplyCommand}">
                                         <StackPanel
                                             Orientation="Horizontal"
                                             Spacing="12">
@@ -629,7 +631,7 @@
                                     </Button>
                                     <Button
                                         Grid.Column="2"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].UndoCommand}">
+                                        Command="{Binding UndoCommand}">
                                         <fi:SymbolIcon
                                             FontSize="{StaticResource MediumFontSize}"
                                             Symbol="ArrowUndo" />
@@ -642,7 +644,7 @@
                                 <husk:Tag
                                     Grid.Row="0"
                                     Classes="Danger"
-                                    ToolTip.Tip="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName}">
+                                    ToolTip.Tip="{Binding Exhibit.InstalledVersionName}">
                                     <StackPanel
                                         Orientation="Horizontal"
                                         Spacing="4">
@@ -651,7 +653,7 @@
                                             Symbol="Delete" />
                                         <TextBlock TextTrimming="CharacterEllipsis">
                                             <Run Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_RemovingTagText}}" />
-                                            <Run Text="{Binding $parent[app:ExhibitPackageModal].Exhibit.InstalledVersionName, FallbackValue=Version}" />
+                                            <Run Text="{Binding Exhibit.InstalledVersionName, FallbackValue=Version}" />
                                         </TextBlock>
                                     </StackPanel>
                                 </husk:Tag>
@@ -664,11 +666,11 @@
                                     ColumnSpacing="12">
                                     <Button
                                         Grid.Column="0"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].FavoriteCommand}"
+                                        Command="{Binding FavoriteCommand}"
                                         Theme="{StaticResource OutlineButtonTheme}">
                                         <husk:SwitchContainer
                                             TargetType="x:Boolean"
-                                            Value="{Binding $parent[app:ExhibitPackageModal].IsFavorite, Mode=OneWay}">
+                                            Value="{Binding IsFavorite, Mode=OneWay}">
                                             <husk:SwitchCase Value="True">
                                                 <fi:SymbolIcon
                                                     FontSize="{StaticResource MediumFontSize}"
@@ -683,7 +685,7 @@
                                     </Button>
                                     <Button
                                         Grid.Column="1"
-                                        Command="{Binding $parent[app:ExhibitPackageModal].UndoCommand}">
+                                        Command="{Binding UndoCommand}">
                                         <StackPanel
                                             Orientation="Horizontal"
                                             Spacing="12">
@@ -703,7 +705,7 @@
         <!--  即使这个面板没有打开也会触发懒加载，因为 IsEffectivelyVisible 不是依赖属性也没法跟踪值  -->
         <husk:ConstrainedBox
             Grid.Column="0"
-            IsVisible="{Binding $parent[app:ExhibitPackageModal].IsDetailPanelVisible, Mode=OneWay}"
+            IsVisible="{Binding ViewState.IsDetailPanelVisible, Mode=OneWay}"
             AspectRatio="0.8">
             <app:BlurBackdrop
                 BorderBrush="{StaticResource ControlBorderBrush}"
@@ -744,13 +746,13 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel>
                                 <husk:ConstrainedBox
-                                    IsVisible="{Binding Gallery.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                    IsVisible="{Binding Package.Gallery.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
                                     AspectRatio="1.78">
                                     <Border Background="{StaticResource ControlTranslucentHalfBackgroundBrush}">
                                         <Panel>
                                             <Carousel
                                                 Name="GalleryCarousel"
-                                                ItemsSource="{Binding Gallery}">
+                                                ItemsSource="{Binding Package.Gallery}">
                                                 <Carousel.ItemTemplate>
                                                     <DataTemplate DataType="x:Uri">
                                                         <Image
@@ -768,7 +770,7 @@
                                         </Panel>
                                     </Border>
                                 </husk:ConstrainedBox>
-                                <husk:LazyContainer Source="{Binding $parent[app:ExhibitPackageModal].LazyDescription}">
+                                <husk:LazyContainer Source="{Binding LazyDescription}">
                                     <husk:LazyContainer.SourceTemplate>
                                         <DataTemplate DataType="x:String">
                                             <husk:MarkdownViewer
@@ -806,13 +808,13 @@
                                     <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_DependenciesTabPrompt}}" />
                                     <TextBlock
                                         FontWeight="{StaticResource ControlStrongFontWeight}"
-                                        Text="{Binding $parent[app:ExhibitPackageModal].LazyDependencies.((app:ExhibitDependencyCollection)Value).VersionName, FallbackValue=None}" />
+                                        Text="{Binding LazyDependencies.((app:ExhibitDependencyCollection)Value).VersionName, FallbackValue=None}" />
                                 </StackPanel>
                             </Border>
                             <Panel Grid.Row="1">
                                 <StackPanel
                                     VerticalAlignment="Center"
-                                    IsVisible="{Binding $parent[app:ExhibitPackageModal].LazyDependencies.((app:ExhibitDependencyCollection)Value).Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
+                                    IsVisible="{Binding LazyDependencies.((app:ExhibitDependencyCollection)Value).Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=True}"
                                     Spacing="8">
                                     <fi:SymbolIcon
                                         HorizontalAlignment="Center"
@@ -829,14 +831,14 @@
                                     <husk:LazyContainer
                                         MinHeight="72"
                                         Margin="12"
-                                        Source="{Binding $parent[app:ExhibitPackageModal].LazyDependencies, Mode=OneWay}">
+                                        Source="{Binding LazyDependencies, Mode=OneWay}">
                                         <husk:LazyContainer.SourceTemplate>
                                             <DataTemplate x:DataType="app:ExhibitDependencyCollection">
                                                 <ItemsControl ItemsSource="{Binding Mode=OneWay}">
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate x:DataType="app:ExhibitDependencyModel">
                                                             <app:PackageDependencyButton
-                                                                Command="{Binding $parent[app:ExhibitPackageModal].ViewPackageCommand, Mode=OneWay}"
+                                                                Command="{Binding $parent[app:ExhibitPackageModal].((app:ExhibitPackageModalModel)DataContext).ViewPackageCommand, Mode=OneWay}"
                                                                 CommandParameter="{Binding Exhibit}"
                                                                 Theme="{StaticResource ExhibitPackageDependencyButtonTheme}">
                                                                 <app:PackageDependencyButton.IsChecked>
@@ -887,7 +889,7 @@
                         </TabItem.Header>
                         <Panel>
                             <ScrollViewer
-                                IsVisible="{Binding $parent[app:ExhibitPackageModal].SelectedVersion, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
+                                IsVisible="{Binding SelectedVersion, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
                                 VerticalScrollBarVisibility="Auto">
                                 <Grid RowDefinitions="Auto,*">
                                     <Border
@@ -900,12 +902,12 @@
                                             <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_ChangelogsTabPrompt}}" />
                                             <TextBlock
                                                 FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                Text="{Binding $parent[app:ExhibitPackageModal].SelectedVersion.VersionName, FallbackValue=None}" />
+                                                Text="{Binding SelectedVersion.VersionName, FallbackValue=None}" />
                                         </StackPanel>
                                     </Border>
                                     <husk:LazyContainer
                                         Grid.Row="1"
-                                        Source="{Binding $parent[app:ExhibitPackageModal].LazyChangelog}">
+                                        Source="{Binding LazyChangelog}">
                                         <husk:LazyContainer.SourceTemplate>
                                             <DataTemplate DataType="x:String">
                                                 <husk:MarkdownViewer
@@ -918,7 +920,7 @@
                             </ScrollViewer>
                             <StackPanel
                                 VerticalAlignment="Center"
-                                IsVisible="{Binding $parent[app:ExhibitPackageModal].SelectedVersion, Converter={x:Static ObjectConverters.IsNull}, FallbackValue=False}"
+                                IsVisible="{Binding SelectedVersion, Converter={x:Static ObjectConverters.IsNull}, FallbackValue=False}"
                                 Spacing="8">
                                 <fi:SymbolIcon
                                     HorizontalAlignment="Center"
@@ -948,7 +950,7 @@
                                     Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitPackageModal_HistoryTabText}}" />
                             </StackPanel>
                         </TabItem.Header>
-                        <husk:LazyContainer Source="{Binding $parent[app:ExhibitPackageModal].LazyHistory}">
+                        <husk:LazyContainer Source="{Binding LazyHistory}">
                             <husk:LazyContainer.SourceTemplate>
                                 <DataTemplate DataType="app:InstancePackageModificationCollection">
                                     <Panel>
