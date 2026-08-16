@@ -1245,6 +1245,15 @@
     <data name="ExhibitPackageModal_DependenciesTabPrompt" xml:space="preserve">
         <value>Showing dependencies of version:</value>
     </data>
+    <data name="ExhibitPackageModal_MissingDependenciesPrefixText" xml:space="preserve">
+        <value>Missing</value>
+    </data>
+    <data name="ExhibitPackageModal_MissingDependenciesSuffixText" xml:space="preserve">
+        <value>required dependencies</value>
+    </data>
+    <data name="ExhibitPackageModal_DetailPanelToggleToolTip" xml:space="preserve">
+        <value>Show or hide the details panel</value>
+    </data>
     <data name="ExhibitPackageModal_ChangelogsTabText" xml:space="preserve">
         <value>Changlogs</value>
     </data>

@@ -1236,6 +1236,15 @@
     <data name="ExhibitPackageModal_DependenciesTabPrompt" xml:space="preserve">
         <value>正在展示如下版本的前置：</value>
     </data>
+    <data name="ExhibitPackageModal_MissingDependenciesPrefixText" xml:space="preserve">
+        <value>缺失</value>
+    </data>
+    <data name="ExhibitPackageModal_MissingDependenciesSuffixText" xml:space="preserve">
+        <value>个必需前置</value>
+    </data>
+    <data name="ExhibitPackageModal_DetailPanelToggleToolTip" xml:space="preserve">
+        <value>显示或隐藏详情面板</value>
+    </data>
     <data name="ExhibitPackageModal_ChangelogsTabText" xml:space="preserve">
         <value>更新日志</value>
     </data>
