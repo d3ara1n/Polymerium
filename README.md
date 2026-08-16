@@ -172,6 +172,23 @@ message.
 
 </details>
 
+<details>
+<summary>🐧 <strong>Linux</strong> — requires glibc 2.34 or newer</summary>
+
+The bundled SQLite native library requires **glibc 2.34+**. On older distributions (Ubuntu 20.04, Debian 11, and
+derivatives such as Zorin OS 16, Pop!_OS 20.04, Linux Mint 20) the app fails to start with
+`DllNotFoundException: e_sqlite3`.
+
+Check your glibc version:
+
+```bash
+ldd --version
+```
+
+Use Ubuntu 22.04+, Debian 12+, or another distribution that ships glibc 2.34 or newer.
+
+</details>
+
 | Platform            | Package       | Direct Download                                                                                     |
 |---------------------|---------------|-----------------------------------------------------------------------------------------------------|
 | Windows x64         | Installer     | [Download](https://github.com/d3ara1n/Polymerium/releases/latest/download/Polymerium-win-Setup.exe) |
