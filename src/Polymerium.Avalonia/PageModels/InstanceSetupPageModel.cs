@@ -29,6 +29,7 @@ using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Modals;
+using Polymerium.Avalonia.ModalModels;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Services;
@@ -926,7 +927,11 @@ public partial class InstanceSetupPageModel(
                                                     ? loader.Identity
                                                     : null);
 
-                var updates = new ConcurrentBag<PackageBulkUpdateReviewerModel>();
+                var blacklist = persistenceService
+                   .GetUpdateBlacklist(Basic.Key)
+                   .ToDictionary(x => (x.Label, x.Namespace, x.ProjectId), x => x.VersionId);
+                var suppressed = 0;
+                var updates = new ConcurrentBag<PackageBulkUpdateCandidateModel>();
                 try
                 {
                     // NOTE: 并发度设 2 是上限，再大触发 Modrinth API 限流。
@@ -964,12 +969,20 @@ public partial class InstanceSetupPageModel(
                                                   .Instance
                                                   .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage
                                                   .Current()
-                                                  .Replace("{0}", updates.Count.ToString()),
+                                                  .Replace("{0}", updates.Count.ToString())
+                                              + (suppressed > 0
+                                                  ? " "
+                                                    + LanguageManager
+                                                       .Instance
+                                                       .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationSuppressedText
+                                                       .Current()
+                                                       .Replace("{0}", suppressed.ToString())
+                                                  : string.Empty),
                                                thumbnail: GetNotificationThumbnail(),
                                                actions: new GrowlAction(LanguageManager.Instance
                                                                            .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText
                                                                            .Current(),
-                                                                        new AsyncRelayCommand(ReviewAsync, CanReview)));
+                                                                        new RelayCommand(Review, CanReview)));
                 return;
 
                 async Task UpdateAsync(
@@ -987,31 +1000,48 @@ public partial class InstanceSetupPageModel(
                     {
                         if (result.Version is not null)
                         {
+                            var isListed = blacklist.TryGetValue((result.Repository,
+                                                                  result.Namespace ?? string.Empty,
+                                                                  result.Identity),
+                                out var blocked);
+
                             try
                             {
-                                var resolved = await dataService
-                                                    .ResolvePackageAsync(new(result.Repository,
-                                                                             result.Namespace,
-                                                                             result.Identity,
-                                                                             null),
-                                                                         filter,
-                                                                         false)
-                                                    .ConfigureAwait(false);
-                                if (resolved.VersionId != result.Version)
+                                // NOTE: hold（Vid 为空）整包抑制，连请求都不发；skip 只拦截同版本候选。
+                                if (isListed && blocked is null)
                                 {
-                                    var package = await dataService
-                                                       .ResolvePackageAsync(result, Filter.None)
-                                                       .ConfigureAwait(false);
-                                    var model = new PackageBulkUpdateReviewerModel(entry,
-                                        package,
-                                        package.Thumbnail ?? AssetUriIndex.DirtImage,
-                                        package.VersionId,
-                                        package.VersionName,
-                                        package.PublishedAt,
-                                        resolved.VersionId,
-                                        resolved.VersionName,
-                                        resolved.PublishedAt);
-                                    updates.Add(model);
+                                    Interlocked.Increment(ref suppressed);
+                                }
+                                else
+                                {
+                                    var resolved = await dataService
+                                                        .ResolvePackageAsync(result with { Version = null },
+                                                                             filter,
+                                                                             false)
+                                                        .ConfigureAwait(false);
+                                    if (resolved.VersionId != result.Version)
+                                    {
+                                        if (blocked == resolved.VersionId)
+                                        {
+                                            Interlocked.Increment(ref suppressed);
+                                        }
+                                        else
+                                        {
+                                            var package = await dataService
+                                                               .ResolvePackageAsync(result, Filter.None)
+                                                               .ConfigureAwait(false);
+                                            var model = new PackageBulkUpdateCandidateModel(entry,
+                                                package,
+                                                package.Thumbnail ?? AssetUriIndex.DirtImage,
+                                                package.VersionId,
+                                                package.VersionName,
+                                                package.PublishedAt,
+                                                resolved.VersionId,
+                                                resolved.VersionName,
+                                                resolved.PublishedAt);
+                                            updates.Add(model);
+                                        }
+                                    }
                                 }
                             }
                             catch (Exception ex)
@@ -1048,38 +1078,10 @@ public partial class InstanceSetupPageModel(
 
                 bool CanReview() => !updates.IsEmpty;
 
-                async Task ReviewAsync()
+                void Review()
                 {
-                    // NOTE: 直接改不可变 Profile 引用的性能 Trick：Profile 是单例，改动已生效，
-                    //  只是不经过 guard.DisposeAsync 落盘。不用 Guard 是避免无效刷新 diff，且本流程
-                    //  跨三个控制流、可在任意层中断，Guard 无法保证释放而可能泄露。缺陷：进程被杀时
-                    //  批量更新可能未保存到硬盘。
-                    var dialog = new PackageBulkUpdateReviewerDialog { Result = updates.ToList() };
-                    if (await overlayService.PopDialogAsync(dialog)
-                     && dialog.Result is IReadOnlyList<PackageBulkUpdateReviewerModel> results)
-                    {
-                        foreach (var model in results.Where(x => x.IsChecked))
-                        {
-                            var old = model.Model.Entry.Pref;
-                            model.Model.Info?.Version = new InstancePackageVersionModel(model.NewVersionId,
-                                model.NewVersionName,
-                                string.Join(",",
-                                            model.Package.Requirements.AnyOfLoaders.Select(LoaderHelper
-                                               .ToDisplayName)),
-                                string.Join(",", model.Package.Requirements.AnyOfVersions),
-                                model.NewVersionTimeRaw,
-                                model.Package.ReleaseType,
-                                model.Package.Dependencies);
-                            // NOTE: 给 Info.Version 赋值会同步写回 Entry.Pref。
-                            persistenceService.AppendAction(new()
-                            {
-                                Key = Basic.Key,
-                                Kind = PersistenceService.ActionKind.EditPackage,
-                                Old = old,
-                                New = model.Model.Entry.Pref
-                            });
-                        }
-                    }
+                    overlayService.PopModal<PackageBulkUpdateReviewModal>(
+                        new PackageBulkUpdateReviewModalModel.Parameter(Basic.Key, [.. updates]));
                 }
             }
         }

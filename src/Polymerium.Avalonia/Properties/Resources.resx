@@ -1398,11 +1398,26 @@
     <data name="InstancePropertiesPage_RequestNamePrompt" xml:space="preserve">
         <value>Give the instance a new name</value>
     </data>
-    <data name="PackageBulkUpdaterModal_UpdateButtonText" xml:space="preserve">
-        <value>Update Checked</value>
+    <data name="PackageBulkUpdateReviewModal_ApplyButtonText" xml:space="preserve">
+        <value>Apply</value>
     </data>
-    <data name="PackageBulkUpdaterModal_Title" xml:space="preserve">
-        <value>Update packages in bulk</value>
+    <data name="PackageBulkUpdateReviewModal_ChangelogTabText" xml:space="preserve">
+        <value>Changelog</value>
+    </data>
+    <data name="PackageBulkUpdateReviewModal_ChangelogUnavailableText" xml:space="preserve">
+        <value>Failed to load the changelog, and the update is not affected.</value>
+    </data>
+    <data name="PackageBulkUpdateDecision_Update" xml:space="preserve">
+        <value>Update</value>
+    </data>
+    <data name="PackageBulkUpdateDecision_NotThisTime" xml:space="preserve">
+        <value>Not this time</value>
+    </data>
+    <data name="PackageBulkUpdateDecision_SkipVersion" xml:space="preserve">
+        <value>Skip this version</value>
+    </data>
+    <data name="PackageBulkUpdateDecision_Hold" xml:space="preserve">
+        <value>Hold updates</value>
     </data>
     <data name="InstanceSetupPage_DependencyGraphMenuText" xml:space="preserve">
         <value>Dependency Graph</value>
@@ -1520,6 +1535,9 @@
     </data>
     <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage" xml:space="preserve">
         <value>{0} packages to be updated</value>
+    </data>
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationSuppressedText" xml:space="preserve">
+        <value>({0} packages hidden by update policies)</value>
     </data>
     <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
         <value>Review</value>

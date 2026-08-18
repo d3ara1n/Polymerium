@@ -164,6 +164,27 @@ public class PersistenceService(IFreeSql freeSql)
 
     #endregion
 
+    #region Nested type: UpdateBlacklist
+
+    public class UpdateBlacklist
+    {
+        [Column(IsPrimary = true)]
+        public required string Key { get; set; }
+
+        [Column(IsPrimary = true)]
+        public required string Label { get; set; }
+
+        [Column(IsPrimary = true)]
+        public required string Namespace { get; set; }
+
+        [Column(IsPrimary = true)]
+        public required string ProjectId { get; set; }
+
+        public string? VersionId { get; set; }
+    }
+
+    #endregion
+
     #region Nested type: Recipe
 
     public class Recipe
@@ -583,6 +604,44 @@ public class PersistenceService(IFreeSql freeSql)
             || favorite.Summary.Contains(query, StringComparison.OrdinalIgnoreCase)
             || DeserializeFavoriteTags(favorite.Tags).Any(x => x.Contains(query, StringComparison.OrdinalIgnoreCase));
     }
+
+    #endregion
+
+    #region UpdateBlacklist
+
+    public IReadOnlyList<UpdateBlacklist> GetUpdateBlacklist(string key) =>
+        freeSql.Select<UpdateBlacklist>().Where(x => x.Key == key).ToList();
+
+    public UpdateBlacklist? FindUpdateBlacklist(string key, string label, string? ns, string projectId) =>
+        freeSql
+           .Select<UpdateBlacklist>()
+           .Where(x => x.Key == key
+                   && x.Label == label
+                   && x.Namespace == (ns ?? string.Empty)
+                   && x.ProjectId == projectId)
+           .First();
+
+    public void SetUpdateBlacklist(string key, string label, string? ns, string projectId, string? versionId) =>
+        freeSql
+           .InsertOrUpdate<UpdateBlacklist>()
+           .SetSource(new()
+           {
+               Key = key,
+               Label = label,
+               Namespace = ns ?? string.Empty,
+               ProjectId = projectId,
+               VersionId = versionId
+           })
+           .ExecuteAffrows();
+
+    public int RemoveUpdateBlacklist(string key, string label, string? ns, string projectId) =>
+        freeSql
+           .Delete<UpdateBlacklist>()
+           .Where(x => x.Key == key
+                   && x.Label == label
+                   && x.Namespace == (ns ?? string.Empty)
+                   && x.ProjectId == projectId)
+           .ExecuteAffrows();
 
     #endregion
 
