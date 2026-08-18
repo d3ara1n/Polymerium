@@ -124,6 +124,11 @@ public partial class InstanceSetupPageModel(
 
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
+            var heldKeys = persistenceService
+               .GetUpdateBlacklist(Basic.Key)
+               .Where(x => x.VersionId is null)
+               .Select(x => (x.Label, x.Namespace, x.ProjectId))
+               .ToHashSet();
             // NOTE: Entry 按地址比较，仍存在的包不动其 Entry 项（实例稳定）；信息是否陈旧由
             //  RefreshMetadataAsync 现场重判，这里不预判。
             var lookup = profile.Setup.Packages.ToHashSet();
@@ -143,6 +148,13 @@ public partial class InstanceSetupPageModel(
                 {
                     toRemove.Add(item.Key);
                 }
+
+                if (PackageHelper.TryParse(entry.Pref, out var pref))
+                {
+                    item.Package.IsUpdateHeld = heldKeys.Contains((pref.Repository,
+                                                                   pref.Namespace ?? string.Empty,
+                                                                   pref.Identity));
+                }
             }
 
             _flat.Remove(toRemove);
@@ -154,6 +166,12 @@ public partial class InstanceSetupPageModel(
                             {
                                 PersistentIndex = persistentIndex++
                             };
+                            if (PackageHelper.TryParse(x.Pref, out var pref))
+                            {
+                                pkg.IsUpdateHeld = heldKeys.Contains((pref.Repository,
+                                                                     pref.Namespace ?? string.Empty,
+                                                                     pref.Identity));
+                            }
                             return new PackageListItemBase.Entry
                             {
                                 Key = new PackageListKey.Entry(x), Group = GroupModelOf(pkg), Package = pkg

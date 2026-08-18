@@ -64,6 +64,11 @@ public partial class InstancePackageModal : Modal
                                                                     o => o.IsDeleting,
                                                                     (o, v) => o.IsDeleting = v);
 
+    public static readonly DirectProperty<InstancePackageModal, PackageUpdatePolicy> UpdatePolicyProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, PackageUpdatePolicy>(nameof(UpdatePolicy),
+                                                                                   o => o.UpdatePolicy,
+                                                                                   (o, v) => o.UpdatePolicy = v);
+
     public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyRulesProperty =
         AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyRules),
                                                                            o => o.LazyRules,
@@ -76,6 +81,8 @@ public partial class InstancePackageModal : Modal
 
     private IDisposable? _dependencySubscription;
 
+    private bool _suppressPolicyWrite;
+
     private string? _old;
 
     public InstancePackageModal() => InitializeComponent();
@@ -84,6 +91,12 @@ public partial class InstancePackageModal : Modal
     {
         get;
         set => SetAndRaise(IsDeletingProperty, ref field, value);
+    }
+
+    public PackageUpdatePolicy UpdatePolicy
+    {
+        get;
+        set => SetAndRaise(UpdatePolicyProperty, ref field, value);
     }
 
     public LazyObject? LazyRules
@@ -497,6 +510,15 @@ public partial class InstancePackageModal : Modal
 
         _old = Model.Owner.Entry.Pref;
         IsFilterEnabled = true;
+        var record = PersistenceService.FindUpdateBlacklist(Guard.Key, Model.Label, Model.Namespace, Model.ProjectId);
+        _suppressPolicyWrite = true;
+        UpdatePolicy = record switch
+        {
+            null => PackageUpdatePolicy.Normal,
+            { VersionId: null } => PackageUpdatePolicy.Hold,
+            _ => PackageUpdatePolicy.SkipVersion
+        };
+        _suppressPolicyWrite = false;
         LazyDependencies = ConstructDependencies();
         SetupDependencyWatcher();
         LazyDependants = ConstructDependants();
@@ -552,6 +574,53 @@ public partial class InstancePackageModal : Modal
         if (change.Property == SelectedVersionProxyProperty)
         {
             LazyBuildStatus = ConstructBuildStatus();
+        }
+
+        if (change.Property == UpdatePolicyProperty && !_suppressPolicyWrite)
+        {
+            _ = HandleUpdatePolicyChangedAsync((PackageUpdatePolicy)change.OldValue!,
+                                               (PackageUpdatePolicy)change.NewValue!);
+        }
+    }
+
+    private async Task HandleUpdatePolicyChangedAsync(PackageUpdatePolicy oldValue, PackageUpdatePolicy value)
+    {
+        switch (value)
+        {
+            case PackageUpdatePolicy.Normal:
+                PersistenceService.RemoveUpdateBlacklist(Guard.Key, Model.Label, Model.Namespace, Model.ProjectId);
+                Model.Owner.IsUpdateHeld = false;
+                break;
+            case PackageUpdatePolicy.Hold:
+                PersistenceService.SetUpdateBlacklist(Guard.Key, Model.Label, Model.Namespace, Model.ProjectId, null);
+                Model.Owner.IsUpdateHeld = true;
+                break;
+            case PackageUpdatePolicy.SkipVersion:
+                try
+                {
+                    var latest = await DataService.ResolvePackageAsync(
+                        new(Model.Label, Model.Namespace, Model.ProjectId, null),
+                        Filter,
+                        false);
+                    PersistenceService.SetUpdateBlacklist(Guard.Key,
+                                                          Model.Label,
+                                                          Model.Namespace,
+                                                          Model.ProjectId,
+                                                          latest.VersionId);
+                    Model.Owner.IsUpdateHeld = false;
+                }
+                catch (Exception ex)
+                {
+                    NotificationService.PopMessage(ex,
+                                                    LanguageManager
+                                                       .Instance.InstanceSetupPage_LoadProjectInformationDangerNotificationTitle
+                                                       .Current());
+                    _suppressPolicyWrite = true;
+                    UpdatePolicy = oldValue;
+                    _suppressPolicyWrite = false;
+                }
+
+                break;
         }
     }
 
