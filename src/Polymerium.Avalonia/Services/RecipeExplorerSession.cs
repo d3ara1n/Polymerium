@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
+using FluentIcons.Common;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Exceptions;
 using Polymerium.Avalonia.Modals;
@@ -34,6 +35,10 @@ public sealed class RecipeExplorerSession : ExplorerSession
         _persistenceService = persistenceService;
         _dataService = dataService;
         _overlayService = overlayService;
+
+        PrimaryCollectAction = new("ExplorerPage_CollectButtonText",
+                                    Symbol.BoxMultipleArrowLeft,
+                                    CollectAsync);
     }
 
     public override Bitmap? Background => null;
@@ -41,6 +46,8 @@ public sealed class RecipeExplorerSession : ExplorerSession
     public override string Title => _title;
 
     public override Filter? InitialFilter => null;
+
+    public override ExplorerActionModel PrimaryCollectAction { get; }
 
     public override void Validate()
     {
@@ -106,7 +113,7 @@ public sealed class RecipeExplorerSession : ExplorerSession
             }));
     }
 
-    public override Task<bool> CollectAsync(IReadOnlyList<ExhibitModel> pending)
+    private Task<bool> CollectAsync(IReadOnlyList<ExhibitModel> pending)
     {
         foreach (var model in pending)
         {

@@ -462,6 +462,9 @@
     <data name="ExplorerPage_CollectButtonText" xml:space="preserve">
         <value>Collect</value>
     </data>
+    <data name="ExplorerPage_CollectIntoCollectionMenuText" xml:space="preserve">
+        <value>Collect into collection</value>
+    </data>
     <data name="ExplorerPage_SearchBarPlaceholder" xml:space="preserve">
         <value>Search by names and names...</value>
     </data>

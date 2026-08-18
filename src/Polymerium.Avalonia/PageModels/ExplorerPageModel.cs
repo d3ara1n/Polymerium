@@ -83,6 +83,37 @@ public partial class ExplorerPageModel : ViewModelBase
         AddingPackagesView = adding;
         ModifyingPackagesView = modifying;
         RemovingPackagesView = removing;
+
+        var primary = _session.PrimaryCollectAction;
+        CollectCommand = new AsyncRelayCommand(() => ExecuteCollectAsync(primary), () => CanCollect(primary));
+        PrimaryAction = new(primary.LangKey, primary.Icon, CollectCommand);
+
+        List<ExplorerActionItemModel> items = [];
+        List<IAsyncRelayCommand> commands = [CollectCommand];
+        foreach (var action in _session.SecondaryCollectActions)
+        {
+            var command = new AsyncRelayCommand(() => ExecuteCollectAsync(action), () => CanCollect(action));
+            commands.Add(command);
+            items.Add(new(action.LangKey, action.Icon, command));
+        }
+
+        SecondaryActions = items;
+        HasSecondaryActions = items.Count > 0;
+
+        // NOTE: 命令的 CanExecute 依赖待定区快照，而快照是传入命令的数组、不会通知命令，
+        //  必须在待定区变化时显式 requery
+        IRelayCommand[] requeryCommands = [.. commands, DismissPendingCommand];
+        PendingPackagesSource
+           .Connect()
+           .QueryWhenChanged()
+           .Subscribe(_ =>
+            {
+                foreach (var command in requeryCommands)
+                {
+                    command.NotifyCanExecuteChanged();
+                }
+            })
+           .DisposeWith(_subscriptions);
     }
 
     #region Overrides
@@ -119,6 +150,14 @@ public partial class ExplorerPageModel : ViewModelBase
     public string? FilterLoaderLabel { get; }
 
     public string? FilterVersionLabel { get; }
+
+    public ExplorerActionItemModel PrimaryAction { get; }
+
+    public IAsyncRelayCommand CollectCommand { get; }
+
+    public IReadOnlyList<ExplorerActionItemModel> SecondaryActions { get; }
+
+    public bool HasSecondaryActions { get; }
 
     #endregion
 
@@ -163,6 +202,17 @@ public partial class ExplorerPageModel : ViewModelBase
 
         return found;
     }
+
+    private async Task ExecuteCollectAsync(ExplorerActionModel action)
+    {
+        if (await action.Handler([.. PendingPackagesSource.Items]))
+        {
+            PendingPackagesSource.Clear();
+        }
+    }
+
+    private bool CanCollect(ExplorerActionModel action) =>
+        PendingPackagesSource.Count > 0 && (action.CanExecute?.Invoke([.. PendingPackagesSource.Items]) ?? true);
 
     #endregion
 
@@ -410,7 +460,7 @@ public partial class ExplorerPageModel : ViewModelBase
         exhibit.IsFavorite = true;
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanDismissPending))]
     private void DismissPending()
     {
         foreach (var model in PendingPackagesSource.Items)
@@ -420,6 +470,8 @@ public partial class ExplorerPageModel : ViewModelBase
 
         PendingPackagesSource.Clear();
     }
+
+    private bool CanDismissPending() => PendingPackagesSource.Count > 0;
 
     [RelayCommand]
     private void RemoveFromPending(ExhibitModel? exhibit)
@@ -434,15 +486,6 @@ public partial class ExplorerPageModel : ViewModelBase
         exhibit.PendingVersionName = null;
 
         PendingPackagesSource.RemoveKey(KeyOf(exhibit));
-    }
-
-    [RelayCommand]
-    private async Task CollectPendingAsync()
-    {
-        if (await _session.CollectAsync(PendingPackagesSource.Items.ToArray()))
-        {
-            PendingPackagesSource.Clear();
-        }
     }
 
     #endregion
