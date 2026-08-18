@@ -1389,11 +1389,26 @@
     <data name="InstancePropertiesPage_RequestNamePrompt" xml:space="preserve">
         <value>为实例设置一个新名称</value>
     </data>
-    <data name="PackageBulkUpdaterModal_UpdateButtonText" xml:space="preserve">
-        <value>升级选中</value>
+    <data name="PackageBulkUpdateReviewModal_ApplyButtonText" xml:space="preserve">
+        <value>应用</value>
     </data>
-    <data name="PackageBulkUpdaterModal_Title" xml:space="preserve">
-        <value>批量升级包版本</value>
+    <data name="PackageBulkUpdateReviewModal_ChangelogTabText" xml:space="preserve">
+        <value>更新日志</value>
+    </data>
+    <data name="PackageBulkUpdateReviewModal_ChangelogUnavailableText" xml:space="preserve">
+        <value>更新日志加载失败，不影响更新。</value>
+    </data>
+    <data name="PackageBulkUpdateDecision_Update" xml:space="preserve">
+        <value>更新</value>
+    </data>
+    <data name="PackageBulkUpdateDecision_NotThisTime" xml:space="preserve">
+        <value>本次不更新</value>
+    </data>
+    <data name="PackageBulkUpdateDecision_SkipVersion" xml:space="preserve">
+        <value>跳过此版本</value>
+    </data>
+    <data name="PackageBulkUpdateDecision_Hold" xml:space="preserve">
+        <value>暂停更新</value>
     </data>
     <data name="InstanceSetupPage_DependencyGraphMenuText" xml:space="preserve">
         <value>依赖关系</value>
@@ -1511,6 +1526,9 @@
     </data>
     <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage" xml:space="preserve">
         <value>{0} 个包存在新版本</value>
+    </data>
+    <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationSuppressedText" xml:space="preserve">
+        <value>（{0} 个包被更新策略隐藏）</value>
     </data>
     <data name="InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText" xml:space="preserve">
         <value>查看</value>

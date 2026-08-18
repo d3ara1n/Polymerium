@@ -22,7 +22,7 @@ public class GarbageCollector(
         var activeUuids = freeSql.Select<PersistenceService.Account>().ToList(x => x.Uuid).ToHashSet();
         var activeKeyList = activeKeys.ToList();
 
-        var totalSteps = 8 + activeKeyList.Count;
+        var totalSteps = 9 + activeKeyList.Count;
         var completed = 0;
 
         var orphanSelectorKeys = freeSql
@@ -137,6 +137,22 @@ public class GarbageCollector(
         if (orphanTagKeys.Count > 0)
         {
             freeSql.Delete<PersistenceService.InstanceTag>().Where(x => orphanTagKeys.Contains(x.Key)).ExecuteAffrows();
+        }
+
+        progress.Report((double)++completed / totalSteps);
+
+        var orphanBlacklistKeys = freeSql
+                                .Select<PersistenceService.UpdateBlacklist>()
+                                .ToList(x => x.Key)
+                                .Distinct()
+                                .Where(k => !activeKeys.Contains(k))
+                                .ToList();
+        if (orphanBlacklistKeys.Count > 0)
+        {
+            freeSql
+               .Delete<PersistenceService.UpdateBlacklist>()
+               .Where(x => orphanBlacklistKeys.Contains(x.Key))
+               .ExecuteAffrows();
         }
 
         progress.Report((double)++completed / totalSteps);

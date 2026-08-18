@@ -1,12 +1,11 @@
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Humanizer;
 using Polymerium.Avalonia.Facilities;
 using TridentCore.Abstractions.Repositories.Resources;
 
 namespace Polymerium.Avalonia.Models;
 
-public partial class PackageBulkUpdateReviewerModel(
+public partial class PackageBulkUpdateCandidateModel(
     InstancePackageModel model,
     Package package,
     Uri thumbnail,
@@ -20,7 +19,7 @@ public partial class PackageBulkUpdateReviewerModel(
     #region Reactive
 
     [ObservableProperty]
-    public partial bool IsChecked { get; set; } = true;
+    public partial PackageBulkUpdateDecision Decision { get; set; } = PackageBulkUpdateDecision.Update;
 
     #endregion
 
@@ -31,12 +30,10 @@ public partial class PackageBulkUpdateReviewerModel(
     public Uri Thumbnail => thumbnail;
     public string OldVersionId => oldVersionId;
     public string OldVersionName => oldVersionName;
-    public DateTimeOffset OldVersionTimeRaw => oldVersionTime;
-    public string OldVersionTime => oldVersionTime.Humanize();
+    public DateTimeOffset OldVersionTime => oldVersionTime;
     public string NewVersionId => newVersionId;
     public string NewVersionName => newVersionName;
-    public DateTimeOffset NewVersionTimeRaw => newVersionTime;
-    public string NewVersionTime => newVersionTime.Humanize();
+    public DateTimeOffset NewVersionTime => newVersionTime;
 
     #endregion
 }

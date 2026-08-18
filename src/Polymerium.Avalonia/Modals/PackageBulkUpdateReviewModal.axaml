@@ -1,0 +1,201 @@
+<husk:Modal
+    x:Class="Polymerium.Avalonia.Modals.PackageBulkUpdateReviewModal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+    xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    MinWidth="720"
+    MinHeight="480"
+    Margin="64"
+    d:DesignHeight="640"
+    d:DesignWidth="960"
+    x:DataType="app:PackageBulkUpdateReviewModalModel"
+    mc:Ignorable="d">
+    <Grid
+        RowDefinitions="*,Auto"
+        RowSpacing="12">
+        <Grid Grid.Row="0" ColumnDefinitions="*,360" ColumnSpacing="12">
+            <Border
+                Grid.Column="0"
+                Padding="8"
+                Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                CornerRadius="{StaticResource MediumCornerRadius}">
+                <ListBox
+                    Theme="{StaticResource CleanListBoxTheme}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    ItemsSource="{Binding Candidates}"
+                    SelectedItem="{Binding SelectedCandidate, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
+                            <DataTemplate DataType="app:PackageBulkUpdateCandidateModel">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <Border
+                                        Grid.Column="0"
+                                        Width="48"
+                                        Height="48"
+                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <Border.Background>
+                                            <ImageBrush asyncImageLoader:ImageBrushLoader.Source="{Binding Thumbnail}" />
+                                        </Border.Background>
+                                    </Border>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Spacing="4">
+                                        <TextBlock
+                                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                                            Text="{Binding Package.ProjectName}"
+                                            TextTrimming="CharacterEllipsis" />
+                                        <husk:IconLabel
+                                            Icon="ArrowUp"
+                                            Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                            Text="{Binding NewVersionName}" />
+                                        <husk:IconLabel
+                                            Icon="ArrowDown"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            Text="{Binding OldVersionName}"/>
+                                    </StackPanel>
+                                    <DockPanel Grid.Column="2">
+                                        <TextBlock
+                                            DockPanel.Dock="Top"
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                            HorizontalAlignment="Right"
+                                            Text="{Binding NewVersionTime, Converter={x:Static app:HumanizerConverters.DateTime}}"
+                                            ToolTip.Tip="{Binding NewVersionTime}" />
+                                        <ComboBox
+                                            VerticalAlignment="Center"
+                                            ItemsSource="{Binding Source={x:Type app:PackageBulkUpdateDecision}, Mode=OneTime, x:DataType={x:Type collections:IEnumerable}, Converter={x:Static app:InternalConverters.EnumTypeToList}}"
+                                            SelectedItem="{Binding Decision, Mode=TwoWay}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate DataType="app:PackageBulkUpdateDecision">
+                                                    <TextBlock Text="{app:LocalizedEnum {Binding}}" />
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox></DockPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+            <Border
+                Grid.Column="1"
+                Padding="12"
+                Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                CornerRadius="{StaticResource MediumCornerRadius}">
+                <Grid RowDefinitions="Auto,*" RowSpacing="12">
+                <husk:PlaceholderContainer Grid.Row="0" Source="{Binding SelectedCandidate}">
+                    <husk:PlaceholderContainer.SourceTemplate>
+                        <DataTemplate DataType="app:PackageBulkUpdateCandidateModel">
+                            <Border
+                                Padding="12"
+                                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                <StackPanel Spacing="4">
+                                    <TextBlock
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{Binding Package.ProjectName}"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                        Text="{Binding NewVersionName}"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Binding OldVersionName}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </husk:PlaceholderContainer.SourceTemplate>
+                    <husk:PlaceholderContainer.Placeholder>
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            Spacing="8">
+                            <fi:SymbolIcon
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource ExtraLargeFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Symbol="Box" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="{StaticResource LargeFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.Shared_EmptyListLabelText}}" />
+                        </StackPanel>
+                    </husk:PlaceholderContainer.Placeholder>
+                </husk:PlaceholderContainer>
+                <TabControl Grid.Row="1" Padding="0">
+                    <TabControl.Styles>
+                        <Style Selector="TabItem">
+                            <Setter Property="Margin" Value="0" />
+                        </Style>
+                    </TabControl.Styles>
+                    <TabItem Header="{Translate {x:Static app:LanguageManager+Keys.PackageBulkUpdateReviewModal_ChangelogTabText}}">
+                        <husk:LazyContainer Source="{Binding LazyChangelog}">
+                            <husk:LazyContainer.SourceTemplate>
+                                <DataTemplate DataType="x:String">
+                                    <ScrollViewer>
+                                        <husk:MarkdownViewer
+                                            Margin="12"
+                                            Markdown="{Binding}" />
+                                    </ScrollViewer>
+                                </DataTemplate>
+                            </husk:LazyContainer.SourceTemplate>
+                            <husk:LazyContainer.FaultContent>
+                                <StackPanel
+                                    Margin="12"
+                                    VerticalAlignment="Center"
+                                    Spacing="8">
+                                    <fi:SymbolIcon
+                                        HorizontalAlignment="Center"
+                                        FontSize="{StaticResource ExtraLargeFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Symbol="DocumentDismiss" />
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.PackageBulkUpdateReviewModal_ChangelogUnavailableText}}"
+                                        TextAlignment="Center" />
+                                </StackPanel>
+                            </husk:LazyContainer.FaultContent>
+                        </husk:LazyContainer>
+                    </TabItem>
+                </TabControl>
+                </Grid>
+            </Border>
+        </Grid>
+        <husk:ModalActionPanel
+            Grid.Row="1"
+            Layout="Right"
+            Spacing="8">
+            <Button
+                Classes="Primary"
+                Command="{Binding ApplyCommand}"
+                IsDefault="True">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="6">
+                    <fi:SymbolIcon
+                        FontSize="{StaticResource MediumFontSize}"
+                        Symbol="Checkmark" />
+                    <TextBlock>
+                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.PackageBulkUpdateReviewModal_ApplyButtonText}}" />
+                        <Run Text="{Binding UpdateCount, StringFormat=' ({0})'}" Foreground="{StaticResource ControlSecondaryForegroundBrush}"/>
+                    </TextBlock>
+                </StackPanel>
+            </Button>
+            <Button
+                Command="{Binding $parent[app:PackageBulkUpdateReviewModal].Dismiss}"
+                IsCancel="True">
+                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.Dialog_CancelButtonText}}" />
+            </Button>
+        </husk:ModalActionPanel>
+    </Grid>
+</husk:Modal>

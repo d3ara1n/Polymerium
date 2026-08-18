@@ -4,7 +4,7 @@
 
 - Fix a failed modpack update partially deleting or corrupting the instance
 - Reduce the installed size by over 40% through release-only trimming that keeps unannotated third-party assemblies intact
-- Improve memory efficiency when browsing many image thumbnails
+- Introduce persistent skip and hold update policies and changelog previews to the bulk update review modal
 
 ### Fixed
 
@@ -16,6 +16,7 @@
 ### Added
 
 - Add a modpack's bundled icon as the instance icon when the pack ships one
+- Introduce persistent skip and hold update policies and changelog previews to the bulk update review modal (#89, #POLY-159)
 
 ### Changed
 
