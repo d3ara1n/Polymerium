@@ -453,6 +453,9 @@
     <data name="ExplorerPage_CollectButtonText" xml:space="preserve">
         <value>执行</value>
     </data>
+    <data name="ExplorerPage_CollectIntoCollectionMenuText" xml:space="preserve">
+        <value>执行并归入集合</value>
+    </data>
     <data name="ExplorerPage_SearchBarPlaceholder" xml:space="preserve">
         <value>根据名字...</value>
     </data>

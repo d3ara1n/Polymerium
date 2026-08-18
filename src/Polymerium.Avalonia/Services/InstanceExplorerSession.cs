@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.Input;
+using FluentIcons.Common;
 using Polymerium.Avalonia.Assets;
+using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Exceptions;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.ModalModels;
@@ -42,6 +44,17 @@ public sealed class InstanceExplorerSession : ExplorerSession
         _dataService = dataService;
         _overlayService = overlayService;
         _persistenceService = persistenceService;
+
+        PrimaryCollectAction = new("ExplorerPage_CollectButtonText",
+                                    Symbol.BoxMultipleArrowLeft,
+                                    pending => CollectCoreAsync(pending, null));
+        SecondaryCollectActions =
+        [
+            new("ExplorerPage_CollectIntoCollectionMenuText",
+                Symbol.CollectionsAdd,
+                CollectIntoCollectionAsync,
+                pending => pending.Any(x => x.State == ExhibitState.Adding))
+        ];
     }
 
     public override string Title => _basic?.Name ?? _key;
@@ -56,6 +69,10 @@ public sealed class InstanceExplorerSession : ExplorerSession
                       ? loader.Identity
                       : null,
                   null);
+
+    public override ExplorerActionModel PrimaryCollectAction { get; }
+
+    public override IReadOnlyList<ExplorerActionModel> SecondaryCollectActions { get; }
 
     public override void Validate()
     {
@@ -126,7 +143,8 @@ public sealed class InstanceExplorerSession : ExplorerSession
 
     // NOTE: Entry 是 Validate 时捕获的同一份 Profile 里的对象，TryGetMutable 的 guard 包的也是这份
     //  Profile，所以直接改 entry.Pref / Remove(entry) 就能落盘，零 lookup。
-    public override async Task<bool> CollectAsync(IReadOnlyList<ExhibitModel> pending)
+    //  collection 只标记新增条目的 Source；修改/移除分支不碰 Source，已装包的集合归属不变。
+    private async Task<bool> CollectCoreAsync(IReadOnlyList<ExhibitModel> pending, CollectionModel? collection)
     {
         if (!_profileManager.TryGetMutable(_key, out var guard))
         {
@@ -143,7 +161,7 @@ public sealed class InstanceExplorerSession : ExplorerSession
                         {
                             Enabled = true,
                             Pref = PackageHelper.ToPref(m.Label, m.Namespace, m.ProjectId, m.PendingVersionId),
-                            Source = null
+                            Source = collection?.Uri
                         };
                         _persistenceService.AppendAction(new()
                         {
@@ -195,6 +213,28 @@ public sealed class InstanceExplorerSession : ExplorerSession
 
         await guard.DisposeAsync();
         return true;
+    }
+
+    private async Task<bool> CollectIntoCollectionAsync(IReadOnlyList<ExhibitModel> pending)
+    {
+        var existing = _profileManager.TryGetImmutable(_key, out var p)
+                           ? p.Setup.Packages
+                              .Select(e => e.Source)
+                              .OfType<string>()
+                              .Where(s => InternalUriHelper.IsKind(s, CollectionHelper.SCHEME))
+                              .Select(s => CollectionHelper.TryGetName(s, out var n) ? new CollectionModel(n, s) : null)
+                              .OfType<CollectionModel>()
+                              .Distinct()
+                              .ToList()
+                           : [];
+
+        var dialog = new CollectionPickerDialog { ExistingCollections = existing };
+        if (!await _overlayService.PopDialogAsync(dialog) || dialog.Result is not CollectionModel collection)
+        {
+            return false;
+        }
+
+        return await CollectCoreAsync(pending, collection);
     }
 
     #endregion

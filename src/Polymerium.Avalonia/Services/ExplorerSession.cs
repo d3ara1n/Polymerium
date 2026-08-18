@@ -34,9 +34,12 @@ public abstract class ExplorerSession
         Action<ExhibitModel> modifyPending,
         Func<ProjectIdentifier, ExhibitModel?> findExisting);
 
-    // NOTE: 落盘待定改动。instance 原地修改随身携带的 Entry（零 lookup），recipe 更新自己的配方存储。
-    //  返回 false 表示写入失败，待定区应保留等待重试。
-    public abstract Task<bool> CollectAsync(IReadOnlyList<ExhibitModel> pending);
+    // NOTE: 提交动作由 session 自声明而非契约方法：Primary 是主动作，Secondary 是挂在主动作
+    //  旁边的变体（如「归入集合并执行」）。宿主只认这两个属性；基类默认 noop/空列表，派生类
+    //  显式声明——忘记声明 Primary 会导致按钮无效果，而不是把死接口留在契约上。
+    public virtual ExplorerActionModel PrimaryCollectAction { get; } = ExplorerActionModel.Noop;
+
+    public virtual IReadOnlyList<ExplorerActionModel> SecondaryCollectActions => [];
 
     public virtual void Validate() { }
 }

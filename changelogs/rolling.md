@@ -5,6 +5,7 @@
 - Fix a failed modpack update partially deleting or corrupting the instance
 - Reduce the installed size by over 40% through release-only trimming that keeps unannotated third-party assemblies intact
 - Introduce persistent skip and hold update policies and changelog previews to the bulk update review modal
+- Add the ability to collect marketplace packages into a new or existing collection from the collect action
 
 ### Fixed
 
@@ -17,6 +18,7 @@
 
 - Add a modpack's bundled icon as the instance icon when the pack ships one
 - Introduce persistent skip and hold update policies for bulk package updates with changelog previews in the review modal and per-package policy indicators and editing (#89, #POLY-159)
+- Add the ability to collect marketplace packages into a new or existing collection from the collect action (#86, #POLY-157)
 
 ### Changed
 

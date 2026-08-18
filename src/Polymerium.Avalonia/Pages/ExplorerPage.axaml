@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:fie="clr-namespace:FluentIcons.Avalonia.Markup;assembly=FluentIcons.Avalonia"
+    xmlns:fic="clr-namespace:FluentIcons.Common;assembly=FluentIcons.Common"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resources="clr-namespace:TridentCore.Abstractions.Repositories.Resources;assembly=TridentCore.Abstractions"
@@ -42,7 +43,8 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_RepositoryMenuText}}" />
+                        <TextBlock
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_RepositoryMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Label, FallbackValue=Repository}" />
@@ -56,7 +58,8 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_NamespaceMenuText}}" />
+                        <TextBlock
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_NamespaceMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Namespace, FallbackValue=Namespace}" />
@@ -70,7 +73,8 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectNameMenuText}}" />
+                        <TextBlock
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectNameMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding ProjectName, FallbackValue=Project Name}" />
@@ -84,7 +88,8 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectIdMenuText}}" />
+                        <TextBlock
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectIdMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding ProjectId, FallbackValue=Pid}" />
@@ -118,7 +123,8 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectNameMenuText}}" />
+                        <TextBlock
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectNameMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding ProjectName, FallbackValue=Project Name}" />
@@ -132,7 +138,8 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectIdMenuText}}" />
+                        <TextBlock
+                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupPage_ProjectIdMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding ProjectId, FallbackValue=Pid}" />
@@ -146,7 +153,8 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_RepositoryMenuText}}" />
+                        <TextBlock
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_RepositoryMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Label, FallbackValue=Repository}" />
@@ -160,7 +168,8 @@
                                       FontSize={StaticResource MediumFontSize}}">
                 <MenuItem.Header>
                     <StackPanel>
-                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_NamespaceMenuText}}" />
+                        <TextBlock
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_NamespaceMenuText}}" />
                         <TextBlock
                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Namespace, FallbackValue=Namespace}" />
@@ -191,6 +200,14 @@
                 ContextFlyout="{StaticResource ExhibitPendingPackageButtonFlyout}" />
         </DataTemplate>
     </app:ScopedPage.Resources>
+    <!--  MenuItem.Icon 只收数据：Symbol 枚举经此隐式模板渲染为图标，落入菜单模板的图标槽  -->
+    <app:ScopedPage.DataTemplates>
+        <DataTemplate x:DataType="fic:Symbol">
+            <fi:SymbolIcon
+                FontSize="{StaticResource MediumFontSize}"
+                Symbol="{Binding}" />
+        </DataTemplate>
+    </app:ScopedPage.DataTemplates>
     <Grid
         ColumnDefinitions="Auto,Auto,*"
         RowDefinitions="Auto,Auto,*">
@@ -250,7 +267,8 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="6">
-                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_ModifyLabelText}}" />
+                            <TextBlock
+                                Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_ModifyLabelText}}" />
                         </StackPanel>
                     </husk:Divider>
                     <Panel>
@@ -275,7 +293,8 @@
                         <StackPanel
                             Orientation="Horizontal"
                             Spacing="6">
-                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_RemoveLabelText}}" />
+                            <TextBlock
+                                Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_RemoveLabelText}}" />
                         </StackPanel>
                     </husk:Divider>
                     <Panel>
@@ -302,50 +321,64 @@
                 Grid.Row="2"
                 Margin="12"
                 Spacing="10">
-                <Button
-                    Classes="Primary"
-                    Padding="12,6"
-                    Command="{Binding CollectPendingCommand}"
-                    CornerRadius="{StaticResource MediumCornerRadius}">
-                    <Button.IsEnabled>
-                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                            <Binding
-                                Converter="{x:Static husk:NumberConverters.IsNonZero}"
-                                Path="AddingPackagesView.Count" />
-                            <Binding
-                                Converter="{x:Static husk:NumberConverters.IsNonZero}"
-                                Path="ModifyingPackagesView.Count" />
-                            <Binding
-                                Converter="{x:Static husk:NumberConverters.IsNonZero}"
-                                Path="RemovingPackagesView.Count" />
-                        </MultiBinding>
-                    </Button.IsEnabled>
-                    <StackPanel
-                        Orientation="Horizontal"
-                        Spacing="6">
-                        <fi:SymbolIcon
-                            FontSize="{StaticResource LargeFontSize}"
-                            Symbol="BoxMultipleArrowLeft" />
-                        <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.ExplorerPage_CollectButtonText}}" />
-                    </StackPanel>
-                </Button>
+                <husk:SwitchContainer
+                    TargetType="x:Boolean"
+                    Value="{Binding HasSecondaryActions, FallbackValue=False}">
+                    <husk:SwitchCase Value="{x:True}">
+                        <SplitButton
+                            Classes="Primary"
+                            Padding="12,6"
+                            Command="{Binding CollectCommand}">
+                            <SplitButton.Flyout>
+                                <MenuFlyout ItemsSource="{Binding SecondaryActions}">
+                                    <MenuFlyout.ItemContainerTheme>
+                                        <ControlTheme
+                                            BasedOn="{StaticResource {x:Type MenuItem}}"
+                                            TargetType="MenuItem"
+                                            x:DataType="app:ExplorerActionItemModel">
+                                            <Setter Property="Command" Value="{Binding Command}" />
+                                            <Setter Property="Icon" Value="{Binding Icon}" />
+                                            <Setter Property="Header" Value="{Binding LangKey}" />
+                                            <Setter Property="HeaderTemplate">
+                                                <DataTemplate x:DataType="x:String">
+                                                    <TextBlock Text="{app:LocalizedKey {Binding}}" />
+                                                </DataTemplate>
+                                            </Setter>
+                                        </ControlTheme>
+                                    </MenuFlyout.ItemContainerTheme>
+                                </MenuFlyout>
+                            </SplitButton.Flyout>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="6">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Symbol="{Binding PrimaryAction.Icon}" />
+                                <TextBlock Text="{app:LocalizedKey {Binding PrimaryAction.LangKey}}" />
+                            </StackPanel>
+                        </SplitButton>
+                    </husk:SwitchCase>
+                    <husk:SwitchCase Value="{x:False}">
+                        <Button
+                            Classes="Primary"
+                            Padding="12,6"
+                            Command="{Binding CollectCommand}"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="6">
+                                <fi:SymbolIcon
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Symbol="{Binding PrimaryAction.Icon}" />
+                                <TextBlock Text="{app:LocalizedKey {Binding PrimaryAction.LangKey}}" />
+                            </StackPanel>
+                        </Button>
+                    </husk:SwitchCase>
+                </husk:SwitchContainer>
                 <Button
                     Padding="12,6"
                     Command="{Binding DismissPendingCommand}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
-                    <Button.IsEnabled>
-                        <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                            <Binding
-                                Converter="{x:Static husk:NumberConverters.IsNonZero}"
-                                Path="AddingPackagesView.Count" />
-                            <Binding
-                                Converter="{x:Static husk:NumberConverters.IsNonZero}"
-                                Path="ModifyingPackagesView.Count" />
-                            <Binding
-                                Converter="{x:Static husk:NumberConverters.IsNonZero}"
-                                Path="RemovingPackagesView.Count" />
-                        </MultiBinding>
-                    </Button.IsEnabled>
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="6">
