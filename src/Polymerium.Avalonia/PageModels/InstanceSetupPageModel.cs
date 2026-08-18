@@ -980,27 +980,26 @@ public partial class InstanceSetupPageModel(
                 //  故这里直接 Dispose。
                 progress.Dispose();
 
-                notificationService.PopMessage(LanguageManager.Instance
-                                                              .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle
-                                                              .Current(),
-                                               LanguageManager
-                                                  .Instance
-                                                  .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage
-                                                  .Current()
-                                                  .Replace("{0}", updates.Count.ToString())
-                                              + (suppressed > 0
-                                                  ? " "
-                                                    + LanguageManager
-                                                       .Instance
-                                                       .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationSuppressedText
-                                                       .Current()
-                                                       .Replace("{0}", suppressed.ToString())
-                                                  : string.Empty),
-                                               thumbnail: GetNotificationThumbnail(),
-                                               actions: new GrowlAction(LanguageManager.Instance
-                                                                           .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText
-                                                                           .Current(),
-                                                                        new RelayCommand(Review, CanReview)));
+                notificationService.PopMessage(
+                    LanguageManager
+                       .Instance
+                       .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage
+                       .Current()
+                       .Replace("{0}", updates.Count.ToString())
+                  + (suppressed > 0
+                       ? " "
+                         + LanguageManager
+                            .Instance
+                            .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationSuppressedText
+                            .Current()
+                            .Replace("{0}", suppressed.ToString())
+                       : string.Empty),
+                    LanguageManager.Instance.InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle.Current(),
+                    thumbnail: GetNotificationThumbnail(),
+                    actions: new GrowlAction(LanguageManager.Instance
+                                                .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText
+                                                .Current(),
+                                             new RelayCommand(Review, CanReview)));
                 return;
 
                 async Task UpdateAsync(
@@ -1039,9 +1038,7 @@ public partial class InstanceSetupPageModel(
                                                         .ConfigureAwait(false);
                                     if (resolved.VersionId != result.Version)
                                     {
-                                        // NOTE: skip 记录两端匹配——审查器记候选目标版本，包设置记当前所在版本；
-                                        //  被记录的版本既不作为更新目标也不作为更新起点。
-                                        if (blocked == resolved.VersionId || blocked == result.Version)
+                                        if (blocked == resolved.VersionId)
                                         {
                                             Interlocked.Increment(ref suppressed);
                                         }

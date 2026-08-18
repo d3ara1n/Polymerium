@@ -3,7 +3,6 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
-    xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
@@ -107,32 +106,75 @@
                                 Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
                                 CornerRadius="{StaticResource MediumCornerRadius}"
                                 IsVisible="{Binding Owner.CanUpdate}">
-                                <Grid
-                                    ColumnDefinitions="*,Auto"
-                                    ColumnSpacing="12">
-                                    <StackPanel
-                                        Grid.Column="0"
-                                        Orientation="Horizontal"
-                                        Spacing="6">
-                                        <fi:SymbolIcon
+                                <StackPanel Spacing="8">
+                                    <Grid
+                                        ColumnDefinitions="*,Auto"
+                                        ColumnSpacing="12">
+                                        <StackPanel
+                                            Grid.Column="0"
+                                            Orientation="Horizontal"
+                                            Spacing="6">
+                                            <fi:SymbolIcon
+                                                VerticalAlignment="Center"
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="ArrowSyncOff" />
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_UpdateHeldLabelText}}" />
+                                        </StackPanel>
+                                        <ToggleSwitch
+                                            Grid.Column="1"
+                                            IsChecked="{Binding $parent[app:InstancePackageModal].IsUpdateHeld, Mode=TwoWay}"
+                                            OffContent="{x:Null}"
+                                            OnContent="{x:Null}" />
+                                    </Grid>
+                                    <Grid
+                                        ColumnDefinitions="Auto,*,Auto"
+                                        ColumnSpacing="8"
+                                        IsVisible="{Binding $parent[app:InstancePackageModal].SkippedVersionLazy, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}">
+                                        <husk:Tag
+                                            Grid.Column="0"
                                             VerticalAlignment="Center"
-                                            FontSize="{StaticResource MediumFontSize}"
-                                            Symbol="ArrowSyncOff" />
-                                        <TextBlock
+                                            Classes="Warning"
+                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Spacing="4">
+                                                <fi:SymbolIcon
+                                                    VerticalAlignment="Center"
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Symbol="PauseCircle" />
+                                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_SkippedVersionLabelText}}" />
+                                            </StackPanel>
+                                        </husk:Tag>
+                                        <husk:LazyContainer
+                                            Grid.Column="1"
                                             VerticalAlignment="Center"
-                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageModal_UpdatePolicyLabelText}}" />
-                                    </StackPanel>
-                                    <ComboBox
-                                        Grid.Column="1"
-                                        ItemsSource="{Binding Source={x:Type app:PackageUpdatePolicy}, Mode=OneTime, x:DataType={x:Type collections:IEnumerable}, Converter={x:Static app:InternalConverters.EnumTypeToList}}"
-                                        SelectedItem="{Binding $parent[app:InstancePackageModal].UpdatePolicy, Mode=TwoWay}">
-                                        <ComboBox.ItemTemplate>
-                                            <DataTemplate DataType="app:PackageUpdatePolicy">
-                                                <TextBlock Text="{app:LocalizedEnum {Binding}}" />
-                                            </DataTemplate>
-                                        </ComboBox.ItemTemplate>
-                                    </ComboBox>
-                                </Grid>
+                                            CornerRadius="{StaticResource SmallCornerRadius}"
+                                            Source="{Binding $parent[app:InstancePackageModal].SkippedVersionLazy}">
+                                            <husk:LazyContainer.SourceTemplate>
+                                                <DataTemplate DataType="x:String">
+                                                    <TextBlock
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        Text="{Binding}"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        ToolTip.Tip="{Binding}" />
+                                                </DataTemplate>
+                                            </husk:LazyContainer.SourceTemplate>
+                                        </husk:LazyContainer>
+                                        <Button
+                                            Grid.Column="2"
+                                            Padding="4"
+                                            Command="{Binding $parent[app:InstancePackageModal].ClearSkippedCommand}"
+                                            CornerRadius="{husk:StaticResourceBinding SmallCornerRadius}"
+                                            Theme="{StaticResource GhostButtonTheme}">
+                                            <fi:SymbolIcon
+                                                VerticalAlignment="Center"
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                Symbol="Dismiss" />
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
                             </Border>
                             <husk:LazyContainer
                                 MinHeight="32"

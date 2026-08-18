@@ -1428,17 +1428,11 @@
     <data name="PackageBulkUpdateDecision_Hold" xml:space="preserve">
         <value>Hold updates</value>
     </data>
-    <data name="PackageUpdatePolicy_Normal" xml:space="preserve">
-        <value>Update normally</value>
+    <data name="InstancePackageModal_UpdateHeldLabelText" xml:space="preserve">
+        <value>Hold bulk updates</value>
     </data>
-    <data name="PackageUpdatePolicy_SkipVersion" xml:space="preserve">
-        <value>Skip the current version</value>
-    </data>
-    <data name="PackageUpdatePolicy_Hold" xml:space="preserve">
-        <value>Hold updates</value>
-    </data>
-    <data name="InstancePackageModal_UpdatePolicyLabelText" xml:space="preserve">
-        <value>Bulk update policy</value>
+    <data name="InstancePackageModal_SkippedVersionLabelText" xml:space="preserve">
+        <value>Skipped</value>
     </data>
     <data name="InstanceSetupPage_DependencyGraphMenuText" xml:space="preserve">
         <value>Dependency Graph</value>
