@@ -16,6 +16,7 @@ using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Services;
+using GrowlLevel = Huskui.Avalonia.Models.GrowlLevel;
 
 namespace Polymerium.Avalonia.ModalModels;
 
@@ -23,7 +24,8 @@ public partial class PackageBulkUpdateReviewModalModel(
     IViewContext<PackageBulkUpdateReviewModalModel.Parameter> context,
     DataService dataService,
     PersistenceService persistenceService,
-    ProfileManager profileManager) : ViewModelBase
+    ProfileManager profileManager,
+    NotificationService notificationService) : ViewModelBase
 {
     private readonly Parameter _parameter = context.GetRequiredParameter();
 
@@ -125,8 +127,16 @@ public partial class PackageBulkUpdateReviewModalModel(
         }
 
         var updates = Candidates.Where(x => x.Decision == PackageBulkUpdateDecision.Update).ToList();
-        if (updates.Count > 0 && profileManager.TryGetMutable(Key, out var guard))
+        if (updates.Count > 0)
         {
+            if (!profileManager.TryGetMutable(Key, out var guard))
+            {
+                notificationService.PopMessage(LanguageManager.Instance.PackageBulkUpdateReviewModal_ApplyFailedText.Current(),
+                                                LanguageManager.Instance.PackageBulkUpdateReviewModal_ApplyFailedTitle.Current(),
+                                                GrowlLevel.Danger);
+                return;
+            }
+
             await using (guard)
             {
                 foreach (var candidate in updates)

@@ -1395,6 +1395,12 @@
     <data name="PackageBulkUpdateReviewModal_ApplyButtonText" xml:space="preserve">
         <value>应用</value>
     </data>
+    <data name="PackageBulkUpdateReviewModal_ApplyFailedTitle" xml:space="preserve">
+        <value>批量升级包版本</value>
+    </data>
+    <data name="PackageBulkUpdateReviewModal_ApplyFailedText" xml:space="preserve">
+        <value>实例已不可用，无法应用更新。</value>
+    </data>
     <data name="PackageBulkUpdateReviewModal_ChangelogTabText" xml:space="preserve">
         <value>更新日志</value>
     </data>
@@ -1409,6 +1415,9 @@
     </data>
     <data name="PackageBulkUpdateDecision_SkipVersion" xml:space="preserve">
         <value>跳过此版本</value>
+    </data>
+    <data name="PackageBulkUpdateDecision_Hold" xml:space="preserve">
+        <value>暂停更新</value>
     </data>
     <data name="PackageUpdatePolicy_Normal" xml:space="preserve">
         <value>正常更新</value>

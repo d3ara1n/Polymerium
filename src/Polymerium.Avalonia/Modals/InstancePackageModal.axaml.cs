@@ -81,6 +81,8 @@ public partial class InstancePackageModal : Modal
 
     private IDisposable? _dependencySubscription;
 
+    private int _policySequence;
+
     private bool _suppressPolicyWrite;
 
     private string? _old;
@@ -578,12 +580,14 @@ public partial class InstancePackageModal : Modal
 
         if (change.Property == UpdatePolicyProperty && !_suppressPolicyWrite)
         {
-            _ = HandleUpdatePolicyChangedAsync((PackageUpdatePolicy)change.OldValue!,
+            var sequence = ++_policySequence;
+            _ = HandleUpdatePolicyChangedAsync(sequence,
+                                               (PackageUpdatePolicy)change.OldValue!,
                                                (PackageUpdatePolicy)change.NewValue!);
         }
     }
 
-    private async Task HandleUpdatePolicyChangedAsync(PackageUpdatePolicy oldValue, PackageUpdatePolicy value)
+    private async Task HandleUpdatePolicyChangedAsync(int sequence, PackageUpdatePolicy oldValue, PackageUpdatePolicy value)
     {
         switch (value)
         {
@@ -596,12 +600,30 @@ public partial class InstancePackageModal : Modal
                 Model.Owner.IsUpdateHeld = true;
                 break;
             case PackageUpdatePolicy.SkipVersion:
+                // 版本固定的包直接记当前版本；未固定版本的包“当前版本”随 latest 浮动，取一次最新。
+                if (Model.Version is InstancePackageVersionModel current)
+                {
+                    PersistenceService.SetUpdateBlacklist(Guard.Key,
+                                                          Model.Label,
+                                                          Model.Namespace,
+                                                          Model.ProjectId,
+                                                          current.Id);
+                    Model.Owner.IsUpdateHeld = false;
+                    break;
+                }
+
                 try
                 {
                     var latest = await DataService.ResolvePackageAsync(
                         new(Model.Label, Model.Namespace, Model.ProjectId, null),
                         Filter,
                         false);
+                    // NOTE: await 后序列号过期 → 用户已改选，本次写入与回退全部作废。
+                    if (sequence != _policySequence)
+                    {
+                        return;
+                    }
+
                     PersistenceService.SetUpdateBlacklist(Guard.Key,
                                                           Model.Label,
                                                           Model.Namespace,
@@ -611,6 +633,11 @@ public partial class InstancePackageModal : Modal
                 }
                 catch (Exception ex)
                 {
+                    if (sequence != _policySequence)
+                    {
+                        return;
+                    }
+
                     NotificationService.PopMessage(ex,
                                                     LanguageManager
                                                        .Instance.InstanceSetupPage_LoadProjectInformationDangerNotificationTitle
