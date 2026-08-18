@@ -1404,6 +1404,12 @@
     <data name="PackageBulkUpdateReviewModal_ApplyButtonText" xml:space="preserve">
         <value>Apply</value>
     </data>
+    <data name="PackageBulkUpdateReviewModal_ApplyFailedTitle" xml:space="preserve">
+        <value>Update packages in bulk</value>
+    </data>
+    <data name="PackageBulkUpdateReviewModal_ApplyFailedText" xml:space="preserve">
+        <value>Failed to apply the updates because the instance is no longer available.</value>
+    </data>
     <data name="PackageBulkUpdateReviewModal_ChangelogTabText" xml:space="preserve">
         <value>Changelog</value>
     </data>
@@ -1418,6 +1424,9 @@
     </data>
     <data name="PackageBulkUpdateDecision_SkipVersion" xml:space="preserve">
         <value>Skip this version</value>
+    </data>
+    <data name="PackageBulkUpdateDecision_Hold" xml:space="preserve">
+        <value>Hold updates</value>
     </data>
     <data name="PackageUpdatePolicy_Normal" xml:space="preserve">
         <value>Update normally</value>

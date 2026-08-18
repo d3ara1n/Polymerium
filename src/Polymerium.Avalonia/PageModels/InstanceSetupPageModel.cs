@@ -1039,7 +1039,9 @@ public partial class InstanceSetupPageModel(
                                                         .ConfigureAwait(false);
                                     if (resolved.VersionId != result.Version)
                                     {
-                                        if (blocked == resolved.VersionId)
+                                        // NOTE: skip 记录两端匹配——审查器记候选目标版本，包设置记当前所在版本；
+                                        //  被记录的版本既不作为更新目标也不作为更新起点。
+                                        if (blocked == resolved.VersionId || blocked == result.Version)
                                         {
                                             Interlocked.Increment(ref suppressed);
                                         }
