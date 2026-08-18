@@ -22,6 +22,7 @@
 - Update marketplace package previews to expand the details panel by default and show a dependency count badge and a missing required dependencies warning (#86)
 - Reduce the installed size by over 40% through release-only trimming that keeps unannotated third-party assemblies intact
 - Improve memory efficiency when browsing many image thumbnails
+- Change instance setup group headers to toggle collapse on any click and open group details from a trailing info button
 
 ### Removed
 
