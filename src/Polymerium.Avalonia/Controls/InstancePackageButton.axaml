@@ -124,7 +124,6 @@
                                                     ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_UpdateHeldToolTipText}}">
                                                     <fi:SymbolIcon
                                                         VerticalAlignment="Center"
-                                                        FontSize="{StaticResource SmallFontSize}"
                                                         Symbol="PauseCircle" />
                                                 </husk:Tag>
                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">

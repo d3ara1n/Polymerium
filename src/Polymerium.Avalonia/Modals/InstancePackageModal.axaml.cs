@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Huskui.Avalonia.Controls;
@@ -64,10 +65,15 @@ public partial class InstancePackageModal : Modal
                                                                     o => o.IsDeleting,
                                                                     (o, v) => o.IsDeleting = v);
 
-    public static readonly DirectProperty<InstancePackageModal, PackageUpdatePolicy> UpdatePolicyProperty =
-        AvaloniaProperty.RegisterDirect<InstancePackageModal, PackageUpdatePolicy>(nameof(UpdatePolicy),
-                                                                                   o => o.UpdatePolicy,
-                                                                                   (o, v) => o.UpdatePolicy = v);
+    public static readonly DirectProperty<InstancePackageModal, bool> IsUpdateHeldProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, bool>(nameof(IsUpdateHeld),
+                                                                    o => o.IsUpdateHeld,
+                                                                    (o, v) => o.IsUpdateHeld = v);
+
+    public static readonly DirectProperty<InstancePackageModal, LazyObject?> SkippedVersionLazyProperty =
+        AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(SkippedVersionLazy),
+                                                                           o => o.SkippedVersionLazy,
+                                                                           (o, v) => o.SkippedVersionLazy = v);
 
     public static readonly DirectProperty<InstancePackageModal, LazyObject?> LazyRulesProperty =
         AvaloniaProperty.RegisterDirect<InstancePackageModal, LazyObject?>(nameof(LazyRules),
@@ -81,8 +87,6 @@ public partial class InstancePackageModal : Modal
 
     private IDisposable? _dependencySubscription;
 
-    private int _policySequence;
-
     private bool _suppressPolicyWrite;
 
     private string? _old;
@@ -95,10 +99,16 @@ public partial class InstancePackageModal : Modal
         set => SetAndRaise(IsDeletingProperty, ref field, value);
     }
 
-    public PackageUpdatePolicy UpdatePolicy
+    public bool IsUpdateHeld
     {
         get;
-        set => SetAndRaise(UpdatePolicyProperty, ref field, value);
+        set => SetAndRaise(IsUpdateHeldProperty, ref field, value);
+    }
+
+    public LazyObject? SkippedVersionLazy
+    {
+        get;
+        set => SetAndRaise(SkippedVersionLazyProperty, ref field, value);
     }
 
     public LazyObject? LazyRules
@@ -502,6 +512,28 @@ public partial class InstancePackageModal : Modal
         return lazy;
     }
 
+    private LazyObject ConstructSkippedVersion(string skippedVersionId) =>
+        new(async t =>
+        {
+            if (t.IsCancellationRequested)
+            {
+                return null;
+            }
+
+            var latest = await DataService.ResolvePackageAsync(
+                new(Model.Label, Model.Namespace, Model.ProjectId, null),
+                Filter,
+                false);
+            if (latest.VersionId != skippedVersionId)
+            {
+                // NOTE: latest 已滚过被跳版本 → 记录已失效，顺手清掉当作没发生过。
+                PersistenceService.RemoveUpdateBlacklist(Guard.Key, Model.Label, Model.Namespace, Model.ProjectId);
+                return null;
+            }
+
+            return latest.VersionName;
+        });
+
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
@@ -514,13 +546,13 @@ public partial class InstancePackageModal : Modal
         IsFilterEnabled = true;
         var record = PersistenceService.FindUpdateBlacklist(Guard.Key, Model.Label, Model.Namespace, Model.ProjectId);
         _suppressPolicyWrite = true;
-        UpdatePolicy = record switch
-        {
-            null => PackageUpdatePolicy.Normal,
-            { VersionId: null } => PackageUpdatePolicy.Hold,
-            _ => PackageUpdatePolicy.SkipVersion
-        };
+        IsUpdateHeld = record is { VersionId: null };
         _suppressPolicyWrite = false;
+        if (record is { VersionId: not null })
+        {
+            SkippedVersionLazy = ConstructSkippedVersion(record.VersionId);
+        }
+
         LazyDependencies = ConstructDependencies();
         SetupDependencyWatcher();
         LazyDependants = ConstructDependants();
@@ -578,81 +610,37 @@ public partial class InstancePackageModal : Modal
             LazyBuildStatus = ConstructBuildStatus();
         }
 
-        if (change.Property == UpdatePolicyProperty && !_suppressPolicyWrite)
+        if (change.Property == IsUpdateHeldProperty && !_suppressPolicyWrite)
         {
-            var sequence = ++_policySequence;
-            _ = HandleUpdatePolicyChangedAsync(sequence,
-                                               (PackageUpdatePolicy)change.OldValue!,
-                                               (PackageUpdatePolicy)change.NewValue!);
-        }
-    }
-
-    private async Task HandleUpdatePolicyChangedAsync(int sequence, PackageUpdatePolicy oldValue, PackageUpdatePolicy value)
-    {
-        switch (value)
-        {
-            case PackageUpdatePolicy.Normal:
-                PersistenceService.RemoveUpdateBlacklist(Guard.Key, Model.Label, Model.Namespace, Model.ProjectId);
-                Model.Owner.IsUpdateHeld = false;
-                break;
-            case PackageUpdatePolicy.Hold:
+            if (IsUpdateHeld)
+            {
                 PersistenceService.SetUpdateBlacklist(Guard.Key, Model.Label, Model.Namespace, Model.ProjectId, null);
-                Model.Owner.IsUpdateHeld = true;
-                break;
-            case PackageUpdatePolicy.SkipVersion:
-                // 版本固定的包直接记当前版本；未固定版本的包“当前版本”随 latest 浮动，取一次最新。
-                if (Model.Version is InstancePackageVersionModel current)
-                {
-                    PersistenceService.SetUpdateBlacklist(Guard.Key,
-                                                          Model.Label,
-                                                          Model.Namespace,
-                                                          Model.ProjectId,
-                                                          current.Id);
-                    Model.Owner.IsUpdateHeld = false;
-                    break;
-                }
+            }
+            else
+            {
+                PersistenceService.RemoveUpdateBlacklist(Guard.Key, Model.Label, Model.Namespace, Model.ProjectId);
+            }
 
-                try
-                {
-                    var latest = await DataService.ResolvePackageAsync(
-                        new(Model.Label, Model.Namespace, Model.ProjectId, null),
-                        Filter,
-                        false);
-                    // NOTE: await 后序列号过期 → 用户已改选，本次写入与回退全部作废。
-                    if (sequence != _policySequence)
-                    {
-                        return;
-                    }
-
-                    PersistenceService.SetUpdateBlacklist(Guard.Key,
-                                                          Model.Label,
-                                                          Model.Namespace,
-                                                          Model.ProjectId,
-                                                          latest.VersionId);
-                    Model.Owner.IsUpdateHeld = false;
-                }
-                catch (Exception ex)
-                {
-                    if (sequence != _policySequence)
-                    {
-                        return;
-                    }
-
-                    NotificationService.PopMessage(ex,
-                                                    LanguageManager
-                                                       .Instance.InstanceSetupPage_LoadProjectInformationDangerNotificationTitle
-                                                       .Current());
-                    _suppressPolicyWrite = true;
-                    UpdatePolicy = oldValue;
-                    _suppressPolicyWrite = false;
-                }
-
-                break;
+            Model.Owner.IsUpdateHeld = IsUpdateHeld;
+            // NOTE: hold 与 skip 共享一行，hold 开启即覆盖 skip，行同步消失。
+            if (IsUpdateHeld)
+            {
+                SkippedVersionLazy?.Cancel();
+                SkippedVersionLazy = null;
+            }
         }
     }
 
 
     #region Commands
+
+    [RelayCommand]
+    private void ClearSkipped()
+    {
+        PersistenceService.RemoveUpdateBlacklist(Guard.Key, Model.Label, Model.Namespace, Model.ProjectId);
+        SkippedVersionLazy?.Cancel();
+        SkippedVersionLazy = null;
+    }
 
     [RelayCommand]
     private void RemoveVersion()
