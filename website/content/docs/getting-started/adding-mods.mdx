@@ -36,7 +36,14 @@ Once installed, each mod in your list can be:
 
 ## Bulk Updates
 
-When mod authors release new versions, Polymerium can show you all available updates at once. The bulk update dialog lets you review each update and choose which ones to apply — or exclude mods with certain tags from auto-updating.
+When mod authors release new versions, Polymerium can show you all available updates at once. The bulk update dialog lets you review each update — with the changelog loaded on demand — and choose what to do with each one:
+
+- **Update** — apply the new version.
+- **Not this time** — skip it for now; the update will be offered again on the next scan.
+- **Skip this version** — remember the decision. As long as the repository keeps offering this version, it stays hidden; once a newer one arrives, it is offered normally again.
+- **Hold updates** — suspend bulk updates for this package until you turn them back on. A pause badge appears on the package, and manual version picking keeps working.
+
+Hold and skip decisions persist across restarts and live per instance and package, so a problematic release can be parked once instead of being excluded by hand every round. The scan summary reports how many candidates were hidden by these policies, and you can clear a hold from the package's details panel at any time.
 
 ## What About Dependencies?
 
