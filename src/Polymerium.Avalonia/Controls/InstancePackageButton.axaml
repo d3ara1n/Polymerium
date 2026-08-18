@@ -110,10 +110,22 @@
                                                 <husk:Tag
                                                     Classes="Primary"
                                                     IsVisible="{Binding Owner.CanUpdate, Converter={x:Static BoolConverters.Not}}"
-                                                    CornerRadius="{StaticResource SmallCornerRadius}">
-                                                    <husk:IconLabel
-                                                        Icon="LockClosed"
-                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_ImportTagText}}" />
+                                                    CornerRadius="{StaticResource SmallCornerRadius}"
+                                                    ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_ImportTagText}}">
+                                                    <fi:SymbolIcon
+                                                        VerticalAlignment="Center"
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Symbol="LockClosed" />
+                                                </husk:Tag>
+                                                <husk:Tag
+                                                    Classes="Warning"
+                                                    IsVisible="{Binding Owner.IsUpdateHeld}"
+                                                    CornerRadius="{StaticResource SmallCornerRadius}"
+                                                    ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_UpdateHeldToolTipText}}">
+                                                    <fi:SymbolIcon
+                                                        VerticalAlignment="Center"
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Symbol="PauseCircle" />
                                                 </husk:Tag>
                                                 <husk:Tag CornerRadius="{StaticResource SmallCornerRadius}">
                                                     <TextBlock Text="{app:LocalizedEnum {Binding Kind}, FallbackValue=Kind}" />

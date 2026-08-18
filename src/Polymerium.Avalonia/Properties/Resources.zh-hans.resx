@@ -987,6 +987,9 @@
     <data name="InstancePackageButton_ImportTagText" xml:space="preserve">
         <value>导入</value>
     </data>
+    <data name="InstancePackageButton_UpdateHeldToolTipText" xml:space="preserve">
+        <value>已暂停批量更新</value>
+    </data>
     <data name="InstancePackageButton_AutoVersionTagText" xml:space="preserve">
         <value>自动版本</value>
     </data>
@@ -1407,8 +1410,17 @@
     <data name="PackageBulkUpdateDecision_SkipVersion" xml:space="preserve">
         <value>跳过此版本</value>
     </data>
-    <data name="PackageBulkUpdateDecision_Hold" xml:space="preserve">
+    <data name="PackageUpdatePolicy_Normal" xml:space="preserve">
+        <value>正常更新</value>
+    </data>
+    <data name="PackageUpdatePolicy_SkipVersion" xml:space="preserve">
+        <value>跳过当前版本</value>
+    </data>
+    <data name="PackageUpdatePolicy_Hold" xml:space="preserve">
         <value>暂停更新</value>
+    </data>
+    <data name="InstancePackageModal_UpdatePolicyLabelText" xml:space="preserve">
+        <value>批量更新策略</value>
     </data>
     <data name="InstanceSetupPage_DependencyGraphMenuText" xml:space="preserve">
         <value>依赖关系</value>

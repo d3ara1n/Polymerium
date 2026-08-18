@@ -996,6 +996,9 @@
     <data name="InstancePackageButton_ImportTagText" xml:space="preserve">
         <value>Import</value>
     </data>
+    <data name="InstancePackageButton_UpdateHeldToolTipText" xml:space="preserve">
+        <value>Bulk updates are on hold</value>
+    </data>
     <data name="InstancePackageButton_AutoVersionTagText" xml:space="preserve">
         <value>Auto Version</value>
     </data>
@@ -1416,8 +1419,17 @@
     <data name="PackageBulkUpdateDecision_SkipVersion" xml:space="preserve">
         <value>Skip this version</value>
     </data>
-    <data name="PackageBulkUpdateDecision_Hold" xml:space="preserve">
+    <data name="PackageUpdatePolicy_Normal" xml:space="preserve">
+        <value>Update normally</value>
+    </data>
+    <data name="PackageUpdatePolicy_SkipVersion" xml:space="preserve">
+        <value>Skip the current version</value>
+    </data>
+    <data name="PackageUpdatePolicy_Hold" xml:space="preserve">
         <value>Hold updates</value>
+    </data>
+    <data name="InstancePackageModal_UpdatePolicyLabelText" xml:space="preserve">
+        <value>Bulk update policy</value>
     </data>
     <data name="InstanceSetupPage_DependencyGraphMenuText" xml:space="preserve">
         <value>Dependency Graph</value>

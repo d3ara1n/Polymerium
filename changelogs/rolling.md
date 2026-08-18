@@ -16,7 +16,7 @@
 ### Added
 
 - Add a modpack's bundled icon as the instance icon when the pack ships one
-- Introduce persistent skip and hold update policies and changelog previews to the bulk update review modal (#89, #POLY-159)
+- Introduce persistent skip and hold update policies for bulk package updates with changelog previews in the review modal and per-package policy indicators and editing (#89, #POLY-159)
 
 ### Changed
 

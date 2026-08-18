@@ -43,6 +43,9 @@ public partial class InstancePackageModel(Profile.Rice.Entry entry, bool canUpda
     public partial bool CanUpdate { get; set; } = canUpdate;
 
     [ObservableProperty]
+    public partial bool IsUpdateHeld { get; set; }
+
+    [ObservableProperty]
     public partial bool IsEnabled { get; set; } = entry.Enabled;
 
     [ObservableProperty]

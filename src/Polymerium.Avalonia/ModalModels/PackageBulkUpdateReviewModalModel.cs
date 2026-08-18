@@ -121,6 +121,7 @@ public partial class PackageBulkUpdateReviewModalModel(
                                                   candidate.Decision == PackageBulkUpdateDecision.SkipVersion
                                                       ? candidate.NewVersionId
                                                       : null);
+            candidate.Model.IsUpdateHeld = candidate.Decision == PackageBulkUpdateDecision.Hold;
         }
 
         var updates = Candidates.Where(x => x.Decision == PackageBulkUpdateDecision.Update).ToList();
