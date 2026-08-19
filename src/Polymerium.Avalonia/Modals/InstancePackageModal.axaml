@@ -215,13 +215,14 @@
                                                         Background="Transparent"
                                                         ToolTip.Tip="{Binding Destination}">
                                                         <TextBlock
-                                                            DockPanel.Dock="Right"
+                                                            DockPanel.Dock="Left"
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRuleModal_DestinationLabelText}}" />
+                                                        <TextBlock
+                                                            HorizontalAlignment="Right"
                                                             Foreground="{StaticResource ControlAccentForegroundBrush}"
                                                             Text="{Binding Destination}"
                                                             TextTrimming="LeadingCharacterEllipsis" />
-                                                        <TextBlock
-                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                            Text="{Translate {x:Static app:LanguageManager+Keys.ProfileRuleModal_DestinationLabelText}}" />
                                                     </DockPanel>
                                                     <DockPanel>
                                                         <husk:SwitchContainer
