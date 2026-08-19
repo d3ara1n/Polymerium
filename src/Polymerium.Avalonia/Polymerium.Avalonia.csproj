@@ -21,18 +21,8 @@
         <RepositoryUrl>https://github.com/d3ara1n/Polymerium</RepositoryUrl>
     </PropertyGroup>
 
-    <!-- Trim only assemblies that opt in via IsTrimmable; unannotated third parties stay intact.
-         NOTE: partial mode roots all unannotated assemblies, so the trim-analysis warnings that publish
-         logs still print (ILLink emits them regardless) are false positives here. Treat them as the roadmap
-         if full trim or NativeAOT is ever attempted, not as current breakage. -->
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-        <PublishTrimmed>true</PublishTrimmed>
-        <TrimMode>partial</TrimMode>
-        <EnableTrimAnalyzer>false</EnableTrimAnalyzer>
         <DebugType>none</DebugType>
-        <!-- IL2104 is informational: the named third-party assembly has internal trim warnings, which
-         partial mode leaves intact. Not actionable from this repo. -->
-        <NoWarn>$(NoWarn);IL2104</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
