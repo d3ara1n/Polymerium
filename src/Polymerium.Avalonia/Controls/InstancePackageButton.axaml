@@ -114,7 +114,6 @@
                                                     ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstancePackageButton_ImportTagText}}">
                                                     <fi:SymbolIcon
                                                         VerticalAlignment="Center"
-                                                        FontSize="{StaticResource SmallFontSize}"
                                                         Symbol="LockClosed" />
                                                 </husk:Tag>
                                                 <husk:Tag
