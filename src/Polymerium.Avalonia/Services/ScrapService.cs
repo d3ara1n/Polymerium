@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Threading;
 using ObservableCollections;
 using Polymerium.Avalonia.Models;
 using TridentCore.Abstractions.Extensions;
@@ -17,6 +19,7 @@ namespace Polymerium.Avalonia.Services;
 public class ScrapService : ILifetimeService
 {
     public const int CAPACITY = 9527;
+    public const int FLUSH_INTERVAL = 100;
     private readonly Dictionary<string, ObservableFixedSizeRingBuffer<ScrapModel>> _buffers = [];
 
     #region Injected
@@ -47,16 +50,24 @@ public class ScrapService : ILifetimeService
             _buffers.Add(e.Key, buffer);
         }
 
+        // NOTE: 游戏输出到达于后台线程，绑定到 UI 的集合若在该线程上变更，VirtualizingStackPanel 可能在布局期间读到并发收缩的列表而索引越界（POLYMERIUM-2E），故攒批后投递到 UI 线程再写入。
         e
-           .ScrapStream.Subscribe(x =>
-                                  {
-                                      var appended = AppendToModel(x, buffer.LastOrDefault());
-                                      buffer.AddLast(appended);
-                                  },
-                                  () =>
-                                  {
-                                      _buffers.Remove(e.Key);
-                                  })
+           .ScrapStream
+           .Buffer(TimeSpan.FromMilliseconds(FLUSH_INTERVAL))
+           .Where(batch => batch.Count > 0)
+           .Subscribe(batch => Dispatcher.UIThread.Post(() =>
+            {
+                var last = buffer.LastOrDefault();
+                foreach (var scrap in batch)
+                {
+                    last = AppendToModel(scrap, last);
+                    buffer.AddLast(last);
+                }
+            }),
+            () =>
+            {
+                _buffers.Remove(e.Key);
+            })
            .DisposeWith(e);
     }
 

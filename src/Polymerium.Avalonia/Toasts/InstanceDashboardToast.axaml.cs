@@ -84,15 +84,9 @@ public partial class InstanceDashboardToast : Toast
 
     private void BindableOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        if (e.Action == NotifyCollectionChangedAction.Add)
+        if (e.Action == NotifyCollectionChangedAction.Add && IsAutoScroll)
         {
-            Dispatcher.UIThread.Post(() =>
-            {
-                if (IsAutoScroll)
-                {
-                    Viewer.ScrollToEnd();
-                }
-            });
+            Viewer.ScrollToEnd();
         }
     }
 
