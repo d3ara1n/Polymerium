@@ -57,8 +57,8 @@
         <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.11" />
         <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="10.0.11" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.11" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.11" Condition="'$(Configuration)' == 'Debug'" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11" Condition="'$(Configuration)' == 'Debug'" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.11" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.11" />
         <PackageReference Include="MessagePack" Version="3.1.8"/>
         <PackageReference Include="NeoSmart.Caching.Sqlite.AspNetCore" Version="9.0.3" />
