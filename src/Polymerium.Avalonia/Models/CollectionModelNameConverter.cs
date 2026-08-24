@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
 using Avalonia.Data.Converters;
-using Polymerium.Avalonia.Utilities;
+using TridentCore.Abstractions.Utilities;
 
 namespace Polymerium.Avalonia.Models;
 

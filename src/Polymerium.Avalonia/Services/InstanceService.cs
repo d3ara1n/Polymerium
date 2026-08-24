@@ -358,7 +358,8 @@ public class InstanceService
                                                                                  key,
                                                                                  name,
                                                                                  author,
-                                                                                 version));
+                                                                                 version,
+                                                                                 PurifyRecipeGroups));
                             notification.Report(50);
                             await using var stream = await storageItem.OpenWriteAsync();
                             await Task.Run(async () =>
@@ -402,6 +403,32 @@ public class InstanceService
                                                 LanguageManager.Instance.MainWindow_SavePackConfigDangerNotificationTitle.Current(),
                                                 thumbnail: ThumbnailHelper.ForInstance(key));
             }
+        }
+    }
+
+    // NOTE: recipe 是宿主本地概念（配方数据不随包分发），导出前统一净化为 collection 分组，
+    //  消费者侧以同名集合呈现而非悬空的 recipe 引用。
+    private void PurifyRecipeGroups(Profile profile)
+    {
+        string Map(string? source)
+        {
+            if (source is null || !RecipeHelper.TryGetId(source, out var id))
+            {
+                return source!;
+            }
+
+            return CollectionHelper.ToUri(_persistenceService.GetRecipe(id)?.Name ?? id);
+        }
+
+        foreach (var entry in profile.Setup.Packages)
+        {
+            entry.Source = Map(entry.Source);
+        }
+
+        var orders = profile.Setup.SourceOrders;
+        for (var i = 0; i < orders.Count; i++)
+        {
+            orders[i] = Map(orders[i]);
         }
     }
 
