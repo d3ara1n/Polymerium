@@ -8,6 +8,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
+using TridentCore.Abstractions.Utilities;
 
 namespace Polymerium.Avalonia;
 

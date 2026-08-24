@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using TridentCore.Abstractions.Utilities;
+using Builder = TridentCore.Pref.Building.Builder;
 
 namespace Polymerium.Avalonia.Utilities;
 
@@ -41,7 +42,7 @@ public static class PackageSourceHelper
             null => Kind.Manual,
             _ when InternalUriHelper.IsKind(source, RecipeHelper.Scheme) => Kind.Recipe,
             _ when InternalUriHelper.IsKind(source, CollectionHelper.SCHEME) => Kind.Collection,
-            _ when InternalUriHelper.IsKind(source, "pref") => Kind.Modpack,
+            _ when InternalUriHelper.IsKind(source, Builder.Scheme) => Kind.Modpack,
             // TODO: legacy Purl-format Source from pre-rename modpacks; remove once on-disk
             //  profiles no longer carry old-format Source values.
             _ when PackageHelper.TryParse(source, out _) => Kind.Modpack,
