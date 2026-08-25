@@ -849,6 +849,15 @@
     <data name="InstanceSetupPage_BatchDisableNothingNotificationMessage" xml:space="preserve">
         <value>没有可停用的包。</value>
     </data>
+    <data name="InstanceSetupPage_BatchMoveToCollectionMenuText" xml:space="preserve">
+        <value>批量移入集合</value>
+    </data>
+    <data name="InstanceSetupPage_BatchAssignNothingNotificationMessage" xml:space="preserve">
+        <value>没有可移入集合的包。</value>
+    </data>
+    <data name="InstanceSetupPage_BatchAssignSucceededNotificationMessage" xml:space="preserve">
+        <value>已将 {0} 个包移入集合。</value>
+    </data>
     <data name="InstanceSetupPage_GetMoreButtonText" xml:space="preserve">
         <value>获取更多</value>
     </data>
@@ -903,17 +912,17 @@
     <data name="InstanceSetupPage_CollectionGroupTagText" xml:space="preserve">
         <value>集合</value>
     </data>
-    <data name="InstanceSetupPage_AddToCollectionMenuText" xml:space="preserve">
-        <value>添加到集合</value>
-    </data>
     <data name="CollectionPickerDialog_Title" xml:space="preserve">
-        <value>添加到集合</value>
+        <value>移入集合</value>
     </data>
     <data name="CollectionPickerDialog_Prompt" xml:space="preserve">
         <value>输入新的集合名称，或从已有集合中选择</value>
     </data>
     <data name="CollectionPickerDialog_Watermark" xml:space="preserve">
         <value>集合名称</value>
+    </data>
+    <data name="CollectionPickerDialog_MoveSummaryFormat" xml:space="preserve">
+        <value>{0} 个包将加入此集合，{1} 个包将从其所在集合移出。</value>
     </data>
     <data name="InstanceSetupPage_EnableGroupMenuText" xml:space="preserve">
         <value>启用整组</value>
@@ -967,7 +976,7 @@
         <value>移出集合</value>
     </data>
     <data name="InstanceSetupPage_MoveToCollectionMenuText" xml:space="preserve">
-        <value>移动到集合</value>
+        <value>移入集合</value>
     </data>
     <data name="InstanceSetupPage_RenameCollectionMenuText" xml:space="preserve">
         <value>重命名集合</value>
@@ -1148,6 +1157,15 @@
     </data>
     <data name="PackageSelectorDialog_DisableText" xml:space="preserve">
         <value>停用</value>
+    </data>
+    <data name="PackageSelectorDialog_AssignCollectionTitle" xml:space="preserve">
+        <value>将包移入集合</value>
+    </data>
+    <data name="PackageSelectorDialog_AssignCollectionText" xml:space="preserve">
+        <value>移入</value>
+    </data>
+    <data name="PackageSelectorDialog_LooseGroupChipText" xml:space="preserve">
+        <value>未分组</value>
     </data>
     <data name="PackageSelectorDialog_SearchPlaceholder" xml:space="preserve">
         <value>搜索包...</value>

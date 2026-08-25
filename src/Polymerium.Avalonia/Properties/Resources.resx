@@ -858,6 +858,15 @@
     <data name="InstanceSetupPage_BatchDisableNothingNotificationMessage" xml:space="preserve">
         <value>No enabled packages to disable.</value>
     </data>
+    <data name="InstanceSetupPage_BatchMoveToCollectionMenuText" xml:space="preserve">
+        <value>Batch Move to Collection</value>
+    </data>
+    <data name="InstanceSetupPage_BatchAssignNothingNotificationMessage" xml:space="preserve">
+        <value>No packages that can be moved into a collection.</value>
+    </data>
+    <data name="InstanceSetupPage_BatchAssignSucceededNotificationMessage" xml:space="preserve">
+        <value>Moved {0} package(s) into the collection.</value>
+    </data>
     <data name="InstanceSetupPage_GetMoreButtonText" xml:space="preserve">
         <value>Get More</value>
     </data>
@@ -912,17 +921,17 @@
     <data name="InstanceSetupPage_CollectionGroupTagText" xml:space="preserve">
         <value>Collection</value>
     </data>
-    <data name="InstanceSetupPage_AddToCollectionMenuText" xml:space="preserve">
-        <value>Add to Collection</value>
-    </data>
     <data name="CollectionPickerDialog_Title" xml:space="preserve">
-        <value>Add to Collection</value>
+        <value>Move into Collection</value>
     </data>
     <data name="CollectionPickerDialog_Prompt" xml:space="preserve">
         <value>Enter a new collection name, or choose an existing one</value>
     </data>
     <data name="CollectionPickerDialog_Watermark" xml:space="preserve">
         <value>Collection name</value>
+    </data>
+    <data name="CollectionPickerDialog_MoveSummaryFormat" xml:space="preserve">
+        <value>{0} will join this collection and {1} will be moved out of their current one.</value>
     </data>
     <data name="InstanceSetupPage_EnableGroupMenuText" xml:space="preserve">
         <value>Enable Whole Group</value>
@@ -976,7 +985,7 @@
         <value>Remove from Collection</value>
     </data>
     <data name="InstanceSetupPage_MoveToCollectionMenuText" xml:space="preserve">
-        <value>Move to Collection</value>
+        <value>Move into Collection</value>
     </data>
     <data name="InstanceSetupPage_RenameCollectionMenuText" xml:space="preserve">
         <value>Rename Collection</value>
@@ -1157,6 +1166,15 @@
     </data>
     <data name="PackageSelectorDialog_DisableText" xml:space="preserve">
         <value>Disable</value>
+    </data>
+    <data name="PackageSelectorDialog_AssignCollectionTitle" xml:space="preserve">
+        <value>Move Packages into a Collection</value>
+    </data>
+    <data name="PackageSelectorDialog_AssignCollectionText" xml:space="preserve">
+        <value>Move</value>
+    </data>
+    <data name="PackageSelectorDialog_LooseGroupChipText" xml:space="preserve">
+        <value>Ungrouped</value>
     </data>
     <data name="PackageSelectorDialog_SearchPlaceholder" xml:space="preserve">
         <value>Search packages...</value>

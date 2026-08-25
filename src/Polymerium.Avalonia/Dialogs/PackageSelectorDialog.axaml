@@ -29,6 +29,45 @@
             MaxHeight="120"
             HorizontalScrollBarVisibility="Disabled">
             <StackPanel Spacing="6">
+                <StackPanel
+                    IsVisible="{Binding $parent[app:PackageSelectorDialog].HasLooseCandidates}"
+                    Orientation="Horizontal">
+                    <Button
+                        Classes="Small"
+                        Padding="8,4"
+                        Command="{Binding $parent[app:PackageSelectorDialog].SelectByGroupCommand}"
+                        CornerRadius="{StaticResource FullCornerRadius}"
+                        Theme="{StaticResource OutlineButtonTheme}">
+                        <!--  NOTE: SelectByGroup 的参数为 null 即散装哨兵，CommandParameter 缺省即为 null。  -->
+                        <husk:IconLabel
+                            Icon="BoxMultiple"
+                            Text="{Translate {x:Static app:LanguageManager+Keys.PackageSelectorDialog_LooseGroupChipText}}" />
+                    </Button>
+                </StackPanel>
+                <ItemsControl ItemsSource="{Binding $parent[app:PackageSelectorDialog].Groups}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="app:GroupModel">
+                            <Button
+                                Classes="Small"
+                                Padding="8,4"
+                                Command="{Binding $parent[app:PackageSelectorDialog].SelectByGroupCommand}"
+                                CommandParameter="{Binding}"
+                                CornerRadius="{StaticResource FullCornerRadius}"
+                                Theme="{StaticResource OutlineButtonTheme}">
+                                <ContentControl
+                                    Content="{Binding Info}"
+                                    ContentTemplate="{StaticResource GroupInfoBadgeTemplate}" />
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel
+                                ItemSpacing="6"
+                                LineSpacing="6" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
                 <ItemsControl ItemsSource="{Binding $parent[app:PackageSelectorDialog].Types}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="resources:ResourceKind">
@@ -202,7 +241,7 @@
                                 Background="{StaticResource LayerBackgroundBrush}"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
                                 <Grid
-                                    ColumnDefinitions="Auto,Auto,*,Auto"
+                                    ColumnDefinitions="Auto,Auto,*,Auto,Auto"
                                     ColumnSpacing="10">
                                     <CheckBox
                                         Grid.Column="0"
@@ -243,8 +282,14 @@
                                             Text="{Binding Author, StringFormat=@{0}}"
                                             TextTrimming="CharacterEllipsis" />
                                     </StackPanel>
-                                    <husk:Tag
+                                    <ContentControl
                                         Grid.Column="3"
+                                        VerticalAlignment="Center"
+                                        Content="{Binding Group.Info}"
+                                        ContentTemplate="{StaticResource GroupInfoBadgeTemplate}"
+                                        IsVisible="{Binding Group.Info, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}" />
+                                    <husk:Tag
+                                        Grid.Column="4"
                                         VerticalAlignment="Center"
                                         IsVisible="{Binding Kind, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
                                         Content="{app:LocalizedEnum {Binding Kind}}"

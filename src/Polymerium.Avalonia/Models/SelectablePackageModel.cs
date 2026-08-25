@@ -25,6 +25,9 @@ public partial class SelectablePackageModel(InstancePackageModel source, Package
 
     public IReadOnlyList<string> Tags { get; } = [.. source.Tags];
 
+    // NOTE: 候选所属组引用（与主列表共享同一 GroupModel 实例）——按组圈选与行内归属徽章共用；散装为 LooseGroupModel。
+    public GroupModel? Group { get; init; }
+
     [ObservableProperty]
     public partial bool IsSelected { get; set; }
 }

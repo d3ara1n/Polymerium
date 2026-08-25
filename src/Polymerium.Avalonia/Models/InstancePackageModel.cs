@@ -33,6 +33,9 @@ public partial class InstancePackageModel(Profile.Rice.Entry entry, bool canUpda
     public bool CanLeaveCollection => PackageSourceHelper.Classify(entry.Source)
         == PackageSourceHelper.Kind.Collection;
 
+    // NOTE: 与批量候选的过滤口径一致——仅散装与集合来源可移入；整合包/配方来源承载溯源，不提供入口。
+    public bool CanMoveToCollection => entry.Source is null || CanLeaveCollection;
+
     public int PersistentIndex { get; set; }
 
     #endregion
