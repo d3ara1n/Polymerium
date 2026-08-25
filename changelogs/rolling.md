@@ -3,6 +3,7 @@
 ### ✨ Highlights ✨
 
 - Group all packages into a collection named after the modpack when importing a local modpack archive that carries no grouping info (#90, POLY-160)
+- Add batch moving of packages into collections together with group quick-select chips and per-package group badges in every batch selection dialog (#90)
 
 ### Fixed
 
@@ -12,7 +13,7 @@
 
 ### Added
 
--
+- Add batch moving of packages into collections together with group quick-select chips and per-package group badges in every batch selection dialog (#90)
 
 ### Changed
 

@@ -17,7 +17,7 @@ namespace Polymerium.Avalonia.Dialogs;
 
 public partial class PackageSelectorDialog : Dialog
 {
-    public enum SelectionIntent { Remove, Enable, Disable }
+    public enum SelectionIntent { Remove, Enable, Disable, AssignCollection }
 
     public static readonly DirectProperty<PackageSelectorDialog, ReadOnlyObservableCollection<SelectablePackageModel>?>
         ViewProperty =
@@ -50,6 +50,17 @@ public partial class PackageSelectorDialog : Dialog
             o => o.Tags,
             (o, v) => o.Tags = v);
 
+    // NOTE: 候选涉及的组快照（SetItems 时构建，散装组除外）；未分组 chip 由 HasLooseCandidates 单独驱动。
+    public static readonly DirectProperty<PackageSelectorDialog, IReadOnlyList<GroupModel>> GroupsProperty =
+        AvaloniaProperty.RegisterDirect<PackageSelectorDialog, IReadOnlyList<GroupModel>>(nameof(Groups),
+            o => o.Groups,
+            (o, v) => o.Groups = v);
+
+    public static readonly DirectProperty<PackageSelectorDialog, bool> HasLooseCandidatesProperty =
+        AvaloniaProperty.RegisterDirect<PackageSelectorDialog, bool>(nameof(HasLooseCandidates),
+            o => o.HasLooseCandidates,
+            (o, v) => o.HasLooseCandidates = v);
+
     private readonly SourceCache<SelectablePackageModel, string> _items = new(x => x.Source.Entry.Pref);
 
     private readonly CompositeDisposable _subscriptions = new();
@@ -60,6 +71,10 @@ public partial class PackageSelectorDialog : Dialog
     private IReadOnlyList<string> _tags = [];
 
     private int _totalCount;
+
+    private IReadOnlyList<GroupModel> _groups = [];
+
+    private bool _hasLooseCandidates;
 
     private IReadOnlyList<ResourceKind> _types = [];
 
@@ -125,6 +140,18 @@ public partial class PackageSelectorDialog : Dialog
         private set => SetAndRaise(TagsProperty, ref _tags, value);
     }
 
+    public IReadOnlyList<GroupModel> Groups
+    {
+        get => _groups;
+        private set => SetAndRaise(GroupsProperty, ref _groups, value);
+    }
+
+    public bool HasLooseCandidates
+    {
+        get => _hasLooseCandidates;
+        private set => SetAndRaise(HasLooseCandidatesProperty, ref _hasLooseCandidates, value);
+    }
+
     public void SetItems(IReadOnlyList<SelectablePackageModel> items)
     {
         _items.Clear();
@@ -136,6 +163,12 @@ public partial class PackageSelectorDialog : Dialog
             .. items.Where(x => !string.IsNullOrEmpty(x.Author)).Select(x => x.Author!).Distinct().OrderBy(x => x)
         ];
         Tags = [.. items.SelectMany(x => x.Tags).Distinct().OrderBy(x => x)];
+        Groups = [.. items.Select(x => x.Group)
+                            .Where(g => g is not (null or LooseGroupModel))
+                            .Select(g => g!)
+                            .Distinct()
+                            .OrderBy(g => g.Source ?? string.Empty)];
+        HasLooseCandidates = items.Any(x => x.Group is LooseGroupModel);
         RecomputeSelection();
     }
 
@@ -204,6 +237,19 @@ public partial class PackageSelectorDialog : Dialog
         }
     }
 
+    [RelayCommand]
+    private void SelectByGroup(GroupModel? group)
+    {
+        foreach (var item in _items.Items)
+        {
+            var hit = group is null ? item.Group is LooseGroupModel : ReferenceEquals(item.Group, group);
+            if (hit)
+            {
+                item.IsSelected = true;
+            }
+        }
+    }
+
     protected override bool ValidateResult(object? result) =>
         result is IReadOnlyList<SelectablePackageModel> { Count: > 0 };
 
@@ -227,6 +273,7 @@ public partial class PackageSelectorDialog : Dialog
             SelectionIntent.Remove => (LanguageManager.Instance.PackageSelectorDialog_RemoveTitle.Current(), LanguageManager.Instance.PackageSelectorDialog_RemoveText.Current()),
             SelectionIntent.Enable => (LanguageManager.Instance.PackageSelectorDialog_EnableTitle.Current(), LanguageManager.Instance.PackageSelectorDialog_EnableText.Current()),
             SelectionIntent.Disable => (LanguageManager.Instance.PackageSelectorDialog_DisableTitle.Current(), LanguageManager.Instance.PackageSelectorDialog_DisableText.Current()),
+            SelectionIntent.AssignCollection => (LanguageManager.Instance.PackageSelectorDialog_AssignCollectionTitle.Current(), LanguageManager.Instance.PackageSelectorDialog_AssignCollectionText.Current()),
             _ => (Title, PrimaryText)
         };
 

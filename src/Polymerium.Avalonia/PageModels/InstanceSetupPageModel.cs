@@ -1317,10 +1317,7 @@ public partial class InstanceSetupPageModel(
                         {
                             var ns = PersistenceService.NormalizeNamespace(item.Namespace);
                             var package =
-                                resolvedByProject.TryGetValue((item.Label.ToLowerInvariant(), ns, item.ProjectId),
-                                                              out var p)
-                                    ? p
-                                    : null;
+                                resolvedByProject.GetValueOrDefault((item.Label.ToLowerInvariant(), ns, item.ProjectId));
                             var pref = package is not null
                                            ? PackageHelper.ToPref(package)
                                            : PackageHelper.ToPref(item.Label, ns, item.ProjectId, null);
@@ -1365,9 +1362,6 @@ public partial class InstanceSetupPageModel(
     }
 
     [RelayCommand]
-    private async Task AddToCollectionAsync(InstancePackageModel? pkg) => await AssignToCollectionAsync(pkg);
-
-    [RelayCommand]
     private async Task MoveToCollectionAsync(InstancePackageModel? pkg) => await AssignToCollectionAsync(pkg);
 
     private async Task AssignToCollectionAsync(InstancePackageModel? pkg)
@@ -1377,18 +1371,7 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        var existing = ProfileManager.TryGetImmutable(Basic.Key, out var p)
-                           ? p
-                            .Setup.Packages.Select(e => e.Source)
-                            .OfType<string>()
-                            .Where(s => InternalUriHelper.IsKind(s, CollectionHelper.SCHEME))
-                            .Select(s => CollectionHelper.TryGetName(s, out var n) ? new CollectionModel(n, s) : null)
-                            .OfType<CollectionModel>()
-                            .Distinct()
-                            .ToList()
-                           : new();
-
-        var dialog = new CollectionPickerDialog { ExistingCollections = existing };
+        var dialog = new CollectionPickerDialog { ExistingCollections = GetExistingCollections() };
         if (!await overlayService.PopDialogAsync(dialog) || dialog.Result is not CollectionModel collection)
         {
             return;
@@ -1397,6 +1380,81 @@ public partial class InstanceSetupPageModel(
         pkg.Entry.Source = collection.Uri;
 
         TriggerPackageMerge();
+    }
+
+    private List<CollectionModel> GetExistingCollections()
+    {
+        return ProfileManager.TryGetImmutable(Basic.Key, out var p)
+                   ? p
+                    .Setup.Packages.Select(e => e.Source)
+                    .OfType<string>()
+                    .Where(s => InternalUriHelper.IsKind(s, CollectionHelper.SCHEME))
+                    .Select(s => CollectionHelper.TryGetName(s, out var n) ? new CollectionModel(n, s) : null)
+                    .OfType<CollectionModel>()
+                    .Distinct()
+                    .ToList()
+                  : new();
+    }
+
+    [RelayCommand]
+    private async Task BatchMoveToCollectionAsync()
+    {
+        // NOTE: 仅散装与集合来源的包可移入；整合包/配方来源承载溯源，改写会破坏导出映射，直接排除。
+        var candidates = _flat
+                        .Items.OfType<PackageListItemBase.Entry>()
+                        .Where(i => i.Package.Entry.Source is null
+                                 || InternalUriHelper.IsKind(i.Package.Entry.Source, CollectionHelper.SCHEME))
+                        .Select(i => new SelectablePackageModel(i.Package, i.Key) { Group = i.Group })
+                        .ToList();
+        if (candidates.Count == 0)
+        {
+            notificationService.PopMessage(LanguageManager.Instance
+                                                          .InstanceSetupPage_BatchAssignNothingNotificationMessage
+                                                          .Current(),
+                                           LanguageManager.Instance.InstanceSetupPage_BatchManagementNotificationTitle
+                                                          .Current(),
+                                           GrowlLevel.Warning,
+                                           thumbnail: GetNotificationThumbnail());
+            return;
+        }
+
+        var dialog = new PackageSelectorDialog { Intent = PackageSelectorDialog.SelectionIntent.AssignCollection };
+        dialog.SetItems(candidates);
+        if (!await overlayService.PopDialogAsync(dialog)
+         || dialog.Result is not IReadOnlyList<SelectablePackageModel> { Count: > 0 } selected)
+        {
+            return;
+        }
+
+        // NOTE: 移入语义以终态定义——已在其他集合的包会被覆盖移出，确认前给出拆解提示。
+        var moveOutCount = selected.Count(x => x.Source.Entry.Source is not null);
+        var picker = new CollectionPickerDialog { ExistingCollections = GetExistingCollections() };
+        if (moveOutCount > 0)
+        {
+            picker.Message = LanguageManager.Instance.CollectionPickerDialog_MoveSummaryFormat.Current()
+                             .Replace("{0}", (selected.Count - moveOutCount).ToString())
+                             .Replace("{1}", moveOutCount.ToString());
+        }
+
+        if (!await overlayService.PopDialogAsync(picker) || picker.Result is not CollectionModel collection)
+        {
+            return;
+        }
+
+        foreach (var item in selected)
+        {
+            item.Source.Entry.Source = collection.Uri;
+        }
+
+        TriggerPackageMerge();
+
+        notificationService.PopMessage(LanguageManager
+                                      .Instance.InstanceSetupPage_BatchAssignSucceededNotificationMessage.Current()
+                                      .Replace("{0}", selected.Count.ToString()),
+                                       LanguageManager.Instance.InstanceSetupPage_BatchManagementNotificationTitle
+                                                      .Current(),
+                                       GrowlLevel.Success,
+                                       thumbnail: GetNotificationThumbnail());
     }
 
     [RelayCommand]
@@ -1688,7 +1746,7 @@ public partial class InstanceSetupPageModel(
         var candidates = _flat
                         .Items.OfType<PackageListItemBase.Entry>()
                         .Where(i => !i.Package.IsEnabled)
-                        .Select(i => new SelectablePackageModel(i.Package, i.Key))
+                        .Select(i => new SelectablePackageModel(i.Package, i.Key) { Group = i.Group })
                         .ToList();
         if (candidates.Count == 0)
         {
@@ -1728,7 +1786,7 @@ public partial class InstanceSetupPageModel(
         var candidates = _flat
                         .Items.OfType<PackageListItemBase.Entry>()
                         .Where(i => i.Package.IsEnabled)
-                        .Select(i => new SelectablePackageModel(i.Package, i.Key))
+                        .Select(i => new SelectablePackageModel(i.Package, i.Key) { Group = i.Group })
                         .ToList();
         if (candidates.Count == 0)
         {
@@ -1768,7 +1826,7 @@ public partial class InstanceSetupPageModel(
         var candidates = _flat
                         .Items.OfType<PackageListItemBase.Entry>()
                         .Where(i => i.Package.CanRemove)
-                        .Select(i => new SelectablePackageModel(i.Package, i.Key))
+                        .Select(i => new SelectablePackageModel(i.Package, i.Key) { Group = i.Group })
                         .ToList();
         if (candidates.Count == 0)
         {
