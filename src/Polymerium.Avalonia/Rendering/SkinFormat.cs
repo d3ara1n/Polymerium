@@ -22,11 +22,11 @@ public static class SkinFormat
             return SkinType.Legacy;
         }
 
-        // NOTE: 非标准尺寸按经典尽力渲染。
+        // 非标准尺寸按经典尽力渲染。
         return SkinType.Classic;
     }
 
-    // NOTE: slim 皮肤手臂外层第 4 列应为完全透明（classic 占满 4 像素）；坐标按 64×64 模板缩放。
+    // WARNING: slim 皮肤手臂外层第 4 列应为完全透明（classic 占满 4 像素）；坐标按 64×64 模板缩放。
     private static bool IsSlim(SKBitmap skin)
     {
         var s = skin.Width / 64;

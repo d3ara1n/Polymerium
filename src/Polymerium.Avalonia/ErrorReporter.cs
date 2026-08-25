@@ -16,7 +16,7 @@ internal static class ErrorReporter
                                        scope =>
                                        {
                                            scope.Level = meta.Level;
-                                           // NOTE: 打标签便于 Sentry 搜索/筛选。
+                                           // 打标签便于 Sentry 搜索/筛选。
                                            scope.SetTag("polymerium.source", meta.Source.ToString());
                                            scope.SetTag("polymerium.phase", meta.Phase);
                                            scope.SetTag("polymerium.critical", meta.Critical ? "true" : "false");
@@ -33,7 +33,7 @@ internal static class ErrorReporter
 
     private static void Dump(object core)
     {
-        // NOTE: 仅调试模式转储错误报告——Prod 目录大概率只读。
+        // 仅调试模式转储错误报告——Prod 目录大概率只读。
         if (!Program.IsDebug)
         {
             return;

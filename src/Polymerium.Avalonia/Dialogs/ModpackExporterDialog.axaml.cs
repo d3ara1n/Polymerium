@@ -135,7 +135,7 @@ public partial class ModpackExporterDialog : Dialog
 
     protected override bool ValidateResult(object? result)
     {
-        // NOTE: Avalonia TabStrip 机制缺陷（销毁后置空 SelectedItem、首次选中不发变更通知），
+        // WARNING: Avalonia TabStrip 机制缺陷（销毁后置空 SelectedItem、首次选中不发变更通知），
         //  故需要这些代理属性与验证代码。
         if (result is ModpackExporterModel model)
         {

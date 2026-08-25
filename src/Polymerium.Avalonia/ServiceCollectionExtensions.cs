@@ -48,7 +48,7 @@ public static class ServiceCollectionExtensions
         public IServiceCollection AddVelopack()
         {
             services.AddSingleton<UpdateSourceSelector>();
-            // NOTE: 不能作为 IUpdateSource，避免自引用。
+            // WARNING: 不能作为 IUpdateSource，避免自引用。
             services.AddSingleton<UpdateManager>(sp => new(sp.GetRequiredService<UpdateSourceSelector>()));
             return services;
         }

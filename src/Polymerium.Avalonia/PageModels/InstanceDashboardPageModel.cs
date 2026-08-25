@@ -193,7 +193,7 @@ public partial class InstanceDashboardPageModel(
 
     private void InitializeLogSources()
     {
-        // NOTE: Live 源内容不变，只需添加一次；不关心具体目录，日志最终都会落在 build/logs。
+        // Live 源内容不变，只需添加一次；不关心具体目录，日志最终都会落在 build/logs。
         Sources.Clear();
         var live = new LiveLogSourceModel();
         Sources.Add(live);
@@ -217,7 +217,7 @@ public partial class InstanceDashboardPageModel(
         }
         if (!IsOnAir)
         {
-            // NOTE: 运行时不清空——LogCollection 是外部共享集合。
+            // WARNING: 运行时不清空——LogCollection 是外部共享集合。
             LogCollection?.Clear();
         }
 
@@ -297,7 +297,6 @@ public partial class InstanceDashboardPageModel(
 
     private Func<ScrapModel, bool>? BuildFilter()
     {
-        // NOTE: 三个级别全开且无搜索文本时不过滤（null = 全放行）。
         var allLevels = IsFilterError && IsFilterWarning && IsFilterInformation;
         var hasSearch = !string.IsNullOrWhiteSpace(FilterText);
 
@@ -387,7 +386,6 @@ public partial class InstanceDashboardPageModel(
             }
             catch (InvalidOperationException)
             {
-                // NOTE: 进程未启动（InvalidOperationException）给三次宽限再停止监控。
                 errorCount++;
                 if (errorCount > 3)
                 {
@@ -406,7 +404,6 @@ public partial class InstanceDashboardPageModel(
                 }
                 catch (OperationCanceledException) when (token.IsCancellationRequested)
                 {
-                    // NOTE: 正常退出（token 取消），不算错误。
                 }
             }
         }

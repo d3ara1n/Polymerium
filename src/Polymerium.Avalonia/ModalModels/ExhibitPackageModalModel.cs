@@ -326,7 +326,6 @@ public partial class ExhibitPackageModalModel(
                                 {
                                     if (x.Old is null)
                                     {
-                                        // NOTE: null -> Project（AddUnversioned）
                                         return new()
                                         {
                                             Kind = InstancePackageModificationKind.AddUnversioned,
@@ -335,7 +334,6 @@ public partial class ExhibitPackageModalModel(
                                         };
                                     }
 
-                                    // NOTE: -> Project: Unset
                                     return new()
                                     {
                                         Kind = InstancePackageModificationKind.Unset,
@@ -347,7 +345,6 @@ public partial class ExhibitPackageModalModel(
                                 var resolved = await dataService.ResolvePackageAsync(result, _parameter.Filter);
                                 if (x.Old is null)
                                 {
-                                    // NOTE: null -> Package: Add
                                     return new()
                                     {
                                         Kind = InstancePackageModificationKind.AddVersioned,
@@ -356,7 +353,6 @@ public partial class ExhibitPackageModalModel(
                                     };
                                 }
 
-                                // NOTE: Package -> Package: Update
                                 return new()
                                 {
                                     Kind = InstancePackageModificationKind.Update,

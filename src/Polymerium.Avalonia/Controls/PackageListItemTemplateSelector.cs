@@ -5,7 +5,7 @@ using Polymerium.Avalonia.Models;
 
 namespace Polymerium.Avalonia.Controls;
 
-// NOTE: 模板容器 DataContext 永远是 item 本身，Header/Entry 都从 item 往 Group 里绑。
+// 模板容器 DataContext 永远是 item 本身，Header/Entry 都从 item 往 Group 里绑。
 public class PackageListItemTemplateSelector : IDataTemplate
 {
     public required DataTemplate HeaderTemplate { get; set; }

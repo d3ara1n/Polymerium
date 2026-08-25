@@ -30,8 +30,8 @@ public partial class RotatingSkinView : UserControl
     public RotatingSkinView()
     {
         InitializeComponent();
-        // NOTE: 直接在 code-behind 把帧集合接上两个 ItemsControl，避免依赖 UserControl 名称作用域的
-        //  元素名绑定（#Root.X），那种绑定容易静默出错。
+        // 直接在 code-behind 把帧集合接上两个 ItemsControl，避免依赖 UserControl 名称作用域的
+        // 元素名绑定（#Root.X），那种绑定容易静默出错。
         FramesList.ItemsSource = Frames;
         Indicators.ItemsSource = Frames;
 
@@ -93,7 +93,6 @@ public partial class RotatingSkinView : UserControl
         }
         else if (Fallback is not null)
         {
-            // NOTE: 无方向渲染可用（如离线）时退化为单张静态图。
             Frames.Add(new(Fallback));
         }
 

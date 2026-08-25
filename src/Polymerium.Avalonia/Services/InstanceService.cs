@@ -164,7 +164,7 @@ public class InstanceService
         }
     }
 
-    // NOTE: explicit nulls bind to the configurable Deploy overload instead of recursing into this one-arg wrapper
+    // WARNING: explicit nulls bind to the configurable Deploy overload instead of recursing into this one-arg wrapper
     public void Deploy(string key)
     {
         try
@@ -406,7 +406,7 @@ public class InstanceService
         }
     }
 
-    // NOTE: recipe 是宿主本地概念（配方数据不随包分发），导出前统一净化为 collection 分组，
+    // WARNING: recipe 是宿主本地概念（配方数据不随包分发），导出前统一净化为 collection 分组，
     //  消费者侧以同名集合呈现而非悬空的 recipe 引用。
     private void PurifyRecipeGroups(Profile profile)
     {

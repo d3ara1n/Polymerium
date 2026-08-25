@@ -570,7 +570,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private WorkspaceChangeKind Diff(string live, string import)
     {
-        // NOTE: 用 mtime 而非哈希——工作副本由 import 复制到 build，atime/ctime/mtime 全相同。
+        // 用 mtime 而非哈希——工作副本由 import 复制到 build，atime/ctime/mtime 全相同。
         if (File.Exists(import))
         {
             var liveTime = File.GetLastWriteTimeUtc(live);

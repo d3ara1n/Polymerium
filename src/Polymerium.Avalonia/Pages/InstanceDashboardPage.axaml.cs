@@ -50,7 +50,7 @@ public partial class InstanceDashboardPage : Subpage
 
     private void OnItemsChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        // NOTE: Reset 覆盖过滤/搜索变化导致的视图重建，跟随开启时仍保持钉底。
+        // Reset 覆盖过滤/搜索变化导致的视图重建，跟随开启时仍保持钉底。
         if (e.Action is not (NotifyCollectionChangedAction.Add or NotifyCollectionChangedAction.Reset))
         {
             return;
@@ -62,7 +62,7 @@ public partial class InstanceDashboardPage : Subpage
         }
     }
 
-    // NOTE: 合并同一调度周期内多次钉底请求——burst 新增只触发一次 ScrollToEnd，避免逐条重排布局。
+    // 合并同一调度周期内多次钉底请求——burst 新增只触发一次 ScrollToEnd，避免逐条重排布局。
     private void RequestScrollToEnd()
     {
         if (_scrollPending)
@@ -71,7 +71,7 @@ public partial class InstanceDashboardPage : Subpage
         }
 
         _scrollPending = true;
-        // NOTE: 集合已变但 VirtualizingStackPanel 尚未重算 extent，同步 ScrollToEnd 会停在旧底部，故延后。
+        // WARNING: 集合已变但 VirtualizingStackPanel 尚未重算 extent，同步 ScrollToEnd 会停在旧底部，故延后。
         Dispatcher.UIThread.Post(() =>
         {
             _scrollPending = false;
@@ -79,7 +79,7 @@ public partial class InstanceDashboardPage : Subpage
         });
     }
 
-    // NOTE: 用 OffsetDelta 的符号而非仅位置判断，是关键不直观点。
+    // WARNING: 用 OffsetDelta 的符号而非仅位置判断，是关键不直观点。
     //  跟随开启时新日志使 extent 增长，ScrollChanged 会因 extent 变化再次触发，但 OffsetDelta.Y 为 0；
     //  若只看「是否在底部」会把这次事件误判为「离开底部」而错误关闭跟随，故仅在用户主动滚动（Delta 非零）时切换。
     private void OnLogScrollChanged(object? sender, ScrollChangedEventArgs e)
@@ -88,7 +88,7 @@ public partial class InstanceDashboardPage : Subpage
         if (e.OffsetDelta.Y < 0 && !atBottom)
         {
             _disableDebounce++;
-            // NOTE: 连续多次向上滚才判定为有意回看，避免惯性/触控板抖动误关跟随。
+            // 连续多次向上滚才判定为有意回看，避免惯性/触控板抖动误关跟随。
             if (_disableDebounce > 1)
             {
                 IsAutoScroll = false;

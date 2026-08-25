@@ -23,7 +23,7 @@ public class SimpleViewActivator(IServiceProvider provider, IViewStateManager st
         }
         catch (NavigationFailedException ex)
         {
-            // NOTE: 避免再抛异常造成无限循环。
+            // WARNING: 避免再抛异常造成无限循环。
             if (activatorErrorCount++ < 3)
             {
                 return Activate(typeof(PageNotReachedPage), ex.Message);
@@ -33,7 +33,7 @@ public class SimpleViewActivator(IServiceProvider provider, IViewStateManager st
         }
         catch (Exception ex)
         {
-            // NOTE: 避免再抛异常造成无限循环。
+            // WARNING: 避免再抛异常造成无限循环。
             if (activatorErrorCount++ < 3)
             {
                 return Activate(typeof(ExceptionPage), ex);

@@ -68,7 +68,6 @@ public partial class PackDataModel : ModelBase
         var found = _pack.IncludedOverrides.FirstOrDefault(x => x.Key == key);
         if (found != null)
         {
-            // NOTE: 禁用只置 Enabled=false 不移除条目，启用时才新增条目。
             found.Enabled = value;
         }
         else if (value)

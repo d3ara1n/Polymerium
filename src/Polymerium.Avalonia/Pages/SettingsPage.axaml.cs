@@ -61,7 +61,7 @@ public partial class SettingsPage : Page
         }
     }
 
-    // NOTE: 始终把节头停靠在视口顶部（对齐 macOS/Windows 设置页）；BringIntoView 是惰性的，
+    // WARNING: 始终把节头停靠在视口顶部（对齐 macOS/Windows 设置页）；BringIntoView 是惰性的，
     //  只滚动到「恰好可见」，会与下方 top-anchored 的 spy 判定不一致导致高亮跳动。
     private void AlignToTop(Control target)
     {
@@ -70,7 +70,7 @@ public partial class SettingsPage : Page
         Scroller.Offset = new(Scroller.Offset.X, Scroller.Offset.Y + delta);
     }
 
-    // NOTE: Top-anchored——节头到达锚线即激活，直至下一节头到达；视口触底时最后一段胜出，
+    // WARNING: Top-anchored——节头到达锚线即激活，直至下一节头到达；视口触底时最后一段胜出，
     //  保证短尾节（头永远到不了顶）仍可选中。
     private void OnScrollChanged(object? sender, ScrollChangedEventArgs e)
     {

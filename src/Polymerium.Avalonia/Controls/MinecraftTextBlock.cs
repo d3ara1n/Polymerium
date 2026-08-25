@@ -92,7 +92,7 @@ public class MinecraftTextBlock : TemplatedControl
             return;
         }
 
-        // NOTE: TextBlock renders Inlines when non-empty and setting Text clears Inlines,
+        // WARNING: TextBlock renders Inlines when non-empty and setting Text clears Inlines,
         //  so populate Inlines and drop Text to make Inlines the single source here.
         inlines.Clear();
         textBlock.Text = null;

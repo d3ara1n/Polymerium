@@ -17,7 +17,7 @@ public static class SkinGeometry
     /// </summary>
     private static readonly float[] CubeVerts =
     [
-        // NOTE: back (z-)
+        // back (z-)
         1,
         1,
         -1,
@@ -30,7 +30,7 @@ public static class SkinGeometry
         -1,
         1,
         -1,
-        // NOTE: front (z+)
+        // front (z+)
         -1,
         1,
         1,
@@ -43,7 +43,7 @@ public static class SkinGeometry
         1,
         1,
         1,
-        // NOTE: left (x-)
+        // left (x-)
         -1,
         1,
         -1,
@@ -56,7 +56,7 @@ public static class SkinGeometry
         -1,
         1,
         1,
-        // NOTE: right (x+)
+        // right (x+)
         1,
         1,
         1,
@@ -69,7 +69,7 @@ public static class SkinGeometry
         1,
         1,
         -1,
-        // NOTE: top (y+)
+        // top (y+)
         -1,
         1,
         -1,
@@ -82,7 +82,7 @@ public static class SkinGeometry
         1,
         1,
         -1,
-        // NOTE: bottom (y-)
+        // bottom (y-)
         1,
         -1,
         -1,
@@ -97,7 +97,7 @@ public static class SkinGeometry
         -1
     ];
 
-    // NOTE: UV 模板（像素坐标，64×64 基准），面序与 CubeVerts 相同。
+    // UV 模板（像素坐标，64×64 基准），面序与 CubeVerts 相同。
     private static readonly float[] HeadTex =
     [
         32,

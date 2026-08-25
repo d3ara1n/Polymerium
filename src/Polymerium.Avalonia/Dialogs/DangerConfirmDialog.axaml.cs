@@ -12,8 +12,6 @@ public partial class DangerConfirmDialog : Dialog
         ChallengeCode = Random.Shared.Next(1000, 10000).ToString();
     }
 
-    // NOTE: 主按钮仅在输入与 challenge 一致时才亮——CanConfirm 委托给 ValidateResult，
-    //  TypedCode 每次击键都写入 Result。
     protected override bool ValidateResult(object? result) => result is string s && s == ChallengeCode;
 
     #region Avalonia Properties

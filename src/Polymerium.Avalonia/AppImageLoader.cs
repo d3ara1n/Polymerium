@@ -55,7 +55,7 @@ public class AppImageLoader(HttpClient httpClient, SkinRenderService skinRendere
 
     protected override async Task<byte[]?> LoadDataFromExternalAsync(string url)
     {
-        // NOTE: 负缓存命中——失败的加载结果短期内直接返回 null，避免重复请求网络。
+        // 负缓存命中——失败的加载结果短期内直接返回 null，避免重复请求网络。
         if (_cache.TryGetValue(url, out NegativeMarker? _))
         {
             return null;

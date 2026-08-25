@@ -87,7 +87,6 @@ public class InstanceStateAggregator
 
     private void OnTracker<T>(object? sender, T tracker) where T : TrackerBase
     {
-        // NOTE: 1) 立即推初始 snapshot（含子类 OnStart 报告的初始 Progress）
         _stream.OnNext((tracker.Key, ToSnapshot(tracker)));
 
         // NOTE: 2) 进度节流更新（沿用现状 1s 策略）；Sample 期间值被合并，首个状态已由步骤 1 反映。
@@ -96,7 +95,6 @@ public class InstanceStateAggregator
            .Subscribe(_ => _stream.OnNext((tracker.Key, ToSnapshot(tracker))))
            .DisposeWith(tracker);
 
-        // NOTE: 3) 完成信号 → Remove；tracker 完成后 Dispose。
         void OnStateUpdated(TrackerBase sender, TrackerState state)
         {
             if (state is TrackerState.Finished or TrackerState.Faulted)

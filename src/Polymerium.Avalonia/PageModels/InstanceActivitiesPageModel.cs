@@ -64,7 +64,7 @@ public partial class InstanceActivitiesPageModel(
 
             var valid = actions.Where(x => !(x.Old == null && x.New == null)).ToList();
 
-            // NOTE: 一次性批量解析整页 Pref；批量结果把失败项单独放进 Failed，单条失败不连累整页。
+            // 一次性批量解析整页 Pref；批量结果把失败项单独放进 Failed，单条失败不连累整页。
             var prefToId = new Dictionary<string, PackageIdentifier>();
             foreach (var pref in valid
                                 .SelectMany(x => new[] { x.Old, x.New })
@@ -105,7 +105,7 @@ public partial class InstanceActivitiesPageModel(
                     }
                     catch
                     {
-                        // NOTE: 单张缩略图获取失败不阻塞整页，退化为默认图。
+                        // 单张缩略图获取失败不阻塞整页，退化为默认图。
                     }
                 }));
             }
@@ -251,14 +251,14 @@ public partial class InstanceActivitiesPageModel(
     [ObservableProperty]
     public partial IEnumerable<Axis>? YAxes { get; set; }
 
-    // NOTE: 以下属性服务「健康度」区块
+    // 以下属性服务「健康度」区块
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SuccessRate))]
     public partial int CrashCount { get; set; }
 
     public double SuccessRate => SessionCount > 0 ? (double)(SessionCount - CrashCount) / SessionCount * 100 : 100.0;
 
-    // NOTE: 以下属性按 Statistics Tab 组织
+    // 以下属性按 Statistics Tab 组织
     [ObservableProperty]
     public partial DateTime? LastPlayedAt { get; set; }
 
@@ -273,7 +273,7 @@ public partial class InstanceActivitiesPageModel(
 
     public double AverageSessionMinutes => SessionCount > 0 ? TotalPlayTimeRaw.TotalMinutes / SessionCount : 0;
 
-    // NOTE: 以下属性按 Trends Tab 组织
+    // 以下属性按 Trends Tab 组织
     [ObservableProperty]
     public partial double PlaytimePercentage { get; set; }
 

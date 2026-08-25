@@ -129,8 +129,8 @@ public partial class InstanceSetupPageModel(
                .Where(x => x.VersionId is null)
                .Select(x => (x.Label, x.Namespace, x.ProjectId))
                .ToHashSet();
-            // NOTE: Entry 按地址比较，仍存在的包不动其 Entry 项（实例稳定）；信息是否陈旧由
-            //  RefreshMetadataAsync 现场重判，这里不预判。
+            // Entry 按地址比较，仍存在的包不动其 Entry 项（实例稳定）；信息是否陈旧由
+            // RefreshMetadataAsync 现场重判，这里不预判。
             var lookup = profile.Setup.Packages.ToHashSet();
             var toRemove = new List<PackageListKey>();
             var entryCount = 0;
@@ -138,7 +138,7 @@ public partial class InstanceSetupPageModel(
             {
                 entryCount++;
                 var entry = item.Package.Entry;
-                // NOTE: Source 被外部改过 → 原地换到新 Source 对应的共享 GroupModel，item 实例保持稳定。
+                // Source 被外部改过 → 原地换到新 Source 对应的共享 GroupModel，item 实例保持稳定。
                 if (item.Package.OldSourceCache != entry.Source)
                 {
                     item.Group = GroupModelOf(item.Package);
@@ -209,7 +209,7 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        // NOTE: Basic 由 InstancePageModel 维护，理论上 ProfileUpdated 会先更新，但不可靠。
+        // Basic 由 InstancePageModel 维护，理论上 ProfileUpdated 会先更新，但不可靠。
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
             if (profile.Setup.Source is not null)
@@ -264,7 +264,6 @@ public partial class InstanceSetupPageModel(
 
         token.ThrowIfCancellationRequested();
 
-        // NOTE: 排到时若前一个已完成全部加载，这里重判为空，直接 no-op 完成。
         var pendingPackages = _flat
                              .Items.OfType<PackageListItemBase.Entry>()
                              .Select(i => i.Package)
@@ -518,7 +517,7 @@ public partial class InstanceSetupPageModel(
             LoaderLabel = "Enum_None";
         }
 
-        // NOTE: 正在 Update/Deploy 期间也照常触发这些刷新（有意为之）。
+        // 正在 Update/Deploy 期间也照常触发这些刷新（有意为之）。
         Dispatcher.UIThread.Post(() =>
         {
             TriggerPackageMerge();
@@ -952,9 +951,9 @@ public partial class InstanceSetupPageModel(
                 var updates = new ConcurrentBag<PackageBulkUpdateCandidateModel>();
                 try
                 {
-                    // NOTE: 并发度设 2 是上限，再大触发 Modrinth API 限流。
+                    // WARNING: 并发度设 2 是上限，再大触发 Modrinth API 限流。
                     var semaphore = new SemaphoreSlim(2);
-                    // NOTE: 无法用批量查询优化——ResolveBatch 不带版本限制会拉全量版本再筛选。
+                    // 无法用批量查询优化——ResolveBatch 不带版本限制会拉全量版本再筛选。
                     // ReSharper disable once AccessToDisposedClosure
                     var tasks = staging.Select(x => UpdateAsync(x, semaphore, progress));
                     await Task.Run(async () => await Task.WhenAll(tasks));
@@ -976,7 +975,7 @@ public partial class InstanceSetupPageModel(
                     return;
                 }
 
-                // NOTE: 用 Dismiss 会让 Token 置 Cancel、Notification 显示“过期”、Growl 直接消失，
+                // WARNING: 用 Dismiss 会让 Token 置 Cancel、Notification 显示“过期”、Growl 直接消失，
                 //  故这里直接 Dispose。
                 progress.Dispose();
 
@@ -1399,7 +1398,7 @@ public partial class InstanceSetupPageModel(
     [RelayCommand]
     private async Task BatchMoveToCollectionAsync()
     {
-        // NOTE: 仅散装与集合来源的包可移入；整合包/配方来源承载溯源，改写会破坏导出映射，直接排除。
+        // WARNING: 仅散装与集合来源的包可移入；整合包/配方来源承载溯源，改写会破坏导出映射，直接排除。
         var candidates = _flat
                         .Items.OfType<PackageListItemBase.Entry>()
                         .Where(i => i.Package.Entry.Source is null
@@ -1426,7 +1425,7 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        // NOTE: 移入语义以终态定义——已在其他集合的包会被覆盖移出，确认前给出拆解提示。
+        // 移入语义以终态定义——已在其他集合的包会被覆盖移出，确认前给出拆解提示。
         var moveOutCount = selected.Count(x => x.Source.Entry.Source is not null);
         var picker = new CollectionPickerDialog { ExistingCollections = GetExistingCollections() };
         if (moveOutCount > 0)
@@ -2316,8 +2315,8 @@ public partial class InstanceSetupPageModel(
             {
                 case PackageSourceHelper.Kind.Recipe:
                 {
-                    // NOTE: Recipe 信息同步可得——能解析即赋 Info，解析不出则 Info 留空，
-                    //  与 Modpack 网络 IO 失败合并为同一「Info 未赋值 = 失败」语义，交公共层渲染重试。
+                    // Recipe 信息同步可得——能解析即赋 Info，解析不出则 Info 留空，
+                    // 与 Modpack 网络 IO 失败合并为同一「Info 未赋值 = 失败」语义，交公共层渲染重试。
                     g.IsLoaded = true;
                     var recipe = persistenceService.GetRecipe(RecipeHelper.GetId(source));
                     if (recipe is not null)

@@ -145,7 +145,7 @@ public class NotificationSink(
                                                thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
             case TrackerState.Faulted when tracker.FailureReason is not OperationCanceledException:
-                // NOTE: ProcessFaultedException 由 CrashDiagnosisSink 处理。
+                // ProcessFaultedException 由 CrashDiagnosisSink 处理。
                 if (IsProcessFaulted(tracker.FailureReason))
                 {
                     return;

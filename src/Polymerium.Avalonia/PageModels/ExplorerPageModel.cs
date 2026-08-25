@@ -239,7 +239,7 @@ public partial class ExplorerPageModel : ViewModelBase
             return;
         }
 
-        // NOTE: 资源类型选择器是 TabStrip，其 SelectionMode 为 AlwaysSelected。切仓库会替换它的
+        // WARNING: 资源类型选择器是 TabStrip，其 SelectionMode 为 AlwaysSelected。切仓库会替换它的
         //  ItemsSource，SelectionModel 会先 Clear 再强制 SelectedIndex=0（各仓库 Kinds 的首项恒为
         //  Mod），经 TwoWay 把 Mod 回写到 SelectedKind 并触发一次多余的 Mod 搜索，覆盖正确结果。
         //  所以这里先记下用户当前的选择、压住这次多余搜索，等绑定平息后再按新仓库重断言。
@@ -300,7 +300,7 @@ public partial class ExplorerPageModel : ViewModelBase
 
         Filter = Filter with { Kind = value };
 
-        // NOTE: 切仓库时 TabStrip 的强制回写也会走到这里，那次搜索由 OnSelectedRepositoryChanged 统一发起。
+        // 切仓库时 TabStrip 的强制回写也会走到这里，那次搜索由 OnSelectedRepositoryChanged 统一发起。
         if (!_suppressSearchOnKindChange)
         {
             _ = SearchAsync();
@@ -345,8 +345,8 @@ public partial class ExplorerPageModel : ViewModelBase
                 handle.PageIndex = (uint)(i < 0 ? 0 : i);
                 try
                 {
-                    // NOTE: ExhibitState 语义：锁定=在构建中但被锁；已安装=在构建中可操作；
-                    //  待添加=不存在但已入待定区；待移除/待修改=在构建中且待定区有移除/改版标记。
+                    // ExhibitState 语义：锁定=在构建中但被锁；已安装=在构建中可操作；
+                    // 待添加=不存在但已入待定区；待移除/待修改=在构建中且待定区有移除/改版标记。
 
                     var rv = await handle.FetchAsync(token);
                     var tasks = rv

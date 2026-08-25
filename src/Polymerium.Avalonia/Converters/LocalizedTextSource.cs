@@ -10,10 +10,10 @@ using Avalonia.Styling;
 
 namespace Polymerium.Avalonia.Converters;
 
-// NOTE: 动态 key 的本地化绑定直接订阅 key 对应的 observable，而非在 CultureChanges 触发时读一次 Current()。
-// 生成的 UpdateCulture 先推 CultureChanges、后更新各 key observable；以 CultureChanges 为触发器读 Current()
-// 会让绑定永远显示上一语言且不自愈。订阅 key observable 后 CultureChanges 的触发顺序无关紧要——key 更新即推送。
-// 未知 key（如品牌名字面）原样返回。
+// WARNING: 动态 key 的本地化绑定直接订阅 key 对应的 observable，而非在 CultureChanges 触发时读一次 Current()。
+//  生成的 UpdateCulture 先推 CultureChanges、后更新各 key observable；以 CultureChanges 为触发器读 Current()
+//  会让绑定永远显示上一语言且不自愈。订阅 key observable 后 CultureChanges 的触发顺序无关紧要——key 更新即推送。
+//  未知 key（如品牌名字面）原样返回。
 internal sealed class LocalizedTextSource : StyledElement
 {
     public static readonly StyledProperty<object?> KeyProperty =

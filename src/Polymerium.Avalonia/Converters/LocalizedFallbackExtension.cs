@@ -8,7 +8,7 @@ using Avalonia.Markup.Xaml;
 
 namespace Polymerium.Avalonia.Converters;
 
-// NOTE: Irihi.Lingua 的 {Translate} 返回的是 BindingBase（绑定对象），不是字符串，塞进
+// WARNING: Irihi.Lingua 的 {Translate} 返回的是 BindingBase（绑定对象），不是字符串，塞进
 //  TargetNullValue/FallbackValue 这种静态值槽会落成桥接对象的 FullName，所以「主值 or 本地化兜底」
 public sealed class LocalizedFallbackExtension : MarkupExtension
 {

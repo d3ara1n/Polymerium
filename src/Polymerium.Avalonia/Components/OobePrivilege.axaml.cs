@@ -35,7 +35,7 @@ public partial class OobePrivilege : OobeStep
     /// <returns>True if symlink creation is allowed, false otherwise.</returns>
     private bool Check()
     {
-        // NOTE: 检查能否在 ~/.trident/.polymerium 下创建指向 first_run 的符号链接。
+        // 检查能否在 ~/.trident/.polymerium 下创建指向 first_run 的符号链接。
         var first = PathDef.Default.FileOfFirstRun();
         var symlink = PathDef.Default.FileOfSymlink();
 
@@ -69,7 +69,7 @@ public partial class OobePrivilege : OobeStep
         }
         catch (IOException io) when (io.HResult == -2147023582)
         {
-            // NOTE: ERROR_PRIVILEGE_NOT_HELD —— 用户缺少所需权限。
+            // ERROR_PRIVILEGE_NOT_HELD —— 用户缺少所需权限。
             return false;
         }
         catch (Exception ex)

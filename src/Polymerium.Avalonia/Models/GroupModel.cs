@@ -4,8 +4,8 @@ using Polymerium.Avalonia.Utilities;
 
 namespace Polymerium.Avalonia.Models;
 
-// NOTE: 有源组（Source 非空）用本类型，散装组用 LooseGroupModel 特化；展示数据落 Info（多态），
-//  组本身只承载类型无关的壳（展开态、计数、加载态、按钮）。
+// 有源组（Source 非空）用本类型，散装组用 LooseGroupModel 特化；展示数据落 Info（多态），
+// 组本身只承载类型无关的壳（展开态、计数、加载态、按钮）。
 public partial class GroupModel : ModelBase
 {
     public required PackageSourceHelper.Kind Kind { get; init; }
