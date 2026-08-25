@@ -14,7 +14,6 @@ public partial class AboutModal : Modal
 
     #region Properties
 
-    // NOTE: 构造时确定且永不变，get-only 即可。
     public string Brand => Program.Brand;
     public string Version => Program.Version;
     public string ReleaseDate => Program.ReleaseDate;

@@ -6,15 +6,15 @@ using TridentCore.Abstractions.Repositories.Resources;
 
 namespace Polymerium.Avalonia.Models;
 
-// NOTE: Info 为 null（加载失败）的包也能正常显示与选中——删除加载失败的包正是常见诉求；
-//  Key 由调用方在构建候选时带入，删除时原样取用，不在消费侧重建。
+// Info 为 null（加载失败）的包也能正常显示与选中——删除加载失败的包正是常见诉求；
+// Key 由调用方在构建候选时带入，删除时原样取用，不在消费侧重建。
 public partial class SelectablePackageModel(InstancePackageModel source, PackageListKey key) : ModelBase
 {
     public InstancePackageModel Source { get; } = source;
 
     public PackageListKey Key { get; } = key;
 
-    // NOTE: 去范式化——Label 回退到 Pref，保证加载失败的包仍可辨识。
+    // 去范式化——Label 回退到 Pref，保证加载失败的包仍可辨识。
     public string Label { get; } = source.Info?.ProjectName ?? source.Entry.Pref;
 
     public string? Author { get; } = source.Info?.Author;
@@ -25,7 +25,7 @@ public partial class SelectablePackageModel(InstancePackageModel source, Package
 
     public IReadOnlyList<string> Tags { get; } = [.. source.Tags];
 
-    // NOTE: 候选所属组引用（与主列表共享同一 GroupModel 实例）——按组圈选与行内归属徽章共用；散装为 LooseGroupModel。
+    // 候选所属组引用（与主列表共享同一 GroupModel 实例）——按组圈选与行内归属徽章共用；散装为 LooseGroupModel。
     public GroupModel? Group { get; init; }
 
     [ObservableProperty]

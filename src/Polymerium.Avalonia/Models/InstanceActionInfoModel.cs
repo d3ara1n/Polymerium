@@ -3,8 +3,8 @@ using Polymerium.Avalonia.Facilities;
 
 namespace Polymerium.Avalonia.Models;
 
-// NOTE: 一次包变更解析成功后的展示数据——Old/New 版本名各自可空（Update 一侧解析失败则留空），
-//  项目级数据取能解析到的那一侧。
+// 一次包变更解析成功后的展示数据——Old/New 版本名各自可空（Update 一侧解析失败则留空），
+// 项目级数据取能解析到的那一侧。
 public class InstanceActionInfoModel(
     string projectName,
     string? oldVersionName,

@@ -106,7 +106,6 @@ public partial class InstancePackageDependencyModal : Modal
                                   },
                                   value =>
                                   {
-                                      // NOTE: 加载后自动选中第一个（最佳）版本。
                                       if (value is InstancePackageVersionCollection { Count: > 0 } versions)
                                       {
                                           Dispatcher.UIThread.Post(() =>
@@ -157,12 +156,11 @@ public partial class InstancePackageDependencyModal : Modal
             return;
         }
 
-        // NOTE: 自动版本不指定版本号（传 null）。
         var versionId = IsAutoVersion ? null : SelectedVersion?.Id;
         var pref = PackageHelper.ToPref(Model.Label, Model.Namespace, Model.ProjectId, versionId);
         var entry = new Profile.Rice.Entry { Pref = pref, Enabled = true, Source = null };
 
-        // NOTE: 加入 Profile 后由 InstanceSetupPage 的 merge 造 Entry item 并加载 Info。
+        // 加入 Profile 后由 InstanceSetupPage 的 merge 造 Entry item 并加载 Info。
         Guard.Value.Setup.Packages.Add(entry);
         Guard.NotifyChanged();
 

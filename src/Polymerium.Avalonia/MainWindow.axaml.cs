@@ -146,7 +146,6 @@ public partial class MainWindow : AppWindow
             ApplySidebarPlacement(mode);
         }
 
-        // NOTE: IsTitleBarVisible 默认 false，连带属性也在默认值，恰好无需额外处理。
         if (change.Property == IsTitleBarVisibleProperty)
         {
             var visible = change.GetNewValue<bool>();
@@ -164,7 +163,6 @@ public partial class MainWindow : AppWindow
     #region Navigation Service
 
     internal void Navigate(Type page, object? parameter, IPageTransition transition) =>
-        // NOTE: NavigationService 会处理错误情况。
         Root.Navigate(page, parameter, transition);
 
     internal bool CanGoBack() => Root.CanGoBack;

@@ -6,7 +6,7 @@ using Avalonia.Styling;
 
 namespace Polymerium.Avalonia.Converters;
 
-// NOTE: 本地化枚举的 key 约定为 {EnumType.Name}_{Value}（如 ResourceKind_Mod），
+// 本地化枚举的 key 约定为 {EnumType.Name}_{Value}（如 ResourceKind_Mod），
 public sealed class LocalizedEnumExtension : MarkupExtension
 {
     public LocalizedEnumExtension() { }

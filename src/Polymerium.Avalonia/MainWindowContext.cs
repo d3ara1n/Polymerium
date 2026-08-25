@@ -53,7 +53,7 @@ public partial class MainWindowContext : ObservableObject
         SubscribeProfileList(profileManager);
         SubscribeState(aggregator);
 
-        // NOTE: 顶栏未读徽标——转发 app 级 NotificationService 未读计数（数据归属仍在服务）。
+        // 顶栏未读徽标——转发 app 级 NotificationService 未读计数（数据归属仍在服务）。
         _notificationService.UnreadCountChanged += OnUnreadCountChanged;
         UnreadNotificationCount = _notificationService.UnreadCount;
 
@@ -78,7 +78,7 @@ public partial class MainWindowContext : ObservableObject
 
     #region Other reactive
 
-    // NOTE: NotificationService 事件均在 UI 线程触发（见服务注释），此处直接赋值即可。
+    // NotificationService 事件均在 UI 线程触发（见服务注释），此处直接赋值即可。
     private void OnUnreadCountChanged(int count) => UnreadNotificationCount = count;
 
     #endregion
@@ -96,7 +96,6 @@ public partial class MainWindowContext : ObservableObject
 
     public void OnInitialize()
     {
-        // NOTE: 首次使用展示 OOBE（Windows 上含权限检查步骤）。
         if (Program.FirstRun)
         {
             _overlayService.PopModal(new OobeModal

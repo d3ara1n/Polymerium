@@ -97,7 +97,7 @@ public static class RecipeHelper
         return true;
     }
 
-    // NOTE: RecipeItem.Tags 在 DB 里以 JSON 字符串存储，解析失败容错为空集而非抛出
+    // RecipeItem.Tags 在 DB 里以 JSON 字符串存储，解析失败容错为空集而非抛出
     public static IReadOnlyList<string> DeserializeTags(string? json)
     {
         if (string.IsNullOrEmpty(json))

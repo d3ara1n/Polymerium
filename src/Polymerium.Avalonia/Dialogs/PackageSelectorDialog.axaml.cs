@@ -34,7 +34,7 @@ public partial class PackageSelectorDialog : Dialog
         AvaloniaProperty.RegisterDirect<PackageSelectorDialog, string>(nameof(SelectionSummary),
                                                                        o => o.SelectionSummary);
 
-    // NOTE: 圈选维度快照（SetItems 时构建）；注册为 DirectProperty 保证绑定任意时序都能收到值。
+    // 圈选维度快照（SetItems 时构建）；注册为 DirectProperty 保证绑定任意时序都能收到值。
     public static readonly DirectProperty<PackageSelectorDialog, IReadOnlyList<ResourceKind>> TypesProperty =
         AvaloniaProperty.RegisterDirect<PackageSelectorDialog, IReadOnlyList<ResourceKind>>(nameof(Types),
             o => o.Types,
@@ -50,7 +50,7 @@ public partial class PackageSelectorDialog : Dialog
             o => o.Tags,
             (o, v) => o.Tags = v);
 
-    // NOTE: 候选涉及的组快照（SetItems 时构建，散装组除外）；未分组 chip 由 HasLooseCandidates 单独驱动。
+    // 候选涉及的组快照（SetItems 时构建，散装组除外）；未分组 chip 由 HasLooseCandidates 单独驱动。
     public static readonly DirectProperty<PackageSelectorDialog, IReadOnlyList<GroupModel>> GroupsProperty =
         AvaloniaProperty.RegisterDirect<PackageSelectorDialog, IReadOnlyList<GroupModel>>(nameof(Groups),
             o => o.Groups,
@@ -66,7 +66,7 @@ public partial class PackageSelectorDialog : Dialog
     private readonly CompositeDisposable _subscriptions = new();
     private IReadOnlyList<string> _authors = [];
 
-    // NOTE: 纯 CLR——caller 在 SetItems/显示前设置一次；setter 把意图映射到标题与主按钮文案。
+    // 纯 CLR——caller 在 SetItems/显示前设置一次；setter 把意图映射到标题与主按钮文案。
     private SelectionIntent _intent = SelectionIntent.Remove;
     private IReadOnlyList<string> _tags = [];
 
@@ -86,7 +86,7 @@ public partial class PackageSelectorDialog : Dialog
         _items.Connect().Filter(filterText).Bind(out var view).Subscribe().DisposeWith(_subscriptions);
         View = view;
 
-        // NOTE: 任一勾选变化 → 重算 Result 与计数；Result 同时驱动主按钮可用性（ValidateResult）。
+        // 任一勾选变化 → 重算 Result 与计数；Result 同时驱动主按钮可用性（ValidateResult）。
         _items
            .Connect()
            .AutoRefresh(x => x.IsSelected)
@@ -172,8 +172,8 @@ public partial class PackageSelectorDialog : Dialog
         RecomputeSelection();
     }
 
-    // NOTE: 作用域划分，搜索条为分界线——局部作用于当前过滤视图（SelectAllVisible/ClearVisible），
-    //  全局作用于完整候选集（ClearAll/SelectByType/SelectByAuthor/SelectByTag）。
+    // 作用域划分，搜索条为分界线——局部作用于当前过滤视图（SelectAllVisible/ClearVisible），
+    // 全局作用于完整候选集（ClearAll/SelectByType/SelectByAuthor/SelectByTag）。
     [RelayCommand]
     private void SelectAllVisible()
     {

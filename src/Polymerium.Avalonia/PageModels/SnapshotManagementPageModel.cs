@@ -200,7 +200,6 @@ public partial class SnapshotManagementPageModel : ViewModelBase
             {
                 updater.Remove(target.Source.Id);
 
-                // NOTE: 修复链——找出 Previous 指向被删项的那些项。
                 var needsFix = updater.Items.Where(x => x.Previous == target).ToList();
                 foreach (var item in needsFix)
                 {

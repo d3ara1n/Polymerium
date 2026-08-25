@@ -277,7 +277,7 @@ public partial class InstancePackageModal : Modal
                 return null;
             }
 
-            // NOTE: dependants 展示数据全部可由本地已加载 Info 构造，无需再网络解析。
+            // dependants 展示数据全部可由本地已加载 Info 构造，无需再网络解析。
             var models = Packages
                         .Where(x => x.Info is { Version: InstancePackageVersionModel version }
                                  && version.Dependencies.Any(y => y.Label == Model.Label
@@ -400,7 +400,6 @@ public partial class InstancePackageModal : Modal
                                 {
                                     if (x.Old is null)
                                     {
-                                        // NOTE: null -> Project（AddUnversioned）
                                         return new()
                                         {
                                             Kind = InstancePackageModificationKind.AddUnversioned,
@@ -409,7 +408,6 @@ public partial class InstancePackageModal : Modal
                                         };
                                     }
 
-                                    // NOTE: -> Project: Unset
                                     return new()
                                     {
                                         Kind = InstancePackageModificationKind.Unset,
@@ -421,7 +419,6 @@ public partial class InstancePackageModal : Modal
                                 var package = await DataService.ResolvePackageAsync(result, Filter);
                                 if (x.Old is null)
                                 {
-                                    // NOTE: null -> Package: Add
                                     return new()
                                     {
                                         Kind = InstancePackageModificationKind.AddVersioned,
@@ -430,7 +427,6 @@ public partial class InstancePackageModal : Modal
                                     };
                                 }
 
-                                // NOTE: Package -> Package: Update
                                 return new()
                                 {
                                     Kind = InstancePackageModificationKind.Update,
@@ -526,7 +522,7 @@ public partial class InstancePackageModal : Modal
                 false);
             if (latest.VersionId != skippedVersionId)
             {
-                // NOTE: latest 已滚过被跳版本 → 记录已失效，顺手清掉当作没发生过。
+                // latest 已滚过被跳版本 → 记录已失效，顺手清掉当作没发生过。
                 PersistenceService.RemoveUpdateBlacklist(Guard.Key, Model.Label, Model.Namespace, Model.ProjectId);
                 return null;
             }
@@ -622,7 +618,7 @@ public partial class InstancePackageModal : Modal
             }
 
             Model.Owner.IsUpdateHeld = IsUpdateHeld;
-            // NOTE: hold 与 skip 共享一行，hold 开启即覆盖 skip，行同步消失。
+            // hold 与 skip 共享一行，hold 开启即覆盖 skip，行同步消失。
             if (IsUpdateHeld)
             {
                 SkippedVersionLazy?.Cancel();

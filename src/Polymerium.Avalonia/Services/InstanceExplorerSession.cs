@@ -255,7 +255,7 @@ public sealed class InstanceExplorerSession : ExplorerSession
                     hit.Reference,
                     FindEntry(hit.Label, hit.Namespace, hit.Pid));
 
-    // NOTE: instance 弹窗的依赖列表用这个把一个 Project 包回携带 Entry 的模型，并优先复用
+    // WARNING: instance 弹窗的依赖列表用这个把一个 Project 包回携带 Entry 的模型，并优先复用
     //  待定区/搜索结果里已存在的实例，避免同一项目出现两份模型导致卡片状态失步。
     //  它是 instance 的内部事务——explorer 和基类契约都不认识它。
     private InstanceExhibitModel LinkExhibit(Project project, Func<ProjectIdentifier, ExhibitModel?> findExisting)

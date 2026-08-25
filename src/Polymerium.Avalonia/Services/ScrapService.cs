@@ -50,7 +50,7 @@ public class ScrapService : ILifetimeService
             _buffers.Add(e.Key, buffer);
         }
 
-        // NOTE: 游戏输出到达于后台线程，绑定到 UI 的集合若在该线程上变更，VirtualizingStackPanel 可能在布局期间读到并发收缩的列表而索引越界（POLYMERIUM-2E），故攒批后投递到 UI 线程再写入。
+        // WARNING: 游戏输出到达于后台线程，绑定到 UI 的集合若在该线程上变更，VirtualizingStackPanel 可能在布局期间读到并发收缩的列表而索引越界（POLYMERIUM-2E），故攒批后投递到 UI 线程再写入。
         e
            .ScrapStream
            .Buffer(TimeSpan.FromMilliseconds(FLUSH_INTERVAL))

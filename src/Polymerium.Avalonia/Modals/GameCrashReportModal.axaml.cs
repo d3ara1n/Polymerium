@@ -214,7 +214,7 @@ public partial class GameCrashReportModal : Modal
         }
         catch
         {
-            // NOTE: 导出失败暂不阻断。
+            // 导出失败暂不阻断。
         }
     }
 
@@ -301,7 +301,7 @@ public partial class GameCrashReportModal : Modal
                     _notificationService?.PopProgress(
                         LanguageManager.Instance.GameCrashReportModal_AiExportUploadingMessage.Current(),
                         LanguageManager.Instance.GameCrashReportModal_AiExportUploadingTitle.Current());
-                // NOTE: Action 须在 Handle 创建后挂载，构造期内引用 Handle 属提前访问。
+                // WARNING: Action 须在 Handle 创建后挂载，构造期内引用 Handle 属提前访问。
                 uploadProgress?.AddAction(new(
                     LanguageManager.Instance.Dialog_CancelButtonText.Current(),
                     new RelayCommand(() => uploadProgress?.Cancel())));
@@ -369,7 +369,7 @@ public partial class GameCrashReportModal : Modal
             }
             catch
             {
-                // NOTE: 上传已成功但后续写盘失败，回滚远端以免留下不可回收的公开日志。
+                // WARNING: 上传已成功但后续写盘失败，回滚远端以免留下不可回收的公开日志。
                 await RollbackUploadsAsync(uploaded);
                 throw;
             }
@@ -555,7 +555,6 @@ public partial class GameCrashReportModal : Modal
             }
             catch
             {
-                // NOTE: 忽略该候选，尝试下一个。
             }
         }
 

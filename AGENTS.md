@@ -155,9 +155,13 @@ Two anti-patterns to avoid:
 
 **Emphasis comments.** When a comment earns a place as a constraint, gotcha, or warning the next reader will get wrong without the hint, promote it above ordinary commentary with a leading tag. This is one tier higher than a plain `//` comment: a tagged line signals "this matters, read me carefully."
 
+**The promotion test is falsifiable, not a feeling.** A comment earns a tag only when you can complete the sentence *"if the reader skips this comment, they will ______"* with a concrete consequence — misapply an invariant, trigger an exception, introduce a race, leak a resource. If the best completion is "miss some context" or "understand the design a bit less", the comment stays plain `//`, no matter how valuable that context is. Valuable and dangerous are different properties, and only dangerous earns the tag.
+
+**Tags never mark summaries.** Comments describing what a type, field, method, or file *is* — its purpose, design, or relationships — are documentation, not landmines; they always stay plain `//` however non-obvious the concept. A tag marks a constraint a reader must not step over at a specific place in code, and whether a comment is that is decided by the promotion test above, never by how much background it carries.
+
 The format is fixed regardless of tag: first line `// TAG: ` (two slashes, one space, the tag, one space); continuation lines `//  ` (two slashes, **two** spaces — one more than a normal comment — so the line visibly belongs to the tagged block). No variants such as `//NOTE:`, `// note:`, or `// NB:`.
 
-Tags are `PascalCase` and pick the intent: `NOTE` for a non-obvious constraint or invariant the code relies on; `TODO` for known unfinished work; `HACK` for a deliberate workaround that should ideally not exist; `FIXME`/`BUG` for a known defect; `WARNING` for a footgun. Use the most specific tag that fits.
+Tags are `PascalCase` and pick the intent: `NOTE` for a non-obvious constraint or invariant the code relies on; `TODO` for known unfinished work; `HACK` for a deliberate workaround that should ideally not exist; `FIXME`/`BUG` for a known defect; `WARNING` for a footgun where a plausible-looking change breaks something observable. Use the most specific tag that fits — when skipping the comment leads to breakage, `WARNING` outranks `NOTE`.
 
 When in doubt, leave the comment out — a stale or meaningless comment is debt, not documentation.
 

@@ -36,8 +36,8 @@ public class App : Application
                 e.IsTerminating ? SentryLevel.Fatal : SentryLevel.Error));
         TaskScheduler.UnobservedTaskException += (_, e) =>
         {
-            // NOTE: 网络/传输层异常（代理/VPN/防火墙致 TLS 握手损坏等）是用户环境问题而非应用 bug，
-            //  吞掉避免崩溃，但仍以 Warning 上报 Sentry，便于区分网络代码错误与用户环境问题。
+            // 网络/传输层异常（代理/VPN/防火墙致 TLS 握手损坏等）是用户环境问题而非应用 bug，
+            // 吞掉避免崩溃，但仍以 Warning 上报 Sentry，便于区分网络代码错误与用户环境问题。
             if (IsNetworkRelatedException(e.Exception))
             {
                 e.SetObserved();
@@ -75,7 +75,7 @@ public class App : Application
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            // NOTE: macOS 关闭主窗口不退出应用，允许经 Dock 栏重新打开。
+            // macOS 关闭主窗口不退出应用，允许经 Dock 栏重新打开。
             if (OperatingSystem.IsMacOS())
             {
                 desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
@@ -85,7 +85,7 @@ public class App : Application
             _ = StartLifetimeServicesAsync(desktop);
         }
 
-        // NOTE: macOS Dock 栏点击重新打开主窗口。
+        // macOS Dock 栏点击重新打开主窗口。
         if (Current?.TryGetFeature<IActivatableLifetime>() is { } activatable)
         {
             activatable.Activated += OnActivated;
@@ -104,14 +104,13 @@ public class App : Application
         HashSet<Exception>? visited = null;
         while (exception is not null)
         {
-            // NOTE: 循环引用保护。
             visited ??= [];
             if (!visited.Add(exception))
             {
                 break;
             }
 
-            // NOTE: HttpRequestException/SocketException/AuthenticationException 均视为传输层问题，
+            // WARNING: HttpRequestException/SocketException/AuthenticationException 均视为传输层问题，
             //  不并入 IOException，避免本地文件异常被误判为网络问题而吞掉。
             if (exception is HttpRequestException or SocketException or AuthenticationException)
             {
@@ -170,7 +169,7 @@ public class App : Application
             return;
         }
 
-        // NOTE: 已关闭窗口的引用仍留在 MainWindow 属性上，需判断是否真正可用。
+        // WARNING: 已关闭窗口的引用仍留在 MainWindow 属性上，需判断是否真正可用。
         var window = desktop.MainWindow;
         if (window is null || !window.IsVisible)
         {
@@ -210,7 +209,7 @@ public class App : Application
         var notification = Program.Services.GetRequiredService<NotificationService>();
         notification.SetHandler(window.PopGrowl);
 
-        // NOTE: 卸载时断开服务 handler，防止悬空引用。
+        // WARNING: 卸载时断开服务 handler，防止悬空引用。
         window.Unloaded += (_, _) =>
         {
             navigation.SetHandler(null!, null!, null!, null!);
@@ -244,13 +243,12 @@ public class App : Application
         var themeService = Program.Services.GetRequiredService<ThemeService>();
         window.AttachTheme(themeService);
 
-        // NOTE: 须在窗口初始化之后——MainWindowContext 构造函数要求 window 已与服务绑定。
+        // WARNING: 须在窗口初始化之后——MainWindowContext 构造函数要求 window 已与服务绑定。
         var viewModel = ActivatorUtilities.CreateInstance<MainWindowContext>(Program.Services);
         window.DataContext = viewModel;
 
         notification.SetHandler(notification.PopNotification);
 
-        // NOTE: MainWindowContext 无 InitializeAsync，这里代为初始化。
         navigation.Navigate<LandingPage>();
 
         return window;

@@ -135,7 +135,7 @@ public partial class LandingPageModel(
 
     private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e) => InstanceCount++;
 
-    // NOTE: UpdateService.StartAsync 的 await 之后线程不保证为 UI 线程，故切回 UI 线程赋值。
+    // WARNING: UpdateService.StartAsync 的 await 之后线程不保证为 UI 线程，故切回 UI 线程赋值。
     private void OnUpdateFound(AppUpdateModel update) => Dispatcher.UIThread.Post(() => CurrentUpdate = update);
 
     private void LoadMinecraftNews() =>

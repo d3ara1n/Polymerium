@@ -48,7 +48,7 @@ public static class NetworkCheckHelper
              || response.StatusCode == HttpStatusCode.MethodNotAllowed
              || response.StatusCode == HttpStatusCode.NotFound)
             {
-                // NOTE: 部分服务器不支持 HEAD，405/404 仍视为可达（对本工具而言 404 也证明链路通）。
+                // 部分服务器不支持 HEAD，405/404 仍视为可达（对本工具而言 404 也证明链路通）。
                 model.Latency = stopwatch.Elapsed.TotalMilliseconds;
                 model.Status = ConnectionTestStatus.Success;
                 model.IsTesting = false;

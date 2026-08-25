@@ -145,7 +145,7 @@ public static class AssetModHelper
         var doc = JsonDocument.Parse(json);
         var root = doc.RootElement;
 
-        // NOTE: Quilt 元数据与 Fabric 同构，仅挂在 quilt_loader 节点下。
+        // Quilt 元数据与 Fabric 同构，仅挂在 quilt_loader 节点下。
         if (root.TryGetProperty("quilt_loader", out var loaderElement))
         {
             var metadata = new AssetModeMetadataModel
@@ -256,7 +256,7 @@ public static class AssetModHelper
             var doc = JsonDocument.Parse(json);
             var root = doc.RootElement;
 
-            // NOTE: mcmod.info 可能是数组（多 mod）或单个对象。
+            // mcmod.info 可能是数组（多 mod）或单个对象。
             var modInfo = root.ValueKind == JsonValueKind.Array && root.GetArrayLength() > 0 ? root[0] : root;
 
             var homepage = GetJsonString(modInfo, "url");

@@ -22,7 +22,7 @@ using Version = TridentCore.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Avalonia.Services;
 
-// NOTE: Application 级数据整合服务，所有 API/模型统一经此提供；状态全局共享，故无需取消。
+// Application 级数据整合服务，所有 API/模型统一经此提供；状态全局共享，故无需取消。
 public class DataService(
     IMemoryCache cache,
     RepositoryAgent agent,
@@ -35,8 +35,8 @@ public class DataService(
 
     public async ValueTask<Package> IdentifyVersionAsync(string filePath) => await agent.IdentifyAsync(filePath);
 
-    // NOTE: Package/Project/Description/Changelog/Status 缓存归 Trident 仓库缓存层管，此处直接委托；
-    //  DataService 只缓存 UI hot data 与应用层加工后的数据。
+    // Package/Project/Description/Changelog/Status 缓存归 Trident 仓库缓存层管，此处直接委托；
+    // DataService 只缓存 UI hot data 与应用层加工后的数据。
     public Task<Package> ResolvePackageAsync(PackageIdentifier id, Filter filter, bool cachedEnabled = true) =>
         agent.ResolveAsync(id, filter, cachedEnabled);
 
@@ -57,9 +57,9 @@ public class DataService(
 
     public Task<RepositoryStatus> CheckStatusAsync(string label) => agent.CheckStatusAsync(label);
 
-    // NOTE: 以下为 DataService 独有的内存缓存——数据源不在 RepositoryAgent，或经过额外加工（Bitmap 解码、版本数截断）。
+    // 以下为 DataService 独有的内存缓存——数据源不在 RepositoryAgent，或经过额外加工（Bitmap 解码、版本数截断）。
 
-    // NOTE: 缩略图经 DecodeToWidth 下采样到 maxWidth（默认 64px，单张 ~16KB），解码后体量可控，
+    // WARNING: 缩略图经 DecodeToWidth 下采样到 maxWidth（默认 64px，单张 ~16KB），解码后体量可控，
     //  故直接缓存解码结果；全尺寸图由 AppImageLoader 走字节缓存。驱逐只丢 Task 不释放 Bitmap——
     //  UI 可能仍引用，提前释放抛 ObjectDisposedException，非托管内存由 GC finalizer 在引用消失后回收。
     public ValueTask<Bitmap> GetBitmapAsync(Uri url, int maxWidth = 64) =>
@@ -80,7 +80,7 @@ public class DataService(
             using var client = httpClientFactory.CreateClient();
             bytes = await client.GetByteArrayAsync(url);
 
-            // NOTE: 先写临时文件再 rename，崩溃时不会留下损坏文件。
+            // WARNING: 先写临时文件再 rename，崩溃时不会留下损坏文件。
             var dir = Path.GetDirectoryName(path)!;
             Directory.CreateDirectory(dir);
             var tmp = path + ".tmp";
@@ -96,7 +96,7 @@ public class DataService(
         GetOrCreate($"versions:{label}:{PackageHelper.Identify(label, ns, pid, null, filter)}",
                     async () =>
                     {
-                        // NOTE: 调用以读展示数据为主，仅版本匹配需全量；此处设上限避免一次拉取过多。
+                        // 调用以读展示数据为主，仅版本匹配需全量；此处设上限避免一次拉取过多。
                         const int LIMIT = 20;
                         var handle = await agent.InspectAsync(new(label, ns, pid), filter);
                         var rv = new List<Version>();
@@ -147,7 +147,7 @@ public class DataService(
 
     private ValueTask<T> GetOrCreate<T>(string key, Func<Task<T>> factory, bool cachedEnabled = true)
     {
-        // NOTE: 缓存进行中的 Task 实现并发去重；已知失败/取消的 Task 不复用，让下次调用重试，
+        // WARNING: 缓存进行中的 Task 实现并发去重；已知失败/取消的 Task 不复用，让下次调用重试，
         //  否则瞬态故障（网络抖动）会把异常钉死在缓存里直到过期。
         if (cachedEnabled
             && cache.TryGetValue(key, out var cached)

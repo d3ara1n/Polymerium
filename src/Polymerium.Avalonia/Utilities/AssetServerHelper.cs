@@ -56,7 +56,7 @@ public static class AssetServerHelper
         }
         catch
         {
-            // NOTE: 解析失败时静默返回已读到的部分数据——空 catch 是有意的。
+            // 解析失败时静默返回已读到的部分数据——空 catch 是有意的。
         }
 
         return servers;

@@ -104,7 +104,7 @@ internal static class Program
         ImageLoader.AsyncImageLoader = loader;
         ImageBrushLoader.AsyncImageLoader = loader;
 
-        // NOTE: 初始化 Sinks——订阅 Aggregator 事件流，仅需一次，不依赖窗口生命周期。
+        // 初始化 Sinks——订阅 Aggregator 事件流，仅需一次，不依赖窗口生命周期。
         Services.GetRequiredService<ActivitySink>().Attach();
         Services.GetRequiredService<NotificationSink>().Attach();
         Services.GetRequiredService<CrashDiagnosisSink>().Attach();
@@ -125,9 +125,9 @@ internal static class Program
         {
             try
             {
-                // NOTE: the CTS self-cancels at 10s; WaitAsync then throws OperationCanceledException,
-                //  which Sentry filters out — so a slow shutdown times out silently rather than being
-                //  misreported as a crash.
+                // the CTS self-cancels at 10s; WaitAsync then throws OperationCanceledException,
+                // which Sentry filters out — so a slow shutdown times out silently rather than being
+                // misreported as a crash.
                 using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
                 runtime.StopAsync(cts.Token).WaitAsync(cts.Token).GetAwaiter().GetResult();
             }

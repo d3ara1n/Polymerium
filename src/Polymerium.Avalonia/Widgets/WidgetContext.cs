@@ -19,6 +19,6 @@ public class WidgetContext(string id, IServiceProvider provider, WidgetHostServi
 
     public void SetLocalData<T>(string indicator, T? data) => service.SetLocalData(Key, Id, indicator, data);
 
-    // NOTE: 本地数据按 Key-WidgetId-DataId-Data 键值对落库，Set<T>/Get<T> 整对象读写，
-    //  不在 Context 生命周期内隐式保存。
+    // 本地数据按 Key-WidgetId-DataId-Data 键值对落库，Set<T>/Get<T> 整对象读写，
+    // 不在 Context 生命周期内隐式保存。
 }

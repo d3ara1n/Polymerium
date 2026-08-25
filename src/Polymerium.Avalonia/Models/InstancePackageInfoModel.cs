@@ -42,7 +42,7 @@ public partial class InstancePackageInfoModel(
 
     partial void OnVersionChanged(InstancePackageVersionModelBase value)
     {
-        // NOTE: 这里 = new InstancePackageInfoModel 不会触发 OnVersionChanged。
+        // 这里 = new InstancePackageInfoModel 不会触发 OnVersionChanged。
         owner.Entry.Pref = PackageHelper.ToPref(label,
                                                 @namespace,
                                                 projectId,

@@ -6,10 +6,10 @@ using Polymerium.Avalonia.Utilities;
 
 namespace Polymerium.Avalonia.DialogModels;
 
-// NOTE: 项目唯一的在线导入入口。Trident 库级 Import 只消费本地 zip，
-//  而用户侧 Import 同时覆盖在线引用与本地文件，由此对话框统一；
-//  分类是本地且无网络的——pref:// 直解析为 PackageIdentifier，http(s) 以 Uri 交给
-//  Trident 的 RepositoryAgent.RecognizeAsync。
+// 项目唯一的在线导入入口。Trident 库级 Import 只消费本地 zip，
+// 而用户侧 Import 同时覆盖在线引用与本地文件，由此对话框统一；
+// 分类是本地且无网络的——pref:// 直解析为 PackageIdentifier，http(s) 以 Uri 交给
+// Trident 的 RepositoryAgent.RecognizeAsync。
 public partial class ModpackImporterDialogModel : ViewModelBase
 {
     [ObservableProperty]
@@ -34,7 +34,7 @@ public partial class ModpackImporterDialogModel : ViewModelBase
 
     public bool CanValidate => !string.IsNullOrWhiteSpace(Input);
 
-    // NOTE: 编辑输入会使已分类结果失效，须重新校验。
+    // WARNING: 编辑输入会使已分类结果失效，须重新校验。
     partial void OnInputChanged(string? value)
     {
         Result = null;

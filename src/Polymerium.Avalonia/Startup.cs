@@ -53,7 +53,7 @@ public static class Startup
                                                    {
                                                        var handler = new HttpClientHandler();
 
-                                                       // NOTE: 尝试取配置服务以应用代理设置（失败忽略，继续直连）。
+                                                       // 尝试取配置服务以应用代理设置（失败忽略，继续直连）。
                                                        var configService = serviceProvider
                                                           .GetService<ConfigurationService>();
                                                        try
@@ -139,7 +139,7 @@ public static class Startup
             })
            .AddMemoryCache(options =>
             {
-                // NOTE: SizeLimit 生效后每个 cache entry 必须设置 Size，否则写入时抛异常。
+                // WARNING: SizeLimit 生效后每个 cache entry 必须设置 Size，否则写入时抛异常。
                 options.SizeLimit = 256;
                 options.CompactionPercentage = 0.10;
                 options.ExpirationScanFrequency = TimeSpan.FromMinutes(1);
@@ -159,9 +159,9 @@ public static class Startup
            .WithNeueccMessagePackSerializer()
            .WithRegisteredDistributedCache();
 
-        // NOTE: AddAccountConfigurers depends on AddMicrosoft, AddXboxLive, AddMinecraft,
-        //       AddYggdrasil, and AddAuthlibInjector being registered first.
-        //       Do not reorder this chain without consulting the dependency graph.
+        // WARNING: AddAccountConfigurers depends on AddMicrosoft, AddXboxLive, AddMinecraft,
+        //  AddYggdrasil, and AddAuthlibInjector being registered first.
+        //  Do not reorder this chain without consulting the dependency graph.
         services
            .AddLifetimeRuntime()
            .AddPrismLauncher()
@@ -249,7 +249,7 @@ public static class Startup
         _singleInstance.Received += OnIpcReceived;
         _singleInstance.StartServer();
 
-        // NOTE: Huskui 的 OverlayHost SmokeMask 是半透明遮罩，进捕获会经模糊+tint 整体偏黑；
+        // WARNING: Huskui 的 OverlayHost SmokeMask 是半透明遮罩，进捕获会经模糊+tint 整体偏黑；
         //  Huskui 以 NuGet 消费、无法挂 BlurBackdrop.ExcludeFromCapture，只能在此按名登记全局排除。
         BlurBackdrop.ExcludedRoots.Add("PART_SmokeMask");
 
@@ -302,7 +302,7 @@ public static class Startup
             return;
         }
 
-        // NOTE: ApplicationLifetime 在 StartWithClassicDesktopLifetime 内部才赋值。在那之前碰
+        // WARNING: ApplicationLifetime 在 StartWithClassicDesktopLifetime 内部才赋值。在那之前碰
         //  Dispatcher.UIThread 会在当前 IPC 监听线程上懒构造 Dispatcher 并绑死 owner，随后
         //  Win32Platform.Initialize 的 VerifyAccess 会因主线程≠监听线程而抛异常崩溃（POLYMERIUM-28）。
         //  框架尚未就绪时丢弃这次激活即可——此时主窗口还没创建，无事可激活。

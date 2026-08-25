@@ -21,7 +21,7 @@ public class FavoriteRepository(
 {
     private const uint PAGE_SIZE = 20;
 
-    // NOTE: 收藏不持久化兼容性信息，此处显式传空而非在 record 里给默认值
+    // 收藏不持久化兼容性信息，此处显式传空而非在 record 里给默认值
     private static Exhibit ToExhibit(PersistenceService.FavoriteProject favorite) =>
         new(favorite.Label,
             PersistenceService.NormalizeNamespace(favorite.Namespace),

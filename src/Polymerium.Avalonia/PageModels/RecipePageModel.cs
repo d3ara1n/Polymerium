@@ -73,8 +73,8 @@ public partial class RecipePageModel(
                                                            s.ProjectId))
                         .ToHashSet();
 
-        // NOTE: 同步分桶——toRemove：cache 有、DB 无；
-        //  toAdd/toUpdate：Lookup 命中则刷新 Note/Tags，未命中则新建。
+        // 同步分桶——toRemove：cache 有、DB 无；
+        // toAdd/toUpdate：Lookup 命中则刷新 Note/Tags，未命中则新建。
         _items.Remove([.. _items.Keys.Where(k => !storedKeys.Contains(k))]);
 
         var toAdd = new List<RecipeItemModel>();
@@ -126,7 +126,7 @@ public partial class RecipePageModel(
         }
         catch
         {
-            // NOTE: 渐进增强：解析失败时保留原始标识并标记已加载以降级显示，不阻断页面
+            // 渐进增强：解析失败时保留原始标识并标记已加载以降级显示，不阻断页面
             foreach (var item in pending)
             {
                 item.IsLoaded = true;

@@ -14,8 +14,8 @@ using Polymerium.Avalonia.Models;
 
 namespace Polymerium.Avalonia.Services;
 
-// NOTE: 门面服务：持有 app 级单例 canonical 通知数据，只暴露命令式方法与状态事件；
-//  不暴露可绑定集合/命令——View 绑定一律经 NotificationSidebarViewModel 投影。
+// 门面服务：持有 app 级单例 canonical 通知数据，只暴露命令式方法与状态事件；
+// 不暴露可绑定集合/命令——View 绑定一律经 NotificationSidebarViewModel 投影。
 public class NotificationService
 {
     private const int MAX_NOTIFICATION_COUNT = 100;
@@ -38,7 +38,7 @@ public class NotificationService
         }
     };
 
-    // NOTE: canonical 数据为 app 级单例，不受窗口生命周期影响；仅本类管理方法可变更。
+    // canonical 数据为 app 级单例，不受窗口生命周期影响；仅本类管理方法可变更。
     private readonly ObservableCollection<NotificationModel> _notifications = [];
     private Action<GrowlItem>? _growlHandler;
 
@@ -61,7 +61,7 @@ public class NotificationService
 
     private void Pop(NotificationModel model, GrowlItem item)
     {
-        // NOTE: 持久通知记录永远写，不受窗口生命周期影响。
+        // 持久通知记录永远写，不受窗口生命周期影响。
         _notificationHandler?.Invoke(model);
 
         // TODO(B): 无窗口时通过 TrayIcon / macOS Notification Center 发系统通知
@@ -238,7 +238,7 @@ public class NotificationService
 
         #region Other Setters
 
-        // NOTE: Action 不能经构造传入——构造期内引用 Handle 属提前访问，只能事后挂载。
+        // Action 不能经构造传入——构造期内引用 Handle 属提前访问，只能事后挂载。
         public void AddAction(GrowlAction action) => actions.Add(action);
 
         public void SetThumbnail(Uri? source) => model.Thumbnail = source;
@@ -250,7 +250,7 @@ public class NotificationService
 
     #region Events
 
-    // NOTE: 所有事件均假定在 UI 线程触发（PopMessage 已 marshal 到 UI 线程）。
+    // WARNING: 所有事件均假定在 UI 线程触发（PopMessage 已 marshal 到 UI 线程）。
     public event Action<NotificationModel>? NotificationAdded;
     public event Action<NotificationModel>? NotificationRemoved;
     public event Action<NotificationModel>? NotificationReadChanged;

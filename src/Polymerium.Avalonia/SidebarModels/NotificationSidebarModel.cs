@@ -9,8 +9,8 @@ using Polymerium.Avalonia.Services;
 
 namespace Polymerium.Avalonia.SidebarModels;
 
-// NOTE: 数据归属仍在 NotificationService（app 级单例），本类仅持有同一批 NotificationModel 引用的镜像，
-//  负责投影集合与未读计数，并转发命令。
+// 数据归属仍在 NotificationService（app 级单例），本类仅持有同一批 NotificationModel 引用的镜像，
+// 负责投影集合与未读计数，并转发命令。
 public partial class NotificationSidebarModel : ViewModelBase
 {
     private readonly NotificationService _service;
@@ -55,7 +55,7 @@ public partial class NotificationSidebarModel : ViewModelBase
         _service.NotificationAdded += OnAdded;
         _service.NotificationRemoved += OnRemoved;
         _service.UnreadCountChanged += OnUnreadCountChanged;
-        // NOTE: NotificationReadChanged 无需处理——逐项 IsRead 在 NotificationModel 上可观察，镜像共享引用。
+        // NotificationReadChanged 无需处理——逐项 IsRead 在 NotificationModel 上可观察，镜像共享引用。
         return Task.CompletedTask;
     }
 

@@ -89,7 +89,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
 
     private async Task WriteIconAsync()
     {
-        // NOTE: 如果监听 ThumbnailOverwrite 改变去写会导致死循环
+        // WARNING: 如果监听 ThumbnailOverwrite 改变去写会导致死循环
         try
         {
             var path = InstanceHelper.PickIcon(Basic.Key);
