@@ -2,6 +2,7 @@ using System.IO;
 using FreeSql;
 using Microsoft.Extensions.DependencyInjection;
 using MirrorChyan.Net;
+using Polymerium.Avalonia.Adapters;
 using Polymerium.Avalonia.Services;
 using TridentCore.Abstractions;
 using Velopack;
@@ -38,9 +39,12 @@ public static class ServiceCollectionExtensions
 
         public IServiceCollection AddVelopackGithubSource()
         {
-            services.AddSingleton<GithubSource>(_ => new("https://github.com/d3ara1n/Polymerium",
+            services.AddSingleton<IFileDownloader, FactoryFileDownloader>();
+            services.AddSingleton<GithubSource>(sp => new("https://github.com/d3ara1n/Polymerium",
                                                          null,
-                                                         !string.IsNullOrEmpty(GitVersionInformation.PreReleaseTag)));
+                                                         !string.IsNullOrEmpty(GitVersionInformation
+                                                             .PreReleaseTag),
+                                                         sp.GetRequiredService<IFileDownloader>()));
             services.AddSingleton<IUpdateSource, GithubSource>(sp => sp.GetRequiredService<GithubSource>());
             return services;
         }
