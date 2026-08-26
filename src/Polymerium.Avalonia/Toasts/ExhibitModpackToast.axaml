@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:async="using:AsyncImageLoader"
+    xmlns:bitmap="using:Avalonia.Media.Imaging"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
@@ -164,7 +165,38 @@
                     Spacing="8">
                     <app:GalleryCarousel
                         HorizontalAlignment="Stretch"
-                        ItemsSource="{Binding Modpack.Gallery}" />
+                        ItemsSource="{Binding Modpack.Gallery}">
+                        <app:GalleryCarousel.ItemTemplate>
+                            <DataTemplate x:DataType="app:GalleryBitmapModel">
+                                <Image
+                                    async:ImageLoader.Source="{Binding Uri}"
+                                    RenderOptions.BitmapInterpolationMode="HighQuality"
+                                    Stretch="Uniform" />
+                            </DataTemplate>
+                        </app:GalleryCarousel.ItemTemplate>
+                        <app:GalleryCarousel.ThumbnailTemplate>
+                            <DataTemplate x:DataType="app:GalleryBitmapModel">
+                                <Border
+                                    Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                    ClipToBounds="True"
+                                    CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <TransitioningContentControl Content="{Binding ThumbnailBitmap}">
+                                        <TransitioningContentControl.PageTransition>
+                                            <CrossFade Duration="{StaticResource ControlFasterAnimationDuration}" />
+                                        </TransitioningContentControl.PageTransition>
+                                        <TransitioningContentControl.ContentTemplate>
+                                            <DataTemplate x:DataType="bitmap:Bitmap">
+                                                <Image
+                                                    Source="{Binding}"
+                                                    RenderOptions.BitmapInterpolationMode="LowQuality"
+                                                    Stretch="UniformToFill" />
+                                            </DataTemplate>
+                                        </TransitioningContentControl.ContentTemplate>
+                                    </TransitioningContentControl>
+                                </Border>
+                            </DataTemplate>
+                        </app:GalleryCarousel.ThumbnailTemplate>
+                    </app:GalleryCarousel>
                 </StackPanel>
                 <StackPanel Spacing="8">
                     <TextBlock

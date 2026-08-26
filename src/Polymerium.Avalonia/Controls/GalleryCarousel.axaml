@@ -2,7 +2,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
-    xmlns:async="using:AsyncImageLoader">
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
     <Design.PreviewWith>
         <Border
             Width="720"
@@ -23,25 +23,16 @@
                         Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                         ClipToBounds="True"
                         CornerRadius="{StaticResource LargeCornerRadius}">
-                        <Viewbox Stretch="Uniform">
-                            <Grid Width="1600" Height="900">
-                                <Carousel
-                                    ItemsSource="{TemplateBinding ItemsSource}"
-                                    SelectedIndex="{Binding SelectedIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
-                                    <Carousel.PageTransition>
-                                        <CrossFade Duration="0:0:0.2" />
-                                    </Carousel.PageTransition>
-                                    <Carousel.ItemTemplate>
-                                        <DataTemplate x:DataType="x:Uri">
-                                            <Image
-                                                async:ImageLoader.Source="{Binding}"
-                                                RenderOptions.BitmapInterpolationMode="HighQuality"
-                                                Stretch="UniformToFill" />
-                                        </DataTemplate>
-                                    </Carousel.ItemTemplate>
-                                </Carousel>
-                            </Grid>
-                        </Viewbox>
+                        <husk:ConstrainedBox AspectRatio="16:9">
+                            <Carousel
+                                ItemTemplate="{TemplateBinding ItemTemplate}"
+                                ItemsSource="{TemplateBinding ItemsSource}"
+                                SelectedIndex="{Binding SelectedIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                                <Carousel.PageTransition>
+                                    <CrossFade Duration="0:0:0.2" />
+                                </Carousel.PageTransition>
+                            </Carousel>
+                        </husk:ConstrainedBox>
                     </Border>
                     <Border
                         Name="ThumbnailStrip"
@@ -51,6 +42,7 @@
                             Background="Transparent"
                             AutoScrollToSelectedItem="False"
                             BorderThickness="0"
+                            ItemTemplate="{TemplateBinding ThumbnailTemplate}"
                             ItemsSource="{TemplateBinding ItemsSource}"
                             SelectedIndex="{Binding SelectedIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                             SelectionMode="Single"
@@ -70,7 +62,7 @@
                                     <Setter Property="Padding" Value="2" />
                                     <Setter Property="Background" Value="Transparent" />
                                     <Setter Property="BorderBrush" Value="Transparent" />
-                                    <Setter Property="BorderThickness" Value="2" />
+                                    <Setter Property="BorderThickness" Value="1" />
                                     <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
                                     <Setter Property="Cursor" Value="Hand" />
                                     <Setter Property="Template">
@@ -89,23 +81,19 @@
                                         </ControlTemplate>
                                     </Setter>
                                     <Style Selector="^:pointerover">
-                                        <Setter Property="Background" Value="{StaticResource ControlInteractiveBackgroundBrush}" />
-                                        <Setter Property="BorderBrush" Value="{StaticResource ControlInteractiveBorderBrush}" />
+                                        <Setter Property="Background"
+                                                Value="{StaticResource ControlInteractiveBackgroundBrush}" />
+                                        <Setter Property="BorderBrush"
+                                                Value="{StaticResource ControlInteractiveBorderBrush}" />
                                     </Style>
                                     <Style Selector="^:selected">
-                                        <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
-                                        <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+                                        <Setter Property="Background"
+                                                Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+                                        <Setter Property="BorderBrush"
+                                                Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
                                     </Style>
                                 </ControlTheme>
                             </ListBox.ItemContainerTheme>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate x:DataType="x:Uri">
-                                    <Image
-                                        async:ImageLoader.Source="{Binding}"
-                                        RenderOptions.BitmapInterpolationMode="HighQuality"
-                                        Stretch="UniformToFill" />
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
                         </ListBox>
                     </Border>
                 </Grid>

@@ -23,6 +23,7 @@ public partial class ExhibitModpackToastModel(
     PersistenceService persistenceService) : ViewModelBase
 {
     private readonly Parameter _parameter = context.GetRequiredParameter();
+    private CancellationTokenSource? _galleryThumbnailCancellationTokenSource;
 
     #region Nested type: Parameter
 
@@ -37,7 +38,7 @@ public partial class ExhibitModpackToastModel(
 
     public ExhibitModpackModel Modpack => _parameter.Modpack;
     public Uri? Thumbnail => Modpack.Thumbnail ?? _parameter.FallbackThumbnail;
-    public Uri? HeroImage => Modpack.Gallery.FirstOrDefault() ?? Thumbnail;
+    public Uri? HeroImage => Modpack.Gallery.FirstOrDefault()?.Uri ?? Thumbnail;
     public ICommand InstallCommand => _parameter.InstallCommand;
 
     #endregion
@@ -65,6 +66,8 @@ public partial class ExhibitModpackToastModel(
         IsFavorite = persistenceService.IsFavoriteProject(Modpack.Label, Modpack.Namespace, Modpack.ProjectId);
         LazyVersions = ConstructVersions();
         LazyDescription = ConstructDescription();
+        _galleryThumbnailCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
+        _ = LoadGalleryThumbnailsAsync(_galleryThumbnailCancellationTokenSource.Token);
         return Task.CompletedTask;
     }
 
@@ -72,10 +75,42 @@ public partial class ExhibitModpackToastModel(
     {
         LazyVersions?.Cancel();
         LazyDescription?.Cancel();
+        _galleryThumbnailCancellationTokenSource?.Cancel();
+        _galleryThumbnailCancellationTokenSource?.Dispose();
+        _galleryThumbnailCancellationTokenSource = null;
         return Task.CompletedTask;
     }
 
     #endregion
+
+    private async Task LoadGalleryThumbnailsAsync(CancellationToken token)
+    {
+        foreach (var image in Modpack.Gallery)
+        {
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+
+            try
+            {
+                var thumbnail = await dataService.GetBitmapAsync(image.Uri, 112);
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                image.ThumbnailBitmap = thumbnail;
+            }
+            catch
+            {
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
+            }
+        }
+    }
 
     #region Lazy construction
 
