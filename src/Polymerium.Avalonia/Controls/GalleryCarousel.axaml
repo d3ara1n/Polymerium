@@ -20,7 +20,7 @@
                 <Grid RowDefinitions="Auto,Auto" RowSpacing="12">
                     <Border
                         Grid.Row="0"
-                        Background="{StaticResource ControlTranslucentBackgroundBrush}"
+                        Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
                         ClipToBounds="True"
                         CornerRadius="{StaticResource LargeCornerRadius}">
                         <Viewbox Stretch="Uniform">

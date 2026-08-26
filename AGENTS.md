@@ -52,7 +52,7 @@ Under `src/Polymerium.Avalonia/`, directories are organized by role. View + View
 - `Dialogs/` + `DialogModels/` — modal dialogs (centered, blocking).
 - `Modals/` + `ModalModels/` — modal overlays (non-blocking, cover the host).
 - `Sidebars/` + `SidebarModels/` — drawer sidebars (slide in from an edge).
-- `Toasts/` — transient toast notifications. There is no `ToastsModels/` folder **yet**, so existing toasts are still constructed inline and passed to `OverlayService.PopToast(Toast)`. The mechanism is fully wired, though: `OverlayService.PopToast<TToast>(parameter)` is provided and routes through the same activator as other overlays — add `ToastsModels/` + a `ToastModel` the moment a toast needs a view model.
+- `Toasts/` + `ToastModels/` — bottom-sheet toast overlays and their view models.
 - `Components/` / `Controls/` / `Widgets/` — reusable Avalonia controls, grouped by scope (larger composite components vs. small atomic widgets).
 - `Services/` — application services (navigation, overlay, data, persistence, instance management, etc.).
 - `Repositories/` — data access / storage adapters.
@@ -137,6 +137,7 @@ Version-numbering convention: **`minor` increments mark milestones, not individu
   - **Nested type** when it is dedicated to an outer class, even if that class exposes it through its public API (e.g. as a parameter or return type). The fact that callers must supply/pass values of that type does **not** make it independent. Example: `SkinView` nests inside `AccountHelper` because it exists only to describe `AccountHelper`'s body-render URLs.
   - **Own file** when it is a shared model — a type with its own data/properties that View, ViewModel, and Services may all consume is a standalone entity and gets its own file (under `Models/` for models). Example: `SkinFrame` is a model the view binds to and view models build, so it lives in `Models/SkinFrame.cs`, not tucked inside the control.
 - **Stateless helper classes use the `Helper` suffix and live in `Utilities`.** A stateless helper is a `public static class XxxHelper` (never instantiated) under the `<Project>.Utilities` namespace; extension-method classes use the separate `XxxExtensions` suffix and live in `Extensions/`. Do not mix the two.
+- **Application service classes use the `Service` suffix and live in `Services`.** A service is an application-level capability accessed through dependency injection, encapsulating sustained application state or coordinated behavior behind a cohesive API.
 
 ## Comments
 
