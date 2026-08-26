@@ -9,6 +9,7 @@ public static class HumanizerConverters
 {
     public static IValueConverter Metric { get; } = new RelayConverter((v, _) => v switch
     {
+        ulong ul => ((double)ul).ToMetric(),
         long l => l.ToMetric(),
         int i => i.ToMetric(),
         float f => ((double)f).ToMetric(),

@@ -17,6 +17,7 @@
         <ResourceInclude Source="/Controls/RecipeItemButton.axaml" />
         <ResourceInclude Source="/Controls/EmptyContainer.axaml" />
         <ResourceInclude Source="/Controls/ExhibitModpackButton.axaml" />
+        <ResourceInclude Source="/Controls/GalleryCarousel.axaml" />
         <ResourceInclude Source="/Controls/ExhibitPackageButton.axaml" />
         <ResourceInclude Source="/Controls/ExhibitPendingPackageButton.axaml" />
         <ResourceInclude Source="/Controls/SettingsEntry.axaml" />

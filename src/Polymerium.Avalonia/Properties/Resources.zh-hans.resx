@@ -1344,6 +1344,39 @@
     <data name="ExhibitModpackToast_InstallButtonText" xml:space="preserve">
         <value>安装</value>
     </data>
+    <data name="ExhibitModpackToast_FavoriteToolTip" xml:space="preserve">
+        <value>添加或移除收藏</value>
+    </data>
+    <data name="ExhibitModpackToast_OpenProjectToolTip" xml:space="preserve">
+        <value>打开项目网站</value>
+    </data>
+    <data name="ExhibitModpackToast_DismissToolTip" xml:space="preserve">
+        <value>关闭</value>
+    </data>
+    <data name="ExhibitModpackToast_GalleryTitle" xml:space="preserve">
+        <value>图库</value>
+    </data>
+    <data name="ExhibitModpackToast_AboutTitle" xml:space="preserve">
+        <value>关于</value>
+    </data>
+    <data name="ExhibitModpackToast_VersionTitle" xml:space="preserve">
+        <value>安装版本</value>
+    </data>
+    <data name="ExhibitModpackToast_DetailsTitle" xml:space="preserve">
+        <value>项目详情</value>
+    </data>
+    <data name="ExhibitModpackToast_RepositoryLabelText" xml:space="preserve">
+        <value>资源仓库</value>
+    </data>
+    <data name="ExhibitModpackToast_AuthorLabelText" xml:space="preserve">
+        <value>作者</value>
+    </data>
+    <data name="ExhibitModpackToast_DownloadsLabelText" xml:space="preserve">
+        <value>下载量</value>
+    </data>
+    <data name="ExhibitModpackToast_UpdatedLabelText" xml:space="preserve">
+        <value>更新时间</value>
+    </data>
     <data name="JavaHomeContainer_ReqeustJavaTitle" xml:space="preserve">
         <value>选择 Java 可执行文件</value>
     </data>

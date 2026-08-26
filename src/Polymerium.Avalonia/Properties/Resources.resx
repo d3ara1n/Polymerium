@@ -1353,6 +1353,39 @@
     <data name="ExhibitModpackToast_InstallButtonText" xml:space="preserve">
         <value>Install</value>
     </data>
+    <data name="ExhibitModpackToast_FavoriteToolTip" xml:space="preserve">
+        <value>Add or remove favorite</value>
+    </data>
+    <data name="ExhibitModpackToast_OpenProjectToolTip" xml:space="preserve">
+        <value>Open project website</value>
+    </data>
+    <data name="ExhibitModpackToast_DismissToolTip" xml:space="preserve">
+        <value>Dismiss</value>
+    </data>
+    <data name="ExhibitModpackToast_GalleryTitle" xml:space="preserve">
+        <value>Gallery</value>
+    </data>
+    <data name="ExhibitModpackToast_AboutTitle" xml:space="preserve">
+        <value>About</value>
+    </data>
+    <data name="ExhibitModpackToast_VersionTitle" xml:space="preserve">
+        <value>Install version</value>
+    </data>
+    <data name="ExhibitModpackToast_DetailsTitle" xml:space="preserve">
+        <value>Project details</value>
+    </data>
+    <data name="ExhibitModpackToast_RepositoryLabelText" xml:space="preserve">
+        <value>Repository</value>
+    </data>
+    <data name="ExhibitModpackToast_AuthorLabelText" xml:space="preserve">
+        <value>Author</value>
+    </data>
+    <data name="ExhibitModpackToast_DownloadsLabelText" xml:space="preserve">
+        <value>Downloads</value>
+    </data>
+    <data name="ExhibitModpackToast_UpdatedLabelText" xml:space="preserve">
+        <value>Updated</value>
+    </data>
     <data name="JavaHomeContainer_ReqeustJavaTitle" xml:space="preserve">
         <value>Select a Java executable</value>
     </data>

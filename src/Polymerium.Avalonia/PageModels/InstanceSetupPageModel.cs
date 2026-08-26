@@ -33,6 +33,7 @@ using Polymerium.Avalonia.ModalModels;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.ToastModels;
 using Polymerium.Avalonia.Toasts;
 using Polymerium.Avalonia.Utilities;
 using Refit;
@@ -848,25 +849,10 @@ public partial class InstanceSetupPageModel(
             try
             {
                 var project = await dataService.QueryProjectAsync(source.ToProjectIdentifier());
-                var model = new ExhibitModpackModel(project.Label,
-                                                    project.Namespace,
-                                                    project.ProjectId,
-                                                    project.ProjectName,
-                                                    project.Author,
-                                                    project.Reference,
-                                                    project.Thumbnail ?? AssetUriIndex.DirtImage,
-                                                    project.Tags,
-                                                    project.DownloadCount,
-                                                    project.Summary,
-                                                    project.UpdatedAt,
-                                                    [.. project.Gallery.Select(x => x.Url)]);
-                overlayService.PopToast(new ExhibitModpackToast
-                {
-                    DataService = dataService,
-                    PersistenceService = persistenceService,
-                    DataContext = model,
-                    InstallCommand = InstallVersionCommand
-                });
+                overlayService.PopToast<ExhibitModpackToast>(
+                    new ExhibitModpackToastModel.Parameter(ExhibitModpackModel.From(project),
+                                                           AssetUriIndex.DirtImage,
+                                                           InstallVersionCommand));
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)
@@ -2258,25 +2244,10 @@ public partial class InstanceSetupPageModel(
             try
             {
                 var project = await dataService.QueryProjectAsync(source.ToProjectIdentifier());
-                var model = new ExhibitModpackModel(project.Label,
-                                                    project.Namespace,
-                                                    project.ProjectId,
-                                                    project.ProjectName,
-                                                    project.Author,
-                                                    project.Reference,
-                                                    project.Thumbnail ?? AssetUriIndex.DirtImage,
-                                                    project.Tags,
-                                                    project.DownloadCount,
-                                                    project.Summary,
-                                                    project.UpdatedAt,
-                                                    [.. project.Gallery.Select(x => x.Url)]);
-                overlayService.PopToast(new ExhibitModpackToast
-                {
-                    DataService = dataService,
-                    PersistenceService = persistenceService,
-                    DataContext = model,
-                    InstallCommand = InstallVersionCommand
-                });
+                overlayService.PopToast<ExhibitModpackToast>(
+                    new ExhibitModpackToastModel.Parameter(ExhibitModpackModel.From(project),
+                                                           AssetUriIndex.DirtImage,
+                                                           InstallVersionCommand));
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)
