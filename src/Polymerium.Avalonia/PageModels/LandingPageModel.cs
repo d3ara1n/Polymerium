@@ -13,6 +13,7 @@ using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.ToastModels;
 using Polymerium.Avalonia.Toasts;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
@@ -246,25 +247,10 @@ public partial class LandingPageModel(
             {
                 var project =
                     await dataService.QueryProjectAsync(new(modpack.Label, modpack.Namespace, modpack.ProjectId));
-                var model = new ExhibitModpackModel(project.Label,
-                                                    project.Namespace,
-                                                    project.ProjectId,
-                                                    project.ProjectName,
-                                                    project.Author,
-                                                    project.Reference,
-                                                    project.Thumbnail ?? modpack.Thumbnail,
-                                                    project.Tags,
-                                                    project.DownloadCount,
-                                                    project.Summary,
-                                                    project.UpdatedAt,
-                                                    [.. project.Gallery.Select(x => x.Url)]);
-                overlayService.PopToast(new ExhibitModpackToast
-                {
-                    DataService = dataService,
-                    PersistenceService = persistenceService,
-                    DataContext = model,
-                    InstallCommand = InstallVersionCommand
-                });
+                overlayService.PopToast<ExhibitModpackToast>(
+                    new ExhibitModpackToastModel.Parameter(ExhibitModpackModel.From(project),
+                                                           modpack.Thumbnail,
+                                                           InstallVersionCommand));
             }
             catch (Exception ex)
             {

@@ -15,6 +15,7 @@ using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.ToastModels;
 using Polymerium.Avalonia.Toasts;
 using Polymerium.Avalonia.Utilities;
 using Refit;
@@ -305,25 +306,10 @@ public partial class MarketplaceModpacksPageModel
             {
                 var project =
                     await _dataService.QueryProjectAsync(new(exhibit.Label, exhibit.Namespace, exhibit.ProjectId));
-                var model = new ExhibitModpackModel(project.Label,
-                                                    project.Namespace,
-                                                    project.ProjectId,
-                                                    project.ProjectName,
-                                                    project.Author,
-                                                    project.Reference,
-                                                    project.Thumbnail ?? exhibit.Thumbnail,
-                                                    project.Tags,
-                                                    project.DownloadCount,
-                                                    project.Summary,
-                                                    project.UpdatedAt,
-                                                    [.. project.Gallery.Select(x => x.Url)]);
-                _overlayService.PopToast(new ExhibitModpackToast
-                {
-                    DataService = _dataService,
-                    PersistenceService = _persistenceService,
-                    DataContext = model,
-                    InstallCommand = InstallVersionCommand
-                });
+                _overlayService.PopToast<ExhibitModpackToast>(
+                    new ExhibitModpackToastModel.Parameter(ExhibitModpackModel.From(project),
+                                                           exhibit.Thumbnail,
+                                                           InstallVersionCommand));
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)

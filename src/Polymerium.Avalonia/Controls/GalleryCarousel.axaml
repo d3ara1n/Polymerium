@@ -1,0 +1,120 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:async="using:AsyncImageLoader">
+    <Design.PreviewWith>
+        <Border
+            Width="720"
+            Padding="24"
+            Background="{DynamicResource ApplicationPageBackgroundBrush}">
+            <app:GalleryCarousel />
+        </Border>
+    </Design.PreviewWith>
+
+    <ControlTheme
+        x:Key="{x:Type app:GalleryCarousel}"
+        TargetType="app:GalleryCarousel">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="12">
+                    <Border
+                        Grid.Row="0"
+                        Background="{StaticResource ControlTranslucentBackgroundBrush}"
+                        ClipToBounds="True"
+                        CornerRadius="{StaticResource LargeCornerRadius}">
+                        <Viewbox Stretch="Uniform">
+                            <Grid Width="1600" Height="900">
+                                <Carousel
+                                    ItemsSource="{TemplateBinding ItemsSource}"
+                                    SelectedIndex="{Binding SelectedIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                                    <Carousel.PageTransition>
+                                        <CrossFade Duration="0:0:0.2" />
+                                    </Carousel.PageTransition>
+                                    <Carousel.ItemTemplate>
+                                        <DataTemplate x:DataType="x:Uri">
+                                            <Image
+                                                async:ImageLoader.Source="{Binding}"
+                                                RenderOptions.BitmapInterpolationMode="HighQuality"
+                                                Stretch="UniformToFill" />
+                                        </DataTemplate>
+                                    </Carousel.ItemTemplate>
+                                </Carousel>
+                            </Grid>
+                        </Viewbox>
+                    </Border>
+                    <Border
+                        Name="ThumbnailStrip"
+                        Grid.Row="1"
+                        Background="Transparent">
+                        <ListBox
+                            Background="Transparent"
+                            BorderThickness="0"
+                            ItemsSource="{TemplateBinding ItemsSource}"
+                            SelectedIndex="{Binding SelectedIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                            SelectionMode="Single"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="8" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemContainerTheme>
+                                <ControlTheme TargetType="ListBoxItem">
+                                    <Setter Property="Width" Value="112" />
+                                    <Setter Property="Height" Value="64" />
+                                    <Setter Property="Padding" Value="2" />
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                    <Setter Property="BorderThickness" Value="2" />
+                                    <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
+                                    <Setter Property="Cursor" Value="Hand" />
+                                    <Setter Property="Template">
+                                        <ControlTemplate>
+                                            <Border
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                ClipToBounds="True"
+                                                CornerRadius="{TemplateBinding CornerRadius}"
+                                                Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter
+                                                    Content="{TemplateBinding Content}"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter>
+                                    <Style Selector="^:pointerover">
+                                        <Setter Property="Background" Value="{StaticResource ControlInteractiveBackgroundBrush}" />
+                                        <Setter Property="BorderBrush" Value="{StaticResource ControlInteractiveBorderBrush}" />
+                                    </Style>
+                                    <Style Selector="^:selected">
+                                        <Setter Property="Background" Value="{StaticResource ControlAccentInteractiveBackgroundBrush}" />
+                                        <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+                                    </Style>
+                                </ControlTheme>
+                            </ListBox.ItemContainerTheme>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="x:Uri">
+                                    <Image
+                                        async:ImageLoader.Source="{Binding}"
+                                        RenderOptions.BitmapInterpolationMode="HighQuality"
+                                        Stretch="UniformToFill" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:empty">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:single /template/ Border#ThumbnailStrip">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>
