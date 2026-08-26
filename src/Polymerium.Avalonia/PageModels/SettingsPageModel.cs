@@ -82,7 +82,6 @@ public partial class SettingsPageModel : ViewModelBase
 
         ProxyMode = TryConvertEnum<ProxyMode>(configurationService.Value.NetworkProxyMode);
         ProxyProtocol = TryConvertEnum<ProxyProtocol>(configurationService.Value.NetworkProxyProtocol);
-        ProxyEnabled = configurationService.Value.NetworkProxyEnabled;
         ProxyAddress = configurationService.Value.NetworkProxyAddress;
         ProxyPort = configurationService.Value.NetworkProxyPort;
         ProxyUsername = configurationService.Value.NetworkProxyUsername;
@@ -541,11 +540,6 @@ public partial class SettingsPageModel : ViewModelBase
         _configurationService.Value.NetworkProxyProtocol = (int)value;
         UpdateProxyStatusText();
     }
-
-    [ObservableProperty]
-    public partial bool ProxyEnabled { get; set; }
-
-    partial void OnProxyEnabledChanged(bool value) => _configurationService.Value.NetworkProxyEnabled = value;
 
     [ObservableProperty]
     public partial string ProxyAddress { get; set; }

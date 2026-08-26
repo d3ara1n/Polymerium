@@ -50,66 +50,9 @@ public static class Startup
            .ConfigureHttpClientDefaults(builder => builder
                                                   .RemoveAllLoggers()
                                                   .ConfigurePrimaryHttpMessageHandler(serviceProvider =>
-                                                   {
-                                                       var handler = new HttpClientHandler();
-
-                                                       // 尝试取配置服务以应用代理设置（失败忽略，继续直连）。
-                                                       var configService = serviceProvider
-                                                          .GetService<ConfigurationService>();
-                                                       try
-                                                       {
-                                                           if (configService != null)
-                                                           {
-                                                               var config = configService.Value;
-                                                               var proxyMode = (ProxyMode)config.NetworkProxyMode;
-
-                                                               switch (proxyMode)
-                                                               {
-                                                                   case ProxyMode.Auto:
-                                                                       handler.UseProxy = true;
-                                                                       handler.DefaultProxyCredentials = CredentialCache
-                                                                          .DefaultCredentials;
-                                                                       break;
-
-                                                                   case ProxyMode.Manual:
-                                                                       var protocol = (ProxyProtocol)config
-                                                                          .NetworkProxyProtocol;
-                                                                       var proxy =
-                                                                           new WebProxy(BuildProxyUri(protocol,
-                                                                               config.NetworkProxyAddress,
-                                                                               config.NetworkProxyPort))
-                                                                           {
-                                                                               Credentials =
-                                                                                   !string.IsNullOrEmpty(config
-                                                                                      .NetworkProxyUsername)
-                                                                                       ? new NetworkCredential(config
-                                                                                              .NetworkProxyUsername,
-                                                                                           config.NetworkProxyPassword)
-                                                                                       : null
-                                                                           };
-
-                                                                       handler.Proxy = proxy;
-                                                                       handler.UseProxy = true;
-                                                                       break;
-
-                                                                   case ProxyMode.Disabled:
-                                                                       handler.UseProxy = false;
-                                                                       break;
-                                                               }
-                                                           }
-                                                           else
-                                                           {
-                                                               handler.UseProxy = true;
-                                                               handler.DefaultProxyCredentials = CredentialCache
-                                                                  .DefaultCredentials;
-                                                           }
-                                                       }
-                                                       catch
-                                                       {
-                                                       }
-
-                                                       return handler;
-                                                   })
+                                                      CreateConfiguredHandler(serviceProvider
+                                                         .GetService<ConfigurationService>()
+                                                         ?.Value))
                                                   .ConfigureHttpClient(client =>
                                                                            client.DefaultRequestHeaders.UserAgent
                                                                               .Add(new(Program.Brand, Program.Version)))
@@ -235,6 +178,47 @@ public static class Startup
             ProxyProtocol.Socks5 => new($"socks5://{address}:{port}"),
             _ => new($"http://{address}:{port}")
         };
+
+    // 代理 URI 构造失败（如地址误填 scheme）时按平台默认（系统代理）回退，不中断网络。
+    private static HttpClientHandler CreateConfiguredHandler(Configuration? config)
+    {
+        var handler = new HttpClientHandler();
+        try
+        {
+            var mode = (ProxyMode?)config?.NetworkProxyMode ?? ProxyMode.Auto;
+            switch (mode)
+            {
+                case ProxyMode.Manual:
+                    var protocol = (ProxyProtocol)config!.NetworkProxyProtocol;
+                    var proxy = new WebProxy(BuildProxyUri(protocol,
+                        config.NetworkProxyAddress,
+                        config.NetworkProxyPort))
+                    {
+                        Credentials = !string.IsNullOrEmpty(config.NetworkProxyUsername)
+                            ? new NetworkCredential(config.NetworkProxyUsername, config.NetworkProxyPassword)
+                            : null
+                    };
+
+                    handler.Proxy = proxy;
+                    handler.UseProxy = true;
+                    break;
+
+                case ProxyMode.Disabled:
+                    handler.UseProxy = false;
+                    break;
+
+                default:
+                    handler.UseProxy = true;
+                    handler.DefaultProxyCredentials = CredentialCache.DefaultCredentials;
+                    break;
+            }
+        }
+        catch
+        {
+        }
+
+        return handler;
+    }
 
     public static bool InitializeUnhostedServices()
     {

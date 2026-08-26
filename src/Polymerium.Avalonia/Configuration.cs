@@ -33,7 +33,6 @@ public class Configuration
     public const string GAME_WINDOW_WIDTH = "Game.Window.Width";
     public const string NETWORK_PROXY_MODE = "Network.Proxy.Mode";
     public const string NETWORK_PROXY_PROTOCOL = "Network.Proxy.Protocol";
-    public const string NETWORK_PROXY_ENABLED = "Network.Proxy.Enabled";
     public const string NETWORK_PROXY_ADDRESS = "Network.Proxy.Address";
     public const string NETWORK_PROXY_PORT = "Network.Proxy.Port";
     public const string NETWORK_PROXY_USERNAME = "Network.Proxy.Username";
@@ -73,7 +72,6 @@ public class Configuration
         { GAME_WINDOW_HEIGHT, 720u },
         { NETWORK_PROXY_MODE, (int)ProxyMode.Auto },
         { NETWORK_PROXY_PROTOCOL, (int)ProxyProtocol.Http },
-        { NETWORK_PROXY_ENABLED, false },
         { NETWORK_PROXY_ADDRESS, "127.0.0.1" },
         { NETWORK_PROXY_PORT, 7890u },
         { NETWORK_PROXY_USERNAME, string.Empty },
@@ -111,7 +109,6 @@ public class Configuration
     public uint GameWindowInitialHeight { get; set; } = AccessDefault<uint>(GAME_WINDOW_HEIGHT);
     public int NetworkProxyMode { get; set; } = AccessDefault<int>(NETWORK_PROXY_MODE);
     public int NetworkProxyProtocol { get; set; } = AccessDefault<int>(NETWORK_PROXY_PROTOCOL);
-    public bool NetworkProxyEnabled { get; set; } = AccessDefault<bool>(NETWORK_PROXY_ENABLED);
     public string NetworkProxyAddress { get; set; } = AccessDefault<string>(NETWORK_PROXY_ADDRESS);
     public uint NetworkProxyPort { get; set; } = AccessDefault<uint>(NETWORK_PROXY_PORT);
     public string NetworkProxyUsername { get; set; } = AccessDefault<string>(NETWORK_PROXY_USERNAME);
