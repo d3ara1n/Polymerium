@@ -1353,9 +1353,6 @@
     <data name="ExhibitModpackToast_DismissToolTip" xml:space="preserve">
         <value>关闭</value>
     </data>
-    <data name="ExhibitModpackToast_GalleryTitle" xml:space="preserve">
-        <value>图库</value>
-    </data>
     <data name="ExhibitModpackToast_AboutTitle" xml:space="preserve">
         <value>关于</value>
     </data>

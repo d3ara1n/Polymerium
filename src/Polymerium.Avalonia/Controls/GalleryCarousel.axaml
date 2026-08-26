@@ -49,6 +49,7 @@
                         Background="Transparent">
                         <ListBox
                             Background="Transparent"
+                            AutoScrollToSelectedItem="False"
                             BorderThickness="0"
                             ItemsSource="{TemplateBinding ItemsSource}"
                             SelectedIndex="{Binding SelectedIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
@@ -70,7 +71,7 @@
                                     <Setter Property="Background" Value="Transparent" />
                                     <Setter Property="BorderBrush" Value="Transparent" />
                                     <Setter Property="BorderThickness" Value="2" />
-                                    <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
+                                    <Setter Property="CornerRadius" Value="{StaticResource SmallCornerRadius}" />
                                     <Setter Property="Cursor" Value="Hand" />
                                     <Setter Property="Template">
                                         <ControlTemplate>
