@@ -46,19 +46,18 @@
                     ColumnDefinitions="Auto,*,Auto"
                     ColumnSpacing="16">
                     <Border
-                        Width="112"
-                        Height="112"
+                        Grid.Column="0"
+                        Width="{Binding $self.Bounds.Height}"
+                        Height="78"
                         VerticalAlignment="Bottom"
-                        Background="{StaticResource ControlTranslucentBackgroundBrush}"
-                        BorderBrush="{StaticResource ControlBorderBrush}"
-                        BorderThickness="1"
                         BoxShadow="0 4 16 0 #66000000"
                         ClipToBounds="True"
                         CornerRadius="{StaticResource MediumCornerRadius}">
-                        <Image
-                            async:ImageLoader.Source="{Binding Thumbnail}"
-                            RenderOptions.BitmapInterpolationMode="HighQuality"
-                            Stretch="UniformToFill" />
+                        <Border.Background>
+                            <ImageBrush
+                                async:ImageBrushLoader.Source="{Binding Thumbnail}"
+                                Stretch="UniformToFill" />
+                        </Border.Background>
                     </Border>
                     <StackPanel
                         Grid.Column="1"
@@ -75,8 +74,7 @@
                             ColumnSpacing="8">
                             <TextBlock
                                 Grid.Column="0"
-                                Foreground="{StaticResource ControlWhiteForegroundBrush}"
-                                Opacity="0.8"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                 Text="{Binding Modpack.AuthorName, StringFormat={}@{0}, FallbackValue=Author}" />
                             <ItemsControl
                                 Grid.Column="1"
@@ -102,8 +100,7 @@
                         </Grid>
                         <TextBlock
                             MaxLines="2"
-                            Foreground="{StaticResource ControlWhiteForegroundBrush}"
-                            Opacity="0.8"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                             Text="{Binding Modpack.Summary, FallbackValue=Display}"
                             TextTrimming="CharacterEllipsis"
                             TextWrapping="Wrap" />
@@ -114,8 +111,6 @@
                         Orientation="Horizontal"
                         Spacing="8">
                         <Button
-                            Background="#66000000"
-                            Foreground="{StaticResource ControlWhiteForegroundBrush}"
                             Command="{Binding FavoriteCommand}"
                             ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ExhibitModpackToast_FavoriteToolTip}}">
                             <husk:SwitchContainer
@@ -135,8 +130,6 @@
                             </husk:SwitchContainer>
                         </Button>
                         <Button
-                            Background="#66000000"
-                            Foreground="{StaticResource ControlWhiteForegroundBrush}"
                             Command="{Binding NavigateUriCommand}"
                             CommandParameter="{Binding Modpack.Reference}"
                             ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ExhibitModpackToast_OpenProjectToolTip}}">
@@ -145,8 +138,6 @@
                                 Symbol="Open" />
                         </Button>
                         <Button
-                            Background="#66000000"
-                            Foreground="{StaticResource ControlWhiteForegroundBrush}"
                             Command="{Binding $parent[husk:Toast].Dismiss}"
                             IsCancel="True"
                             ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ExhibitModpackToast_DismissToolTip}}">
@@ -171,10 +162,6 @@
                 <StackPanel
                     IsVisible="{Binding Modpack.Gallery, Converter={x:Static husk:CollectionConverters.IsNotEmpty}}"
                     Spacing="8">
-                    <TextBlock
-                        FontSize="{StaticResource LargeFontSize}"
-                        FontWeight="{StaticResource ControlStrongFontWeight}"
-                        Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitModpackToast_GalleryTitle}}" />
                     <app:GalleryCarousel
                         HorizontalAlignment="Stretch"
                         ItemsSource="{Binding Modpack.Gallery}" />
@@ -210,7 +197,7 @@
                             FontWeight="{StaticResource ControlStrongFontWeight}"
                             Text="{Translate {x:Static app:LanguageManager+Keys.ExhibitModpackToast_VersionTitle}}" />
                         <husk:LazyContainer
-                            MinHeight="112"
+                            MinHeight="56"
                             Source="{Binding LazyVersions, Mode=OneWay}">
                             <husk:LazyContainer.SourceTemplate>
                                 <DataTemplate DataType="app:ExhibitVersionCollection">
@@ -321,7 +308,7 @@
                                         </ComboBox>
                                         <Button
                                             Classes="Primary"
-                                            Command="{Binding $parent[app:ExhibitModpackToast].((app:ExhibitModpackToastModel)DataContext).InstallCommand}"
+                                            Command="{Binding $parent[app:ExhibitModpackToast].((app:ExhibitModpackToastModel)DataContext)?.InstallCommand}"
                                             CommandParameter="{Binding $parent[app:ExhibitModpackToast].((app:ExhibitModpackToastModel)DataContext).SelectedVersion, Mode=OneWay, FallbackValue={x:Null}}"
                                             HorizontalAlignment="Stretch">
                                             <StackPanel
