@@ -1189,7 +1189,9 @@ public partial class InstanceSetupPageModel(
                                         {
                                             Enabled = importedEntry.Enabled,
                                             Pref = importedEntry.Pref,
-                                            Source = importedEntry.Source
+                                            Source = string.IsNullOrEmpty(importedEntry.Source)
+                                                ? null
+                                                : importedEntry.Source
                                         };
                                         guard.Value.Setup.Packages.Add(newEntry);
                                         persistenceService.AppendAction(new()
