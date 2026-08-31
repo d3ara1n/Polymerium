@@ -144,8 +144,9 @@ public partial class InstanceSetupPageModel(
                 {
                     item.Group = GroupModelOf(item.Package);
                     item.Package.OldSourceCache = entry.Source;
+                    item.Package.NotifySourceChanged();
                 }
-                else if (!lookup.Remove(entry))
+                if (!lookup.Remove(entry))
                 {
                     toRemove.Add(item.Key);
                 }
@@ -1364,9 +1365,52 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        pkg.Entry.Source = collection.Uri;
+        await AssignPackagesToCollectionAsync([pkg.Entry], collection.Uri);
+    }
 
-        TriggerPackageMerge();
+    [RelayCommand]
+    private async Task MovePackageToCollectionAsync(PackageCollectionMoveRequest? request)
+    {
+        if (request is null
+         || request.Package.Source == request.TargetSource
+         || !BuildGroupOrder().Any(group => group.Kind == PackageSourceHelper.Kind.Collection
+                                         && group.Source == request.TargetSource))
+        {
+            return;
+        }
+
+        await AssignPackagesToCollectionAsync([request.Package], request.TargetSource);
+    }
+
+    private async Task<int> AssignPackagesToCollectionAsync(IEnumerable<Profile.Rice.Entry> packages, string targetSource)
+    {
+        if (!InternalUriHelper.IsKind(targetSource, CollectionHelper.SCHEME)
+         || !ProfileManager.TryGetMutable(Basic.Key, out var guard))
+        {
+            return 0;
+        }
+
+        var requested = packages.ToHashSet();
+        var moved = 0;
+        foreach (var entry in guard.Value.Setup.Packages.Where(requested.Contains))
+        {
+            if (entry.Source == targetSource
+             || entry.Source is not null && !InternalUriHelper.IsKind(entry.Source, CollectionHelper.SCHEME))
+            {
+                continue;
+            }
+
+            entry.Source = targetSource;
+            moved++;
+        }
+
+        await guard.DisposeAsync();
+        if (moved > 0)
+        {
+            TriggerPackageMerge();
+        }
+
+        return moved;
     }
 
     private List<CollectionModel> GetExistingCollections()
@@ -1428,16 +1472,11 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        foreach (var item in selected)
-        {
-            item.Source.Entry.Source = collection.Uri;
-        }
-
-        TriggerPackageMerge();
+        var moved = await AssignPackagesToCollectionAsync(selected.Select(item => item.Source.Entry), collection.Uri);
 
         notificationService.PopMessage(LanguageManager
                                       .Instance.InstanceSetupPage_BatchAssignSucceededNotificationMessage.Current()
-                                      .Replace("{0}", selected.Count.ToString()),
+                                      .Replace("{0}", moved.ToString()),
                                        LanguageManager.Instance.InstanceSetupPage_BatchManagementNotificationTitle
                                                       .Current(),
                                        GrowlLevel.Success,
@@ -2176,20 +2215,7 @@ public partial class InstanceSetupPageModel(
         }
 
         (order[index], order[target]) = (order[target], order[index]);
-
-        if (ProfileManager.TryGetMutable(Basic.Key, out var guard))
-        {
-            // NOTE: 未入列的组随首次移动显式化进 SourceOrders（列进即声明显式覆盖层，POLY-116），
-            //  因此移动总是落全量新序，而非只交换已列项
-            var orders = guard.Value.Setup.SourceOrders;
-            orders.Clear();
-            foreach (var source in order.Select(g => g.Source!))
-            {
-                orders.Add(source);
-            }
-
-            await guard.DisposeAsync();
-        }
+        await PersistGroupOrderAsync([.. order.Select(group => group.Source!)]);
     }
 
     private List<GroupModel> BuildGroupOrder()
@@ -2202,6 +2228,51 @@ public partial class InstanceSetupPageModel(
         var headers = _flat.Items.OfType<PackageListItemBase.Header>().ToList();
         headers.Sort(new PackageListItemComparer(profile.Setup.SourceOrders));
         return [.. headers.Select(h => h.Group)];
+    }
+
+    [RelayCommand]
+    private async Task ReorderGroupsAsync(GroupReorderRequest? request)
+    {
+        if (request is null)
+        {
+            return;
+        }
+
+        var current = BuildGroupOrder();
+        var requestedSources = request.Sources.ToList();
+        var currentSources = current.Select(group => group.Source).OfType<string>().ToList();
+        if (requestedSources.Count != currentSources.Count
+         || requestedSources.Distinct(StringComparer.Ordinal).Count() != requestedSources.Count
+         || !requestedSources.ToHashSet(StringComparer.Ordinal).SetEquals(currentSources)
+         || requestedSources.SequenceEqual(currentSources, StringComparer.Ordinal))
+        {
+            return;
+        }
+
+        await PersistGroupOrderAsync(requestedSources);
+    }
+
+    private async Task PersistGroupOrderAsync(IReadOnlyList<string> order)
+    {
+        if (!ProfileManager.TryGetMutable(Basic.Key, out var guard))
+        {
+            return;
+        }
+
+        // NOTE: 未入列的组随首次移动显式化进 SourceOrders（列进即声明显式覆盖层，POLY-116），
+        //  因此移动总是落全量新序，而非只交换已列项
+        var orders = guard.Value.Setup.SourceOrders;
+        orders.Clear();
+        foreach (var source in order)
+        {
+            orders.Add(source);
+        }
+
+        await guard.DisposeAsync();
+
+        // SourceOrders 是比较器读取的可变列表，内容变化本身不会向 DynamicData 发出重新排序信号。
+        _flat.Refresh();
+        NotifyGroupCommandStates();
     }
 
     private void NotifyGroupCommandStates()

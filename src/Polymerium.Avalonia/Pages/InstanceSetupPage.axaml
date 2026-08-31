@@ -207,6 +207,7 @@
                             ColumnDefinitions="*,Auto" ColumnSpacing="4">
                             <Button
                                 Grid.Column="0"
+                                app:InstanceSetupDragSurface.DragItem="{Binding Group}"
                                 HorizontalContentAlignment="Stretch"
                                 Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ToggleGroupExpandedCommand, FallbackValue={x:Null}}"
                                 CommandParameter="{Binding Group}"
@@ -398,6 +399,7 @@
                         </Panel>
                         <app:InstancePackageButton
                             Grid.Column="1"
+                            app:InstanceSetupDragSurface.DragItem="{Binding}"
                             Margin="0,3"
                             Command="{Binding $parent[app:InstanceSetupPage].((app:InstanceSetupPageModel)DataContext).ViewPackageCommand, FallbackValue={x:Null}}"
                             CommandParameter="{Binding}"
@@ -472,6 +474,10 @@
                 </StackPanel>
             </husk:Card>
         </husk:BusyContainer.PendingContent>
+        <app:InstanceSetupDragSurface
+            ItemsSource="{Binding FlatView}"
+            MovePackageToCollectionCommand="{Binding MovePackageToCollectionCommand}"
+            ReorderGroupsCommand="{Binding ReorderGroupsCommand}">
         <Grid RowDefinitions="Auto,0,*">
             <Grid
                 Grid.Row="0"
@@ -1021,5 +1027,6 @@
                 </Panel>
             </Grid>
         </Grid>
+        </app:InstanceSetupDragSurface>
     </husk:BusyContainer>
 </app:Subpage>

@@ -38,6 +38,13 @@ public partial class InstancePackageModel(Profile.Rice.Entry entry, bool canUpda
 
     public int PersistentIndex { get; set; }
 
+    internal void NotifySourceChanged()
+    {
+        OnPropertyChanged(nameof(CanRemove));
+        OnPropertyChanged(nameof(CanLeaveCollection));
+        OnPropertyChanged(nameof(CanMoveToCollection));
+    }
+
     #endregion
 
     #region Reactive

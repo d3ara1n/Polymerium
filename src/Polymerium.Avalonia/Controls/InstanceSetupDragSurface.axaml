@@ -1,0 +1,148 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
+    <ControlTheme
+        x:Key="{x:Type app:InstanceSetupDragSurface}"
+        TargetType="app:InstanceSetupDragSurface">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ClipToBounds="True">
+                    <ContentPresenter
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    <Grid
+                        IsHitTestVisible="False"
+                        IsVisible="{Binding Mode, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=None}">
+                        <Canvas>
+                            <Border
+                                Name="PART_DragPreview"
+                                Width="240"
+                                Padding="10,8"
+                                Background="{StaticResource OverlaySolidBackgroundBrush}"
+                                BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                    <fi:SymbolIcon
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                        Symbol="{Binding DragIcon, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{Binding DragLabel, RelativeSource={RelativeSource TemplatedParent}}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </Grid>
+                            </Border>
+                        </Canvas>
+                        <Border
+                            Width="300"
+                            MaxHeight="480"
+                            Margin="16"
+                            Padding="12"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Background="{StaticResource OverlaySolidBackgroundBrush}"
+                            BorderBrush="{StaticResource ControlBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{StaticResource MediumCornerRadius}">
+                            <Grid RowDefinitions="Auto,Auto,*" RowSpacing="10">
+                                <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                    <fi:SymbolIcon
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        FontSize="{StaticResource LargeFontSize}"
+                                        Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                        Symbol="ArrowMove" />
+                                    <husk:SwitchContainer
+                                        Grid.Column="1"
+                                        TargetType="app:InstanceSetupDragSurface+DragMode"
+                                        Value="{Binding Mode, RelativeSource={RelativeSource TemplatedParent}}">
+                                        <husk:SwitchCase Value="Group">
+                                            <TextBlock
+                                                FontSize="{StaticResource LargeFontSize}"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupDragSurface_GroupTitleText}}" />
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="Package">
+                                            <TextBlock
+                                                FontSize="{StaticResource LargeFontSize}"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceSetupDragSurface_PackageTitleText}}" />
+                                        </husk:SwitchCase>
+                                    </husk:SwitchContainer>
+                                </Grid>
+                                <husk:Divider Grid.Row="1" />
+                                <ScrollViewer
+                                    Name="PART_TargetScrollViewer"
+                                    Grid.Row="2"
+                                    HorizontalScrollBarVisibility="Disabled"
+                                    VerticalScrollBarVisibility="Auto">
+                                    <ItemsControl
+                                        Name="PART_TargetItems"
+                                        ItemsSource="{Binding Targets, RelativeSource={RelativeSource TemplatedParent}}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Spacing="4" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="app:InstanceSetupDragSurface+TargetItem">
+                                                <Panel>
+                                                    <Border
+                                                        Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
+                                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                                    </Border>
+                                                    <Border
+                                                        Background="{StaticResource ControlAccentInteractiveBackgroundBrush}"
+                                                        CornerRadius="{StaticResource SmallCornerRadius}"
+                                                        IsVisible="{Binding IsHovered}" />
+                                                    <Border
+                                                        Background="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
+                                                        BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="{StaticResource SmallCornerRadius}"
+                                                        IsVisible="{Binding IsDragged}" />
+                                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8"
+                                                          Margin="10,8">
+                                                        <fi:SymbolIcon
+                                                            Grid.Column="0"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="{StaticResource MediumFontSize}"
+                                                            Symbol="{Binding Icon}" />
+                                                        <TextBlock
+                                                            Grid.Column="1"
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding Label}"
+                                                            TextTrimming="CharacterEllipsis" />
+                                                        <husk:IconLabel
+                                                            Grid.Column="2"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Icon="Box"
+                                                            Text="{Binding Group.Count}" />
+                                                    </Grid>
+                                                </Panel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>
