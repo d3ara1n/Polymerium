@@ -19,7 +19,7 @@ using SkiaSharp;
 namespace Polymerium.Avalonia.Controls;
 
 /// <summary>
-///     毛玻璃背景控件：截取后方可视树内容 → GPU 高斯模糊 → 主题色叠加。内容静止时不重绘，变化时上限 15fps。
+///     毛玻璃背景控件：截取后方可视树内容 → GPU 高斯模糊 → 主题色叠加。内容静止时不重绘，变化时按捕获成本自适应节流。
 /// </summary>
 public class BlurBackdrop : ContentControl
 {
@@ -31,6 +31,9 @@ public class BlurBackdrop : ContentControl
 
     public static readonly StyledProperty<double> TintOpacityProperty =
         AvaloniaProperty.Register<BlurBackdrop, double>(nameof(TintOpacity), 1.0);
+
+    public static readonly StyledProperty<double> SaturationProperty =
+        AvaloniaProperty.Register<BlurBackdrop, double>(nameof(Saturation), 1.0);
 
     /// <summary>
     ///     模糊链路任意一环失败（无 GPU 上下文、snapshot 不可租、blur 抛错、capture 抛错）时绘制的纯色底。
@@ -52,8 +55,10 @@ public class BlurBackdrop : ContentControl
     public static readonly AttachedProperty<bool> UseBlurProperty =
         AvaloniaProperty.RegisterAttached<BlurBackdrop, Control, bool>("UseBlur", true);
 
-    // 重绘频率上限（15fps）——SceneInvalidated 频率远高于此，只做上限节流。
-    private static readonly long MIN_INTERVAL_TICKS = TimeSpan.FromMilliseconds(66).Ticks;
+    // 捕获间隔的硬边界：下限防高频空转，上限防内容变化长时间失响应；初始值沿用旧的固定 15fps。
+    private static readonly long MIN_INTERVAL_TICKS = TimeSpan.FromMilliseconds(8).Ticks;
+    private static readonly long MAX_INTERVAL_TICKS = TimeSpan.FromMilliseconds(250).Ticks;
+    private static readonly long INITIAL_INTERVAL_TICKS = TimeSpan.FromMilliseconds(66).Ticks;
 
     private static PropertyInfo? _topLevelRendererProperty;
     private static PropertyInfo? _dirtyRectProperty;
@@ -69,6 +74,8 @@ public class BlurBackdrop : ContentControl
     // NOTE: 是否已成功捕获过至少一帧：未就绪（首帧前）Render 透明跳过；就绪后 snapshot 缺失才视为失败走 Fallback。
     private volatile bool _everCaptured;
     private long _lastCaptureTicksUtc;
+    private long _intervalTicks = INITIAL_INTERVAL_TICKS;
+    private Rect? _lastCaptureRect;
     private ulong _lastHash;
     private bool _polling;
 
@@ -83,6 +90,7 @@ public class BlurBackdrop : ContentControl
         AffectsRender<BlurBackdrop>(BlurRadiusProperty,
                                     TintColorProperty,
                                     TintOpacityProperty,
+                                    SaturationProperty,
                                     CornerRadiusProperty,
                                     FallbackBrushProperty);
 
@@ -109,6 +117,12 @@ public class BlurBackdrop : ContentControl
     {
         get => GetValue(TintOpacityProperty);
         set => SetValue(TintOpacityProperty, value);
+    }
+
+    public double Saturation
+    {
+        get => GetValue(SaturationProperty);
+        set => SetValue(SaturationProperty, value);
     }
 
     public IBrush? FallbackBrush
@@ -143,6 +157,8 @@ public class BlurBackdrop : ContentControl
         var old = Interlocked.Exchange(ref _current, null);
         old?.ReleaseLease();
         _everCaptured = false;
+        _lastCaptureRect = null;
+        _intervalTicks = INITIAL_INTERVAL_TICKS;
         base.OnDetachedFromVisualTree(e);
     }
 
@@ -160,6 +176,7 @@ public class BlurBackdrop : ContentControl
             context.Custom(new BackdropDrawOperation(new(Bounds.Size),
                                                      snapshot,
                                                      BlurRadius,
+                                                     (float)Saturation,
                                                      TintColor,
                                                      (float)TintOpacity,
                                                      ResolveFallback()));
@@ -259,9 +276,7 @@ public class BlurBackdrop : ContentControl
 
     private void OnSceneInvalidated(object? sender, SceneInvalidatedEventArgs e)
     {
-        // DirtyRect 优化——重绘区域若完全落在自身 bounds 内（典型是 Capture 末尾 InvalidateVisual 触发），
-        // 说明只是自身重绘、后方内容没变，跳过捕获省掉最贵的软件光栅化；脏区延伸到外部才捕获。
-        if (_everCaptured && TryGetDirtyRect(e, out var dirtyRect) && IsSelfOnlyDirtyRect(dirtyRect))
+        if (_everCaptured && TryGetDirtyRect(e, out var dirtyRect) && ShouldSkipInvalidation(dirtyRect))
         {
             return;
         }
@@ -269,15 +284,17 @@ public class BlurBackdrop : ContentControl
         ConsiderCapture();
     }
 
-    private bool IsSelfOnlyDirtyRect(Rect dirtyRect)
+    // 脏区完全落在自身 bounds 内（典型是 Capture 末尾 InvalidateVisual 触发）说明只是自身重绘——捕获排除
+    // 自身，后方内容未变，跳过以防反馈环；脏区与采样区（自身+模糊余量）完全不相交的变化与快照无关，
+    // 在最贵的软件光栅化之前就挡掉——hash 只能省其后的像素拷贝。
+    private bool ShouldSkipInvalidation(Rect dirtyRect)
     {
-        if (TopLevel.GetTopLevel(this) is not { } topLevel || this.TransformToVisual(topLevel) is not { } toTopLevel)
+        if (TopLevel.GetTopLevel(this) is not { } topLevel || !TryGetCaptureRect(topLevel, out var selfInTop, out var captureRect))
         {
             return false;
         }
 
-        var selfInTop = new Rect(Bounds.Size).TransformToAABB(toTopLevel);
-        return selfInTop.Contains(dirtyRect);
+        return selfInTop.Contains(dirtyRect) || !dirtyRect.Intersects(captureRect);
     }
 
     private static bool TryGetDirtyRect(SceneInvalidatedEventArgs e, out Rect dirtyRect)
@@ -308,7 +325,19 @@ public class BlurBackdrop : ContentControl
             return;
         }
 
-        if (DateTime.UtcNow.Ticks - _lastCaptureTicksUtc < MIN_INTERVAL_TICKS)
+        // 节流只针对内容变化型重捕：上次捕获区已覆盖不住当前采样区（移动/缩放/窗口变化）时绕过节流立即
+        // 重捕，否则旧快照会按旧偏移映射到新 bounds，最长一个间隔内可见。
+        if (_everCaptured
+            && _lastCaptureRect is { } last
+            && TopLevel.GetTopLevel(this) is { } topLevel
+            && TryGetCaptureRect(topLevel, out _, out var desired)
+            && !last.Contains(desired))
+        {
+            QueueCapture();
+            return;
+        }
+
+        if (DateTime.UtcNow.Ticks - _lastCaptureTicksUtc < _intervalTicks)
         {
             return;
         }
@@ -348,6 +377,22 @@ public class BlurBackdrop : ContentControl
         });
     }
 
+    private static double BlurMargin(double blurRadius) => Math.Max(8.0, blurRadius * 3.0);
+
+    // 采样区 = 自身 bounds 外扩模糊余量（blur 采样会读取余量内的后方像素），并与窗口客户区求交。
+    private bool TryGetCaptureRect(TopLevel topLevel, out Rect selfInTop, out Rect captureRect)
+    {
+        selfInTop = captureRect = default;
+        if (Bounds.Width <= 0 || Bounds.Height <= 0 || this.TransformToVisual(topLevel) is not { } toTopLevel)
+        {
+            return false;
+        }
+
+        selfInTop = new Rect(Bounds.Size).TransformToAABB(toTopLevel);
+        captureRect = selfInTop.Inflate(BlurMargin(BlurRadius)).Intersect(new(topLevel.ClientSize));
+        return captureRect.Width > 0 && captureRect.Height > 0;
+    }
+
     private void Capture()
     {
         if (_detached)
@@ -356,24 +401,13 @@ public class BlurBackdrop : ContentControl
         }
 
         var topLevel = TopLevel.GetTopLevel(this);
-        if (topLevel is null || Bounds.Width <= 0 || Bounds.Height <= 0)
+        if (topLevel is null || !TryGetCaptureRect(topLevel, out var controlInTop, out var captureRect))
         {
             return;
         }
 
-        if (this.TransformToVisual(topLevel) is not { } toTopLevel)
-        {
-            return;
-        }
-
-        var controlInTop = new Rect(Bounds.Size).TransformToAABB(toTopLevel);
+        _lastCaptureRect = captureRect;
         var scaling = topLevel.RenderScaling;
-        var blurMargin = Math.Max(8.0, BlurRadius * 3.0);
-        var captureRect = controlInTop.Inflate(blurMargin).Intersect(new(topLevel.ClientSize));
-        if (captureRect.Width <= 0 || captureRect.Height <= 0)
-        {
-            return;
-        }
 
         // 只渲染控件区域（含 blurMargin），bitmap 尺寸 = captureRect 像素尺寸，省去整窗软件渲染。
         PixelSize pixel = new((int)Math.Ceiling(captureRect.Width * scaling),
@@ -384,63 +418,84 @@ public class BlurBackdrop : ContentControl
             _scratch = new(pixel, new(96.0 * scaling, 96.0 * scaling));
         }
 
-        using (var ctx = _scratch.CreateDrawingContext())
-        {
-            BackdropVisualRenderer.Render(ctx, topLevel, this, captureRect);
-        }
-
-        const int bpp = 4;
-        var cw = pixel.Width;
-        var ch = pixel.Height;
-        var rowBytes = cw * bpp;
-
-        // NOTE: 先读 8 条采样行做 hash，匹配则跳过整图拷贝。计时器无论是否匹配都推进，
-        //  保证 15fps 节流覆盖整个捕获（含采样），否则静态内容会让采样每帧空转。
-        var hash = SampleHash(_scratch, cw, ch, rowBytes);
-        _lastCaptureTicksUtc = DateTime.UtcNow.Ticks;
-        if (_everCaptured && hash == _lastHash)
-        {
-            return;
-        }
-
-        _lastHash = hash;
-
-        var length = rowBytes * ch;
-        // 复用 ArrayPool 避免每帧分配像素；Rent 的 buffer 可能长于 length，后续访问全部用
-        // cw/ch/rowBytes 限定，不触碰多余尾部。
-        var pixels = ArrayPool<byte>.Shared.Rent(length);
+        var sw = Stopwatch.StartNew();
+        var producedUpdate = false;
         try
         {
-            var handle = GCHandle.Alloc(pixels, GCHandleType.Pinned);
+            using (var ctx = _scratch.CreateDrawingContext())
+            {
+                BackdropVisualRenderer.Render(ctx, topLevel, this, captureRect);
+            }
+
+            const int bpp = 4;
+            var cw = pixel.Width;
+            var ch = pixel.Height;
+            var rowBytes = cw * bpp;
+
+            // NOTE: 先读 8 条采样行做 hash，匹配则跳过整图拷贝。计时器无论是否匹配都推进，
+            //  保证节流间隔覆盖整个捕获（含采样），否则静态内容会让采样每帧空转。
+            var hash = SampleHash(_scratch, cw, ch, rowBytes);
+            _lastCaptureTicksUtc = DateTime.UtcNow.Ticks;
+            if (_everCaptured && hash == _lastHash)
+            {
+                return;
+            }
+
+            _lastHash = hash;
+
+            var length = rowBytes * ch;
+            // 复用 ArrayPool 避免每帧分配像素；Rent 的 buffer 可能长于 length，后续访问全部用
+            // cw/ch/rowBytes 限定，不触碰多余尾部。
+            var pixels = ArrayPool<byte>.Shared.Rent(length);
             try
             {
-                _scratch.CopyPixels(new(0, 0, cw, ch), handle.AddrOfPinnedObject(), length, rowBytes);
+                var handle = GCHandle.Alloc(pixels, GCHandleType.Pinned);
+                try
+                {
+                    _scratch.CopyPixels(new(0, 0, cw, ch), handle.AddrOfPinnedObject(), length, rowBytes);
+                }
+                finally
+                {
+                    handle.Free();
+                }
+
+                var controlOffsetPx = new Vector((controlInTop.X - captureRect.X) * scaling,
+                                                 (controlInTop.Y - captureRect.Y) * scaling);
+                var controlSizePx = new Vector(controlInTop.Width * scaling, controlInTop.Height * scaling);
+
+                // WARNING: color type 必须用 PlatformColorType——RenderTargetBitmap 在 macOS/Linux 输出 Rgba8888、
+                //  Windows 输出 Bgra8888，硬编码任一都会在另一个平台 R/B 反色。FromPixelCopy 会拷贝一
+                //  份自有像素，此后 pixels 可安全归还池。
+                SKImageInfo info = new(cw, ch, SKImageInfo.PlatformColorType, SKAlphaType.Premul);
+                var image = SKImage.FromPixelCopy(info, pixels, rowBytes);
+
+                var snapshot = new BackdropSnapshot(image, controlOffsetPx, controlSizePx, scaling);
+                var old = Interlocked.Exchange(ref _current, snapshot);
+                old?.ReleaseLease();
+                _everCaptured = true;
+                producedUpdate = true;
+                InvalidateVisual();
             }
             finally
             {
-                handle.Free();
+                ArrayPool<byte>.Shared.Return(pixels);
             }
-
-            var controlOffsetPx = new Vector((controlInTop.X - captureRect.X) * scaling,
-                                             (controlInTop.Y - captureRect.Y) * scaling);
-            var controlSizePx = new Vector(controlInTop.Width * scaling, controlInTop.Height * scaling);
-
-            // WARNING: color type 必须用 PlatformColorType——RenderTargetBitmap 在 macOS/Linux 输出 Rgba8888、
-            //  Windows 输出 Bgra8888，硬编码任一都会在另一个平台 R/B 反色。FromPixelCopy 会拷贝一
-            //  份自有像素，此后 pixels 可安全归还池。
-            SKImageInfo info = new(cw, ch, SKImageInfo.PlatformColorType, SKAlphaType.Premul);
-            var image = SKImage.FromPixelCopy(info, pixels, rowBytes);
-
-            var snapshot = new BackdropSnapshot(image, controlOffsetPx, controlSizePx, scaling);
-            var old = Interlocked.Exchange(ref _current, snapshot);
-            old?.ReleaseLease();
-            _everCaptured = true;
-            InvalidateVisual();
         }
         finally
         {
-            ArrayPool<byte>.Shared.Return(pixels);
+            UpdateCaptureInterval(sw.ElapsedTicks, producedUpdate);
         }
+    }
+
+    // 自适应节流：间隔下限 2× 实测捕获耗时（占空比 ≤50%）。真实更新指数回落提速，hash 空转（典型是
+    // SmokeMask 全窗动画穿过过滤后内容未变）退避，避免静态内容下的高频白光栅化。
+    // NOTE: 与 _lastCaptureTicksUtc 同等纪律——Capture 在 UI 线程写、SceneInvalidated 线程读，long 良性竞态不加锁。
+    private void UpdateCaptureInterval(long costTicks, bool producedUpdate)
+    {
+        var target = Math.Clamp(costTicks * 2, MIN_INTERVAL_TICKS, MAX_INTERVAL_TICKS);
+        _intervalTicks = producedUpdate
+            ? Math.Max(target, _intervalTicks / 2)
+            : Math.Min(MAX_INTERVAL_TICKS, Math.Max(target, _intervalTicks * 3 / 2));
     }
 
     private static ulong SampleHash(RenderTargetBitmap bmp, int cw, int ch, int rowBytes)
@@ -544,10 +599,28 @@ public class BlurBackdrop : ContentControl
         Rect bounds,
         BackdropSnapshot? snapshot,
         double blurRadius,
+        float saturation,
         Color tint,
         float tintOpacity,
         SKColor fallback) : ICustomDrawOperation
     {
+
+        // Rec.601 亮度权重饱和度矩阵，与 Skia 内置 Saturation 滤镜等价。
+        private static SKColorFilter CreateSaturationFilter(float saturation)
+        {
+            var inv = 1f - saturation;
+            var r = 0.213f * inv;
+            var g = 0.715f * inv;
+            var b = 0.072f * inv;
+            return SKColorFilter.CreateColorMatrix(
+            [
+                r + saturation, g, b, 0f, 0f,
+                r, g + saturation, b, 0f, 0f,
+                r, g, b + saturation, 0f, 0f,
+                0f, 0f, 0f, 1f, 0f
+            ]);
+        }
+
         public Rect Bounds => bounds;
 
         public bool HitTest(Point p) => false;
@@ -592,7 +665,10 @@ public class BlurBackdrop : ContentControl
                 // 全程不创建自定义 GPU surface，规避 GRContext 生命周期问题。
                 var sigma = (float)(blurRadius * snapshot.Scaling);
                 using var blur = SKImageFilter.CreateBlur(sigma, sigma, SKShaderTileMode.Clamp, null);
-                using var paint = new SKPaint { ImageFilter = blur };
+                using var saturationFilter = MathF.Abs(saturation - 1f) > 0.001f
+                    ? CreateSaturationFilter(saturation)
+                    : null;
+                using var paint = new SKPaint { ImageFilter = blur, ColorFilter = saturationFilter };
                 canvas.DrawImage(snapshot.Image, src, dst, new(SKFilterMode.Linear), paint);
 
                 var a = (byte)Math.Clamp(tint.A * tintOpacity, 0, 255);

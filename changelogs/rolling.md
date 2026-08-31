@@ -15,7 +15,7 @@
 
 ### Changed
 
--
+- Improve the blurred backdrop behind dialogs, sidebars and toasts to follow background motion at full frame rate and avoid stretching when the window is resized
 
 ### Removed
 
