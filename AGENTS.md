@@ -125,6 +125,12 @@ Version-numbering convention: **`minor` increments mark milestones, not individu
 - `{Translate}`, `{app:LocalizedEnum}`, and `{app:LocalizedKey}` bind to `AvaloniaProperty` only — never assign them to a POCO `string` property (use `LocalizedKey` or `.Current()` instead).
 - The `EnumName_Value` key convention for enum localization is canonical; follow it when adding new enums.
 
+## Competitive Neutrality
+
+- Do not name competitor products anywhere in repository content — code comments, `plans/`, docs, Jira/GitHub issue text, changelog entries, commit messages. Describe external practice generically ("a common desktop-app pattern"), never "inspired by X" or "as done by X".
+- Dependency attributions (e.g. `(Huskui.Avalonia)`) and references to upstream libraries or specs are unaffected.
+- Sole exception: `website/content/docs/comparisons/` may compare only against the vanilla Minecraft launcher (the official baseline) and Prism Launcher (the community baseline). Both are mainstream enough that naming them carries no fan-community backlash risk; smaller launchers have tribal followings — keep them unnamed everywhere.
+
 ## Expected Build Noise
 
 - `dotnet build "Polymerium.slnx"` currently emits Avalonia Accelerate Community telemetry notices and a warning in `submodules/Trident.Net`; those are existing build outputs, not necessarily regressions from your change.
