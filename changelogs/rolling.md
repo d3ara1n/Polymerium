@@ -2,7 +2,7 @@
 
 ### ✨ Highlights ✨
 
--
+- Add drag-and-drop group reordering and quick package assignment to collections on the instance setup page (#POLY-148, #POLY-141)
 
 ### Fixed
 
@@ -11,7 +11,7 @@
 
 ### Added
 
--
+- Add drag-and-drop group reordering and quick package assignment to collections on the instance setup page (#POLY-148, #POLY-141)
 
 ### Changed
 

@@ -900,6 +900,12 @@
     <data name="InstanceSetupPage_GroupExpandedMenuText" xml:space="preserve">
         <value>展开</value>
     </data>
+    <data name="InstanceSetupDragSurface_GroupTitleText" xml:space="preserve">
+        <value>调整组顺序</value>
+    </data>
+    <data name="InstanceSetupDragSurface_PackageTitleText" xml:space="preserve">
+        <value>移入集合</value>
+    </data>
     <data name="InstanceSetupPage_ViewGroupDetailsMenuText" xml:space="preserve">
         <value>查看详情</value>
     </data>

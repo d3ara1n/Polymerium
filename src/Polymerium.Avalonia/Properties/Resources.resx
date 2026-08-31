@@ -909,6 +909,12 @@
     <data name="InstanceSetupPage_GroupExpandedMenuText" xml:space="preserve">
         <value>Expand</value>
     </data>
+    <data name="InstanceSetupDragSurface_GroupTitleText" xml:space="preserve">
+        <value>Reorder Groups</value>
+    </data>
+    <data name="InstanceSetupDragSurface_PackageTitleText" xml:space="preserve">
+        <value>Move to Collection</value>
+    </data>
     <data name="InstanceSetupPage_ViewGroupDetailsMenuText" xml:space="preserve">
         <value>View Details</value>
     </data>
