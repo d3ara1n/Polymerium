@@ -1686,7 +1686,7 @@ public partial class InstanceSetupPageModel(
                     Update(version);
                 }
             }
-            catch (ApiException ex)
+            catch (ApiExceptionBase ex)
             {
                 logger.LogError(ex, "Failed to check update: {}", reference.Pref);
                 notificationService.PopMessage(ex,

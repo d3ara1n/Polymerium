@@ -365,7 +365,7 @@ public partial class ExplorerPageModel : ViewModelBase
                                .ToArray();
                     return tasks;
                 }
-                catch (ApiException ex)
+                catch (ApiExceptionBase ex)
                 {
                     _notificationService.PopMessage(ex, LanguageManager.Instance.Error_BadNetwork.Current(), GrowlLevel.Warning);
                     Debug.WriteLine(ex);
@@ -380,7 +380,7 @@ public partial class ExplorerPageModel : ViewModelBase
             });
             Exhibits = source;
         }
-        catch (ApiException ex)
+        catch (ApiExceptionBase ex)
         {
             _notificationService.PopMessage(ex, LanguageManager.Instance.Error_BadNetwork.Current(), GrowlLevel.Warning);
             Debug.WriteLine(ex);
