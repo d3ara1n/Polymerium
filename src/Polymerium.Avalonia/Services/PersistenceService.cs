@@ -53,6 +53,7 @@ public class PersistenceService(IFreeSql freeSql)
 
     #region Nested type: Action
 
+    [Index("{TableName}_idx_key_kind_at", "Key, Kind, At DESC")]
     public class Action
     {
         public DateTime At { get; set; } = DateTime.Now;
@@ -67,6 +68,7 @@ public class PersistenceService(IFreeSql freeSql)
 
     #region Nested type: Activity
 
+    [Index("{TableName}_idx_key_end", "Key, End DESC")]
     public class Activity
     {
         public required string Key { get; set; }
@@ -291,12 +293,17 @@ public class PersistenceService(IFreeSql freeSql)
 
     public int GetTotalPlayTimeRank(string key)
     {
-        var allActivities = freeSql.Select<Activity>().ToList();
-
-        var playTimes = allActivities
+        // WARNING: FreeSql 的 SQLite 方言只对 TotalSeconds 生成正确翻译（strftime('%s') 差值），
+        //  换成 TotalHours 会生成 strftime('%h')（月份缩写），统计值恒错，勿改。
+        var playTimes = freeSql
+                       .Select<Activity>()
                        .GroupBy(x => x.Key)
-                       .Select(g => new { g.Key, TotalHours = g.Sum(x => (x.End - x.Begin).TotalHours) })
-                       .OrderByDescending(x => x.TotalHours)
+                       .ToList(g => new
+                       {
+                           Key = g.Key,
+                           TotalSeconds = g.Sum((g.Value.End - g.Value.Begin).TotalSeconds)
+                       })
+                       .OrderByDescending(x => x.TotalSeconds)
                        .ToList();
 
         var rank = playTimes.FindIndex(x => x.Key == key);
@@ -334,14 +341,12 @@ public class PersistenceService(IFreeSql freeSql)
 
     public TimeSpan GetLongestSession(string key)
     {
-        var activities = freeSql.Select<Activity>().Where(x => x.Key == key).ToList();
-        if (activities.Count == 0)
-        {
-            return TimeSpan.Zero;
-        }
-
-        var longest = activities.Max(x => (x.End - x.Begin).TotalSeconds);
-        return TimeSpan.FromSeconds(longest);
+        // FreeSql 的 Max 对空集返回 0，与原先无会话时返回 TimeSpan.Zero 的行为一致
+        var longestSeconds = freeSql
+                            .Select<Activity>()
+                            .Where(x => x.Key == key)
+                            .Max(x => (x.End - x.Begin).TotalSeconds);
+        return TimeSpan.FromSeconds(longestSeconds);
     }
 
     public TimeSpan GetWeekPlayTime(string key, int weeksAgo)
@@ -468,11 +473,15 @@ public class PersistenceService(IFreeSql freeSql)
 
     public void SetInstanceTags(string key, string[] tags)
     {
-        freeSql.Delete<InstanceTag>().Where(x => x.Key == key).ExecuteAffrows();
-        foreach (var tag in tags)
+        freeSql.Transaction(() =>
         {
-            freeSql.Insert(new InstanceTag { Key = key, Tag = tag }).ExecuteAffrows();
-        }
+            freeSql.Delete<InstanceTag>().Where(x => x.Key == key).ExecuteAffrows();
+            if (tags.Length > 0)
+            {
+                freeSql.Insert(tags.Select(tag => new InstanceTag { Key = key, Tag = tag }).ToList())
+                       .ExecuteAffrows();
+            }
+        });
     }
 
     public void RemoveInstanceTags(string key) =>
@@ -574,17 +583,35 @@ public class PersistenceService(IFreeSql freeSql)
         out int totalCount)
     {
         var normalizedQuery = query.Trim();
-        var filtered = freeSql
-                      .Select<FavoriteProject>()
-                      .ToList()
-                      .Where(x => filter.Kind is null || x.Kind == filter.Kind)
-                      .Where(x => IsFavoriteQueryMatched(x, normalizedQuery))
-                      .OrderByDescending(x => x.AddedAt)
-                      .ThenByDescending(x => x.UpdatedAt)
-                      .ToList();
+        var select = freeSql.Select<FavoriteProject>();
 
-        totalCount = filtered.Count;
-        return [.. filtered.Skip((int)(pageIndex * pageSize)).Take((int)pageSize)];
+        if (filter.Kind is { } kind)
+        {
+            select = select.Where(x => x.Kind == kind);
+        }
+
+        // 关键字匹配依赖 OrdinalIgnoreCase，SQLite LIKE 只对 ASCII 不区分大小写，无法安全下推：
+        // 有关键字时取回内存过滤，无关键字路径全 SQL 化（计数 + 排序分页）
+        if (normalizedQuery.Length > 0)
+        {
+            var filtered = select
+                          .ToList()
+                          .Where(x => IsFavoriteQueryMatched(x, normalizedQuery))
+                          .OrderByDescending(x => x.AddedAt)
+                          .ThenByDescending(x => x.UpdatedAt)
+                          .ToList();
+
+            totalCount = filtered.Count;
+            return [.. filtered.Skip((int)(pageIndex * pageSize)).Take((int)pageSize)];
+        }
+
+        totalCount = (int)select.Count();
+        return select
+              .OrderByDescending(x => x.AddedAt)
+              .OrderByDescending(x => x.UpdatedAt)
+              .Skip((int)(pageIndex * pageSize))
+              .Take((int)pageSize)
+              .ToList();
     }
 
     public static string? NormalizeNamespace(string? ns) => string.IsNullOrEmpty(ns) ? null : ns;
