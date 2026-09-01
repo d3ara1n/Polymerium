@@ -605,6 +605,8 @@ public class PersistenceService(IFreeSql freeSql)
             return [.. filtered.Skip((int)(pageIndex * pageSize)).Take((int)pageSize)];
         }
 
+        // 排序列没有唯一 tiebreaker：AddedAt/UpdatedAt 完全并列的行跨页边界时翻页顺序不保证稳定，
+        //  若真出现跨页重复/丢行，把复合主键 (Label, Namespace, ProjectId) 追加为末位排序列即可
         totalCount = (int)select.Count();
         return select
               .OrderByDescending(x => x.AddedAt)
