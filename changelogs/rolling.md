@@ -16,6 +16,7 @@
 ### Changed
 
 - Improve the blurred backdrop behind dialogs, sidebars and toasts to follow background motion at full frame rate and avoid stretching when the window is resized
+- Improve the speed of play-time statistics and favorites search and prevent instance tags from being lost when saving is interrupted
 
 ### Removed
 
