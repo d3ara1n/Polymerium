@@ -60,6 +60,7 @@
                             Color="{StaticResource White5Color}" />
                     </Panel.Resources>
                     <Border
+                        Name="Track"
                         Background="{StaticResource ControlBackgroundBrush}"
                         CornerRadius="{TemplateBinding CornerRadius}" />
                     <Panel Name="Determinate">
@@ -165,8 +166,14 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:disabled /template/ Panel#Container">
-            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+        <Style Selector="^:disabled">
+            <Setter Property="Background" Value="{StaticResource ControlDisabledInteractiveBackgroundBrush}" />
+        </Style>
+        <Style Selector="^:disabled /template/ Border#Track">
+            <Setter Property="Background" Value="{StaticResource ControlDisabledBackgroundBrush}" />
+        </Style>
+        <Style Selector="^:disabled /template/ Border#PART_Indicator">
+            <Setter Property="Background" Value="{StaticResource ControlDisabledInteractiveBackgroundBrush}" />
         </Style>
 
         <Style Selector="^:indeterminate">

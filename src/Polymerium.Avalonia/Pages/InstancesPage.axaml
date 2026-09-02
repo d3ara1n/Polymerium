@@ -222,8 +222,8 @@
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <husk:FlexWrapPanel
-                                    ColumnSpacing="8"
-                                    RowSpacing="8" />
+                                    ColumnSpacing="12"
+                                    RowSpacing="12" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
