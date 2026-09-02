@@ -73,7 +73,8 @@
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}">
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Foreground="{TemplateBinding Foreground}">
                             <ContentPresenter.Transitions>
                                 <Transitions>
                                     <TransformOperationsTransition
@@ -119,11 +120,17 @@
                 <Setter Property="RenderTransform" Value="scale(0.95)" />
             </Style>
 
+            <Style Selector="^:disabled">
+                <Setter Property="Background" Value="{StaticResource ControlDisabledInteractiveBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource ControlDisabledForegroundBrush}" />
+            </Style>
             <Style Selector="^:disabled /template/ Border#Background">
-                <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+                <Setter Property="Background" Value="{StaticResource ControlDisabledInteractiveBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource ControlDisabledInteractiveBorderBrush}" />
+                <Setter Property="Effect" Value="{x:Null}" />
             </Style>
             <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+                <Setter Property="Foreground" Value="{StaticResource ControlDisabledForegroundBrush}" />
             </Style>
         </ControlTheme>
     </app:Subpage.Resources>
