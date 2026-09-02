@@ -55,8 +55,13 @@
             <Setter Property="RenderTransform" Value="scale(0.98)" />
         </Style>
 
+        <Style Selector="^:disabled">
+            <Setter Property="Background" Value="{StaticResource ControlDisabledInteractiveBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlDisabledInteractiveBorderBrush}" />
+        </Style>
         <Style Selector="^:disabled /template/ Border#Background">
-            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+            <Setter Property="Background" Value="{StaticResource ControlDisabledBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlDisabledBorderBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

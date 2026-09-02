@@ -30,14 +30,6 @@
                     Padding="0"
                     Background="{StaticResource LayerBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
-                    <husk:Card.Opacity>
-                        <MultiBinding Converter="{x:Static app:InternalConverters.OneOr}">
-                            <Binding
-                                Mode="OneWay"
-                                Path="IsEnabled" />
-                            <Binding Source="{StaticResource ControlDimOpacity}" />
-                        </MultiBinding>
-                    </husk:Card.Opacity>
                     <husk:Card.Transitions>
                         <Transitions>
                             <BrushTransition
@@ -295,8 +287,13 @@
             <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
         </Style>
 
+        <Style Selector="^:disabled">
+            <Setter Property="Background" Value="{StaticResource ControlDisabledInteractiveBackgroundBrush}" />
+        </Style>
         <Style Selector="^:disabled /template/ husk|Card#Background">
-            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+            <Setter Property="Background" Value="{StaticResource ControlDisabledBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlDisabledBorderBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDisabledForegroundBrush}" />
         </Style>
     </ControlTheme>
 
@@ -311,14 +308,6 @@
                     Padding="0"
                     Background="{StaticResource LayerBackgroundBrush}"
                     CornerRadius="{StaticResource MediumCornerRadius}">
-                    <husk:Card.Opacity>
-                        <MultiBinding Converter="{x:Static app:InternalConverters.OneOr}">
-                            <Binding
-                                Mode="OneWay"
-                                Path="IsEnabled" />
-                            <Binding Source="{StaticResource ControlDimOpacity}" />
-                        </MultiBinding>
-                    </husk:Card.Opacity>
                     <husk:Card.Transitions>
                         <Transitions>
                             <BrushTransition
@@ -397,8 +386,13 @@
             <Setter Property="Background" Value="{StaticResource OverlayFullBackgroundBrush}" />
         </Style>
 
+        <Style Selector="^:disabled">
+            <Setter Property="Background" Value="{StaticResource ControlDisabledInteractiveBackgroundBrush}" />
+        </Style>
         <Style Selector="^:disabled /template/ husk|Card#Background">
-            <Setter Property="Opacity" Value="{StaticResource ControlDimOpacity}" />
+            <Setter Property="Background" Value="{StaticResource ControlDisabledBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlDisabledBorderBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ControlDisabledForegroundBrush}" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>
