@@ -1575,11 +1575,17 @@
     <data name="DeployStage_LoadLock" xml:space="preserve">
         <value>Loading version lock...</value>
     </data>
+    <data name="DeployStage_LoadLaunchPlan" xml:space="preserve">
+        <value>Loading launch plan...</value>
+    </data>
     <data name="DeployStage_InstallVanilla" xml:space="preserve">
         <value>Installing vanilla...</value>
     </data>
     <data name="DeployStage_ProcessLoader" xml:space="preserve">
         <value>Installing mod loader...</value>
+    </data>
+    <data name="DeployStage_ResolveLaunchPlan" xml:space="preserve">
+        <value>Resolving launch plan...</value>
     </data>
     <data name="DeployStage_SyncPackages" xml:space="preserve">
         <value>Synchronizing packages...</value>

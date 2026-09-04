@@ -2,6 +2,7 @@
 
 ### ✨ Highlights ✨
 
+- Add optional external launch plans that customize Minecraft startup configuration and remain part of instance imports and snapshots
 - Add drag-and-drop group reordering and quick package assignment to collections on the instance setup page (#POLY-148, #POLY-141)
 
 ### Fixed
@@ -11,6 +12,7 @@
 
 ### Added
 
+- Add optional external launch plans that customize Minecraft startup configuration and remain part of instance imports and snapshots (#92, #POLY-165)
 - Add drag-and-drop group reordering and quick package assignment to collections on the instance setup page (#POLY-148, #POLY-141)
 
 ### Changed
