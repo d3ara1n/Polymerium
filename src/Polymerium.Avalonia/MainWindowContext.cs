@@ -325,7 +325,14 @@ public partial class MainWindowContext : ObservableObject
         _entries.AddOrUpdate(list);
     }
 
-    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
+    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e)
+    {
+        var defaultAccount = _persistenceService.GetDefaultAccount();
+        if (defaultAccount != null)
+        {
+            _persistenceService.SetAccountSelector(e.Key, defaultAccount.Uuid);
+        }
+
         Dispatcher.UIThread.Post(() =>
         {
             InstanceEntryModel entry;
@@ -345,14 +352,8 @@ public partial class MainWindowContext : ObservableObject
             }
 
             AddRecent(e.Key, entry);
-
-            var defaultAccount = _persistenceService.GetDefaultAccount();
-            if (defaultAccount != null)
-            {
-                var cooked = AccountHelper.ToCooked(defaultAccount);
-                _persistenceService.SetAccountSelector(e.Key, cooked.Uuid);
-            }
         });
+    }
 
     private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
         Dispatcher.UIThread.Post(() =>
