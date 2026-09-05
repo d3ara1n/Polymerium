@@ -9,6 +9,8 @@
 - Fix the check integrity action not performing a full validation pass
 - Fix update checks and downloads on the GitHub update channel ignoring the network proxy settings
 - Fix a crash when opening the setup page of an instance after importing a package list from a file (#POLY-161, #POLYMERIUM-2G)
+- Fix the launcher crashing right after a deployment failed, instead of reporting why it failed
+- Fix importing a modpack whose archive has an extra folder wrapping its contents ending up with no packages
 - Fix newly created instances not having the default account selected
 - Fix launching an instance whose selected account was deleted doing nothing instead of showing the account selection prompt
 
