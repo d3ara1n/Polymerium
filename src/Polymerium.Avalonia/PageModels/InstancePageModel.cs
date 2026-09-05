@@ -229,11 +229,13 @@ public partial class InstancePageModel : ViewModelBase, IStatefulViewModel<Insta
     {
         _aggregatorSubscription = _aggregator
                                  .Watch(Basic.Key)
-                                 .Subscribe(snapshot =>
+                                 .Subscribe(activity =>
                                   {
                                       Dispatcher.UIThread.Post(() =>
                                       {
-                                          State = snapshot?.State ?? InstanceState.Idle;
+                                          State = activity is { IsCompleted: false }
+                                                      ? activity.Kind
+                                                      : InstanceState.Idle;
                                       });
                                   });
 

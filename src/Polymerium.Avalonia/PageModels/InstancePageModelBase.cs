@@ -11,7 +11,6 @@ using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Widgets;
 using TridentCore.Abstractions;
 using TridentCore.Abstractions.FileModels;
-using TridentCore.Abstractions.Tasks;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
 
@@ -56,17 +55,14 @@ public abstract partial class InstancePageModelBase : ViewModelBase
 
     protected virtual void OnModelUpdated(string key, Profile profile) { }
 
-    protected virtual void OnInstanceUpdating(UpdateTracker tracker) { }
+    /// <summary>一次新活动开始（按 <see cref="InstanceActivity.Id" /> 判定）。</summary>
+    protected virtual void OnActivityStarted(InstanceActivity activity) { }
 
-    protected virtual void OnInstanceDeploying(DeployTracker tracker) { }
+    /// <summary>同一活动的后继快照（进度/字段变化）。</summary>
+    protected virtual void OnActivityProgressed(InstanceActivity activity) { }
 
-    protected virtual void OnInstanceLaunching(LaunchTracker tracker) { }
-
-    protected virtual void OnInstanceUpdated(UpdateTracker tracker) { }
-
-    protected virtual void OnInstanceDeployed(DeployTracker tracker) { }
-
-    protected virtual void OnInstanceLaunched(LaunchTracker tracker) { }
+    /// <summary>活动落终态。参数即终态快照，失败原因等信息均已带全。</summary>
+    protected virtual void OnActivityCompleted(InstanceActivity activity) { }
 
     #endregion
 
@@ -76,7 +72,7 @@ public abstract partial class InstancePageModelBase : ViewModelBase
     protected readonly ProfileManager ProfileManager;
     private readonly InstanceStateAggregator _aggregator;
     private IDisposable? _aggregatorSubscription;
-    private TrackerBase? _currentTracker;
+    private Guid? _currentActivityId;
 
     #endregion
 
@@ -88,57 +84,37 @@ public abstract partial class InstancePageModelBase : ViewModelBase
 
         _aggregatorSubscription = _aggregator
                                  .Watch(Basic.Key)
-                                 .Subscribe(snapshot =>
+                                 .Subscribe(activity =>
                                   {
-                                      if (snapshot is null)
+                                      // 活动对象是不可变值，投递到 UI 线程后仍然有效——无需担心它在
+                                      // 投递期间被释放。
+                                      if (activity is null)
                                       {
-                                          var completed = _currentTracker;
-                                          _currentTracker = null;
-                                          Dispatcher.UIThread.Post(() =>
-                                          {
-                                              State = InstanceState.Idle;
-                                              switch (completed)
-                                              {
-                                                  case UpdateTracker update:
-                                                      OnInstanceUpdated(update);
-                                                      break;
-                                                  case DeployTracker deploy:
-                                                      OnInstanceDeployed(deploy);
-                                                      break;
-                                                  case LaunchTracker launch:
-                                                      OnInstanceLaunched(launch);
-                                                      break;
-                                              }
-                                          });
+                                          _currentActivityId = null;
+                                          Dispatcher.UIThread.Post(() => State = InstanceState.Idle);
+                                          return;
                                       }
-                                      else
+
+                                      var started = _currentActivityId != activity.Id;
+                                      _currentActivityId = activity.IsCompleted ? null : activity.Id;
+
+                                      Dispatcher.UIThread.Post(() =>
                                       {
-                                          // NOTE: 仅 tracker 变化时调 hook，避免每次 snapshot 更新重复调。
-                                          if (!ReferenceEquals(snapshot.Tracker, _currentTracker))
+                                          State = activity.IsCompleted ? InstanceState.Idle : activity.Kind;
+                                          if (started)
                                           {
-                                              _currentTracker = snapshot.Tracker;
-                                              Dispatcher.UIThread.Post(() =>
-                                              {
-                                                  State = snapshot.State;
-                                                  switch (snapshot.Tracker)
-                                                  {
-                                                      case UpdateTracker update:
-                                                          OnInstanceUpdating(update);
-                                                          break;
-                                                      case DeployTracker deploy:
-                                                          OnInstanceDeploying(deploy);
-                                                          break;
-                                                      case LaunchTracker launch:
-                                                          OnInstanceLaunching(launch);
-                                                          break;
-                                                  }
-                                              });
+                                              OnActivityStarted(activity);
                                           }
-                                          else
+
+                                          if (activity.IsCompleted)
                                           {
-                                              Dispatcher.UIThread.Post(() => State = snapshot.State);
+                                              OnActivityCompleted(activity);
                                           }
-                                      }
+                                          else if (!started)
+                                          {
+                                              OnActivityProgressed(activity);
+                                          }
+                                      });
                                   });
 
         OnModelUpdated(Basic.Key, ProfileManager.GetImmutable(Basic.Key));
