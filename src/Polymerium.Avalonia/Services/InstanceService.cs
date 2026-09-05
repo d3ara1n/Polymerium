@@ -85,43 +85,38 @@ public class InstanceService
     public void DeployAndLaunch(string key, LaunchMode mode)
     {
         var selector = _persistenceService.GetAccountSelector(key);
-        if (selector != null)
-        {
-            var account = _persistenceService.GetAccount(selector.Uuid);
-            if (account != null)
-            {
-                var cooked = AccountHelper.ToCooked(account);
-                _persistenceService.UseAccount(account.Uuid);
-                var profile = _profileManager.GetImmutable(key);
-                var locator = CreateJavaLocator(profile, _configurationService.Value);
-                var deploy = new DeployOptions(false);
-                var launch =
-                    new LaunchOptions(additionalArguments:
-                                      profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
-                                                          _configurationService.Value.GameJavaAdditionalArguments),
-                                      maxMemory:
-                                      profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
-                                                          _configurationService.Value.GameJavaMaxMemory),
-                                      windowSize:
-                                      (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH,
-                                                           _configurationService.Value.GameWindowInitialWidth),
-                                       profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
-                                                           _configurationService.Value.GameWindowInitialHeight)),
-                                      quickConnectAddress:
-                                      profile.GetOverride<string>(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER),
-                                      commandWrapperTemplate:
-                                      profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_COMMAND_WRAPPER,
-                                                          _configurationService.Value.GameCommandWrapper),
-                                      launchMode: mode,
-                                      account: cooked,
-                                      brand: Program.Brand);
-                _instanceManager.DeployAndLaunch(key, deploy, launch, locator);
-            }
-        }
-        else
+        var account = selector is null ? null : _persistenceService.GetAccount(selector.Uuid);
+        if (account is null)
         {
             throw new AccountNotFoundException("Account is not provided or removed after set");
         }
+
+        var cooked = AccountHelper.ToCooked(account);
+        _persistenceService.UseAccount(account.Uuid);
+        var profile = _profileManager.GetImmutable(key);
+        var locator = CreateJavaLocator(profile, _configurationService.Value);
+        var deploy = new DeployOptions(false);
+        var launch =
+            new LaunchOptions(additionalArguments:
+                              profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
+                                                  _configurationService.Value.GameJavaAdditionalArguments),
+                              maxMemory:
+                              profile.GetOverride(Profile.OVERRIDE_JAVA_MAX_MEMORY,
+                                                  _configurationService.Value.GameJavaMaxMemory),
+                              windowSize:
+                              (profile.GetOverride(Profile.OVERRIDE_WINDOW_WIDTH,
+                                                   _configurationService.Value.GameWindowInitialWidth),
+                               profile.GetOverride(Profile.OVERRIDE_WINDOW_HEIGHT,
+                                                   _configurationService.Value.GameWindowInitialHeight)),
+                              quickConnectAddress:
+                              profile.GetOverride<string>(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER),
+                              commandWrapperTemplate:
+                              profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_COMMAND_WRAPPER,
+                                                  _configurationService.Value.GameCommandWrapper),
+                              launchMode: mode,
+                              account: cooked,
+                              brand: Program.Brand);
+        _instanceManager.DeployAndLaunch(key, deploy, launch, locator);
     }
 
     public void Deploy(string key, bool? fullCheckMode = null)
