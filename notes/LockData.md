@@ -1,9 +1,9 @@
 # 启动计划与部署快照：影响面与故障定位地图
 
 > 制定日期：2026-07-06
-> 定位：启动计划与部署快照的**影响面与故障定位地图**。本文档面向上线后问题定位；Profile 保存基础实例意图，launch/data.plan.json 保存可选的启动层意图，lock 只是可丢弃的计算快照。随代码演进维护：凡改动启动计划或 lock 行为，同步更新本文档。
+> 定位：启动计划与部署快照的**影响面与故障定位地图**。本文档面向上线后问题定位；Profile 保存基础实例意图，launch/source/ 与 launch/ 根目录下的原生 plan 文件保存可选的启动层意图，lock 只是可丢弃的计算快照。随代码演进维护：凡改动启动计划或 lock 行为，同步更新本文档。
 > 关联：[POLY-116](https://d3ara1n.atlassian.net/browse/POLY-116)
-> 当前状态：启动计划基础设施完成，多目录外挂与来源无感叠加待实现
+> 当前状态：启动计划多层叠加与 MMC patch 转换已实现；不支持计划的导出格式提示和 Portable Instance 支持待第三阶段
 
 ---
 
@@ -25,7 +25,7 @@
 | **FastMode 门控** | `TridentCore.Abstractions/Extensions/LockDataExtensions.cs` | `Verify(setup, optionsHash, priorityHash, launchPlanHash)`——FastMode 判定，比 platform + OptionsHash + **PriorityHash** + 外挂 LaunchPlanHash + 完整 pref（含 vid）集合 | "改了 mod 版本/SourceOrders 没生效（FastMode）"、"每次都全量部署" |
 | **部署上下文** | `TridentCore.Core/Engines/Deploying/DeployContext.cs` | `BaseLock`/`Lock`/`OptionsHash` 的载体 | stage 间数据传递问题 |
 | **pipeline 编排** | `TridentCore.Core/Engines/DeployEngine.cs` | 固定 11-stage 线性序列（包含外挂启动计划加载、解析与 `FlattenPackages`） | stage 执行顺序、stage 未执行（看 Sequence 数组） |
-| **加载** | `Stages/LoadLockStage.cs` / `LoadLaunchPlanStage.cs` / `Utilities/LaunchPlanSnapshot.cs` | 在部署开始时读取并校验可选的 `launch/data.plan.json`，LoadLaunchPlanStage 将已捕获的文档接入管线；new Lock 填 Platform/Viability/LaunchPlanHash | lock 或外挂启动计划读不到、结构错误、Platform 填错 |
+| **加载** | `Stages/LoadLockStage.cs` / `LoadLaunchPlanStage.cs` / `Utilities/LaunchPlanSnapshot.cs` | 在部署开始时读取并校验 `launch/source/` 与 `launch/` 根目录下按文件名排序的原生 plan 文件，按 source 后 user 顺序合成并接入管线；本地引用按所属 plan 文件解析并计入 hash；new Lock 填 Platform/Viability/LaunchPlanHash | lock 或外挂启动计划读不到、结构错误、本地引用越界、Platform 填错 |
 | **平台缓存·vanilla** | `Stages/InstallVanillaStage.cs` | 看 `BaseLock.Platform==Lock.Platform`→整体迁启动计划；否则重建 vanilla（调 PrismLauncher + authlib-injector） | vanilla 启动缺库、启动计划迁移不完整 |
 | **平台缓存·loader** | `Stages/ProcessLoaderStage.cs` | 看 `BaseLock.Platform` 匹配→skip（启动计划已整体迁）；否则重建 loader | loader 启动失败、loader 库缺失、mainClass 错 |
 | **版本锁定·核心** | `Stages/SyncPackagesStage.cs` | diff 按 **`(project, Source)`**（POLY-117，同 mod 多来源各自存活）+ floating 失效（platform）+ 固定 vid 变更检测 + 精细 rule（`EvaluateRule` 直接哺 `locked.Resolved`，零网络）| **绝大多数 mod 版本相关问题**（见 §4） |
@@ -48,7 +48,7 @@
 ```
 LoadLock        读 BaseLock + 建 Lock(Platform/Viability/LaunchPlanHash)
    ↓
-LoadLaunchPlan  读取可选的 launch/data.plan.json
+LoadLaunchPlan  读取并按顺序合成 launch/source/ 与 launch/ 根目录下的原生 plan 文件，忽略点号前缀文件
    ↓
 InstallVanilla  BaseLock.Platform 匹配且 LaunchPlan 非空 → 整体迁；否则重建 vanilla
    ↓
@@ -171,6 +171,7 @@ Lock (本次快照) ◄───────┘    各 stage 迁移/重建写入
 - `DeployStage.cs`（枚举改名）
 - `Resources.resx` / `Resources.zh-hans.resx`（部署阶段资源键）
 - `Core/Services/SnapshotManager.cs` / `Core/Services/ImporterAgent.cs` / `Core/Services/InstanceManager.cs` / `Core/Exporters/TridentExporter.cs` / `Core/Importers/TridentImporter.cs`（外挂目录生命周期）
+- `Core/Utilities/LaunchPlanFileHelper.cs` / `Core/Utilities/MultiMcPatchConverter.cs` / `Core/Models/MultiMcPack/MmcPatch.cs`（多层文件发现与 MMC patch 转换）
 
 **宿主（src/Polymerium.Avalonia）**
 - `PageModels/InstanceHomePageModel.cs`（stage→resource 映射）
@@ -183,6 +184,7 @@ Lock (本次快照) ◄───────┘    各 stage 迁移/重建写入
 
 - 凡改动 lock 的**结构**（新增/改字段）：更新本文件 §1 数据结构行 + §5 相关易错点。
 - 凡改动 **pipeline stage** 顺序或职责：更新 §2 + §1 对应行。
+- 凡改动 **launch/source/ 或根目录 plan 文件发现、排序、相对引用**：更新 §1、§2、§5 相关条目。
 - 凡改动 **SyncPackages** 的 diff/失效/rule 逻辑：重点更新 §4 症状表 + §5 对应条目（这是 bug 高发区）。
 - 凡改动 **Verify**：更新 §4 的 FastMode 相关行。
 - 新增 **rule 选择器类型**：现在直接读全量 `Package`（`locked.Resolved`），无重建/无假值——只需确认该字段在 `Package` 上（§5.4）。
