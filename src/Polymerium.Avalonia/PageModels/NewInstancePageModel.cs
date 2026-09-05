@@ -8,6 +8,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
 using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
@@ -74,6 +75,17 @@ public partial class NewInstancePageModel(
             ImportedPack = new(path, pack, container);
             VersionName = container.Profile.Setup.Version;
             DisplayName = container.Profile.Name;
+
+            // 转换丢弃的内容（如 jar mod、traits）不阻止导入，但必须让用户看到，
+            // 否则他们只会在游戏表现异常时发现实例与整合包不一致。
+            if (container.LaunchPlanDiagnostics is { Count: > 0 } diagnostics)
+            {
+                notificationService.PopMessage(string.Join(Environment.NewLine, diagnostics.Select(x => x.Message)),
+                                               LanguageManager
+                                                  .Instance.NewInstancePage_ImportDiagnosticWarningNotificationTitle
+                                                  .Current(),
+                                               GrowlLevel.Warning);
+            }
         }
         catch (Exception e)
         {

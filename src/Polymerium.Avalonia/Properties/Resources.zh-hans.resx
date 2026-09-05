@@ -1383,6 +1383,9 @@
     <data name="NewInstancePage_ImportDangerNotificationTitle" xml:space="preserve">
         <value>导入失败</value>
     </data>
+    <data name="NewInstancePage_ImportDiagnosticWarningNotificationTitle" xml:space="preserve">
+        <value>导入存在限制</value>
+    </data>
     <data name="NewInstancePage_IconSavingDangerNotificationTitle" xml:space="preserve">
         <value>写入图标失败</value>
     </data>
@@ -1553,9 +1556,6 @@
     </data>
     <data name="DeployStage_LoadLock" xml:space="preserve">
         <value>加载版本锁...</value>
-    </data>
-    <data name="DeployStage_LoadLaunchPlan" xml:space="preserve">
-        <value>加载启动计划...</value>
     </data>
     <data name="DeployStage_GenerateManifest" xml:space="preserve">
         <value>生成文件清单...</value>

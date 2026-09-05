@@ -1392,6 +1392,9 @@
     <data name="NewInstancePage_ImportDangerNotificationTitle" xml:space="preserve">
         <value>Import failed</value>
     </data>
+    <data name="NewInstancePage_ImportDiagnosticWarningNotificationTitle" xml:space="preserve">
+        <value>Imported with limitations</value>
+    </data>
     <data name="NewInstancePage_IconSavingDangerNotificationTitle" xml:space="preserve">
         <value>Write icon failed</value>
     </data>
@@ -1559,9 +1562,6 @@
     </data>
     <data name="DeployStage_LoadLock" xml:space="preserve">
         <value>Loading version lock...</value>
-    </data>
-    <data name="DeployStage_LoadLaunchPlan" xml:space="preserve">
-        <value>Loading launch plan...</value>
     </data>
     <data name="DeployStage_InstallVanilla" xml:space="preserve">
         <value>Installing vanilla...</value>
