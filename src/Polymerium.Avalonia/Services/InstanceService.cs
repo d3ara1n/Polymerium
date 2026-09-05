@@ -94,8 +94,7 @@ public class InstanceService
                 _persistenceService.UseAccount(account.Uuid);
                 var profile = _profileManager.GetImmutable(key);
                 var locator = CreateJavaLocator(profile, _configurationService.Value);
-                var deploy = new DeployOptions(profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false),
-                                               false);
+                var deploy = new DeployOptions(false);
                 var launch =
                     new LaunchOptions(additionalArguments:
                                       profile.GetOverride(Profile.OVERRIDE_JAVA_ADDITIONAL_ARGUMENTS,
@@ -125,13 +124,11 @@ public class InstanceService
         }
     }
 
-    public void Deploy(string key, bool? fastMode = null, bool? resolveDependency = null, bool? fullCheckMode = null)
+    public void Deploy(string key, bool? fullCheckMode = null)
     {
         var profile = _profileManager.GetImmutable(key);
-        fastMode ??= profile.GetOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, false);
-        fullCheckMode ??= false;
         var locator = CreateJavaLocator(profile, _configurationService.Value);
-        _instanceManager.Deploy(key, new(fastMode, fullCheckMode), locator);
+        _instanceManager.Deploy(key, new(fullCheckMode), locator);
     }
 
     private static JavaHomeLocatorDelegate CreateJavaLocator(Profile profile, Configuration configuration) =>
