@@ -126,20 +126,24 @@ public class InstanceService
         _instanceManager.Deploy(key, new(fullCheckMode), locator);
     }
 
-    private static JavaHomeLocatorDelegate CreateJavaLocator(Profile profile, Configuration configuration) =>
-        JavaHelper.MakeLocator(major => profile.GetOverride(Profile.OVERRIDE_JAVA_HOME,
-                                                            major switch
-                                                            {
-                                                                8 => configuration.RuntimeJavaHome8,
-                                                                11 => configuration.RuntimeJavaHome11,
-                                                                16 or 17 => configuration.RuntimeJavaHome17,
-                                                                21 => configuration.RuntimeJavaHome21,
-                                                                24 or 25 => configuration.RuntimeJavaHome25,
-                                                                _ => throw new
-                                                                         ArgumentOutOfRangeException(nameof(major),
-                                                                             major,
-                                                                             $"Unsupported java version: {major}")
-                                                            }));
+    private static JavaHomeLocatorDelegate CreateJavaLocator(Profile profile, Configuration configuration)
+    {
+        var instanceJava = profile.GetOverride<string>(Profile.OVERRIDE_JAVA_HOME);
+        if (!string.IsNullOrWhiteSpace(instanceJava))
+        {
+            return JavaHelper.MakeForcedLocator(instanceJava);
+        }
+
+        return JavaHelper.MakeLocator(major => major switch
+        {
+            8 => configuration.RuntimeJavaHome8,
+            11 => configuration.RuntimeJavaHome11,
+            16 or 17 => configuration.RuntimeJavaHome17,
+            21 => configuration.RuntimeJavaHome21,
+            24 or 25 => configuration.RuntimeJavaHome25,
+            _ => null
+        });
+    }
 
     public void Play(string key)
     {

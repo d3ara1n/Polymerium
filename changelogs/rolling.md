@@ -8,6 +8,8 @@
 ### Fixed
 
 - Fix modpack installation and update failures losing existing files
+- Fix instance Java overrides being rejected when their major is outside metadata requirements
+- Fix launch metadata with unrecognized traits being rejected during import
 - Fix the check integrity action not performing a full validation pass
 - Fix bundled Java runtime metadata being discarded on every deployment and refetched
 - Fix update checks and downloads on the GitHub update channel ignoring the network proxy settings
