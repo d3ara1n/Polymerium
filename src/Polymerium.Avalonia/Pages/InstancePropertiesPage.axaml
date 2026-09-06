@@ -252,29 +252,6 @@
         <!--     </app:SettingsEntryItem> -->
         <!-- </app:SettingsEntry> -->
         <!-- <husk:Divider /> -->
-        <app:SettingsEntry
-            Title="{Translate {x:Static app:LanguageManager+Keys.InstancePropertiesPage_BehaviorsTitle}}"
-            Icon="Handshake"
-            Summary="{Translate {x:Static app:LanguageManager+Keys.InstancePropertiesPage_BehaviorsSubtitle}}">
-            <!-- <app:SettingsEntryItem Header="[Experimental] Deployment Method"> -->
-            <!--     <StackPanel Spacing="8"> -->
-            <!--         <ComboBox SelectedIndex="0" IsEnabled="False"> -->
-            <!--             <ComboBoxItem Content="Auto" /> -->
-            <!--         </ComboBox> -->
-            <!--     </StackPanel> -->
-            <!-- </app:SettingsEntryItem> -->
-            <app:SettingsEntryItem
-                Header="{Translate {x:Static app:LanguageManager+Keys.InstancePropertiesPage_FastLaunchLabelText}}"
-                Orientation="Vertical">
-                <StackPanel Spacing="8">
-                    <husk:InfoBar Content="{Translate {x:Static app:LanguageManager+Keys.InstancePropertiesPage_FastLaunchPrompt}}" />
-                    <ToggleSwitch
-                        IsChecked="{Binding BehaviorDeployFastMode, Mode=TwoWay}"
-                        OffContent="{Translate {x:Static app:LanguageManager+Keys.Enum_Off}}"
-                        OnContent="{Translate {x:Static app:LanguageManager+Keys.InstancePropertiesPage_FastLaunchOnText}}" />
-                </StackPanel>
-            </app:SettingsEntryItem>
-        </app:SettingsEntry>
         <husk:BusyContainer
             Background="Transparent"
             IsBusy="{Binding State, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=Idle, FallbackValue=False}">

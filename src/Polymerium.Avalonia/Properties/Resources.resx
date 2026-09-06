@@ -297,18 +297,6 @@
     <data name="InstancePropertiesPage_WindowHeightLabelText" xml:space="preserve">
         <value>Height</value>
     </data>
-    <data name="InstancePropertiesPage_BehaviorsTitle" xml:space="preserve">
-        <value>Behaviors</value>
-    </data>
-    <data name="InstancePropertiesPage_BehaviorsSubtitle" xml:space="preserve">
-        <value>How the application acts and chooses strategies</value>
-    </data>
-    <data name="InstancePropertiesPage_FastLaunchLabelText" xml:space="preserve">
-        <value>Fast Launch</value>
-    </data>
-    <data name="InstancePropertiesPage_FastLaunchPrompt" xml:space="preserve">
-        <value>Skip the asset and file validation process if the instance is already built and launch the game directly. May lead to crash if the assets are corrupted.</value>
-    </data>
     <data name="InstancePropertiesPage_DangerZoneTitle" xml:space="preserve">
         <value>Danger Zone</value>
     </data>
@@ -1499,9 +1487,6 @@
     </data>
     <data name="Enum_Off" xml:space="preserve">
         <value>Off</value>
-    </data>
-    <data name="InstancePropertiesPage_FastLaunchOnText" xml:space="preserve">
-        <value>I'm in a hurry</value>
     </data>
     <data name="Enum_Vanilla" xml:space="preserve">
         <value>Vanilla</value>

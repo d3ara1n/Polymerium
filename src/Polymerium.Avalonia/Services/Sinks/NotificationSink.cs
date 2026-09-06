@@ -2,7 +2,6 @@ using System;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Huskui.Avalonia.Models;
-using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Tasks;
@@ -12,8 +11,9 @@ using TridentCore.Core.Services.Instances;
 namespace Polymerium.Avalonia.Services.Sinks;
 
 /// <summary>
-///     订阅 <see cref="InstanceStateAggregator" />，在 tracker 完成时发通知（成功/失败/取消）。
-///     不处理 ProcessFaultedException 的崩溃诊断（由 <see cref="CrashDiagnosisSink" /> 负责）。
+///     订阅 <see cref="InstanceStateAggregator" />，在活动完成时发通知（成功/失败）。
+///     取消不发通知；<see cref="ProcessFaultedException" /> 的崩溃诊断由
+///     <see cref="CrashDiagnosisSink" /> 负责。
 /// </summary>
 public class NotificationSink(
     InstanceStateAggregator aggregator,
@@ -35,30 +35,30 @@ public class NotificationSink(
             }
         });
 
-    private void HandleCompleted(InstanceStateSnapshot snapshot)
+    private void HandleCompleted(InstanceActivity activity)
     {
-        switch (snapshot.Tracker)
+        switch (activity)
         {
-            case InstallTracker install:
+            case InstanceActivity.Installing install:
                 HandleInstallCompleted(install);
                 break;
-            case UpdateTracker update:
+            case InstanceActivity.Updating update:
                 HandleUpdateCompleted(update);
                 break;
-            case DeployTracker deploy:
+            case InstanceActivity.Deploying deploy:
                 HandleDeployCompleted(deploy);
                 break;
-            case LaunchTracker launch:
-                HandleLaunchCompleted(launch);
+            case InstanceActivity.Running running:
+                HandleLaunchCompleted(running);
                 break;
         }
     }
 
-    private void HandleInstallCompleted(InstallTracker tracker)
+    private void HandleInstallCompleted(InstanceActivity.Installing tracker)
     {
         switch (tracker.State)
         {
-            case TrackerState.Finished:
+            case ActivityState.Finished:
                 notificationService.PopMessage(LanguageManager.Instance.MainWindow_InstanceInstallingSuccessNotificationMessage.Current(),
                                                tracker.Key,
                                                GrowlLevel.Success,
@@ -69,7 +69,7 @@ public class NotificationSink(
                                                                                    .Navigate<InstancePage>(tracker
                                                                                        .Key))));
                 break;
-            case TrackerState.Faulted when tracker.FailureReason is not OperationCanceledException:
+            case ActivityState.Faulted:
                 notificationService.PopMessage(tracker.FailureReason,
                                                LanguageManager.Instance.MainWindow_InstanceInstallingDangerNotificationTitle.Current()
                                                         .Replace("{0}", tracker.Key),
@@ -78,11 +78,11 @@ public class NotificationSink(
         }
     }
 
-    private void HandleUpdateCompleted(UpdateTracker tracker)
+    private void HandleUpdateCompleted(InstanceActivity.Updating tracker)
     {
         switch (tracker.State)
         {
-            case TrackerState.Finished:
+            case ActivityState.Finished:
                 notificationService.PopMessage(LanguageManager.Instance.MainWindow_InstanceUpdatingSuccessNotificationMessage.Current(),
                                                tracker.Key,
                                                GrowlLevel.Success,
@@ -93,7 +93,7 @@ public class NotificationSink(
                                                                                    .Navigate<InstancePage>(tracker
                                                                                        .Key))));
                 break;
-            case TrackerState.Faulted when tracker.FailureReason is not OperationCanceledException:
+            case ActivityState.Faulted:
                 notificationService.PopMessage(tracker.FailureReason,
                                                LanguageManager.Instance.MainWindow_InstanceUpdatingDangerNotificationTitle.Current()
                                                         .Replace("{0}", tracker.Key),
@@ -102,17 +102,17 @@ public class NotificationSink(
         }
     }
 
-    private void HandleDeployCompleted(DeployTracker tracker)
+    private void HandleDeployCompleted(InstanceActivity.Deploying tracker)
     {
         switch (tracker.State)
         {
-            case TrackerState.Finished:
+            case ActivityState.Finished:
                 notificationService.PopMessage(LanguageManager.Instance.MainWindow_InstanceDeployingSuccessNotificationMessage.Current(),
                                                tracker.Key,
                                                GrowlLevel.Success,
                                                thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
-            case TrackerState.Faulted when tracker.FailureReason is not OperationCanceledException:
+            case ActivityState.Faulted:
                 var title = LanguageManager.Instance.MainWindow_InstanceDeployingDangerNotificationTitle.Current().Replace("{0}", tracker.Key);
                 if (FindBuildArtifactConflict(tracker.FailureReason) is not null)
                 {
@@ -134,17 +134,17 @@ public class NotificationSink(
         }
     }
 
-    private void HandleLaunchCompleted(LaunchTracker tracker)
+    private void HandleLaunchCompleted(InstanceActivity.Running tracker)
     {
         switch (tracker.State)
         {
-            case TrackerState.Finished:
+            case ActivityState.Finished:
                 notificationService.PopMessage(LanguageManager.Instance.MainWindow_InstanceLaunchingSuccessNotificationMessage.Current(),
                                                tracker.Key,
                                                GrowlLevel.Success,
                                                thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
-            case TrackerState.Faulted when tracker.FailureReason is not OperationCanceledException:
+            case ActivityState.Faulted:
                 // ProcessFaultedException 由 CrashDiagnosisSink 处理。
                 if (IsProcessFaulted(tracker.FailureReason))
                 {

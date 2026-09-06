@@ -1,6 +1,5 @@
 using System;
 using DynamicData;
-using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Tasks;
 using TridentCore.Core.Services.Instances;
@@ -8,7 +7,7 @@ using TridentCore.Core.Services.Instances;
 namespace Polymerium.Avalonia.Services.Sinks;
 
 /// <summary>
-///     订阅 <see cref="InstanceStateAggregator" />，在 tracker 完成时写入
+///     订阅 <see cref="InstanceStateAggregator" />，在活动完成时写入
 ///     <see cref="PersistenceService" /> 的操作记录（Install/Update）和活动记录（Launch）。
 ///     纯数据副作用，不涉及 UI。
 /// </summary>
@@ -26,11 +25,11 @@ public class ActivitySink(InstanceStateAggregator aggregator, PersistenceService
             }
         });
 
-    private void HandleCompleted(InstanceStateSnapshot snapshot)
+    private void HandleCompleted(InstanceActivity activity)
     {
-        switch (snapshot.Tracker)
+        switch (activity)
         {
-            case InstallTracker { State: TrackerState.Finished } install:
+            case InstanceActivity.Installing { State: ActivityState.Finished } install:
                 persistenceService.AppendAction(new()
                 {
                     Key = install.Key,
@@ -38,7 +37,7 @@ public class ActivitySink(InstanceStateAggregator aggregator, PersistenceService
                     New = install.Reference
                 });
                 break;
-            case UpdateTracker { State: TrackerState.Finished } update:
+            case InstanceActivity.Updating { State: ActivityState.Finished } update:
                 persistenceService.AppendAction(new()
                 {
                     Key = update.Key,
@@ -47,14 +46,14 @@ public class ActivitySink(InstanceStateAggregator aggregator, PersistenceService
                     New = update.NewSource
                 });
                 break;
-            case LaunchTracker launch:
+            case InstanceActivity.Running running:
                 persistenceService.AppendActivity(new()
                 {
-                    Key = launch.Key,
-                    AccountId = launch.Options.Account?.Uuid ?? string.Empty,
-                    DieInPeace = launch.State == TrackerState.Finished,
+                    Key = running.Key,
+                    AccountId = running.Options.Account?.Uuid ?? string.Empty,
+                    DieInPeace = running.State == ActivityState.Finished,
                     Begin =
-                        DateTimeHelper.ToPersistedLocalDateTime(launch.StartedAt),
+                        DateTimeHelper.ToPersistedLocalDateTime(running.StartedAt),
                     End = DateTime.Now
                 });
                 break;

@@ -39,14 +39,14 @@ public class CrashDiagnosisSink(
             }
         });
 
-    private void HandleCompleted(InstanceStateSnapshot snapshot)
+    private void HandleCompleted(InstanceActivity activity)
     {
-        if (snapshot.Tracker is not LaunchTracker launcher)
+        if (activity is not InstanceActivity.Running launcher)
         {
             return;
         }
 
-        if (launcher.State != TrackerState.Faulted)
+        if (launcher.State != ActivityState.Faulted)
         {
             return;
         }
@@ -68,14 +68,14 @@ public class CrashDiagnosisSink(
                                        ]);
     }
 
-    private void Diagnose(LaunchTracker tracker)
+    private void Diagnose(InstanceActivity.Running tracker)
     {
         var crashReport = BuildCrashReport(tracker);
         var modal = new GameCrashReportModal { Report = crashReport };
         overlayService.PopModal(modal);
     }
 
-    private CrashReportModel BuildCrashReport(LaunchTracker tracker)
+    private CrashReportModel BuildCrashReport(InstanceActivity.Running tracker)
     {
         var profile = profileManager.TryGetImmutable(tracker.Key, out var p) ? p : null;
         var gameDir = PathDef.Default.DirectoryOfBuild(tracker.Key);

@@ -45,7 +45,6 @@ public partial class InstanceHomePageModel(
     InstanceService instanceService,
     WidgetHostService widgetHostService) : InstancePageModelBase(context, aggregator, instanceManager, profileManager)
 {
-    private CompositeDisposable? _subscription;
     private IDisposable? _timerSubscription;
 
     #region Other
@@ -62,9 +61,9 @@ public partial class InstanceHomePageModel(
     internal void ViewForTimerLaunch()
     {
         _timerSubscription?.Dispose();
-        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch)
+        if (InstanceManager.ActivityOf(Basic.Key) is InstanceActivity.Running running)
         {
-            var start = DateTimeOffset.Now - launch.StartedAt;
+            var start = DateTimeOffset.Now - running.StartedAt;
             _timerSubscription = Observable
                                 .Interval(TimeSpan.FromSeconds(1))
                                 .Subscribe(x => TimerCount = start + TimeSpan.FromSeconds(x));
@@ -106,7 +105,6 @@ public partial class InstanceHomePageModel(
 
     protected override Task OnDeinitializeAsync()
     {
-        _subscription?.Dispose();
         _timerSubscription?.Dispose();
 
         PinnedWidgets.Clear();
@@ -131,40 +129,50 @@ public partial class InstanceHomePageModel(
 
     #region Tracking
 
-    protected override void OnInstanceDeploying(DeployTracker tracker)
+    protected override void OnActivityStarted(InstanceActivity activity)
     {
-        base.OnInstanceDeploying(tracker);
-        _subscription?.Dispose();
-        _subscription = new();
-        DeployingMessage = tracker.CurrentStage;
-        tracker
-           .ProgressStream.Sample(TimeSpan.FromSeconds(1))
-           .Subscribe(x =>
-            {
-                DeployingProgress = (double)x.Current / x.Total;
-                DeployingProgressCurrent = x.Current;
-                DeployingProgressTotal = x.Total;
-                HasDeployingFileCount = true;
-                DeployingPending = false;
-            })
-           .DisposeWith(tracker)
-           .DisposeWith(_subscription);
-        tracker
-           .StageStream.Subscribe(stage =>
-            {
-                DeployingMessage = stage;
-                DeployingPending = true;
-                HasDeployingFileCount = false;
-            })
-           .DisposeWith(tracker)
-           .DisposeWith(_subscription);
+        base.OnActivityStarted(activity);
+        ApplyDeploying(activity);
     }
 
-    protected override void OnInstanceLaunched(LaunchTracker tracker)
+    protected override void OnActivityProgressed(InstanceActivity activity)
     {
-        base.OnInstanceLaunched(tracker);
+        base.OnActivityProgressed(activity);
+        ApplyDeploying(activity);
+    }
 
-        UpdateTime(Basic.Key);
+    protected override void OnActivityCompleted(InstanceActivity activity)
+    {
+        base.OnActivityCompleted(activity);
+
+        if (activity is InstanceActivity.Running)
+        {
+            UpdateTime(Basic.Key);
+        }
+    }
+
+    // 每帧快照都自带阶段与文件计数，直接读即可，无需分别订阅两条流再合并。
+    private void ApplyDeploying(InstanceActivity activity)
+    {
+        if (activity is not InstanceActivity.Deploying deploying)
+        {
+            return;
+        }
+
+        DeployingMessage = deploying.CurrentStage;
+        if (deploying.FileCount is { Total: > 0 } count)
+        {
+            DeployingProgress = (double)count.Current / count.Total;
+            DeployingProgressCurrent = count.Current;
+            DeployingProgressTotal = count.Total;
+            HasDeployingFileCount = true;
+            DeployingPending = false;
+        }
+        else
+        {
+            HasDeployingFileCount = false;
+            DeployingPending = true;
+        }
     }
 
     #endregion
@@ -239,28 +247,21 @@ public partial class InstanceHomePageModel(
     [RelayCommand]
     private void Abort()
     {
-        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is DeployTracker)
+        if (InstanceManager.ActivityOf(Basic.Key) is InstanceActivity.Deploying)
         {
-            tracker.Abort();
+            InstanceManager.Abort(Basic.Key);
         }
     }
 
     [RelayCommand]
-    private void Eject()
-    {
-        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker launch)
-        {
-            launch.IsDetaching = true;
-            tracker.Abort();
-        }
-    }
+    private void Eject() => InstanceManager.Detach(Basic.Key);
 
     [RelayCommand]
     private void Stop()
     {
-        if (InstanceManager.IsTracking(Basic.Key, out var tracker) && tracker is LaunchTracker)
+        if (InstanceManager.ActivityOf(Basic.Key) is InstanceActivity.Running)
         {
-            tracker.Abort();
+            InstanceManager.Abort(Basic.Key);
         }
     }
 

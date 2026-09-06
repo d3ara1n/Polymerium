@@ -288,18 +288,6 @@
     <data name="InstancePropertiesPage_WindowWidthLabelText" xml:space="preserve">
         <value>宽度</value>
     </data>
-    <data name="InstancePropertiesPage_BehaviorsTitle" xml:space="preserve">
-        <value>行为</value>
-    </data>
-    <data name="InstancePropertiesPage_BehaviorsSubtitle" xml:space="preserve">
-        <value>程序会根据这些设置选择对应策略</value>
-    </data>
-    <data name="InstancePropertiesPage_FastLaunchLabelText" xml:space="preserve">
-        <value>快速启动</value>
-    </data>
-    <data name="InstancePropertiesPage_FastLaunchPrompt" xml:space="preserve">
-        <value>当成功部署过一次实例后且未检测到文件清单修改时将跳过还原步骤。可能会导致游戏缺少文件。</value>
-    </data>
     <data name="InstancePropertiesPage_DangerZoneTitle" xml:space="preserve">
         <value>危险操作</value>
     </data>
@@ -1490,9 +1478,6 @@
     </data>
     <data name="Enum_On" xml:space="preserve">
         <value>开</value>
-    </data>
-    <data name="InstancePropertiesPage_FastLaunchOnText" xml:space="preserve">
-        <value>我很急啊</value>
     </data>
     <data name="Enum_Vanilla" xml:space="preserve">
         <value>原版</value>

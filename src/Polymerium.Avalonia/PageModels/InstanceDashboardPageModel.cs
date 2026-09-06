@@ -34,58 +34,64 @@ public partial class InstanceDashboardPageModel(
 {
     #region Instance State
 
-    protected override void OnInstanceLaunching(LaunchTracker tracker)
+    protected override void OnActivityStarted(InstanceActivity activity)
     {
-        CallCleanup();
+        base.OnActivityStarted(activity);
 
-        if (tracker.Process is { } process)
+        if (activity is not InstanceActivity.Running running)
         {
-            StartMonitoring(process);
-            Dispatcher.UIThread.Post(() => MemoryAssigned = tracker.Options.MaxMemory);
-        }
-        else
-        {
-            tracker.ProcessAssigned += OnProcessAssigned;
+            return;
         }
 
-        tracker.StateUpdated += OnStateUpdated;
-
-        _callbackCleanup = () =>
-        {
-            tracker.ProcessAssigned -= OnProcessAssigned;
-            tracker.StateUpdated -= OnStateUpdated;
-            StopMonitoring();
-        };
-
+        StopMonitoring();
         IsOnAir = true;
+        AttachProcess(running);
         Dispatcher.UIThread.Post(() => UpdateLogSource(SelectedSource));
-        return;
+    }
 
-        void OnProcessAssigned(object? sender, Process got)
+    protected override void OnActivityProgressed(InstanceActivity activity)
+    {
+        base.OnActivityProgressed(activity);
+
+        // 进程句柄在启动后的某一帧才出现，每帧都试接一次（已接上则为空操作）。
+        if (activity is InstanceActivity.Running running)
         {
-            tracker.ProcessAssigned -= OnProcessAssigned;
-            StartMonitoring(got);
-            Dispatcher.UIThread.Post(() => MemoryAssigned = tracker.Options.MaxMemory);
+            AttachProcess(running);
+        }
+    }
+
+    protected override void OnActivityCompleted(InstanceActivity activity)
+    {
+        base.OnActivityCompleted(activity);
+
+        if (activity is not InstanceActivity.Running)
+        {
+            return;
         }
 
-        void OnStateUpdated(TrackerBase _, TrackerState state)
+        IsOnAir = false;
+        StopMonitoring();
+        Dispatcher.UIThread.Post(() =>
         {
-            if (state is TrackerState.Faulted or TrackerState.Finished)
+            UpdateLogSource(SelectedSource);
+            SessionCount++;
+            if (activity.State is ActivityState.Faulted)
             {
-                CallCleanup();
-                IsOnAir = false;
-                StopMonitoring();
-                Dispatcher.UIThread.Post(() =>
-                {
-                    UpdateLogSource(SelectedSource);
-                    SessionCount++;
-                    if (state is TrackerState.Faulted)
-                    {
-                        CrashCount++;
-                    }
-                });
+                CrashCount++;
             }
+        });
+    }
+
+    private void AttachProcess(InstanceActivity.Running running)
+    {
+        if (running.Process is not { } process || _monitoringTokenSource is not null)
+        {
+            return;
         }
+
+        StartMonitoring(process);
+        var memory = running.Options.MaxMemory;
+        Dispatcher.UIThread.Post(() => MemoryAssigned = memory);
     }
 
     #endregion
@@ -159,8 +165,6 @@ public partial class InstanceDashboardPageModel(
 
     private CancellationTokenSource? _monitoringTokenSource;
 
-    private Action? _callbackCleanup;
-
     #endregion
 
     #region Overrides
@@ -179,7 +183,7 @@ public partial class InstanceDashboardPageModel(
     protected override Task OnDeinitializeAsync()
     {
         _isDisposed = true;
-        CallCleanup();
+        StopMonitoring();
         FilteredLogCollection?.Dispose();
         FilteredLogCollection = null;
         _collectionView?.Dispose();
@@ -337,12 +341,6 @@ public partial class InstanceDashboardPageModel(
     #endregion
 
     #region Other: Metrics
-
-    private void CallCleanup()
-    {
-        _callbackCleanup?.Invoke();
-        _callbackCleanup = null;
-    }
 
     private void StartMonitoring(Process process)
     {
