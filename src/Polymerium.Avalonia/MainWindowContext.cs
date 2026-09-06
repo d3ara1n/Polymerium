@@ -168,24 +168,24 @@ public partial class MainWindowContext : ObservableObject
     }
 
     [RelayCommand]
-    private Task ViewLog(LaunchTracker? tracker)
+    private Task ViewLog(InstanceActivity.Running? activity)
     {
-        if (tracker != null)
+        if (activity != null)
         {
-            var path = Path.Combine(PathDef.Default.DirectoryOfBuild(tracker.Key), "logs", "latest.log");
+            var path = Path.Combine(PathDef.Default.DirectoryOfBuild(activity.Key), "logs", "latest.log");
             if (File.Exists(path))
             {
                 return TopLevelHelper.LaunchFileInfoAsync(TopLevelHelper.GetTopLevel(),
                                                           new(path),
                                                           LanguageManager.Instance.Shared_FailedToOpenLogFileDangerNotificationTitle.Current(),
                                                           _notificationService,
-                                                          thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
+                                                          thumbnail: ThumbnailHelper.ForInstance(activity.Key));
             }
 
             _notificationService.PopMessage(LanguageManager.Instance.MainWindow_LogFileNotFoundWarningNotificationMessage.Current(),
                                             LanguageManager.Instance.Shared_FailedToOpenLogFileDangerNotificationTitle.Current(),
                                             GrowlLevel.Warning,
-                                            thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
+                                            thumbnail: ThumbnailHelper.ForInstance(activity.Key));
         }
 
         return Task.CompletedTask;
@@ -325,7 +325,14 @@ public partial class MainWindowContext : ObservableObject
         _entries.AddOrUpdate(list);
     }
 
-    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
+    private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e)
+    {
+        var defaultAccount = _persistenceService.GetDefaultAccount();
+        if (defaultAccount != null)
+        {
+            _persistenceService.SetAccountSelector(e.Key, defaultAccount.Uuid);
+        }
+
         Dispatcher.UIThread.Post(() =>
         {
             InstanceEntryModel entry;
@@ -345,14 +352,8 @@ public partial class MainWindowContext : ObservableObject
             }
 
             AddRecent(e.Key, entry);
-
-            var defaultAccount = _persistenceService.GetDefaultAccount();
-            if (defaultAccount != null)
-            {
-                var cooked = AccountHelper.ToCooked(defaultAccount);
-                _persistenceService.SetAccountSelector(e.Key, cooked.Uuid);
-            }
         });
+    }
 
     private void OnProfileUpdated(object? sender, ProfileManager.ProfileChangedEventArgs e) =>
         Dispatcher.UIThread.Post(() =>
@@ -403,54 +404,49 @@ public partial class MainWindowContext : ObservableObject
             })
            .DisposeWith(_disposables);
 
-    private void HandleSnapshotUpdate(InstanceStateSnapshot snapshot)
-    {
-        if (_entries.Lookup(snapshot.Key) is { HasValue: true, Value: var model })
+    // NOTE: 活动值投递到 UI 线程后仍然有效（不可变），故查询与变更整体搬到 UI 线程：
+    //  _entries 的读写因此同在一个线程，不会在“查完到改完”之间被另一条变更插进来。
+    private void HandleSnapshotUpdate(InstanceActivity activity) =>
+        Dispatcher.UIThread.Post(() =>
         {
-            Dispatcher.UIThread.Post(() =>
+            if (_entries.Lookup(activity.Key) is { HasValue: true, Value: var model })
             {
-                model.State = snapshot.State;
-                model.IsPending = snapshot.Progress is TrackerProgress.Indeterminate;
-                model.Progress = snapshot.Progress is TrackerProgress.Determinate d ? d.Percent : 0d;
-            });
-        }
-        else if (snapshot.State != InstanceState.Idle)
-        {
-            // NOTE: 从 InstancesPage 启动的未 pin/非 recent 实例，状态必须可见，拉进 _entries。
-            InstanceEntryModel entry = _profileManager.TryGetImmutable(snapshot.Key, out var profile)
-                                           ? new(snapshot.Key,
+                model.State = activity.Kind;
+                model.IsPending = activity.Progress is ActivityProgress.Indeterminate;
+                model.Progress = activity.Progress is ActivityProgress.Determinate d ? d.Percent : 0d;
+                return;
+            }
+
+            // 从 InstancesPage 启动的未 pin/非 recent 实例，状态必须可见，拉进 _entries。
+            InstanceEntryModel entry = _profileManager.TryGetImmutable(activity.Key, out var profile)
+                                           ? new(activity.Key,
                                                  profile.Name,
                                                  profile.Setup.Version,
                                                  profile.Setup.Loader,
                                                  profile.Setup.Source)
-                                           : new(snapshot.Key, snapshot.Key, "N/A", null, null);
+                                           : new(activity.Key, activity.Key, "N/A", null, null);
+            entry.State = activity.Kind;
+            entry.IsPending = activity.Progress is ActivityProgress.Indeterminate;
+            entry.Progress = activity.Progress is ActivityProgress.Determinate progress ? progress.Percent : 0d;
+            _entries.AddOrUpdate(entry);
+        });
 
-            Dispatcher.UIThread.Post(() =>
-            {
-                entry.State = snapshot.State;
-                entry.IsPending = snapshot.Progress is TrackerProgress.Indeterminate;
-                entry.Progress = snapshot.Progress is TrackerProgress.Determinate d ? d.Percent : 0d;
-                _entries.AddOrUpdate(entry);
-            });
-        }
-    }
-
-    private void HandleSnapshotRemove(InstanceStateSnapshot snapshot)
-    {
-        if (_entries.Lookup(snapshot.Key) is { HasValue: true, Value: var model })
+    private void HandleSnapshotRemove(InstanceActivity activity) =>
+        Dispatcher.UIThread.Post(() =>
         {
-            Dispatcher.UIThread.Post(() =>
+            if (_entries.Lookup(activity.Key) is not { HasValue: true, Value: var model })
             {
-                model.State = InstanceState.Idle;
-                model.IsPending = false;
-                model.Progress = 0d;
-                if (!ShouldShow(model))
-                {
-                    _entries.Remove(model);
-                }
-            });
-        }
-    }
+                return;
+            }
+
+            model.State = InstanceState.Idle;
+            model.IsPending = false;
+            model.Progress = 0d;
+            if (!ShouldShow(model))
+            {
+                _entries.Remove(model);
+            }
+        });
 
     private void OnPinnedChanged(IChangeSet<string, string> change) =>
         Dispatcher.UIThread.Post(() =>

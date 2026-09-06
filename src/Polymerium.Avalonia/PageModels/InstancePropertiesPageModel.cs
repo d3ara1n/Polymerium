@@ -60,16 +60,6 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         return string.Empty;
     }
 
-    private bool AccessOverrideBoolean(string key)
-    {
-        if (_owned != null && _owned.Value.Overrides.TryGetValue(key, out var result) && result is bool rv)
-        {
-            return rv;
-        }
-
-        return false;
-    }
-
     private void WriteOverride(string key, object? value)
     {
         if (_owned == null)
@@ -153,7 +143,6 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         WindowInitialHeightWatermark = _configurationService.Value.GameWindowInitialHeight.ToString();
         WindowInitialWidthOverride = AccessOverrideString(Profile.OVERRIDE_WINDOW_WIDTH);
         WindowInitialWidthWatermark = _configurationService.Value.GameWindowInitialWidth.ToString();
-        BehaviorDeployFastMode = AccessOverrideBoolean(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE);
         QuickConnectAddressOverride = AccessOverrideString(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER);
         QuickConnectAddressWatermark = LanguageManager.Instance.InstancePropertiesPage_QuickConnectPlaceholder.Current();
 
@@ -217,7 +206,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     }
 
     [RelayCommand]
-    private void CheckIntegrity() => _instanceService.Deploy(Basic.Key, false, true);
+    private void CheckIntegrity() => _instanceService.Deploy(Basic.Key, true);
 
     [RelayCommand]
     private Task ResetInstanceAsync() => _instanceService.ResetAsync(Basic.Key);
@@ -409,12 +398,6 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
 
     partial void OnQuickConnectAddressOverrideChanged(string value) =>
         WriteOverride(Profile.OVERRIDE_BEHAVIOR_CONNECT_SERVER, !string.IsNullOrEmpty(value) ? value : null);
-
-    [ObservableProperty]
-    public partial bool BehaviorDeployFastMode { get; set; }
-
-    partial void OnBehaviorDeployFastModeChanged(bool value) =>
-        WriteOverride(Profile.OVERRIDE_BEHAVIOR_DEPLOY_FASTMODE, value);
 
     #endregion
 }

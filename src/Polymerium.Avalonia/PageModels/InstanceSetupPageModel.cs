@@ -41,6 +41,7 @@ using TridentCore.Abstractions.Extensions;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
+using TridentCore.Abstractions.Tasks;
 using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Engines.Deploying;
 using TridentCore.Core.Services;
@@ -498,7 +499,6 @@ public partial class InstanceSetupPageModel(
     private CancellationTokenSource? _pageCancellationTokenSource;
     private readonly SourceCache<PackageListItemBase, PackageListKey> _flat = new(x => x.Key);
     private Task _metadataTask = Task.CompletedTask;
-    private IDisposable? _updatingSubscription;
     private readonly CompositeDisposable _subscriptions = new();
     private readonly Dictionary<(PackageSourceHelper.Kind Kind, string? Source), GroupModel> _groupModels = new();
     private readonly LooseGroupModel _loose = new() { Kind = PackageSourceHelper.Kind.Manual, Source = null };
@@ -643,8 +643,15 @@ public partial class InstanceSetupPageModel(
 
     #region Instance State
 
-    protected override void OnInstanceUpdating(UpdateTracker tracker)
+    protected override void OnActivityStarted(InstanceActivity activity)
     {
+        base.OnActivityStarted(activity);
+
+        if (activity is not InstanceActivity.Updating)
+        {
+            return;
+        }
+
         if (_pageCancellationTokenSource is null)
         {
             return;
@@ -654,32 +661,33 @@ public partial class InstanceSetupPageModel(
         _pageCancellationTokenSource.Cancel();
         _pageCancellationTokenSource.Dispose();
         _pageCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_lifetimeToken!.Value);
-        TrackUpdateProgress(tracker);
-        base.OnInstanceUpdating(tracker);
+        ApplyUpdateProgress(activity);
     }
 
-    protected override void OnInstanceUpdated(UpdateTracker tracker)
+    protected override void OnActivityProgressed(InstanceActivity activity)
     {
-        _updatingSubscription?.Dispose();
-        if (_pageCancellationTokenSource is null || _pageCancellationTokenSource.IsCancellationRequested)
+        base.OnActivityProgressed(activity);
+        ApplyUpdateProgress(activity);
+    }
+
+    private void ApplyUpdateProgress(InstanceActivity activity)
+    {
+        if (activity is not InstanceActivity.Updating)
         {
             return;
         }
 
-        base.OnInstanceUpdated(tracker);
-    }
-
-    private void TrackUpdateProgress(UpdateTracker update)
-    {
-        _updatingSubscription?.Dispose();
-        _updatingSubscription = update
-                               .ProgressStream.Sample(TimeSpan.FromSeconds(1))
-                               .Subscribe(x =>
-                                {
-                                    UpdatingProgress = x ?? 0d;
-                                    UpdatingPending = !x.HasValue;
-                                })
-                               .DisposeWith(update);
+        switch (activity.Progress)
+        {
+            case ActivityProgress.Determinate determinate:
+                UpdatingProgress = determinate.Percent;
+                UpdatingPending = false;
+                break;
+            default:
+                UpdatingProgress = 0d;
+                UpdatingPending = true;
+                break;
+        }
     }
 
     #endregion
