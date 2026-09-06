@@ -2,11 +2,12 @@
 
 ### ✨ Highlights ✨
 
-- Add optional external launch plans that customize Minecraft startup configuration and remain part of instance imports and snapshots
+- Add native launch definitions that preserve modpack startup requirements and support separate user customizations
 - Add drag-and-drop group reordering and quick package assignment to collections on the instance setup page (#POLY-148, #POLY-141)
 
 ### Fixed
 
+- Fix modpack installation and update failures losing existing files
 - Fix the check integrity action not performing a full validation pass
 - Fix bundled Java runtime metadata being discarded on every deployment and refetched
 - Fix update checks and downloads on the GitHub update channel ignoring the network proxy settings
@@ -18,7 +19,7 @@
 
 ### Added
 
-- Add optional external launch plans that customize Minecraft startup configuration and remain part of instance imports and snapshots (#92, #POLY-165)
+- Add native launch definitions that preserve modpack startup requirements and support separate user customizations (#92, #POLY-165)
 - Add drag-and-drop group reordering and quick package assignment to collections on the instance setup page (#POLY-148, #POLY-141)
 
 ### Changed

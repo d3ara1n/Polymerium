@@ -9,6 +9,8 @@ This glossary defines the canonical user-facing terms for Polymerium. Use these 
 | Polymerium launcher / instance manager | Polymerium 启动器 | The application. The product is positioned as an instance manager — its scope is broader than launching the game — but "launcher" is the market-facing category name because it is what users immediately recognize. Use "launcher" when naming the product category; "instance manager" remains accurate when describing the product's actual scope. |
 | instance | 实例 | A Minecraft environment managed by Polymerium, including its profile and managed directories. |
 | profile / instance profile | 配置 / 实例配置 | The metadata that defines an instance, such as the Minecraft version, loader, packages, and rules. Use "profile" for this representation, not as a synonym for the whole instance. |
+| launch definition | 启动定义 | An optional ordered selection of components that supply instance startup requirements, stored separately from the ordinary profile. |
+| launch component | 启动组件 | A complete, identified declaration of startup requirements such as dependencies, Java compatibility, arguments, and libraries. |
 | modpack | 整合包 | A distributable collection of game versions, packages, configuration, and other source files. Do not shorten it to "package" when the complete modpack is meant. |
 | package | 包 | A managed reference to content from a resource repository. Packages include mods, resource packs, shader packs, data packs, and worlds; "package" and "mod" are not synonyms. |
 | asset | 资产 | A physical file managed by Polymerium, such as a configuration file, screenshot, log, library, or version file. An asset is not the same concept as a repository package. |

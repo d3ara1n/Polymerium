@@ -1560,14 +1560,11 @@
     <data name="DeployStage_GenerateManifest" xml:space="preserve">
         <value>生成文件清单...</value>
     </data>
-    <data name="DeployStage_InstallVanilla" xml:space="preserve">
-        <value>安装原版...</value>
+    <data name="DeployStage_ResolveComponents" xml:space="preserve">
+        <value>解析启动组件...</value>
     </data>
-    <data name="DeployStage_ProcessLoader" xml:space="preserve">
-        <value>安装模组加载器...</value>
-    </data>
-    <data name="DeployStage_ResolveLaunchPlan" xml:space="preserve">
-        <value>解析启动计划...</value>
+    <data name="DeployStage_CompileLaunch" xml:space="preserve">
+        <value>准备启动配置...</value>
     </data>
     <data name="DeployStage_SyncPackages" xml:space="preserve">
         <value>同步包...</value>

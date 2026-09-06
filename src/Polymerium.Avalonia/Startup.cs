@@ -138,6 +138,7 @@ public static class Startup
            .AddSingleton<ImporterAgent>()
            .AddSingleton<ExporterAgent>()
            .AddSingleton<MigratorAgent>()
+           .AddSingleton<InstanceModpackService>()
            .AddSingleton<InstanceManager>()
            .AddSingleton<InstanceStateAggregator>()
            .AddSingleton<ActivitySink>()

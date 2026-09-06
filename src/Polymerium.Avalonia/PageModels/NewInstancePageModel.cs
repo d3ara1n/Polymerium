@@ -31,6 +31,7 @@ public partial class NewInstancePageModel(
     NavigationService navigationService,
     NotificationService notificationService,
     ImporterAgent importerAgent,
+    InstanceModpackService modpacks,
     DataService dataService,
     PersistenceService persistenceService) : ViewModelBase
 {
@@ -76,9 +77,7 @@ public partial class NewInstancePageModel(
             VersionName = container.Profile.Setup.Version;
             DisplayName = container.Profile.Name;
 
-            // 转换丢弃的内容（如 jar mod、traits）不阻止导入，但必须让用户看到，
-            // 否则他们只会在游戏表现异常时发现实例与整合包不一致。
-            if (container.LaunchPlanDiagnostics is { Count: > 0 } diagnostics)
+            if (container.LaunchDiagnostics is { Count: > 0 } diagnostics)
             {
                 notificationService.PopMessage(string.Join(Environment.NewLine, diagnostics.Select(x => x.Message)),
                                                LanguageManager
@@ -131,60 +130,56 @@ public partial class NewInstancePageModel(
     [RelayCommand]
     private async Task CreateAsync()
     {
-        var key = profileManager.RequestKey(DisplayName);
-
-        Profile profile;
-        if (ImportedPack != null)
-        {
-            profile = ImportedPack.Container.Profile;
-            profile.Name = DisplayName;
-            await Task.Run(async () => await importerAgent.ExtractFilesAsync(key.Key,
-                                                                             ImportedPack.Container,
-                                                                             ImportedPack.Pack));
-        }
-        else
-        {
-            profile = new()
-            {
-                Name = DisplayName,
-                Setup = new() { Loader = null, Version = VersionName, Source = null }
-            };
-        }
-
+        using var key = profileManager.RequestKey(DisplayName);
+        var imported = ImportedPack;
+        var attachments = new Dictionary<string, byte[]>();
         if (Thumbnail != null)
         {
             try
             {
                 using var stream = new MemoryStream();
                 Thumbnail.Save(stream, new PngBitmapEncoderOptions());
-                stream.Position = 0;
-                var extension = FileHelper.GuessBitmapExtension(stream);
-                var iconPath = PathDef.Default.FileOfIcon(key.Key, extension);
-                stream.Position = 0;
-                var parent = Path.GetDirectoryName(iconPath);
-                if (parent != null && !Directory.Exists(parent))
-                {
-                    Directory.CreateDirectory(parent);
-                }
-
-                await using var writer = new FileStream(iconPath, FileMode.Create, FileAccess.Write);
-                await stream.CopyToAsync(writer);
-                await writer.FlushAsync();
+                attachments.Add("icon.png", stream.ToArray());
             }
             catch (Exception ex)
             {
-                Dispatcher.UIThread.Post(() => notificationService.PopMessage(ex,
-                                                                              LanguageManager.Instance.NewInstancePage_IconSavingDangerNotificationTitle.Current()));
+                notificationService.PopMessage(ex, LanguageManager.Instance.NewInstancePage_IconSavingDangerNotificationTitle.Current());
             }
         }
 
-        profileManager.Add(key, profile);
+        if (imported != null)
+        {
+            imported.Container.Profile.Name = DisplayName;
+            await Task.Run(() => modpacks.InstallAsync(key, imported.Pack, imported.Container, CancellationToken.None, attachments));
+        }
+        else
+        {
+            var profile = new Profile
+            {
+                Name = DisplayName,
+                Setup = new() { Loader = null, Version = VersionName, Source = null }
+            };
+            foreach (var (name, bytes) in attachments)
+            {
+                try
+                {
+                    var home = PathDef.Default.DirectoryOfHome(key.Key);
+                    Directory.CreateDirectory(home);
+                    await File.WriteAllBytesAsync(Path.Combine(home, name), bytes);
+                }
+                catch (Exception ex)
+                {
+                    notificationService.PopMessage(ex, LanguageManager.Instance.NewInstancePage_IconSavingDangerNotificationTitle.Current());
+                }
+            }
+            profileManager.Add(key, profile);
+        }
 
         persistenceService.AppendAction(new()
         {
             Key = key.Key,
             Kind = PersistenceService.ActionKind.Install,
-            New = ImportedPack?.Path
+            New = imported?.Path
         });
 
         navigationService.Navigate<InstancePage>(key.Key);
