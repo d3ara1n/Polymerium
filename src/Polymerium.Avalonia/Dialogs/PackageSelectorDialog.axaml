@@ -3,6 +3,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
@@ -14,6 +15,65 @@
     IsPrimaryButtonVisible="True"
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
     mc:Ignorable="d">
+    <husk:Dialog.Resources>
+        <DataTemplate
+            x:Key="GroupInfoBadgeTemplate"
+            x:DataType="app:GroupInfoModelBase">
+            <ContentControl Content="{Binding}">
+                <ContentControl.DataTemplates>
+                    <DataTemplate
+                        DataType="app:ModpackGroupInfoModel"
+                        x:DataType="app:ModpackGroupInfoModel">
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="4">
+                            <Border
+                                Width="14"
+                                Height="14"
+                                ClipToBounds="True"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                <Border.Background>
+                                    <ImageBrush
+                                        async:ImageBrushLoader.Source="{Binding Thumbnail}"
+                                        Stretch="UniformToFill" />
+                                </Border.Background>
+                            </Border>
+                            <TextBlock Text="{Binding Name, FallbackValue=Modpack}" TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
+                    </DataTemplate>
+                    <DataTemplate
+                        DataType="app:RecipeGroupInfoModel"
+                        x:DataType="app:RecipeGroupInfoModel">
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="4">
+                            <fi:SymbolIcon
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Symbol="ListBar" />
+                            <TextBlock Text="{Binding Name, FallbackValue=Recipe}" TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
+                    </DataTemplate>
+                    <DataTemplate
+                        DataType="app:CollectionGroupInfoModel"
+                        x:DataType="app:CollectionGroupInfoModel">
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="4">
+                            <fi:SymbolIcon
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Symbol="Collections" />
+                            <TextBlock Text="{Binding Name, FallbackValue=Collection}" TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ContentControl.DataTemplates>
+            </ContentControl>
+        </DataTemplate>
+    </husk:Dialog.Resources>
     <!--
         作用域划分：搜索条是全局/局部的分界线。
         之上（含 chip、搜索、清空全部）= 全局；之下（全选可见、清除可见、列表）= 局部。
