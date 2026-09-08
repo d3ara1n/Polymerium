@@ -22,6 +22,9 @@ namespace Polymerium.Avalonia;
 
 public class App : Application
 {
+    private static bool _exitConfirmed;
+    private static bool _exitPromptInFlight;
+
     public HuskuiTheme? Theme { get; private set; }
 
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
@@ -82,6 +85,7 @@ public class App : Application
             }
 
             desktop.MainWindow = ConstructWindow();
+            desktop.ShutdownRequested += (_, e) => OnShutdownRequested(desktop, e);
             _ = StartLifetimeServicesAsync(desktop);
         }
 
@@ -153,7 +157,11 @@ public class App : Application
                                      true,
                                      true,
                                      SentryLevel.Fatal));
-            Dispatcher.UIThread.Post(() => desktop.Shutdown(-1));
+            Dispatcher.UIThread.Post(() =>
+            {
+                _exitConfirmed = true;
+                desktop.Shutdown(-1);
+            });
         }
     }
 
@@ -182,6 +190,58 @@ public class App : Application
             window.Activate();
         }
     }
+
+    #region Exit Confirmation
+
+    private static void OnShutdownRequested(IClassicDesktopStyleApplicationLifetime desktop,
+                                            ShutdownRequestedEventArgs e)
+    {
+        if (_exitConfirmed || Program.Services?.GetService<ExitGuardService>() is not { IsBusy: true } guard)
+        {
+            return;
+        }
+
+        e.Cancel = true;
+        if (_exitPromptInFlight)
+        {
+            return;
+        }
+
+        // macOS 关窗后台驻留后 Cmd+Q：重建主窗口以承载确认对话框。
+        if (desktop.MainWindow is not { IsVisible: true })
+        {
+            var window = ConstructWindow();
+            desktop.MainWindow = window;
+            window.Show();
+        }
+
+        _ = RunExitConfirmationAsync(guard, () => desktop.Shutdown());
+    }
+
+    private static async Task RunExitConfirmationAsync(ExitGuardService guard, Action proceed)
+    {
+        if (_exitPromptInFlight)
+        {
+            return;
+        }
+
+        _exitPromptInFlight = true;
+        try
+        {
+            if (await guard.RequestConfirmationAsync())
+            {
+                _exitConfirmed = true;
+                await guard.SettleBusyActivitiesAsync();
+                proceed();
+            }
+        }
+        finally
+        {
+            _exitPromptInFlight = false;
+        }
+    }
+
+    #endregion
 
     internal static Window ConstructWindow()
     {
@@ -232,10 +292,18 @@ public class App : Application
             }
         };
 
-        window.Closing += (_, _) =>
+        window.Closing += (_, e) =>
         {
             configuration.Value.ApplicationWindowWidth = window.Width;
             configuration.Value.ApplicationWindowHeight = window.Height;
+
+            // macOS 关主窗口只是退到后台（任务继续跑），无需确认；其余平台关窗即退出，忙碌时先确认。
+            if (!_exitConfirmed && !OperatingSystem.IsMacOS()
+                && Program.Services?.GetService<ExitGuardService>() is { IsBusy: true } guard)
+            {
+                e.Cancel = true;
+                _ = RunExitConfirmationAsync(guard, window.Close);
+            }
         };
 
         #endregion
