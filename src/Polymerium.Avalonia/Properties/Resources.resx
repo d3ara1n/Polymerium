@@ -3552,6 +3552,15 @@ Affected entries: {0}
     <data name="AccountCreationAuthlib_InsecureServerUrlWarning" xml:space="preserve">
         <value>This server address is not encrypted (HTTP). Your username, password, and session tokens will be transmitted in plaintext and may be intercepted. Proceed only if you accept this risk.</value>
     </data>
+    <data name="App_ExitConfirmTitle" xml:space="preserve">
+        <value>Exit Polymerium?</value>
+    </data>
+    <data name="App_ExitConfirmTaskMessage" xml:space="preserve">
+        <value>{0} instance(s) are deploying, installing, or updating, and exiting will interrupt them.</value>
+    </data>
+    <data name="App_ExitConfirmRunningMessage" xml:space="preserve">
+        <value>{0} instance(s) are running games, and the game processes will keep running after the launcher exits.</value>
+    </data>
     <data name="AppMenu_AboutText" xml:space="preserve">
         <value>About Polymerium</value>
     </data>

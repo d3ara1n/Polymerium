@@ -16,6 +16,7 @@
 
 ### Added
 
+- Add an exit confirmation prompt when closing or quitting the launcher while instances are deploying, installing, updating, or running games
 - Add drag-and-drop group reordering and quick package assignment to collections on the instance setup page (#POLY-148, #POLY-141)
 
 ### Changed

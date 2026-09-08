@@ -142,7 +142,8 @@ public static class Startup
            .AddSingleton<InstanceStateAggregator>()
            .AddSingleton<ActivitySink>()
            .AddSingleton<NotificationSink>()
-           .AddSingleton<CrashDiagnosisSink>();
+           .AddSingleton<CrashDiagnosisSink>()
+           .AddSingleton<ExitGuardService>();
 
         services
            .AddViewModelActivation<SimpleViewActivator>()
