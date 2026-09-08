@@ -3,7 +3,6 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
-    xmlns:controls="clr-namespace:Polymerium.Avalonia.Controls"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:sys="clr-namespace:System;assembly=System.Runtime"
     Title="{Translate {x:Static app:LanguageManager+Keys.FontPickerDialog_Title}}"
@@ -19,7 +18,7 @@
             Padding="3"
             Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
             CornerRadius="{StaticResource MediumCornerRadius}">
-            <controls:FontSelectionPresenter Selection="{Binding $parent[app:FontPickerDialog].Selected}" />
+            <app:FontSelectionPresenter Selection="{Binding $parent[app:FontPickerDialog].Selected}" />
         </Border>
 
         <!--  操作行：用默认 + 选择字体文件  -->
