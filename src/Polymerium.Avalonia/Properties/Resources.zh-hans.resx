@@ -3282,6 +3282,9 @@
     <data name="InstancePage_ImportFileAlreadyExistsDangerNotificationTitle" xml:space="preserve">
     <value>作为实体文件导入失败</value>
   </data>
+    <data name="InstancePage_ImportDangerNotificationTitle" xml:space="preserve">
+    <value>导入失败</value>
+  </data>
     <data name="InstanceStoragePage_OpenFolderDangerNotificationTitle" xml:space="preserve">
     <value>打开 {0} 文件夹失败</value>
   </data>

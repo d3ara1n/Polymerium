@@ -119,7 +119,7 @@ public partial class AccountCreationMicrosoft : AccountCreationStep
     #region Commands
 
     [RelayCommand]
-    private void Retry() => _ = LoadModelAsync();
+    private Task RetryAsync() => LoadModelAsync();
 
     [RelayCommand]
     private async Task CopyAsync()

@@ -193,8 +193,8 @@ public class App : Application
 
     #region Exit Confirmation
 
-    private static void OnShutdownRequested(IClassicDesktopStyleApplicationLifetime desktop,
-                                            ShutdownRequestedEventArgs e)
+    private static async void OnShutdownRequested(IClassicDesktopStyleApplicationLifetime desktop,
+                                                 ShutdownRequestedEventArgs e)
     {
         if (_exitConfirmed || Program.Services?.GetService<ExitGuardService>() is not { IsBusy: true } guard)
         {
@@ -215,7 +215,7 @@ public class App : Application
             window.Show();
         }
 
-        _ = RunExitConfirmationAsync(guard, () => desktop.Shutdown());
+        await RunExitConfirmationAsync(guard, () => desktop.Shutdown());
     }
 
     private static async Task RunExitConfirmationAsync(ExitGuardService guard, Action proceed)
@@ -292,7 +292,7 @@ public class App : Application
             }
         };
 
-        window.Closing += (_, e) =>
+        window.Closing += async (_, e) =>
         {
             configuration.Value.ApplicationWindowWidth = window.Width;
             configuration.Value.ApplicationWindowHeight = window.Height;
@@ -302,7 +302,7 @@ public class App : Application
                 && Program.Services?.GetService<ExitGuardService>() is { IsBusy: true } guard)
             {
                 e.Cancel = true;
-                _ = RunExitConfirmationAsync(guard, window.Close);
+                await RunExitConfirmationAsync(guard, window.Close);
             }
         };
 
