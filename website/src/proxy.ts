@@ -51,6 +51,6 @@ export const config = {
   // Root-level routes and static assets have no locale prefix; they must bypass
   // the i18n redirect or they 307 into /en/<path> and 404.
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon|og/|brand/|screenshots/|llms|robots|sitemap|static.json).*)',
+    '/((?!api|_next/static|_next/image|favicon|og/|brand/|screenshots/|llms|robots|sitemap|static.json|7dbc28eaf0387607124ab7e642b7088d).*)',
   ],
 };

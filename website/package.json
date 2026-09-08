@@ -8,6 +8,7 @@
     "build:post": "node ./scripts/sync-algolia.mjs",
     "dev": "next dev",
     "start": "next start",
+    "notify:indexnow": "node ./scripts/notify-indexnow.mjs",
     "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
     "postinstall": "fumadocs-mdx",
     "lint": "eslint"
