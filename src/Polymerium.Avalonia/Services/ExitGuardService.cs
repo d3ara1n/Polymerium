@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Polymerium.Avalonia.Dialogs;
 using TridentCore.Abstractions;
@@ -62,49 +60,6 @@ public class ExitGuardService(InstanceManager instanceManager, OverlayService ov
         return await overlayService.PopDialogAsync(dialog);
     }
 
-    public async Task SettleBusyActivitiesAsync()
-    {
-        var activities = instanceManager.CurrentActivities;
-        if (activities.Count == 0)
-        {
-            return;
-        }
-
-        // NOTE: IsInUse 是先移除后落终态的，轮询它变 false 不代表终态（及下游同步写入的会话记录）已发生，
-        //  故在触发中止前订阅活动流，等这些 key 的终值本身。
-        var pending = activities.Select(x => x.Key).ToHashSet();
-        var settled = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-        using var subscription = instanceManager.Activities
-           .Where(x => x.IsCompleted && pending.Contains(x.Key))
-           .Subscribe(x =>
-            {
-                pending.Remove(x.Key);
-                if (pending.Count == 0)
-                {
-                    settled.TrySetResult();
-                }
-            });
-
-        // 订阅建立前已自然结束的活动收不到终值，但其终态在订阅前同步发出即已同步落库，无需等待。
-        pending.RemoveWhere(key => !instanceManager.IsInUse(key));
-        if (pending.Count == 0)
-        {
-            return;
-        }
-
-        // NOTE: 运行中的游戏只能 Detach——Abort 会杀掉游戏进程；Detach 后会话记录与进程句柄都正常收尾。
-        foreach (var activity in activities)
-        {
-            if (activity is InstanceActivity.Running)
-            {
-                instanceManager.Detach(activity.Key);
-            }
-            else
-            {
-                instanceManager.Abort(activity.Key);
-            }
-        }
-
-        await Task.WhenAny(settled.Task, Task.Delay(SETTLE_GRACE_PERIOD));
-    }
+    // 终态落地与宽限部由 InstanceManager.SettleAsync 保证；宽限时长是应用层策略，留在此处。
+    public Task SettleBusyActivitiesAsync() => instanceManager.SettleAsync(SETTLE_GRACE_PERIOD);
 }
