@@ -26,8 +26,9 @@ export default function proxy(request: NextRequest) {
       getNegotiator(request).languages(i18n.languages as string[])[0] ??
       i18n.defaultLanguage;
     const target = new URL(url);
-    target.pathname = `/${preferred}${url.pathname}`.replaceAll(/\/+/g, '/');
-    return NextResponse.redirect(target);
+    const prefixed = `/${preferred}${url.pathname}`.replaceAll(/\/+/g, '/');
+    target.pathname = prefixed.replace(/\/+$/, '') || '/';
+    return NextResponse.redirect(target, 308);
   }
 
   // Markdown content negotiation for LLMs

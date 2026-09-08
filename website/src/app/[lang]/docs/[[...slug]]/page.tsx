@@ -85,6 +85,8 @@ export async function generateMetadata(props: PageProps<'/[lang]/docs/[[...slug]
 
   const slugPath = params.slug?.join('/') ?? '';
   const canonicalUrl = `https://polymerium.dearain.dev${page.url}`;
+  const localizedUrl = (lang: string) =>
+    `https://polymerium.dearain.dev/${lang}/docs${slugPath ? `/${slugPath}` : ''}`;
 
   return {
     title: page.data.title,
@@ -92,9 +94,9 @@ export async function generateMetadata(props: PageProps<'/[lang]/docs/[[...slug]
     alternates: {
       canonical: canonicalUrl,
       languages: {
-        en: `https://polymerium.dearain.dev/en/docs/${slugPath}`,
-        zh: `https://polymerium.dearain.dev/zh/docs/${slugPath}`,
-        'x-default': `https://polymerium.dearain.dev/en/docs/${slugPath}`,
+        en: localizedUrl('en'),
+        zh: localizedUrl('zh'),
+        'x-default': localizedUrl('en'),
       },
     },
     openGraph: {

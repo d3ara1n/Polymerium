@@ -319,7 +319,7 @@ export async function generateMetadata(props: PageProps<'/[lang]'>): Promise<Met
   const d = getDict(lang);
 
   return {
-    title: d.metaTitle,
+    title: { absolute: d.metaTitle },
     description: d.metaDesc,
     alternates: {
       canonical: `https://polymerium.dearain.dev/${lang}`,
