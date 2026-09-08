@@ -177,24 +177,37 @@ public class App : Application
             return;
         }
 
-        // WARNING: 已关闭窗口的引用仍留在 MainWindow 属性上，需判断是否真正可用。
-        var window = desktop.MainWindow;
-        if (window is null || !window.IsVisible)
+        EnsureMainWindow(desktop);
+    }
+
+    // 主窗口非空引用必然是活窗口（Closed 时已置空，见 ConstructWindow）：
+    // 藏起的 Show 回来、最小化的还原；置空才需要重建走完整生命周期。
+    private static void EnsureMainWindow(IClassicDesktopStyleApplicationLifetime desktop)
+    {
+        if (desktop.MainWindow is not { } window)
         {
             window = ConstructWindow();
             desktop.MainWindow = window;
             window.Show();
         }
-        else
+        else if (!window.IsVisible)
         {
-            window.Activate();
+            window.Show();
         }
+
+        if (window.WindowState == WindowState.Minimized)
+        {
+            window.WindowState = WindowState.Normal;
+        }
+
+        window.Activate();
     }
 
     #region Exit Confirmation
 
-    private static async void OnShutdownRequested(IClassicDesktopStyleApplicationLifetime desktop,
-                                                 ShutdownRequestedEventArgs e)
+    private static async void OnShutdownRequested(
+        IClassicDesktopStyleApplicationLifetime desktop,
+        ShutdownRequestedEventArgs e)
     {
         if (_exitConfirmed || Program.Services?.GetService<ExitGuardService>() is not { IsBusy: true } guard)
         {
@@ -207,13 +220,8 @@ public class App : Application
             return;
         }
 
-        // macOS 关窗后台驻留后 Cmd+Q：重建主窗口以承载确认对话框。
-        if (desktop.MainWindow is not { IsVisible: true })
-        {
-            var window = ConstructWindow();
-            desktop.MainWindow = window;
-            window.Show();
-        }
+        // 确认对话框是窗口内 overlay：Cmd+Q 可能在主窗口已关闭（后台驻留）或最小化时到来。
+        EnsureMainWindow(desktop);
 
         await RunExitConfirmationAsync(guard, () => desktop.Shutdown());
     }
@@ -277,6 +285,17 @@ public class App : Application
             notification.SetHandler((Action<GrowlItem>?)null!);
         };
 
+        // NOTE: Close 后的 Window 不可再 Show（PlatformImpl 已销毁）；置空引用，
+        //  让需要主窗口的路径（Dock 重开、退出确认）走重建而不是复活已关闭的窗口。
+        window.Closed += (_, _) =>
+        {
+            if (Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+                && desktop.MainWindow == window)
+            {
+                desktop.MainWindow = null;
+            }
+        };
+
         #endregion
 
         #region Window Size Persistence
@@ -297,9 +316,11 @@ public class App : Application
             configuration.Value.ApplicationWindowWidth = window.Width;
             configuration.Value.ApplicationWindowHeight = window.Height;
 
-            // macOS 关主窗口只是退到后台（任务继续跑），无需确认；其余平台关窗即退出，忙碌时先确认。
-            if (!_exitConfirmed && !OperatingSystem.IsMacOS()
-                && Program.Services?.GetService<ExitGuardService>() is { IsBusy: true } guard)
+            // 关窗是否导致退出由 ShutdownMode 决定：显式退出模式下关窗只是退到后台（任务继续跑），
+            // 无需确认；关窗即退出的模式下，忙碌时先确认。
+            if (!_exitConfirmed
+             && Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime { ShutdownMode: not ShutdownMode.OnExplicitShutdown }
+             && Program.Services.GetService<ExitGuardService>() is { IsBusy: true } guard)
             {
                 e.Cancel = true;
                 await RunExitConfirmationAsync(guard, window.Close);
