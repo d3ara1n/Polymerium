@@ -246,7 +246,7 @@ public partial class ExplorerPageModel : ViewModelBase
         var desiredKind = SelectedKind;
         _suppressSearchOnKindChange = true;
 
-        Dispatcher.UIThread.Post(() =>
+        Dispatcher.UIThread.Post(async () =>
         {
             _suppressSearchOnKindChange = false;
 
@@ -260,7 +260,7 @@ public partial class ExplorerPageModel : ViewModelBase
             }
             else
             {
-                _ = SearchAsync();
+                await SearchAsync();
             }
         });
     }
@@ -274,7 +274,7 @@ public partial class ExplorerPageModel : ViewModelBase
     [ObservableProperty]
     public partial bool IsFilterEnabled { get; set; }
 
-    partial void OnIsFilterEnabledChanged(bool value)
+    async partial void OnIsFilterEnabledChanged(bool value)
     {
         if (value && _session.InitialFilter is { } initial)
         {
@@ -285,13 +285,13 @@ public partial class ExplorerPageModel : ViewModelBase
             Filter = Filter with { Loader = null, Version = null };
         }
 
-        _ = SearchAsync();
+        await SearchAsync();
     }
 
     [ObservableProperty]
     public partial ResourceKind? SelectedKind { get; set; }
 
-    partial void OnSelectedKindChanged(ResourceKind? value)
+    async partial void OnSelectedKindChanged(ResourceKind? value)
     {
         if (value == null)
         {
@@ -303,7 +303,7 @@ public partial class ExplorerPageModel : ViewModelBase
         // 切仓库时 TabStrip 的强制回写也会走到这里，那次搜索由 OnSelectedRepositoryChanged 统一发起。
         if (!_suppressSearchOnKindChange)
         {
-            _ = SearchAsync();
+            await SearchAsync();
         }
     }
 
@@ -449,7 +449,7 @@ public partial class ExplorerPageModel : ViewModelBase
             exhibit.IsFavorite = false;
             if (SelectedRepository.Label == "favorite")
             {
-                _ = SearchAsync();
+                await SearchAsync();
             }
 
             return;

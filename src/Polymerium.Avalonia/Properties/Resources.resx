@@ -3291,6 +3291,9 @@ Affected entries: {0}
     <data name="InstancePage_ImportFileAlreadyExistsDangerNotificationTitle" xml:space="preserve">
     <value>Failed to import as solid file</value>
   </data>
+    <data name="InstancePage_ImportDangerNotificationTitle" xml:space="preserve">
+    <value>Import failed</value>
+  </data>
     <data name="InstanceStoragePage_OpenFolderDangerNotificationTitle" xml:space="preserve">
     <value>Failed to open {0} folder</value>
   </data>

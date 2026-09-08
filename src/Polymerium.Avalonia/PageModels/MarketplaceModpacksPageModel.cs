@@ -73,7 +73,7 @@ public partial class MarketplaceModpacksPageModel
             return;
         }
 
-        _ = SearchAsync();
+        var search = SearchAsync();
 
         foreach (var repository in Repositories)
         {
@@ -95,6 +95,8 @@ public partial class MarketplaceModpacksPageModel
                 ];
             }
         }
+
+        await search;
     }
 
     #endregion
@@ -131,7 +133,7 @@ public partial class MarketplaceModpacksPageModel
     [ObservableProperty]
     public partial RepositoryBasicModel? SelectedRepository { get; set; }
 
-    partial void OnSelectedRepositoryChanged(RepositoryBasicModel? value)
+    async partial void OnSelectedRepositoryChanged(RepositoryBasicModel? value)
     {
         if (value is null)
         {
@@ -148,18 +150,18 @@ public partial class MarketplaceModpacksPageModel
 
         FilteredLoader = null;
         FilteredVersion = null;
-        _ = SearchAsync();
+        await SearchAsync();
     }
 
     [ObservableProperty]
     public partial string? FilteredVersion { get; set; }
 
-    partial void OnFilteredVersionChanged(string? value) => _ = SearchAsync();
+    async partial void OnFilteredVersionChanged(string? value) => await SearchAsync();
 
     [ObservableProperty]
     public partial LoaderBasicModel? FilteredLoader { get; set; }
 
-    partial void OnFilteredLoaderChanged(LoaderBasicModel? value) => _ = SearchAsync();
+    async partial void OnFilteredLoaderChanged(LoaderBasicModel? value) => await SearchAsync();
 
     [ObservableProperty]
     public partial InfiniteCollection<ExhibitModel>? Exhibits { get; set; }

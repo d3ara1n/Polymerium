@@ -120,81 +120,90 @@ public partial class InstancePageModel : ViewModelBase, IStatefulViewModel<Insta
         };
         if (await _overlayService.PopDialogAsync(dialog))
         {
-            switch (dialog.Result)
+            try
             {
-                case AssetIdentificationPackageModel package:
-                    if (_profileManager.TryGetMutable(Basic.Key, out var guard))
-                    {
-                        await using (guard)
+                switch (dialog.Result)
+                {
+                    case AssetIdentificationPackageModel package:
+                        if (_profileManager.TryGetMutable(Basic.Key, out var guard))
                         {
-                            if (!guard.Value.Setup.Packages.Any(x => PackageHelper.IsMatched(x.Pref,
-                                                                    package.Package.Label,
-                                                                    package.Package.Namespace,
-                                                                    package.Package.ProjectId)))
+                            await using (guard)
                             {
-                                var pref = PackageHelper.ToPref(package.Package.Label,
-                                                                package.Package.Namespace,
-                                                                package.Package.ProjectId,
-                                                                package.Package.VersionId);
-                                guard.Value.Setup.Packages.Add(new() { Pref = pref, Enabled = true, Source = null });
-                                _persistenceService.AppendAction(new()
+                                if (!guard.Value.Setup.Packages.Any(x => PackageHelper.IsMatched(x.Pref,
+                                                                        package.Package.Label,
+                                                                        package.Package.Namespace,
+                                                                        package.Package.ProjectId)))
                                 {
-                                    Key = Basic.Key,
-                                    Kind = PersistenceService.ActionKind
-                                                             .EditPackage,
-                                    New = pref
-                                });
-                                _notificationService.PopMessage(LanguageManager.Instance.InstancePage_ImportPackageSuccessNotificationMessage.Current()
-                                                               .Replace("{0}", package.Package.ProjectName)
-                                                               .Replace("{1}", package.Package.ProjectId),
-                                                                guard.Key,
-                                                                thumbnail: package.Thumbnail);
-                            }
-                            else
-                            {
-                                _notificationService.PopMessage(LanguageManager.Instance.InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage.Current()
-                                                               .Replace("{0}", package.Package.ProjectName)
-                                                               .Replace("{1}", package.Package.ProjectId),
-                                                                LanguageManager.Instance.InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle.Current(),
-                                                                GrowlLevel.Danger,
-                                                                thumbnail: package.Thumbnail);
+                                    var pref = PackageHelper.ToPref(package.Package.Label,
+                                                                    package.Package.Namespace,
+                                                                    package.Package.ProjectId,
+                                                                    package.Package.VersionId);
+                                    guard.Value.Setup.Packages.Add(new() { Pref = pref, Enabled = true, Source = null });
+                                    _persistenceService.AppendAction(new()
+                                    {
+                                        Key = Basic.Key,
+                                        Kind = PersistenceService.ActionKind
+                                                                 .EditPackage,
+                                        New = pref
+                                    });
+                                    _notificationService.PopMessage(LanguageManager.Instance.InstancePage_ImportPackageSuccessNotificationMessage.Current()
+                                                                   .Replace("{0}", package.Package.ProjectName)
+                                                                   .Replace("{1}", package.Package.ProjectId),
+                                                                    guard.Key,
+                                                                    thumbnail: package.Thumbnail);
+                                }
+                                else
+                                {
+                                    _notificationService.PopMessage(LanguageManager.Instance.InstancePage_ImportPackageAlreadyExistsDangerNotificationMessage.Current()
+                                                                   .Replace("{0}", package.Package.ProjectName)
+                                                                   .Replace("{1}", package.Package.ProjectId),
+                                                                    LanguageManager.Instance.InstancePage_ImportPackageAlreadyExistsDangerNotificationTitle.Current(),
+                                                                    GrowlLevel.Danger,
+                                                                    thumbnail: package.Thumbnail);
+                                }
                             }
                         }
-                    }
 
-                    break;
-                case AssetIdentificationPersistModel persist:
-                    var target =
-                        Path.Combine(persist.IsInImportMode
-                                         ? PathDef.Default.DirectoryOfImport(Basic.Key)
-                                         : PathDef.Default.DirectoryOfPersist(Basic.Key),
-                                     FileHelper.GetAssetFolderName(persist.Kind),
-                                     Path.GetFileName(persist.Path));
-                    if (!File.Exists(target))
-                    {
-                        var dir = Path.GetDirectoryName(target);
-                        if (dir != null && !Directory.Exists(dir))
+                        break;
+                    case AssetIdentificationPersistModel persist:
+                        var target =
+                            Path.Combine(persist.IsInImportMode
+                                             ? PathDef.Default.DirectoryOfImport(Basic.Key)
+                                             : PathDef.Default.DirectoryOfPersist(Basic.Key),
+                                         FileHelper.GetAssetFolderName(persist.Kind),
+                                         Path.GetFileName(persist.Path));
+                        if (!File.Exists(target))
                         {
-                            Directory.CreateDirectory(dir);
+                            var dir = Path.GetDirectoryName(target);
+                            if (dir != null && !Directory.Exists(dir))
+                            {
+                                Directory.CreateDirectory(dir);
+                            }
+
+                            File.Copy(persist.Path, target, false);
+                            _notificationService.PopMessage(LanguageManager.Instance.InstancePage_ImportFileSuccessNotificationMessage.Current()
+                                                                     .Replace("{0}", target),
+                                                            Basic.Key,
+                                                            thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
+                        }
+                        else
+                        {
+                            var relative = Path.GetRelativePath(PathDef.Default.DirectoryOfHome(Basic.Key), target);
+                            _notificationService.PopMessage(LanguageManager.Instance.InstancePage_ImportFileAlreadyExistsDangerNotificationMessage.Current()
+                                                           .Replace("{0}", relative),
+                                                            LanguageManager.Instance.InstancePage_ImportFileAlreadyExistsDangerNotificationTitle.Current(),
+                                                            GrowlLevel.Danger,
+                                                            thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
                         }
 
-                        File.Copy(persist.Path, target, false);
-                        _notificationService.PopMessage(LanguageManager.Instance.InstancePage_ImportFileSuccessNotificationMessage.Current()
-                                                                 .Replace("{0}", target),
-                                                        Basic.Key,
-                                                        thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
-                    }
-                    else
-                    {
-                        var relative = Path.GetRelativePath(PathDef.Default.DirectoryOfHome(Basic.Key), target);
-                        _notificationService.PopMessage(LanguageManager.Instance.InstancePage_ImportFileAlreadyExistsDangerNotificationMessage.Current()
-                                                       .Replace("{0}", relative),
-                                                        LanguageManager.Instance.InstancePage_ImportFileAlreadyExistsDangerNotificationTitle.Current(),
-                                                        GrowlLevel.Danger,
-                                                        thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
-                    }
-
-                    break;
+                        break;
+                }
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                _notificationService.PopMessage(ex,
+                    LanguageManager.Instance.InstancePage_ImportDangerNotificationTitle.Current(),
+                    thumbnail: ThumbnailHelper.ForInstance(Basic.Key));
             }
         }
     }
