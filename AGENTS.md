@@ -53,7 +53,9 @@ Under `src/Polymerium.Avalonia/`, directories are organized by role. View + View
 - `Modals/` + `ModalModels/` — modal overlays (non-blocking, cover the host).
 - `Sidebars/` + `SidebarModels/` — drawer sidebars (slide in from an edge).
 - `Toasts/` + `ToastModels/` — bottom-sheet toast overlays and their view models.
-- `Components/` / `Controls/` / `Widgets/` — reusable Avalonia controls, grouped by scope (larger composite components vs. small atomic widgets).
+- `Controls/` — the themed control library: custom control classes (`Xxx.cs`, subclassing an Avalonia or Huskui control) paired with their ControlTheme `Xxx.axaml` side by side, merged through `Themes/Controls.axaml`. Also hosts pure ControlTheme overrides of external controls (`Dialog`, `Modal`, `Page`, `Toast`, `Sidebar`, `ProgressBar`) that have no local class file.
+- `Components/` — composite view fragments: `UserControl` `.axaml` + minimal `.axaml.cs` pairs (`PageHeaderBar`, OOBE and account-creation steps) embedded inside pages and overlays. Unlike `Controls/`, their content is composed in XAML rather than templated; unlike pages/overlays, they are never navigated or activated and have no view model of their own — parameters come in as styled properties.
+- `Widgets/` — the dashboard widget subsystem: `WidgetBase` subclasses with their own initialize/deinitialize lifecycle, full/slim templates, and per-instance persisted state via `WidgetContext` / `WidgetHostService`. Widgets are not placed in XAML by consumers — the host service instantiates and manages them dynamically.
 - `Services/` — application services (navigation, overlay, data, persistence, instance management, etc.).
 - `Repositories/` — data access / storage adapters.
 - `Snapshots/` — snapshot/version store for instances.
@@ -65,6 +67,8 @@ Under `src/Polymerium.Avalonia/`, directories are organized by role. View + View
 - `Assets/` / `Properties/` / `Exceptions/` — static assets, `.resx` localization, and domain exception types.
 
 App-level files at the project root: `Program.cs` (entry), `Startup.cs` (DI), `App.axaml(.cs)` (window/lifetime), `MainWindow.axaml(.cs)` + `MainWindowContext.cs` (shell), `Configuration.cs`, `ErrorReporter.cs`, `AppBuilderExtensions.cs`.
+
+Rule of thumb: a reusable control primitive goes to `Controls/` (class + theme side by side, or a lone `.axaml` when only restyling an external control); a XAML-composed fragment embedded in pages or overlays goes to `Components/`; a dashboard mini-tool with its own lifecycle and persisted state goes to `Widgets/`.
 
 ## ViewModel Mechanism
 
