@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using AsyncImageLoader;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -180,13 +181,18 @@ internal static class Program
         exitAction?.Invoke();
     }
 
-    public static void Terminate(Action? beforeDie)
+    public static Task TerminateAsync(Action? beforeDie)
     {
-        exitAction = beforeDie;
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.Shutdown();
+            return App.RequestExitAsync(desktop, Services!.GetRequiredService<ExitGuardService>(), () =>
+            {
+                exitAction = beforeDie;
+                desktop.Shutdown();
+            });
         }
+
+        return Task.CompletedTask;
     }
 
     private static CultureInfo GetSafeCultureInfo(string cultureName)

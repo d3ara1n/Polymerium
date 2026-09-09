@@ -61,12 +61,14 @@ public partial class InstanceHomePageModel(
     internal void ViewForTimerLaunch()
     {
         _timerSubscription?.Dispose();
-        if (InstanceManager.ActivityOf(Basic.Key) is InstanceActivity.Running running)
+        TimerCount = TimeSpan.Zero;
+        if (InstanceManager.ActivityOf(Basic.Key) is InstanceActivity.Running)
         {
-            var start = DateTimeOffset.Now - running.StartedAt;
             _timerSubscription = Observable
                                 .Interval(TimeSpan.FromSeconds(1))
-                                .Subscribe(x => TimerCount = start + TimeSpan.FromSeconds(x));
+                                .Subscribe(_ => TimerCount = InstanceManager.ActivityOf(Basic.Key)
+                                    is InstanceActivity.Running { RunStartedAt: { } started }
+                                        ? DateTimeOffset.Now - started : TimeSpan.Zero);
         }
     }
 

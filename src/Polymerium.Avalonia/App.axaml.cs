@@ -22,8 +22,7 @@ namespace Polymerium.Avalonia;
 
 public class App : Application
 {
-    private static bool _exitConfirmed;
-    private static bool _exitPromptInFlight;
+    private static ExitState _exitState;
 
     public HuskuiTheme? Theme { get; private set; }
 
@@ -159,7 +158,7 @@ public class App : Application
                                      SentryLevel.Fatal));
             Dispatcher.UIThread.Post(() =>
             {
-                _exitConfirmed = true;
+                _exitState = ExitState.Ready;
                 desktop.Shutdown(-1);
             });
         }
@@ -209,45 +208,54 @@ public class App : Application
         IClassicDesktopStyleApplicationLifetime desktop,
         ShutdownRequestedEventArgs e)
     {
-        if (_exitConfirmed || Program.Services?.GetService<ExitGuardService>() is not { IsBusy: true } guard)
+        if (_exitState is ExitState.Ready || Program.Services?.GetService<ExitGuardService>() is not { } guard)
         {
             return;
         }
 
         e.Cancel = true;
-        if (_exitPromptInFlight)
-        {
-            return;
-        }
-
-        // 确认对话框是窗口内 overlay：Cmd+Q 可能在主窗口已关闭（后台驻留）或最小化时到来。
-        EnsureMainWindow(desktop);
-
-        await RunExitConfirmationAsync(guard, () => desktop.Shutdown());
+        await RequestExitAsync(desktop, guard, () => desktop.Shutdown());
     }
 
-    private static async Task RunExitConfirmationAsync(ExitGuardService guard, Action proceed)
+    internal static async Task RequestExitAsync(
+        IClassicDesktopStyleApplicationLifetime desktop,
+        ExitGuardService guard,
+        Action proceed)
     {
-        if (_exitPromptInFlight)
+        if (_exitState is not ExitState.Idle)
         {
             return;
         }
 
-        _exitPromptInFlight = true;
+        _exitState = ExitState.Confirming;
         try
         {
-            if (await guard.RequestConfirmationAsync())
+            if (guard.IsBusy)
             {
-                _exitConfirmed = true;
-                await guard.SettleBusyActivitiesAsync();
-                proceed();
+                EnsureMainWindow(desktop);
+                if (!await guard.RequestConfirmationAsync())
+                {
+                    return;
+                }
             }
+
+            _exitState = ExitState.Stopping;
+            await guard.StopAsync();
+            // NOTE: An idle stop can complete synchronously; let the original Closing event return before closing again.
+            await Dispatcher.Yield();
+            _exitState = ExitState.Ready;
+            proceed();
         }
         finally
         {
-            _exitPromptInFlight = false;
+            if (_exitState is ExitState.Confirming)
+            {
+                _exitState = ExitState.Idle;
+            }
         }
     }
+
+    private enum ExitState { Idle, Confirming, Stopping, Ready }
 
     #endregion
 
@@ -316,14 +324,24 @@ public class App : Application
             configuration.Value.ApplicationWindowWidth = window.Width;
             configuration.Value.ApplicationWindowHeight = window.Height;
 
-            // 关窗是否导致退出由 ShutdownMode 决定：显式退出模式下关窗只是退到后台（任务继续跑），
-            // 无需确认；关窗即退出的模式下，忙碌时先确认。
-            if (!_exitConfirmed
-             && Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime { ShutdownMode: not ShutdownMode.OnExplicitShutdown }
-             && Program.Services.GetService<ExitGuardService>() is { IsBusy: true } guard)
+            if (_exitState is ExitState.Ready)
+            {
+                return;
+            }
+
+            // NOTE: Keep the overlay host alive throughout confirmation and settlement, including on macOS.
+            if (_exitState is not ExitState.Idle)
             {
                 e.Cancel = true;
-                await RunExitConfirmationAsync(guard, window.Close);
+                return;
+            }
+
+            if (Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+                && desktop.ShutdownMode is not ShutdownMode.OnExplicitShutdown
+                && Program.Services.GetService<ExitGuardService>() is { } guard)
+            {
+                e.Cancel = true;
+                await RequestExitAsync(desktop, guard, window.Close);
             }
         };
 

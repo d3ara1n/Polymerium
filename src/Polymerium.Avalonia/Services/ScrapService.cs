@@ -19,7 +19,7 @@ public class ScrapService : ILifetimeService
 {
     public const int CAPACITY = 9527;
     public const int FLUSH_INTERVAL = 100;
-    private readonly Dictionary<string, ObservableFixedSizeRingBuffer<ScrapModel>> _buffers = [];
+    private readonly Dictionary<string, (Guid ActivityId, ObservableFixedSizeRingBuffer<ScrapModel> Buffer)> _buffers = [];
 
     #region Injected
 
@@ -41,9 +41,15 @@ public class ScrapService : ILifetimeService
                           .Where(batch => batch.Count > 0)
                           .Subscribe(batch => Dispatcher.UIThread.Post(() =>
                            {
-                               foreach (var group in batch.GroupBy(x => x.Key))
+                               foreach (var group in batch.GroupBy(x => (x.Key, x.ActivityId)))
                                {
-                                   var buffer = BufferOf(group.Key);
+                                   if (!_buffers.TryGetValue(group.Key.Key, out var entry)
+                                       || entry.ActivityId != group.Key.ActivityId)
+                                   {
+                                       continue;
+                                   }
+
+                                   var buffer = entry.Buffer;
                                    var last = buffer.LastOrDefault();
                                    foreach (var item in group)
                                    {
@@ -53,11 +59,9 @@ public class ScrapService : ILifetimeService
                                }
                            })));
 
-        // 缓冲区随本次运行结束而弃置，下次启动从空白开始。
-        // NOTE: 与写入同在 UI 线程摘除，_buffers 因此只被单线程触碰。
         _subscriptions.Add(_instanceManager
-                          .Activities.Where(x => x is InstanceActivity.Running { IsCompleted: true })
-                          .Subscribe(x => Dispatcher.UIThread.Post(() => _buffers.Remove(x.Key))));
+                          .Activities.OfType<InstanceActivity.Running>()
+                          .Subscribe(activity => Dispatcher.UIThread.Post(() => Track(activity))));
         return ValueTask.CompletedTask;
     }
 
@@ -72,19 +76,33 @@ public class ScrapService : ILifetimeService
         return ValueTask.CompletedTask;
     }
 
-    private ObservableFixedSizeRingBuffer<ScrapModel> BufferOf(string key)
+    private void Track(InstanceActivity.Running activity)
     {
-        if (!_buffers.TryGetValue(key, out var buffer))
+        var exists = _buffers.TryGetValue(activity.Key, out var entry);
+        if (activity.IsCompleted)
         {
-            buffer = [with(CAPACITY)];
-            _buffers.Add(key, buffer);
+            if (exists && entry.ActivityId == activity.Id)
+            {
+                _buffers.Remove(activity.Key);
+            }
         }
-
-        return buffer;
+        else if (!exists || entry.ActivityId != activity.Id)
+        {
+            _buffers[activity.Key] = (activity.Id, [with(CAPACITY)]);
+        }
     }
 
-    public bool TryGetBuffer(string key, [MaybeNullWhen(false)] out ObservableFixedSizeRingBuffer<ScrapModel> buffer) =>
-        _buffers.TryGetValue(key, out buffer);
+    public bool TryGetBuffer(string key, [MaybeNullWhen(false)] out ObservableFixedSizeRingBuffer<ScrapModel> buffer)
+    {
+        if (_buffers.TryGetValue(key, out var entry))
+        {
+            buffer = entry.Buffer;
+            return true;
+        }
+
+        buffer = null;
+        return false;
+    }
 
     public static ScrapModel AppendToModel(Scrap item, ScrapModel? last)
     {

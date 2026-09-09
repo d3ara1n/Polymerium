@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Mvvm.Activation;
@@ -15,7 +15,6 @@ using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
-using TridentCore.Abstractions.Tasks;
 using TridentCore.Core.Engines.Launching;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
@@ -44,16 +43,14 @@ public partial class InstanceDashboardPageModel(
         }
 
         StopMonitoring();
-        IsOnAir = true;
+        IsOnAir = false;
         AttachProcess(running);
-        Dispatcher.UIThread.Post(() => UpdateLogSource(SelectedSource));
     }
 
     protected override void OnActivityProgressed(InstanceActivity activity)
     {
         base.OnActivityProgressed(activity);
 
-        // 进程句柄在启动后的某一帧才出现，每帧都试接一次（已接上则为空操作）。
         if (activity is InstanceActivity.Running running)
         {
             AttachProcess(running);
@@ -71,27 +68,24 @@ public partial class InstanceDashboardPageModel(
 
         IsOnAir = false;
         StopMonitoring();
-        Dispatcher.UIThread.Post(() =>
-        {
-            UpdateLogSource(SelectedSource);
-            SessionCount++;
-            if (activity.State is ActivityState.Faulted)
-            {
-                CrashCount++;
-            }
-        });
+        UpdateLogSource(SelectedSource);
+        SessionCount = persistenceService.GetSessionCount(Basic.Key);
+        CrashCount = persistenceService.GetCrashCount(Basic.Key);
     }
 
     private void AttachProcess(InstanceActivity.Running running)
     {
-        if (running.Process is not { } process || _monitoringTokenSource is not null)
+        if (running.IsCompleted || running.Outcome is not null
+            || running is not { ProcessId: { } processId, RunStartedAt: { } startedAt }
+            || _monitoringTokenSource is not null)
         {
             return;
         }
 
-        StartMonitoring(process);
-        var memory = running.Options.MaxMemory;
-        Dispatcher.UIThread.Post(() => MemoryAssigned = memory);
+        IsOnAir = true;
+        MemoryAssigned = running.MaxMemory;
+        StartMonitoring(processId, startedAt);
+        UpdateLogSource(SelectedSource);
     }
 
     #endregion
@@ -342,92 +336,68 @@ public partial class InstanceDashboardPageModel(
 
     #region Other: Metrics
 
-    private void StartMonitoring(Process process)
+    private void StartMonitoring(int processId, DateTimeOffset startedAt)
     {
         StopMonitoring();
-
         _monitoringTokenSource = new();
-        _ = MonitorAsync(process, _monitoringTokenSource.Token);
+        _ = MonitorAsync(processId, startedAt, _monitoringTokenSource);
     }
 
     private void StopMonitoring()
     {
-        if (_monitoringTokenSource is { } cts)
-        {
-            _monitoringTokenSource = null;
-            if (!cts.IsCancellationRequested)
-            {
-                cts.Cancel();
-            }
-
-            cts.Dispose();
-        }
+        var source = _monitoringTokenSource;
+        _monitoringTokenSource = null;
+        source?.Cancel();
     }
 
-    private async Task MonitorAsync(Process process, CancellationToken token)
+    private async Task MonitorAsync(int processId, DateTimeOffset startedAt, CancellationTokenSource source)
     {
-        process.Refresh();
-        var errorCount = 0;
-        TimeSpan? lastCpuTime = null;
-        var lastSampleTime = DateTime.Now;
-        var cpuCount = Environment.ProcessorCount;
-        while (!token.IsCancellationRequested)
+        var token = source.Token;
+        try
         {
-            try
+            using var process = Process.GetProcessById(processId);
+            // NOTE: A queued snapshot may outlive its process; do not attach to a newer process reusing the PID.
+            if (process.StartTime.ToUniversalTime() > startedAt.UtcDateTime)
             {
-                (lastSampleTime, lastCpuTime) = await MonitorCoreAsync(process, lastSampleTime, lastCpuTime, cpuCount);
+                return;
+            }
 
-                if (process.HasExited)
-                {
-                    StopMonitoring();
-                }
-            }
-            catch (InvalidOperationException)
+            TimeSpan? lastCpuTime = null;
+            var lastSampleTime = DateTime.Now;
+            var cpuCount = Environment.ProcessorCount;
+            while (!token.IsCancellationRequested && !process.HasExited)
             {
-                errorCount++;
-                if (errorCount > 3)
-                {
-                    StopMonitoring();
-                }
+                (lastSampleTime, lastCpuTime) = SampleProcess(process, lastSampleTime, lastCpuTime, cpuCount);
+                await Task.Delay(TimeSpan.FromSeconds(1), token);
             }
-            catch (Exception)
+        }
+        catch (OperationCanceledException) when (token.IsCancellationRequested)
+        {
+        }
+        catch (Exception ex) when (ex is ArgumentException or InvalidOperationException or Win32Exception)
+        {
+        }
+        finally
+        {
+            if (ReferenceEquals(_monitoringTokenSource, source))
             {
-                StopMonitoring();
+                _monitoringTokenSource = null;
             }
-            finally
-            {
-                try
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(1), token);
-                }
-                catch (OperationCanceledException) when (token.IsCancellationRequested)
-                {
-                }
-            }
+
+            source.Dispose();
         }
     }
 
-    private async Task<(DateTime, TimeSpan)> MonitorCoreAsync(
+    private (DateTime, TimeSpan) SampleProcess(
         Process process,
         DateTime lastSampleTime,
         TimeSpan? lastCpuTime,
         int cpuCount)
     {
-        if (process.HasExited)
-        {
-            return (DateTime.Now, TimeSpan.Zero);
-        }
-
         process.Refresh();
-
-        // NOTE: 进程未启动时这行抛 InvalidOperationException，被外围捕获并进入失败倒计时。
         var cpuTime = process.TotalProcessorTime;
         var sampleTime = DateTime.Now;
-
         var cpuPercent = 0.0d;
-        var memory = process.WorkingSet64 / 1024 / 1024;
-        var uptime = sampleTime - process.StartTime;
-
         if (lastCpuTime.HasValue)
         {
             var cpuDelta = (cpuTime - lastCpuTime.Value).TotalMilliseconds;
@@ -435,13 +405,9 @@ public partial class InstanceDashboardPageModel(
             cpuPercent = elapsed > 0 ? cpuDelta / (elapsed * cpuCount) * 100.0 : 0.0d;
         }
 
-        Dispatcher.UIThread.Post(() =>
-        {
-            CpuPercent = cpuPercent;
-            MemoryUsage = (uint)memory;
-            Uptime = uptime;
-        });
-
+        CpuPercent = cpuPercent;
+        MemoryUsage = (uint)(process.WorkingSet64 / 1024 / 1024);
+        Uptime = sampleTime - process.StartTime;
         return (sampleTime, cpuTime);
     }
 
