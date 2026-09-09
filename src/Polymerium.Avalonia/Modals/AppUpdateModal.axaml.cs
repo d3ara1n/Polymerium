@@ -48,12 +48,15 @@ public partial class AppUpdateModal : Modal
 
             await UpdateManager.DownloadUpdatesAsync(Model.Update, Report);
 
-            Program.Terminate(() => UpdateManager.ApplyUpdatesAndRestart(Model.Update));
+            await Program.TerminateAsync(() => UpdateManager.ApplyUpdatesAndRestart(Model.Update));
         }
         catch (Exception ex)
         {
-            IsDownloading = false;
             NotificationService.PopMessage(ex, LanguageManager.Instance.AppUpdateModal_DownloadUpdateDangerNotificationTitle.Current());
+        }
+        finally
+        {
+            IsDownloading = false;
         }
     }
 

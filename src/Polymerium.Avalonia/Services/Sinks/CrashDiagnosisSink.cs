@@ -9,17 +9,15 @@ using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
-using TridentCore.Abstractions.Tasks;
 using TridentCore.Abstractions.Utilities;
-using TridentCore.Core.Exceptions;
+using TridentCore.Core.Engines.Launching;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
 
 namespace Polymerium.Avalonia.Services.Sinks;
 
 /// <summary>
-///     订阅 <see cref="InstanceStateAggregator" />，在 Launch tracker 因
-///     <see cref="ProcessFaultedException" /> 失败时发崩溃诊断通知（Danger growl + Diagnose 按钮）。
+///     订阅 <see cref="InstanceStateAggregator" />，为 <see cref="LaunchOutcome.Crashed" /> 发出崩溃诊断通知。
 /// </summary>
 public class CrashDiagnosisSink(
     InstanceStateAggregator aggregator,
@@ -41,17 +39,7 @@ public class CrashDiagnosisSink(
 
     private void HandleCompleted(InstanceActivity activity)
     {
-        if (activity is not InstanceActivity.Running launcher)
-        {
-            return;
-        }
-
-        if (launcher.State != ActivityState.Faulted)
-        {
-            return;
-        }
-
-        if (!IsProcessFaulted(launcher.FailureReason))
+        if (activity is not InstanceActivity.Running { Outcome: LaunchOutcome.Crashed } launcher)
         {
             return;
         }
@@ -88,7 +76,7 @@ public class CrashDiagnosisSink(
 
         var javaVersion = tracker.JavaVersion?.ToString();
         var javaPath = tracker.JavaHome;
-        var allocatedMemory = $"{tracker.Options.MaxMemory} MB";
+        var allocatedMemory = $"{tracker.MaxMemory} MB";
 
         string? lastLogLines = null;
         try
@@ -113,24 +101,16 @@ public class CrashDiagnosisSink(
         var installedMemory =
             $"{double.Round((double)GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / 1024 / 1024 / 1024)} GB";
 
-        var exitCode = tracker.FailureReason is ProcessFaultedException pfe ? pfe.ExitCode : -1;
+        var exitCode = tracker.ExitCode ?? -1;
         var exceptionMessage = tracker.FailureReason?.Message ?? "Unknown error";
-        if (tracker.FailureReason is AggregateException { InnerException: not null } ae)
-        {
-            exceptionMessage = ae.InnerException?.Message ?? "Unknown error";
-            if (ae.InnerException is ProcessFaultedException innerPfe)
-            {
-                exitCode = innerPfe.ExitCode;
-            }
-        }
 
         return new()
         {
             InstanceKey = tracker.Key,
             InstanceName = profile?.Name ?? tracker.Key,
             ExitCode = exitCode,
-            LaunchTime = tracker.StartedAt,
-            CrashTime = DateTimeOffset.Now,
+            LaunchTime = tracker.RunStartedAt ?? tracker.StartedAt,
+            CrashTime = tracker.CompletedAt ?? DateTimeOffset.Now,
             ExceptionMessage = exceptionMessage,
             MinecraftVersion = profile?.Setup.Version ?? "Unknown",
             LoaderLabel = loaderLabel,
@@ -168,7 +148,4 @@ public class CrashDiagnosisSink(
             return null;
         }
     }
-
-    private static bool IsProcessFaulted(Exception? ex) =>
-        ex is ProcessFaultedException or AggregateException { InnerException: ProcessFaultedException };
 }

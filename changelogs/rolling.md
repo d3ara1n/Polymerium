@@ -6,6 +6,7 @@
 
 ### Fixed
 
+- Fix crash statistics for new game sessions that end without crashing
 - Fix unexpected errors during search and exit being silently discarded instead of failing the launcher visibly
 - Fix drag-and-drop imports of files into an instance failing silently on file errors instead of showing a failure prompt
 - Fix the check integrity action not performing a full validation pass
@@ -18,7 +19,7 @@
 
 ### Added
 
-- Add an exit confirmation prompt when closing or quitting the launcher while instances are deploying, installing, updating, or running games
+- Add an exit confirmation flow that preserves running games while stopping instance operations
 - Add drag-and-drop group reordering and quick package assignment to collections on the instance setup page (#POLY-148, #POLY-141)
 
 ### Changed

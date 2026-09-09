@@ -9,8 +9,7 @@ using TridentCore.Core.Services.Instances;
 namespace Polymerium.Avalonia.Services;
 
 /// <summary>
-///     在关闭或退出前向 <see cref="InstanceManager" /> 查询忙碌状态并组织确认；确认退出后分流收尾——
-///     运行中的游戏 Detach（不杀进程、正常落会话记录），其余活动 Abort——并等待终态落地再放行。
+///     组织退出确认，并为 Core 的停止操作设置应用层等待期限。
 /// </summary>
 public class ExitGuardService(InstanceManager instanceManager, OverlayService overlayService)
 {
@@ -60,6 +59,15 @@ public class ExitGuardService(InstanceManager instanceManager, OverlayService ov
         return await overlayService.PopDialogAsync(dialog);
     }
 
-    // 终态落地与宽限部由 InstanceManager.SettleAsync 保证；宽限时长是应用层策略，留在此处。
-    public Task SettleBusyActivitiesAsync() => instanceManager.SettleAsync(SETTLE_GRACE_PERIOD);
+    public async Task StopAsync()
+    {
+        try
+        {
+            await instanceManager.StopAsync().WaitAsync(SETTLE_GRACE_PERIOD);
+        }
+        catch (TimeoutException)
+        {
+            // The application may exit after the grace period even if Core is still stopping.
+        }
+    }
 }

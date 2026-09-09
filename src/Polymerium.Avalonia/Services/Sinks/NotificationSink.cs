@@ -5,6 +5,7 @@ using Huskui.Avalonia.Models;
 using Polymerium.Avalonia.Pages;
 using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Tasks;
+using TridentCore.Core.Engines.Launching;
 using TridentCore.Core.Exceptions;
 using TridentCore.Core.Services.Instances;
 
@@ -12,7 +13,7 @@ namespace Polymerium.Avalonia.Services.Sinks;
 
 /// <summary>
 ///     订阅 <see cref="InstanceStateAggregator" />，在活动完成时发通知（成功/失败）。
-///     取消不发通知；<see cref="ProcessFaultedException" /> 的崩溃诊断由
+///     取消和分离不发通知；<see cref="LaunchOutcome.Crashed" /> 的崩溃诊断由
 ///     <see cref="CrashDiagnosisSink" /> 负责。
 /// </summary>
 public class NotificationSink(
@@ -138,15 +139,14 @@ public class NotificationSink(
     {
         switch (tracker.State)
         {
-            case ActivityState.Finished:
+            case ActivityState.Finished when tracker.Outcome is LaunchOutcome.Exited:
                 notificationService.PopMessage(LanguageManager.Instance.MainWindow_InstanceLaunchingSuccessNotificationMessage.Current(),
                                                tracker.Key,
                                                GrowlLevel.Success,
                                                thumbnail: ThumbnailHelper.ForInstance(tracker.Key));
                 break;
             case ActivityState.Faulted:
-                // ProcessFaultedException 由 CrashDiagnosisSink 处理。
-                if (IsProcessFaulted(tracker.FailureReason))
+                if (tracker.Outcome is LaunchOutcome.Crashed)
                 {
                     return;
                 }
@@ -191,9 +191,6 @@ public class NotificationSink(
 
         return null;
     }
-
-    private static bool IsProcessFaulted(Exception? ex) =>
-        ex is ProcessFaultedException or AggregateException { InnerException: ProcessFaultedException };
 
     private void HandleJavaNotFound(string key, JavaNotFoundException exception) =>
         notificationService.PopMessage(string.Format(LanguageManager.Instance.MainWindow_JavaRuntimeNotFoundDangerNotificationMessage.Current(),

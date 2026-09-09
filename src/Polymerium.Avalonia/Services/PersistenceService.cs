@@ -8,6 +8,7 @@ using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
 using TridentCore.Core.Accounts;
+using TridentCore.Core.Engines.Launching;
 using TridentCore.Pref;
 
 namespace Polymerium.Avalonia.Services;
@@ -77,6 +78,7 @@ public class PersistenceService(IFreeSql freeSql)
         public required DateTime End { get; set; }
         public required string AccountId { get; set; }
         public required bool DieInPeace { get; set; }
+        public LaunchOutcome? Outcome { get; set; }
     }
 
     #endregion
@@ -286,10 +288,16 @@ public class PersistenceService(IFreeSql freeSql)
 
     public int GetSessionCount() => (int)freeSql.Select<Activity>().Count();
 
+    // Legacy sessions have no outcome; their original classification is retained.
     public int GetCrashCount(string key) =>
-        (int)freeSql.Select<Activity>().Where(x => x.Key == key && !x.DieInPeace).Count();
+        (int)freeSql.Select<Activity>()
+            .Where(x => x.Key == key && (x.Outcome == LaunchOutcome.Crashed || (x.Outcome == null && !x.DieInPeace)))
+            .Count();
 
-    public int GetCrashCount() => (int)freeSql.Select<Activity>().Where(x => !x.DieInPeace).Count();
+    public int GetCrashCount() =>
+        (int)freeSql.Select<Activity>()
+            .Where(x => x.Outcome == LaunchOutcome.Crashed || (x.Outcome == null && !x.DieInPeace))
+            .Count();
 
     public int GetTotalPlayTimeRank(string key)
     {
