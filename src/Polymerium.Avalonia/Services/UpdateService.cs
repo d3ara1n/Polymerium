@@ -38,10 +38,6 @@ public class UpdateService(
         try
         {
             await CheckUpdateAsync();
-            if (UpdateState == AppUpdateState.Found && CurrentUpdate is { } update)
-            {
-                UpdateFound?.Invoke(update);
-            }
         }
         catch (Exception)
         {
@@ -51,16 +47,18 @@ public class UpdateService(
     public ValueTask StopAsync(CancellationToken cancellationToken = default) => ValueTask.CompletedTask;
 
     /// <summary>
-    ///     自动检查（启动时）发现新版本时触发；手动检查走各自的调用方反馈，不经过此事件。
+    ///     状态（UpdateState / CurrentUpdate / IsChecking）迁移时触发；触发线程不保证为 UI 线程。
     /// </summary>
-    public event Action<AppUpdateModel>? UpdateFound;
+    public event Action? StateChanged;
+
+    private void RaiseStateChanged() => StateChanged?.Invoke();
 
     internal void ApplyMockUpdate(AppUpdateModel model)
     {
         CurrentUpdate = model;
         UpdateState = AppUpdateState.Found;
         IsUpdateChecked = true;
-        UpdateFound?.Invoke(model);
+        RaiseStateChanged();
     }
 
     public async Task CheckUpdateAsync()
@@ -75,10 +73,12 @@ public class UpdateService(
             CurrentUpdate = null;
             IsUpdateChecked = false;
             UpdateState = AppUpdateState.Unavailable;
+            RaiseStateChanged();
             return;
         }
 
         IsChecking = true;
+        RaiseStateChanged();
 
         try
         {
@@ -110,6 +110,7 @@ public class UpdateService(
         finally
         {
             IsChecking = false;
+            RaiseStateChanged();
         }
     }
 

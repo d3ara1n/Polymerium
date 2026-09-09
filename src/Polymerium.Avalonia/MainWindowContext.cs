@@ -57,6 +57,8 @@ public partial class MainWindowContext : ObservableObject
         _notificationService.UnreadCountChanged += OnUnreadCountChanged;
         UnreadNotificationCount = _notificationService.UnreadCount;
 
+        _updateService.StateChanged += OnUpdateStateChanged;
+
         _instanceService.PinnedChangeStream.Subscribe(OnPinnedChanged).DisposeWith(_disposables);
 
         _ = _entries
@@ -278,11 +280,13 @@ public partial class MainWindowContext : ObservableObject
         {
             _notificationService.PopMessage(ex, LanguageManager.Instance.MainWindow_CheckForUpdatesDangerNotificationTitle.Current());
         }
-
-        CheckForUpdatesCommand.NotifyCanExecuteChanged();
     }
 
     private bool CanCheckForUpdates => _updateService.CanCheckUpdate;
+
+    // UpdateService 的状态迁移线程不保证为 UI 线程，故切回 UI 线程刷新。
+    private void OnUpdateStateChanged() =>
+        Dispatcher.UIThread.Post(() => CheckForUpdatesCommand.NotifyCanExecuteChanged());
 
     [RelayCommand]
     private async Task OpenGitHubAsync()
