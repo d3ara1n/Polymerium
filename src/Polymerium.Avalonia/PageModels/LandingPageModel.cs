@@ -86,7 +86,7 @@ public partial class LandingPageModel(
         profileManager.ProfileRemoved += OnProfileRemoved;
 
         CurrentUpdate = updateService.CurrentUpdate;
-        updateService.UpdateFound += OnUpdateFound;
+        updateService.StateChanged += OnUpdateStateChanged;
 
         var last = persistenceService.GetLastActivity();
         if (last is not null && profileManager.TryGetImmutable(last.Key, out var profile))
@@ -123,7 +123,7 @@ public partial class LandingPageModel(
         profileManager.ProfileAdded -= OnProfileAdded;
         profileManager.ProfileRemoved -= OnProfileRemoved;
 
-        updateService.UpdateFound -= OnUpdateFound;
+        updateService.StateChanged -= OnUpdateStateChanged;
 
         return Task.CompletedTask;
     }
@@ -136,8 +136,9 @@ public partial class LandingPageModel(
 
     private void OnProfileAdded(object? sender, ProfileManager.ProfileChangedEventArgs e) => InstanceCount++;
 
-    // WARNING: UpdateService.StartAsync 的 await 之后线程不保证为 UI 线程，故切回 UI 线程赋值。
-    private void OnUpdateFound(AppUpdateModel update) => Dispatcher.UIThread.Post(() => CurrentUpdate = update);
+    // WARNING: UpdateService 的状态迁移线程不保证为 UI 线程，故切回 UI 线程赋值。
+    private void OnUpdateStateChanged() =>
+        Dispatcher.UIThread.Post(() => CurrentUpdate = updateService.CurrentUpdate);
 
     private void LoadMinecraftNews() =>
         MinecraftNews = new(async _ =>

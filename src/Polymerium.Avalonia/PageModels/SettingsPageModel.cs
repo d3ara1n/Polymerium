@@ -2,7 +2,9 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia;
@@ -118,6 +120,22 @@ public partial class SettingsPageModel : ViewModelBase
 
     #endregion
 
+    #region Overrides
+
+    protected override Task OnInitializeAsync(CancellationToken token)
+    {
+        UpdateService.StateChanged += OnUpdateStateChanged;
+        return Task.CompletedTask;
+    }
+
+    protected override Task OnDeinitializeAsync()
+    {
+        UpdateService.StateChanged -= OnUpdateStateChanged;
+        return Task.CompletedTask;
+    }
+
+    #endregion
+
     #region Commands
 
     [RelayCommand]
@@ -144,10 +162,6 @@ public partial class SettingsPageModel : ViewModelBase
                                             LanguageManager.Instance.SettingsPage_CheckUpdatesDangerNotificationTitle
                                                            .Current());
         }
-
-        SyncUpdateState();
-        CheckUpdatesCommand.NotifyCanExecuteChanged();
-        ViewReleaseCommand.NotifyCanExecuteChanged();
     }
 
     private bool CanViewRelease(AppUpdateModel? model) => model != null;
@@ -328,6 +342,14 @@ public partial class SettingsPageModel : ViewModelBase
         UpdateState = UpdateService.UpdateState;
         UpdateTarget = UpdateService.CurrentUpdate;
     }
+
+    // UpdateService 的状态迁移线程不保证为 UI 线程，故切回 UI 线程同步。
+    private void OnUpdateStateChanged() => Dispatcher.UIThread.Post(() =>
+    {
+        SyncUpdateState();
+        CheckUpdatesCommand.NotifyCanExecuteChanged();
+        ViewReleaseCommand.NotifyCanExecuteChanged();
+    });
 
     private T TryConvertEnum<T>(int value, T orDefault = default) where T : struct, Enum
     {
