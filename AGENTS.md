@@ -284,5 +284,6 @@ Ignored; that status change is API/UI only.
 - When linking a Jira issue, put the issue key at the start of the first line: `POLY-XX: type(scope): description`.
 - When linking a GitHub issue, put the issue key in parentheses at the end of the first line: `type(scope): description (#nnn)`.
 - Write the change summary in the body, separated from the first line by a blank line.
+- AI-assisted commits carry a `Co-Authored-By: <model name> <email>` trailer after the body. Read the model identity from the `PI_*` environment variables; use `noreply@pi.dev` when no matching address exists, and never invent a provider domain.
 
 @ROLLING.md
