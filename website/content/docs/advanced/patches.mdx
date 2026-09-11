@@ -1,0 +1,101 @@
+---
+title: Native Patches
+description: Customize an instance's launch libraries, arguments and Java major without changing its profile.
+---
+
+Native patches replace, append or remove deployment data such as launch libraries and argument groups. They can also replace the entry point, main JAR, asset index or requested Java major. They use Trident's existing deployment pipeline and do not modify JAR contents.
+
+## Why instances need patches
+
+A Minecraft version and a mod loader describe most instances, but not all of them. GTNH and Cleanroom carry launch data of their own — pinned libraries, argument groups, an entry point and a required Java major that no version metadata declares. Patches are how an instance states that data, so these runtimes deploy and launch through the same pipeline as everything else instead of a compatibility layer built around them.
+
+Instances distributed for component-based launchers already carry that data as local component definitions. Importing one translates those definitions into native patches, so the converted instance keeps its launch plan.
+
+## Profiles and external data
+
+`profile.json` contains no references to patches. Sharing a profile alone shares its own declarations; it does not share external data such as Pack Source (`import/`), Local Data (`persist/`) or patches.
+
+A complete instance stores patches separately:
+
+```text
+patches/
+├── data.patch.json
+├── import/
+│   └── pack-runtime/
+│       ├── patch.json
+│       └── assets/bootstrap.jar
+└── users/
+    └── my-adjustments/patch.json
+```
+
+The `import` layer contains distributable customizations. The `users` layer belongs only to the local user: modpack import and export never transfer it, and updates preserve it. Patches and their assets do not automatically appear in the Run Directory (`build/`).
+
+## Enable and order patches
+
+`patches/data.patch.json` records the enabled entries and their order:
+
+```json
+{
+  "format": 1,
+  "import": [
+    { "path": "pack-runtime/patch.json", "enabled": true }
+  ],
+  "users": [
+    { "path": "my-adjustments/patch.json", "enabled": false }
+  ]
+}
+```
+
+Paths are relative to their layer. Within each deployment boundary, imported entries run first and user entries run afterward, each in array order. Disabling a patch preserves its place. Unlisted files do not activate automatically.
+
+## Write a patch
+
+This example changes the Java major used by automatic selection and appends a JVM option:
+
+```json
+{
+  "format": 1,
+  "name": "My launch adjustments",
+  "operations": [
+    {
+      "target": "launch.javaMajor",
+      "action": "replace",
+      "value": 25
+    },
+    {
+      "target": "launch.jvmArguments",
+      "action": "append",
+      "value": [["-Dfile.encoding=UTF-8"]]
+    }
+  ]
+}
+```
+
+A Java path you set yourself — the instance override or a per-major home in the settings — is used exactly as given and never silently replaced by another runtime, so testing a specific JRE really tests that JRE; a path that turns out to be wrong fails with an explicit Java-not-found error. When you have not set one, the patched major is resolved to the runtime the launcher downloads or finds for that major. A major Mojang does not publish, such as 11 or 24, needs a Java you provide yourself.
+
+Arguments are arrays of token groups. For example, `[["--tweakClass", "example.Tweaker"]]` keeps an option and its value together. Repeated options retain their order.
+
+Libraries can use a download URL or a local file relative to the patch document. Local files must accompany the patch; they are instance data rather than disposable shared cache entries.
+
+The complete format, target list, selectors and Core integration are documented in [Trident's native patch reference](https://github.com/TridentCore/Trident.Net/blob/main/docs/PATCHES.md).
+
+## Manage patches from the CLI
+
+```sh
+trident patch list --instance example
+trident patch add --instance example --path ./my-patch/patch.json --name my-adjustments
+trident patch enable --instance example --path my-adjustments/patch.json
+trident patch disable --instance example --path my-adjustments/patch.json
+trident patch move --instance example --path my-adjustments/patch.json --position 0
+trident patch remove --instance example --path my-adjustments/patch.json --yes
+```
+
+The default layer is `users`; use `--layer import` to manage an imported entry. Positions are zero-based within the selected layer. Removal deletes the patch's owned files. You can also edit the JSON files directly; changes take effect on the next deployment.
+
+## Preserve patches when sharing
+
+Trident Portable Instance includes the import layer's index entries, documents and assets, including disabled imported patches. User patches stay local, like Local Data: no export format carries them, and no import reads them, so user-layer content found in an archive is ignored. Put customizations intended for distribution in the import layer.
+
+Local snapshots preserve both layers and their full index. Reset retains patch sources while clearing the Run Directory and deployment lock; reset can still delete saves and other user data in the Run Directory.
+
+Other export formats omit imported native patches. The export dialog warns that the exported instance may no longer have the same launch behavior. Use Trident Portable Instance to distribute an instance's imported patch definitions.

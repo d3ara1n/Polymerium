@@ -20,6 +20,7 @@ This glossary defines the canonical user-facing terms for Polymerium. Use these 
 | tag | 标签 | A user-defined label used to organize packages or target deployment rules. |
 | recipe | 配方 | A user-curated, shareable list of package references with optional per-item tags and notes, applicable to an instance during setup. A recipe holds references only — no files, configuration, or Minecraft version and loader — unlike a modpack. |
 | collection | 集合 | An in-place grouping of packages within an instance, defined purely by a shared `collection://by-name/<name>` source stamp and carrying no external reference. The collection name is both the group's identity and its only data — packages with the same name merge into one group — so unlike a recipe, a collection needs no separate metadata or shareable artifact and travels fully inside the profile. |
+| native patch / Patch | 原生 Patch | External deployment declarations stored under `patches/` that change how an instance deploys and launches — such as applied libraries and argument groups, the entry point, the main JAR, the asset index or the requested Java major — without being referenced from the profile. Every patch belongs to one of two layers: `patches/import/` (the import layer, distributed with a modpack and carried by Trident-format packs) or `patches/users/` (the user layer, local to the machine and never shipped in a pack). |
 
 ## Instance Lifecycle
 

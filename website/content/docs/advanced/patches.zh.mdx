@@ -1,0 +1,101 @@
+---
+title: 原生 Patch
+description: 在不修改实例配置的前提下定制启动库、参数和 Java 大版本。
+---
+
+原生 Patch 可以替换、追加或移除启动库、参数组等部署数据，也可以替换启动入口、主 JAR、资源索引和请求的 Java 大版本。它使用 Trident 现有的部署管线，不修改 JAR 内容。
+
+## 为什么需要 Patch
+
+版本号加一个模组加载器能描述大多数实例，但不是全部。GTNH 与 Cleanroom 自带启动数据——固定的库、参数组、入口点与要求的 Java 大版本，这些都不是版本元数据能声明的。Patch 就是实例声明这些数据的方式，因此这类运行时走的是与其他实例完全相同的部署与启动管线，而不是为它们单独搭一层兼容代码。
+
+为组件式启动器分发的实例本身就带着这些数据（本地组件定义）。导入时这些定义会被转换为原生 Patch，转换后的实例保留它原本的启动计划。
+
+## 配置与外部数据
+
+`profile.json` 不引用 Patch。单独分享配置文件时，分享的是配置本身的声明，不包含整合包源（`import/`）、本地保留（`persist/`）或 Patch 等外部数据。
+
+完整实例将 Patch 单独存放：
+
+```text
+patches/
+├── data.patch.json
+├── import/
+│   └── pack-runtime/
+│       ├── patch.json
+│       └── assets/bootstrap.jar
+└── users/
+    └── my-adjustments/patch.json
+```
+
+`import` 层保存可分发的定制。`users` 层只属于本机用户，整合包导入导出不会传递它，更新时也会保留。Patch 及其资产不会自动出现在运行目录（`build/`）中。
+
+## 启用与排序
+
+`patches/data.patch.json` 记录启用状态和顺序：
+
+```json
+{
+  "format": 1,
+  "import": [
+    { "path": "pack-runtime/patch.json", "enabled": true }
+  ],
+  "users": [
+    { "path": "my-adjustments/patch.json", "enabled": false }
+  ]
+}
+```
+
+路径相对于各自的层。在同一部署作用位置，先执行导入层，再执行用户层，各层内部遵循数组顺序。禁用 Patch 会保留它的位置，未登记的文件不会自动启用。
+
+## 编写 Patch
+
+下面的示例修改自动选择 Java 时使用的大版本，并追加一个 JVM 选项：
+
+```json
+{
+  "format": 1,
+  "name": "My launch adjustments",
+  "operations": [
+    {
+      "target": "launch.javaMajor",
+      "action": "replace",
+      "value": 25
+    },
+    {
+      "target": "launch.jvmArguments",
+      "action": "append",
+      "value": [["-Dfile.encoding=UTF-8"]]
+    }
+  ]
+}
+```
+
+你自行指定的 Java 路径——实例指定项或设置里按大版本配置的 home——会按原样使用，绝不会被悄悄替换成别的运行时，因此专门测试某个 JRE 时测到的就是它；路径有误时会明确报 Java 未找到。没有指定时，修改后的大版本会解析到启动器为该大版本下载或找到的运行时。Mojang 未发布的版本（如 11、24）需要你自备 Java。
+
+参数以 token 组的数组保存。例如 `[["--tweakClass", "example.Tweaker"]]` 将选项和值放在同一组中，重复选项也会保留顺序。
+
+库可以来自下载地址，也可以引用相对于 Patch 文件的本地文件。本地文件需要随 Patch 一起提供，它们是实例数据，不属于可随意清理的共享缓存。
+
+完整格式、目标列表、选择器和 Core 接入方式见 [Trident 原生 Patch 参考](https://github.com/TridentCore/Trident.Net/blob/main/docs/PATCHES.md)。
+
+## 使用 CLI 管理
+
+```sh
+trident patch list --instance example
+trident patch add --instance example --path ./my-patch/patch.json --name my-adjustments
+trident patch enable --instance example --path my-adjustments/patch.json
+trident patch disable --instance example --path my-adjustments/patch.json
+trident patch move --instance example --path my-adjustments/patch.json --position 0
+trident patch remove --instance example --path my-adjustments/patch.json --yes
+```
+
+默认操作 `users` 层，可使用 `--layer import` 管理导入项。位置从零开始，仅在所选层内排序。删除操作会删除 Patch 拥有的文件。也可以直接编辑 JSON 文件，修改在下一次部署时生效。
+
+## 分享时保留 Patch
+
+Trident Portable Instance 会包含导入层的索引条目、规则与资产，包括禁用的导入 Patch。用户 Patch 与本地保留一样留在本机：任何格式的导出都不携带，任何导入都不读取，归档中的用户层内容一律忽略。需要分发的定制应放在导入层。
+
+本地快照保存两层内容与完整索引。重置会保留 Patch 源文件，同时清空运行目录和部署锁；运行目录中的存档等用户数据仍可能因重置而丢失。
+
+其他导出格式不包含导入层的原生 Patch。导出对话框会提示导出后的实例可能无法保持当前启动行为。需要分发实例的导入 Patch 声明时，请使用 Trident Portable Instance。

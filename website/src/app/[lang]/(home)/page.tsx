@@ -10,6 +10,7 @@ import {
   Zap,
   RefreshCw,
   Monitor,
+  Puzzle,
   ShieldCheck,
   ShoppingBag,
   type LucideIcon,
@@ -62,7 +63,6 @@ function getDict(lang: string) {
 
       // Features
       featuresTitle: '为高效而生',
-      marketShotAlt: 'Polymerium 整合包市场界面截图',
       features: [
         {
           title: '整合包市场',
@@ -83,6 +83,10 @@ function getDict(lang: string) {
         {
           title: 'Git 友好的整合包',
           desc: '一个实例就是一个 JSON 文件，像代码一样用 Git 管理你的整合包。',
+        },
+        {
+          title: '原生 Patch',
+          desc: '有序的 Patch 文档可以重塑实例的启动计划——库、参数与 Java 运行时。GTNH、Cleanroom 这类非标准运行时因此能原生运行，为组件式启动器构建的实例也能在导入时完成转换。',
         },
         {
           title: '隐私优先',
@@ -118,6 +122,10 @@ function getDict(lang: string) {
         {
           q: '支持哪些模组加载器？',
           a: '支持 Fabric、Forge、NeoForge 和 Quilt。你可以在创建实例时选择，也可以随时切换。',
+        },
+        {
+          q: '能运行 GTNH、Cleanroom 这类实例吗？',
+          a: '可以。它们的启动数据用版本号加加载器描述不了，Polymerium 会把这些组件声明读成原生 Patch，与自身启动管线共用同一套机制，而不是在旁边加一层兼容代码。为组件式启动器构建的实例也是这样导入的。',
         },
         {
           q: '和 Prism Launcher / HMCL 有什么不同？',
@@ -178,7 +186,6 @@ function getDict(lang: string) {
       'Polymerium describes your game setup with a lightweight profile.json — version, loader, mod list. Instances are built on demand from a shared cache using symlinks. No files are copied. That means zero duplication, instant modpack switching, and Git-friendly version control.',
 
     featuresTitle: 'Built for Efficiency',
-    marketShotAlt: 'Screenshot of the Polymerium modpack marketplace',
     features: [
       {
         title: 'Modpack Marketplace',
@@ -199,6 +206,10 @@ function getDict(lang: string) {
       {
         title: 'Git-Friendly Modpacks',
         desc: 'An instance is a single JSON file. Version control your modpack like code.',
+      },
+      {
+        title: 'Native Patches',
+        desc: 'Ordered patch documents reshape an instance\'s launch plan — libraries, arguments and the Java runtime. That is how non-standard runtimes like GTNH and Cleanroom run natively, and how component-based launcher instances convert on import.',
       },
       {
         title: 'Privacy First',
@@ -231,6 +242,10 @@ function getDict(lang: string) {
       {
         q: 'Which mod loaders are supported?',
         a: 'Fabric, Forge, NeoForge, and Quilt. You choose when creating an instance and can switch anytime.',
+      },
+      {
+        q: 'Can Polymerium run GTNH or Cleanroom instances?',
+        a: 'Yes. Their launch data cannot be described by a version and a mod loader, so Polymerium reads those component declarations as native patches — the same mechanism its own launch pipeline uses, not a compatibility layer bolted on the side. Instances built for component-based launchers import the same way.',
       },
       {
         q: 'How is this different from Prism Launcher / HMCL?',
@@ -275,14 +290,15 @@ function GitHubIcon(props: React.ComponentProps<'svg'>) {
   );
 }
 
-type FeatureVariant = 'hero' | 'wide' | 'default';
+type FeatureVariant = 'wide' | 'default';
 
 const FEATURE_LAYOUT: { variant: FeatureVariant; icon: LucideIcon }[] = [
-  { variant: 'hero', icon: ShoppingBag },
+  { variant: 'default', icon: ShoppingBag },
   { variant: 'default', icon: HardDrive },
   { variant: 'default', icon: RefreshCw },
   { variant: 'default', icon: Camera },
   { variant: 'default', icon: FileJson },
+  { variant: 'default', icon: Puzzle },
   { variant: 'wide', icon: ShieldCheck },
 ];
 
@@ -552,37 +568,6 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
                 variant: 'default' as FeatureVariant,
                 icon: ShieldCheck,
               };
-              if (variant === 'hero') {
-                return (
-                  <Reveal key={f.title} className="md:col-span-4">
-                    <div className="group h-full rounded-2xl border border-border bg-card overflow-hidden transition-all duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5">
-                      <div className="grid h-full items-center sm:grid-cols-2">
-                        <div className="p-7">
-                          <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-primary-foreground">
-                            <Icon className="size-5" />
-                          </div>
-                          <h3 className="mt-4 text-lg font-semibold text-foreground">{f.title}</h3>
-                          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                            {f.desc}
-                          </p>
-                        </div>
-                        <div className="border-t border-border p-4 sm:border-t-0 sm:border-l sm:p-5">
-                          {/* NOTE: aspect-[7/4] matches the source image (1920×1098); swap the screenshot and this ratio must change with it, or object-cover crops again */}
-                          <div className="relative aspect-[7/4] w-full overflow-hidden rounded-lg border border-border">
-                            <Image
-                              src="/screenshots/marketplace.webp"
-                              alt={d.marketShotAlt}
-                              fill
-                              sizes="(min-width: 768px) 22rem, 100vw"
-                              className="object-cover object-left-top transition-transform duration-300 group-hover:scale-[1.02]"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Reveal>
-                );
-              }
               if (variant === 'wide') {
                 return (
                   <Reveal key={f.title} className="md:col-span-6">

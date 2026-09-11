@@ -127,19 +127,15 @@ public class InstanceService
     }
 
     private static JavaHomeLocatorDelegate CreateJavaLocator(Profile profile, Configuration configuration) =>
-        JavaHelper.MakeLocator(major => profile.GetOverride(Profile.OVERRIDE_JAVA_HOME,
-                                                            major switch
-                                                            {
-                                                                8 => configuration.RuntimeJavaHome8,
-                                                                11 => configuration.RuntimeJavaHome11,
-                                                                16 or 17 => configuration.RuntimeJavaHome17,
-                                                                21 => configuration.RuntimeJavaHome21,
-                                                                24 or 25 => configuration.RuntimeJavaHome25,
-                                                                _ => throw new
-                                                                         ArgumentOutOfRangeException(nameof(major),
-                                                                             major,
-                                                                             $"Unsupported java version: {major}")
-                                                            }));
+        JavaHelper.MakeLocator(profile.GetOverride<string>(Profile.OVERRIDE_JAVA_HOME), major => major switch
+        {
+            8 => configuration.RuntimeJavaHome8,
+            11 => configuration.RuntimeJavaHome11,
+            16 or 17 => configuration.RuntimeJavaHome17,
+            21 => configuration.RuntimeJavaHome21,
+            24 or 25 => configuration.RuntimeJavaHome25,
+            _ => null
+        });
 
     public void Play(string key)
     {
@@ -292,8 +288,10 @@ public class InstanceService
 
             var availableTags = profile.Setup.Packages.SelectMany(x => x.Tags).Distinct().OrderBy(x => x).ToList();
 
+            var patchIndex = await PatchStorageHelper.ReadIndexAtAsync(PathDef.Default.DirectoryOfPatches(key));
             var dialog = new ModpackExporterDialog
             {
+                HasPatches = patchIndex.Import.Count > 0,
                 Pack = pack,
                 AvailableTags = availableTags,
                 OverlayService = _overlayService,
