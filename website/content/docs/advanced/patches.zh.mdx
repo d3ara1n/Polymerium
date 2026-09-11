@@ -50,17 +50,22 @@ patches/
 
 ## 编写 Patch
 
-下面的示例修改自动选择 Java 时使用的大版本，并追加一个 JVM 选项：
+下面的示例收窄实例可接受的 Java 大版本，并追加一个 JVM 选项：
 
 ```json
 {
-  "format": 1,
+  "format": 2,
   "name": "My launch adjustments",
   "operations": [
     {
-      "target": "launch.javaMajor",
+      "target": "launch.compatibleJavaMajors",
       "action": "replace",
-      "value": 25
+      "value": [21, 25]
+    },
+    {
+      "target": "launch.compatibleJavaMajors",
+      "action": "intersect",
+      "value": [17, 21]
     },
     {
       "target": "launch.jvmArguments",
@@ -71,7 +76,7 @@ patches/
 }
 ```
 
-你自行指定的 Java 路径——实例指定项或设置里按大版本配置的 home——会按原样使用，绝不会被悄悄替换成别的运行时，因此专门测试某个 JRE 时测到的就是它；路径有误时会明确报 Java 未找到。没有指定时，修改后的大版本会解析到启动器为该大版本下载或找到的运行时。Mojang 未发布的版本（如 11、24）需要你自备 Java。
+`compatibleJavaMajors` 是该结果可接受的 Java 大版本集合：`replace` 直接声明集合，`intersect` 收窄为两侧都接受的大版本。你自行指定的 Java 路径——实例指定项或设置里按大版本配置的 home——会按原样使用，绝不会被悄悄替换成别的运行时，因此专门测试某个 JRE 时测到的就是它；启动器不会检查路径是否可用，路径有误会在游戏启动时报错，而不是悄悄换成别的运行时。你已配置的大版本中最新的可接受版本胜出；没有任何已配置路径覆盖可接受版本时，启动器使用它为可捆绑的最新可接受大版本下载的运行时。Mojang 未发布的版本（如 11、24）需要你自行配置 Java；如果实例的 Patch 取交集后没有任何可接受的大版本，会报没有可兼容的 Java。
 
 参数以 token 组的数组保存。例如 `[["--tweakClass", "example.Tweaker"]]` 将选项和值放在同一组中，重复选项也会保留顺序。
 

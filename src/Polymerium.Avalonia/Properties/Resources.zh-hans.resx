@@ -273,6 +273,12 @@
     <data name="InstancePropertiesPage_JavaAdditionalArgumentsLabelText" xml:space="preserve">
         <value>Java 附加命令行参数</value>
     </data>
+    <data name="InstanceService_JavaUnavailableNotificationTitle" xml:space="preserve">
+        <value>实例 {0} 的 Java 运行时不可用</value>
+    </data>
+    <data name="InstanceService_ConfigureJavaActionText" xml:space="preserve">
+        <value>配置 Java 预设</value>
+    </data>
     <data name="InstancePropertiesPage_CommandWrapperLabelText" xml:space="preserve">
         <value>包装命令</value>
     </data>

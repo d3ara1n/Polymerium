@@ -282,6 +282,12 @@
     <data name="InstancePropertiesPage_JavaAdditionalArgumentsLabelText" xml:space="preserve">
         <value>Java Additional Arguments</value>
     </data>
+    <data name="InstanceService_JavaUnavailableNotificationTitle" xml:space="preserve">
+        <value>Java runtime unavailable for {0}</value>
+    </data>
+    <data name="InstanceService_ConfigureJavaActionText" xml:space="preserve">
+        <value>Configure Java presets</value>
+    </data>
     <data name="InstancePropertiesPage_CommandWrapperLabelText" xml:space="preserve">
         <value>Command Wrapper</value>
     </data>
