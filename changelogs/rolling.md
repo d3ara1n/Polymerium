@@ -23,4 +23,4 @@
 
 ### Removed
 
--
+- Remove the built-in MirrorChyan CDK and make GitHub the default update source (#POLY-144)

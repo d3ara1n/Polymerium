@@ -1834,7 +1834,7 @@
         <value>MirrorChyan CDK</value>
     </data>
     <data name="SettingsPage_MirrorChyanCdkPlaceholder" xml:space="preserve">
-        <value>(Optional) Enter your CDK here</value>
+        <value>Enter your CDK here</value>
     </data>
     <data name="SettingsPage_MirrorChyanCdkHint" xml:space="preserve">
         <value>Get a CDK to support development: </value>
