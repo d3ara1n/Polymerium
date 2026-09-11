@@ -90,6 +90,20 @@
                     </TabStrip.ItemTemplate>
                 </TabStrip>
             </ScrollViewer>
+            <husk:InfoBar Classes="Warning">
+                <husk:InfoBar.IsVisible>
+                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                        <Binding Path="$parent[app:ModpackExporterDialog].HasPatches" />
+                        <Binding
+                            Converter="{x:Static husk:ObjectConverters.NotMatch}"
+                            ConverterParameter="trident"
+                            Path="$parent[app:ModpackExporterDialog].SelectedExporterLabel.Label" />
+                    </MultiBinding>
+                </husk:InfoBar.IsVisible>
+                <TextBlock
+                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_PatchesOmittedText}}"
+                    TextWrapping="Wrap" />
+            </husk:InfoBar>
         </StackPanel>
         <!--  基本选项  -->
         <StackPanel Spacing="8">

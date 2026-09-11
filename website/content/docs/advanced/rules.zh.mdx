@@ -1,6 +1,6 @@
 ---
 title: 部署规则
-description: 通过强大的规则引擎精细控制模组的部署方式——按条件跳过、重定向或规范化文件。
+description: 通过规则引擎精细控制模组的部署方式——按条件跳过、重定向或重命名文件。
 ---
 
 ## 什么是部署规则？
@@ -9,46 +9,59 @@ description: 通过强大的规则引擎精细控制模组的部署方式——�
 
 - "在 Fabric 实例中跳过此模组"
 - "将此数据包重定向到 Paxi 文件夹"
-- "规范化此模组的文件名"
+- "把此模组的文件名改成稳定名称"
 
-规则附加在实例模组列表中的各个包上。
+规则存放在 `profile.json` 的 `setup.rules` 下，也可以在实例的 Setup 页面编辑。
 
 ## 规则结构
 
 一条规则由两部分组成：
 
 1. **选择器**——这条规则应用于哪些包？
-2. **操作**——对匹配的包执行什么动作？
+2. **操作**——对匹配的包执行哪些动作？
 
 ### 选择器
 
-选择器是布尔表达式，通过包的属性进行匹配：
+选择器是布尔表达式，通过包的属性进行匹配。每个选择器是一个带 `type` 的 JSON 对象：
 
-| 选择器 | 匹配依据 | 示例 |
+| `type` | 匹配依据 | 字段 |
 |----------|-----------|---------|
-| `Pref` | 包引用（精确或部分匹配） | `pref://modrinth/sodium` |
-| `Repository` | 来源仓库 | `curseforge` |
-| `Tag` | 标签名 | `server-only` |
-| `Kind` | 资源类型 | `mod`、`resourcepack`、`shaderpack`、`datapack` |
+| `pref` | 包引用（精确或部分匹配） | `pref` |
+| `repository` | 来源仓库 | `repository` |
+| `tag` | 标签名 | `tag` |
+| `kind` | 资源类型 | `kind` |
 
-选择器可以通过布尔运算符组合使用：
+`kind` 的取值为 `mod`、`resourcePack`、`shaderPack`、`dataPack` 与 `world`。
 
-- `And`——所有子选择器都必须匹配
-- `Or`——任意一个子选择器匹配即可
-- `Not`——反转选择器的匹配结果
+选择器可以通过布尔运算符组合，操作数放在 `children` 数组里：
 
-示例：匹配所有来自 CurseForge 的数据包：
-```
-And(Repository=curseforge, Kind=datapack)
+- `and`——所有子选择器都必须匹配
+- `or`——任意一个子选择器匹配即可
+- `not`——反转选择器的匹配结果
+
+例如，匹配所有来自 CurseForge 的数据包：
+
+```json
+{
+  "type": "and",
+  "children": [
+    { "type": "repository", "repository": "curseforge" },
+    { "type": "kind", "kind": "dataPack" }
+  ]
+}
 ```
 
 ### 操作
 
-| 操作 | 作用 |
+一条规则可以组合以下三种操作：
+
+| 字段 | 作用 |
 |--------|-------------|
-| `Skip` | 完全不部署此包 |
-| `Normalize` | 将文件重命名为标准化名称 |
-| `Destination` | 部署到自定义路径而非默认路径 |
+| `"skipping": true` | 完全不部署此包 |
+| `"destination": "<文件夹>"` | 部署到指定文件夹，而不是默认位置 |
+| `"normalizing": true` | 把文件重命名为包的项目名加原扩展名 |
+
+`destination` 相对于运行目录（`build/`）。`skipping` 与 `normalizing` 省略时为 false，规则本身也可以用 `"enabled": false` 关闭。
 
 ## 常见用例
 
@@ -56,32 +69,38 @@ And(Repository=curseforge, Kind=datapack)
 
 如果你有一些不应出现在客户端实例中的服务端模组：
 
-```
-Selector: Tag=server-only
-Action: Skip
+```json
+{
+  "selector": { "type": "tag", "tag": "server-only" },
+  "skipping": true
+}
 ```
 
 ### 为 Paxi 重定向数据包
 
 不同的加载器使用不同的数据包路径。如果你使用 Paxi：
 
-```
-Selector: Kind=datapack
-Action: Destination → datapacks/
+```json
+{
+  "selector": { "type": "kind", "kind": "dataPack" },
+  "destination": "datapacks/"
+}
 ```
 
 ### 规范化资源包文件名
 
 资源包文件名通常包含版本号——例如 `Sapphire-v2.1.zip`。当资源包更新到 `Sapphire-v2.2.zip` 时，文件名发生了变化，Minecraft 会忘记你的资源包选择，你每次都必须重新启用它。
 
-规范化通过将文件重命名为一致的名称来解决这个问题：
+`normalizing` 会把部署的文件重命名为包的项目名加原扩展名，让名称在更新中保持稳定：
 
-```
-Selector: Pref=pref://modrinth/sapphire
-Action: Normalize → Sapphire.zip
+```json
+{
+  "selector": { "type": "pref", "pref": "pref://modrinth/sapphire" },
+  "normalizing": true
+}
 ```
 
-现在部署的文件名始终保持为 `Sapphire.zip`，无论作者使用了什么版本号。你的资源包不会在每次更新时被取消选择。
+项目名来自安装该包的仓库，所以无论作者使用什么版本号，文件都叫 `Sapphire.zip`。你的资源包不会在每次更新时被取消选择。
 
 ## 添加规则
 

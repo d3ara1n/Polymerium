@@ -25,6 +25,9 @@ public partial class ModpackExporterDialog : Dialog
     public static readonly StyledProperty<string> AuthorOverrideProperty =
         AvaloniaProperty.Register<ModpackExporterDialog, string>(nameof(AuthorOverride));
 
+    public static readonly StyledProperty<bool> HasPatchesProperty =
+        AvaloniaProperty.Register<ModpackExporterDialog, bool>(nameof(HasPatches));
+
     public static readonly StyledProperty<int> PackageCountProperty =
         AvaloniaProperty.Register<ModpackExporterDialog, int>(nameof(PackageCount));
 
@@ -74,6 +77,12 @@ public partial class ModpackExporterDialog : Dialog
     {
         get => GetValue(AuthorOverrideProperty);
         set => SetValue(AuthorOverrideProperty, value);
+    }
+
+    public bool HasPatches
+    {
+        get => GetValue(HasPatchesProperty);
+        set => SetValue(HasPatchesProperty, value);
     }
 
     public required int PackageCount

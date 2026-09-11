@@ -2,6 +2,7 @@
   "title": "Advanced",
   "pages": [
     "rules",
+    "patches",
     "workspace",
     "modpack-dev",
     "cli",

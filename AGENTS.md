@@ -34,7 +34,7 @@ Rule of thumb: when a behavior spans both layers, the real logic almost certainl
 
 - Full solution build: `dotnet build "Polymerium.slnx"`
 - Focused app build: `dotnet build "src/Polymerium.Avalonia/Polymerium.Avalonia.csproj"`
-- There are no test projects in this repo right now. `dotnet test "Polymerium.slnx"` is not a meaningful verification step; use build plus targeted checks instead.
+- **Do not add test cases, mock-based suites, or feature-specific test/check projects.** The sole exception is the Pref/PURL parsing and formatting library. Validate deployment and launch behavior with actual distribution packs and real instance runs; a successful build only verifies compilation, and passing assertions do not establish real-world support.
 - **Do NOT run any formatting tools** (`scripts/Format-Files.ps1`, `csharpier`, `xstyler`, etc.). They operate across the entire repo including submodules and will produce unintended changes, and can also corrupt parts of the code. Only the user may invoke formatting.
 
 ## Architecture Entry Points

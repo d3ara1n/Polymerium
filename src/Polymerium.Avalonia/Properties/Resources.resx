@@ -1566,6 +1566,9 @@
     <data name="DeployStage_ProcessLoader" xml:space="preserve">
         <value>Installing mod loader...</value>
     </data>
+    <data name="DeployStage_ApplyLaunchPatch" xml:space="preserve">
+        <value>Applying launch patches...</value>
+    </data>
     <data name="DeployStage_SyncPackages" xml:space="preserve">
         <value>Synchronizing packages...</value>
     </data>
@@ -2031,8 +2034,11 @@
     <data name="ModpackExporterDialog_AdvancedOptionsLabelText" xml:space="preserve">
         <value>Advanced Options</value>
     </data>
+    <data name="ModpackExporterDialog_PatchesOmittedText" xml:space="preserve">
+        <value>This format does not include native patches, so the exported instance may not retain its current launch behavior. Use the Trident format to preserve imported patches and their assets.</value>
+    </data>
     <data name="ModpackExporterDialog_TridentOptionsInfoBarText" xml:space="preserve">
-        <value>These options only take effect when exporting as Trident Portable Instance.</value>
+        <value>These options only take effect when exporting as Trident.</value>
     </data>
     <data name="ModpackExporterDialog_IncludingSourceLabelText" xml:space="preserve">
         <value>Include source information</value>

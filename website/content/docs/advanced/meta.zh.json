@@ -2,6 +2,7 @@
   "title": "进阶",
   "pages": [
     "rules",
+    "patches",
     "workspace",
     "modpack-dev",
     "cli",

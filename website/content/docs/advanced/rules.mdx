@@ -1,6 +1,6 @@
 ---
 title: Deployment Rules
-description: Fine-tune how mods are deployed with a powerful rule engine — skip, redirect, or normalize files conditionally.
+description: Fine-tune how mods are deployed with a rule engine that can skip, redirect, or rename files conditionally.
 ---
 
 ## What Are Deployment Rules?
@@ -9,46 +9,59 @@ Deployment rules let you control how individual mods (or groups of mods) are han
 
 - "Skip this mod on Fabric instances"
 - "Redirect this datapack to the Paxi folder"
-- "Normalize this mod's filename"
+- "Rename this mod's file to a stable name"
 
-Rules are attached to individual packages in your instance's mod list.
+Rules live in `profile.json` under `setup.rules`, and can also be edited from the instance's Setup page.
 
 ## Rule Anatomy
 
 A rule has two parts:
 
 1. **Selector** — which packages does this rule apply to?
-2. **Action** — what should happen to matching packages?
+2. **Actions** — what should happen to matching packages?
 
 ### Selectors
 
-Selectors are boolean expressions that match packages by their properties:
+Selectors are boolean expressions that match packages by their properties. A selector is a JSON object with a `type`:
 
-| Selector | Matches By | Example |
+| `type` | Matches by | Field |
 |----------|-----------|---------|
-| `Pref` | Package Reference (exact or partial) | `pref://modrinth/sodium` |
-| `Repository` | Source repository | `curseforge` |
-| `Tag` | Tag name | `server-only` |
-| `Kind` | Resource type | `mod`, `resourcepack`, `shaderpack`, `datapack` |
+| `pref` | Package reference (exact or partial) | `pref` |
+| `repository` | Source repository | `repository` |
+| `tag` | Tag name | `tag` |
+| `kind` | Resource type | `kind` |
 
-Selectors can be combined with boolean operators:
+`kind` values are `mod`, `resourcePack`, `shaderPack`, `dataPack` and `world`.
 
-- `And` — all sub-selectors must match
-- `Or` — any sub-selector must match
-- `Not` — inverts a selector
+Selectors combine through boolean operators, which take their operands in a `children` array:
 
-Example: match all CurseForge datapacks:
-```
-And(Repository=curseforge, Kind=datapack)
+- `and` — all sub-selectors must match
+- `or` — any sub-selector must match
+- `not` — inverts a selector
+
+For example, all CurseForge data packs:
+
+```json
+{
+  "type": "and",
+  "children": [
+    { "type": "repository", "repository": "curseforge" },
+    { "type": "kind", "kind": "dataPack" }
+  ]
+}
 ```
 
 ### Actions
 
-| Action | What It Does |
+A rule applies any combination of three actions:
+
+| Field | What it does |
 |--------|-------------|
-| `Skip` | Don't deploy this package at all |
-| `Normalize` | Rename the file to a standardized name |
-| `Destination` | Deploy to a custom path instead of the default |
+| `"skipping": true` | Don't deploy this package at all |
+| `"destination": "<folder>"` | Deploy into this folder instead of the default one |
+| `"normalizing": true` | Rename the file to the package's project name plus its original extension |
+
+`destination` is relative to the Run Directory (`build/`). `skipping` and `normalizing` default to false when omitted, and a rule itself can be turned off with `"enabled": false`.
 
 ## Common Use Cases
 
@@ -56,38 +69,44 @@ And(Repository=curseforge, Kind=datapack)
 
 If you have server-side mods that shouldn't be in a client instance:
 
-```
-Selector: Tag=server-only
-Action: Skip
+```json
+{
+  "selector": { "type": "tag", "tag": "server-only" },
+  "skipping": true
+}
 ```
 
 ### Redirect Datapacks for Paxi
 
 Different loaders use different datapack paths. If you use Paxi:
 
-```
-Selector: Kind=datapack
-Action: Destination → datapacks/
+```json
+{
+  "selector": { "type": "kind", "kind": "dataPack" },
+  "destination": "datapacks/"
+}
 ```
 
 ### Normalize Filenames for Resource Packs
 
 Resource pack files often include version numbers in their filenames — `Sapphire-v2.1.zip`, for example. When the pack updates to `Sapphire-v2.2.zip`, the filename changes, and Minecraft forgets your resource pack selection. You have to re-enable it every time.
 
-Normalize fixes this by renaming the file to a consistent name:
+`normalizing` renames the deployed file to the package's project name plus its original extension, so the name stays stable across updates:
 
-```
-Selector: Pref=pref://modrinth/sapphire
-Action: Normalize → Sapphire.zip
+```json
+{
+  "selector": { "type": "pref", "pref": "pref://modrinth/sapphire" },
+  "normalizing": true
+}
 ```
 
-Now the deployed filename stays `Sapphire.zip` regardless of what version number the author used. Your resource pack won't be deselected every time it updates.
+The project name comes from the repository the package was installed from, so the file stays `Sapphire.zip` regardless of what version number the author used. Your resource pack won't be deselected every time it updates.
 
 ## Adding Rules
 
 1. Open your instance and go to the **Setup** tab.
 2. Open the **Rules** editor for the instance.
-3. Add a new rule: define the selector and action.
+3. Add a new rule: define the selector and its actions.
 4. Save. Rules take effect on the next deploy.
 
 ## Rules and Tags
