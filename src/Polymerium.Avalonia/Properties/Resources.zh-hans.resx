@@ -1825,7 +1825,7 @@
         <value>Mirror酱 CDK</value>
     </data>
     <data name="SettingsPage_MirrorChyanCdkPlaceholder" xml:space="preserve">
-        <value>（可选）在此输入你的 CDK</value>
+        <value>在此输入你的 CDK</value>
     </data>
     <data name="SettingsPage_MirrorChyanCdkHint" xml:space="preserve">
         <value>获取 CDK 以支持开发：</value>

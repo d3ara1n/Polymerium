@@ -40,8 +40,6 @@ internal static class Program
 
     public static readonly string MagicWords = "say u say me";
 
-    public static readonly string MirrorChyanCdk = "0001bf520b5a75eb3e61f458";
-
     private static Action? exitAction;
 
     internal static IServiceProvider? Services { get; private set; }

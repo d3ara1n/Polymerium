@@ -114,9 +114,6 @@ public class UpdateService(
         }
     }
 
-    private void ApplySourceConfiguration()
-    {
-        var cdk = configurationService.Value.UpdateMirrorChyanCdk;
-        mirrorChyanSourceOptions.Value.Cdk = !string.IsNullOrEmpty(cdk) ? cdk : Program.MirrorChyanCdk;
-    }
+    private void ApplySourceConfiguration() =>
+        mirrorChyanSourceOptions.Value.Cdk = configurationService.Value.UpdateMirrorChyanCdk;
 }
