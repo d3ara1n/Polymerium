@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
+using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Huskui.Avalonia.Models;
 using Polymerium.Avalonia.Dialogs;
@@ -18,6 +19,7 @@ using TridentCore.Abstractions.Accounts;
 using TridentCore.Abstractions.Extensions;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Utilities;
+using TridentCore.Core.Exceptions;
 using TridentCore.Core.Igniters;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
@@ -94,7 +96,7 @@ public class InstanceService
         var cooked = AccountHelper.ToCooked(account);
         _persistenceService.UseAccount(account.Uuid);
         var profile = _profileManager.GetImmutable(key);
-        var locator = CreateJavaLocator(profile, _configurationService.Value);
+        var vault = CreateJavaVault(profile, _configurationService.Value);
         var deploy = new DeployOptions(false);
         var launch =
             new LaunchOptions(additionalArguments:
@@ -116,32 +118,68 @@ public class InstanceService
                               launchMode: mode,
                               account: cooked,
                               brand: Program.Brand);
-        _instanceManager.DeployAndLaunch(key, deploy, launch, locator);
+        _instanceManager.DeployAndLaunch(key, deploy, launch, vault);
     }
 
     public void Deploy(string key, bool? fullCheckMode = null)
     {
         var profile = _profileManager.GetImmutable(key);
-        var locator = CreateJavaLocator(profile, _configurationService.Value);
-        _instanceManager.Deploy(key, new(fullCheckMode), locator);
+        var vault = CreateJavaVault(profile, _configurationService.Value);
+        _instanceManager.Deploy(key, new(fullCheckMode), vault);
     }
 
-    private static JavaHomeLocatorDelegate CreateJavaLocator(Profile profile, Configuration configuration) =>
-        JavaHelper.MakeLocator(profile.GetOverride<string>(Profile.OVERRIDE_JAVA_HOME), major => major switch
+    // vault 是“用户实际提供了哪些 major”：实例 override 是通配项（任何 major 都落它），否则按全局
+    //  预设逐 major 列出。空值不构成提供项，仲裁时才不会被当成“有”。
+    private static IReadOnlyList<(uint? Major, string Home)> CreateJavaVault(Profile profile, Configuration configuration)
+    {
+        if (profile.GetOverride<string>(Profile.OVERRIDE_JAVA_HOME) is { Length: > 0 } home)
         {
-            8 => configuration.RuntimeJavaHome8,
-            11 => configuration.RuntimeJavaHome11,
-            16 or 17 => configuration.RuntimeJavaHome17,
-            21 => configuration.RuntimeJavaHome21,
-            24 or 25 => configuration.RuntimeJavaHome25,
-            _ => null
-        });
+            return JavaHelper.WildcardVault(home);
+        }
+
+        List<(uint? Major, string Home)> vault = [];
+        Add(8, configuration.RuntimeJavaHome8);
+        Add(11, configuration.RuntimeJavaHome11);
+        Add(16, configuration.RuntimeJavaHome17);
+        Add(17, configuration.RuntimeJavaHome17);
+        Add(21, configuration.RuntimeJavaHome21);
+        Add(24, configuration.RuntimeJavaHome25);
+        Add(25, configuration.RuntimeJavaHome25);
+        return vault;
+
+        void Add(uint major, string home)
+        {
+            if (!string.IsNullOrEmpty(home))
+            {
+                vault.Add((major, home));
+            }
+        }
+    }
+
+    // 两类失败都要用户回到 Java 设置里指定运行时：需求集为空（patch 自相矛盾）与两个提供方都覆盖不到
+    //  需求。提示直接把用户带到设置页，而不是让他自己找。
+    private void PopJavaUnavailable(Exception ex, string key) =>
+        _notificationService.PopMessage(ex,
+                                        LanguageManager.Instance.InstanceService_JavaUnavailableNotificationTitle.Current()
+                                                 .Replace("{0}", key),
+                                        GrowlLevel.Danger,
+                                        ThumbnailHelper.ForInstance(key),
+                                        new GrowlAction(LanguageManager.Instance.InstanceService_ConfigureJavaActionText.Current(),
+                                                        new RelayCommand(() => _navigationService.Navigate<SettingsPage>())));
 
     public void Play(string key)
     {
         try
         {
             DeployAndLaunch(key, LaunchMode.Managed);
+        }
+        catch (NoCompatibleJavaException ex)
+        {
+            PopJavaUnavailable(ex, key);
+        }
+        catch (JavaNotFoundException ex)
+        {
+            PopJavaUnavailable(ex, key);
         }
         catch (Exception ex)
         {
@@ -158,6 +196,14 @@ public class InstanceService
         try
         {
             Deploy(key, null);
+        }
+        catch (NoCompatibleJavaException ex)
+        {
+            PopJavaUnavailable(ex, key);
+        }
+        catch (JavaNotFoundException ex)
+        {
+            PopJavaUnavailable(ex, key);
         }
         catch (Exception ex)
         {

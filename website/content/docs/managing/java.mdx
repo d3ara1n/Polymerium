@@ -12,7 +12,11 @@ Polymerium doesn't scan your system drive for Java installations. It uses two so
 
 ### When Auto-Deploy Happens
 
-If you haven't configured a Java path (or the configured path doesn't work), Polymerium automatically downloads the appropriate runtime during deploy. This happens once — the runtime is cached and reused.
+Polymerium resolves the Java majors an instance accepts against the paths you configured. If none of your configured paths covers any accepted major, it downloads a matching runtime during deploy. This happens once — the runtime is cached and reused.
+
+Configured paths are used as given: Polymerium does not check that a path works, so a wrong path fails when the game starts instead of falling back to another runtime.
+
+A modpack can narrow the accepted majors through a native patch. If nothing you configured covers the accepted majors, or the accepted set is empty, the launch fails with a prompt to open Java settings.
 
 Auto-deployed runtimes live in `cache/runtimes/` and don't touch your system registry or replace your system Java.
 

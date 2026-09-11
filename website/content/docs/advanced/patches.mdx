@@ -50,17 +50,22 @@ Paths are relative to their layer. Within each deployment boundary, imported ent
 
 ## Write a patch
 
-This example changes the Java major used by automatic selection and appends a JVM option:
+This example narrows the Java majors the instance accepts and appends a JVM option:
 
 ```json
 {
-  "format": 1,
+  "format": 2,
   "name": "My launch adjustments",
   "operations": [
     {
-      "target": "launch.javaMajor",
+      "target": "launch.compatibleJavaMajors",
       "action": "replace",
-      "value": 25
+      "value": [21, 25]
+    },
+    {
+      "target": "launch.compatibleJavaMajors",
+      "action": "intersect",
+      "value": [17, 21]
     },
     {
       "target": "launch.jvmArguments",
@@ -71,7 +76,7 @@ This example changes the Java major used by automatic selection and appends a JV
 }
 ```
 
-A Java path you set yourself — the instance override or a per-major home in the settings — is used exactly as given and never silently replaced by another runtime, so testing a specific JRE really tests that JRE; a path that turns out to be wrong fails with an explicit Java-not-found error. When you have not set one, the patched major is resolved to the runtime the launcher downloads or finds for that major. A major Mojang does not publish, such as 11 or 24, needs a Java you provide yourself.
+`compatibleJavaMajors` is a set of every Java major the result accepts: `replace` declares it outright, `intersect` narrows it to the majors both sides accept. A Java path you set yourself — the instance override or a per-major home in the settings — is used exactly as given and never silently replaced by another runtime, so testing a specific JRE really tests that JRE; the launcher does not check that the path works, so a wrong path fails when the game starts instead of quietly running on something else. The newest accepted major you have configured wins; when no configured path covers any accepted major the launcher uses the runtime it downloads for the newest accepted major it can bundle. A major Mojang does not publish, such as 11 or 24, needs a Java you configured yourself, and an instance whose patches leave no accepted major reports that no compatible Java remains.
 
 Arguments are arrays of token groups. For example, `[["--tweakClass", "example.Tweaker"]]` keeps an option and its value together. Repeated options retain their order.
 
