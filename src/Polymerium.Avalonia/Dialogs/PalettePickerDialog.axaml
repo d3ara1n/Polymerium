@@ -1,0 +1,96 @@
+<husk:Dialog
+    x:Class="Polymerium.Avalonia.Dialogs.PalettePickerDialog"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Polymerium.Avalonia.Models"
+    Width="400"
+    d:DesignHeight="400"
+    d:DesignWidth="400"
+    IsPrimaryButtonVisible="True"
+    Message="{Translate {x:Static app:LanguageManager+Keys.PalettePickerDialog_Message}}"
+    Title="{Translate {x:Static app:LanguageManager+Keys.PalettePickerDialog_Title}}"
+    mc:Ignorable="d">
+
+    <ListBox
+        ItemsSource="{x:Static models:PalettePreviewItem.All}"
+        SelectedItem="{Binding $parent[app:PalettePickerDialog].Selected, Mode=TwoWay}"
+        Theme="{StaticResource CleanListBoxTheme}">
+        <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Spacing="8" />
+            </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemTemplate>
+            <DataTemplate x:DataType="models:PalettePreviewItem">
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Spacing="2">
+                        <TextBlock
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="{Binding Name}" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{app:LocalizedEnum {Binding Palette.Gray}}" />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text=" · " />
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{app:LocalizedEnum {Binding Palette.Accent}}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <!--  灰阶 surface 预览：面板底 + 文字行  -->
+                        <Border
+                            Width="56"
+                            Height="36"
+                            VerticalAlignment="Center"
+                            Background="{Binding DarkSurfaceHex}"
+                            BorderBrush="{StaticResource ControlBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{StaticResource SmallCornerRadius}">
+                            <StackPanel
+                                Margin="7"
+                                VerticalAlignment="Center"
+                                Spacing="4">
+                                <Border
+                                    Width="28"
+                                    Height="4"
+                                    Background="{Binding TextHex}"
+                                    CornerRadius="2" />
+                                <Border
+                                    Width="18"
+                                    Height="4"
+                                    Background="{Binding TextHex}"
+                                    CornerRadius="2"
+                                    Opacity="0.6" />
+                            </StackPanel>
+                        </Border>
+                        <!--  强调色块  -->
+                        <Border
+                            Width="36"
+                            Height="36"
+                            VerticalAlignment="Center"
+                            Background="{Binding AccentHex}"
+                            CornerRadius="{StaticResource SmallCornerRadius}" />
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</husk:Dialog>

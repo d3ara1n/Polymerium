@@ -65,6 +65,7 @@ public partial class MainWindow : AppWindow
         if (Application.Current is App { Theme: { } appTheme })
         {
             appTheme.Accent = theme.Accent;
+            appTheme.Gray = theme.Gray;
             appTheme.Corner = theme.Corner;
         }
 

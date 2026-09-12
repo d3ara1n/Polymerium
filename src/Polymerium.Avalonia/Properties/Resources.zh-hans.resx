@@ -1704,6 +1704,126 @@
     <data name="SettingsPage_AccentColorLabelText" xml:space="preserve">
         <value>强调色</value>
     </data>
+    <data name="SettingsPage_GrayColorLabelText" xml:space="preserve">
+        <value>灰阶色调</value>
+    </data>
+    <data name="SettingsPage_PaletteLabelText" xml:space="preserve">
+        <value>调色板</value>
+    </data>
+    <data name="SettingsPage_PaletteButtonText" xml:space="preserve">
+        <value>选择调色板...</value>
+    </data>
+    <data name="PalettePickerDialog_Title" xml:space="preserve">
+        <value>选择调色板</value>
+    </data>
+    <data name="PalettePickerDialog_Message" xml:space="preserve">
+        <value>调色板会将灰阶与强调色设置为成套的预设组合。</value>
+    </data>
+    <data name="GrayColor_Neutral" xml:space="preserve">
+        <value>中性灰</value>
+    </data>
+    <data name="GrayColor_Slate" xml:space="preserve">
+        <value>石板灰</value>
+    </data>
+    <data name="GrayColor_Mauve" xml:space="preserve">
+        <value>藕荷灰</value>
+    </data>
+    <data name="GrayColor_Sage" xml:space="preserve">
+        <value>鼠尾草灰</value>
+    </data>
+    <data name="GrayColor_Olive" xml:space="preserve">
+        <value>橄榄灰</value>
+    </data>
+    <data name="GrayColor_Sand" xml:space="preserve">
+        <value>沙色灰</value>
+    </data>
+    <data name="GrayColor_Warm" xml:space="preserve">
+        <value>暖灰</value>
+    </data>
+    <data name="AccentColor_System" xml:space="preserve">
+        <value>跟随系统</value>
+    </data>
+    <data name="AccentColor_Neutral" xml:space="preserve">
+        <value>中性</value>
+    </data>
+    <data name="AccentColor_Tomato" xml:space="preserve">
+        <value>番茄红</value>
+    </data>
+    <data name="AccentColor_Red" xml:space="preserve">
+        <value>正红</value>
+    </data>
+    <data name="AccentColor_Ruby" xml:space="preserve">
+        <value>宝石红</value>
+    </data>
+    <data name="AccentColor_Crimson" xml:space="preserve">
+        <value>绯红</value>
+    </data>
+    <data name="AccentColor_Pink" xml:space="preserve">
+        <value>粉色</value>
+    </data>
+    <data name="AccentColor_Plum" xml:space="preserve">
+        <value>梅紫</value>
+    </data>
+    <data name="AccentColor_Purple" xml:space="preserve">
+        <value>紫色</value>
+    </data>
+    <data name="AccentColor_Violet" xml:space="preserve">
+        <value>紫罗兰</value>
+    </data>
+    <data name="AccentColor_Iris" xml:space="preserve">
+        <value>鸢尾紫</value>
+    </data>
+    <data name="AccentColor_Indigo" xml:space="preserve">
+        <value>靛蓝</value>
+    </data>
+    <data name="AccentColor_Blue" xml:space="preserve">
+        <value>蓝色</value>
+    </data>
+    <data name="AccentColor_Cyan" xml:space="preserve">
+        <value>青色</value>
+    </data>
+    <data name="AccentColor_Teal" xml:space="preserve">
+        <value>凫青</value>
+    </data>
+    <data name="AccentColor_Jade" xml:space="preserve">
+        <value>翡翠</value>
+    </data>
+    <data name="AccentColor_Green" xml:space="preserve">
+        <value>绿色</value>
+    </data>
+    <data name="AccentColor_Grass" xml:space="preserve">
+        <value>草绿</value>
+    </data>
+    <data name="AccentColor_Bronze" xml:space="preserve">
+        <value>青铜</value>
+    </data>
+    <data name="AccentColor_Gold" xml:space="preserve">
+        <value>金色</value>
+    </data>
+    <data name="AccentColor_Orange" xml:space="preserve">
+        <value>橙色</value>
+    </data>
+    <data name="AccentColor_Amber" xml:space="preserve">
+        <value>琥珀</value>
+    </data>
+    <data name="AccentColor_Yellow" xml:space="preserve">
+        <value>黄色</value>
+    </data>
+    <data name="AccentColor_Lime" xml:space="preserve">
+        <value>青柠</value>
+    </data>
+    <data name="AccentColor_Mint" xml:space="preserve">
+        <value>薄荷</value>
+    </data>
+    <data name="AccentColor_Sky" xml:space="preserve">
+        <value>天蓝</value>
+    </data>
+    <data name="AccentColor_Brown" xml:space="preserve">
+        <value>棕色</value>
+    </data>
+    <data name="AccentColor_Ember" xml:space="preserve">
+        <value>余烬</value>
+    </data>
     <data name="DeployStage_EnsureRuntime" xml:space="preserve">
         <value>准备 Java 运行时...</value>
     </data>
@@ -2599,10 +2719,10 @@
         <value>继续即表示您已阅读并同意上述隐私条款。</value>
     </data>
     <data name="OobePrivacy_CrashReportingToggleText" xml:space="preserve">
-        <value>发送崩溃报告和启动心跳</value>
+        <value>发送崩溃报告和会话记录</value>
     </data>
     <data name="OobePrivacy_CrashReportingToggleDescription" xml:space="preserve">
-        <value>开启后，Polymerium 会向 Sentry 发送异常详情（类型、消息、堆栈）和一次启动心跳，用于统计崩溃率。关闭后所有遥测彻底停止。重启后生效。</value>
+        <value>开启后，Polymerium 会向 Sentry 发送异常详情（类型、消息、堆栈）和会话记录，用于统计崩溃率。关闭后所有遥测彻底停止。重启后生效。</value>
     </data>
     <!-- Maintenance Storage View -->
     <data name="MaintenanceStoragePage_Title" xml:space="preserve">

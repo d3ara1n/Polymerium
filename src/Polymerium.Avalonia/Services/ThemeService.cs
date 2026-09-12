@@ -16,6 +16,12 @@ public sealed class ThemeService(ConfigurationService configurationService)
         set => Set(ref field, value, v => configurationService.Value.ApplicationStyleAccent = v);
     } = configurationService.Value.ApplicationStyleAccent;
 
+    public GrayColor Gray
+    {
+        get;
+        set => Set(ref field, value, v => configurationService.Value.ApplicationStyleGray = v);
+    } = configurationService.Value.ApplicationStyleGray;
+
     public int ThemeVariantIndex
     {
         get;

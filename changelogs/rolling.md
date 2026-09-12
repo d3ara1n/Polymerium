@@ -2,6 +2,7 @@
 
 ### ✨ Highlights ✨
 
+- Add curated color palettes that apply a matching gray scale and accent color pair with one click
 - Add support for declaring a range of compatible Java versions in native patches
 
 ### Fixed
@@ -11,11 +12,14 @@
 
 ### Added
 
+- Add curated color palettes that apply a matching gray scale and accent color pair with one click (Huskui.Avalonia)
+- Add a gray scale option to the appearance settings (Huskui.Avalonia)
 - Add support for declaring a range of compatible Java versions in native patches
 - Add a prompt pointing to the Java settings when an instance has no compatible Java runtime
 
 ### Changed
 
+- Change the default appearance to the Ember palette with a warm gray scale and an amber accent (Huskui.Avalonia)
 - Change Java selection to use the newest compatible Java version you have configured and fall back to the bundled runtime otherwise
 
 ### Removed

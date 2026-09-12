@@ -89,6 +89,8 @@ public static class InternalConverters
             AccentColor.Lime => Color.FromRgb(0xBD, 0xEE, 0x63),
             AccentColor.Mint => Color.FromRgb(0x7D, 0xE0, 0xCB),
             AccentColor.Sky => Color.FromRgb(0x7C, 0xE2, 0xFE),
+            AccentColor.Brown => Color.FromRgb(0xA0, 0x75, 0x53),
+            AccentColor.Ember => Color.FromRgb(0xE8, 0xA8, 0x55),
             _ => Colors.Transparent
         })
         : AvaloniaProperty.UnsetValue);

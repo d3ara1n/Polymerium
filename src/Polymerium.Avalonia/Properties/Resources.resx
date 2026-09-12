@@ -1713,6 +1713,126 @@
     <data name="SettingsPage_AccentColorLabelText" xml:space="preserve">
         <value>Accent Color</value>
     </data>
+    <data name="SettingsPage_GrayColorLabelText" xml:space="preserve">
+        <value>Gray Scale</value>
+    </data>
+    <data name="SettingsPage_PaletteLabelText" xml:space="preserve">
+        <value>Palette</value>
+    </data>
+    <data name="SettingsPage_PaletteButtonText" xml:space="preserve">
+        <value>Choose a palette...</value>
+    </data>
+    <data name="PalettePickerDialog_Title" xml:space="preserve">
+        <value>Choose a Palette</value>
+    </data>
+    <data name="PalettePickerDialog_Message" xml:space="preserve">
+        <value>A palette presets a matching gray scale and accent color pair.</value>
+    </data>
+    <data name="GrayColor_Neutral" xml:space="preserve">
+        <value>Neutral</value>
+    </data>
+    <data name="GrayColor_Slate" xml:space="preserve">
+        <value>Slate</value>
+    </data>
+    <data name="GrayColor_Mauve" xml:space="preserve">
+        <value>Mauve</value>
+    </data>
+    <data name="GrayColor_Sage" xml:space="preserve">
+        <value>Sage</value>
+    </data>
+    <data name="GrayColor_Olive" xml:space="preserve">
+        <value>Olive</value>
+    </data>
+    <data name="GrayColor_Sand" xml:space="preserve">
+        <value>Sand</value>
+    </data>
+    <data name="GrayColor_Warm" xml:space="preserve">
+        <value>Warm</value>
+    </data>
+    <data name="AccentColor_System" xml:space="preserve">
+        <value>System</value>
+    </data>
+    <data name="AccentColor_Neutral" xml:space="preserve">
+        <value>Neutral</value>
+    </data>
+    <data name="AccentColor_Tomato" xml:space="preserve">
+        <value>Tomato</value>
+    </data>
+    <data name="AccentColor_Red" xml:space="preserve">
+        <value>Red</value>
+    </data>
+    <data name="AccentColor_Ruby" xml:space="preserve">
+        <value>Ruby</value>
+    </data>
+    <data name="AccentColor_Crimson" xml:space="preserve">
+        <value>Crimson</value>
+    </data>
+    <data name="AccentColor_Pink" xml:space="preserve">
+        <value>Pink</value>
+    </data>
+    <data name="AccentColor_Plum" xml:space="preserve">
+        <value>Plum</value>
+    </data>
+    <data name="AccentColor_Purple" xml:space="preserve">
+        <value>Purple</value>
+    </data>
+    <data name="AccentColor_Violet" xml:space="preserve">
+        <value>Violet</value>
+    </data>
+    <data name="AccentColor_Iris" xml:space="preserve">
+        <value>Iris</value>
+    </data>
+    <data name="AccentColor_Indigo" xml:space="preserve">
+        <value>Indigo</value>
+    </data>
+    <data name="AccentColor_Blue" xml:space="preserve">
+        <value>Blue</value>
+    </data>
+    <data name="AccentColor_Cyan" xml:space="preserve">
+        <value>Cyan</value>
+    </data>
+    <data name="AccentColor_Teal" xml:space="preserve">
+        <value>Teal</value>
+    </data>
+    <data name="AccentColor_Jade" xml:space="preserve">
+        <value>Jade</value>
+    </data>
+    <data name="AccentColor_Green" xml:space="preserve">
+        <value>Green</value>
+    </data>
+    <data name="AccentColor_Grass" xml:space="preserve">
+        <value>Grass</value>
+    </data>
+    <data name="AccentColor_Bronze" xml:space="preserve">
+        <value>Bronze</value>
+    </data>
+    <data name="AccentColor_Gold" xml:space="preserve">
+        <value>Gold</value>
+    </data>
+    <data name="AccentColor_Orange" xml:space="preserve">
+        <value>Orange</value>
+    </data>
+    <data name="AccentColor_Amber" xml:space="preserve">
+        <value>Amber</value>
+    </data>
+    <data name="AccentColor_Yellow" xml:space="preserve">
+        <value>Yellow</value>
+    </data>
+    <data name="AccentColor_Lime" xml:space="preserve">
+        <value>Lime</value>
+    </data>
+    <data name="AccentColor_Mint" xml:space="preserve">
+        <value>Mint</value>
+    </data>
+    <data name="AccentColor_Sky" xml:space="preserve">
+        <value>Sky</value>
+    </data>
+    <data name="AccentColor_Brown" xml:space="preserve">
+        <value>Brown</value>
+    </data>
+    <data name="AccentColor_Ember" xml:space="preserve">
+        <value>Ember</value>
+    </data>
     <data name="DeployStage_EnsureRuntime" xml:space="preserve">
         <value>Preparing Java runtime...</value>
     </data>

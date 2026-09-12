@@ -12,6 +12,7 @@ public class Configuration
     public const string APPLICATION_TITLEBAR_VISIBILITY = "Application.TitleBar.Visibility";
     public const string APPLICATION_LEFT_PANEL_MODE = "Application.LeftPanelMode";
     public const string APPLICATION_STYLE_ACCENT = "Application.Style.Accent";
+    public const string APPLICATION_STYLE_GRAY = "Application.Style.Gray";
     public const string APPLICATION_STYLE_CORNER = "Application.Style.Corner";
     public const string APPLICATION_STYLE_BACKGROUND = "Application.Style.Background";
     public const string APPLICATION_STYLE_THEME_VARIANT = "Application.Style.ThemeVariant";
@@ -46,7 +47,8 @@ public class Configuration
         { APPLICATION_SUPERPOWER_ACTIVATED, false },
         { APPLICATION_TITLEBAR_VISIBILITY, OperatingSystem.IsWindows() },
         { APPLICATION_LEFT_PANEL_MODE, OperatingSystem.IsMacOS() },
-        { APPLICATION_STYLE_ACCENT, AccentColor.System },
+        { APPLICATION_STYLE_ACCENT, AccentColor.Ember },
+        { APPLICATION_STYLE_GRAY, GrayColor.Warm },
         {
             APPLICATION_STYLE_CORNER,
             OperatingSystem.IsMacOS() ? CornerStyle.Large :
@@ -88,6 +90,7 @@ public class Configuration
     public bool ApplicationTitleBarVisibility { get; set; } = AccessDefault<bool>(APPLICATION_TITLEBAR_VISIBILITY);
     public bool ApplicationLeftPanelMode { get; set; } = AccessDefault<bool>(APPLICATION_LEFT_PANEL_MODE);
     public AccentColor ApplicationStyleAccent { get; set; } = AccessDefault<AccentColor>(APPLICATION_STYLE_ACCENT);
+    public GrayColor ApplicationStyleGray { get; set; } = AccessDefault<GrayColor>(APPLICATION_STYLE_GRAY);
     public CornerStyle ApplicationStyleCorner { get; set; } = AccessDefault<CornerStyle>(APPLICATION_STYLE_CORNER);
     public int ApplicationStyleBackground { get; set; } = AccessDefault<int>(APPLICATION_STYLE_BACKGROUND);
     public int ApplicationStyleThemeVariant { get; set; } = AccessDefault<int>(APPLICATION_STYLE_THEME_VARIANT);

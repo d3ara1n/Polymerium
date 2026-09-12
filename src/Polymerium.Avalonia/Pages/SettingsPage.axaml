@@ -206,11 +206,29 @@
                                             CornerRadius="{StaticResource FullCornerRadius}" />
                                         <TextBlock
                                             VerticalAlignment="Center"
-                                            Text="{Binding}" />
+                                            Text="{app:LocalizedEnum {Binding}}" />
                                     </DockPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
+                    </app:SettingsEntryItem>
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_GrayColorLabelText}}">
+                        <ComboBox
+                            ItemsSource="{Binding GrayColors}"
+                            SelectedIndex="{Binding GrayColor, Mode=TwoWay}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="husk:GrayColor">
+                                    <TextBlock Text="{app:LocalizedEnum {Binding}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </app:SettingsEntryItem>
+                    <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_PaletteLabelText}}">
+                        <Button Command="{Binding PickPaletteCommand}">
+                            <husk:IconLabel
+                                Icon="Color"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_PaletteButtonText}}" />
+                        </Button>
                     </app:SettingsEntryItem>
                     <app:SettingsEntryItem Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_CornerStyleLabelText}}">
                         <ComboBox
