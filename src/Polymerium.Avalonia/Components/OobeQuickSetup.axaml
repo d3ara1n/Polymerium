@@ -173,7 +173,7 @@
                         SelectedItem="{Binding $parent[app:OobeQuickSetup].SelectedAccentColor, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate DataType="husk:AccentColor">
-                                <TextBlock Text="{Binding}" />
+                                <TextBlock Text="{app:LocalizedEnum {Binding}}" />
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>

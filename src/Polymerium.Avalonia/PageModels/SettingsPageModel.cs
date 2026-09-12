@@ -51,6 +51,7 @@ public partial class SettingsPageModel : ViewModelBase
         TitleBarVisibility = configurationService.Value.ApplicationTitleBarVisibility;
         SidebarPlacement = configurationService.Value.ApplicationLeftPanelMode ? 0 : 1;
         AccentColor = configurationService.Value.ApplicationStyleAccent;
+        GrayColor = configurationService.Value.ApplicationStyleGray;
         CornerStyle = configurationService.Value.ApplicationStyleCorner;
         BackgroundMode =
             BackgroundStyles.FirstOrDefault(x => x.Index == configurationService.Value.ApplicationStyleBackground)
@@ -403,6 +404,28 @@ public partial class SettingsPageModel : ViewModelBase
     partial void OnAccentColorChanged(AccentColor value) => _themeService.Accent = value;
 
     public AccentColor[] AccentColors { get; } = Enum.GetValues<AccentColor>();
+
+    #endregion
+
+    #region GrayColor
+
+    [ObservableProperty]
+    public partial GrayColor GrayColor { get; set; }
+
+    partial void OnGrayColorChanged(GrayColor value) => _themeService.Gray = value;
+
+    public GrayColor[] GrayColors { get; } = Enum.GetValues<GrayColor>();
+
+    [RelayCommand]
+    private async Task PickPaletteAsync()
+    {
+        var dialog = new PalettePickerDialog();
+        if (await OverlayService.PopDialogAsync(dialog) && dialog.Result is ColorPalette palette)
+        {
+            AccentColor = palette.Accent;
+            GrayColor = palette.Gray;
+        }
+    }
 
     #endregion
 
