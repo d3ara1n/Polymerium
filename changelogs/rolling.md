@@ -7,6 +7,7 @@
 ### Fixed
 
 - Fix instances imported by an earlier version failing to deploy after Java compatibility became a declared range
+- Fix native patch customizations being lost during migration or applied inconsistently during deployment
 
 ### Added
 
