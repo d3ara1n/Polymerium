@@ -9,7 +9,7 @@ Native patches replace, append or remove deployment data such as launch librarie
 
 A Minecraft version and a mod loader describe most instances, but not all of them. GTNH and Cleanroom carry launch data of their own — pinned libraries, argument groups, an entry point and a required Java major that no version metadata declares. Patches are how an instance states that data, so these runtimes deploy and launch through the same pipeline as everything else instead of a compatibility layer built around them.
 
-Instances distributed for component-based launchers already carry that data as local component definitions. Importing one translates those definitions into native patches, so the converted instance keeps its launch plan.
+Instances distributed for component-based launchers already carry that data as local component definitions. Archive import and direct directory migration both translate those definitions and their local assets into native patches, so the converted instance keeps its launch plan.
 
 ## Profiles and external data
 
@@ -78,9 +78,9 @@ This example narrows the Java majors the instance accepts and appends a JVM opti
 
 `compatibleJavaMajors` is a set of every Java major the result accepts: `replace` declares it outright, `intersect` narrows it to the majors both sides accept. A Java path you set yourself — the instance override or a per-major home in the settings — is used exactly as given and never silently replaced by another runtime, so testing a specific JRE really tests that JRE; the launcher does not check that the path works, so a wrong path fails when the game starts instead of quietly running on something else. The newest accepted major you have configured wins; when no configured path covers any accepted major the launcher uses the runtime it downloads for the newest accepted major it can bundle. A major Mojang does not publish, such as 11 or 24, needs a Java you configured yourself, and an instance whose patches leave no accepted major reports that no compatible Java remains.
 
-Arguments are arrays of token groups. For example, `[["--tweakClass", "example.Tweaker"]]` keeps an option and its value together. Repeated options retain their order.
+Arguments are arrays of token groups. For example, `[["--tweakClass", "example.Tweaker"]]` keeps an option and its value together. Repeated options retain their order. File references such as `${main_jar}` and `${forge_installer}` resolve from the final patched launch data when the game starts, so replacing the referenced file also updates its launch argument.
 
-Libraries can use a download URL or a local file relative to the patch document. Local files must accompany the patch; they are instance data rather than disposable shared cache entries.
+Libraries can use a download URL or a local file relative to the patch document. Local files must accompany the patch; they are instance data rather than disposable shared cache entries. Native libraries are re-extracted when their contents, order or exclusion rules change, including when switching to an older version.
 
 The complete format, target list, selectors and Core integration are documented in [Trident's native patch reference](https://github.com/TridentCore/Trident.Net/blob/main/docs/PATCHES.md).
 
@@ -95,7 +95,7 @@ trident patch move --instance example --path my-adjustments/patch.json --positio
 trident patch remove --instance example --path my-adjustments/patch.json --yes
 ```
 
-The default layer is `users`; use `--layer import` to manage an imported entry. Positions are zero-based within the selected layer. Removal deletes the patch's owned files. You can also edit the JSON files directly; changes take effect on the next deployment.
+The default layer is `users`; use `--layer import` to manage an imported entry. Positions are zero-based within the selected layer. Removal deletes the patch's owned files. A malformed document can still be disabled; enabling it requires a valid document. You can also edit the JSON files directly; changes take effect on the next deployment.
 
 ## Preserve patches when sharing
 
