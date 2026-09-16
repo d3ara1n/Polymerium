@@ -1,5 +1,3 @@
-# Polymerium
-
 <a href="https://polymerium.dearain.dev">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/brand/banner-dark.svg">

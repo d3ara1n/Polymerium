@@ -1,6 +1,4 @@
-﻿# Polymerium
-
-<a href="https://polymerium.dearain.dev">
+﻿<a href="https://polymerium.dearain.dev">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/brand/banner-dark.zh.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/brand/banner-light.zh.svg">
@@ -10,7 +8,7 @@
 
 <div align="center">
 
-**一个 Minecraft 启动器，源于一个简单的理念。**
+**一个 Minecraft 实例管理器，源于一个简单的理念。**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![.NET 10.0](https://img.shields.io/badge/.NET-10-5C2D91?style=for-the-badge&logoColor=white)](https://dotnet.microsoft.com/)
@@ -21,7 +19,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/8516e3e1a3994d138a1adc537d7c6ecd)](https://app.codacy.com/gh/d3ara1n/Polymerium/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/d3ara1n/polymerium/badge)](https://www.codefactor.io/repository/github/d3ara1n/polymerium)
 
-[📥 下载](https://github.com/d3ara1n/Polymerium/releases) • [📖 文档](https://polymerium.dearain.dev) • [🐛 报告问题](https://github.com/d3ara1n/Polymerium/issues) • [💡 功能建议](https://github.com/d3ara1n/Polymerium/issues)
+[🌐 English](https://github.com/d3ara1n/Polymerium/blob/main/README.md) • [📥 下载](https://github.com/d3ara1n/Polymerium/releases) • [📖 文档](https://polymerium.dearain.dev) • [🐛 报告问题](https://github.com/d3ara1n/Polymerium/issues) • [💡 功能建议](https://github.com/d3ara1n/Polymerium/issues)
 
 </div>
 
@@ -238,11 +236,29 @@ Polymerium/
 
 ---
 
+## 已知问题
+
+这些是 Avalonia 上游框架的局限，Polymerium 层面无法解决。
+
+### 渲染
+
+- **渐变色带** —— Avalonia 的画刷渐变渲染在某些渐变过渡中会产生明显的色阶跳变。问题根源在框架的渐变着色器，影响所有 Avalonia 应用，并非 Polymerium 独有。
+
+### 窗口外观
+
+- **macOS 与 Linux 上自定义标题栏支持有限** —— Avalonia 对自定义标题栏的支持在 macOS 和 Linux 上较为有限。自绘标题栏存在布局瑕疵与风格不一致，偏离平台惯例，按钮位置和观感相比 Windows 更为粗糙。
+
+### 弹出层
+
+- **macOS 上阴影渲染不佳** —— Avalonia 在 macOS 上的 Tooltip 和 Flyout 弹出层无法以真正透明的背景渲染，破坏了平台原生的投影效果，呈现出生硬的方框轮廓，而不是 macOS 上应有的柔和阴影。
+
+---
+
 ## 隐私与安全
 
 Polymerium 尊重您的隐私：
 
-- **少量遥测**：仅收集最少数据用于调试错误
+- **可选崩溃报告**：发送匿名崩溃数据以帮助修复问题，可随时关闭
 - **本地存储**：所有数据都保留在您的机器上
 - **最小占用**：干净卸载不留痕迹
 - **开源**：透明、可审计的代码库
