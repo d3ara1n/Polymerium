@@ -126,18 +126,108 @@ public class InstanceStateService(
 
     #region Mechanism
 
-    private readonly ConcurrentDictionary<string, ConcurrentDictionary<Type, Entry>> _entries = new();
+    private readonly ConcurrentDictionary<string, ConcurrentDictionary<Type, Slot>> _slots = new();
     private readonly Dictionary<string, Guid> _activeActivities = [];
     private readonly List<IDisposable> _subscriptions = [];
     private readonly Subject<string> _changed = new();
     private readonly Lock _sync = new();
     private CancellationTokenSource? _lifetime;
 
-    private sealed class Entry
+    // 单个 (实例, 状态类型) 的驻留槽：字段只在 _gate 内变更，锁纪律收在类内，RetrieveAsync 只做编排。
+    private sealed class Slot
     {
-        public StateBase? Value;
-        public Task? InFlight;
-        public long Generation;
+        private readonly object _gate = new();
+
+        private StateBase? _retained;
+        private Task? _inFlight;
+        private long _inFlightGeneration;
+        private long _generation;
+
+        public StateBase? PeekRetained()
+        {
+            lock (_gate)
+            {
+                return _retained;
+            }
+        }
+
+        public void Invalidate()
+        {
+            lock (_gate)
+            {
+                _generation++;
+                _retained = null;
+            }
+        }
+
+        // NOTE: 只放行同代际且仍在途的计算。已完成的任务视同无在途——轻状态每次都重算；
+        //  旧代际任务是失效前发起的，后来者并入只会拿到已被撤销的数据。
+        public Task<TState>? JoinInFlight<TState>() where TState : StateBase
+        {
+            lock (_gate)
+            {
+                return _inFlight is Task<TState> task && !task.IsCompleted && _inFlightGeneration == _generation
+                    ? task
+                    : null;
+            }
+        }
+
+        public Task<TState> BeginCompute<TState>(Func<CancellationToken, Task<TState>> compute,
+                                                 CancellationToken lifetime)
+            where TState : StateBase
+        {
+            lock (_gate)
+            {
+                var generation = _generation;
+                var task = RunAsync(this, generation, compute, lifetime);
+                _inFlight = task;
+                _inFlightGeneration = generation;
+                return task;
+            }
+        }
+
+        public void Retain(long generation, StateBase value)
+        {
+            lock (_gate)
+            {
+                // NOTE: 代际不匹配说明计算期间状态已被撤销（部署开始、profile 变更等），结果不得进驻留。
+                if (_generation == generation)
+                {
+                    _retained = value;
+                }
+            }
+        }
+
+        // NOTE: 失效后新计算会顶替登记，旧任务的收尾不得把新任务的在途标记清掉。
+        public void ReleaseInFlight(long generation)
+        {
+            lock (_gate)
+            {
+                if (_inFlightGeneration == generation)
+                {
+                    _inFlight = null;
+                }
+            }
+        }
+
+        private static async Task<TState> RunAsync<TState>(Slot slot,
+                                                          long generation,
+                                                          Func<CancellationToken, Task<TState>> compute,
+                                                          CancellationToken lifetime)
+            where TState : StateBase
+        {
+            try
+            {
+                var value = await compute(lifetime).ConfigureAwait(false);
+                value.CapturedAt = DateTimeOffset.Now;
+                slot.Retain(generation, value);
+                return value;
+            }
+            finally
+            {
+                slot.ReleaseInFlight(generation);
+            }
+        }
     }
 
     /// <summary>实例状态被撤销的通知（含部署开始、profile 更新、实例移除）。</summary>
@@ -150,7 +240,8 @@ public class InstanceStateService(
 
     /// <summary>取状态。有判据时先问判据，有效直接复用驻留值；否则重算。</summary>
     /// <param name="stillValid">
-    ///     便宜判据（如锁有效性）。为 null 表示状态没有可靠判据，每次都重算；判据抛异常按失效处理。
+    ///     便宜判据（如部署锁的配置指纹比对）。为 null 表示状态没有可靠判据，每次都重算；判据抛异常按失效处理。
+    ///     目前没有使用者，是离线可用性（#88）接入 DeploymentState 时要填的槽：判据有效复用驻留值，判据失效走重路径。
     /// </param>
     private async Task<TState> RetrieveAsync<TState>(string key,
                                                      Func<CancellationToken, Task<bool>>? stillValid,
@@ -158,15 +249,9 @@ public class InstanceStateService(
                                                      CancellationToken token)
         where TState : StateBase
     {
-        var entry = EntryOf(key, typeof(TState));
+        var slot = SlotOf(key, typeof(TState));
 
-        StateBase? retained;
-        lock (entry)
-        {
-            retained = entry.Value;
-        }
-
-        if (stillValid is not null && retained is TState cached)
+        if (stillValid is not null && slot.PeekRetained() is TState cached)
         {
             bool valid;
             try
@@ -185,70 +270,24 @@ public class InstanceStateService(
             }
         }
 
-        Task<TState> pending;
-        lock (entry)
-        {
-            // 只合并同一次在途计算；已完成的调用不驻留任务，轻状态因此每次都重算。
-            if (entry.InFlight is Task<TState> running)
-            {
-                pending = running;
-            }
-            else
-            {
-                pending = ComputeAsync(entry, entry.Generation, compute);
-                entry.InFlight = pending;
-            }
-        }
+        var pending = slot.JoinInFlight<TState>()
+                     ?? slot.BeginCompute(compute, _lifetime?.Token ?? CancellationToken.None);
 
         // 计算不随调用方取消：结果要进驻留，取消只结束本次等待。
         return await pending.WaitAsync(token).ConfigureAwait(false);
     }
 
-    private async Task<TState> ComputeAsync<TState>(Entry entry,
-                                                    long generation,
-                                                    Func<CancellationToken, Task<TState>> compute)
-        where TState : StateBase
-    {
-        try
-        {
-            var value = await compute(_lifetime?.Token ?? CancellationToken.None).ConfigureAwait(false);
-            value.CapturedAt = DateTimeOffset.Now;
-
-            lock (entry)
-            {
-                // NOTE: 代际不匹配说明计算期间状态已被撤销（部署开始、profile 变更等），结果不得写回。
-                if (entry.Generation == generation)
-                {
-                    entry.Value = value;
-                }
-            }
-
-            return value;
-        }
-        finally
-        {
-            lock (entry)
-            {
-                entry.InFlight = null;
-            }
-        }
-    }
-
-    private Entry EntryOf(string key, Type state) =>
-        _entries.GetOrAdd(key, _ => new()).GetOrAdd(state, _ => new());
+    private Slot SlotOf(string key, Type state) =>
+        _slots.GetOrAdd(key, _ => new()).GetOrAdd(state, _ => new());
 
     /// <summary>撤销某实例的全部驻留状态并通知消费方。修实例产物的操作在开始时就该调用。</summary>
     public void Invalidate(string key)
     {
-        if (_entries.TryGetValue(key, out var entries))
+        if (_slots.TryGetValue(key, out var slots))
         {
-            foreach (var entry in entries.Values)
+            foreach (var slot in slots.Values)
             {
-                lock (entry)
-                {
-                    entry.Generation++;
-                    entry.Value = null;
-                }
+                slot.Invalidate();
             }
         }
 
@@ -565,7 +604,7 @@ public class InstanceStateService(
 
     private void OnProfileRemoved(object? sender, ProfileManager.ProfileChangedEventArgs e)
     {
-        _entries.TryRemove(e.Key, out _);
+        _slots.TryRemove(e.Key, out _);
         Invalidate(e.Key);
     }
 
