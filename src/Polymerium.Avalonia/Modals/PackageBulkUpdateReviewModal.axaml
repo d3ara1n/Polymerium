@@ -12,6 +12,8 @@
     MinWidth="720"
     MinHeight="480"
     Margin="64"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
     d:DesignHeight="640"
     d:DesignWidth="960"
     x:DataType="app:PackageBulkUpdateReviewModalModel"
