@@ -138,6 +138,9 @@
     <data name="Shared_EmptyListLabelText" xml:space="preserve">
         <value>No Entries</value>
     </data>
+    <data name="Shared_FilesUnitText" xml:space="preserve">
+        <value>files</value>
+    </data>
     <data name="AccountsPage_MarkAsDefaultMenuText" xml:space="preserve">
         <value>Mark as Default</value>
     </data>
@@ -212,6 +215,90 @@
     </data>
     <data name="InstanceHomePage_DashboardButtonSubtitle" xml:space="preserve">
         <value>Dashboard</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_Title" xml:space="preserve">
+        <value>Development</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_VersionControlLabel" xml:space="preserve">
+        <value>Version control</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_NoRepositoryText" xml:space="preserve">
+        <value>Not under version control</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_UnsyncedLabel" xml:space="preserve">
+        <value>Unsynced changes</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_SyncedText" xml:space="preserve">
+        <value>Nothing to sync</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_PackSourceLabel" xml:space="preserve">
+        <value>Pack Source</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_PackSourceEmptyText" xml:space="preserve">
+        <value>Not prepared</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_PatchLabel" xml:space="preserve">
+        <value>Native patches</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_ReleaseFilesLabel" xml:space="preserve">
+        <value>Release files</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_LastRunLabel" xml:space="preserve">
+        <value>Last run</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_NeverRunText" xml:space="preserve">
+        <value>Not started yet</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_UnavailableText" xml:space="preserve">
+        <value>Development state unavailable</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_OpenWorkspaceButtonText" xml:space="preserve">
+        <value>Open Workspace</value>
+    </data>
+    <data name="NoteWidget_Title" xml:space="preserve">
+        <value>Note</value>
+    </data>
+    <data name="NetworkCheckerWidget_Title" xml:space="preserve">
+        <value>Network Checker</value>
+    </data>
+    <data name="NetworkCheckerWidget_StartButtonText" xml:space="preserve">
+        <value>Start Test</value>
+    </data>
+    <data name="NetworkCheckerWidget_CancelButtonText" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="NetworkCheckerWidget_RetryButtonText" xml:space="preserve">
+        <value>Test Again</value>
+    </data>
+    <data name="NetworkCheckerWidget_WaitingText" xml:space="preserve">
+        <value>Waiting…</value>
+    </data>
+    <data name="NetworkCheckerWidget_TestingText" xml:space="preserve">
+        <value>Testing…</value>
+    </data>
+    <data name="NetworkCheckerWidget_SiteMicrosoftLoginText" xml:space="preserve">
+        <value>Microsoft Login</value>
+    </data>
+    <data name="NetworkCheckerWidget_SiteXboxLiveText" xml:space="preserve">
+        <value>Xbox Live Auth</value>
+    </data>
+    <data name="NetworkCheckerWidget_SiteGithubAssetsText" xml:space="preserve">
+        <value>GitHub Assets</value>
+    </data>
+    <data name="NetworkCheckerWidget_SiteMojangMetaText" xml:space="preserve">
+        <value>Mojang Meta</value>
+    </data>
+    <data name="NetworkCheckerWidget_SiteCommunityMetaText" xml:space="preserve">
+        <value>Community Meta</value>
+    </data>
+    <data name="DeveloperToolboxWidget_Title" xml:space="preserve">
+        <value>Developer Toolbox</value>
+    </data>
+    <data name="DeveloperToolboxWidget_JarInJarScannerButtonText" xml:space="preserve">
+        <value>JarInJar Dependency Scanner</value>
+    </data>
+    <data name="DeveloperToolboxWidget_GitCommitComparerButtonText" xml:space="preserve">
+        <value>Git Commit Comparer</value>
     </data>
     <data name="InstancePage_HomePageText" xml:space="preserve">
         <value>Home</value>
@@ -1088,6 +1175,21 @@
     </data>
     <data name="ReleaseType_Alpha" xml:space="preserve">
         <value>Alpha</value>
+    </data>
+    <data name="LaunchOutcome_Unknown" xml:space="preserve">
+        <value>Unknown</value>
+    </data>
+    <data name="LaunchOutcome_Exited" xml:space="preserve">
+        <value>Exited</value>
+    </data>
+    <data name="LaunchOutcome_Crashed" xml:space="preserve">
+        <value>Crashed</value>
+    </data>
+    <data name="LaunchOutcome_Aborted" xml:space="preserve">
+        <value>Aborted</value>
+    </data>
+    <data name="LaunchOutcome_Detached" xml:space="preserve">
+        <value>Detached</value>
     </data>
     <data name="MinecraftReleaseType_Release" xml:space="preserve">
         <value>Release</value>

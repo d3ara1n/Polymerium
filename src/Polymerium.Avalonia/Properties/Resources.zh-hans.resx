@@ -129,6 +129,9 @@
     <data name="Shared_EmptyListLabelText" xml:space="preserve">
         <value>空列表</value>
     </data>
+    <data name="Shared_FilesUnitText" xml:space="preserve">
+        <value>个文件</value>
+    </data>
     <data name="AccountsPage_MarkAsDefaultMenuText" xml:space="preserve">
         <value>标记为默认</value>
     </data>
@@ -203,6 +206,90 @@
     </data>
     <data name="InstanceHomePage_DashboardButtonSubtitle" xml:space="preserve">
         <value>信息面板</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_Title" xml:space="preserve">
+        <value>开发总览</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_VersionControlLabel" xml:space="preserve">
+        <value>版本控制</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_NoRepositoryText" xml:space="preserve">
+        <value>未启用版本控制</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_UnsyncedLabel" xml:space="preserve">
+        <value>待同步变更</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_SyncedText" xml:space="preserve">
+        <value>无待同步变更</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_PackSourceLabel" xml:space="preserve">
+        <value>整合包源</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_PackSourceEmptyText" xml:space="preserve">
+        <value>未准备</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_PatchLabel" xml:space="preserve">
+        <value>原生 Patch</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_ReleaseFilesLabel" xml:space="preserve">
+        <value>发布文件</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_LastRunLabel" xml:space="preserve">
+        <value>最近运行</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_NeverRunText" xml:space="preserve">
+        <value>尚未启动</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_UnavailableText" xml:space="preserve">
+        <value>无法读取开发状态</value>
+    </data>
+    <data name="DevelopmentOverviewWidget_OpenWorkspaceButtonText" xml:space="preserve">
+        <value>打开工作区</value>
+    </data>
+    <data name="NoteWidget_Title" xml:space="preserve">
+        <value>便签</value>
+    </data>
+    <data name="NetworkCheckerWidget_Title" xml:space="preserve">
+        <value>网络检测</value>
+    </data>
+    <data name="NetworkCheckerWidget_StartButtonText" xml:space="preserve">
+        <value>开始检测</value>
+    </data>
+    <data name="NetworkCheckerWidget_CancelButtonText" xml:space="preserve">
+        <value>取消</value>
+    </data>
+    <data name="NetworkCheckerWidget_RetryButtonText" xml:space="preserve">
+        <value>重新检测</value>
+    </data>
+    <data name="NetworkCheckerWidget_WaitingText" xml:space="preserve">
+        <value>等待中…</value>
+    </data>
+    <data name="NetworkCheckerWidget_TestingText" xml:space="preserve">
+        <value>检测中…</value>
+    </data>
+    <data name="NetworkCheckerWidget_SiteMicrosoftLoginText" xml:space="preserve">
+        <value>微软登录</value>
+    </data>
+    <data name="NetworkCheckerWidget_SiteXboxLiveText" xml:space="preserve">
+        <value>Xbox Live 验证</value>
+    </data>
+    <data name="NetworkCheckerWidget_SiteGithubAssetsText" xml:space="preserve">
+        <value>GitHub 资源</value>
+    </data>
+    <data name="NetworkCheckerWidget_SiteMojangMetaText" xml:space="preserve">
+        <value>Mojang 元数据</value>
+    </data>
+    <data name="NetworkCheckerWidget_SiteCommunityMetaText" xml:space="preserve">
+        <value>社区元数据</value>
+    </data>
+    <data name="DeveloperToolboxWidget_Title" xml:space="preserve">
+        <value>开发者工具箱</value>
+    </data>
+    <data name="DeveloperToolboxWidget_JarInJarScannerButtonText" xml:space="preserve">
+        <value>JarInJar 依赖扫描</value>
+    </data>
+    <data name="DeveloperToolboxWidget_GitCommitComparerButtonText" xml:space="preserve">
+        <value>Git 提交比对</value>
     </data>
     <data name="InstancePage_HomePageText" xml:space="preserve">
         <value>主页</value>
@@ -1079,6 +1166,21 @@
     </data>
     <data name="ReleaseType_Alpha" xml:space="preserve">
         <value>A测</value>
+    </data>
+    <data name="LaunchOutcome_Unknown" xml:space="preserve">
+        <value>未知</value>
+    </data>
+    <data name="LaunchOutcome_Exited" xml:space="preserve">
+        <value>正常退出</value>
+    </data>
+    <data name="LaunchOutcome_Crashed" xml:space="preserve">
+        <value>崩溃</value>
+    </data>
+    <data name="LaunchOutcome_Aborted" xml:space="preserve">
+        <value>已中止</value>
+    </data>
+    <data name="LaunchOutcome_Detached" xml:space="preserve">
+        <value>已分离</value>
     </data>
     <data name="MinecraftReleaseType_Release" xml:space="preserve">
         <value>正式版</value>

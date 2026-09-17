@@ -106,14 +106,14 @@
                                                         VerticalAlignment="Center"
                                                         IsVisible="{Binding Status, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static app:ConnectionTestStatus.Pending}}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="Waiting..." />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.NetworkCheckerWidget_WaitingText}}" />
 
                                                     <!--  测试中  -->
                                                     <TextBlock
                                                         VerticalAlignment="Center"
                                                         IsVisible="{Binding IsTesting}"
                                                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                        Text="Testing..." />
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.NetworkCheckerWidget_TestingText}}" />
                                                 </StackPanel>
                                             </Grid>
                                         </Border>

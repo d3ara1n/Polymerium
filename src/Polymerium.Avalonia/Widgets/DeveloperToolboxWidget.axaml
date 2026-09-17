@@ -20,13 +20,13 @@
                 <Button Command="{Binding OpenJarInJarScannerCommand}">
                     <husk:IconLabel
                         Icon="DrinkBottle"
-                        Text="JarInJar Dependency Scanner" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.DeveloperToolboxWidget_JarInJarScannerButtonText}}" />
                 </Button>
                 <!--  根据 Commit Diff 比对出更新了的包和修改了的文件，如果是工作空间 Diff 还提供 Commit Message 导出  -->
                 <Button IsVisible="False">
                     <husk:IconLabel
                         Icon="Branch"
-                        Text="Git Commit Comparer" />
+                        Text="{Translate {x:Static app:LanguageManager+Keys.DeveloperToolboxWidget_GitCommitComparerButtonText}}" />
                 </Button>
             </WrapPanel>
         </DataTemplate>

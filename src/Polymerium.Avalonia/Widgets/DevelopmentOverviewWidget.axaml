@@ -1,0 +1,414 @@
+<app:WidgetBase
+    x:Class="Polymerium.Avalonia.Widgets.DevelopmentOverviewWidget"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fi="using:FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Development"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Icon="Branch"
+    mc:Ignorable="d">
+    <app:WidgetBase.FullTemplate>
+        <DataTemplate x:DataType="app:DevelopmentOverviewWidget">
+            <StackPanel Spacing="12">
+                <husk:LazyContainer Source="{Binding LazyState}">
+                    <husk:LazyContainer.SourceTemplate>
+                        <DataTemplate x:DataType="app:DevelopmentOverviewWidget+Presentation">
+                            <ItemsControl ItemsSource="{Binding All}">
+                                <ItemsControl.DataTemplates>
+                                    <!--  版本控制  -->
+                                    <DataTemplate x:DataType="app:DevelopmentStatusModel+Git">
+                                        <Grid
+                                            ColumnDefinitions="88,*"
+                                            ColumnSpacing="12">
+                                            <TextBlock
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_VersionControlLabel}}" />
+                                            <Panel Grid.Column="1">
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="12"
+                                                    IsVisible="{Binding IsRepository}">
+                                                    <husk:IconLabel
+                                                        Icon="Branch"
+                                                        Spacing="4"
+                                                        Text="{Binding BranchName}"
+                                                        ToolTip.Tip="{Binding HeadSummary}" />
+                                                    <StackPanel
+                                                        Orientation="Horizontal"
+                                                        Spacing="4"
+                                                        ToolTip.Tip="{Binding TrackingBranchName}">
+                                                        <fi:SymbolIcon
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Symbol="ArrowUp" />
+                                                        <TextBlock
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Text="{Binding AheadCount}" />
+                                                        <fi:SymbolIcon
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Symbol="ArrowDown" />
+                                                        <TextBlock
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Text="{Binding BehindCount}" />
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                                        <fi:SymbolIcon
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Symbol="Edit" />
+                                                        <TextBlock
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Text="{Binding ChangedCount}" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                                <TextBlock
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    IsVisible="{Binding !IsRepository}"
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_NoRepositoryText}}"
+                                                    TextWrapping="Wrap" />
+                                            </Panel>
+                                        </Grid>
+                                    </DataTemplate>
+                                    <!--  待同步  -->
+                                    <DataTemplate x:DataType="app:DevelopmentStatusModel+Unsynced">
+                                        <Grid
+                                            ColumnDefinitions="88,*"
+                                            ColumnSpacing="12">
+                                            <TextBlock
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_UnsyncedLabel}}" />
+                                            <Panel Grid.Column="1">
+                                                <TextBlock
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsZero}}"
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_SyncedText}}"
+                                                    TextWrapping="Wrap" />
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="4"
+                                                    IsVisible="{Binding Count, Converter={x:Static husk:NumberConverters.IsNonZero}}">
+                                                    <fi:SymbolIcon
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                        Symbol="Warning" />
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Text="{Binding Count}" />
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.Shared_FilesUnitText}}" />
+                                                </StackPanel>
+                                            </Panel>
+                                        </Grid>
+                                    </DataTemplate>
+                                    <!--  Pack Source  -->
+                                    <DataTemplate x:DataType="app:DevelopmentStatusModel+PackSource">
+                                        <Grid
+                                            ColumnDefinitions="88,*"
+                                            ColumnSpacing="12">
+                                            <TextBlock
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_PackSourceLabel}}" />
+                                            <Panel Grid.Column="1">
+                                                <TextBlock
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    IsVisible="{Binding FileCount, Converter={x:Static husk:NumberConverters.IsZero}}"
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_PackSourceEmptyText}}"
+                                                    TextWrapping="Wrap" />
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="4"
+                                                    IsVisible="{Binding FileCount, Converter={x:Static husk:NumberConverters.IsNonZero}}">
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Text="{Binding FileCount}" />
+                                                    <TextBlock
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.Shared_FilesUnitText}}" />
+                                                </StackPanel>
+                                            </Panel>
+                                        </Grid>
+                                    </DataTemplate>
+                                    <!--  Native Patch  -->
+                                    <DataTemplate x:DataType="app:DevelopmentStatusModel+Patches">
+                                        <Grid
+                                            ColumnDefinitions="88,*"
+                                            ColumnSpacing="12">
+                                            <TextBlock
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_PatchLabel}}" />
+                                            <StackPanel
+                                                Grid.Column="1"
+                                                Orientation="Horizontal"
+                                                Spacing="4">
+                                                <husk:Tag FontSize="{StaticResource SmallFontSize}">
+                                                    <husk:IconLabel
+                                                        Icon="ArrowImport"
+                                                        Spacing="4"
+                                                        Text="{Binding ImportCount, StringFormat={}{0}}" />
+                                                </husk:Tag>
+                                                <husk:Tag FontSize="{StaticResource SmallFontSize}">
+                                                    <husk:IconLabel
+                                                        Icon="Person"
+                                                        Spacing="4"
+                                                        Text="{Binding UserCount, StringFormat={}{0}}" />
+                                                </husk:Tag>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                    <!--  发布文件  -->
+                                    <DataTemplate x:DataType="app:DevelopmentStatusModel+ReleaseFiles">
+                                        <Grid
+                                            ColumnDefinitions="88,*"
+                                            ColumnSpacing="12">
+                                            <TextBlock
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_ReleaseFilesLabel}}" />
+                                            <WrapPanel
+                                                Grid.Column="1"
+                                                ItemSpacing="4"
+                                                LineSpacing="4">
+                                                <WrapPanel.Styles>
+                                                    <Style Selector="WrapPanel > husk|Tag">
+                                                        <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
+                                                    </Style>
+                                                    <Style Selector="WrapPanel > husk|Tag.Missing">
+                                                        <Setter Property="Opacity" Value="0.4" />
+                                                    </Style>
+                                                </WrapPanel.Styles>
+                                                <husk:Tag Classes.Missing="{Binding IconPath, Converter={x:Static ObjectConverters.IsNull}}" Content="icon.png" />
+                                                <husk:Tag Classes.Missing="{Binding ReadmePath, Converter={x:Static ObjectConverters.IsNull}}" Content="README.md" />
+                                                <husk:Tag Classes.Missing="{Binding ChangelogPath, Converter={x:Static ObjectConverters.IsNull}}" Content="CHANGELOG.md" />
+                                                <husk:Tag Classes.Missing="{Binding LicensePath, Converter={x:Static ObjectConverters.IsNull}}" Content="LICENSE.txt" />
+                                            </WrapPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                    <!--  最近运行  -->
+                                    <DataTemplate x:DataType="app:DevelopmentStatusModel+LastRun">
+                                        <Grid
+                                            ColumnDefinitions="88,*"
+                                            ColumnSpacing="12">
+                                            <TextBlock
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_LastRunLabel}}" />
+                                            <Panel Grid.Column="1">
+                                                <TextBlock
+                                                    FontSize="{StaticResource SmallFontSize}"
+                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                    IsVisible="{Binding EndedAt, Converter={x:Static ObjectConverters.IsNull}}"
+                                                    Text="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_NeverRunText}}"
+                                                    TextWrapping="Wrap" />
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Spacing="12"
+                                                    IsVisible="{Binding EndedAt, Converter={x:Static ObjectConverters.IsNotNull}}">
+                                                    <husk:IconLabel
+                                                        Icon="Clock"
+                                                        Spacing="4"
+                                                        Text="{Binding EndedAt, Converter={x:Static app:HumanizerConverters.DateTime}}" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        FontSize="{StaticResource SmallFontSize}"
+                                                        Text="{app:LocalizedEnum {Binding Outcome}}" />
+                                                    <StackPanel
+                                                        Orientation="Horizontal"
+                                                        Spacing="4"
+                                                        IsVisible="{Binding CrashCount, Converter={x:Static husk:NumberConverters.IsNonZero}}">
+                                                        <fi:SymbolIcon
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                            Symbol="Warning" />
+                                                        <TextBlock
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Text="{Binding CrashCount}" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Panel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.DataTemplates>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Spacing="8" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </husk:LazyContainer.SourceTemplate>
+                    <husk:LazyContainer.FaultContent>
+                        <TextBlock
+                            FontSize="{StaticResource SmallFontSize}"
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_UnavailableText}}"
+                            TextWrapping="Wrap" />
+                    </husk:LazyContainer.FaultContent>
+                </husk:LazyContainer>
+                <Button
+                    HorizontalAlignment="Left"
+                    Classes="Small"
+                    Command="{Binding $parent[app:InstancePage].NavigateCommand}"
+                    CommandParameter="{x:Type app:InstanceWorkspacePage}"
+                    Theme="{StaticResource OutlineButtonTheme}">
+                    <husk:IconLabel
+                        Icon="ArrowRight"
+                        Spacing="8"
+                        Text="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_OpenWorkspaceButtonText}}" />
+                </Button>
+            </StackPanel>
+        </DataTemplate>
+    </app:WidgetBase.FullTemplate>
+    <app:WidgetBase.SlimTemplate>
+        <DataTemplate x:DataType="app:DevelopmentOverviewWidget">
+            <husk:LazyContainer Source="{Binding LazyState}">
+                <husk:LazyContainer.SourceTemplate>
+                    <DataTemplate x:DataType="app:DevelopmentOverviewWidget+Presentation">
+                        <ItemsControl ItemsSource="{Binding Meaningful}">
+                            <ItemsControl.DataTemplates>
+                                <DataTemplate x:DataType="app:DevelopmentStatusModel+Git">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="4">
+                                        <husk:IconLabel
+                                            Icon="Branch"
+                                            Spacing="4"
+                                            Text="{Binding BranchName}"
+                                            ToolTip.Tip="{Binding HeadSummary}" />
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Symbol="ArrowUp" />
+                                        <TextBlock
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Text="{Binding AheadCount}" />
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Symbol="ArrowDown" />
+                                        <TextBlock
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Text="{Binding BehindCount}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate x:DataType="app:DevelopmentStatusModel+Unsynced">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="4">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                            Symbol="Warning" />
+                                        <TextBlock
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Text="{Binding Count}" />
+                                        <TextBlock
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.Shared_FilesUnitText}}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate x:DataType="app:DevelopmentStatusModel+PackSource">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="4">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Symbol="Box" />
+                                        <TextBlock
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Text="{Binding FileCount}" />
+                                        <TextBlock
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.Shared_FilesUnitText}}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate x:DataType="app:DevelopmentStatusModel+Patches">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="8">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="4"
+                                            ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.DevelopmentOverviewWidget_PatchLabel}}">
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Symbol="ArrowImport" />
+                                            <TextBlock
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Text="{Binding ImportCount}" />
+                                            <fi:SymbolIcon
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Symbol="Person" />
+                                            <TextBlock
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Text="{Binding UserCount}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate x:DataType="app:DevelopmentStatusModel+ReleaseFiles">
+                                    <WrapPanel
+                                        ItemSpacing="4"
+                                        LineSpacing="4">
+                                        <WrapPanel.Styles>
+                                            <Style Selector="WrapPanel > husk|Tag">
+                                                <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
+                                                <Setter Property="Opacity" Value="0.4" />
+                                            </Style>
+                                        </WrapPanel.Styles>
+                                        <husk:Tag
+                                            Content="icon.png"
+                                            IsVisible="{Binding IconPath, Converter={x:Static ObjectConverters.IsNull}}" />
+                                        <husk:Tag
+                                            Content="README.md"
+                                            IsVisible="{Binding ReadmePath, Converter={x:Static ObjectConverters.IsNull}}" />
+                                        <husk:Tag
+                                            Content="CHANGELOG.md"
+                                            IsVisible="{Binding ChangelogPath, Converter={x:Static ObjectConverters.IsNull}}" />
+                                        <husk:Tag
+                                            Content="LICENSE.txt"
+                                            IsVisible="{Binding LicensePath, Converter={x:Static ObjectConverters.IsNull}}" />
+                                    </WrapPanel>
+                                </DataTemplate>
+                                <DataTemplate x:DataType="app:DevelopmentStatusModel+LastRun">
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="4">
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Symbol="Clock" />
+                                        <TextBlock
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Text="{Binding EndedAt, Converter={x:Static app:HumanizerConverters.DateTime}}" />
+                                        <fi:SymbolIcon
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                            IsVisible="{Binding CrashCount, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                            Symbol="Warning" />
+                                        <TextBlock
+                                            FontSize="{StaticResource SmallFontSize}"
+                                            Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                            IsVisible="{Binding CrashCount, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                                            Text="{Binding CrashCount}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.DataTemplates>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Spacing="6" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </DataTemplate>
+                </husk:LazyContainer.SourceTemplate>
+            </husk:LazyContainer>
+        </DataTemplate>
+    </app:WidgetBase.SlimTemplate>
+</app:WidgetBase>
