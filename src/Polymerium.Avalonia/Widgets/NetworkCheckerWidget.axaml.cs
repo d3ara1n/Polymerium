@@ -15,20 +15,26 @@ namespace Polymerium.Avalonia.Widgets;
 
 public partial class NetworkCheckerWidget : WidgetBase
 {
-    private readonly IReadOnlyList<(string Display, string Url)> _websites =
-    [
-        ("Microsoft Login", "https://login.microsoftonline.com"),
-        ("Xbox Live Auth", "https://user.auth.xboxlive.com"),
-        ("GitHub Assets", "https://release-assets.githubusercontent.com"),
-        ("Mojang Meta", "https://launchermeta.mojang.com"),
-        ("PrismLauncher Meta", "https://meta.prismlauncher.org"),
-        ("CurseForge API", "https://api.curseforge.com"),
-        ("Modrinth API", "https://api.modrinth.com")
-    ];
+    private readonly IReadOnlyList<(string Display, string Url)> _websites = BuildWebsites();
 
     private CancellationTokenSource? _cts;
 
     public NetworkCheckerWidget() => AvaloniaXamlLoader.Load(this);
+
+    private static IReadOnlyList<(string Display, string Url)> BuildWebsites() =>
+    [
+        (LanguageManager.Instance.NetworkCheckerWidget_SiteMicrosoftLoginText.Current(),
+         "https://login.microsoftonline.com"),
+        (LanguageManager.Instance.NetworkCheckerWidget_SiteXboxLiveText.Current(), "https://user.auth.xboxlive.com"),
+        (LanguageManager.Instance.NetworkCheckerWidget_SiteGithubAssetsText.Current(),
+         "https://release-assets.githubusercontent.com"),
+        (LanguageManager.Instance.NetworkCheckerWidget_SiteMojangMetaText.Current(),
+         "https://launchermeta.mojang.com"),
+        (LanguageManager.Instance.NetworkCheckerWidget_SiteCommunityMetaText.Current(),
+         "https://meta.prismlauncher.org"),
+        ("CurseForge API", "https://api.curseforge.com"),
+        ("Modrinth API", "https://api.modrinth.com")
+    ];
 
     #region Direct
 
@@ -38,6 +44,9 @@ public partial class NetworkCheckerWidget : WidgetBase
 
     protected override Task OnInitializeAsync()
     {
+        Title = LanguageManager.Instance.NetworkCheckerWidget_Title.Current();
+        ButtonText = LanguageManager.Instance.NetworkCheckerWidget_StartButtonText.Current();
+
         _cts = new();
         foreach (var (display, url) in _websites)
         {
@@ -88,7 +97,7 @@ public partial class NetworkCheckerWidget : WidgetBase
     {
         get;
         set => SetAndRaise(ButtonTextProperty, ref field, value);
-    } = "Start Test";
+    } = string.Empty;
 
     #endregion
 
@@ -107,7 +116,7 @@ public partial class NetworkCheckerWidget : WidgetBase
 
         IsTesting = true;
         HasTested = false;
-        ButtonText = "Cancel";
+        ButtonText = LanguageManager.Instance.NetworkCheckerWidget_CancelButtonText.Current();
 
         try
         {
@@ -119,11 +128,11 @@ public partial class NetworkCheckerWidget : WidgetBase
             await NetworkCheckHelper.TestConnectionsAsync(Sites, httpClient, _cts?.Token ?? CancellationToken.None);
 
             HasTested = true;
-            ButtonText = "Test Again";
+            ButtonText = LanguageManager.Instance.NetworkCheckerWidget_RetryButtonText.Current();
         }
         catch (OperationCanceledException)
         {
-            ButtonText = "Start Test";
+            ButtonText = LanguageManager.Instance.NetworkCheckerWidget_StartButtonText.Current();
         }
         finally
         {

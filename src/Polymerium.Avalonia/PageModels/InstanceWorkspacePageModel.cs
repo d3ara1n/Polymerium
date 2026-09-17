@@ -19,6 +19,7 @@ using LibGit2Sharp;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions;
 using TridentCore.Core.Services;
 using TridentCore.Core.Utilities;
@@ -34,10 +35,12 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         InstanceManager instanceManager,
         NotificationService notificationService,
         OverlayService overlayService,
+        InstanceStateService stateService,
         ProfileManager profileManager) : base(context, aggregator, instanceManager, profileManager)
     {
         _notificationService = notificationService;
         _overlayService = overlayService;
+        _stateService = stateService;
 
         var filter = this.WhenValueChanged(x => x.FilterText).Select(BuildFilter);
         _changesSource.Connect().Filter(filter).Bind(out var view).Subscribe().DisposeWith(_subscriptions);
@@ -54,6 +57,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private readonly NotificationService _notificationService;
     private readonly OverlayService _overlayService;
+    private readonly InstanceStateService _stateService;
 
     #endregion
 
@@ -271,165 +275,52 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
 
     private async Task LoadChangeListAsync(CancellationToken token)
     {
-        var buildDir = PathDef.Default.DirectoryOfBuild(Basic.Key);
-        var importDir = PathDef.Default.DirectoryOfImport(Basic.Key);
-
         await Dispatcher.UIThread.InvokeAsync(() =>
         {
             _changesSource.Clear();
             ChangesCount = _changesSource.Count;
         });
 
-        var batch = new List<WorkspaceChangeModel>(200);
-        foreach (var importEntry in ScanFolder(importDir, token))
+        var state = await _stateService.RetrieveChangesAsync(Basic.Key, token);
+        var batch = state.Entries.Select(entry => new WorkspaceChangeModel
         {
-            var livePath = Path.Combine(buildDir, importEntry);
-            var importPath = Path.Combine(importDir, importEntry);
-            if (!File.Exists(livePath) || File.ResolveLinkTarget(livePath, false) is not null)
-            {
-                continue;
-            }
+            RelativePath = entry.RelativePath,
+            FileName = entry.FileName,
+            Kind = entry.Kind,
+            LivePath = entry.LivePath,
+            ImportPath = entry.ImportPath,
+            FileType = entry.FileType,
+            FileSizeRaw = entry.FileSize,
+            FileLastModifiedRaw = entry.FileLastModified
+        }).ToArray();
 
-            var kind = Diff(livePath, importPath);
-            if (kind != WorkspaceChangeKind.Same)
-            {
-                var file = new FileInfo(livePath);
-                var type = Path.GetExtension(livePath).TrimStart('.');
-                batch.Add(new()
-                {
-                    RelativePath = importEntry,
-                    FileName = Path.GetFileName(livePath),
-                    Kind = kind,
-                    LivePath = livePath,
-                    ImportPath = importPath,
-                    FileType = type,
-                    FileSizeRaw = file.Length,
-                    FileLastModifiedRaw = file.LastWriteTime
-                });
-                if (batch.Count >= 100)
-                {
-                    var toAdd = batch.ToArray();
-                    batch.Clear();
-                    await Dispatcher.UIThread.InvokeAsync(() => _changesSource.AddOrUpdate(toAdd));
-                }
-            }
-        }
-
-        if (batch.Count > 0)
+        await Dispatcher.UIThread.InvokeAsync(() =>
         {
-            await Dispatcher.UIThread.InvokeAsync(() => _changesSource.AddOrUpdate(batch));
-        }
-
-        await Dispatcher.UIThread.InvokeAsync(() => ChangesCount = _changesSource.Count);
+            _changesSource.AddOrUpdate(batch);
+            ChangesCount = _changesSource.Count;
+        });
     }
 
     private async Task LoadGitStatusAsync()
     {
-        var dir = PathDef.Default.DirectoryOfHome(Basic.Key);
-        var discoveredPath = Repository.Discover(dir);
-        if (string.IsNullOrEmpty(discoveredPath))
-        {
-            await ResetGitStatusAsync();
-            return;
-        }
-
-        using var repository = new Repository(discoveredPath);
-        if (!FileHelper.IsPathEquivalent(repository.Info.WorkingDirectory, dir))
-        {
-            await ResetGitStatusAsync();
-            return;
-        }
-
-        var isDetached = repository.Info.IsHeadDetached;
-        var trackedBranch = repository.Head.TrackedBranch;
-        var trackingDetails = repository.Head.TrackingDetails;
-        var branchName = isDetached ? "Detached HEAD" : repository.Head.FriendlyName;
-        var headSummary = BuildHeadSummary(repository);
-        var status =
-            repository.RetrieveStatus(new StatusOptions { IncludeIgnored = false, RecurseUntrackedDirs = true });
-
-        var stagedCount = 0;
-        var unstagedCount = 0;
-        var changedCount = 0;
-        foreach (var entry in status)
-        {
-            if (IsStaged(entry.State))
-            {
-                stagedCount++;
-            }
-
-            if (IsUnstaged(entry.State))
-            {
-                unstagedCount++;
-            }
-
-            changedCount++;
-        }
+        var state = await _stateService.RetrieveGitAsync(Basic.Key, _initToken ?? CancellationToken.None);
 
         await Dispatcher.UIThread.InvokeAsync(() =>
         {
-            IsGitRepository = true;
-            GitBranchName = branchName;
-            GitHeadSummary = headSummary;
-            GitStagedCount = stagedCount;
-            GitUnstagedCount = unstagedCount;
-            GitChangedCount = changedCount;
-            GitAheadCount = trackingDetails.AheadBy ?? 0;
-            GitBehindCount = trackingDetails.BehindBy ?? 0;
-            GitTrackingBranchName = trackedBranch?.FriendlyName ?? "No upstream";
-            GitIsDetachedHead = isDetached;
+            IsGitRepository = state.IsRepository;
+            GitBranchName = state.BranchName;
+            GitHeadSummary = state.HeadSummary;
+            GitStagedCount = state.StagedCount;
+            GitUnstagedCount = state.UnstagedCount;
+            GitChangedCount = state.ChangedCount;
+            GitAheadCount = state.AheadCount;
+            GitBehindCount = state.BehindCount;
+            GitTrackingBranchName = state.TrackingBranchName;
+            GitIsDetachedHead = state.IsHeadDetached;
         });
 
         RefreshGitCommands();
     }
-
-    private async Task ResetGitStatusAsync()
-    {
-        await Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            IsGitRepository = false;
-            GitBranchName = string.Empty;
-            GitHeadSummary = string.Empty;
-            GitStagedCount = 0;
-            GitUnstagedCount = 0;
-            GitChangedCount = 0;
-            GitAheadCount = 0;
-            GitBehindCount = 0;
-            GitTrackingBranchName = string.Empty;
-            GitIsDetachedHead = false;
-        });
-
-        RefreshGitCommands();
-    }
-
-    private static string BuildHeadSummary(Repository repository)
-    {
-        var tip = repository.Head.Tip;
-        if (tip is null)
-        {
-            return "No commits yet";
-        }
-
-        var shortSha = tip.Sha[..7];
-        var tag = repository.Tags.FirstOrDefault(tag => tag.PeeledTarget is Commit commit && commit.Sha == tip.Sha)
-                           ?.FriendlyName;
-
-        return string.IsNullOrEmpty(tag) ? shortSha : $"{shortSha} ({tag})";
-    }
-
-    private static bool IsStaged(FileStatus status) =>
-        status.HasFlag(FileStatus.NewInIndex)
-     || status.HasFlag(FileStatus.ModifiedInIndex)
-     || status.HasFlag(FileStatus.DeletedFromIndex)
-     || status.HasFlag(FileStatus.RenamedInIndex)
-     || status.HasFlag(FileStatus.TypeChangeInIndex);
-
-    private static bool IsUnstaged(FileStatus status) =>
-        status.HasFlag(FileStatus.NewInWorkdir)
-     || status.HasFlag(FileStatus.ModifiedInWorkdir)
-     || status.HasFlag(FileStatus.DeletedFromWorkdir)
-     || status.HasFlag(FileStatus.RenamedInWorkdir)
-     || status.HasFlag(FileStatus.TypeChangeInWorkdir);
 
     private bool TryOpenGitRepository(out Repository? repository)
     {
@@ -481,7 +372,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     {
         if (!TryOpenGitRepository(out var repository))
         {
-            await ResetGitStatusAsync();
+            await LoadGitStatusAsync();
             _notificationService.PopMessage(LanguageManager.Instance.InstanceWorkspacePage_GitNotRepositoryWarningNotificationMessage.Current(),
                                             LanguageManager.Instance.InstanceWorkspacePage_GitErrorWarningNotificationTitle.Current(),
                                             GrowlLevel.Warning);
@@ -546,51 +437,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     private static string BuildRestoreConfirmationMessage(int unstagedCount) =>
         LanguageManager.Instance.InstanceWorkspacePage_GitRestoreConfirmationMessage.Current().Replace("{0}", unstagedCount.ToString());
 
-    private IEnumerable<string> ScanFolder(string folder, CancellationToken token)
-    {
-        var root = new DirectoryInfo(folder);
-        if (!root.Exists)
-        {
-            yield break;
-        }
-
-        foreach (var file in root.EnumerateFiles("*", SearchOption.AllDirectories))
-        {
-            if (token.IsCancellationRequested)
-            {
-                yield break;
-            }
-
-            yield return Path.GetRelativePath(folder, file.FullName);
-        }
-    }
-
     private static bool IsImportProjectionEntity(string path) =>
         File.Exists(path) && File.ResolveLinkTarget(path, false) is null;
-
-    private WorkspaceChangeKind Diff(string live, string import)
-    {
-        // 用 mtime 而非哈希——工作副本由 import 复制到 build，atime/ctime/mtime 全相同。
-        if (File.Exists(import))
-        {
-            var liveTime = File.GetLastWriteTimeUtc(live);
-            var importTime = File.GetLastWriteTimeUtc(import);
-
-            if (liveTime > importTime)
-            {
-                return WorkspaceChangeKind.Updated;
-            }
-
-            if (liveTime < importTime)
-            {
-                return WorkspaceChangeKind.Outdated;
-            }
-
-            return WorkspaceChangeKind.Same;
-        }
-
-        return WorkspaceChangeKind.Deleted;
-    }
 
     #endregion
 
@@ -966,7 +814,7 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
                                        });
 
                                        var trackedPaths = status
-                                                         .Where(entry => IsUnstaged(entry.State)
+                                                         .Where(entry => GitStatusHelper.IsUnstaged(entry.State)
                                                                       && !entry.State.HasFlag(FileStatus.NewInWorkdir))
                                                          .Select(entry => entry.FilePath)
                                                          .Distinct(StringComparer.OrdinalIgnoreCase)

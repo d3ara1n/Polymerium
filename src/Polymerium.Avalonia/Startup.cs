@@ -164,6 +164,7 @@ public static class Startup
            .AddSingleton<DataService>()
            .AddSingleton<PersistenceService>()
            .AddLifetimeService<ScrapService>()
+           .AddLifetimeService<InstanceStateService>()
            .AddSingleton<InstanceService>()
            .AddLifetimeService<UpdateService>()
            .AddSingleton<WidgetHostService>()

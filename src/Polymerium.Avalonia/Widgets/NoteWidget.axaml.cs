@@ -27,6 +27,7 @@ public class NoteWidget : WidgetBase
 
     protected override Task OnInitializeAsync()
     {
+        Title = LanguageManager.Instance.NoteWidget_Title.Current();
         NoteText = Context.GetLocalData<string>(nameof(NoteText)) ?? string.Empty;
         return Task.CompletedTask;
     }

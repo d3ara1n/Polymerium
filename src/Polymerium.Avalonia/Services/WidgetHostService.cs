@@ -19,7 +19,8 @@ public class WidgetHostService(PersistenceService persistenceService, IServicePr
 
     #endregion
 
-    public Type[] WidgetTypes => [typeof(NoteWidget), typeof(NetworkCheckerWidget), typeof(DeveloperToolboxWidget)];
+    public Type[] WidgetTypes =>
+        [typeof(NoteWidget), typeof(NetworkCheckerWidget), typeof(DeveloperToolboxWidget), typeof(DevelopmentOverviewWidget)];
 
     public WidgetContext GetOrCreateContext(string key, string widgetId)
     {
