@@ -124,9 +124,7 @@ public class InstanceService
 
     public void Deploy(string key, bool? fullCheckMode = null)
     {
-        var profile = _profileManager.GetImmutable(key);
-        var vault = CreateJavaVault(profile, _configurationService.Value);
-        _instanceManager.Deploy(key, new(fullCheckMode), vault);
+        _instanceManager.Deploy(key, new(fullCheckMode));
     }
 
     // vault 是“用户实际提供了哪些 major”：实例 override 是通配项（任何 major 都落它），否则按全局

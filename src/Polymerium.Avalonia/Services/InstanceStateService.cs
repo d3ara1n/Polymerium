@@ -15,6 +15,7 @@ using TridentCore.Abstractions;
 using TridentCore.Abstractions.Lifetimes;
 using TridentCore.Abstractions.Utilities;
 using TridentCore.Core.Engines.Launching;
+using TridentCore.Core.Engines.Deploying;
 using TridentCore.Core.Services;
 using TridentCore.Core.Services.Instances;
 using TridentCore.Core.Utilities;
@@ -28,7 +29,8 @@ public class InstanceStateService(
     ILogger<InstanceStateService> logger,
     InstanceManager instanceManager,
     ProfileManager profileManager,
-    PersistenceService persistenceService) : ILifetimeService
+    PersistenceService persistenceService,
+    DeploymentPlanner deploymentPlanner) : ILifetimeService
 {
     #region Nested type: StateBase
 
@@ -123,6 +125,46 @@ public class InstanceStateService(
     }
 
     #endregion
+
+    public sealed class DeploymentState : StateBase
+    {
+        public bool IsReady { get; init; }
+    }
+
+    public Task<DeploymentState> RetrieveDeploymentStateAsync(string key, CancellationToken token = default) =>
+        RetrieveAsync(key,
+            ct => Task.Run(async () =>
+            {
+                if (instanceManager.IsInUse(key)) return false;
+                var data = await LockValidationHelper.ReadAsync(key, ct).ConfigureAwait(false);
+                return data is not null && await LockValidationHelper.ValidateAsync(key, profileManager.GetImmutable(key).Setup, data, ct).ConfigureAwait(false);
+            }, ct),
+            ct => Task.Run(async () =>
+            {
+                try
+                {
+                    if (instanceManager.IsInUse(key)) return new();
+                    var data = await LockValidationHelper.ReadAsync(key, ct).ConfigureAwait(false);
+                    if (data is null || !await LockValidationHelper.ValidateAsync(key, profileManager.GetImmutable(key).Setup, data, ct).ConfigureAwait(false))
+                        return new();
+                    if (!Ready(deploymentPlanner.Plan(key, data, ct))) return new();
+                    var assets = await DeploymentIndexHelper.ReadAssetAsync(data.Artifact!.AssetIndex, ct).ConfigureAwait(false);
+                    if (assets is null || !Ready(new AssetPlanner().Plan(assets, ct))) return new();
+                    if (data.RuntimeMajor is { } major)
+                    {
+                        var runtime = await DeploymentIndexHelper.ReadRuntimeAsync(major, ct).ConfigureAwait(false);
+                        if (runtime is null || !Ready(new RuntimePlanner().Plan(runtime, ct))) return new();
+                    }
+                    return new() { IsReady = true };
+                }
+                catch (Exception ex) when (ex is not OperationCanceledException)
+                {
+                    logger.LogWarning(ex, "Deployment state probe failed for {key}", key);
+                    return new DeploymentState();
+                }
+            }, ct), token);
+
+    private static bool Ready(DeploymentPlan plan) => plan.Downloads.Count == 0 && plan.Operations.Count == 0;
 
     #region Mechanism
 
@@ -241,7 +283,7 @@ public class InstanceStateService(
     /// <summary>取状态。有判据时先问判据，有效直接复用驻留值；否则重算。</summary>
     /// <param name="stillValid">
     ///     便宜判据（如部署锁的配置指纹比对）。为 null 表示状态没有可靠判据，每次都重算；判据抛异常按失效处理。
-    ///     目前没有使用者，是离线可用性（#88）接入 DeploymentState 时要填的槽：判据有效复用驻留值，判据失效走重路径。
+    ///     资源就绪状态以锁有效性复用本会话的检查结果，不监控外部文件修改。
     /// </param>
     private async Task<TState> RetrieveAsync<TState>(string key,
                                                      Func<CancellationToken, Task<bool>>? stillValid,

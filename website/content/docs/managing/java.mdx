@@ -12,11 +12,11 @@ Polymerium doesn't scan your system drive for Java installations. It uses two so
 
 ### When Auto-Deploy Happens
 
-Polymerium resolves the Java majors an instance accepts against the paths you configured. If none of your configured paths covers any accepted major, it downloads a matching runtime during deploy. This happens once — the runtime is cached and reused.
+Deployment prepares a matching Mojang Java runtime whenever one is available for the instance's accepted Java majors, including when you configured your own Java. Instances share the cached runtime for each major. Your configured Java takes precedence when starting the game and does not change deployment requirements.
 
 Configured paths are used as given: Polymerium does not check that a path works, so a wrong path fails when the game starts instead of falling back to another runtime.
 
-A modpack can narrow the accepted majors through a native patch. If nothing you configured covers the accepted majors, or the accepted set is empty, the launch fails with a prompt to open Java settings.
+A modpack can narrow the accepted majors through a native patch. If none matches an automatically provided runtime, deployment has no Java download requirement. Starting the game still needs a suitable user-configured Java; otherwise launch reports an error so you can configure Java or review the patch.
 
 Auto-deployed runtimes live in `cache/runtimes/` and don't touch your system registry or replace your system Java.
 
@@ -49,12 +49,12 @@ This is useful for testing compatibility or using optimized JVM distributions fo
 | Scenario | Recommendation |
 |----------|---------------|
 | Casual player | Let Polymerium auto-deploy — zero configuration |
-| System Java already installed | Configure the path — avoids duplicate runtimes |
+| System Java already installed | Configure the path to use it when launching |
 | Multiple MC versions | Configure paths per version, or let auto-deploy handle it |
 | Debugging Java issues | Set manually so you control exactly which Java runs |
 
 ## Troubleshooting Java Issues
 
 - **Wrong Java version** → check the instance's Java override and the global Java settings for the matching version
-- **Java not found** → remove the override and let auto-deploy fetch the right one
+- **Java not found** → check the configured path or provide a Java version accepted by the instance
 - **Crash on launch** → verify the Java path points to a valid JDK/JRE home (must contain `bin/java`)

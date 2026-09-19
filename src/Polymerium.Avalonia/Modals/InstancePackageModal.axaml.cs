@@ -121,6 +121,7 @@ public partial class InstancePackageModal : Modal
     public required DataService DataService { get; init; }
     public required Filter Filter { get; init; }
     public required OverlayService OverlayService { get; init; }
+    public required PackageResolver PackageResolver { get; init; }
     public required PackagePlanner PackagePlanner { get; init; }
     public required PersistenceService PersistenceService { get; init; }
     public required PackageMaterializer PackageMaterializer { get; init; }
@@ -481,12 +482,8 @@ public partial class InstancePackageModal : Modal
             }
 
             var loader = LoaderHelper.TryParse(Guard.Value.Setup.Loader, out var result) ? result.Identity : null;
-            // NOTE: planner 会忽略 Enabled == false，这里保持一致。
-            var plans = await PackagePlanner
-                             .PlanAsync([Model.Owner.Entry],
-                                        new([.. Guard.Value.Setup.Rules.Where(x => x.Enabled)],
-                                            new(Guard.Value.Setup.Version, loader, null)))
-                             .ToListAsync(t);
+            var resolvedPackages = await PackageResolver.ResolveAsync([Model.Owner.Entry], new(Guard.Value.Setup.Version, loader, null));
+            var plans = PackagePlanner.Plan(resolvedPackages, [.. Guard.Value.Setup.Rules.Where(x => x.Enabled)]);
             var plan = plans.First();
             var realPath = Path.Combine(PathDef.Default.DirectoryOfBuild(Guard.Key), plan.RelativeTargetPath);
             var symPath = PathDef.Default.FileOfPackageObject(plan.Label,
@@ -699,6 +696,7 @@ public partial class InstancePackageModal : Modal
                 DataService = DataService,
                 OverlayService = OverlayService,
                 PersistenceService = PersistenceService,
+                PackageResolver = PackageResolver,
                 PackagePlanner = PackagePlanner,
                 NotificationService = NotificationService,
                 PackageMaterializer = PackageMaterializer,
@@ -736,11 +734,8 @@ public partial class InstancePackageModal : Modal
         try
         {
             var loader = LoaderHelper.TryParse(Guard.Value.Setup.Loader, out var result) ? result.Identity : null;
-            var plans = await PackagePlanner
-                             .PlanAsync([Model.Owner.Entry],
-                                        new([.. Guard.Value.Setup.Rules.Where(x => x.Enabled)],
-                                            new(Guard.Value.Setup.Version, loader, null)))
-                             .ToListAsync();
+            var resolvedPackages = await PackageResolver.ResolveAsync([Model.Owner.Entry], new(Guard.Value.Setup.Version, loader, null));
+            var plans = PackagePlanner.Plan(resolvedPackages, [.. Guard.Value.Setup.Rules.Where(x => x.Enabled)]);
             await PackageMaterializer.MaterializeAsync(plans);
             progress.Dispose();
             foreach (var plan in plans.Where(x => !x.IsSkipping))

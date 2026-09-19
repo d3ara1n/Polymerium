@@ -15,6 +15,8 @@
 
 ### Changed
 
+- Improve instance resource preparation with cached readiness checks on the instance home page (#88)
+- Change Java deployment to prepare a shared matching runtime independently of custom launch preferences
 - Change the built-in widgets to follow the interface language
 - Change the modpack Workspace file comparison to run without blocking the interface
 - Rework modpack export around a shared instance overview and metadata options for each format (#POLY-172)
