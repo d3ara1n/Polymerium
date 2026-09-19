@@ -8,6 +8,7 @@ using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Huskui.Avalonia.Models;
+using Polymerium.Avalonia.DialogModels;
 using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Exceptions;
 using Polymerium.Avalonia.Models;
@@ -335,33 +336,26 @@ public class InstanceService
             var availableTags = profile.Setup.Packages.SelectMany(x => x.Tags).Distinct().OrderBy(x => x).ToList();
 
             var patchIndex = await PatchStorageHelper.ReadIndexAtAsync(PathDef.Default.DirectoryOfPatches(key));
-            var dialog = new ModpackExporterDialog
-            {
-                HasPatches = patchIndex.Import.Count > 0,
-                Pack = pack,
-                AvailableTags = availableTags,
-                OverlayService = _overlayService,
-                NameOriginal = !string.IsNullOrEmpty(overrideName) ? overrideName : profile.Name,
-                LoaderLabel = loaderLabel,
-                PackageCount = profile.Setup.Packages.Count,
-                AuthorOriginal = !string.IsNullOrEmpty(overrideAuthor) ? overrideAuthor : user,
-                VersionOriginal = !string.IsNullOrEmpty(overrideVersion) ? overrideVersion : "1.0.0",
-                Result = new ModpackExporterModel(key)
-            };
-
-            if (await _overlayService.PopDialogAsync(dialog) && dialog.Result is ModpackExporterModel model)
+            var dialog = _overlayService.CreateDialog<ModpackExporterDialog>(
+                new ModpackExporterDialogModel.Parameter(key,
+                    profile.Name,
+                    pack,
+                    availableTags,
+                    profile.Setup.Packages.Count,
+                    loaderLabel,
+                    patchIndex.Import.Count > 0,
+                    !string.IsNullOrEmpty(overrideName) ? overrideName : profile.Name,
+                    !string.IsNullOrEmpty(overrideAuthor) ? overrideAuthor : user,
+                    !string.IsNullOrEmpty(overrideVersion) ? overrideVersion : "1.0.0"));
+            if (await _overlayService.PopDialogAsync(dialog) && dialog.ConfirmedResult is { } model)
             {
                 var top = TopLevelHelper.GetTopLevel();
                 var storage = top.StorageProvider;
-                if (storage.CanOpen)
+                if (storage.CanSave)
                 {
-                    var name = !string.IsNullOrEmpty(model.NameOverride) ? model.NameOverride : dialog.NameOriginal;
-                    var author = !string.IsNullOrEmpty(model.AuthorOverride)
-                                     ? model.AuthorOverride
-                                     : dialog.AuthorOriginal;
-                    var version = !string.IsNullOrEmpty(model.VersionOverride)
-                                      ? model.VersionOverride
-                                      : dialog.VersionOriginal;
+                    var name = model.Name;
+                    var author = model.Author;
+                    var version = model.Version;
                     var storageItem = await storage.SaveFilePickerAsync(new()
                     {
                         SuggestedStartLocation =
@@ -389,8 +383,9 @@ public class InstanceService
                                                                                .ForInstance(key));
                         try
                         {
+                            var label = model.SelectedExporterLabel;
                             using var container = await Task.Run(async () => await _exporterAgent.ExportAsync(pack,
-                                                                                 model.SelectedExporterLabel,
+                                                                                 label,
                                                                                  key,
                                                                                  name,
                                                                                  author,

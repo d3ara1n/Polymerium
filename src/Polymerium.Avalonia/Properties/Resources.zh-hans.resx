@@ -2229,11 +2229,8 @@
     <data name="ModpackExporterDialog_AuthorLabelText" xml:space="preserve">
         <value>作者</value>
     </data>
-    <data name="ModpackExporterDialog_AttachmentsLabelText" xml:space="preserve">
-        <value>附件</value>
-    </data>
     <data name="ModpackExporterDialog_AttachmentsPrompt" xml:space="preserve">
-        <value>会随整合包一起打包的 import 文件位于</value>
+        <value>整合包会将整合包源目录（./import）中的内容一同打包。</value>
     </data>
     <data name="ModpackExporterDialog_VersionLabelText" xml:space="preserve">
         <value>版本</value>
@@ -2250,14 +2247,8 @@
     <data name="ModpackExporterDialog_PackagesLabelText" xml:space="preserve">
         <value>包数量</value>
     </data>
-    <data name="ModpackExporterDialog_AdvancedOptionsLabelText" xml:space="preserve">
-        <value>额外选项</value>
-    </data>
     <data name="ModpackExporterDialog_PatchesOmittedText" xml:space="preserve">
         <value>此格式不包含原生 Patch，导出后的实例可能无法保持当前启动行为。使用 Trident 格式可保留导入层的 Patch 及其资产。</value>
-    </data>
-    <data name="ModpackExporterDialog_TridentOptionsInfoBarText" xml:space="preserve">
-        <value>这些选项只有在导出为 Trident 时才有作用。</value>
     </data>
     <data name="ModpackExporterDialog_IncludingSourceLabelText" xml:space="preserve">
         <value>保留来源信息</value>
@@ -2279,6 +2270,42 @@
     </data>
     <data name="ModpackExporterDialog_OfflineModeToolTip" xml:space="preserve">
         <value>启用后，Mod 文件会被直接打包进压缩包中，而不是使用下载链接。这会显著增加压缩包体积，但允许离线安装。</value>
+    </data>
+    <data name="ModpackExporterDialog_NativeLabelText" xml:space="preserve">
+        <value>原生（Trident）</value>
+    </data>
+    <data name="ModpackExporterDialog_NativeSummaryText" xml:space="preserve">
+        <value>完整项目元数据与打包控制</value>
+    </data>
+    <data name="ModpackExporterDialog_ExternalLabelText" xml:space="preserve">
+        <value>外部格式</value>
+    </data>
+    <data name="ModpackExporterDialog_ExternalSummaryText" xml:space="preserve">
+        <value>面向 Modrinth · CurseForge · MultiMC 的兼容字段</value>
+    </data>
+    <data name="ModpackExporterDialog_BasicOptionsLabelText" xml:space="preserve">
+        <value>基本选项</value>
+    </data>
+    <data name="ModpackExporterDialog_ReleaseFilesLabelText" xml:space="preserve">
+        <value>实例附件</value>
+    </data>
+    <data name="ModpackExporterDialog_IncludedOverridesLabelText" xml:space="preserve">
+        <value>携带设置</value>
+    </data>
+    <data name="ModpackExporterDialog_CapabilityModrinthText" xml:space="preserve">
+        <value>此格式不保留作者信息、实例附件、原生 Patch 和包标签。在线导出使用包的下载链接。</value>
+    </data>
+    <data name="ModpackExporterDialog_CapabilityCurseForgeText" xml:space="preserve">
+        <value>此格式不保留实例附件、原生 Patch 和包标签。在线导出要求包托管于 CurseForge。</value>
+    </data>
+    <data name="ModpackExporterDialog_CapabilityMultiMcText" xml:space="preserve">
+        <value>此格式不保留整合包版本和作者信息、实例附件、原生 Patch 和包标签。包文件始终随压缩包一起打包。</value>
+    </data>
+    <data name="ModpackExporterDialog_FileIncludedText" xml:space="preserve">
+        <value>将会携带</value>
+    </data>
+    <data name="ModpackExporterDialog_FileMissingText" xml:space="preserve">
+        <value>未提供</value>
     </data>
     <data name="InstanceFilesPage_DescriptionLabelText" xml:space="preserve">
         <value>描述</value>
@@ -3128,10 +3155,7 @@
         <value>运行目录/整合包源/本地保留 分别是什么？</value>
     </data>
     <data name="ModpackExporterDialog_OpenWikiButtonText" xml:space="preserve">
-        <value>import 文件如何打包？</value>
-    </data>
-    <data name="ModpackExporterDialog_TridentOptionsLabelText" xml:space="preserve">
-        <value>Trident 专属选项</value>
+        <value>整合包源如何打包？</value>
     </data>
     <data name="ModpackExporterDialog_ExcludedTagsLabelText" xml:space="preserve">
         <value>排除标签</value>
@@ -3710,9 +3734,6 @@
     </data>
     <data name="ModpackExporterDialog_OfflineTagText" xml:space="preserve">
         <value>离线</value>
-    </data>
-    <data name="ModpackExporterDialog_TypeLabelText" xml:space="preserve">
-        <value>类型：</value>
     </data>
     <data name="InstancePackageButton_LoadFailedTitleText" xml:space="preserve">
         <value>🫡这个包的相关信息获取失败了</value>

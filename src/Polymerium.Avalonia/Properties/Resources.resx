@@ -2241,11 +2241,8 @@
     <data name="ModpackExporterDialog_Title" xml:space="preserve">
         <value>Packing instance</value>
     </data>
-    <data name="ModpackExporterDialog_AttachmentsLabelText" xml:space="preserve">
-        <value>Attachments</value>
-    </data>
     <data name="ModpackExporterDialog_AttachmentsPrompt" xml:space="preserve">
-        <value>Files included from the import layer are located at</value>
+        <value>The modpack includes the contents of the Pack Source directory (./import).</value>
     </data>
     <data name="ModpackExporterDialog_VersionLabelText" xml:space="preserve">
         <value>Version</value>
@@ -2259,14 +2256,8 @@
     <data name="ModpackExporterDialog_ModLoaderLabelText" xml:space="preserve">
         <value>Mod Loader</value>
     </data>
-    <data name="ModpackExporterDialog_AdvancedOptionsLabelText" xml:space="preserve">
-        <value>Advanced Options</value>
-    </data>
     <data name="ModpackExporterDialog_PatchesOmittedText" xml:space="preserve">
         <value>This format does not include native patches, so the exported instance may not retain its current launch behavior. Use the Trident format to preserve imported patches and their assets.</value>
-    </data>
-    <data name="ModpackExporterDialog_TridentOptionsInfoBarText" xml:space="preserve">
-        <value>These options only take effect when exporting as Trident.</value>
     </data>
     <data name="ModpackExporterDialog_IncludingSourceLabelText" xml:space="preserve">
         <value>Include source information</value>
@@ -2288,6 +2279,42 @@
     </data>
     <data name="ModpackExporterDialog_OfflineModeToolTip" xml:space="preserve">
         <value>When enabled, mod files will be bundled into the archive instead of using download links. This increases archive size significantly but allows offline installation.</value>
+    </data>
+    <data name="ModpackExporterDialog_NativeLabelText" xml:space="preserve">
+        <value>Native (Trident)</value>
+    </data>
+    <data name="ModpackExporterDialog_NativeSummaryText" xml:space="preserve">
+        <value>Full project metadata and packaging control</value>
+    </data>
+    <data name="ModpackExporterDialog_ExternalLabelText" xml:space="preserve">
+        <value>External</value>
+    </data>
+    <data name="ModpackExporterDialog_ExternalSummaryText" xml:space="preserve">
+        <value>Compatible fields for Modrinth, CurseForge and MultiMC</value>
+    </data>
+    <data name="ModpackExporterDialog_BasicOptionsLabelText" xml:space="preserve">
+        <value>Basic options</value>
+    </data>
+    <data name="ModpackExporterDialog_ReleaseFilesLabelText" xml:space="preserve">
+        <value>Instance attachments</value>
+    </data>
+    <data name="ModpackExporterDialog_IncludedOverridesLabelText" xml:space="preserve">
+        <value>Included settings</value>
+    </data>
+    <data name="ModpackExporterDialog_CapabilityModrinthText" xml:space="preserve">
+        <value>This format omits author metadata, instance attachments, native patches and package tags. Online export uses package download links.</value>
+    </data>
+    <data name="ModpackExporterDialog_CapabilityCurseForgeText" xml:space="preserve">
+        <value>This format omits instance attachments, native patches and package tags. Online export requires CurseForge-hosted packages.</value>
+    </data>
+    <data name="ModpackExporterDialog_CapabilityMultiMcText" xml:space="preserve">
+        <value>This format omits version and author metadata, instance attachments, native patches and package tags. Package files are always bundled into the archive.</value>
+    </data>
+    <data name="ModpackExporterDialog_FileIncludedText" xml:space="preserve">
+        <value>Included</value>
+    </data>
+    <data name="ModpackExporterDialog_FileMissingText" xml:space="preserve">
+        <value>Not present</value>
     </data>
     <data name="InstanceFilesPage_DescriptionLabelText" xml:space="preserve">
         <value>Description</value>
@@ -3137,10 +3164,7 @@
         <value>What are build/import/persist?</value>
     </data>
     <data name="ModpackExporterDialog_OpenWikiButtonText" xml:space="preserve">
-        <value>How import files are packed</value>
-    </data>
-    <data name="ModpackExporterDialog_TridentOptionsLabelText" xml:space="preserve">
-        <value>Trident-specific Options</value>
+        <value>How Pack Source files are packed</value>
     </data>
     <data name="ModpackExporterDialog_ExcludedTagsLabelText" xml:space="preserve">
         <value>Excluded Tags</value>
@@ -3719,9 +3743,6 @@ Affected entries: {0}
     </data>
     <data name="ModpackExporterDialog_OfflineTagText" xml:space="preserve">
         <value>Offline</value>
-    </data>
-    <data name="ModpackExporterDialog_TypeLabelText" xml:space="preserve">
-        <value>Type:</value>
     </data>
     <data name="InstancePackageButton_LoadFailedTitleText" xml:space="preserve">
         <value>🫡 Failed to load package info</value>

@@ -1,0 +1,76 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme
+        x:Key="AccordionListBoxTheme"
+        BasedOn="{StaticResource {x:Type ListBox}}"
+        TargetType="ListBox">
+        <Setter Property="ItemContainerTheme" Value="{StaticResource AccordionListBoxItemTheme}" />
+        <Setter Property="SelectionMode" Value="AlwaysSelected" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <StackPanel Spacing="8" />
+            </ItemsPanelTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme
+        x:Key="AccordionListBoxItemTheme"
+        TargetType="ListBoxItem">
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{StaticResource ControlTranslucentHalfBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource MediumCornerRadius}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}">
+                    <Border.Transitions>
+                        <Transitions>
+                            <BrushTransition
+                                Property="Background"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                            <BrushTransition
+                                Property="BorderBrush"
+                                Duration="{StaticResource ControlFasterAnimationDuration}" />
+                        </Transitions>
+                    </Border.Transitions>
+                    <ContentPresenter
+                        Name="PART_ContentPresenter"
+                        Padding="{TemplateBinding Padding}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        Foreground="{TemplateBinding Foreground}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover:not(:selected)">
+            <Setter Property="Background" Value="{StaticResource ControlTranslucentFullBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlBorderBrush}" />
+        </Style>
+        <Style Selector="^:selected">
+            <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentFullBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+        </Style>
+        <Style Selector="^:pressed">
+            <Setter Property="Background" Value="{StaticResource ControlAccentTranslucentHalfBackgroundBrush}" />
+        </Style>
+        <Style Selector="^:focus-visible">
+            <Setter Property="BorderBrush" Value="{StaticResource ControlAccentInteractiveBorderBrush}" />
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>
