@@ -178,7 +178,7 @@
         <value>编辑</value>
     </data>
     <data name="InstanceHomePage_ReadyLabelText" xml:space="preserve">
-        <value>准备就绪</value>
+        <value>资源已就绪</value>
     </data>
     <data name="InstanceHomePage_NoAccountLabelText" xml:space="preserve">
         <value>未选择账号</value>
@@ -1677,10 +1677,7 @@
     <data name="DeployStage_SyncPackages" xml:space="preserve">
         <value>同步包...</value>
     </data>
-    <data name="DeployStage_FlattenPackages" xml:space="preserve">
-        <value>解决包冲突...</value>
-    </data>
-    <data name="DeployStage_SolidifyManifest" xml:space="preserve">
+      <data name="DeployStage_SolidifyManifest" xml:space="preserve">
         <value>准备文件...</value>
     </data>
     <data name="InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle" xml:space="preserve">
@@ -1926,8 +1923,8 @@
     <data name="AccentColor_Ember" xml:space="preserve">
         <value>余烬</value>
     </data>
-    <data name="DeployStage_EnsureRuntime" xml:space="preserve">
-        <value>准备 Java 运行时...</value>
+    <data name="DeployStage_SelectRuntime" xml:space="preserve">
+        <value>选择运行时需求</value>
     </data>
     <data name="MainWindow_PlayMenuText" xml:space="preserve">
         <value>开始</value>
@@ -4365,4 +4362,7 @@
     <data name="RecipePickerDialog_EmptyText" xml:space="preserve">
         <value>还没有配方</value>
     </data>
+  <data name="InstanceHomePage_DeploymentRequiredLabelText" xml:space="preserve">
+    <value>需要部署</value>
+  </data>
 </root>

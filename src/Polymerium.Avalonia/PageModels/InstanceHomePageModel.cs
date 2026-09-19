@@ -43,9 +43,11 @@ public partial class InstanceHomePageModel(
     ConfigurationService configurationService,
     PersistenceService persistenceService,
     InstanceService instanceService,
+    InstanceStateService instanceStateService,
     WidgetHostService widgetHostService) : InstancePageModelBase(context, aggregator, instanceManager, profileManager)
 {
     private IDisposable? _timerSubscription;
+    private IDisposable? _deploymentSubscription;
 
     #region Other
 
@@ -80,6 +82,9 @@ public partial class InstanceHomePageModel(
 
     protected override Task OnInitializeAsync(CancellationToken token)
     {
+        LazyDeployment = CreateDeploymentState();
+        _deploymentSubscription = instanceStateService.Changed.Where(key => key == Basic.Key)
+            .Subscribe(_ => LazyDeployment = CreateDeploymentState());
         var selector = persistenceService.GetAccountSelector(Basic.Key);
         if (selector != null)
         {
@@ -108,6 +113,9 @@ public partial class InstanceHomePageModel(
     protected override Task OnDeinitializeAsync()
     {
         _timerSubscription?.Dispose();
+        _deploymentSubscription?.Dispose();
+        _deploymentSubscription = null;
+        LazyDeployment = null;
 
         PinnedWidgets.Clear();
         return Task.CompletedTask;
@@ -292,6 +300,14 @@ public partial class InstanceHomePageModel(
     #endregion
 
     #region Reactive
+
+    [ObservableProperty]
+    public partial LazyObject? LazyDeployment { get; set; }
+
+    private LazyObject CreateDeploymentState() =>
+        new(async token => await instanceStateService.RetrieveDeploymentStateAsync(Basic.Key, token));
+
+    partial void OnLazyDeploymentChanged(LazyObject? oldValue, LazyObject? newValue) => oldValue?.Cancel();
 
     [ObservableProperty]
     public partial Bitmap? Screenshot { get; set; }

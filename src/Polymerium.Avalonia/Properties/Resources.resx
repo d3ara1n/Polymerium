@@ -187,7 +187,7 @@
         <value>Details</value>
     </data>
     <data name="InstanceHomePage_ReadyLabelText" xml:space="preserve">
-        <value>Everything is ready</value>
+        <value>Resources ready</value>
     </data>
     <data name="InstanceHomePage_NoAccountLabelText" xml:space="preserve">
         <value>Account is not set yet</value>
@@ -1680,10 +1680,7 @@
     <data name="DeployStage_SyncPackages" xml:space="preserve">
         <value>Synchronizing packages...</value>
     </data>
-    <data name="DeployStage_FlattenPackages" xml:space="preserve">
-        <value>Resolving conflicts...</value>
-    </data>
-    <data name="DeployStage_PersistLock" xml:space="preserve">
+      <data name="DeployStage_PersistLock" xml:space="preserve">
         <value>Saving version lock...</value>
     </data>
     <data name="DeployStage_GenerateManifest" xml:space="preserve">
@@ -1935,8 +1932,8 @@
     <data name="AccentColor_Ember" xml:space="preserve">
         <value>Ember</value>
     </data>
-    <data name="DeployStage_EnsureRuntime" xml:space="preserve">
-        <value>Preparing Java runtime...</value>
+    <data name="DeployStage_SelectRuntime" xml:space="preserve">
+        <value>Select runtime requirement</value>
     </data>
     <data name="MainWindow_PlayMenuText" xml:space="preserve">
         <value>Play</value>
@@ -4374,4 +4371,7 @@ Affected entries: {0}
     <data name="RecipePickerDialog_EmptyText" xml:space="preserve">
         <value>No recipes yet</value>
     </data>
+  <data name="InstanceHomePage_DeploymentRequiredLabelText" xml:space="preserve">
+    <value>Deployment required</value>
+  </data>
 </root>

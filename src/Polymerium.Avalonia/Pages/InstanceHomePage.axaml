@@ -585,30 +585,43 @@
                         TargetType="trident:InstanceState"
                         Value="{Binding State}">
                         <husk:SwitchCase Value="Idle">
-                            <husk:SwitchContainer
-                                TargetType="x:Boolean"
-                                Value="{Binding SelectedAccount, Converter={x:Static ObjectConverters.IsNotNull}, Mode=OneWay, FallbackValue={x:False}}">
-                                <husk:SwitchCase Value="{x:True}">
-                                    <husk:IconLabel
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                        Icon="CheckmarkCircle"
-                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_ReadyLabelText}}"
-                                        TextBlock.TextWrapping="Wrap"
-                                        Variant="Filled" />
-                                </husk:SwitchCase>
-                                <husk:SwitchCase Value="{x:False}">
-                                    <husk:IconLabel
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                        Icon="DismissCircle"
-                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_NoAccountLabelText}}"
-                                        TextBlock.TextWrapping="Wrap"
-                                        Variant="Filled" />
-                                </husk:SwitchCase>
-                            </husk:SwitchContainer>
+                            <StackPanel Spacing="6">
+                                <husk:LazyContainer Source="{Binding LazyDeployment}">
+                                    <husk:LazyContainer.SourceTemplate>
+                                        <DataTemplate x:DataType="app:InstanceStateService+DeploymentState">
+                                            <husk:SwitchContainer TargetType="x:Boolean" Value="{Binding IsReady}">
+                                                <husk:SwitchCase Value="{x:True}">
+                                                    <husk:IconLabel
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                                        Icon="CheckmarkCircle"
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_ReadyLabelText}}"
+                                                        TextBlock.TextWrapping="Wrap"
+                                                        Variant="Filled" />
+                                                </husk:SwitchCase>
+                                                <husk:SwitchCase Value="{x:False}">
+                                                    <husk:IconLabel
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Icon="ArrowDownload"
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_DeploymentRequiredLabelText}}"
+                                                        TextBlock.TextWrapping="Wrap" />
+                                                </husk:SwitchCase>
+                                            </husk:SwitchContainer>
+                                        </DataTemplate>
+                                    </husk:LazyContainer.SourceTemplate>
+                                </husk:LazyContainer>
+                                <husk:IconLabel
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                    Icon="DismissCircle"
+                                    IsVisible="{Binding SelectedAccount, Converter={x:Static ObjectConverters.IsNull}, Mode=OneWay}"
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_NoAccountLabelText}}"
+                                    TextBlock.TextWrapping="Wrap"
+                                    Variant="Filled" />
+                            </StackPanel>
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="Deploying">
                             <Panel Margin="8">

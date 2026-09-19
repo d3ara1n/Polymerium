@@ -1,182 +1,61 @@
-# LockData 现代化：实施影响面与故障定位地图
+# LockData 与离线部署规划
 
-> 制定日期：2026-07-06
-> 定位：POLY-116（LockData 现代化）实施后的**影响面与故障定位地图**。不是施工蓝本——设计源自 [POLY-116](https://d3ara1n.atlassian.net/browse/POLY-116)（施工蓝本已随实施归档）；本文档面向"上线后遇到问题，如何快速定位责任域和出错点"。随代码演进维护：凡改动 lock 相关行为，同步更新本文档。
-> 关联：[POLY-116](https://d3ara1n.atlassian.net/browse/POLY-116)
-> 当前状态：实施完成（2026-07-06）
+`data.lock.json` 固定实例的解析需求，不证明文件已经部署完成。`LockData.FORMAT` 为 9，参与 Artifact 区域的输入指纹。
 
----
+## 锁的内容
 
-## 0. 先理解重构本质（90% 的问题靠这三点定位）
+- `Platform` 保存包解析使用的 Minecraft 版本和加载器。
+- `Vanilla`、`Loader`、`Launch` 分别保存区域输入指纹与输出。`Artifact` 是最终启动数据。
+- `Packages` 保留所有来源的完整解析结果与规则结果。包版本不会因为优先级变化而重新解析。
+- `PackagesInput` 描述启用的包、规则和来源顺序；`PackageSource`、`PackageSourceOrders` 供离线仲裁使用。
+- `RuntimeMajor` 是可选的 Mojang 运行时部署需求，来自全部 Patch 应用后的兼容大版本集合，与用户 Java 偏好无关。没有交集时为 null，部署跳过运行时准备。
 
-POLY-116 把 `data.lock.json` 从"构建过程缓存"重做为"版本锁定权威源"。与旧架构的三个根本差异，理解了就能定位绝大多数异常：
+## 管线
 
-1. **双对象模型** —— 每次部署同时存在 `BaseLock`（磁盘旧 lock，只读参照）和 `Lock`（本次产物，new 出来逐步填）。**各 stage 判断有效性看 BaseLock、修改写 Lock**，两者解耦。任何"判断依据"问题先想：它是看 BaseLock（稳定源头）还是 Lock（被改的中间态）？
-2. **固定线性 pipeline** —— `DeployEngine.DecideNext` 状态机已废弃，8 个 stage 固定顺序线性执行，各自看 BaseLock 自决干不干活。没有"跳过 stage"的分支了——出问题不要找状态机，找具体 stage 的自决逻辑。
-3. **防漂移 = lock 优先** —— 只要 lock 里有 resolved 就不重新 resolve（不碰仓库 API）；rule 变化用缓存 resolved 重算，绝不重新 resolve。任何"版本不对"先想：它该走缓存复用、还是 resolve，有没有走错。
-
----
-
-## 1. 责任域地图（按模块）
-
-| 责任域 | 文件 | 职责 | 出错查这里 |
-|--------|------|------|-----------|
-| **数据结构** | `TridentCore.Abstractions/FileModels/LockData.cs` | lock 的内存与磁盘形态。`FORMAT=2`，含 `PlatformData/ViabilityData/ArtifactData/LockedPackage/PackageRule`；`LockedPackage.Resolved` 是**全量 `Package`**、另带 `SuppressedBy`（POLY-117） | 序列化/反序列化异常、字段缺失、跨机器数据不一致 |
-| **FastMode 门控** | `TridentCore.Abstractions/Extensions/LockDataExtensions.cs` | `Verify(setup, optionsHash, priorityHash)`——FastMode 判定，比 platform + OptionsHash + **PriorityHash**（POLY-117，caller 用 `ViabilityHashHelper` 算好传入）+ 完整 purl（含 vid）集合 | "改了 mod 版本/SourceOrders 没生效（FastMode）"、"每次都全量部署" |
-| **部署上下文** | `TridentCore.Core/Engines/Deploying/DeployContext.cs` | `BaseLock`/`Lock`/`OptionsHash` 的载体 | stage 间数据传递问题 |
-| **pipeline 编排** | `TridentCore.Core/Engines/DeployEngine.cs` | 固定 9-stage 线性序列（POLY-117 加 `FlattenPackages`） | stage 执行顺序、stage 未执行（看 Sequence 数组） |
-| **加载** | `Stages/LoadLockStage.cs` | 读磁盘→BaseLock；new Lock 填 Platform/Viability；旧 `FORMAT=1` 降级 BaseLock=null | lock 读不到、升级后全量重建、Platform 填错 |
-| **平台缓存·vanilla** | `Stages/InstallVanillaStage.cs` | 看 `BaseLock.Platform==Lock.Platform`→整体迁 artifact；否则重建 vanilla（调 PrismLauncher + authlib-injector） | vanilla 启动缺库、artifact 迁移不完整 |
-| **平台缓存·loader** | `Stages/ProcessLoaderStage.cs` | 看 `BaseLock.Platform` 匹配→skip（artifact 已整体迁）；否则重建 loader | loader 启动失败、loader 库缺失、mainClass 错 |
-| **版本锁定·核心** | `Stages/SyncPackagesStage.cs` | diff 按 **`(project, Source)`**（POLY-117，同 mod 多来源各自存活）+ floating 失效（platform）+ 固定 vid 变更检测 + 精细 rule（`EvaluateRule` 直接哺 `locked.Resolved`，零网络）| **绝大多数 mod 版本相关问题**（见 §4） |
-| **覆盖仲裁**（POLY-117） | `Stages/FlattenPackagesStage.cs` | 两遍 dedupe（project identity + 落盘路径）按 `SourceOrders` 裁决；败者 `SuppressedBy`；同档平手 throw `PackageConflictException` | 同 mod 多来源没裁/裁错、冲突报错、被覆盖的包没落盘 |
-| **持久化** | `Stages/PersistLockStage.cs` | 唯一写回磁盘点 | lock 没更新、写文件失败 |
-| **下载清单** | `Stages/GenerateManifestStage.cs` | 消费 `Lock.Artifact`+`Lock.Packages`；跳过 `SuppressedBy` 包（POLY-117）；target 由 `locked.RelativeTarget()` 派生（`PackagePathHelper`） | mod 落盘路径错、文件没进 manifest、target 不相对、被覆盖的包不该落盘却落了 |
-| **下载执行** | `Stages/SolidifyManifestStage.cs` | 下载 + 软链；**下载后 hash 校验闭环** | 下载失败、hash 不匹配、缓存未命中重复下载 |
-| **规则重算** | `Engines/Deploying/PackagePlanner.cs` | `EvaluateRule`（matched 包直接哺全量 `locked.Resolved`，零网络、无假值）/ `ResolveAsync`（`ToLookup` 去重分发，POLY-117）；`PlanAsync` 保留供导出器/宿主 | rule 评估结果错、rule 改了没生效 |
-| **库累积** | `TridentCore.Core/Extensions/LockDataExtensions.cs` | `MakeIgniter` + `AddLibrary`/`AddLibraryPrismFlavor`（库去重规则） | 库重复、库丢失、启动 classpath 错 |
-| **启动装配** | `TridentCore.Core/Services/InstanceManager.cs` | FastMode 路径（读 lock→Verify→直接 Launch）；正常路径 foreach 驱动 stage | FastMode 误判、stage 进度跟踪、启动参数装配 |
-| **PrismLauncher 适配** | `TridentCore.Core/Services/PrismLauncherService.cs` | `AddValidatedLibrariesToArtifact(IList<Library>, ...)` | vanilla/loader 库获取 |
-| **账户注入** | `Services/AccountConfigurerAgent.cs` + `Accounts/AuthlibAccountConfigurer.cs` | 读 `Lock.Artifact` 装配启动 | 账户/外置登录启动问题 |
-
----
-
-## 2. 部署 pipeline 各 stage（运行时顺序，按症状定位）
-
-固定序列，**每个都执行**（无跳过），各自内部自决：
-
-```
-LoadLock        读 BaseLock + 建 Lock(Platform/Viability)
-   ↓
-InstallVanilla  BaseLock.Platform 匹配且 Artifact 非空 → 整体迁；否则重建 vanilla
-   ↓
-ProcessLoader   BaseLock.Platform 匹配 → skip；否则重建 loader
-   ↓
-SyncPackages    按 (project,source) diff → floating/platform 失效重 resolve + 固定 vid 变更重 resolve
-                + 精细 rule（EvaluateRule 直接哺 Resolved）→ 组装 Lock.Packages
-   ↓
-FlattenPackages 两遍仲裁（project identity + 落盘路径）按 SourceOrders 裁决；
-                胜者 SuppressedBy=null、败者 SuppressedBy=胜者；同档平手 throw（POLY-117）
-   ↓
-PersistLock     写 data.lock.json（唯一写回）
-   ↓
-EnsureRuntime   查 Java 运行时
-   ↓
-GenerateManifest  从 Lock 生成下载清单（package target 派生）
-   ↓
-SolidifyManifest  下载 + 软链 + 下载后 hash 校验
+```text
+LoadLock
+  → InstallVanilla
+  → ProcessLoader
+  → ApplyLaunchPatch
+  → SyncPackages
+  → SelectRuntime
+  → PersistLock
+  → GenerateManifest
+  → SolidifyManifest
 ```
 
-**关键不变量**：`InstallVanilla` 与 `ProcessLoader` 的判断**都看 `BaseLock.Platform`**（不看 Lock 中间态）。匹配时 InstallVanilla 整体迁、ProcessLoader skip；不匹配时两者各自重建。如果出现"vanilla 迁了但 loader 没迁"或反之，查这两个 stage 的判断是否一致。
+`BaseLock` 是磁盘锁的只读参照，`Lock` 是各阶段逐步组装的本次需求。`PersistLock` 在文件准备前保存需求，因此部署失败后仍可使用已固定的解析结果。
 
----
+`LockValidationHelper` 提供部署区域和状态检查共用的指纹计算。`ValidateAsync` 检查区域链、包输入和运行时需求；索引及资源文件是否存在属于 Planner 的职责。旧区域指纹不匹配时重新解析区域，包版本仍按现有匹配规则复用。
 
-## 3. 数据流（追踪 LockData 去向）
+## 离线规划
 
-```
-磁盘 data.lock.json
-   │ 读（LoadLockStage；FORMAT≠2 或损坏 → BaseLock=null）
-   ▼
-BaseLock (只读参照) ──┐
-                      ├─► 各 stage 判断有效性
-Lock (new, 逐步填) ◄──┘    各 stage 迁移/重建写入
-   │
-   │ 写（PersistLockStage，唯一）
-   ▼
-磁盘 data.lock.json
+`DeploymentPlanner.Plan(key, data)` 调用离线 `PackagePlanner` 仲裁包，并将包、整合包源（`import/`）、本地保留（`persist/`）的投影与当前运行目录（`build/`）比较。只返回需要执行的下载、复制、移动、链接和目录操作，已经就绪的文件不进入操作清单。
 
-旁路（不进 pipeline）：
-磁盘 ──► InstanceManager FastMode ──► Verify ──► 命中直接 Launch / 不命中进 pipeline
-```
+`AssetPlanner` 消费本地 `AssetIndex`，`RuntimePlanner` 消费本地 `RuntimeIndex`，两者不联网。索引读取由 `DeploymentIndexHelper` 提供，获取由 `DeploymentIndexService` 提供：部署消费方发现缺失便补齐索引继续规划，状态检查消费方直接返回未就绪。
 
-`LockedPackage`：`Purl` 存**当前声明的完整 purl**（含 vid，diff 键 + Verify 比较单元）；`Source` 是覆盖层身份（POLY-117 仲裁用）；`Resolved` 是**全量 `Package`**（锁定的事实，规则复算/清单/UI 直接读）；`Rule` 是 rule 评估快照；`SuppressedBy`（POLY-117）非 null 表示被该 purl 的包覆盖、不落盘。
+运行时以 major 共享，索引位于 `cache/runtimes/{major}.json`，文件位于 `cache/runtimes/{major}/`。实例不固定 Java 补丁版本；删除共享索引后，下次部署获取当前索引并修复文件。用户 Java 偏好只在启动时参与选择，未命中时使用锁定 major，没有可用 Java 则在启动时报错。
 
----
+## 执行与收尾
 
-## 4. 症状 → 定位速查表（核心 debug 价值）
+`SolidifyManifestStage` 先下载并校验文件，再按顺序执行本地操作。符号链接创建、替换与清理都是显式操作，不能把差量列表当成完整目标集合来删除其余链接。
 
-| 症状 | 首查 | 次查 / 说明 |
-|------|------|------------|
-| **mod 版本漂移到最新** | `SyncPackagesStage` floating 失效判定 | 该走缓存复用却 resolve 了——查 `platformChanged` 是否误判 true，或 purl 的 MatchKey 是否没匹配上 BaseLock |
-| **改了固定 mod 版本（@vid）启动还是旧版** | `LockDataExtensions.Verify` | FastMode 用完整 purl 比较；若仍命中旧版，查 Verify 的 purl 集合是否含 vid |
-| **rule 改了，mod 行为/路径没变** | `SyncPackagesStage` 精细 rule + `PackagePlanner.EvaluateRule` | matched 包零网络重算，直接哺全量 `locked.Resolved`；查 rule 选择器读的字段是否在 `Package` 上 |
-| **每次启动都重新解析（不缓存）** | `Verify`（FastMode）+ `LoadLockStage`（BaseLock 读取） | FastMode 不命中→查 platform/viability.optionsHash/purl 集合哪个变了；或 BaseLock 读失败（FORMAT/损坏） |
-| **启动崩溃 / class not found / 主类错** | `InstallVanilla`/`ProcessLoader` artifact 迁移 + `MakeIgniter` | artifact 迁移不完整、loader 重建遗漏、Library 去重把需要的库 dedup 掉 |
-| **mod 文件落盘路径不对** | `PackagePathHelper.RelativeTarget` / `locked.RelativeTarget()` 扩展 | target 由 Rule+Resolved 派生；查 Normalizing/Destination 逻辑 |
-| **跨机器复制实例后版本不一致** | `LockData` 可迁移字段 | 应无本地 Key；`Resolved` 是全量 `Package`，含完整复现信息（vid/download/hash 等） |
-| **下载的文件损坏未被发现** | `SolidifyManifestStage` hash 校验 | 下载后应有 `FileHelper.VerifyModified` 闭环；查 `Package.Hash` |
-| **旧实例升级后第一次全量重建** | `LoadLockStage` FORMAT 降级 | `FORMAT=1` 反序列化失败→BaseLock=null→全量，属预期（数据无损） |
-| **loader 相关启动失败（Fabric/Forge/Quilt/NeoForge）** | `ProcessLoaderStage` 重建分支 | 仅 platform 不匹配时才重建；查 loader 字符串解析、intermediary（Fabric/Quilt）、ForgeWrapper 参数 |
-| **authlib-injector/外置登录失败** | `AccountConfigurerAgent` + `AuthlibAccountConfigurer` | 读 `Lock.Artifact`；查 artifact 是否就绪 |
-| **加 mod 不解析 / 删 mod 不移除** | `SyncPackagesStage` diff 三桶 | Added/Removed/Matched 分桶；查 MatchKey（project identity 小写）匹配 |
-| **同 project 多来源/多版本冲突** | `FlattenPackagesStage`（POLY-117 已实施） | 见 `notes/DeploymentPriority.md`——两遍仲裁 + SourceOrders 覆盖模型 |
+原生库不参与首页就绪判断。文件操作完成后，`NativeHelper` 直接读取本地原生库归档，按排除规则和覆盖顺序推导预期输出，对照 `build/natives/` 并在必要时通过临时目录替换。没有单独持久化的原生库提取索引。
 
----
+## Polymerium 消费
 
-## 5. 已知复杂点 / 易藏 bug
+`InstanceStateService.RetrieveDeploymentStateAsync` 是资源就绪状态的入口。锁无效则返回未就绪；锁有效且已有本会话结果则复用；没有缓存时执行只读规划。首版只有索引齐全且所有计划均无操作时才显示资源已就绪。
 
-1. **`SyncPackagesStage.MatchKey`** —— 用 `(Label, Namespace, Pid, Source)` 小写化做 diff 键（POLY-117 加 Source，同 mod 多来源各自存活）。大小写、namespace 缺失（`null`→`""`）处理若变，会导致匹配失败→误判新增/删除→重新 resolve。filter/vid 故意不进 key（支持 fixed→floating 继承）。
-2. **floating 失效只看 `platformChanged`** —— 因为 `ResolveAsync` 的 filter 完全从 `setup.Version/Loader` 构建，不从 `entry.Purl` 的 `#filter` 取。**若未来 filter 语义改变**（让 entry 的 filter 参与 resolve），此处必须同步加 entry filter 变更检测，否则 filter 漂移。
-3. **固定 vid 变更检测** —— `parsed.Vid != locked.Resolved.VersionId` 触发重 resolve（`Resolved` 现为全量 `Package`，字段名 `VersionId`）。这是对蓝本的补全（尊重用户重定版本）。若用户反馈"锁定太死，改 vid 不生效"，先查这里。
-4. **全量 Package 持久化**（POLY-117）—— `LockedPackage.Resolved` 是完整 `Package`（含 Thumbnail/Author/Summary/Reference/Dependencies），规则复算直接哺它、无假值（旧的 `ReconstructPackage` 占位重建已删）。`Reference` 是 Uri 友情链接（≠ `Source` 覆盖身份，二者绝不可混）。旧 `ResolvedPackage` 结构的锁读到会反序列化失败→全量重建（FORMAT 未升，dev 期可接受）。
-5. **artifact 整体迁移的原子性** —— InstallVanilla 匹配则整体迁、ProcessLoader 匹配则 skip。两者判断**必须都看 `BaseLock.Platform`**。若任一改成看 Lock 中间态，会出现"半迁移"。
-6. **FastMode Verify 多维指纹** —— 比 platform + OptionsHash + PriorityHash + 完整 purl（含 vid）集合。改 vid 触发重建；改 `SourceOrders`/`Setup.Source` 触发 PriorityHash 变→重建（POLY-117）。若 purl 比较改成 project identity 会重蹈"改 vid 不生效"覆辙。
-7. **`FORMAT=2` 破坏性** —— 旧 `FORMAT=1` 反序列化失败→降级。若以后再改结构，升 FORMAT 并保证旧版能 clean 降级（lock 可重建，不做双读迁移）。
-8. **`PackagePlanner.PlanAsync` 保留** —— 导出器（4 个）+ 宿主（`InstancePackageModal`/`InstanceSetupPageModel`）依赖。它内部委托 `ResolveAsync`+`EvaluateRule`，与 pipeline 共享底层，无重复逻辑。若动 ResolveAsync/EvaluateRule 签名，PlanAsync 也要同步。
+缓存通过已有实例活动和 Profile 事件失效，不监控用户在应用外修改文件。应用重启后重新检查。账号和用户 Java vault 不属于这个状态的输入，资源就绪也不保证启动条件全部满足。
 
----
+## 故障定位
 
-## 6. 降级行为与外部依赖
-
-| 场景 | 行为 | 出错点 |
-|------|------|--------|
-| `data.lock.json` 不存在 | BaseLock=null，全量构建 | 正常首次部署 |
-| `FORMAT=1`（旧版）文件 | 反序列化失败→BaseLock=null→全量重建（数据无损） | `LoadLockStage` catch JsonException |
-| 文件损坏 | 同上 | `LoadLockStage` catch |
-| `Options.FullCheckMode=true` | 不读 BaseLock→全量重建 | `LoadLockStage` 顶部条件 |
-| PrismLauncher Meta 不可达 | InstallVanilla/ProcessLoader 重建失败→部署中断 | 网络依赖，无降级 |
-| 仓库 API（CF/Modrinth）失败 | 仅 SyncPackages 的 toResolve 集合受影响；已锁定的包零网络不受波及 | resolve 失败提示用户 |
-| authlib-injector API 失败 | InstallVanilla 重建失败 | 部署中断 |
-
----
-
-## 7. 改动文件全清单（按责任域，实施完成态）
-
-**新增**
-- `TridentCore.Core/Engines/Deploying/Stages/LoadLockStage.cs`
-- `TridentCore.Core/Engines/Deploying/Stages/SyncPackagesStage.cs`
-- `TridentCore.Core/Engines/Deploying/Stages/PersistLockStage.cs`
-- `TridentCore.Abstractions/Exceptions/LockUnavailableException.cs`
-
-**删除**
-- `Stages/CheckArtifactStage.cs` / `BuildArtifactStage.cs` / `ResolvePackageStage.cs`
-- `Engines/Deploying/LockDataBuilder.cs` / `LockDataBuilderExtensions.cs` / `LibraryCollectionExtensions.cs`（后者内容合入 `Core/Extensions/LockDataExtensions.cs`）
-- `Exceptions/ArtifactUnavailableException.cs`
-
-**重写/重大修改**
-- `Abstractions/FileModels/LockData.cs`（结构重构）
-- `Abstractions/Extensions/LockDataExtensions.cs`（Verify 重写）
-- `Core/Engines/Deploying/DeployContext.cs` / `DeployEngine.cs`
-- `Core/Engines/Deploying/Stages/InstallVanillaStage.cs` / `ProcessLoaderStage.cs` / `GenerateManifestStage.cs` / `SolidifyManifestStage.cs` / `EnsureRuntimeStage.cs`
-- `Core/Engines/Deploying/PackagePlanner.cs`（拆 EvaluateRule/ResolveAsync）
-- `Core/Extensions/LockDataExtensions.cs`（合入 AddLibrary）
-- `Core/Services/InstanceManager.cs` / `PrismLauncherService.cs` / `AccountConfigurerAgent.cs`
-- `Accounts/AuthlibAccountConfigurer.cs`
-- `DeployStage.cs`（枚举改名）
-- `Resources.resx` / `Resources.zh-hans.resx` / `Resources.Designer.cs`（资源键）
-
-**宿主（src/Polymerium.Avalonia）**
-- `PageModels/InstanceHomePageModel.cs`（stage→resource 映射）
-- `Services/Instances/DeployTracker.cs`（默认 stage）
-- 经 grep 确认无其他 Artifact/Watermark/Parcels 旧名残留
-
----
-
-## 8. 维护约定
-
-- 凡改动 lock 的**结构**（新增/改字段）：升 `LockData.FORMAT`，更新本文件 §1 数据结构行 + §5 相关易错点。
-- 凡改动 **pipeline stage** 顺序或职责：更新 §2 + §1 对应行。
-- 凡改动 **SyncPackages** 的 diff/失效/rule 逻辑：重点更新 §4 症状表 + §5 对应条目（这是 bug 高发区）。
-- 凡改动 **Verify**：更新 §4 的 FastMode 相关行。
-- 新增 **rule 选择器类型**：现在直接读全量 `Package`（`locked.Resolved`），无重建/无假值——只需确认该字段在 `Package` 上（§5.4）。
-- 凡改动 **来源覆盖仲裁 / SourceOrders / FlattenPackages / SuppressedBy**：见 `notes/DeploymentPriority.md`（POLY-117 专属 note）。
+| 现象 | 检查位置 |
+| --- | --- |
+| 浮动包版本意外变化 | `SyncPackagesStage` 的身份匹配和平台变化判断 |
+| Patch 修改后仍复用旧区域 | `LockValidationHelper` 对应区域的输入指纹 |
+| 资源齐全仍计划下载 | `FilePlanningHelper` 的路径和哈希检查 |
+| 链接丢失或重复创建 | `DeploymentPlanner` 的投影仲裁与链接比较 |
+| 索引缺失时检查联网 | 状态消费方是否误调用 `DeploymentIndexService` |
+| 用户改 Java 偏好触发资源重建 | 部署是否错误地重新依赖 vault |
+| 原生库不完整 | `NativeHelper` 的归档推导和目录替换 |

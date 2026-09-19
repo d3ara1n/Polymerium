@@ -837,6 +837,7 @@ public partial class InstanceSetupPageModel(
                 PackageMaterializer = packageMaterializer,
                 Collection = _flat,
                 NotificationService = notificationService,
+                PackageResolver = serviceProvider.GetRequiredService<PackageResolver>(),
                 PackagePlanner = serviceProvider.GetRequiredService<PackagePlanner>(),
                 Filter = new(Kind: model.Info.Kind,
                              Version: Basic.Version,
