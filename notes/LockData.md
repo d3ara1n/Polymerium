@@ -9,6 +9,7 @@
 - `Packages` 保留所有来源的完整解析结果与规则结果。包版本不会因为优先级变化而重新解析。
 - `PackagesInput` 描述启用的包、规则和来源顺序；`PackageSource`、`PackageSourceOrders` 供离线仲裁使用。
 - `RuntimeMajor` 是可选的 Mojang 运行时部署需求，来自全部 Patch 应用后的兼容大版本集合，与用户 Java 偏好无关。没有交集时为 null，部署跳过运行时准备。
+- `RuntimeIndex` 可选地保存运行时索引 URL 与哈希。已有索引但旧锁未记录引用时继续离线使用；有哈希时读取前校验，没有哈希时按存在性读取，再验证索引结构。
 
 ## 管线
 
@@ -34,7 +35,7 @@ LoadLock
 
 `AssetPlanner` 消费本地 `AssetIndex`，`RuntimePlanner` 消费本地 `RuntimeIndex`，两者不联网。索引读取由 `DeploymentIndexHelper` 提供，获取由 `DeploymentIndexService` 提供：部署消费方发现缺失便补齐索引继续规划，状态检查消费方直接返回未就绪。
 
-运行时以 major 共享，索引位于 `cache/runtimes/{major}.json`，文件位于 `cache/runtimes/{major}/`。实例不固定 Java 补丁版本；删除共享索引后，下次部署获取当前索引并修复文件。用户 Java 偏好只在启动时参与选择，未命中时使用锁定 major，没有可用 Java 则在启动时报错。
+运行时以 major 共享，索引位于 `cache/runtimes/{major}.json`，文件位于 `cache/runtimes/{major}/`。索引与锁内引用匹配时离线复用；缺失或失效时重新查询目录并记录当前索引引用。实例不固定 Java 补丁版本；删除共享索引后，下次部署获取当前索引并修复文件。用户 Java 偏好只在启动时参与选择，未命中时使用锁定 major，没有可用 Java 则在启动时报错。
 
 ## 执行与收尾
 
