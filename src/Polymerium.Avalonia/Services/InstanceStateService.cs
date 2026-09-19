@@ -126,9 +126,16 @@ public class InstanceStateService(
 
     #endregion
 
+    public enum DeploymentReadiness { NeedsDeployment, NeedsDownload, Ready }
+
+    public enum DownloadCategory { Library, Package, Asset, Runtime, Other }
+
+    public sealed record DownloadCheck(DownloadCategory Category, bool IsReady);
+
     public sealed class DeploymentState : StateBase
     {
-        public bool IsReady { get; init; }
+        public DeploymentReadiness Readiness { get; init; }
+        public IReadOnlyList<DownloadCheck>? DownloadChecks { get; init; }
     }
 
     public Task<DeploymentState> RetrieveDeploymentStateAsync(string key, CancellationToken token = default) =>
@@ -147,15 +154,42 @@ public class InstanceStateService(
                     var data = await LockValidationHelper.ReadAsync(key, ct).ConfigureAwait(false);
                     if (data is null || !await LockValidationHelper.ValidateAsync(key, profileManager.GetImmutable(key).Setup, data, ct).ConfigureAwait(false))
                         return new();
-                    if (!Ready(deploymentPlanner.Plan(key, data, ct))) return new();
+                    var plan = deploymentPlanner.Plan(key, data, ct);
+                    var missing = new List<DownloadCategory>();
+                    var libraryRoot = PathDef.Default.CacheLibraryDirectory;
+                    var packageRoot = PathDef.Default.CachePackageDirectory;
+                    if (plan.Downloads.Any(x => FileHelper.IsInDirectory(x.Path, libraryRoot))) missing.Add(DownloadCategory.Library);
+                    if (plan.Downloads.Any(x => FileHelper.IsInDirectory(x.Path, packageRoot))) missing.Add(DownloadCategory.Package);
+                    if (plan.Downloads.Any(x => !FileHelper.IsInDirectory(x.Path, libraryRoot)
+                        && !FileHelper.IsInDirectory(x.Path, packageRoot))) missing.Add(DownloadCategory.Other);
+                    var needsLocalWork = plan.Operations.Count != 0;
                     var assets = await DeploymentIndexHelper.ReadAssetAsync(data.Artifact!.AssetIndex, ct).ConfigureAwait(false);
-                    if (assets is null || !Ready(new AssetPlanner().Plan(assets, ct))) return new();
+                    if (assets is null) missing.Add(DownloadCategory.Asset);
+                    else
+                    {
+                        var assetPlan = new AssetPlanner().Plan(assets, ct);
+                        if (assetPlan.Downloads.Count != 0) missing.Add(DownloadCategory.Asset);
+                        needsLocalWork |= assetPlan.Operations.Count != 0;
+                    }
                     if (data.RuntimeMajor is { } major)
                     {
                         var runtime = await DeploymentIndexHelper.ReadRuntimeAsync(major, data.RuntimeIndex?.Hash, ct).ConfigureAwait(false);
-                        if (runtime is null || !Ready(new RuntimePlanner().Plan(runtime, ct))) return new();
+                        if (runtime is null) missing.Add(DownloadCategory.Runtime);
+                        else
+                        {
+                            var runtimePlan = new RuntimePlanner().Plan(runtime, ct);
+                            if (runtimePlan.Downloads.Count != 0) missing.Add(DownloadCategory.Runtime);
+                            needsLocalWork |= runtimePlan.Operations.Count != 0;
+                        }
                     }
-                    return new() { IsReady = true };
+                    return new()
+                    {
+                        Readiness = missing.Count != 0 ? DeploymentReadiness.NeedsDownload
+                            : needsLocalWork ? DeploymentReadiness.NeedsDeployment : DeploymentReadiness.Ready,
+                        DownloadChecks = [.. Enum.GetValues<DownloadCategory>()
+                            .Where(x => x != DownloadCategory.Other || missing.Contains(x))
+                            .Select(x => new DownloadCheck(x, !missing.Contains(x)))]
+                    };
                 }
                 catch (Exception ex) when (ex is not OperationCanceledException)
                 {
@@ -163,8 +197,6 @@ public class InstanceStateService(
                     return new DeploymentState();
                 }
             }, ct), token);
-
-    private static bool Ready(DeploymentPlan plan) => plan.Downloads.Count == 0 && plan.Operations.Count == 0;
 
     #region Mechanism
 
