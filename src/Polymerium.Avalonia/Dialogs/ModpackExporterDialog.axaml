@@ -1,4 +1,4 @@
-﻿<husk:Dialog
+<husk:Dialog
     x:Class="Polymerium.Avalonia.Dialogs.ModpackExporterDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,187 +8,367 @@
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_Title}}"
-    Width="450"
-    d:DesignHeight="600"
+    Width="520"
+    d:DesignHeight="800"
     IsPrimaryButtonVisible="True"
-    mc:Ignorable="d">
+    Result="{Binding Result, Mode=OneWay}"
+    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+    ScrollViewer.VerticalScrollBarVisibility="Auto"
+    mc:Ignorable="d"
+    x:DataType="app:ModpackExporterDialogModel">
     <StackPanel Spacing="24">
-        <!--  格式选择  -->
+        <Border
+            Padding="12"
+            Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+            CornerRadius="{StaticResource MediumCornerRadius}">
+            <StackPanel Spacing="12">
+                <TextBlock
+                    FontSize="{StaticResource LargeFontSize}"
+                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                    Text="{Binding Source.InstanceName}"
+                    TextWrapping="Wrap" />
+                <Grid ColumnDefinitions="*,Auto,2*" ColumnSpacing="12">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                        <Image
+                            Width="36"
+                            Height="36"
+                            VerticalAlignment="Center"
+                            RenderOptions.BitmapInterpolationMode="MediumQuality"
+                            Source="/Assets/Icons/Package.png" />
+                        <StackPanel Grid.Column="1" Spacing="4">
+                            <TextBlock
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_PackagesLabelText}}" />
+                            <TextBlock
+                                FontSize="{StaticResource MediumFontSize}"
+                                Text="{Binding Source.PackageCount}" />
+                        </StackPanel>
+                    </Grid>
+                    <husk:Divider Grid.Column="1" Orientation="Vertical" />
+                    <StackPanel Grid.Column="2" Spacing="4">
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ModLoaderLabelText}}" />
+                        <TextBlock
+                            FontSize="{StaticResource MediumFontSize}"
+                            Text="{Binding Source.LoaderLabel}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+                <husk:Divider />
+                <StackPanel Spacing="4">
+                    <TextBlock
+                        FontSize="{StaticResource SmallFontSize}"
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_AttachmentsPrompt}}"
+                        TextWrapping="Wrap" />
+                    <WrapPanel ItemSpacing="12" LineSpacing="4">
+                        <HyperlinkButton
+                            Classes="Small"
+                            Command="{Binding OpenImportFolderCommand}"
+                            Content="./import" />
+                        <HyperlinkButton
+                            Classes="Small"
+                            Command="{x:Static app:InternalCommands.OpenStringUriCommand}"
+                            CommandParameter="https://polymerium.dearain.dev/docs/managing/import-export">
+                            <husk:IconLabel
+                                Icon="BookQuestionMark"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OpenWikiButtonText}}" />
+                        </HyperlinkButton>
+                    </WrapPanel>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
         <StackPanel Spacing="8">
             <TextBlock
                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                 Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_FormatLabelText}}" />
-            <ScrollViewer
-                HorizontalScrollBarVisibility="Auto"
-                VerticalScrollBarVisibility="Disabled">
-                <TabStrip
-                    ItemsSource="{Binding $parent[app:ModpackExporterDialog].ExporterLabels, Mode=OneWay, FallbackValue={x:Null}}"
-                    SelectedItem="{Binding $parent[app:ModpackExporterDialog].SelectedExporterLabel, Mode=TwoWay, FallbackValue={x:Null}}">
-                    <TabStrip.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid
-                                ColumnSpacing="8"
-                                Columns="2"
-                                RowSpacing="8" />
-                        </ItemsPanelTemplate>
-                    </TabStrip.ItemsPanel>
-                    <TabStrip.ItemTemplate>
-                        <DataTemplate x:DataType="app:ModpackExporterFormatModel">
-                            <Grid
-                                ColumnDefinitions="*,Auto"
-                                ColumnSpacing="4">
-                                <husk:IconLabel
-                                    Grid.Column="0"
-                                    Icon="{Binding Icon}"
-                                    Text="{Binding Label, Converter={x:Static husk:StringConverters.ToUpper}}" />
-                                <husk:Tag
-                                    Grid.Column="1"
-                                    Classes="Small">
-                                    <husk:Tag.IsVisible>
-                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                            <Binding Path="SupportsOffline" />
-                                            <Binding Path="!SupportsOnline" />
-                                        </MultiBinding>
-                                    </husk:Tag.IsVisible>
-                                    <TextBlock>
-                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_TypeLabelText}}" />
-                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineTagText}}" />
-                                    </TextBlock>
-                                </husk:Tag>
-                                <husk:Tag
-                                    Grid.Column="1"
-                                    Classes="Small">
-                                    <husk:Tag.IsVisible>
-                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                            <Binding Path="!SupportsOffline" />
-                                            <Binding Path="SupportsOnline" />
-                                        </MultiBinding>
-                                    </husk:Tag.IsVisible>
-                                    <TextBlock>
-                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_TypeLabelText}}" />
-                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OnlineTagText}}" />
-                                    </TextBlock>
-                                </husk:Tag>
-                                <husk:Tag
-                                    Grid.Column="1"
-                                    Classes="Small">
-                                    <husk:Tag.IsVisible>
-                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                            <Binding Path="SupportsOffline" />
-                                            <Binding Path="SupportsOnline" />
-                                        </MultiBinding>
-                                    </husk:Tag.IsVisible>
-                                    <TextBlock>
-                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_TypeLabelText}}" />
-                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OnlineTagText}}" />
-                                        <Run Text="/" />
-                                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineTagText}}" />
-                                    </TextBlock>
-                                </husk:Tag>
+            <ListBox
+                ItemsSource="{Binding Options}"
+                SelectedItem="{Binding SelectedOption, Mode=TwoWay}"
+                Theme="{StaticResource AccordionListBoxTheme}">
+                <ListBox.DataTemplates>
+                    <DataTemplate x:DataType="app:NativeExportOptionModel">
+                        <StackPanel Spacing="12">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                <fi:SymbolIcon
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Symbol="{Binding Icon}" />
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <TextBlock
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{app:LocalizedKey {Binding LabelKey}}"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_NativeSummaryText}}"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
                             </Grid>
-                        </DataTemplate>
-                    </TabStrip.ItemTemplate>
-                </TabStrip>
-            </ScrollViewer>
-            <husk:InfoBar Classes="Warning">
-                <husk:InfoBar.IsVisible>
-                    <MultiBinding Converter="{x:Static BoolConverters.And}">
-                        <Binding Path="$parent[app:ModpackExporterDialog].HasPatches" />
-                        <Binding
-                            Converter="{x:Static husk:ObjectConverters.NotMatch}"
-                            ConverterParameter="trident"
-                            Path="$parent[app:ModpackExporterDialog].SelectedExporterLabel.Label" />
-                    </MultiBinding>
-                </husk:InfoBar.IsVisible>
+                            <StackPanel
+                                IsVisible="{Binding $parent[ListBoxItem].IsSelected}"
+                                Spacing="12">
+                                <StackPanel Spacing="8">
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ReleaseFilesLabelText}}" />
+                                    <Border
+                                        Padding="8"
+                                        Background="{StaticResource ControlTranslucentHalfBackgroundBrush}"
+                                        CornerRadius="{StaticResource SmallCornerRadius}">
+                                        <ItemsControl ItemsSource="{Binding ReleaseFiles}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Spacing="4" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="app:ReleaseFileModel">
+                                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                                        <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+                                                        <husk:SwitchContainer Grid.Column="1" TargetType="x:Boolean" Value="{Binding Exists}">
+                                                            <husk:SwitchCase Value="True">
+                                                                <husk:IconLabel
+                                                                    FontSize="{StaticResource SmallFontSize}"
+                                                                    Foreground="{StaticResource ControlAccentForegroundBrush}"
+                                                                    Icon="Checkmark"
+                                                                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_FileIncludedText}}" />
+                                                            </husk:SwitchCase>
+                                                            <husk:SwitchCase Value="False">
+                                                                <husk:IconLabel
+                                                                    FontSize="{StaticResource SmallFontSize}"
+                                                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                                    Icon="Dismiss"
+                                                                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_FileMissingText}}" />
+                                                            </husk:SwitchCase>
+                                                        </husk:SwitchContainer>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Border>
+                                </StackPanel>
+                                <StackPanel
+                                    DataContext="{Binding $parent[app:ModpackExporterDialog].DataContext}"
+                                    Spacing="8"
+                                    x:DataType="app:ModpackExporterDialogModel">
+                                    <TextBlock
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_IncludedOverridesLabelText}}" />
+                                    <DockPanel HorizontalSpacing="12" ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_IncludingSourceToolTip}}">
+                                        <ToggleSwitch
+                                            Name="SourceSwitch"
+                                            DockPanel.Dock="Right"
+                                            AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_IncludingSourceLabelText}}"
+                                            IsChecked="{Binding PackData.IncludingSource, Mode=TwoWay}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_IncludingSourceLabelText}}"
+                                            TextWrapping="Wrap" />
+                                    </DockPanel>
+                                    <DockPanel HorizontalSpacing="12">
+                                        <ToggleSwitch
+                                            Name="TagsSwitch"
+                                            DockPanel.Dock="Right"
+                                            AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_IncludingTagsLabelText}}"
+                                            IsChecked="{Binding PackData.IncludingTags, Mode=TwoWay}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_IncludingTagsLabelText}}"
+                                            TextWrapping="Wrap" />
+                                    </DockPanel>
+                                    <DockPanel HorizontalSpacing="12">
+                                        <ToggleSwitch
+                                            Name="ServerSwitch"
+                                            DockPanel.Dock="Right"
+                                            AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ConnectServerText}}"
+                                            IsChecked="{Binding PackData.ConnectServer, Mode=TwoWay}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ConnectServerText}}"
+                                            TextWrapping="Wrap" />
+                                    </DockPanel>
+                                    <DockPanel HorizontalSpacing="12">
+                                        <ToggleSwitch
+                                            Name="MemorySwitch"
+                                            DockPanel.Dock="Right"
+                                            AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_JavaMaxMemoryLabelText}}"
+                                            IsChecked="{Binding PackData.JavaMaxMemory, Mode=TwoWay}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_JavaMaxMemoryLabelText}}"
+                                            TextWrapping="Wrap" />
+                                    </DockPanel>
+                                    <DockPanel HorizontalSpacing="12">
+                                        <ToggleSwitch
+                                            Name="ArgumentsSwitch"
+                                            DockPanel.Dock="Right"
+                                            AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_JavaAdditionalArgumentsLabelText}}"
+                                            IsChecked="{Binding PackData.JavaAdditionalArguments, Mode=TwoWay}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_JavaAdditionalArgumentsLabelText}}"
+                                            TextWrapping="Wrap" />
+                                    </DockPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                    <DataTemplate x:DataType="app:ExternalExportOptionModel">
+                        <StackPanel Spacing="12">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                <fi:SymbolIcon
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Symbol="{Binding Icon}" />
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <TextBlock
+                                        FontSize="{StaticResource MediumFontSize}"
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{app:LocalizedKey {Binding LabelKey}}"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ExternalSummaryText}}"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Grid>
+                            <StackPanel
+                                DataContext="{Binding $parent[app:ModpackExporterDialog].DataContext}"
+                                IsVisible="{Binding $parent[ListBoxItem].IsSelected}"
+                                Spacing="12"
+                                x:DataType="app:ModpackExporterDialogModel">
+                                <TabStrip
+                                    ItemsSource="{Binding Formats}"
+                                    SelectedItem="{Binding SelectedFormat, Mode=TwoWay}">
+                                    <TabStrip.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="3" ColumnSpacing="8" />
+                                        </ItemsPanelTemplate>
+                                    </TabStrip.ItemsPanel>
+                                    <TabStrip.ItemTemplate>
+                                        <DataTemplate x:DataType="app:ModpackExporterFormatModel">
+                                            <StackPanel Spacing="4">
+                                                <TextBlock
+                                                    Text="{Binding DisplayName}"
+                                                    TextWrapping="Wrap" />
+                                                <husk:SwitchContainer TargetType="x:Boolean" Value="{Binding SupportsOnline}">
+                                                    <husk:SwitchCase Value="True">
+                                                        <TextBlock
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            TextWrapping="Wrap">
+                                                            <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OnlineTagText}}" />
+                                                            <Run Text=" / " />
+                                                            <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineTagText}}" />
+                                                        </TextBlock>
+                                                    </husk:SwitchCase>
+                                                    <husk:SwitchCase Value="False">
+                                                        <TextBlock
+                                                            FontSize="{StaticResource SmallFontSize}"
+                                                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                            Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineTagText}}"
+                                                            TextWrapping="Wrap" />
+                                                    </husk:SwitchCase>
+                                                </husk:SwitchContainer>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </TabStrip.ItemTemplate>
+                                </TabStrip>
+                                <husk:InfoBar Classes="Warning">
+                                    <TextBlock
+                                        Text="{app:LocalizedKey {Binding SelectedFormat.CapabilityKey}}"
+                                        TextWrapping="Wrap" />
+                                </husk:InfoBar>
+                                <husk:InfoBar Classes="Warning" IsVisible="{Binding IsPatchesWarningVisible}">
+                                    <TextBlock
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_PatchesOmittedText}}"
+                                        TextWrapping="Wrap" />
+                                </husk:InfoBar>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.DataTemplates>
+            </ListBox>
+        </StackPanel>
+
+        <StackPanel Spacing="12" Grid.IsSharedSizeScope="True">
+            <TextBlock
+                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_BasicOptionsLabelText}}" />
+            <Grid ColumnSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="ExportFieldLabel" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
                 <TextBlock
-                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_PatchesOmittedText}}"
+                    VerticalAlignment="Center"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_NameLabelText}}" />
+                <TextBox
+                    Name="NameInput"
+                    AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_NameLabelText}}"
+                    Grid.Column="1"
+                    PlaceholderText="{Binding Source.Name}"
+                    Text="{Binding NameOverride, Mode=TwoWay}" />
+            </Grid>
+            <Grid ColumnSpacing="12" IsVisible="{Binding IsAuthorVisible}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="ExportFieldLabel" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_AuthorLabelText}}" />
+                <TextBox
+                    Name="AuthorInput"
+                    AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_AuthorLabelText}}"
+                    Grid.Column="1"
+                    PlaceholderText="{Binding Source.Author}"
+                    Text="{Binding AuthorOverride, Mode=TwoWay}" />
+            </Grid>
+            <Grid ColumnSpacing="12" IsVisible="{Binding IsVersionVisible}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="ExportFieldLabel" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_VersionLabelText}}" />
+                <TextBox
+                    Name="VersionInput"
+                    AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_VersionLabelText}}"
+                    Grid.Column="1"
+                    PlaceholderText="{Binding Source.Version}"
+                    Text="{Binding VersionOverride, Mode=TwoWay}" />
+            </Grid>
+            <DockPanel
+                HorizontalSpacing="12"
+                IsVisible="{Binding IsOfflineModeVisible}"
+                ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineModeToolTip}}">
+                <ToggleSwitch
+                    Name="OfflineSwitch"
+                    DockPanel.Dock="Right"
+                    AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineModeLabelText}}"
+                    IsChecked="{Binding PackData.OfflineMode, Mode=TwoWay}" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineModeLabelText}}"
                     TextWrapping="Wrap" />
-            </husk:InfoBar>
-        </StackPanel>
-        <!--  基本选项  -->
-        <StackPanel Spacing="8">
-            <TextBlock
-                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_NameLabelText}}" />
-            <TextBox
-                PlaceholderText="{Binding $parent[app:ModpackExporterDialog].NameOriginal, FallbackValue=Unknown}"
-                Text="{Binding $parent[app:ModpackExporterDialog].NameOverride, Mode=TwoWay, FallbackValue={x:Null}}">
-                <TextBox.InnerLeftContent>
-                    <StackPanel Orientation="Horizontal">
-                        <fi:SymbolIcon
-                            Margin="12,0"
-                            VerticalAlignment="Center"
-                            FontSize="{StaticResource MediumFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Symbol="Tag" />
-                        <husk:Divider Orientation="Vertical" />
-                    </StackPanel>
-                </TextBox.InnerLeftContent>
-            </TextBox>
-            <TextBlock
-                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_AuthorLabelText}}" />
-            <TextBox
-                PlaceholderText="{Binding $parent[app:ModpackExporterDialog].AuthorOriginal, FallbackValue=Unknown}"
-                Text="{Binding $parent[app:ModpackExporterDialog].AuthorOverride, Mode=TwoWay, FallbackValue={x:Null}}">
-                <TextBox.InnerLeftContent>
-                    <StackPanel Orientation="Horizontal">
-                        <fi:SymbolIcon
-                            Margin="12,0"
-                            VerticalAlignment="Center"
-                            FontSize="{StaticResource MediumFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Symbol="Person" />
-                        <husk:Divider Orientation="Vertical" />
-                    </StackPanel>
-                </TextBox.InnerLeftContent>
-            </TextBox>
-            <TextBlock
-                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_VersionLabelText}}" />
-            <TextBox
-                PlaceholderText="{Binding $parent[app:ModpackExporterDialog].VersionOriginal, FallbackValue=Unknown}"
-                Text="{Binding $parent[app:ModpackExporterDialog].VersionOverride, Mode=TwoWay, FallbackValue={x:Null}}">
-                <TextBox.InnerLeftContent>
-                    <StackPanel Orientation="Horizontal">
-                        <fi:SymbolIcon
-                            Margin="12,0"
-                            VerticalAlignment="Center"
-                            FontSize="{StaticResource MediumFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Symbol="Branch" />
-                        <husk:Divider Orientation="Vertical" />
-                    </StackPanel>
-                </TextBox.InnerLeftContent>
-            </TextBox>
-        </StackPanel>
-        <!--  额外选项  -->
-        <Expander Header="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_AdvancedOptionsLabelText}}">
+            </DockPanel>
             <StackPanel Spacing="8">
-                <DockPanel>
-                    <ToggleSwitch
-                        DockPanel.Dock="Right"
-                        IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.OfflineMode, Mode=TwoWay, FallbackValue=false}" />
-                    <StackPanel
-                        Orientation="Horizontal"
-                        Spacing="6">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineModeLabelText}}" />
-                        <fi:SymbolIcon
-                            VerticalAlignment="Center"
-                            Background="Transparent"
-                            FontSize="{StaticResource SmallFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Symbol="Info"
-                            ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OfflineModeToolTip}}" />
-                    </StackPanel>
-                </DockPanel>
                 <DockPanel>
                     <Button
                         DockPanel.Dock="Right"
                         Classes="Small"
-                        Command="{Binding $parent[app:ModpackExporterDialog].AddTagCommand}"
+                        Command="{Binding AddTagCommand}"
                         Theme="{StaticResource GhostButtonTheme}">
                         <husk:IconLabel
                             Icon="Add"
@@ -199,203 +379,43 @@
                         Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                         Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ExcludedTagsLabelText}}" />
                 </DockPanel>
-                <app:EmptyContainer
-                    Icon="TagMultiple"
-                    IsEmpty="{Binding $parent[app:ModpackExporterDialog].PackData.ExcludedTags.Count, Converter={x:Static husk:NumberConverters.IsZero}, FallbackValue=False}">
-                    <ItemsControl ItemsSource="{Binding $parent[app:ModpackExporterDialog].PackData.ExcludedTags}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel
-                                    ItemSpacing="6"
-                                    LineSpacing="6" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="x:String">
-                                <Border
-                                    Background="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
-                                    BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="{StaticResource SmallCornerRadius}">
-                                    <DockPanel>
-                                        <Button
-                                            DockPanel.Dock="Right"
-                                            Padding="4,0"
-                                            Command="{Binding $parent[app:ModpackExporterDialog].RemoveTagCommand}"
-                                            CommandParameter="{Binding}"
-                                            CornerRadius="{husk:StaticResourceBinding SmallCornerRadius,
-                                                                                      Converter={x:Static husk:CornerRadiusConverters.Right}}"
-                                            Theme="{StaticResource GhostButtonTheme}">
-                                            <fi:SymbolIcon
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                FontSize="{Binding $parent[Button].FontSize}"
-                                                Symbol="Dismiss" />
-                                        </Button>
-                                        <TextBlock
-                                            Margin="8,4,0,4"
-                                            Text="{Binding}" />
-                                    </DockPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </app:EmptyContainer>
+                <ItemsControl
+                    IsVisible="{Binding PackData.ExcludedTags.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
+                    ItemsSource="{Binding PackData.ExcludedTags}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel ItemSpacing="6" LineSpacing="6" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <Border
+                                Background="{StaticResource ControlAccentTranslucentFullBackgroundBrush}"
+                                BorderBrush="{StaticResource ControlAccentInteractiveBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{StaticResource SmallCornerRadius}">
+                                <DockPanel HorizontalSpacing="4">
+                                    <Button
+                                        DockPanel.Dock="Right"
+                                        Padding="4"
+                                        AutomationProperties.Name="{Binding}"
+                                        Command="{Binding $parent[app:ModpackExporterDialog].((app:ModpackExporterDialogModel)DataContext).RemoveTagCommand}"
+                                        CommandParameter="{Binding}"
+                                        CornerRadius="{husk:StaticResourceBinding SmallCornerRadius, Converter={x:Static husk:CornerRadiusConverters.Right}}"
+                                        Theme="{StaticResource GhostButtonTheme}">
+                                        <fi:SymbolIcon Symbol="Dismiss" />
+                                    </Button>
+                                    <TextBlock Margin="8,4,0,4" Text="{Binding}" />
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
                 <TextBlock
                     FontSize="{StaticResource SmallFontSize}"
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ExcludedTagsDescriptionText}}" />
-            </StackPanel>
-        </Expander>
-        <!--  Trident 专属选项  -->
-        <Expander Header="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_TridentOptionsLabelText}}">
-            <StackPanel Spacing="8">
-                <husk:InfoBar
-                    Classes="Warning"
-                    IsVisible="{Binding $parent[app:ModpackExporterDialog].SelectedExporterLabel, Converter={x:Static husk:ObjectConverters.NotMatch}, ConverterParameter=trident}"
-                    Content="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_TridentOptionsInfoBarText}}" />
-                <DockPanel>
-                    <ToggleSwitch
-                        DockPanel.Dock="Right"
-                        IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.IncludingSource, FallbackValue=false}" />
-                    <StackPanel
-                        Orientation="Horizontal"
-                        Spacing="6">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_IncludingSourceLabelText}}" />
-                        <fi:SymbolIcon
-                            VerticalAlignment="Center"
-                            Background="Transparent"
-                            FontSize="{StaticResource SmallFontSize}"
-                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                            Symbol="Info"
-                            ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_IncludingSourceToolTip}}" />
-                    </StackPanel>
-                </DockPanel>
-                <DockPanel>
-                    <ToggleSwitch
-                        DockPanel.Dock="Right"
-                        IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.IncludingTags, FallbackValue=false}" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_IncludingTagsLabelText}}" />
-                </DockPanel>
-                <DockPanel>
-                    <ToggleSwitch
-                        DockPanel.Dock="Right"
-                        IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.ConnectServer, FallbackValue=false}" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ConnectServerText}}" />
-                </DockPanel>
-                <DockPanel>
-                    <ToggleSwitch
-                        DockPanel.Dock="Right"
-                        IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.JavaMaxMemory, FallbackValue=false}" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_JavaMaxMemoryLabelText}}" />
-                </DockPanel>
-                <DockPanel>
-                    <ToggleSwitch
-                        DockPanel.Dock="Right"
-                        IsChecked="{Binding $parent[app:ModpackExporterDialog].PackData.JavaAdditionalArguments, FallbackValue=false}" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_JavaAdditionalArgumentsLabelText}}" />
-                </DockPanel>
-
-            </StackPanel>
-        </Expander>
-        <!--  附件  -->
-        <StackPanel Spacing="8">
-            <TextBlock
-                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_AttachmentsLabelText}}" />
-            <Border
-                Padding="3"
-                Background="{StaticResource ControlTranslucentFullBackgroundBrush}"
-                CornerRadius="{StaticResource MediumCornerRadius}">
-                <Border
-                    Padding="8"
-                    Background="{StaticResource OverlaySolidBackgroundBrush}">
-                    <Border.CornerRadius>
-                        <MultiBinding Converter="{x:Static husk:CornerRadiusConverters.ToInnerRadiusMulti}">
-                            <Binding
-                                Path="CornerRadius"
-                                RelativeSource="{RelativeSource FindAncestor,
-                                                                AncestorType=Border}" />
-                            <Binding
-                                Path="Padding"
-                                RelativeSource="{RelativeSource FindAncestor,
-                                                                AncestorType=Border}" />
-                        </MultiBinding>
-                    </Border.CornerRadius>
-                    <Grid
-                        ColumnDefinitions="*,Auto,*"
-                        ColumnSpacing="8">
-                        <Grid
-                            Grid.Column="0"
-                            ColumnDefinitions="Auto,*"
-                            ColumnSpacing="8">
-                            <Image
-                                Grid.Column="0"
-                                Width="36"
-                                Height="36"
-                                RenderOptions.BitmapInterpolationMode="MediumQuality"
-                                Source="/Assets/Icons/Package.png" />
-                            <StackPanel Grid.Column="1">
-                                <TextBlock
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_PackagesLabelText}}" />
-                                <TextBlock
-                                    FontSize="{StaticResource LargeFontSize}"
-                                    Text="{Binding $parent[app:ModpackExporterDialog].PackageCount, FallbackValue=Unknown}" />
-                            </StackPanel>
-                        </Grid>
-                        <husk:Divider
-                            Grid.Column="1"
-                            Orientation="Vertical" />
-                        <StackPanel Grid.Column="2">
-                            <TextBlock
-                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ModLoaderLabelText}}" />
-                            <TextBlock
-                                FontSize="{StaticResource LargeFontSize}"
-                                Text="{Binding $parent[app:ModpackExporterDialog].LoaderLabel, FallbackValue=Unknown}" />
-                        </StackPanel>
-                    </Grid>
-                </Border>
-            </Border>
-            <StackPanel Spacing="4">
-                <StackPanel
-                    Orientation="Horizontal"
-                    Spacing="6">
-                    <fi:SymbolIcon
-                        FontSize="{StaticResource SmallFontSize}"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                        Symbol="Info" />
-                    <TextBlock
-                        FontSize="{StaticResource SmallFontSize}"
-                        FontStyle="Italic"
-                        Foreground="{StaticResource ControlSecondaryForegroundBrush}">
-                        <Run Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_AttachmentsPrompt}}" />
-                        <HyperlinkButton Command="{Binding $parent[app:ModpackExporterDialog].OpenImportFolderCommand}">
-                            <TextBlock Text="./import" />
-                        </HyperlinkButton>
-                    </TextBlock>
-                </StackPanel>
-                <HyperlinkButton
-                    Classes="Small"
-                    VerticalAlignment="Center"
-                    Command="{x:Static app:InternalCommands.OpenStringUriCommand}"
-                    CommandParameter="https://polymerium.dearain.dev/docs/managing/import-export">
-                    <husk:IconLabel
-                        FontSize="{StaticResource SmallFontSize}"
-                        Icon="BookQuestionMark"
-                        Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_OpenWikiButtonText}}" />
-                </HyperlinkButton>
+                    Text="{Translate {x:Static app:LanguageManager+Keys.ModpackExporterDialog_ExcludedTagsDescriptionText}}"
+                    TextWrapping="Wrap" />
             </StackPanel>
         </StackPanel>
     </StackPanel>
