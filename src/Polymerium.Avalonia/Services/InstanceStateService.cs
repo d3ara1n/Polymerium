@@ -152,7 +152,7 @@ public class InstanceStateService(
                     if (assets is null || !Ready(new AssetPlanner().Plan(assets, ct))) return new();
                     if (data.RuntimeMajor is { } major)
                     {
-                        var runtime = await DeploymentIndexHelper.ReadRuntimeAsync(major, ct).ConfigureAwait(false);
+                        var runtime = await DeploymentIndexHelper.ReadRuntimeAsync(major, data.RuntimeIndex?.Hash, ct).ConfigureAwait(false);
                         if (runtime is null || !Ready(new RuntimePlanner().Plan(runtime, ct))) return new();
                     }
                     return new() { IsReady = true };
