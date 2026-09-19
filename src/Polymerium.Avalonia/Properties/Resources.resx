@@ -4374,4 +4374,28 @@ Affected entries: {0}
   <data name="InstanceHomePage_DeploymentRequiredLabelText" xml:space="preserve">
     <value>Deployment required</value>
   </data>
+  <data name="InstanceHomePage_DownloadRequiredLabelText" xml:space="preserve">
+    <value>Download required</value>
+  </data>
+  <data name="InstanceHomePage_DownloadReadinessTitle" xml:space="preserve">
+    <value>Download readiness</value>
+  </data>
+  <data name="InstanceHomePage_RequirementsUncheckedText" xml:space="preserve">
+    <value>Resource requirements not yet verified</value>
+  </data>
+  <data name="DownloadCategory_Library" xml:space="preserve">
+    <value>Minecraft libraries</value>
+  </data>
+  <data name="DownloadCategory_Package" xml:space="preserve">
+    <value>Packages</value>
+  </data>
+  <data name="DownloadCategory_Asset" xml:space="preserve">
+    <value>Minecraft assets</value>
+  </data>
+  <data name="DownloadCategory_Runtime" xml:space="preserve">
+    <value>Java runtime</value>
+  </data>
+  <data name="DownloadCategory_Other" xml:space="preserve">
+    <value>Other resources</value>
+  </data>
 </root>

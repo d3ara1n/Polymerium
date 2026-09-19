@@ -33,7 +33,7 @@ The first deploy for a new instance downloads everything, so it takes a moment â
 - **Nothing changed?** Deployment reuses resolved metadata and checks local resources, then skips file operations that are already satisfied.
 - **Only a few mods changed?** Only those mods are updated. Everything else stays in place.
 
-The instance home page shows **Resources ready** when its deployment requirements are satisfied. This is a cached resource check for the current application session; it does not validate your account or a custom Java installation. Deployment also prepares native libraries locally before launching.
+The instance home page shows **Resources ready** when its checked files need no downloads or local operations, **Deployment required** when local work remains or the current requirements need re-evaluation, and **Download required** when it finds resources that must be fetched. Hover over the status to see which resource categories are ready and which still need downloading. This check is cached for the current application session and does not validate your account or a custom Java installation. Deployment also prepares native libraries locally before launching.
 
 ## Caching Benefits
 

@@ -4365,4 +4365,28 @@
   <data name="InstanceHomePage_DeploymentRequiredLabelText" xml:space="preserve">
     <value>需要部署</value>
   </data>
+  <data name="InstanceHomePage_DownloadRequiredLabelText" xml:space="preserve">
+    <value>需要下载</value>
+  </data>
+  <data name="InstanceHomePage_DownloadReadinessTitle" xml:space="preserve">
+    <value>资源下载状态</value>
+  </data>
+  <data name="InstanceHomePage_RequirementsUncheckedText" xml:space="preserve">
+    <value>尚未验证资源需求</value>
+  </data>
+  <data name="DownloadCategory_Library" xml:space="preserve">
+    <value>Minecraft 库文件</value>
+  </data>
+  <data name="DownloadCategory_Package" xml:space="preserve">
+    <value>包</value>
+  </data>
+  <data name="DownloadCategory_Asset" xml:space="preserve">
+    <value>Minecraft 资产</value>
+  </data>
+  <data name="DownloadCategory_Runtime" xml:space="preserve">
+    <value>Java 运行时</value>
+  </data>
+  <data name="DownloadCategory_Other" xml:space="preserve">
+    <value>其他资源</value>
+  </data>
 </root>
