@@ -4389,4 +4389,22 @@
   <data name="DownloadCategory_Other" xml:space="preserve">
     <value>其他资源</value>
   </data>
+    <data name="ChangelogSectionKind_Highlights" xml:space="preserve">
+        <value>本次亮点</value>
+    </data>
+    <data name="ChangelogSectionKind_Fixed" xml:space="preserve">
+        <value>修复</value>
+    </data>
+    <data name="ChangelogSectionKind_Added" xml:space="preserve">
+        <value>新增</value>
+    </data>
+    <data name="ChangelogSectionKind_Changed" xml:space="preserve">
+        <value>改进</value>
+    </data>
+    <data name="ChangelogSectionKind_Removed" xml:space="preserve">
+        <value>移除</value>
+    </data>
+    <data name="ChangelogView_CopyReference" xml:space="preserve">
+        <value>复制引用</value>
+    </data>
 </root>

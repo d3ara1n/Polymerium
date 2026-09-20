@@ -20,6 +20,7 @@
 - Change the built-in widgets to follow the interface language
 - Change the modpack Workspace file comparison to run without blocking the interface
 - Rework modpack export around a shared instance overview and metadata options for each format (#POLY-172)
+- Improve update notes with expandable sections and visually emphasized highlights
 
 ### Removed
 

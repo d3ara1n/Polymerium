@@ -17,6 +17,7 @@ using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
+using Velopack;
 
 namespace Polymerium.Avalonia.PageModels;
 
@@ -69,6 +70,42 @@ public partial class UnknownPageModel(
     #endregion
 
     #region Helpers
+
+    private static string GetSampleChangelog() =>
+        """
+        # Changelog
+
+        ## [99.0.0] - 2099-01-01
+
+        This is a preview release with no downloadable update.
+
+        ### ✨ Highlights ✨
+
+        - Add curated color palettes that apply a matching gray scale and accent color pair with one click
+        - Improve update notes with expandable sections and visually emphasized highlights
+
+        ### Fixed
+
+        - Fix the update check button staying disabled after the automatic check on startup completes (#POLY-165)
+        - Fix long package descriptions overflowing the available space when viewing an instance on a smaller display (#88, #POLY-172)
+
+        ### Added
+
+        - Add curated color palettes that apply a matching gray scale and accent color pair with one click (Huskui.Avalonia)
+        - Add support for declaring compatible Java versions in `patches/users/`
+
+        ### Changed
+
+        - Improve update notes with expandable sections and visually emphasized highlights
+        - Improve **package browsing** with links to the [resource repository](https://modrinth.com) (#92)
+        - Improve startup error reporting (POLYMERIUM-2D)
+
+        ### Removed
+
+        -
+
+        This paragraph is intentionally omitted from the structured changelog.
+        """;
 
     private static string GetSampleMarkdown() =>
         """
@@ -185,6 +222,18 @@ public partial class UnknownPageModel(
     #endregion
 
     #region Commands
+
+    [RelayCommand]
+    private void ShowUpdatePreview() =>
+        overlayService.PopModal(new AppUpdateModal
+        {
+            Model = new(new UpdateInfo(new VelopackAsset
+            {
+                Version = new(99, 0, 0),
+                NotesMarkdown = GetSampleChangelog(),
+            }, false)),
+            NotificationService = notificationService,
+        });
 
     [RelayCommand]
     private void ShowInformation() =>

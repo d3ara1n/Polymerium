@@ -37,7 +37,7 @@
                     <fi:SymbolIcon
                         VerticalAlignment="Center"
                         FontSize="{StaticResource LargeFontSize}"
-                        Symbol="SparkleAction" />
+                        Symbol="ArrowCircleUpSparkle" />
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="{StaticResource LargeFontSize}"
@@ -93,7 +93,6 @@
                 Spacing="8">
                 <Button
                     Classes="Primary"
-                    IsEnabled="{Binding !$parent[app:AppUpdateModal].IsDownloading, FallbackValue=True}"
                     Command="{Binding $parent[app:AppUpdateModal].ConfirmUpdateCommand}"
                     IsDefault="True">
                     <StackPanel
@@ -129,7 +128,7 @@
                 TargetType="x:Boolean"
                 Value="{Binding $parent[app:AppUpdateModal].Model.ReleaseNotes, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue={x:False}}">
                 <husk:SwitchCase Value="{x:True}">
-                    <husk:MarkdownViewer Markdown="{Binding $parent[app:AppUpdateModal].Model.ReleaseNotes, FallbackValue=No release notes}" />
+                    <app:ChangelogView Markdown="{Binding $parent[app:AppUpdateModal].Model.ReleaseNotes}" />
                 </husk:SwitchCase>
                 <husk:SwitchCase Value="{x:False}">
                     <StackPanel

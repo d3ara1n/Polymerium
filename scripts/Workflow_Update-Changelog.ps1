@@ -41,7 +41,6 @@ $versionWithV = if ($Version.StartsWith('v')) { $Version } else { "v$Version" }
 $rollingChangelog = Join-Path $PSScriptRoot ".." "changelogs" "rolling.md"
 $packageChangelog = Join-Path $PSScriptRoot ".." "CHANGELOG.md"
 $releaseChangelog = Join-Path $PSScriptRoot ".." "RELEASE_CHANGELOG.md"
-$sponsorLine = '[已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=github-readme)'
 
 # Determine the version archive file (e.g., v0.1.md for version 0.1.0)
 $versionParts = $normalizedVersion -split '\.'
@@ -81,20 +80,9 @@ if ($content -match $unreleasedPattern) {
 $unreleasedSection
 "@
 
-    # Create the GitHub release notes with sponsor link
-    $releaseNotes = @"
-# Changelog
-
-## [$normalizedVersion] - $releaseDate
-
-$unreleasedSection
-
-$sponsorLine
-"@
-
     # Write output files
     Set-Content -Path $packageChangelog -Value $packageReleaseNotes -Encoding UTF8 -NoNewline
-    Set-Content -Path $releaseChangelog -Value $releaseNotes -Encoding UTF8 -NoNewline
+    Set-Content -Path $releaseChangelog -Value $packageReleaseNotes -Encoding UTF8 -NoNewline
     Write-Host "✓ Created CHANGELOG.md for package release notes" -ForegroundColor Green
     Write-Host "✓ Created RELEASE_CHANGELOG.md for GitHub release notes" -ForegroundColor Green
 

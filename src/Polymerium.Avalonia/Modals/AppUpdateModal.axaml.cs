@@ -29,12 +29,25 @@ public partial class AppUpdateModal : Modal
 
     public AppUpdateModal() => InitializeComponent();
 
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == ModelProperty || change.Property == IsDownloadingProperty)
+        {
+            ConfirmUpdateCommand.NotifyCanExecuteChanged();
+        }
+    }
+
     #region Commands
 
-    [RelayCommand]
+    private bool CanConfirmUpdate() =>
+        !IsDownloading && UpdateManager is not null && !string.IsNullOrWhiteSpace(Model?.Update.TargetFullRelease.FileName);
+
+    [RelayCommand(CanExecute = nameof(CanConfirmUpdate))]
     private async Task ConfirmUpdateAsync()
     {
-        if (Model == null)
+        if (!CanConfirmUpdate() || Model is not { } model || UpdateManager is not { } updateManager)
         {
             return;
         }
@@ -46,9 +59,9 @@ public partial class AppUpdateModal : Modal
         {
             void Report(int value) => Dispatcher.UIThread.Post(() => DownloadProgress = value);
 
-            await UpdateManager.DownloadUpdatesAsync(Model.Update, Report);
+            await updateManager.DownloadUpdatesAsync(model.Update, Report);
 
-            await Program.TerminateAsync(() => UpdateManager.ApplyUpdatesAndRestart(Model.Update));
+            await Program.TerminateAsync(() => updateManager.ApplyUpdatesAndRestart(model.Update));
         }
         catch (Exception ex)
         {
@@ -86,7 +99,7 @@ public partial class AppUpdateModal : Modal
 
     #region Services
 
-    public required UpdateManager UpdateManager { get; init; }
+    public UpdateManager? UpdateManager { get; init; }
     public required NotificationService NotificationService { get; init; }
 
     #endregion
