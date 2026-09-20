@@ -19,6 +19,13 @@
                 DockPanel.Dock="Right"
                 Orientation="Horizontal"
                 Spacing="4">
+                <Button
+                    Command="{Binding ShowUpdatePreviewCommand}"
+                    AutomationProperties.Name="Preview update dialog (mock)">
+                    <fi:SymbolIcon
+                        FontSize="12"
+                        Symbol="ArrowCircleUpSparkle" />
+                </Button>
                 <Button Command="{Binding ShowDiagnosisCommand}">
                     <fi:SymbolIcon
                         FontSize="12"

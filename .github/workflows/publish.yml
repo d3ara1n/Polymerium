@@ -193,6 +193,14 @@ jobs:
                   echo "Combined release assets:"
                   ls -R Releases
 
+            - name: Append GitHub release download link
+              run: |
+                  cat >> ./artifacts/release-metadata/RELEASE_CHANGELOG.md <<'EOF'
+
+
+                  [已有 Mirror酱 CDK？前往 Mirror酱 高速下载](https://mirrorchyan.com/zh/projects?rid=Polymerium&channel=Polymerium_setup&source=github-readme)
+                  EOF
+
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v2
               with:

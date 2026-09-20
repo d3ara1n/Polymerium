@@ -1,0 +1,142 @@
+<UserControl
+    x:Class="Polymerium.Avalonia.Components.ChangelogView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
+    <UserControl.Styles>
+        <Style Selector="Expander.Primary">
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+        </Style>
+        <Style Selector="Border.Primary">
+            <Setter Property="Background" Value="{DynamicResource ControlAccentTranslucentHalfBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlAccentBorderBrush}" />
+        </Style>
+    </UserControl.Styles>
+    <husk:PlaceholderContainer Source="{Binding $parent[app:ChangelogView].Document}">
+        <husk:PlaceholderContainer.Placeholder>
+            <husk:MarkdownViewer Markdown="{Binding $parent[app:ChangelogView].Markdown}" />
+        </husk:PlaceholderContainer.Placeholder>
+        <husk:PlaceholderContainer.SourceTemplate>
+            <DataTemplate x:DataType="app:ChangelogDocumentModel">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="12">
+                        <Expander
+                            IsVisible="{Binding Highlights.Count}"
+                            IsExpanded="True"
+                            Classes="Primary"
+                            HorizontalContentAlignment="Stretch">
+                            <Expander.Header>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <fi:SymbolIcon
+                                        VerticalAlignment="Center"
+                                        Foreground="{DynamicResource ControlAccentForegroundBrush}"
+                                        Symbol="SparkleAction" />
+                                    <TextBlock
+                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.ChangelogSectionKind_Highlights}}" />
+                                </StackPanel>
+                            </Expander.Header>
+                            <ItemsControl ItemsSource="{Binding Highlights}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Spacing="10" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="app:ChangelogEntryModel">
+                                        <Border
+                                            Padding="16"
+                                            Classes="Primary"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource SmallCornerRadius}">
+                                            <husk:MarkdownViewer
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Markdown="{Binding Markdown}"
+                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                ScrollViewer.VerticalScrollBarVisibility="Disabled" />
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Expander>
+                        <ItemsControl ItemsSource="{Binding Sections}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Spacing="8" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="app:ChangelogSectionModel">
+                                    <Expander HorizontalContentAlignment="Stretch">
+                                        <Expander.Header>
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                    Text="{app:LocalizedEnum {Binding Kind}}" />
+                                                <husk:Tag Classes="Small" Content="{Binding Entries.Count}" />
+                                            </StackPanel>
+                                        </Expander.Header>
+                                        <ItemsControl ItemsSource="{Binding Entries}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Spacing="16" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="app:ChangelogEntryModel">
+                                                    <StackPanel Spacing="6">
+                                                        <husk:MarkdownViewer
+                                                            Markdown="{Binding Markdown}"
+                                                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                            ScrollViewer.VerticalScrollBarVisibility="Disabled" />
+                                                        <ItemsControl
+                                                            IsVisible="{Binding References.Count}"
+                                                            ItemsSource="{Binding References}">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <WrapPanel ItemSpacing="6" LineSpacing="6" />
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate x:DataType="app:ChangelogReferenceModel">
+                                                                    <husk:SwitchContainer
+                                                                        TargetType="x:Boolean"
+                                                                        Value="{Binding Uri, Converter={x:Static ObjectConverters.IsNotNull}}">
+                                                                        <husk:SwitchCase Value="{x:True}">
+                                                                            <HyperlinkButton
+                                                                                Padding="0"
+                                                                                NavigateUri="{Binding Uri}">
+                                                                                <husk:Tag Classes="Small" Content="{Binding Text}" />
+                                                                            </HyperlinkButton>
+                                                                        </husk:SwitchCase>
+                                                                        <husk:SwitchCase Value="{x:False}">
+                                                                            <Button
+                                                                                Padding="0"
+                                                                                Command="{x:Static app:InternalCommands.CopyToClipboardCommand}"
+                                                                                CommandParameter="{Binding Text}"
+                                                                                Theme="{StaticResource GhostButtonTheme}"
+                                                                                ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ChangelogView_CopyReference}}">
+                                                                                <husk:Tag Classes="Small" Content="{Binding Text}" />
+                                                                            </Button>
+                                                                        </husk:SwitchCase>
+                                                                    </husk:SwitchContainer>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Expander>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </DataTemplate>
+        </husk:PlaceholderContainer.SourceTemplate>
+    </husk:PlaceholderContainer>
+</UserControl>
