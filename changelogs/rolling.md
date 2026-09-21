@@ -25,4 +25,4 @@
 
 ### Removed
 
--
+- Remove the unset account indicator from the instance home page
