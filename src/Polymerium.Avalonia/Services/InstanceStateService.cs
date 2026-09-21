@@ -466,8 +466,7 @@ public class InstanceStateService(
         var persistDirectory = PathDef.Default.DirectoryOfPersist(key);
         var entries = new List<ChangeState.Change>();
         var relativePaths = new HashSet<string>(FileHelper.PathComparer);
-        if (DeploymentFileHelper.LinkTarget(importDirectory) is not null)
-            throw new InvalidDataException($"Managed source directory cannot be a symbolic link: {importDirectory}");
+        if (ProjectionManifestHelper.HasImportManifest(key))
         if (ProjectionManifestHelper.HasImportManifest(key))
             relativePaths.UnionWith(ProjectionManifestHelper.ReadImport(key).Files);
         relativePaths.UnionWith(ProjectionManifestHelper.EnumerateImportSourcePaths(key));
@@ -513,7 +512,6 @@ public class InstanceStateService(
 
         return new() { Entries = entries };
     }
-
 
     private static WorkspaceChangeKind Diff(string live, string import)
     {
