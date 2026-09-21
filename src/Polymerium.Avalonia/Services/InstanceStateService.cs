@@ -31,7 +31,9 @@ public class InstanceStateService(
     ProfileManager profileManager,
     PersistenceService persistenceService,
     DeploymentPlanner deploymentPlanner,
-    DeploymentDiffer deploymentDiffer) : ILifetimeService
+    DeploymentDiffer deploymentDiffer,
+    SourceProjectionPlanner sourceProjectionPlanner,
+    ProjectionArbitrator projectionArbitrator) : ILifetimeService
 {
     #region Nested type: StateBase
 
@@ -459,21 +461,30 @@ public class InstanceStateService(
     public Task<ChangeState> RetrieveChangesAsync(string key, CancellationToken token = default) =>
         RetrieveAsync(key, ct => Task.Run(() => ProbeChanges(key, ct), ct), token);
 
-    private static ChangeState ProbeChanges(string key, CancellationToken token)
+    private ChangeState ProbeChanges(string key, CancellationToken token)
     {
         var buildDirectory = PathDef.Default.DirectoryOfBuild(key);
         var importDirectory = PathDef.Default.DirectoryOfImport(key);
-        var persistDirectory = PathDef.Default.DirectoryOfPersist(key);
         var entries = new List<ChangeState.Change>();
-        var relativePaths = new HashSet<string>(FileHelper.PathComparer);
+        var sourceProjections = sourceProjectionPlanner.CreateTarget(key, token);
+        var relativePaths = sourceProjections
+            .Where(x => x.Kind == DeploymentTarget.ProjectionKind.Import)
+            .Select(x => ProjectionManifestHelper.ToStoredPath(buildDirectory, x.Target))
+            .ToHashSet(FileHelper.PathComparer);
         if (ProjectionManifestHelper.HasImportManifest(key))
-        if (ProjectionManifestHelper.HasImportManifest(key))
-            relativePaths.UnionWith(ProjectionManifestHelper.ReadImport(key).Files);
-        relativePaths.UnionWith(ProjectionManifestHelper.EnumerateImportSourcePaths(key));
+        {
+            foreach (var relative in ProjectionManifestHelper.ReadImport(key).Files)
+            {
+                var livePath = ProjectionManifestHelper.ResolveStoredPath(buildDirectory, relative);
+                var importPath = DeploymentFileHelper.ProjectionPath(importDirectory, relative.Replace('/', Path.DirectorySeparatorChar));
+                var candidate = new DeploymentTarget.Projection(
+                    importPath, livePath, DeploymentTarget.ProjectionKind.Import, false, null, null);
+                if (!projectionArbitrator.IsShadowed(candidate, sourceProjections)) relativePaths.Add(relative);
+            }
+        }
         foreach (var relative in relativePaths.OrderBy(x => x, FileHelper.PathComparer))
         {
             if (token.IsCancellationRequested) break;
-            if (IsCoveredByPersist(relative)) continue;
             var livePath = ProjectionManifestHelper.ResolveStoredPath(buildDirectory, relative);
             var importPath = DeploymentFileHelper.ProjectionPath(importDirectory, relative.Replace('/', Path.DirectorySeparatorChar));
 
@@ -495,19 +506,6 @@ public class InstanceStateService(
                 FileLastModified = live.LastWriteTime,
                 Kind = kind
             });
-        }
-
-        bool IsCoveredByPersist(string relative)
-        {
-            var target = DeploymentFileHelper.ProjectionPath(persistDirectory, relative.Replace('/', Path.DirectorySeparatorChar));
-            if (File.Exists(target) || Directory.Exists(target) && File.Exists(Path.Combine(target, ".keep"))) return true;
-            var current = Path.GetDirectoryName(target);
-            while (current is not null && !FileHelper.IsPathEquivalent(current, persistDirectory))
-            {
-                if (File.Exists(Path.Combine(current, ".keep"))) return true;
-                current = Path.GetDirectoryName(current);
-            }
-            return false;
         }
 
         return new() { Entries = entries };
