@@ -30,7 +30,8 @@ public class InstanceStateService(
     InstanceManager instanceManager,
     ProfileManager profileManager,
     PersistenceService persistenceService,
-    DeploymentPlanner deploymentPlanner) : ILifetimeService
+    DeploymentPlanner deploymentPlanner,
+    DeploymentDiffer deploymentDiffer) : ILifetimeService
 {
     #region Nested type: StateBase
 
@@ -154,7 +155,8 @@ public class InstanceStateService(
                     var data = await LockValidationHelper.ReadAsync(key, ct).ConfigureAwait(false);
                     if (data is null || !await LockValidationHelper.ValidateAsync(key, profileManager.GetImmutable(key).Setup, data, ct).ConfigureAwait(false))
                         return new();
-                    var plan = deploymentPlanner.Plan(key, data, ct);
+                    var target = deploymentPlanner.CreateTarget(key, data, ct);
+                    var plan = deploymentDiffer.Diff(key, target, ct);
                     var missing = new List<DownloadCategory>();
                     var libraryRoot = PathDef.Default.CacheLibraryDirectory;
                     var packageRoot = PathDef.Default.CachePackageDirectory;
@@ -162,7 +164,7 @@ public class InstanceStateService(
                     if (plan.Downloads.Any(x => FileHelper.IsInDirectory(x.Path, packageRoot))) missing.Add(DownloadCategory.Package);
                     if (plan.Downloads.Any(x => !FileHelper.IsInDirectory(x.Path, libraryRoot)
                         && !FileHelper.IsInDirectory(x.Path, packageRoot))) missing.Add(DownloadCategory.Other);
-                    var needsLocalWork = plan.Operations.Count != 0;
+                    var needsLocalWork = plan.Operations.Count != 0 || plan.NeedsManifestCommit;
                     var assets = await DeploymentIndexHelper.ReadAssetAsync(data.Artifact!.AssetIndex, ct).ConfigureAwait(false);
                     if (assets is null) missing.Add(DownloadCategory.Asset);
                     else
@@ -465,50 +467,61 @@ public class InstanceStateService(
     {
         var buildDirectory = PathDef.Default.DirectoryOfBuild(key);
         var importDirectory = PathDef.Default.DirectoryOfImport(key);
+        var persistDirectory = PathDef.Default.DirectoryOfPersist(key);
         var entries = new List<ChangeState.Change>();
+        var relativePaths = new HashSet<string>(FileHelper.PathComparer);
+        var importManifest = ProjectionManifestHelper.ReadImport(key);
+        if (File.Exists(PathDef.Default.FileOfImportProjectionManifest(key)))
+            relativePaths.UnionWith(importManifest.Files);
+        if (DeploymentFileHelper.LinkTarget(importDirectory) is not null)
+            throw new InvalidDataException($"Managed source directory cannot be a symbolic link: {importDirectory}");
+        if (Directory.Exists(importDirectory))
+            relativePaths.UnionWith(DeploymentFileHelper.EnumerateFilesWithoutLinks(importDirectory)
+                .Select(x => Path.GetRelativePath(importDirectory, x).Replace(Path.DirectorySeparatorChar, '/')));
 
-        var root = new DirectoryInfo(importDirectory);
-        if (root.Exists)
+        foreach (var relative in relativePaths.OrderBy(x => x, FileHelper.PathComparer))
         {
-            foreach (var file in root.EnumerateFiles("*", SearchOption.AllDirectories))
+            if (token.IsCancellationRequested) break;
+            if (IsCoveredByPersist(relative)) continue;
+            var livePath = ProjectionManifestHelper.ResolveStoredPath(buildDirectory, relative);
+            var importPath = DeploymentFileHelper.ProjectionPath(importDirectory, relative.Replace('/', Path.DirectorySeparatorChar));
+
+            // 符号链接是部署投影，不是工作副本，不参与比对。
+            if (!File.Exists(livePath) || DeploymentFileHelper.HasLinkAtOrAbove(livePath, buildDirectory)) continue;
+
+            var kind = Diff(livePath, importPath);
+            if (kind == WorkspaceChangeKind.Same) continue;
+
+            var live = new FileInfo(livePath);
+            entries.Add(new()
             {
-                if (token.IsCancellationRequested)
-                {
-                    break;
-                }
+                RelativePath = relative.Replace('/', Path.DirectorySeparatorChar),
+                FileName = live.Name,
+                LivePath = livePath,
+                ImportPath = importPath,
+                FileType = Path.GetExtension(livePath).TrimStart('.'),
+                FileSize = live.Length,
+                FileLastModified = live.LastWriteTime,
+                Kind = kind
+            });
+        }
 
-                var relative = Path.GetRelativePath(importDirectory, file.FullName);
-                var livePath = Path.Combine(buildDirectory, relative);
-
-                // 符号链接是部署投影，不是工作副本，不参与比对。
-                if (!File.Exists(livePath) || File.ResolveLinkTarget(livePath, false) is not null)
-                {
-                    continue;
-                }
-
-                var kind = Diff(livePath, file.FullName);
-                if (kind == WorkspaceChangeKind.Same)
-                {
-                    continue;
-                }
-
-                var live = new FileInfo(livePath);
-                entries.Add(new()
-                {
-                    RelativePath = relative,
-                    FileName = live.Name,
-                    LivePath = livePath,
-                    ImportPath = file.FullName,
-                    FileType = Path.GetExtension(livePath).TrimStart('.'),
-                    FileSize = live.Length,
-                    FileLastModified = live.LastWriteTime,
-                    Kind = kind
-                });
+        bool IsCoveredByPersist(string relative)
+        {
+            var target = DeploymentFileHelper.ProjectionPath(persistDirectory, relative.Replace('/', Path.DirectorySeparatorChar));
+            if (File.Exists(target) || Directory.Exists(target) && File.Exists(Path.Combine(target, ".keep"))) return true;
+            var current = Path.GetDirectoryName(target);
+            while (current is not null && !FileHelper.IsPathEquivalent(current, persistDirectory))
+            {
+                if (File.Exists(Path.Combine(current, ".keep"))) return true;
+                current = Path.GetDirectoryName(current);
             }
+            return false;
         }
 
         return new() { Entries = entries };
     }
+
 
     private static WorkspaceChangeKind Diff(string live, string import)
     {
