@@ -26,7 +26,7 @@
 
 ## 文件投影
 
-包仲裁之后，`DeploymentPlanner` 只对目标视图进行来源仲裁：本地保留（`persist/`）优先于整合包源（`import/`），整合包源优先于包。`DeploymentDiffer` 再将该目标视图与当前运行目录和旧投影清单比较，产出可执行差异。
+包仲裁之后，`SourceProjectionPlanner` 扫描整合包源（`import/`）和本地保留（`persist/`），`ProjectionArbitrator` 统一完成路径优先级与祖先／后代遮蔽仲裁：本地保留优先于整合包源，整合包源优先于包。`DeploymentPlanner` 将仲裁结果组装为目标视图，`DeploymentDiffer` 再将它与当前运行目录和旧投影清单比较，产出下载与可执行差异。
 
 - 生效包从共享缓存创建符号链接。
 - 整合包源生成真实工作副本，仅在缺失时复制，保留运行中的修改。

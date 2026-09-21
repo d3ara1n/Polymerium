@@ -133,6 +133,8 @@ public static class Startup
            .AddTransient<IProfileExporter, MultiMcExporter>()
            .AddTransient<PackageResolver>()
            .AddTransient<PackagePlanner>()
+           .AddTransient<ProjectionArbitrator>()
+           .AddTransient<SourceProjectionPlanner>()
            .AddTransient<DeploymentPlanner>()
            .AddTransient<DeploymentDiffer>()
            .AddTransient<DeploymentIndexService>()
