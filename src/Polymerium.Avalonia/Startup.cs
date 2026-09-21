@@ -134,6 +134,7 @@ public static class Startup
            .AddTransient<PackageResolver>()
            .AddTransient<PackagePlanner>()
            .AddTransient<DeploymentPlanner>()
+           .AddTransient<DeploymentDiffer>()
            .AddTransient<DeploymentIndexService>()
            .AddTransient<PackageMaterializer>()
            .AddSingleton<ProfileManager>()

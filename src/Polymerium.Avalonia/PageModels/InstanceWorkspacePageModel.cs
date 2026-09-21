@@ -437,8 +437,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
     private static string BuildRestoreConfirmationMessage(int unstagedCount) =>
         LanguageManager.Instance.InstanceWorkspacePage_GitRestoreConfirmationMessage.Current().Replace("{0}", unstagedCount.ToString());
 
-    private static bool IsImportProjectionEntity(string path) =>
-        File.Exists(path) && File.ResolveLinkTarget(path, false) is null;
+    private bool IsImportProjectionEntity(string path) =>
+        File.Exists(path) && !DeploymentFileHelper.HasLinkAtOrAbove(path, PathDef.Default.DirectoryOfBuild(Basic.Key));
 
     #endregion
 
@@ -654,6 +654,14 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             return;
         }
 
+        if (DeploymentFileHelper.HasLinkAtOrAbove(model.ImportPath, PathDef.Default.DirectoryOfImport(Basic.Key)))
+        {
+            _notificationService.PopMessage(
+                new InvalidDataException($"Managed source cannot contain a symbolic link: {model.ImportPath}"),
+                LanguageManager.Instance.InstanceWorkspacePage_FileStagingDangerNotificationTitle.Current());
+            return;
+        }
+
         var suc = false;
         if (File.Exists(model.ImportPath))
         {
@@ -671,7 +679,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
         {
             try
             {
-                File.Delete(model.LivePath);
+                Directory.CreateDirectory(Path.GetDirectoryName(model.ImportPath)!);
+                File.Copy(model.LivePath, model.ImportPath, false);
                 suc = true;
             }
             catch (Exception ex)
@@ -709,6 +718,8 @@ public partial class InstanceWorkspacePageModel : InstancePageModelBase
             {
                 if (File.Exists(model.ImportPath))
                 {
+                    if (DeploymentFileHelper.HasLinkAtOrAbove(model.ImportPath, PathDef.Default.DirectoryOfImport(Basic.Key)))
+                        throw new InvalidDataException($"Managed source cannot contain a symbolic link: {model.ImportPath}");
                     File.Copy(model.ImportPath, model.LivePath, true);
                 }
                 else

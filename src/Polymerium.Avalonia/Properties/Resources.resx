@@ -1683,11 +1683,11 @@
       <data name="DeployStage_PersistLock" xml:space="preserve">
         <value>Saving version lock...</value>
     </data>
-    <data name="DeployStage_GenerateManifest" xml:space="preserve">
-        <value>Generating manifest...</value>
+    <data name="DeployStage_PlanDeployment" xml:space="preserve">
+        <value>Planning deployment...</value>
     </data>
-    <data name="DeployStage_SolidifyManifest" xml:space="preserve">
-        <value>Preparing files...</value>
+    <data name="DeployStage_ExecuteDeployment" xml:space="preserve">
+        <value>Applying deployment...</value>
     </data>
     <data name="InstanceSetupPage_PackageBulkUpdatingProgressingNotificationTitle" xml:space="preserve">
         <value>Update packages in bulk</value>

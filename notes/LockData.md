@@ -21,8 +21,8 @@ LoadLock
   → SyncPackages
   → SelectRuntime
   → PersistLock
-  → GenerateManifest
-  → SolidifyManifest
+  → PlanDeployment
+  → ExecuteDeployment
 ```
 
 `BaseLock` 是磁盘锁的只读参照，`Lock` 是各阶段逐步组装的本次需求。`PersistLock` 在文件准备前保存需求，因此部署失败后仍可使用已固定的解析结果。
@@ -31,7 +31,7 @@ LoadLock
 
 ## 离线规划
 
-`DeploymentPlanner.Plan(key, data)` 调用离线 `PackagePlanner` 仲裁包，并将包、整合包源（`import/`）、本地保留（`persist/`）的投影与当前运行目录（`build/`）比较。只返回需要执行的下载、复制、移动、链接和目录操作，已经就绪的文件不进入操作清单。
+`DeploymentPlanner.CreateTarget(key, data)` 调用离线 `PackagePlanner` 仲裁包，并从包、整合包源（`import/`）和本地保留（`persist/`）生成完整目标视图；它不读取当前运行目录（`build/`）或旧投影清单。`DeploymentDiffer.Diff(key, target)` 再以当前目录和旧清单仲裁真实对象归属，输出下载、复制、移动、链接、目录及清单提交操作。已经就绪的对象不进入操作清单。
 
 `AssetPlanner` 消费本地 `AssetIndex`，`RuntimePlanner` 消费本地 `RuntimeIndex`，两者不联网。索引读取由 `DeploymentIndexHelper` 提供，获取由 `DeploymentIndexService` 提供：部署消费方发现缺失便补齐索引继续规划，状态检查消费方直接返回未就绪。
 
@@ -39,7 +39,7 @@ LoadLock
 
 ## 执行与收尾
 
-`SolidifyManifestStage` 先下载并校验文件，再按顺序执行本地操作。符号链接创建、替换与清理都是显式操作，不能把差量列表当成完整目标集合来删除其余链接。
+`ExecuteDeploymentStage` 先下载并校验文件，再按顺序执行 `DeploymentDiffer` 产出的本地操作。符号链接创建、替换与清理已经包含在同一份差异结果中；执行阶段只复核物理前置条件，并在删除或迁移文件后裁剪空目录。
 
 原生库不参与首页就绪判断。文件操作完成后，`NativeHelper` 直接读取本地原生库归档，按排除规则和覆盖顺序推导预期输出，对照 `build/natives/` 并在必要时通过临时目录替换。没有单独持久化的原生库提取索引。
 
@@ -55,8 +55,8 @@ LoadLock
 | --- | --- |
 | 浮动包版本意外变化 | `SyncPackagesStage` 的身份匹配和平台变化判断 |
 | Patch 修改后仍复用旧区域 | `LockValidationHelper` 对应区域的输入指纹 |
-| 资源齐全仍计划下载 | `FilePlanningHelper` 的路径和哈希检查 |
-| 链接丢失或重复创建 | `DeploymentPlanner` 的投影仲裁与链接比较 |
+| 资源齐全仍计划下载 | `DeploymentFileHelper` 的路径和哈希检查 |
+| 链接丢失或重复创建 | `DeploymentDiffer` 的链接差异 |
 | 索引缺失时检查联网 | 状态消费方是否误调用 `DeploymentIndexService` |
 | 用户改 Java 偏好触发资源重建 | 部署是否错误地重新依赖 vault |
 | 原生库不完整 | `NativeHelper` 的归档推导和目录替换 |
