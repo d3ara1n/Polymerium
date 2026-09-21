@@ -156,34 +156,30 @@ public class InstanceStateService(
                     if (data is null || !await LockValidationHelper.ValidateAsync(key, profileManager.GetImmutable(key).Setup, data, ct).ConfigureAwait(false))
                         return new();
                     var target = deploymentPlanner.CreateTarget(key, data, ct);
-                    var plan = deploymentDiffer.Diff(key, target, ct);
                     var missing = new List<DownloadCategory>();
-                    var libraryRoot = PathDef.Default.CacheLibraryDirectory;
-                    var packageRoot = PathDef.Default.CachePackageDirectory;
-                    if (plan.Downloads.Any(x => FileHelper.IsInDirectory(x.Path, libraryRoot))) missing.Add(DownloadCategory.Library);
-                    if (plan.Downloads.Any(x => FileHelper.IsInDirectory(x.Path, packageRoot))) missing.Add(DownloadCategory.Package);
-                    if (plan.Downloads.Any(x => !FileHelper.IsInDirectory(x.Path, libraryRoot)
-                        && !FileHelper.IsInDirectory(x.Path, packageRoot))) missing.Add(DownloadCategory.Other);
-                    var needsLocalWork = plan.Operations.Count != 0 || plan.NeedsManifestCommit;
                     var assets = await DeploymentIndexHelper.ReadAssetAsync(data.Artifact!.AssetIndex, ct).ConfigureAwait(false);
                     if (assets is null) missing.Add(DownloadCategory.Asset);
-                    else
-                    {
-                        var assetPlan = new AssetPlanner().Plan(assets, ct);
-                        if (assetPlan.Downloads.Count != 0) missing.Add(DownloadCategory.Asset);
-                        needsLocalWork |= assetPlan.Operations.Count != 0;
-                    }
+                    else new AssetPlanner().Plan(target, assets, ct);
                     if (data.RuntimeMajor is { } major)
                     {
                         var runtime = await DeploymentIndexHelper.ReadRuntimeAsync(major, data.RuntimeIndex?.Hash, ct).ConfigureAwait(false);
                         if (runtime is null) missing.Add(DownloadCategory.Runtime);
-                        else
-                        {
-                            var runtimePlan = new RuntimePlanner().Plan(runtime, ct);
-                            if (runtimePlan.Downloads.Count != 0) missing.Add(DownloadCategory.Runtime);
-                            needsLocalWork |= runtimePlan.Operations.Count != 0;
-                        }
+                        else new RuntimePlanner().Plan(target, runtime, ct);
                     }
+                    var plan = deploymentDiffer.Diff(key, target, ct);
+                    var libraryRoot = PathDef.Default.CacheLibraryDirectory;
+                    var packageRoot = PathDef.Default.CachePackageDirectory;
+                    var assetRoot = PathDef.Default.CacheAssetDirectory;
+                    var runtimeRoot = PathDef.Default.CacheRuntimeDirectory;
+                    if (plan.Downloads.Any(x => FileHelper.IsInDirectory(x.Path, libraryRoot))) missing.Add(DownloadCategory.Library);
+                    if (plan.Downloads.Any(x => FileHelper.IsInDirectory(x.Path, packageRoot))) missing.Add(DownloadCategory.Package);
+                    if (plan.Downloads.Any(x => FileHelper.IsInDirectory(x.Path, assetRoot))) missing.Add(DownloadCategory.Asset);
+                    if (plan.Downloads.Any(x => FileHelper.IsInDirectory(x.Path, runtimeRoot))) missing.Add(DownloadCategory.Runtime);
+                    if (plan.Downloads.Any(x => !FileHelper.IsInDirectory(x.Path, libraryRoot)
+                        && !FileHelper.IsInDirectory(x.Path, packageRoot)
+                        && !FileHelper.IsInDirectory(x.Path, assetRoot)
+                        && !FileHelper.IsInDirectory(x.Path, runtimeRoot))) missing.Add(DownloadCategory.Other);
+                    var needsLocalWork = plan.Operations.Count != 0 || plan.NeedsManifestCommit;
                     return new()
                     {
                         Readiness = missing.Count != 0 ? DeploymentReadiness.NeedsDownload
@@ -470,15 +466,11 @@ public class InstanceStateService(
         var persistDirectory = PathDef.Default.DirectoryOfPersist(key);
         var entries = new List<ChangeState.Change>();
         var relativePaths = new HashSet<string>(FileHelper.PathComparer);
-        var importManifest = ProjectionManifestHelper.ReadImport(key);
-        if (File.Exists(PathDef.Default.FileOfImportProjectionManifest(key)))
-            relativePaths.UnionWith(importManifest.Files);
         if (DeploymentFileHelper.LinkTarget(importDirectory) is not null)
             throw new InvalidDataException($"Managed source directory cannot be a symbolic link: {importDirectory}");
-        if (Directory.Exists(importDirectory))
-            relativePaths.UnionWith(DeploymentFileHelper.EnumerateFilesWithoutLinks(importDirectory)
-                .Select(x => Path.GetRelativePath(importDirectory, x).Replace(Path.DirectorySeparatorChar, '/')));
-
+        if (ProjectionManifestHelper.HasImportManifest(key))
+            relativePaths.UnionWith(ProjectionManifestHelper.ReadImport(key).Files);
+        relativePaths.UnionWith(ProjectionManifestHelper.EnumerateImportSourcePaths(key));
         foreach (var relative in relativePaths.OrderBy(x => x, FileHelper.PathComparer))
         {
             if (token.IsCancellationRequested) break;
