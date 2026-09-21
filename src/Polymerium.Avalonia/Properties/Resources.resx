@@ -189,9 +189,6 @@
     <data name="InstanceHomePage_ReadyLabelText" xml:space="preserve">
         <value>Resources ready</value>
     </data>
-    <data name="InstanceHomePage_NoAccountLabelText" xml:space="preserve">
-        <value>Account is not set yet</value>
-    </data>
     <data name="InstanceHomePage_LaunchButtonText" xml:space="preserve">
         <value>LAUNCH</value>
     </data>

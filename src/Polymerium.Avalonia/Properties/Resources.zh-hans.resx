@@ -180,9 +180,6 @@
     <data name="InstanceHomePage_ReadyLabelText" xml:space="preserve">
         <value>资源已就绪</value>
     </data>
-    <data name="InstanceHomePage_NoAccountLabelText" xml:space="preserve">
-        <value>未选择账号</value>
-    </data>
     <data name="InstanceHomePage_LaunchButtonText" xml:space="preserve">
         <value>开始游玩</value>
     </data>

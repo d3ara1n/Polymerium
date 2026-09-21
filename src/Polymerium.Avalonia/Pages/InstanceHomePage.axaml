@@ -585,93 +585,79 @@
                         TargetType="trident:InstanceState"
                         Value="{Binding State}">
                         <husk:SwitchCase Value="Idle">
-                            <StackPanel
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Spacing="6">
-                                <husk:LazyContainer Source="{Binding LazyDeployment}">
-                                    <husk:LazyContainer.SourceTemplate>
-                                        <DataTemplate x:DataType="app:InstanceStateService+DeploymentState">
-                                            <Border HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip.Placement="Top">
-                                                <ToolTip.Tip>
-                                                    <StackPanel Spacing="6">
-                                                        <TextBlock
-                                                            FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                            IsVisible="{Binding DownloadChecks, Converter={x:Static ObjectConverters.IsNotNull}}"
-                                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_DownloadReadinessTitle}}" />
-                                                        <TextBlock
-                                                            IsVisible="{Binding DownloadChecks, Converter={x:Static ObjectConverters.IsNull}}"
-                                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_RequirementsUncheckedText}}" />
-                                                        <ItemsControl ItemsSource="{Binding DownloadChecks}">
-                                                            <ItemsControl.ItemsPanel>
-                                                                <ItemsPanelTemplate>
-                                                                    <StackPanel Spacing="4" />
-                                                                </ItemsPanelTemplate>
-                                                            </ItemsControl.ItemsPanel>
-                                                            <ItemsControl.ItemTemplate>
-                                                                <DataTemplate x:DataType="app:InstanceStateService+DownloadCheck">
-                                                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                                                        <husk:SwitchContainer TargetType="x:Boolean" Value="{Binding IsReady}">
-                                                                            <husk:SwitchCase Value="{x:True}">
-                                                                                <fi:SymbolIcon
-                                                                                    Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                                                                    Symbol="CheckmarkCircle" />
-                                                                            </husk:SwitchCase>
-                                                                            <husk:SwitchCase Value="{x:False}">
-                                                                                <fi:SymbolIcon
-                                                                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                                                                    Symbol="DismissCircle" />
-                                                                            </husk:SwitchCase>
-                                                                        </husk:SwitchContainer>
-                                                                        <TextBlock Text="{app:LocalizedEnum {Binding Category}}" />
-                                                                    </StackPanel>
-                                                                </DataTemplate>
-                                                            </ItemsControl.ItemTemplate>
-                                                        </ItemsControl>
-                                                    </StackPanel>
-                                                </ToolTip.Tip>
-                                                <husk:SwitchContainer TargetType="app:InstanceStateService+DeploymentReadiness" Value="{Binding Readiness}">
-                                                    <husk:SwitchCase Value="Ready">
-                                                        <husk:IconLabel
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="{StaticResource ControlSuccessForegroundBrush}"
-                                                            Icon="CheckmarkCircle"
-                                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_ReadyLabelText}}"
-                                                            TextBlock.TextWrapping="Wrap"
-                                                            Variant="Filled" />
-                                                    </husk:SwitchCase>
-                                                    <husk:SwitchCase Value="NeedsDeployment">
-                                                        <husk:IconLabel
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Icon="ArrowSync"
-                                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_DeploymentRequiredLabelText}}"
-                                                            TextBlock.TextWrapping="Wrap" />
-                                                    </husk:SwitchCase>
-                                                    <husk:SwitchCase Value="NeedsDownload">
-                                                        <husk:IconLabel
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Icon="ArrowDownload"
-                                                            Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_DownloadRequiredLabelText}}"
-                                                            TextBlock.TextWrapping="Wrap" />
-                                                    </husk:SwitchCase>
-                                                </husk:SwitchContainer>
-                                            </Border>
-                                        </DataTemplate>
-                                    </husk:LazyContainer.SourceTemplate>
-                                </husk:LazyContainer>
-                                <husk:IconLabel
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
-                                    Icon="DismissCircle"
-                                    IsVisible="{Binding SelectedAccount, Converter={x:Static ObjectConverters.IsNull}, Mode=OneWay}"
-                                    Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_NoAccountLabelText}}"
-                                    TextBlock.TextWrapping="Wrap"
-                                    Variant="Filled" />
-                            </StackPanel>
+                            <husk:LazyContainer Source="{Binding LazyDeployment}">
+                                <husk:LazyContainer.SourceTemplate>
+                                    <DataTemplate x:DataType="app:InstanceStateService+DeploymentState">
+                                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip.Placement="Top">
+                                            <ToolTip.Tip>
+                                                <StackPanel Spacing="6">
+                                                    <TextBlock
+                                                        FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                        IsVisible="{Binding DownloadChecks, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_DownloadReadinessTitle}}" />
+                                                    <TextBlock
+                                                        IsVisible="{Binding DownloadChecks, Converter={x:Static ObjectConverters.IsNull}}"
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_RequirementsUncheckedText}}" />
+                                                    <ItemsControl ItemsSource="{Binding DownloadChecks}">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Spacing="4" />
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate x:DataType="app:InstanceStateService+DownloadCheck">
+                                                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                                                    <husk:SwitchContainer TargetType="x:Boolean" Value="{Binding IsReady}">
+                                                                        <husk:SwitchCase Value="{x:True}">
+                                                                            <fi:SymbolIcon
+                                                                                Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                                                                Symbol="CheckmarkCircle" />
+                                                                        </husk:SwitchCase>
+                                                                        <husk:SwitchCase Value="{x:False}">
+                                                                            <fi:SymbolIcon
+                                                                                Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                                                                Symbol="DismissCircle" />
+                                                                        </husk:SwitchCase>
+                                                                    </husk:SwitchContainer>
+                                                                    <TextBlock Text="{app:LocalizedEnum {Binding Category}}" />
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>
+                                            </ToolTip.Tip>
+                                            <husk:SwitchContainer TargetType="app:InstanceStateService+DeploymentReadiness" Value="{Binding Readiness}">
+                                                <husk:SwitchCase Value="Ready">
+                                                    <husk:IconLabel
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="{StaticResource ControlSuccessForegroundBrush}"
+                                                        Icon="CheckmarkCircle"
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_ReadyLabelText}}"
+                                                        TextBlock.TextWrapping="Wrap"
+                                                        Variant="Filled" />
+                                                </husk:SwitchCase>
+                                                <husk:SwitchCase Value="NeedsDeployment">
+                                                    <husk:IconLabel
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Icon="ArrowSync"
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_DeploymentRequiredLabelText}}"
+                                                        TextBlock.TextWrapping="Wrap" />
+                                                </husk:SwitchCase>
+                                                <husk:SwitchCase Value="NeedsDownload">
+                                                    <husk:IconLabel
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Icon="ArrowDownload"
+                                                        Text="{Translate {x:Static app:LanguageManager+Keys.InstanceHomePage_DownloadRequiredLabelText}}"
+                                                        TextBlock.TextWrapping="Wrap" />
+                                                </husk:SwitchCase>
+                                            </husk:SwitchContainer>
+                                        </Border>
+                                    </DataTemplate>
+                                </husk:LazyContainer.SourceTemplate>
+                            </husk:LazyContainer>
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="Deploying">
                             <Panel Margin="8">
