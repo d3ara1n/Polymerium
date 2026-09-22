@@ -7,7 +7,7 @@
 
 ### Fixed
 
--
+- Fix instance deployment failing with a reset prompt when operating system metadata files such as .DS_Store appear in the instance directories
 
 ### Added
 
