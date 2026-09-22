@@ -8,6 +8,7 @@
 ### Fixed
 
 - Fix bulk package update suggestions to match each package's current release type (#POLY-73)
+- Fix new instance creation to require a game version and use it as the name when no name is entered
 
 ### Added
 
