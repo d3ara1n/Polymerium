@@ -3,10 +3,11 @@
   "pages": [
     "accounts",
     "import-export",
-    "snapshots",
-    "tags",
+    "package-groups",
     "collections",
     "recipes",
+    "tags",
+    "snapshots",
     "java"
   ]
 }

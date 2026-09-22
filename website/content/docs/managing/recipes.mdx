@@ -9,6 +9,8 @@ A recipe is a user-curated list of package references — mods, resource packs, 
 
 A recipe holds **references only** (`pref://` URIs). It contains no mod files, no configuration, and no Minecraft version or loader — that is exactly what makes it different from a modpack.
 
+Applying a recipe creates a **recipe group** in the instance. It uses the same [package grouping mechanism](/docs/managing/package-groups) as modpack groups and collections, including priority and duplicate-package handling. The recipe in your library and the group of entries in an instance are distinct: editing the recipe does not automatically synchronize previously applied groups.
+
 ## Recipes vs. Modpacks
 
 | | Recipe | Modpack |
@@ -36,9 +38,11 @@ Projects you've already added show an **In Recipe** marker when you browse them 
 
 ## Applying a Recipe to an Instance
 
-Open an existing instance's setup page. Open the menu under the **Get More** button and choose **Import from recipe**, then pick a recipe. Polymerium resolves each reference through the repositories and adds the packages to the instance's package list; they appear grouped under the recipe, and selecting the group opens the recipe.
+Open an existing instance's **Setup** page. Open the menu under **Get More** and choose **Import from recipe**, then pick a recipe. Polymerium resolves each reference through the repositories and adds entries under that recipe group. References it cannot resolve are added as disabled entries for you to review. Click the group header to expand or collapse it; choose **View Details** from its menu to open the recipe.
 
-A collection on the same Setup page is only a local group. Use its header menu to **Promote to Recipe** when you want to maintain a separate reusable list. To remove an instance group's recipe association without deleting its packages or the recipe itself, choose **Demote to Collection** on the recipe group. Trident modpack export represents local recipe groups as collections, because the local recipe library does not travel with a modpack.
+A project already present in another group can also appear in the recipe group. Both entries remain in the profile; [group priority](/docs/managing/package-groups) decides which is deployed. Review the order after applying a recipe, especially when it overlaps with another recipe or collection.
+
+To create a recipe from an existing collection, or keep an applied recipe group as a local collection, see [Convert to or from a Recipe](/docs/managing/collections#convert-to-or-from-a-recipe). Exporting a Trident modpack represents local recipe groups as collections because the local recipe library does not travel with a modpack.
 
 ## Sharing Recipes
 
@@ -48,7 +52,7 @@ A collection on the same Setup page is only a local group. Use its header menu t
 
 ## Deleting a Recipe
 
-A recipe that instances still reference can't be deleted. Polymerium lists the referencing instances — remove the recipe from those instances in their setup first, then delete it.
+A recipe that instances still reference can't be deleted. Polymerium lists those instances. In each instance's Setup page, **Demote to Collection** keeps the entries grouped without the recipe association; **Disband Group** makes them loose, and **Remove Group** deletes them from the profile. Once no instance references the recipe, delete it from the Recipes library.
 
 ## Recipes and Version Control
 

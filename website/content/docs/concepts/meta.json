@@ -2,6 +2,7 @@
   "title": "Core Concepts",
   "pages": [
     "metadata-driven",
+    "packages",
     "directory-model",
     "deploy-explained",
     "glossary"

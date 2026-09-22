@@ -3,6 +3,8 @@ title: Adding Mods
 description: Browse, search, and install mods from CurseForge and Modrinth directly in Polymerium.
 ---
 
+Mods are managed as [packages](/docs/concepts/packages) in Polymerium. This guide walks through adding them to an instance, selecting versions, and managing updates. The Packages article introduces how references, files, and other resource kinds fit together.
+
 ## Browsing Mods
 
 1. Select your instance in the sidebar.
@@ -33,6 +35,12 @@ Once installed, each mod in your list can be:
 - **Enabled / Disabled** — toggle without removing. Disabled mods are ignored during deployment.
 - **Version-pinned** — click the version to pick a specific release instead of always using the latest.
 - **Tagged** — add custom tags like `performance`, `core`, `QoL` for your own organization. See [Tags & Batch Operations](/docs/managing/tags) for more.
+
+### Where Your Packages Appear
+
+Individually added packages appear at the bottom of Setup as **loose packages**, without a group header. You can move them into a [collection](/docs/managing/collections) to organize them. Packages supplied through a recipe or an online modpack can appear under their own source groups.
+
+The same project can have entries in more than one group. Deployment selects the entry with the highest group priority; loose packages take priority over all sourced groups. See [Package Groups & Override Order](/docs/managing/package-groups) before combining overlapping package lists or moving entries between groups.
 
 ## Bulk Updates
 

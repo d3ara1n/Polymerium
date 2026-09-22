@@ -1,0 +1,103 @@
+---
+title: Package Groups & Override Order
+description: Understand modpack groups, recipe groups, collections, loose packages, and how group priority decides which duplicate package is deployed.
+---
+
+Packages on an instance's **Setup** page are grouped by source. Modpack groups, recipe groups, and collections share this mechanism. Packages with no source group belong to the **loose group**. Groups support bulk management and decide which entry deployment uses when several groups contain the same package.
+
+This page explains how to manage entries already in an instance. Start with [Packages](/docs/concepts/packages) for repositories, references, versions, and files. To add content first, see [Adding Mods](/docs/getting-started/adding-mods) or [Import & Export](/docs/managing/import-export).
+
+## Four Ways a Package Can Belong
+
+| Group | How it forms | What it is useful for |
+|-------|--------------|-----------------------|
+| **Modpack group** | Packages retain an association with their online modpack source | Keep the modpack's package list and layer your own choices over it |
+| **Recipe group** | Applying a recipe adds entries associated with that recipe | Add a reusable package selection to an instance |
+| **Collection** | Packages are assigned to a named collection | Organize packages by purpose within the current instance |
+| **Loose group** | Packages have no modpack, recipe, or collection association | Add individual packages or provide personal choices that take priority over grouped entries |
+
+Each **package entry** belongs to only one group, but the same project can have an entry in several groups, even at different versions. Each entry retains its own version, enabled state, and tags. Tags can span groups, and an entry can have several; see [Tags & Batch Operations](/docs/managing/tags).
+
+A recipe itself is a separately stored, shareable list of package references; a **recipe group** consists of the entries added when it is applied to an instance. A collection only has a name and members within the instance, with no independent list. Collections with the same name merge into one group. See [Recipes](/docs/managing/recipes) and [Collections](/docs/managing/collections) for creation and conversion workflows.
+
+### A Modpack Is Also a Group Source
+
+Packages supplied by an online modpack can form a modpack group and participate in overrides alongside recipe groups, collections, and loose packages. Here, “modpack group” describes the source association of package entries. A modpack can also supply a Minecraft version, mod loader, and configuration files, which have their own management rules.
+
+The import method affects which groups you see. For example, importing a local CurseForge or Modrinth archive without an online source association places its package references in a collection named after the modpack. Trident format can carry existing groups, so one imported modpack may appear as several groups. Content supplied only as files, without managed package references, does not automatically become group entries. See [Import & Export](/docs/managing/import-export).
+
+### Where Is the Loose Group?
+
+Individually added packages with no source association appear at the end of the list **without a group header**. This is the loose group. Removing a package from a collection or disbanding an eligible group also moves its entries here.
+
+The loose group cannot be reordered by dragging, and its deployment priority is always higher than every sourced group. Moving a loose package into a collection, or making a grouped package loose, can therefore change which entry wins against the same project in another group.
+
+## How Duplicate Packages Deploy
+
+Different groups can retain references to the same project. At deployment, Polymerium selects the effective entry by group priority. Overridden entries stay in the instance profile; they are not deleted just because they are not deployed this time.
+
+Selection happens in two steps:
+
+1. **Choose one entry per project.** When entries refer to the same project in the same resource repository, use the entry with the highest priority, including its selected version.
+2. **Choose one package per target path.** If the remaining packages still target the same deployment path, select one using the same priorities.
+
+Overriding does not merge two versions' contents or make Minecraft load both versions. Two identically named projects from different repositories are not recognized as the same project by name alone. If they also target different paths, both may deploy, so you still need to check compatibility.
+
+**Disabled entries do not participate in selection.** Disabling an entry with higher priority can allow an enabled entry for the same project in a lower-priority group to take effect again. To disable that project entirely, check its entries across groups.
+
+## Group Order and Priority
+
+### Adjust the Order
+
+On the Setup page, open a group header's menu and choose **Raise Priority** or **Lower Priority**. You can also drag a group header with the mouse and drop it in the **Reorder Groups** panel.
+
+When you change the order, Polymerium saves the order of all current groups with headers. **Within that saved order, later groups have higher priority**: raising priority moves a group down the list, and lowering it moves the group up. Loose packages remain at the end with the highest priority. This decides which packages are deployed, not the order in which the game loads mods.
+
+For example, manually arrange the current groups as shown below. Assume all entries are enabled, refer to the same map mod project in the same repository, and have no deployment rule skipping them:
+
+| Setup list, top to bottom | Map mod version | Deployment result |
+|---------------------------|-----------------|-------------------|
+| Modpack group | 1.0 | Overridden; entry retained |
+| Recipe group | 1.1 | Overridden; entry retained |
+| “Personal adjustments” collection | 1.2 | Overridden; entry retained |
+| Loose package, no header | 1.3 | **Use 1.3** |
+
+Disable the loose 1.3 entry and the next deployment uses the collection's 1.2. Then move that collection before the recipe group and deployment uses the recipe's 1.1. Priority decides the version; the largest version number does not automatically win.
+
+### Before You Set an Order
+
+Groups without a saved order follow default rules. The full deployment priority, highest first, is:
+
+| Priority | Entry belongs to |
+|----------|------------------|
+| Highest | Loose packages |
+| Next | Groups included in the saved order, with later groups winning |
+| Next | Groups outside the saved order other than the instance's currently associated modpack |
+| Lowest | The current modpack group, when outside the saved order |
+
+The “current modpack” is the modpack source associated with the instance. Once its group is included in manual ordering, it follows that order instead of staying at the lowest priority.
+
+By default, unordered groups appear as recipes, then modpacks, then collections, with loose packages last. Ordered groups appear before unordered groups. **This default display order is not a deployment priority order.** For example, two unordered recipe groups containing the same project cause a conflict if no entry with a higher priority wins, because both recipes have equal priority.
+
+A group added later may also be outside the saved order. To give it a definite place in the override order, adjust the group order again to save all current groups together.
+
+### Resolve a Conflict
+
+If several entries still tie for the highest priority, deployment reports a conflict instead of choosing randomly. Reorder groups to resolve conflicts between them. If different packages within one group target the same path, remove or disable a conflicting entry, or use [deployment rules](/docs/advanced/rules) to assign suitable packages different target paths. Merely changing entries' display positions within a group does not give them different group priorities.
+
+## What Group Operations Change
+
+Click a group header to expand or collapse it, and use its menu for group operations. Collapsing only changes the display; collapsed packages still participate in deployment according to their enabled state.
+
+| Operation | Result |
+|-----------|--------|
+| **Enable Whole Group / Disable Whole Group** | Set every member entry to enabled or disabled |
+| **View Details** | Open the associated recipe or modpack; collections have no independent details object |
+| **Disband Group** | Keep the package entries, clear their group association, and make them loose packages with the highest priority |
+| **Remove Group** | Delete the group's package entries from the instance profile |
+
+The instance's currently associated modpack group cannot be directly disbanded or removed. See [Collections](/docs/managing/collections) for renaming, moving packages, and converting between collections and recipes.
+
+## Groups and File Layers
+
+Group order decides **which packages win against other packages**. Assets such as configuration files follow the [Directory Model](/docs/concepts/directory-model) rules for Pack Source (`import/`), Local Data (`persist/`), and the Run Directory (`build/`). Raising a modpack group's priority does not also raise the directory priority of its configuration files or change the Minecraft version or mod loader.

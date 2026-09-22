@@ -29,6 +29,12 @@ Polymerium supports four modpack formats for both import and export:
 
 > **Updating a modpack?** If the instance was created from an import, you can re-import a newer version of the same pack. Polymerium replaces `import/` with the new files while leaving `persist/` untouched — files you've moved there are preserved.
 
+### How Imported Packages Are Grouped
+
+Packages associated with an online modpack form a **modpack group** on the Setup page. That group participates in the same priority and override mechanism as recipe groups and collections. A local CurseForge or Modrinth archive without an online source association instead places its package references in a collection named after the modpack; Trident imports can retain groups carried in the archive.
+
+You can keep the modpack's package entries while adding overlapping projects through other groups or as loose packages. See [Package Groups & Override Order](/docs/managing/package-groups) for which entry is deployed. Configuration files supplied in Pack Source (`import/`) follow the separate [directory layering rules](/docs/concepts/directory-model).
+
 ## Exporting an Instance
 
 1. Select an instance.
@@ -94,7 +100,7 @@ In online mode, TPI preserves declarations that external formats cannot represen
 - **Tags** — user-defined labels for categorization
 - **Deployment rules** — per-mod overrides for destination path, skipping, or normalization
 - **Instance overrides** — JVM arguments, window size, server address, deploy strategy
-- **Source tracking** — where each mod came from, preserved across export/import cycles
+- **Package groups and order** — collections and their saved order travel with online exports; local recipe groups become collections. If source information is excluded, online modpack groups also become collections instead of losing their grouping.
 - **Native patches** — the imported patch layer travels with its assets, disabled entries and order; user patches stay local and never travel
 
 TPI preserves these modpack declarations, not the complete local instance or its personal data.

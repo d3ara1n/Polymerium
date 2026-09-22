@@ -1,11 +1,11 @@
 ---
 title: Tags & Batch Operations
-description: Label packages for filtering, bulk operations, and deployment rules alongside collections.
+description: Label packages across groups for filtering, bulk operations, and deployment rules.
 ---
 
-## Tags and Collections
+## Tags and Groups
 
-A [collection](/docs/managing/collections) groups packages in one instance. A tag labels each package independently, so one package can carry several tags even when it belongs to a collection or recipe group.
+A [package group](/docs/managing/package-groups) gives each entry one source association and a deployment priority. Tags label entries independently: an entry can carry several tags whether it belongs to a modpack group, recipe group, collection, or the loose group. Use tags to filter and operate across groups without changing their membership or priority.
 
 For example, Sodium might have:
 
@@ -25,7 +25,7 @@ This lets you filter and operate on mods from multiple angles:
 2. Each mod in the list has a tag field.
 3. Type tags separated by commas or spaces. Tags are freeform — use whatever makes sense to you.
 
-Tags are stored per-instance, per-package. The same mod can have different tags in different instances.
+Tags are stored on each package entry in an instance. The same project can have different tags in different groups or instances.
 
 ## Filtering by Tag
 
