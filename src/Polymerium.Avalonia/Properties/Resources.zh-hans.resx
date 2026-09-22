@@ -2845,7 +2845,7 @@
         <value>发送崩溃报告和会话记录</value>
     </data>
     <data name="OobePrivacy_CrashReportingToggleDescription" xml:space="preserve">
-        <value>开启后，Polymerium 会向 Sentry 发送异常详情（类型、消息、堆栈）和会话记录，用于统计崩溃率。关闭后所有遥测彻底停止。重启后生效。</value>
+        <value>开启后，Polymerium 会向 Sentry 发送异常详情（类型、消息、堆栈）和会话记录，用于统计崩溃率。关闭后停止自动上报，您仍可主动发送反馈。重启后生效。</value>
     </data>
     <!-- Maintenance Storage View -->
     <data name="MaintenanceStoragePage_Title" xml:space="preserve">
@@ -3876,9 +3876,6 @@
     <data name="AboutModal_OpenLinkDangerNotificationTitle" xml:space="preserve">
         <value>打开链接失败</value>
     </data>
-    <data name="MainWindow_OpenGitHubDangerNotificationTitle" xml:space="preserve">
-        <value>打开 GitHub 失败</value>
-    </data>
     <data name="MainWindow_CheckForUpdatesDangerNotificationTitle" xml:space="preserve">
         <value>检查更新失败</value>
     </data>
@@ -4403,5 +4400,80 @@
     </data>
     <data name="ChangelogView_CopyReference" xml:space="preserve">
         <value>复制引用</value>
+    </data>
+    <data name="SettingsPage_FeedbackDescription" xml:space="preserve">
+        <value>主动发送问题或建议，无需开启崩溃报告。</value>
+    </data>
+    <data name="SettingsPage_FeedbackButtonText" xml:space="preserve">
+        <value>填写反馈</value>
+    </data>
+    <data name="FeedbackModal_Title" xml:space="preserve">
+        <value>意见反馈</value>
+    </data>
+    <data name="FeedbackModal_Subtitle" xml:space="preserve">
+        <value>遇到了问题，或有什么想法？欢迎告诉我们，无需登录。</value>
+    </data>
+    <data name="FeedbackKind_Problem" xml:space="preserve">
+        <value>问题反馈</value>
+    </data>
+    <data name="FeedbackKind_Suggestion" xml:space="preserve">
+        <value>功能建议</value>
+    </data>
+    <data name="FeedbackKind_Other" xml:space="preserve">
+        <value>其他想法</value>
+    </data>
+    <data name="FeedbackModal_MessageLabel" xml:space="preserve">
+        <value>详细描述</value>
+    </data>
+    <data name="FeedbackModal_MessagePlaceholder" xml:space="preserve">
+        <value>当时在做什么？发生了什么，或者你希望改进什么？</value>
+    </data>
+    <data name="FeedbackModal_EmailLabel" xml:space="preserve">
+        <value>联系邮箱（选填）</value>
+    </data>
+    <data name="FeedbackModal_EmailPlaceholder" xml:space="preserve">
+        <value>留下邮箱，方便我们进一步了解情况</value>
+    </data>
+    <data name="FeedbackModal_DataLabel" xml:space="preserve">
+        <value>随反馈发送的信息</value>
+    </data>
+    <data name="FeedbackModal_DataDescription" xml:space="preserve">
+        <value>你选择的分类、填写的描述和可选邮箱，以及 Polymerium 版本、操作系统、界面语言和反馈入口。不会自动附加游戏账号、本地文件路径、日志或截图。</value>
+    </data>
+    <data name="FeedbackModal_PrivacyDescription" xml:space="preserve">
+        <value>点击“发送反馈”后，以上信息将通过 Sentry 发送给开发者。草稿仅保存在内存中，发送后或退出应用时清除。</value>
+    </data>
+    <data name="FeedbackModal_PrivacyLinkText" xml:space="preserve">
+        <value>Sentry 隐私政策</value>
+    </data>
+    <data name="FeedbackModal_CloseText" xml:space="preserve">
+        <value>关闭</value>
+    </data>
+    <data name="FeedbackModal_SubmitText" xml:space="preserve">
+        <value>发送反馈</value>
+    </data>
+    <data name="FeedbackModal_DoneText" xml:space="preserve">
+        <value>完成</value>
+    </data>
+    <data name="FeedbackModal_MessageError" xml:space="preserve">
+        <value>请填写描述，最多 5000 字。</value>
+    </data>
+    <data name="FeedbackModal_EmailError" xml:space="preserve">
+        <value>请填写有效的邮箱地址，或留空。</value>
+    </data>
+    <data name="FeedbackModal_UnavailableError" xml:space="preserve">
+        <value>当前构建未启用反馈服务，已保留草稿。</value>
+    </data>
+    <data name="FeedbackModal_TooFrequentError" xml:space="preserve">
+        <value>两次提交之间请间隔 30 秒，已保留草稿。</value>
+    </data>
+    <data name="FeedbackModal_SubmissionError" xml:space="preserve">
+        <value>反馈未能加入发送队列，已保留草稿，请稍后重试。</value>
+    </data>
+    <data name="FeedbackModal_QueuedTitle" xml:space="preserve">
+        <value>反馈已加入发送队列</value>
+    </data>
+    <data name="FeedbackModal_QueuedDescription" xml:space="preserve">
+        <value>感谢你的反馈。应用会在后台尝试发送，目前尚未确认送达，请保持联网并暂时不要退出应用。如果你留下了邮箱，我们可能联系你了解更多情况。</value>
     </data>
 </root>

@@ -3,6 +3,7 @@
 ### ✨ Highlights ✨
 
 - Fix bulk package update suggestions to match each package's current release type
+- Add in-app feedback that remains available with automatic crash reporting turned off
 
 ### Fixed
 
@@ -10,7 +11,7 @@
 
 ### Added
 
--
+- Add in-app feedback that remains available with automatic crash reporting turned off
 
 ### Changed
 

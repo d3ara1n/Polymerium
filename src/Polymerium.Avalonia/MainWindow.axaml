@@ -93,7 +93,7 @@
                             Command="{Binding CheckForUpdatesCommand}"
                             Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_CheckForUpdatesText}}" />
                         <NativeMenuItem
-                            Command="{Binding OpenGitHubCommand}"
+                            Command="{Binding OpenFeedbackCommand}"
                             Header="{Translate {x:Static app:LanguageManager+Keys.AppMenu_FeedbackText}}" />
                     </NativeMenu>
                 </NativeMenuItem.Menu>

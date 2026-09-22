@@ -10,7 +10,7 @@ internal static class ErrorReporter
 {
     public static void Report(object core, ErrorReportMeta meta)
     {
-        if (core is Exception ex)
+        if (Startup.IsCrashReportingEnabled && core is Exception ex)
         {
             SentrySdk.CaptureException(ex,
                                        scope =>

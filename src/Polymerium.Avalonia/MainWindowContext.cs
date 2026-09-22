@@ -289,15 +289,7 @@ public partial class MainWindowContext : ObservableObject
         Dispatcher.UIThread.Post(() => CheckForUpdatesCommand.NotifyCanExecuteChanged());
 
     [RelayCommand]
-    private async Task OpenGitHubAsync()
-    {
-        var topLevel =
-            TopLevel.GetTopLevel((Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)
-                               ?.MainWindow);
-        await TopLevelHelper.LaunchUriAsync(topLevel,
-                                            new(Program.RepositoryUrl),
-                                            LanguageManager.Instance.MainWindow_OpenGitHubDangerNotificationTitle.Current());
-    }
+    private void OpenFeedback() => _overlayService.PopModal<FeedbackModal>("menu");
 
     #endregion
 

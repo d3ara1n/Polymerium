@@ -302,6 +302,9 @@ public partial class SettingsPageModel : ViewModelBase
 
     #region Privacy
 
+    [RelayCommand]
+    private void OpenFeedback() => OverlayService.PopModal<FeedbackModal>("settings");
+
     [ObservableProperty]
     public partial bool CrashReportingEnabled { get; set; }
 

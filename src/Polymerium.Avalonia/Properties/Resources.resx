@@ -2857,7 +2857,7 @@
         <value>Send crash reports and launch pings</value>
     </data>
     <data name="OobePrivacy_CrashReportingToggleDescription" xml:space="preserve">
-        <value>When enabled, Polymerium sends exception details (type, message, stack trace) and a launch ping to Sentry to track crash-free rates. Disabling it stops all telemetry entirely. Takes effect after restart.</value>
+        <value>When enabled, Polymerium sends exception details (type, message, stack trace) and session records to Sentry to track crash-free rates. Disabling it stops automatic reporting. You can still send feedback yourself. Takes effect after restart.</value>
     </data>
     <!-- Maintenance Storage View -->
     <data name="MaintenanceStoragePage_Title" xml:space="preserve">
@@ -3885,9 +3885,6 @@ Affected entries: {0}
     <data name="AboutModal_OpenLinkDangerNotificationTitle" xml:space="preserve">
         <value>Failed to open link</value>
     </data>
-    <data name="MainWindow_OpenGitHubDangerNotificationTitle" xml:space="preserve">
-        <value>Failed to open GitHub</value>
-    </data>
     <data name="MainWindow_CheckForUpdatesDangerNotificationTitle" xml:space="preserve">
         <value>Failed to check for updates</value>
     </data>
@@ -4412,5 +4409,80 @@ Affected entries: {0}
     </data>
     <data name="ChangelogView_CopyReference" xml:space="preserve">
         <value>Copy reference</value>
+    </data>
+    <data name="SettingsPage_FeedbackDescription" xml:space="preserve">
+        <value>Send a problem or suggestion yourself, even when crash reporting is turned off.</value>
+    </data>
+    <data name="SettingsPage_FeedbackButtonText" xml:space="preserve">
+        <value>Write feedback</value>
+    </data>
+    <data name="FeedbackModal_Title" xml:space="preserve">
+        <value>Feedback</value>
+    </data>
+    <data name="FeedbackModal_Subtitle" xml:space="preserve">
+        <value>Tell us what happened or what could be better. No account needed.</value>
+    </data>
+    <data name="FeedbackKind_Problem" xml:space="preserve">
+        <value>Problem</value>
+    </data>
+    <data name="FeedbackKind_Suggestion" xml:space="preserve">
+        <value>Suggestion</value>
+    </data>
+    <data name="FeedbackKind_Other" xml:space="preserve">
+        <value>Other thoughts</value>
+    </data>
+    <data name="FeedbackModal_MessageLabel" xml:space="preserve">
+        <value>Description</value>
+    </data>
+    <data name="FeedbackModal_MessagePlaceholder" xml:space="preserve">
+        <value>What were you doing? What happened, or what would you like to improve?</value>
+    </data>
+    <data name="FeedbackModal_EmailLabel" xml:space="preserve">
+        <value>Contact email (optional)</value>
+    </data>
+    <data name="FeedbackModal_EmailPlaceholder" xml:space="preserve">
+        <value>Leave an email so we can ask for more details</value>
+    </data>
+    <data name="FeedbackModal_DataLabel" xml:space="preserve">
+        <value>Information included with your feedback</value>
+    </data>
+    <data name="FeedbackModal_DataDescription" xml:space="preserve">
+        <value>Your chosen category, description and optional email, plus the Polymerium version, operating system, interface language and feedback entry point. No game account, local file paths, logs or screenshots are attached automatically.</value>
+    </data>
+    <data name="FeedbackModal_PrivacyDescription" xml:space="preserve">
+        <value>Clicking Send feedback shares this information with the developer through Sentry. Your draft stays in memory until you send it or exit the app.</value>
+    </data>
+    <data name="FeedbackModal_PrivacyLinkText" xml:space="preserve">
+        <value>Sentry privacy policy</value>
+    </data>
+    <data name="FeedbackModal_CloseText" xml:space="preserve">
+        <value>Close</value>
+    </data>
+    <data name="FeedbackModal_SubmitText" xml:space="preserve">
+        <value>Send feedback</value>
+    </data>
+    <data name="FeedbackModal_DoneText" xml:space="preserve">
+        <value>Done</value>
+    </data>
+    <data name="FeedbackModal_MessageError" xml:space="preserve">
+        <value>Please enter a description of up to 5000 characters.</value>
+    </data>
+    <data name="FeedbackModal_EmailError" xml:space="preserve">
+        <value>Please enter a valid email address or leave this field empty.</value>
+    </data>
+    <data name="FeedbackModal_UnavailableError" xml:space="preserve">
+        <value>Feedback is unavailable in this build. Your draft has been kept.</value>
+    </data>
+    <data name="FeedbackModal_TooFrequentError" xml:space="preserve">
+        <value>Please wait 30 seconds between submissions. Your draft has been kept.</value>
+    </data>
+    <data name="FeedbackModal_SubmissionError" xml:space="preserve">
+        <value>Could not queue your feedback. Your draft has been kept; please try again.</value>
+    </data>
+    <data name="FeedbackModal_QueuedTitle" xml:space="preserve">
+        <value>Feedback queued</value>
+    </data>
+    <data name="FeedbackModal_QueuedDescription" xml:space="preserve">
+        <value>Thank you for your feedback. The app will attempt to send it in the background; receipt has not been confirmed. Please stay connected and keep the app open for a moment. If you left an email, we may contact you for more details.</value>
     </data>
 </root>

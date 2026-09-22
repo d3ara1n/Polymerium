@@ -554,6 +554,16 @@
                         Header="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_CrashReportingLabelText}}">
                         <ToggleSwitch IsChecked="{Binding CrashReportingEnabled, Mode=TwoWay}" />
                     </app:SettingsEntryItem>
+                    <app:SettingsEntryItem
+                        HorizontalContentAlignment="Right"
+                        Description="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_FeedbackDescription}}"
+                        Header="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_Title}}">
+                        <Button Command="{Binding OpenFeedbackCommand}">
+                            <husk:IconLabel
+                                Icon="Chat"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.SettingsPage_FeedbackButtonText}}" />
+                        </Button>
+                    </app:SettingsEntryItem>
                 </app:SettingsEntry>
                 <!--  Maintenance  -->
                 <app:SettingsEntry
