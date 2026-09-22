@@ -1,21 +1,13 @@
 ---
 title: MCP 模式与 AI 智能体集成
-description: 让 AI 智能体通过模型上下文协议管理你的 Minecraft 实例——Polymerium 独有功能。
+description: 通过模型上下文协议使用 Trident CLI 管理实例配置和包。
 ---
 
 ## 什么是 MCP？
 
 模型上下文协议（Model Context Protocol，MCP）是 AI 智能体与外部工具交互的标准。Polymerium 的 CLI（`trident`）可以作为 MCP 服务器运行，暴露 30 多个工具供 AI 智能体直接调用。
 
-这意味着你可以让 AI 助手：
-
-- "创建一个 Fabric 1.21.4 实例，装上性能优化模组"
-- "先打个快照，然后把 Sodium 更新到最新版本"
-- "将这个实例导出为 Modrinth 整合包"
-
-它就会帮你完成——无需手动点击。
-
-**没有其他 Minecraft 启动器支持这个功能。**
+智能体可以通过这些工具创建实例、查看和添加包、选择版本，以及导出整合包。部署、游戏启动和快照仍需在桌面应用中操作；部署和启动也可使用 CLI 命令。
 
 ## 启动 MCP 服务器
 
@@ -23,7 +15,7 @@ description: 让 AI 智能体通过模型上下文协议管理你的 Minecraft �
 trident --mcp
 ```
 
-这会通过 stdio 启动一个 MCP 服务器。将你的 AI 客户端（Claude、Cursor 等）连接到它作为工具提供者。
+这会通过 stdio 启动本地 MCP 服务器。先单独安装 `trident` CLI，再让 MCP 客户端连接它。
 
 ## AI 客户端配置
 
@@ -64,6 +56,7 @@ trident --mcp
 | `instance_reset` | 清空运行目录（`build/`）；未放入本地保留（`persist/`）的数据会丢失 |
 | `instance_export` | 将实例导出为整合包 |
 | `instance_import` | 导入整合包文件 |
+| `instance_install` | 从资源仓库安装整合包，创建新实例 |
 
 ### 包工具
 
@@ -75,7 +68,7 @@ trident --mcp
 | `package_inspect` | 查看包详情 |
 | `package_enable` / `package_disable` | 切换包状态 |
 | `package_dependency_list` | 列出包的依赖项 |
-| `package_dependent_list` | 列出依赖于指定包的其他包 |
+| `package_dependent_list` | 列出当前实例内依赖指定包的已安装包 |
 | `package_version_list` | 列出可用版本 |
 | `package_version_set` | 固定特定版本 |
 
@@ -83,7 +76,7 @@ trident --mcp
 
 | 工具 | 说明 |
 |------|-------------|
-| `loader_list` | 列出实例的加载器 |
+| `loader_list` | 列出支持的模组加载器 |
 | `loader_version_list` | 列出可用的加载器版本 |
 | `loader_get` / `loader_set` | 获取或设置加载器 |
 
@@ -110,39 +103,29 @@ trident --mcp
 | `repository_status` | 检查仓库连接状态 |
 | `repository_add` / `repository_remove` | 添加或移除仓库 |
 
-## 示例会话
+### 原生 Patch 工具
 
-### 创建性能优化整合包
+| 工具 | 说明 |
+|------|------|
+| `patch_list` | 列出实例的导入层和用户层 Patch |
+| `patch_set_enabled` | 启用或禁用 Patch |
+| `patch_move` | 在所属层内调整 Patch 顺序 |
 
+## 示例：建立包列表
+
+以下调用使用当前服务器实际提供的工具名和必填参数：
+
+```text
+instance_create(name="Performance", version="1.21.1",
+                loader="net.fabricmc:0.16.10", identity="perf-pack")
+package_search(query="sodium", repository="modrinth")
+package_add(pref="pref://modrinth/aC3cM3Vq", instance="perf-pack")
 ```
-你：创建一个名为 "perf-pack" 的 Fabric 1.21.4 实例，装上 Sodium、Lithium 和 Iris。
 
-Agent：我来创建实例并添加模组。
-  → instance_create("perf-pack", version="1.21.4", loader="fabric")
-  → package_add("modrinth:sodium")
-  → package_add("modrinth:lithium")
-  → package_add("modrinth:iris")
-  → instance_build("perf-pack")
-  完成！你的 "perf-pack" 实例已准备就绪。
-```
-
-### 安全实验
-
-```
-你：给我的 "skyblock" 实例打个快照，然后更新所有模组。
-
-Agent：
-  → instance_inspect("skyblock")   // 确认实例存在
-  → snapshot_create("skyblock", name="before-bulk-update")
-  → package_version_list(...)      // 检查每个模组是否有更新
-  → package_version_set(...)       // 应用更新
-  → instance_build("skyblock")
-  快照已保存。所有模组已更新并重新部署。
-  如果出现问题，可以恢复 "before-bulk-update" 快照。
-```
+搜索结果会给出所选包的 Pref。加入包只会保存配置引用；使用桌面应用或 `trident instance build --instance perf-pack` 完成部署。更改版本前如需[快照](/docs/managing/snapshots)，请先在桌面应用中创建。
 
 ## 限制
 
-- MCP 通过 stdio 运行——设计用于本地使用，不适用于远程服务器。
-- 微软账户登录需要设备代码流（Device Code Flow），对无头 AI 交互不够理想。在自动化工作流中请使用离线账户。
-- MCP 服务器与 GUI 使用相同的数据目录——不要同时运行两者。
+- MCP 经本地 stdio 运行，不提供部署、游戏启动、创建快照或微软账号登录工具。
+- 包工具修改的是实例配置；只有部署时才会准备游戏文件。
+- CLI 账号设置与桌面应用的账号分开存储。两端可访问同一实例，不要同时修改同一实例。

@@ -42,7 +42,7 @@ Both launchers share Minecraft's assets, libraries and Java runtimes, so the pra
 | **File organization** | Pack Source (`import/`) / Local Data (`persist/`) / Run Directory (`build/`) | One instance folder, plus shared `assets/`, `libraries/`, `meta/` and `java/` |
 | **Reset/rebuild** | ✅ Clear the Run Directory and redeploy from metadata; Pack Source and Local Data survive | ⚠️ No whole-instance reset; mods and loader components can be reinstalled individually |
 | **Modpack updates** | ✅ In-place; Pack Source is replaced, Local Data is preserved | ✅ In-place from the Managed Pack page; edits to configuration files are not protected from the update |
-| **Copy an instance** | ⚠️ Export as a Trident pack and import it again | ✅ Copy with hard links, symbolic links or copy-on-write clones, optionally keeping play time |
+| **Copy an instance** | ⚠️ Export a Trident modpack and import it again; Local Data and unmanaged Run Directory files do not transfer | ✅ Copy with hard links, symbolic links or copy-on-write clones, optionally keeping play time |
 
 **Polymerium's directory model:**
 
@@ -215,7 +215,7 @@ A deployment rule in `profile.json` (`setup.rules`) looks like this:
 
 ### MCP Mode & AI Integration
 
-Polymerium ships a built-in MCP server. Run `trident --mcp` and an AI agent can create instances, add packages, take snapshots, deploy and launch — 30+ tools covering the workflow. Prism Launcher has no MCP integration.
+Polymerium's `trident --mcp` server lets an AI agent create instances, inspect and add packages, and export modpacks. It does not expose snapshot, deployment, or game-launch tools: create snapshots in the desktop app, and deploy or launch from the desktop app or CLI. Prism Launcher has no MCP integration.
 
 ### Snapshots & Diff
 
@@ -245,7 +245,7 @@ Your instance source is clean: `profile.json` + `import/` + icon + README + CHAN
 | Metadata-driven instances | ✅ | ❌ |
 | import / persist / build directories | ✅ | ❌ |
 | Compile-on-read deployment | ✅ | ❌ |
-| Whole-instance copy | ⚠️ Export and re-import | ✅ With links or clones |
+| Whole-instance copy | ⚠️ Modpack export and import omit Local Data and unmanaged Run Directory files | ✅ With links or clones |
 | **Mod Loaders** |||
 | Fabric | ✅ | ✅ |
 | Forge | ✅ | ✅ |

@@ -27,7 +27,7 @@ The deploy pipeline failed — Minecraft was never launched.
 
 **Fixes:**
 - Check your internet connection.
-- If in China, try switching the update source to Mirror酱 in Settings.
+- Check proxy settings if repository or download requests cannot connect. The application update channel does not control game-file downloads.
 - Retry the deploy — network issues are often transient.
 
 ### Symlink Permission Issues (Windows)
@@ -44,8 +44,8 @@ The deploy pipeline failed — Minecraft was never launched.
 **Symptoms:** "File already exists" or "Unexpected file in build directory."
 
 **Fixes:**
-- Delete the `build/` directory and redeploy.
-- Make sure no other process is writing to the instance directory.
+- Stop the game and any tool writing to the instance, then retry deployment.
+- Before using **Reset** or deleting `build/`, back up any saves, screenshots, or configuration stored only in the Run Directory. Reset permanently clears it; only files already in Local Data (`persist/`) are protected. See [Directory Model](/docs/concepts/directory-model).
 
 ### Security Software
 
@@ -68,7 +68,7 @@ Java started but the game exited immediately (usually within seconds).
 **Fixes:**
 - Check the Java version configured for this instance (see [Java Management](/docs/managing/java)).
 - Minecraft 1.20.5+ requires Java 21. Minecraft 1.18–1.20.4 requires Java 17.
-- Let Polymerium auto-deploy the correct runtime by removing any manual Java override.
+- If no manual Java override works, remove it and check whether the instance has a compatible bundled runtime; native patches can narrow the acceptable Java versions.
 
 ### Bad Launch Parameters
 
@@ -107,7 +107,7 @@ The game loaded but crashed during play.
 | `java.lang.OutOfMemoryError` | Increase max memory in Settings |
 | Shader pack crash | Update or switch shader packs; check Iris/Optimize compatibility |
 | Mod-specific crash | Check the mod's issue tracker; try a different version |
-| World corruption | Restore from a backup or snapshot |
+| World corruption | Restore the world from a separate backup; snapshots do not automatically capture saves kept only in `build/` |
 
 ---
 
@@ -137,6 +137,8 @@ Polymerium can also export an AI-ready analysis package in Markdown format. The 
 ---
 
 ## Getting Help
+
+For problems caused by documented deployment boundaries rather than a one-off failure, check [Known Issues](/docs/appendix/known-issues) before filing a report.
 
 1. Check the logs first — most errors are self-explanatory.
 2. Try the fixes above for your error stage.

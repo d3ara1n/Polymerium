@@ -1,0 +1,51 @@
+---
+title: Compatibility and migration
+description: On-disk format changes, current compatibility windows, and ways to check older data.
+---
+
+This register covers changes that still have a compatibility path. Current guides describe current behavior; this page records older data you may still own. Keep a separate backup of the instance home and important saves before editing files or upgrading across several releases.
+
+## Compatibility register
+
+| Introduced | Earlier data or behavior | Current form | Last compatible version |
+|---|---|---|---|
+| 1.10.0 | All app data under `~/.trident/` | Platform-specific config, data, cache, and instance locations for new installations | Not announced; an existing legacy root is still selected |
+| 1.11.2 | `purl` keys and `repository:project@version` references | `pref` keys and `pref://repository/project@version` references | Not announced; legacy reads remain supported |
+| 1.13.0 | Empty `source` string on a package entry | No source (`null`) for an ungrouped package | Not announced; empty strings are normalized when read |
+| 1.13.1 | One Java major in older patch documents and lock data | A set of compatible Java majors | Not announced; format 1 patch documents still load |
+
+**No removal deadline has been published for these entries.** The table does not require an intermediate upgrade today: the current release still reads the listed older forms. Before a future release removes a reader, its last compatible version and the action required before upgrading must be stated here. Automatic conversion on read is not proof that every file, backup, or snapshot on disk has been rewritten.
+
+## Data directory layout (1.10.0)
+
+Before 1.10.0, Polymerium kept settings, cache, and instances under `~/.trident/`. New installations use [platform-specific paths](/docs/getting-started/installation#what-gets-installed-where). If the older root exists, the launcher continues using it; it does **not** automatically move its contents into the new locations.
+
+Check which home your installation uses before moving or deleting anything. To retain or deliberately relocate one shared root, follow [Custom Data Directory](/docs/guides/custom-data-directory) with the launcher closed. Do not delete `~/.trident/` merely because a newer platform directory also exists.
+
+## Package references (1.11.2)
+
+Older `profile.json` package entries and rule selectors can contain a `purl` key. Lock data and older snapshot metadata can contain it too. Current entries use `pref`; the value changes from `modrinth:aC3cM3Vq@9I21YYxf` to `pref://modrinth/aC3cM3Vq@9I21YYxf`. Rule selector type `purl` becomes `pref`. The package identity and optional version are retained.
+
+The current reader converts recognized older values in memory. Saving the profile writes `pref`, but merely opening an instance does not rewrite every profile, lock file, or snapshot. Unrecognized values stay unchanged instead of being silently replaced with another package. The snapshot database stores older profile metadata separately and does not rewrite its historical rows when you open a snapshot.
+
+To migrate a file yourself, back it up, replace each package or selector `purl` key with `pref`, and convert valid legacy values to `pref://` URIs. Check rule selector types as well. Let deployment regenerate `data.lock.json` rather than editing generated lock data. For old snapshots, retain a version that reads them until you have restored and made a new snapshot in the current format; editing the snapshot database by hand is not recommended. See [Pref](/docs/concepts/glossary) for the current term.
+
+## Empty package source (1.13.0)
+
+Some imported package lists wrote `"source": ""` for an ungrouped package in `profile.json`. The current reader treats this as no source. The entry is written in normalized form when its profile is next saved. If editing manually, remove the empty `source` value or set it to `null`; do not change a nonempty source URI, which may identify a modpack, recipe, or [collection](/docs/managing/collections).
+
+## Java compatibility declarations (1.13.1)
+
+Older patch documents use format 1 and can declare a single Java major through a target such as `launch.javaMajor` with `"value": 21`. The current format 2 target is `launch.compatibleJavaMajors` with `"value": [21]`; it can also intersect the set with other accepted majors. Older patch artifacts use `javaMajor` instead of `compatibleJavaMajors`, and older `data.lock.json` files use `javaMajorVersion` instead of the set.
+
+The current reader folds each old scalar into a one-element set, and it continues to read format 1 documents. Reading a patch does not rewrite that patch file. If you maintain patch JSON yourself, back it up, change its format to 2, change the affected operation targets and scalar values to the array form, and review the full [native patch reference](/docs/advanced/patches). Let deployment regenerate lock data. Check every archived modpack that carries an import-layer patch before a future compatibility deadline.
+
+## Before upgrading past a future deadline
+
+1. Read the last compatible version and affected files in this register before skipping releases.
+2. Back up the instance directory, Local Data, snapshots, and any modpack archives you maintain.
+3. Open and save affected profiles, or update the documented JSON fields manually while a compatible release is still available. Redeploy to regenerate lock data.
+4. Search all copies you intend to keep, including old archives and snapshots. A file the launcher never opened was not automatically migrated.
+5. Only upgrade beyond the stated deadline after you have verified those copies or accepted that older copies may no longer load.
+
+If the deadline says **Not announced**, there is no announced required migration version. Do not treat a changelog entry or the mere act of launching a newer version as confirmation that all stored data has changed.

@@ -9,7 +9,7 @@ Polymerium 实例在设计上天然适配 Git：
 
 - `profile.json` 是整合包的定义文件——纯 JSON，方便 diff 比较
 - `import/` 包含可分发的文件——配置、资源、自定义内容
-- `build/` 与 `persist/` 是运行时产物，不应纳入版本控制
+- `build/` 是可能包含个人数据的运行目录，不应纳入 Git；需要时请单独备份。`persist/` 是本地保留，应保持私有。
 
 这意味着你可以将实例纳入 Git 管理，获得有意义的差异比较、分支管理和协作能力。
 
@@ -33,7 +33,7 @@ data.lock.json
 3. 提交初始状态：
 
 ```bash
-git add profile.json import/ icon.png README.md CHANGELOG.md
+git add profile.json import/
 git commit -m "Initial modpack"
 ```
 
@@ -43,12 +43,14 @@ git commit -m "Initial modpack"
 |------|--------|-----|
 | `profile.json` | ✅ | 整合包定义文件——版本、加载器、模组列表 |
 | `import/` | ✅ | 可分发文件（配置、资源） |
-| 图标 / README / CHANGELOG | ✅ | 整合包元数据 |
-| `build/` | ❌ | 构建产物，可复现 |
+| 导入层原生 Patch（`patches/data.patch.json`、`patches/import/`） | ✅ 使用时 | 可随 Trident 整合包分发的启动声明 |
+| `build/` | ❌ | 运行产物，可能含有尚未备份的存档等数据 |
 | `persist/` | ❌ | 玩家数据（存档、截图） |
 | `data.lock.json` | ❌ | 部署缓存，自动生成 |
 
 ## 开发工作流
+
+实例首页的开发概览组件汇总 Git 状态、整合包源文件、未同步的工作副本变更、Patch、发行附件及上次运行结果。紧凑形态会隐藏无事可报的类别。要检查具体文件变更，请打开[工作区](/docs/advanced/workspace)。
 
 ### 迭代配置
 

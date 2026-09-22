@@ -17,7 +17,7 @@ A recipe holds **references only** (`pref://` URIs). It contains no mod files, n
 | Applies to | An instance you're setting up — adds its packages | Creates or updates a whole instance |
 | File | Lightweight JSON | A `.zip` / `.mrpack` archive |
 
-Because a recipe is only a list of references, applying it never touches an instance's Minecraft version or loader, and it stays valid as packages are updated — the references resolve to whatever the repositories currently offer.
+Applying a recipe does not change the instance's Minecraft version or loader. Its project references resolve available package versions when you apply it. Unlike an in-place [collection](/docs/managing/collections), the recipe also exists independently of any one instance.
 
 ## Creating a Recipe
 
@@ -37,6 +37,8 @@ Projects you've already added show an **In Recipe** marker when you browse them 
 ## Applying a Recipe to an Instance
 
 Open an existing instance's setup page. Open the menu under the **Get More** button and choose **Import from recipe**, then pick a recipe. Polymerium resolves each reference through the repositories and adds the packages to the instance's package list; they appear grouped under the recipe, and selecting the group opens the recipe.
+
+A collection on the same Setup page is only a local group. Use its header menu to **Promote to Recipe** when you want to maintain a separate reusable list. To remove an instance group's recipe association without deleting its packages or the recipe itself, choose **Demote to Collection** on the recipe group. Trident modpack export represents local recipe groups as collections, because the local recipe library does not travel with a modpack.
 
 ## Sharing Recipes
 

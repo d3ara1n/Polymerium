@@ -17,23 +17,21 @@ Click **Deploy** — or just click **Launch** and Polymerium will deploy automat
 
 ### First Deploy vs. Incremental Deploys
 
-Your first deploy downloads everything from scratch — expect it to take as long as installing a fresh modpack on any launcher. Polymerium uses an aggressive, optimized download strategy, so on a good network it can be faster than other launchers.
+The first deploy downloads files that are not already in the shared cache. Its duration depends on the files needed and your connection.
 
-The real speed advantage comes on subsequent deploys. When you make small changes (add a mod, switch a loader version), Polymerium only downloads what's new or changed and rebuilds the game directory with symlinks. Incremental deploys are fast — often near-instant.
+Later deploys reuse valid cached resources and apply only the file operations needed to bring the Run Directory up to date.
 
-### Fast Mode
-
-If nothing has changed since your last deploy (same mods, same versions, same settings), Polymerium **skips the deploy entirely** and goes straight to launch. This makes subsequent launches feel instant.
+Launching runs the deployment check even if you haven't changed the profile. Missing or damaged managed files can be repaired; files already in the expected state need no further work.
 
 ## Launching
 
-Click **Launch** to start Minecraft. Polymerium supports three launch modes:
+Click **Launch** to start Minecraft. The instance page offers Managed and Fire-and-forget modes; Debug mode is available after enabling the application's advanced controls:
 
 | Mode | What It Does |
 |------|-------------|
 | **Managed** (default) | Polymerium tracks the game process, captures output, and detects crashes. Recommended. |
 | **Fire-and-forget** | Launches the game and detaches. Use this if you want to close Polymerium while playing. |
-| **Debug** | Exports the full launch command for troubleshooting. Doesn't actually start the game. |
+| **Debug** (advanced controls) | Exports the launch command for troubleshooting without starting the game. |
 
 ## First Launch Checklist
 

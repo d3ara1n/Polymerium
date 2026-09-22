@@ -1,21 +1,13 @@
 ---
 title: MCP Mode & AI Agent Integration
-description: Let AI agents manage your Minecraft instances through the Model Context Protocol — unique to Polymerium.
+description: Manage instance profiles and packages through the Trident CLI's Model Context Protocol tools.
 ---
 
 ## What is MCP?
 
 The Model Context Protocol (MCP) is a standard for AI agents to interact with external tools. Polymerium's CLI (`trident`) can run as an MCP server, exposing 30+ tools that AI agents can call directly.
 
-This means you can ask an AI assistant to:
-
-- "Create a Fabric 1.21.4 instance with performance mods"
-- "Take a snapshot, then update Sodium to the latest version"
-- "Export this instance as a Modrinth modpack"
-
-And it will do it — no manual clicks needed.
-
-**No other Minecraft launcher supports this.**
+An agent can create instances, inspect and add packages, select versions, and export modpacks through these tools. Deployment and launch remain desktop or CLI commands; snapshots are created in the desktop app.
 
 ## Starting the MCP Server
 
@@ -23,7 +15,7 @@ And it will do it — no manual clicks needed.
 trident --mcp
 ```
 
-This starts an MCP server over stdio. Connect your AI client (Claude, Cursor, etc.) to it as a tool provider.
+This starts a local MCP server over stdio. Install the `trident` CLI separately, then connect an MCP client to it.
 
 ## Configuration for AI Clients
 
@@ -64,6 +56,7 @@ Any client that supports MCP over stdio can connect. The server speaks the stand
 | `instance_reset` | Clear the Run Directory (`build/`); data not already in Local Data (`persist/`) is lost |
 | `instance_export` | Export instance as a modpack |
 | `instance_import` | Import a modpack file |
+| `instance_install` | Install a repository modpack as a new instance |
 
 ### Package Tools
 
@@ -75,7 +68,7 @@ Any client that supports MCP over stdio can connect. The server speaks the stand
 | `package_inspect` | View package details |
 | `package_enable` / `package_disable` | Toggle packages |
 | `package_dependency_list` | List a package's dependencies |
-| `package_dependent_list` | List packages that depend on a given package |
+| `package_dependent_list` | List installed packages in this instance that depend on a package |
 | `package_version_list` | List available versions |
 | `package_version_set` | Pin a specific version |
 
@@ -83,7 +76,7 @@ Any client that supports MCP over stdio can connect. The server speaks the stand
 
 | Tool | Description |
 |------|-------------|
-| `loader_list` | List loaders for an instance |
+| `loader_list` | List supported mod loaders |
 | `loader_version_list` | List available loader versions |
 | `loader_get` / `loader_set` | Get or set the loader |
 
@@ -110,39 +103,29 @@ Any client that supports MCP over stdio can connect. The server speaks the stand
 | `repository_status` | Check repository connectivity |
 | `repository_add` / `repository_remove` | Add or remove repositories |
 
-## Example Sessions
+### Native Patch Tools
 
-### Creating a Performance Modpack
+| Tool | Description |
+|------|-------------|
+| `patch_list` | List an instance's imported and user patches |
+| `patch_set_enabled` | Enable or disable a patch |
+| `patch_move` | Reorder a patch within its layer |
 
+## Example: Build a Package List
+
+These calls use the tool names and required parameters exposed by the current server:
+
+```text
+instance_create(name="Performance", version="1.21.1",
+                loader="net.fabricmc:0.16.10", identity="perf-pack")
+package_search(query="sodium", repository="modrinth")
+package_add(pref="pref://modrinth/aC3cM3Vq", instance="perf-pack")
 ```
-You: Create a Fabric 1.21.4 instance called "perf-pack" with Sodium, Lithium, and Iris.
 
-Agent: I'll create the instance and add the mods.
-  → instance_create("perf-pack", version="1.21.4", loader="fabric")
-  → package_add("modrinth:sodium")
-  → package_add("modrinth:lithium")
-  → package_add("modrinth:iris")
-  → instance_build("perf-pack")
-  Done! Your "perf-pack" instance is ready to launch.
-```
-
-### Safe Experimentation
-
-```
-You: Take a snapshot of my "skyblock" instance, then update all mods.
-
-Agent:
-  → instance_inspect("skyblock")   // confirm instance exists
-  → snapshot_create("skyblock", name="before-bulk-update")
-  → package_version_list(...)      // check each mod for updates
-  → package_version_set(...)       // apply updates
-  → instance_build("skyblock")
-  Snapshot saved. All mods updated and redeployed.
-  If anything breaks, restore the "before-bulk-update" snapshot.
-```
+The search result supplies the Pref for the package you choose. The added reference is saved in the profile; use the desktop app or `trident instance build --instance perf-pack` to deploy it. To take a [snapshot](/docs/managing/snapshots) before changing versions, use the desktop app first.
 
 ## Limitations
 
-- MCP runs over stdio — it's designed for local use, not remote servers.
-- Microsoft account login requires Device Code Flow, which isn't ideal for headless AI interaction. Use offline accounts for automated workflows.
-- The MCP server uses the same data directory as the GUI — don't run both simultaneously.
+- MCP runs locally over stdio. It does not expose deployment, game launch, snapshot creation, or Microsoft account sign-in tools.
+- A package tool changes profile data; it does not install game files until you deploy.
+- CLI account settings are separate from desktop accounts. Both hosts can access the same instances, so avoid editing an instance from both at the same time.

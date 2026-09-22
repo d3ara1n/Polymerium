@@ -62,3 +62,5 @@ Snapshots store the actual profile setup data and managed directory file content
 | Restores | Restores metadata + dirs (including working copy) | Copies files back |
 
 Snapshots are lighter than a full backup and faster to create. They capture the inputs and the import working copy — not every log, package link, or unmanaged file under `build/` — which is what you need to get back to a known state.
+
+If Local Data and the Run Directory hold different ordinary files at the same path, a snapshot does not include the unreconciled Run Directory copy. Complete a deploy and keep a separate backup first. See [Known Issues](/docs/appendix/known-issues) for this and the interruption boundary during restore.

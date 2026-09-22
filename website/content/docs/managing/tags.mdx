@@ -1,11 +1,11 @@
 ---
 title: Tags & Batch Operations
-description: Organize mods with flexible tags instead of rigid categories. Filter, batch-update, and exclude with precision.
+description: Label packages for filtering, bulk operations, and deployment rules alongside collections.
 ---
 
-## Tags vs. Categories
+## Tags and Collections
 
-Most launchers let you put a mod in one category. Polymerium uses **tags** — a mod can have as many tags as you want.
+A [collection](/docs/managing/collections) groups packages in one instance. A tag labels each package independently, so one package can carry several tags even when it belongs to a collection or recipe group.
 
 For example, Sodium might have:
 
@@ -41,6 +41,8 @@ When new mod versions are available:
 4. **Exclude by tag** — e.g. exclude all mods tagged `stability-watch` from the update batch.
 
 This gives you fine-grained control over mass updates without losing the convenience of "update all."
+
+For persistent per-package skip and hold decisions, see [Bulk Updates](/docs/getting-started/adding-mods#bulk-updates).
 
 ## Using Tags in Deployment Rules
 
