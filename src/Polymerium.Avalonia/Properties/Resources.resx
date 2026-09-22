@@ -1683,6 +1683,27 @@
     <data name="DeployStage_PlanDeployment" xml:space="preserve">
         <value>Planning deployment...</value>
     </data>
+    <data name="DeploymentPlanningStep_CollectSources" xml:space="preserve">
+        <value>Collecting sources</value>
+    </data>
+    <data name="DeploymentPlanningStep_BuildRequirements" xml:space="preserve">
+        <value>Listing required files</value>
+    </data>
+    <data name="DeploymentPlanningStep_VerifyFiles" xml:space="preserve">
+        <value>Checking files</value>
+    </data>
+    <data name="DeploymentPlanningStep_ReconcileDirectories" xml:space="preserve">
+        <value>Checking directories</value>
+    </data>
+    <data name="DeploymentExecutionStep_DownloadFiles" xml:space="preserve">
+        <value>Downloading files</value>
+    </data>
+    <data name="DeploymentExecutionStep_ApplyChanges" xml:space="preserve">
+        <value>Applying file changes</value>
+    </data>
+    <data name="DeploymentExecutionStep_FinalizeDeployment" xml:space="preserve">
+        <value>Finalizing deployment</value>
+    </data>
     <data name="DeployStage_ExecuteDeployment" xml:space="preserve">
         <value>Applying deployment...</value>
     </data>

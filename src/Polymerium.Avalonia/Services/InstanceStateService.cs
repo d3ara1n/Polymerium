@@ -157,17 +157,16 @@ public class InstanceStateService(
                     var data = await LockValidationHelper.ReadAsync(key, ct).ConfigureAwait(false);
                     if (data is null || !await LockValidationHelper.ValidateAsync(key, profileManager.GetImmutable(key).Setup, data, ct).ConfigureAwait(false))
                         return new();
-                    var target = deploymentPlanner.CreateTarget(key, data, ct);
                     var missing = new List<DownloadCategory>();
                     var assets = await DeploymentIndexHelper.ReadAssetAsync(data.Artifact!.AssetIndex, ct).ConfigureAwait(false);
                     if (assets is null) missing.Add(DownloadCategory.Asset);
-                    else new AssetPlanner().Plan(target, assets, ct);
+                    RuntimeIndex? runtime = null;
                     if (data.RuntimeMajor is { } major)
                     {
-                        var runtime = await DeploymentIndexHelper.ReadRuntimeAsync(major, data.RuntimeIndex?.Hash, ct).ConfigureAwait(false);
+                        runtime = await DeploymentIndexHelper.ReadRuntimeAsync(major, data.RuntimeIndex?.Hash, ct).ConfigureAwait(false);
                         if (runtime is null) missing.Add(DownloadCategory.Runtime);
-                        else new RuntimePlanner().Plan(target, runtime, ct);
                     }
+                    var target = deploymentPlanner.CreateTarget(key, data, assets, runtime, ct);
                     var plan = deploymentDiffer.Diff(key, target, ct);
                     var libraryRoot = PathDef.Default.CacheLibraryDirectory;
                     var packageRoot = PathDef.Default.CachePackageDirectory;

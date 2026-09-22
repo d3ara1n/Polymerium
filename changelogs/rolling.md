@@ -16,7 +16,8 @@
 
 ### Changed
 
--
+- Improve deployment planning speed for large file sets
+- Update deployment progress to show the current step with completed and total counts
 
 ### Removed
 

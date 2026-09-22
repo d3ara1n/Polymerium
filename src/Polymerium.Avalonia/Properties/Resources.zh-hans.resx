@@ -1662,6 +1662,27 @@
     <data name="DeployStage_PlanDeployment" xml:space="preserve">
         <value>规划部署...</value>
     </data>
+    <data name="DeploymentPlanningStep_CollectSources" xml:space="preserve">
+        <value>收集来源</value>
+    </data>
+    <data name="DeploymentPlanningStep_BuildRequirements" xml:space="preserve">
+        <value>生成文件清单</value>
+    </data>
+    <data name="DeploymentPlanningStep_VerifyFiles" xml:space="preserve">
+        <value>校验文件</value>
+    </data>
+    <data name="DeploymentPlanningStep_ReconcileDirectories" xml:space="preserve">
+        <value>核对目录</value>
+    </data>
+    <data name="DeploymentExecutionStep_DownloadFiles" xml:space="preserve">
+        <value>下载文件</value>
+    </data>
+    <data name="DeploymentExecutionStep_ApplyChanges" xml:space="preserve">
+        <value>应用文件变更</value>
+    </data>
+    <data name="DeploymentExecutionStep_FinalizeDeployment" xml:space="preserve">
+        <value>完成部署</value>
+    </data>
     <data name="DeployStage_InstallVanilla" xml:space="preserve">
         <value>安装原版...</value>
     </data>

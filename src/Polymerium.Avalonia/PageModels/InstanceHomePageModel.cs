@@ -23,6 +23,7 @@ using Polymerium.Avalonia.Utilities;
 using Polymerium.Avalonia.Widgets;
 using TridentCore.Abstractions.Extensions;
 using TridentCore.Abstractions.FileModels;
+using TridentCore.Abstractions.Tasks;
 using TridentCore.Core.Engines.Deploying;
 using TridentCore.Core.Exceptions;
 using TridentCore.Core.Igniters;
@@ -161,7 +162,6 @@ public partial class InstanceHomePageModel(
         }
     }
 
-    // 每帧快照都自带阶段与文件计数，直接读即可，无需分别订阅两条流再合并。
     private void ApplyDeploying(InstanceActivity activity)
     {
         if (activity is not InstanceActivity.Deploying deploying)
@@ -170,19 +170,15 @@ public partial class InstanceHomePageModel(
         }
 
         DeployingMessage = deploying.CurrentStage;
-        if (deploying.FileCount is { Total: > 0 } count)
+        DeployingStep = deploying.Progress switch
         {
-            DeployingProgress = (double)count.Current / count.Total;
-            DeployingProgressCurrent = count.Current;
-            DeployingProgressTotal = count.Total;
-            HasDeployingFileCount = true;
-            DeployingPending = false;
-        }
-        else
-        {
-            HasDeployingFileCount = false;
-            DeployingPending = true;
-        }
+            ActivityProgress.Determinate progress => progress.Stage,
+            ActivityProgress.Indeterminate progress => progress.Stage,
+            _ => null
+        };
+        DeployingPending = deploying.Progress is not ActivityProgress.Determinate;
+        DeployingTotal = deploying.Progress is ActivityProgress.Determinate total ? total.Total : 1;
+        DeployingCurrent = deploying.Progress is ActivityProgress.Determinate current ? current.Current : 0;
     }
 
     #endregion
@@ -316,19 +312,16 @@ public partial class InstanceHomePageModel(
     public partial int PackageCount { get; set; }
 
     [ObservableProperty]
-    public partial double DeployingProgress { get; set; }
+    public partial double DeployingCurrent { get; set; }
 
     [ObservableProperty]
-    public partial int DeployingProgressCurrent { get; set; }
-
-    [ObservableProperty]
-    public partial int DeployingProgressTotal { get; set; }
-
-    [ObservableProperty]
-    public partial bool HasDeployingFileCount { get; set; }
+    public partial double DeployingTotal { get; set; } = 1;
 
     [ObservableProperty]
     public partial DeployStage DeployingMessage { get; set; }
+
+    [ObservableProperty]
+    public partial string? DeployingStep { get; set; }
 
     [ObservableProperty]
     public partial bool DeployingPending { get; set; }
