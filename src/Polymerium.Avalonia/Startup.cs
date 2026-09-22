@@ -43,6 +43,8 @@ public static class Startup
     private static SingleInstance? _singleInstance;
     private static bool _sentryInitialized;
 
+    public static bool IsCrashReportingEnabled { get; private set; }
+
     public static void ConfigureServices(IServiceCollection services, bool debug)
     {
         services
@@ -167,6 +169,7 @@ public static class Startup
            .AddSingleton<NotificationService>()
            .AddSingleton<NavigationService>()
            .AddSingleton<OverlayService>()
+           .AddSingleton<FeedbackService>()
            .AddSingleton<DataService>()
            .AddSingleton<PersistenceService>()
            .AddLifetimeService<ScrapService>()
@@ -247,27 +250,52 @@ public static class Startup
 
         #region SentrySdk Init (only in Release)
 
-        if (!Program.IsDebug && !File.Exists(PathDef.Default.FileOfTelemetrySwitch()))
+        IsCrashReportingEnabled = !Program.IsDebug && !File.Exists(PathDef.Default.FileOfTelemetrySwitch());
+        if (!Program.IsDebug)
         {
             SentrySdk.Init(options =>
             {
                 options.Dsn = "https://70f1e791a5f2b8cb31f0947a1bac5e7a@o941379.ingest.us.sentry.io/4510328831410176";
-                options.AutoSessionTracking = true;
                 options.Environment = "Production";
                 options.Release = Program.Version;
-                options.CacheDirectoryPath = PathDef.Default.PrivateCacheDirectory();
-                options.AddExceptionFilterForType<OperationCanceledException>();
-                options.AddExceptionFilterForType<TaskCanceledException>();
-                options.SetBeforeSend(@event =>
-                {
-                    if (@event.Tags.TryGetValue("polymerium.source", out var source))
-                    {
-                        @event.SetFingerprint("{{ default }}", source);
-                    }
-
-                    return @event;
-                });
                 options.SendDefaultPii = false;
+                options.SetBeforeSendFeedback(FeedbackService.PrepareEvent);
+
+                if (IsCrashReportingEnabled)
+                {
+                    options.AutoSessionTracking = true;
+                    options.CacheDirectoryPath = PathDef.Default.PrivateCacheDirectory();
+                    options.AddExceptionFilterForType<OperationCanceledException>();
+                    options.AddExceptionFilterForType<TaskCanceledException>();
+                    options.SetBeforeSend(@event =>
+                    {
+                        if (@event.Tags.TryGetValue("polymerium.source", out var source))
+                        {
+                            @event.SetFingerprint("{{ default }}", source);
+                        }
+
+                        return @event;
+                    });
+                }
+                else
+                {
+                    // WARNING: Reusing the telemetry cache would resend stored errors after opting out.
+                    options.CacheDirectoryPath = null;
+                    options.DisableFileWrite = true;
+                    options.AutoSessionTracking = false;
+                    options.SendClientReports = false;
+                    options.MaxBreadcrumbs = 0;
+                    options.TracesSampleRate = 0;
+                    options.DisableAppDomainUnhandledExceptionCapture();
+                    options.DisableUnobservedTaskExceptionCapture();
+                    options.DisableWinUiUnhandledExceptionIntegration();
+                    options.DisableDiagnosticSourceIntegration();
+                    options.DisableSystemDiagnosticsMetricsIntegration();
+                    options.SetBeforeSend(_ => null);
+                    options.SetBeforeSendTransaction((_, _) => null);
+                    options.SetBeforeSendLog(_ => null);
+                    options.SetBeforeSendMetric(_ => null);
+                }
             });
             _sentryInitialized = true;
         }

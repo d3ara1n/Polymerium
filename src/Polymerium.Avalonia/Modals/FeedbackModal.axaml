@@ -1,0 +1,171 @@
+<husk:Modal
+    x:Class="Polymerium.Avalonia.Modals.FeedbackModal"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="https://github.com/d3ara1n/Polymerium"
+    xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+    xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
+    Width="520"
+    MaxHeight="600"
+    x:DataType="app:FeedbackModalModel">
+    <husk:Modal.KeyBindings>
+        <KeyBinding Gesture="Ctrl+Enter" Command="{Binding SubmitCommand}" />
+        <KeyBinding Gesture="Meta+Enter" Command="{Binding SubmitCommand}" />
+    </husk:Modal.KeyBindings>
+    <Grid RowDefinitions="Auto,*" RowSpacing="18">
+        <DockPanel Grid.Row="0" HorizontalSpacing="12">
+            <Button
+                DockPanel.Dock="Right"
+                Classes="Small"
+                VerticalAlignment="Top"
+                Command="{Binding $parent[app:FeedbackModal].Dismiss}"
+                IsCancel="True"
+                Theme="{StaticResource GhostButtonTheme}"
+                AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_CloseText}}">
+                <fi:SymbolIcon Symbol="Dismiss" />
+            </Button>
+            <StackPanel Spacing="4">
+                <TextBlock
+                    FontSize="{StaticResource LargeFontSize}"
+                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                    Text="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_Title}}" />
+                <TextBlock
+                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                    Text="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_Subtitle}}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </DockPanel>
+        <husk:PlaceholderContainer Grid.Row="1" Source="{Binding Receipt}">
+            <husk:PlaceholderContainer.SourceTemplate>
+                <DataTemplate x:DataType="app:FeedbackReceiptModel">
+                    <StackPanel Spacing="18">
+                        <fi:SymbolIcon
+                            HorizontalAlignment="Center"
+                            FontSize="40"
+                            Symbol="Send" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="{StaticResource LargeFontSize}"
+                            Text="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_QueuedTitle}}" />
+                        <TextBlock
+                            Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                            Text="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_QueuedDescription}}"
+                            TextWrapping="Wrap" />
+                        <Button
+                            Classes="Primary"
+                            HorizontalAlignment="Right"
+                            Command="{Binding $parent[app:FeedbackModal].Dismiss}">
+                            <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_DoneText}}" />
+                        </Button>
+                    </StackPanel>
+                </DataTemplate>
+            </husk:PlaceholderContainer.SourceTemplate>
+            <husk:PlaceholderContainer.Placeholder>
+                <Grid RowDefinitions="*,Auto" RowSpacing="18">
+                    <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Spacing="16">
+                            <TabStrip
+                                ItemsSource="{Binding Kinds}"
+                                SelectedItem="{Binding Draft.Kind, Mode=TwoWay}"
+                                Theme="{StaticResource SegmentedTabStripTheme}">
+                                <TabStrip.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="4" />
+                                    </ItemsPanelTemplate>
+                                </TabStrip.ItemsPanel>
+                                <TabStrip.Styles>
+                                    <Style Selector="TabStripItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    </Style>
+                                    <Style Selector="TabStripItem:nth-child(2)">
+                                        <Setter Property="Grid.Column" Value="1" />
+                                    </Style>
+                                    <Style Selector="TabStripItem:nth-child(3)">
+                                        <Setter Property="Grid.Column" Value="2" />
+                                    </Style>
+                                </TabStrip.Styles>
+                                <TabStrip.ItemTemplate>
+                                    <DataTemplate x:DataType="app:FeedbackKind">
+                                        <TextBlock Text="{app:LocalizedEnum {Binding}}" />
+                                    </DataTemplate>
+                                </TabStrip.ItemTemplate>
+                            </TabStrip>
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_MessageLabel}}" />
+                                <TextBox
+                                    MinHeight="144"
+                                    MaxHeight="240"
+                                    AcceptsReturn="True"
+                                    MaxLength="{x:Static app:FeedbackService.MAX_MESSAGE_LENGTH}"
+                                    PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_MessagePlaceholder}}"
+                                    Text="{Binding Draft.Message, Mode=TwoWay}"
+                                    TextWrapping="Wrap"
+                                    AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_MessageLabel}}" />
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Binding Draft.Message.Length, StringFormat='{}{0} / 5000', FallbackValue='0 / 5000'}" />
+                                <TextBlock
+                                    IsVisible="{Binding MessageErrorKey, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                    Text="{app:LocalizedKey {Binding MessageErrorKey}}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_EmailLabel}}" />
+                                <TextBox
+                                    MaxLength="{x:Static app:FeedbackService.MAX_EMAIL_LENGTH}"
+                                    PlaceholderText="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_EmailPlaceholder}}"
+                                    Text="{Binding Draft.Email, Mode=TwoWay}"
+                                    AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_EmailLabel}}" />
+                                <TextBlock
+                                    IsVisible="{Binding EmailErrorKey, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                    Foreground="{StaticResource ControlDangerForegroundBrush}"
+                                    Text="{app:LocalizedKey {Binding EmailErrorKey}}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                            <StackPanel Spacing="6">
+                                <Expander Header="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_DataLabel}}">
+                                    <TextBlock
+                                        FontSize="{StaticResource SmallFontSize}"
+                                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                        Text="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_DataDescription}}"
+                                        TextWrapping="Wrap" />
+                                </Expander>
+                                <TextBlock
+                                    FontSize="{StaticResource SmallFontSize}"
+                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_PrivacyDescription}}"
+                                    TextWrapping="Wrap" />
+                                <HyperlinkButton
+                                    HorizontalAlignment="Left"
+                                    NavigateUri="https://sentry.io/privacy">
+                                    <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_PrivacyLinkText}}" />
+                                </HyperlinkButton>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <StackPanel Grid.Row="1" Spacing="8">
+                        <TextBlock
+                            IsVisible="{Binding SubmissionErrorKey, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                            Foreground="{StaticResource ControlDangerForegroundBrush}"
+                            Text="{app:LocalizedKey {Binding SubmissionErrorKey}}"
+                            TextWrapping="Wrap" />
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="8">
+                            <Button Command="{Binding $parent[app:FeedbackModal].Dismiss}">
+                                <TextBlock Text="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_CloseText}}" />
+                            </Button>
+                            <Button Classes="Primary" Command="{Binding SubmitCommand}">
+                                <husk:IconLabel
+                                    Icon="Send"
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.FeedbackModal_SubmitText}}" />
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </husk:PlaceholderContainer.Placeholder>
+        </husk:PlaceholderContainer>
+    </Grid>
+</husk:Modal>
