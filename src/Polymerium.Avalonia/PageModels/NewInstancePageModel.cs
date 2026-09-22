@@ -116,16 +116,19 @@ public partial class NewInstancePageModel(
     [RelayCommand]
     private void ClearImportedPack() => ImportedPack = null;
 
-    [RelayCommand]
+    private bool CanCreate() => !string.IsNullOrWhiteSpace(VersionName);
+
+    [RelayCommand(CanExecute = nameof(CanCreate))]
     private async Task CreateAsync()
     {
-        var key = profileManager.RequestKey(DisplayName);
+        var name = string.IsNullOrWhiteSpace(DisplayName) ? VersionName : DisplayName;
+        var key = profileManager.RequestKey(name);
 
         Profile profile;
         if (ImportedPack != null)
         {
             profile = ImportedPack.Container.Profile;
-            profile.Name = DisplayName;
+            profile.Name = name;
             await Task.Run(async () => await importerAgent.ExtractFilesAsync(key.Key,
                                                                              ImportedPack.Container,
                                                                              ImportedPack.Pack));
@@ -134,7 +137,7 @@ public partial class NewInstancePageModel(
         {
             profile = new()
             {
-                Name = DisplayName,
+                Name = name,
                 Setup = new() { Loader = null, Version = VersionName, Source = null }
             };
         }
@@ -186,6 +189,7 @@ public partial class NewInstancePageModel(
     public partial IReadOnlyList<GameVersionModel>? Versions { get; set; }
 
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(CreateCommand))]
     public partial string VersionName { get; set; } = string.Empty;
 
     [ObservableProperty]
