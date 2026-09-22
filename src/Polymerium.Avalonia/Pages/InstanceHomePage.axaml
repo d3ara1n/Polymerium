@@ -664,9 +664,9 @@
                                 <ProgressBar
                                     CornerRadius="{StaticResource MediumCornerRadius}"
                                     IsIndeterminate="{Binding DeployingPending, Mode=OneWay}"
-                                    Maximum="1"
+                                    Maximum="{Binding DeployingTotal, Mode=OneWay}"
                                     Theme="{StaticResource LaunchProgressBarTheme}"
-                                    Value="{Binding DeployingProgress, Mode=OneWay}">
+                                    Value="{Binding DeployingCurrent, Mode=OneWay}">
                                     <ProgressBar.Transitions>
                                         <Transitions>
                                             <DoubleTransition
@@ -676,21 +676,46 @@
                                         </Transitions>
                                     </ProgressBar.Transitions>
                                 </ProgressBar>
-                                <StackPanel
-                                    HorizontalAlignment="Center"
+                                <Grid
                                     VerticalAlignment="Center"
-                                    Spacing="2">
+                                    RowDefinitions="Auto,16"
+                                    RowSpacing="2">
                                     <TextBlock
                                         Text="{app:LocalizedEnum {Binding DeployingMessage, Mode=OneWay}}"
-                                        TextAlignment="Center" />
-                                    <TextBlock
-                                        IsVisible="{Binding HasDeployingFileCount, Mode=OneWay}"
-                                        TextAlignment="Center">
-                                        <Run Text="{Binding DeployingProgressCurrent, Mode=OneWay}" />
-                                        <Run Text=" / " />
-                                        <Run Text="{Binding DeployingProgressTotal, Mode=OneWay}" />
-                                    </TextBlock>
-                                </StackPanel>
+                                        TextAlignment="Center"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap" />
+                                    <husk:SwitchContainer
+                                        Grid.Row="1"
+                                        IsVisible="{Binding DeployingStep, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                        TargetType="x:Boolean"
+                                        Value="{Binding DeployingPending}">
+                                        <husk:SwitchCase Value="True">
+                                            <TextBlock
+                                                FontSize="12"
+                                                TextAlignment="Center"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
+                                                <Run Text="{app:LocalizedKey {Binding DeployingStep, Mode=OneWay}}" />
+                                                <Run Text="…" />
+                                            </TextBlock>
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="False">
+                                            <TextBlock
+                                                FontSize="12"
+                                                TextAlignment="Center"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
+                                                <Run Text="{app:LocalizedKey {Binding DeployingStep, Mode=OneWay}}" />
+                                                <Run Text="… (" />
+                                                <Run Text="{Binding DeployingCurrent, Mode=OneWay}" />
+                                                <Run Text="/" />
+                                                <Run Text="{Binding DeployingTotal, Mode=OneWay}" />
+                                                <Run Text=")" />
+                                            </TextBlock>
+                                        </husk:SwitchCase>
+                                    </husk:SwitchContainer>
+                                </Grid>
 
                             </Panel>
                         </husk:SwitchCase>

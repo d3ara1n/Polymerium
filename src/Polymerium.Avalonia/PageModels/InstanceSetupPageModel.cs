@@ -680,7 +680,7 @@ public partial class InstanceSetupPageModel(
         switch (activity.Progress)
         {
             case ActivityProgress.Determinate determinate:
-                UpdatingProgress = determinate.Percent;
+                UpdatingProgress = determinate.Current / determinate.Total;
                 UpdatingPending = false;
                 break;
             default:

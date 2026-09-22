@@ -409,7 +409,7 @@ public partial class MainWindowContext : ObservableObject
             {
                 model.State = activity.Kind;
                 model.IsPending = activity.Progress is ActivityProgress.Indeterminate;
-                model.Progress = activity.Progress is ActivityProgress.Determinate d ? d.Percent : 0d;
+                model.Progress = activity.Progress is ActivityProgress.Determinate d ? d.Current / d.Total : 0d;
                 return;
             }
 
@@ -423,7 +423,7 @@ public partial class MainWindowContext : ObservableObject
                                            : new(activity.Key, activity.Key, "N/A", null, null);
             entry.State = activity.Kind;
             entry.IsPending = activity.Progress is ActivityProgress.Indeterminate;
-            entry.Progress = activity.Progress is ActivityProgress.Determinate progress ? progress.Percent : 0d;
+            entry.Progress = activity.Progress is ActivityProgress.Determinate progress ? progress.Current / progress.Total : 0d;
             _entries.AddOrUpdate(entry);
         });
 
