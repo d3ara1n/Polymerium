@@ -5,7 +5,7 @@ description: What happens when you click "Deploy" — how Polymerium turns your 
 
 ## What Deploy Does
 
-Deploy turns your instance metadata — the Minecraft version, mod loader, and package list — into a runnable Run Directory (`build/`). Think of it as building your game from a recipe: the metadata is the recipe, and the deployed Run Directory is what Minecraft actually opens.
+Deploy turns your instance metadata — the Minecraft version, mod loader, and package list — into a runnable Run Directory (`build/`). The profile describes what to prepare, and the deployed Run Directory is what Minecraft actually opens.
 
 See the [Glossary →](/docs/concepts/glossary) for Polymerium's terms like Pack Source, Local Data, Run Directory, and Working Copy.
 
@@ -19,6 +19,10 @@ On your first deploy, Polymerium downloads everything needed to run your game:
 - **Java runtime** — a matching Mojang runtime when available, shared across instances even when you choose another Java for launching
 
 All of these are stored in a **shared cache** on your disk. Valid cached files are reused by any instance; missing or damaged files are downloaded again.
+
+## Which Package Entries Take Effect
+
+An instance can retain the same project in several package groups. Deployment excludes disabled entries, then uses group priority to choose one entry per project and resolve competing package target paths. Overridden entries remain in the profile. See [Package Groups & Override Order](/docs/managing/package-groups) for loose packages, saved group order, and conflicts between entries with equal priority.
 
 ## Symlinks, Not Copies
 

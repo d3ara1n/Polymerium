@@ -2,6 +2,7 @@
   "title": "核心概念",
   "pages": [
     "metadata-driven",
+    "packages",
     "directory-model",
     "deploy-explained",
     "glossary"

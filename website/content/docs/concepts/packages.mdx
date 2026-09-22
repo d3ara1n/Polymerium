@@ -1,0 +1,79 @@
+---
+title: Packages
+description: Understand resource repositories, package references, versions, dependencies, and how packages enter an instance and become deployed files.
+---
+
+In Polymerium, adding a mod from Modrinth or CurseForge means adding a **package** to an instance. A package is a managed reference to content in a resource repository. It records which project and version you want so Polymerium can find the corresponding files during deployment.
+
+Mods are one kind of package. Understanding packages first connects [adding mods](/docs/getting-started/adding-mods) and [organizing them into groups](/docs/managing/package-groups) with browsing, installation, and deployment.
+
+## Kinds of Packages
+
+A package's category is its **resource kind**. Common kinds include:
+
+| Resource kind | Content |
+|---------------|---------|
+| Mod | Changes or additions to game functionality |
+| Resource pack | Textures, sounds, and other game resources |
+| Shader pack | Lighting and visual effects |
+| Data pack | Recipes, loot tables, functions, and other data-driven content |
+| World | Distributable world content |
+
+All of these can be managed as packages, but their requirements differ. Mods usually need a matching Minecraft version and mod loader, for example, while shader packs require suitable support in the game. Deploying package files does not by itself enable them in the game or guarantee compatibility between packages.
+
+A **modpack** is a distributable setup that can include a Minecraft version, mod loader, multiple packages, and configuration files. Importing a modpack creates or updates an instance; adding a package to an existing instance changes its content list.
+
+## Repositories, Projects, and Versions
+
+A **resource repository** is a service that hosts content, such as Modrinth or CurseForge. A **project** in that repository represents a maintained piece of content and can publish multiple **versions**. Alongside content updates, versions may target different Minecraft versions or mod loaders.
+
+Choosing a package involves two decisions: which project to install and which version of it to use. Content with the same name may be published in several repositories. Polymerium does not treat these as the same project based on their display names alone.
+
+### Package References: Pref
+
+Polymerium identifies a project or a specific version with a **package reference (Pref)**. You normally choose these through the interface rather than writing them yourself, but you may see references like these in recipes, exports, or instance profiles:
+
+```text
+pref://modrinth/aC3cM3Vq
+pref://modrinth/aC3cM3Vq@9I21YYxf
+```
+
+The first specifies a repository and project. The second also specifies a version after `@`. A reference without a version must be resolved to an available version. Version lock data can retain the resolved result, so **it does not mean the package automatically updates on every launch**. See [Adding Mods](/docs/getting-started/adding-mods) for version selection and bulk updates.
+
+## How Packages Relate to Files
+
+Adding a package writes a reference into the instance profile (`profile.json`). During deployment, Polymerium resolves the required versions, reuses files from the shared cache or downloads missing ones, and places the selected package files in the Run Directory (`build/`) for the game to use.
+
+| Object | What it stores | Purpose |
+|--------|----------------|---------|
+| Package entry in the profile | Reference, enabled state, tags, and group membership | Describe what the instance needs |
+| File in the shared cache | Downloaded package content | Allow reuse across instances |
+| Deployed result in the Run Directory | Files or symbolic links for selected packages | Supply content Minecraft can read |
+
+An entry in the list therefore does not mean its file is already downloaded or will necessarily deploy this time. Disabled entries do not participate in deployment, and projects appearing in multiple groups need [group priority](/docs/managing/package-groups) to select the effective entry.
+
+A physical file is an **asset**. A manually placed JAR, configuration file, or screenshot does not become a managed package reference simply by existing in a directory. A modpack can also carry both package references and directly bundled files. See the [Directory Model](/docs/concepts/directory-model) for file storage and layering, and the [Deploy Pipeline](/docs/concepts/deploy-explained) for how references become runnable game content.
+
+## Dependencies and Dependent Packages
+
+If package A needs package B to work, B is a **dependency** of A, and A is a **dependent package** of B. For example, a mod may depend on a library mod that supplies shared functionality. They remain separately managed packages, with versions and compatibility requirements to check individually.
+
+Polymerium can display dependencies and their installation status to help you decide what else to add. See [What About Dependencies?](/docs/getting-started/adding-mods#what-about-dependencies) for the inspection and installation workflow.
+
+## How Packages Enter an Instance and Are Organized
+
+Packages can be added individually, imported with a modpack, or added together by applying a recipe. Each route produces package entries in the instance profile. **Which repository supplies a package** and **which group an entry belongs to** are separate questions: a recipe group can contain packages from both Modrinth and CurseForge.
+
+The Setup page uses groups to preserve these associations. Modpack groups retain modpack associations, recipe groups refer to applied lists, and collections organize packages by name within the instance. Entries with none of these associations are loose packages. Tags provide labels that can span groups.
+
+Continue with the workflow you need:
+
+| What you want to do | Read |
+|--------------------|------|
+| Browse, add, enable, or update individual packages | [Adding Mods](/docs/getting-started/adding-mods) |
+| Import a complete setup or share an instance's content | [Import & Export](/docs/managing/import-export) |
+| Understand group membership, loose packages, and duplicate-package priority | [Package Groups & Override Order](/docs/managing/package-groups) |
+| Organize packages by name within an instance | [Collections](/docs/managing/collections) |
+| Maintain reusable, shareable lists of package references | [Recipes](/docs/managing/recipes) |
+| Filter or operate on packages across groups | [Tags & Batch Operations](/docs/managing/tags) |
+| Change where matching packages deploy or skip them | [Deployment Rules](/docs/advanced/rules) |

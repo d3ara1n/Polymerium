@@ -2,7 +2,7 @@
 
 ### ✨ Highlights ✨
 
-- Fix bulk package update suggestions to match each package's current release type (#POLY-73)
+- Fix bulk package update suggestions to match each package's current release type
 
 ### Fixed
 
