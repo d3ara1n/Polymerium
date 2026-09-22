@@ -41,6 +41,8 @@ The important rule is simple: files survive reset and modpack updates only after
 - **What it's for:** Files you want to survive resets, modpack updates, and rebuilds
 - **What it is not:** Automatic backup. Data only becomes protected after you put it here.
 
+If a program replaces a projected Local Data link with a regular file in `build/`, two copies can conflict on the next deploy. See [Known Issues: Local Data copies](/docs/appendix/known-issues) before treating a snapshot as a backup of both.
+
 ### `build/` — Run Directory
 
 This is the final game directory — what Minecraft sees as `.minecraft`. It's assembled from the other layers during deploy. When you play, the game reads and writes here.

@@ -1,0 +1,32 @@
+---
+title: Collections
+description: Group packages inside an instance without creating a separate recipe.
+---
+
+A collection groups packages by name in one instance's Setup list. It lives in the instance profile, not in a separate file. Use a [recipe](/docs/managing/recipes) when you want a reusable list to apply to other instances.
+
+## Collections, recipes, and tags
+
+| | Collection | Recipe | Tag |
+|---|---|---|---|
+| Purpose | Group packages in one instance | Maintain a shareable package-reference list | Label packages for filtering and rules |
+| Stored in | The instance profile | The Recipes library | Each package entry in an instance |
+| Includes files | No | No | No |
+
+A collection name is its identity: packages assigned to the same name form one group. It does not store a separate definition, Minecraft version, or mod loader. Tags remain on the packages when you move them between collections.
+
+## Organize packages
+
+1. Open an instance's **Setup** page.
+2. Open a loose package's menu and choose **Move into Collection**. Select an existing collection or enter a new name.
+3. To move several packages, open the menu under **Get More** and choose **Batch Move to Collection**. Review the selection before assigning a destination.
+
+You can move packages between collections or remove one from its collection without deleting the package. Packages that belong to an imported modpack or a recipe keep their source association and cannot be assigned directly to a collection. To reorganize a recipe group locally, convert the group first.
+
+Use the collection header menu to rename it, disband the group, or adjust its order. Renaming a collection to an existing name merges the groups. Group order also controls source priority where grouped sources target the same deployed path; [deployment rules](/docs/advanced/rules) and Local Data still follow their own precedence.
+
+## Convert to or from a recipe
+
+The collection header menu can **Promote to Recipe**. Polymerium creates a recipe from the collection's package references and tags, then associates the group with that recipe. Notes are not generated. The recipe header can **Demote to Collection** to keep the packages grouped locally without referencing the recipe; it does not delete the recipe from the Recipes library.
+
+A local modpack archive with no grouping information groups its packages under a collection named after the modpack on import. Trident modpack export can carry collection grouping, while external formats do not necessarily preserve it. For the rest of the archive's contents, see [Import & Export](/docs/managing/import-export).

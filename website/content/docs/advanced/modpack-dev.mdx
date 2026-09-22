@@ -9,7 +9,7 @@ A Polymerium instance is already Git-friendly by design:
 
 - `profile.json` is the modpack definition — plain JSON, diffable
 - `import/` contains the distributable files — configs, resources, custom content
-- `build/` and `persist/` are runtime artifacts that don't belong in version control
+- `build/` is the Run Directory; it can contain personal data, so keep it out of Git and back it up separately when needed. `persist/` is Local Data and should stay private.
 
 This means you can put an instance under Git and get meaningful diffs, branching, and collaboration.
 
@@ -33,7 +33,7 @@ data.lock.json
 3. Commit the initial state:
 
 ```bash
-git add profile.json import/ icon.png README.md CHANGELOG.md
+git add profile.json import/
 git commit -m "Initial modpack"
 ```
 
@@ -43,12 +43,14 @@ git commit -m "Initial modpack"
 |------|--------|-----|
 | `profile.json` | ✅ | The modpack definition — version, loader, mod list |
 | `import/` | ✅ | Distributable files (configs, resources) |
-| Icon / README / CHANGELOG | ✅ | Modpack metadata |
-| `build/` | ❌ | Build artifact, reproducible |
+| Imported native patches (`patches/data.patch.json`, `patches/import/`) | ✅ If used | Launch declarations that travel with a Trident modpack |
+| `build/` | ❌ | Runtime output; may contain saves and other data not backed up elsewhere |
 | `persist/` | ❌ | Player data (saves, screenshots) |
 | `data.lock.json` | ❌ | Deploy cache, auto-generated |
 
 ## Development Workflow
+
+On the instance home page, the development overview widget summarizes Git status, Pack Source files, unsynced working-copy changes, patches, release attachments, and the last run. Its compact view hides categories with nothing to report. Open [Workspace](/docs/advanced/workspace) to review individual file changes.
 
 ### Iterating on Configs
 

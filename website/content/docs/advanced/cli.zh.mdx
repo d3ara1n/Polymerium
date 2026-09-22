@@ -19,19 +19,19 @@ dotnet tool install --global TridentCore.Cli
 | `--no-interactive` | 禁用交互式提示 |
 | `--verbose` / `--debug` | 增加输出详细程度 |
 
-数据目录的覆盖不是 CLI 参数——它由共享的路径层解析，在桌面应用和 CLI 中行为完全一致：`TRIDENT_HOME` 环境变量、从当前目录向上查找的 `.trident/` 文件夹、或 `~/.trident.home` 文件。详见 [自定义数据目录 →](/docs/guides/custom-data-directory)。
+CLI 与桌面应用可通过 `TRIDENT_HOME` 或 `~/.trident.home` 使用同一个实例主目录，但 CLI 的账号、仓库及设置单独存储。路径选择参见[自定义数据目录](/docs/guides/custom-data-directory)。
 
 ## 实例命令
 
 ### 创建实例
 
 ```bash
-trident instance create my-modpack --version 1.21.4 --loader fabric
+trident instance create --name "My Modpack" --identity my-modpack --version 1.21.1 --loader net.fabricmc:0.16.10
 ```
 
 选项：
-- `--version`——Minecraft 版本（必填）
-- `--loader`——加载器名称：`fabric`、`forge`、`neoforge`、`quilt`
+- 当前 CLI 校验要求提供 `--name`、`--version`，以及实例标识（`--identity` 或 `--id`）。
+- `--loader` 接受加载器 ID 和版本组成的 LURL，例如 `net.fabricmc:0.16.10`。用 `trident loader list` 查看支持的 ID。
 
 ### 列出实例
 
@@ -42,15 +42,15 @@ trident instance list
 ### 查看实例详情
 
 ```bash
-trident instance inspect my-modpack
+trident instance inspect --instance my-modpack
 ```
 
-显示版本、加载器、模组数量、部署状态等信息。
+显示实例配置和包信息。
 
 ### 部署（构建）实例
 
 ```bash
-trident instance build my-modpack
+trident instance build --instance my-modpack
 ```
 
 运行完整的部署管道。等同于在 GUI 中点击"Deploy"。
@@ -58,15 +58,15 @@ trident instance build my-modpack
 ### 启动实例
 
 ```bash
-trident instance run my-modpack
+trident instance run --instance my-modpack --username Steve
 ```
 
-如有需要会先部署，然后启动 Minecraft。
+先部署，再使用 CLI 中的账号或指定的离线用户名启动 Minecraft。CLI 的账号存储与桌面应用分开。
 
 ### 导出整合包
 
 ```bash
-trident instance export my-modpack --format modrinth --output ./release/
+trident instance export --instance my-modpack --format modrinth --author Steve --output ./my-modpack.mrpack
 ```
 
 支持的格式：`trident`、`curseforge`、`modrinth`、`multimc`。
@@ -82,7 +82,7 @@ trident instance import ./my-pack.mrpack
 ### 删除实例
 
 ```bash
-trident instance delete my-modpack
+trident instance delete --instance my-modpack
 ```
 
 ## 包命令
@@ -90,16 +90,16 @@ trident instance delete my-modpack
 ### 搜索模组
 
 ```bash
-trident package search "sodium"
+trident package search --repository modrinth "sodium"
 ```
 
 ### 添加模组
 
 ```bash
-trident package add pref://modrinth/sodium
+trident package add --instance my-modpack pref://modrinth/aC3cM3Vq
 ```
 
-`pref` 格式为 `pref://repository/project-id` 或 `pref://repository/project-id@version-id`。
+Pref 格式为 `pref://repository/project-id` 或 `pref://repository/project-id@version-id`。请使用搜索结果返回的 Pref，而非显示名称。
 
 ### 列出已安装的模组
 
@@ -110,34 +110,34 @@ trident package list --instance my-modpack
 ### 启用/禁用模组
 
 ```bash
-trident package enable modrinth:sodium --instance my-modpack
-trident package disable modrinth:sodium --instance my-modpack
+trident package enable --instance my-modpack pref://modrinth/aC3cM3Vq
+trident package disable --instance my-modpack pref://modrinth/aC3cM3Vq
 ```
 
 ### 查看可用版本
 
 ```bash
-trident package version list modrinth:sodium
+trident package version list pref://modrinth/aC3cM3Vq
 ```
 
 ### 固定特定版本
 
 ```bash
-trident package version set modrinth:sodium <version-file-id>
+trident package version set --instance my-modpack pref://modrinth/aC3cM3Vq@9I21YYxf
 ```
 
 ## 加载器命令
 
-### 列出实例的加载器
+### 列出支持的加载器
 
 ```bash
-trident loader list --instance my-modpack
+trident loader list
 ```
 
 ### 更换加载器
 
 ```bash
-trident loader set my-modpack --loader neoforge --version 21.4.0
+trident loader set --instance my-modpack net.fabricmc:0.16.10
 ```
 
 ## 账户命令
@@ -145,7 +145,7 @@ trident loader set my-modpack --loader neoforge --version 21.4.0
 ### 添加微软账户
 
 ```bash
-trident account add
+trident account add --type microsoft
 ```
 
 在终端中启动设备代码流（Device Code Flow）。
@@ -153,7 +153,7 @@ trident account add
 ### 添加离线账户
 
 ```bash
-trident account add-offline --username Steve
+trident account add --type offline --username Steve
 ```
 
 ### 列出账户
@@ -165,7 +165,7 @@ trident account list
 ### 移除账户
 
 ```bash
-trident account remove <uuid>
+trident account remove --uuid 00000000-0000-0000-0000-000000000000
 ```
 
 ## 仓库命令
@@ -185,7 +185,7 @@ trident repository status
 ### 添加仓库
 
 ```bash
-trident repository add my-repo https://api.example.com
+trident repository add --label my-repo --driver modrinth --endpoint https://api.modrinth.com
 ```
 
 ## MCP 模式

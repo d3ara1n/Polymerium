@@ -1,0 +1,34 @@
+---
+title: Known issues
+description: Current mechanism limits, their effects, and ways to avoid data loss.
+---
+
+These are confirmed limits in the current source, not isolated installation failures. KI-01 and KI-03 are verified against development code after v1.13.1; their applicability to earlier releases has not been established. The actions below reduce risk but do not fix the underlying mechanism. Check whether your case matches before opening a duplicate issue; report a different symptom with logs and the files involved.
+
+## Current limits
+
+| ID | Version scope | When it happens | What you may see | Safer action |
+|---|---|---|---|---|
+| KI-01 | Current development build (after 1.13.1) | A Local Data symlink is replaced by a regular file in the Run Directory | One of two same-path copies may be discarded or overwritten on deployment | Back up the Run Directory copy and deploy successfully before taking a snapshot |
+| KI-02 | Current build; earliest affected release not established | Pack Source and working copy contents change without distinguishable modification times | Workspace may omit a changed file | Compare contents yourself before syncing or publishing |
+| KI-03 | Current development build (after 1.13.1) | Snapshot restore or deployment stops while writing two projection manifests | The next deployment may use manifests from different states | Back up the Run Directory and repeat the interrupted operation after checking the files |
+
+## KI-01: Local Data and Run Directory contain two copies
+
+A single file in Local Data (`persist/`) is linked into the Run Directory (`build/`). Some programs write through that link, then delete it and create a regular file at the same path. The two files can now differ. Deployment uses the Local Data file's modification time since the last projection to choose a copy; it cannot establish which edit happened last. A changed Local Data timestamp makes deployment discard the regular `build/` copy, even if that copy contains later edits. Otherwise, deployment moves the `build/` copy back into Local Data.
+
+Before deploying, inspect and back up the regular `build/` copy when both paths exist. Complete a successful deploy before making a snapshot: snapshots store Local Data, but not a regular Run Directory copy that has not yet been reconciled. Keep another backup for valuable saves and configuration. This is a known model limitation, with no deployment or snapshot fix planned. For the directory roles, see [Directory Model](/docs/concepts/directory-model).
+
+## KI-02: Workspace uses modification times
+
+[Workspace](/docs/advanced/workspace) identifies an updated or outdated working-copy file by comparing its modification time with the Pack Source file. Equal timestamps are treated as unchanged without comparing contents. Tools that preserve timestamps can therefore change a file without putting it in Workspace's change list. Workspace also ignores projected symbolic links.
+
+When reviewing a release, compare important files in `import/` and `build/` with a file comparison tool if their timestamps might have been preserved. Do not rely on an empty Workspace list as a content-integrity check. There is no content-hash fallback in the current comparison.
+
+## KI-03: Projection manifests are written separately
+
+Deployment and snapshot restore track which Pack Source and Local Data files belong in the Run Directory through two files, `build/trident.import.json` and `build/trident.persist.json`. They are written in sequence, not as one transaction. A crash, cancellation, or storage failure between writes can leave the two files describing different states. The next deployment continues from the files on disk; it cannot automatically roll both back as a pair.
+
+Do not cancel restore or deployment while it finishes. If it was interrupted, stop other writers, back up valuable files still in `build/`, inspect the instance, then repeat the interrupted restore or deployment. Recheck saves and working-copy changes before further operations. Repeating the action does not recover a file already lost; use a separate backup for that. There is no cross-file transaction or automatic rollback in the current mechanism.
+
+For ordinary deployment and launch errors, use [Troubleshooting](/docs/advanced/troubleshooting). A [snapshot](/docs/managing/snapshots) is not a full backup of unmanaged Run Directory files.

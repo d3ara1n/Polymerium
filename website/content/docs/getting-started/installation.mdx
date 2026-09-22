@@ -54,7 +54,7 @@ When you open Polymerium for the first time, the OOBE (Out-of-Box Experience) wi
 
 ## What Gets Installed Where
 
-Starting with **1.10.0**, Polymerium follows each platform's standard directory conventions instead of bundling everything under one folder. Data is split into four categories, each placed in the location the OS expects:
+Polymerium stores configuration, application data, cache files, and instances in separate platform-specific locations for new installations:
 
 - **Config** — `settings.json`
 - **Data** — the persistence database (`persistence.sqlite.db`) and first-run marker
@@ -69,9 +69,7 @@ Starting with **1.10.0**, Polymerium follows each platform's standard directory 
 | Cache (shared: mods/assets/runtimes) | `%TEMP%\Trident` | `~/.cache/trident` | `~/Library/Caches/dev.dearain.trident` |
 | Instances | `%LOCALAPPDATA%\Trident\instances` | `~/.local/share/trident/instances` | `~/Library/Application Support/dev.dearain.trident/instances` |
 
-> **Behavior change since 1.10.0** — before 1.10.0, Polymerium stored **everything** under a single `~/.trident/` directory on every platform (settings under `~/.trident/.polymerium/`, the shared cache under `~/.trident/cache/`, and instances under `~/.trident/instances/`). For backward compatibility, if a `~/.trident/` directory already exists from a previous install, Polymerium **keeps using it** instead of switching to the per-platform locations above — so existing setups are not disturbed. Brand-new installs get the split layout automatically.
->
-> Want to place data on a different drive, or force the classic single-root layout? See [Custom Data Directory →](/docs/guides/custom-data-directory).
+> If your installation already has a `~/.trident/` root, Polymerium continues using it rather than moving files automatically. Check [Compatibility and migration](/docs/appendix/compatibility) before moving or deleting old files. To choose another root, see [Custom Data Directory](/docs/guides/custom-data-directory).
 
 ## Next Step
 

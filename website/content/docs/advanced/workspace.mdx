@@ -24,16 +24,17 @@ The workspace compares `import/` (source) with the working copy under `build/`.
 
 ## Understanding the Diff
 
-The workspace looks at files that belong to the import working copy:
+Workspace lists changed, regular files associated with the Pack Source working copy. It ignores projected symbolic links and compares modification times, not file contents:
 
 | Type | Meaning |
 |------|---------|
 | **Updated** | The working copy is newer than `import/` (typical after in-game edits) |
 | **Outdated** | `import/` is newer than the working copy |
+| **Deleted** | A previously projected working-copy file remains in `build/`, but its source in `import/` no longer exists |
 
 ### Example: Config Tweaks
 
-You launched the game and adjusted performance settings for your modpack. The changes are in the working copy under `build/config/` while the originals sit in `import/config/`. The workspace shows exactly which files changed and how they differ.
+You launched the game and adjusted settings. The working copy in `build/config/` can now have a newer modification time than its source in `import/config/`. Open the file to review its contents before syncing: equal timestamps can hide a content change.
 
 ## Syncing Changes
 
@@ -53,13 +54,15 @@ You can select multiple files and sync them at once — useful after a tuning se
 
 ### Restore: import → working copy (secondary)
 
-If an in-game change went wrong and you want the original file back:
+If an in-game change went wrong and the source file still exists, restore the source version:
 
 1. Select the file in the workspace.
 2. Click restore.
 3. The file is copied from `import/` into the working copy under `build/`, overwriting your local change.
 
 This restores the modpack's original version of that file.
+
+For **Deleted**, Restore deletes the remaining working-copy file because there is no Pack Source file to copy. Use **Sync to Import** instead if you want to keep that file in the modpack.
 
 ## Modpack Author Workflow
 

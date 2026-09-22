@@ -3,11 +3,11 @@ title: Overview
 description: Learn how to use Polymerium — from your first instance to advanced modpack development.
 ---
 
-Polymerium is a cross-platform, open-source Minecraft launcher built around a simple idea:
+Polymerium is a cross-platform, open-source Minecraft launcher built around a declarative instance profile:
 
-**Your instance is a recipe, not a pile of file copies.**
+**Your instance is defined by a profile, not by a pile of file copies.**
 
-Instead of duplicating mod files for every instance, Polymerium stores each file once and builds instances on demand. The result: less disk usage, instant switching, and a workflow that actually makes sense for modpack development.
+Polymerium stores downloaded package files in a shared cache and deploys each instance from its profile, Pack Source, and Local Data. This keeps managed files reusable while leaving you in control of data created by the game.
 
 ## Where to Start
 
@@ -20,7 +20,8 @@ Instead of duplicating mod files for every instance, Polymerium stores each file
 | Section | What It Covers |
 |---------|---------------|
 | [Getting Started](/docs/getting-started/installation) | Download, install, create an instance, add mods, play. |
-| [Core Concepts](/docs/concepts/metadata-driven) | The ideas behind Polymerium: metadata-driven instances, four-layer directories, deploy pipeline. |
-| [Managing Instances](/docs/managing/accounts) | Accounts, import/export, recipes, snapshots, tags, Java management, settings. |
+| [Core Concepts](/docs/concepts/metadata-driven) | Profiles, the three managed directories, and deployment. |
+| [Managing Instances](/docs/managing/accounts) | Accounts, modpack import/export, collections, recipes, snapshots, tags, and Java. |
 | [Advanced](/docs/advanced/rules) | Deployment rules, workspace, modpack development, CLI, MCP/AI agent mode. |
 | [Guides](/docs/guides/migrate-from-other-launchers) | Step-by-step walkthroughs for specific tasks — no theory, just doing. |
+| [Appendix](/docs/appendix/compatibility) | On-disk compatibility transitions and known limitations. |
