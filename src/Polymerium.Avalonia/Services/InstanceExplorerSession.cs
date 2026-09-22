@@ -46,8 +46,8 @@ public sealed class InstanceExplorerSession : ExplorerSession
         _persistenceService = persistenceService;
 
         PrimaryCollectAction = new("ExplorerPage_CollectButtonText",
-                                    Symbol.BoxMultipleArrowLeft,
-                                    pending => CollectCoreAsync(pending, null));
+                                   Symbol.BoxMultipleArrowLeft,
+                                   pending => CollectCoreAsync(pending, null));
         SecondaryCollectActions =
         [
             new("ExplorerPage_CollectIntoCollectionMenuText",
@@ -68,6 +68,7 @@ public sealed class InstanceExplorerSession : ExplorerSession
                   _basic.Loader != null && LoaderHelper.TryParse(_basic.Loader, out var loader)
                       ? loader.Identity
                       : null,
+                  null,
                   null);
 
     public override ExplorerActionModel PrimaryCollectAction { get; }
@@ -79,7 +80,9 @@ public sealed class InstanceExplorerSession : ExplorerSession
         if (!_profileManager.TryGetImmutable(_key, out var profile))
         {
             throw new PageNotReachedException(typeof(ExplorerPage),
-                                              LanguageManager.Instance.InstancePage_KeyNotFoundExceptionMessage.Current().Replace("{0}", _key));
+                                              LanguageManager
+                                                 .Instance.InstancePage_KeyNotFoundExceptionMessage.Current()
+                                                 .Replace("{0}", _key));
         }
 
         _profile = profile;
@@ -118,23 +121,26 @@ public sealed class InstanceExplorerSession : ExplorerSession
                                             project.UpdatedAt,
                                             [.. project.Gallery.Select(x => x.Url)]);
 
-        _overlayService.PopModal<ExhibitPackageModal>(new ExhibitPackageModalModel.Parameter(
-            _key,
-            exhibit,
-            model,
-            new(_basic!.Version,
-                _basic.Loader != null && LoaderHelper.TryParse(_basic.Loader, out var loader)
-                    ? loader.Identity
-                    : null,
-                project.Kind),
-            modifyPending,
-            m =>
-            {
-                RevertState(m);
-                modifyPending(m);
-            },
-            project => LinkExhibit(project, findExisting),
-            new AsyncRelayCommand<ExhibitModel>(m => ViewExhibitAsync(m!, modifyPending, findExisting))));
+        _overlayService.PopModal<ExhibitPackageModal>(new ExhibitPackageModalModel.Parameter(_key,
+                                                          exhibit,
+                                                          model,
+                                                          new(_basic!.Version,
+                                                              _basic.Loader != null
+                                                           && LoaderHelper.TryParse(_basic.Loader, out var loader)
+                                                                  ? loader.Identity
+                                                                  : null,
+                                                              project.Kind, null),
+                                                          modifyPending,
+                                                          m =>
+                                                          {
+                                                              RevertState(m);
+                                                              modifyPending(m);
+                                                          },
+                                                          project => LinkExhibit(project, findExisting),
+                                                          new AsyncRelayCommand<ExhibitModel>(m =>
+                                                              ViewExhibitAsync(m!,
+                                                                               modifyPending,
+                                                                               findExisting))));
     }
 
     #endregion
@@ -156,58 +162,58 @@ public sealed class InstanceExplorerSession : ExplorerSession
             switch (model)
             {
                 case InstanceExhibitModel { State: ExhibitState.Adding } m:
+                {
+                    var entry = new Profile.Rice.Entry
                     {
-                        var entry = new Profile.Rice.Entry
-                        {
-                            Enabled = true,
-                            Pref = PackageHelper.ToPref(m.Label, m.Namespace, m.ProjectId, m.PendingVersionId),
-                            Source = collection?.Uri
-                        };
-                        _persistenceService.AppendAction(new()
-                        {
-                            Key = _key,
-                            Kind = PersistenceService.ActionKind.EditPackage,
-                            New = entry.Pref
-                        });
-                        guard.Value.Setup.Packages.Add(entry);
-                        m.State = ExhibitState.Editable;
-                        m.Entry = entry;
-                        m.InstalledVersionName = m.PendingVersionName;
-                        m.InstalledVersionId = m.PendingVersionId;
-                        break;
-                    }
+                        Enabled = true,
+                        Pref = PackageHelper.ToPref(m.Label, m.Namespace, m.ProjectId, m.PendingVersionId),
+                        Source = collection?.Uri
+                    };
+                    _persistenceService.AppendAction(new()
+                    {
+                        Key = _key,
+                        Kind = PersistenceService.ActionKind.EditPackage,
+                        New = entry.Pref
+                    });
+                    guard.Value.Setup.Packages.Add(entry);
+                    m.State = ExhibitState.Editable;
+                    m.Entry = entry;
+                    m.InstalledVersionName = m.PendingVersionName;
+                    m.InstalledVersionId = m.PendingVersionId;
+                    break;
+                }
                 case InstanceExhibitModel { State: ExhibitState.Removing } m when m.Entry is not null:
+                {
+                    var old = m.Entry.Pref;
+                    guard.Value.Setup.Packages.Remove(m.Entry);
+                    _persistenceService.AppendAction(new()
                     {
-                        var old = m.Entry.Pref;
-                        guard.Value.Setup.Packages.Remove(m.Entry);
-                        _persistenceService.AppendAction(new()
-                        {
-                            Key = _key,
-                            Kind = PersistenceService.ActionKind.EditPackage,
-                            Old = old
-                        });
-                        m.State = null;
-                        m.Entry = null;
-                        m.InstalledVersionName = null;
-                        m.InstalledVersionId = null;
-                        break;
-                    }
+                        Key = _key,
+                        Kind = PersistenceService.ActionKind.EditPackage,
+                        Old = old
+                    });
+                    m.State = null;
+                    m.Entry = null;
+                    m.InstalledVersionName = null;
+                    m.InstalledVersionId = null;
+                    break;
+                }
                 case InstanceExhibitModel { State: ExhibitState.Modifying } m when m.Entry is not null:
+                {
+                    var old = m.Entry.Pref;
+                    m.Entry.Pref = PackageHelper.ToPref(m.Label, m.Namespace, m.ProjectId, m.PendingVersionId);
+                    _persistenceService.AppendAction(new()
                     {
-                        var old = m.Entry.Pref;
-                        m.Entry.Pref = PackageHelper.ToPref(m.Label, m.Namespace, m.ProjectId, m.PendingVersionId);
-                        _persistenceService.AppendAction(new()
-                        {
-                            Key = _key,
-                            Kind = PersistenceService.ActionKind.EditPackage,
-                            Old = old,
-                            New = m.Entry.Pref
-                        });
-                        m.State = ExhibitState.Editable;
-                        m.InstalledVersionName = m.PendingVersionName;
-                        m.InstalledVersionId = m.PendingVersionId;
-                        break;
-                    }
+                        Key = _key,
+                        Kind = PersistenceService.ActionKind.EditPackage,
+                        Old = old,
+                        New = m.Entry.Pref
+                    });
+                    m.State = ExhibitState.Editable;
+                    m.InstalledVersionName = m.PendingVersionName;
+                    m.InstalledVersionId = m.PendingVersionId;
+                    break;
+                }
             }
         }
 
@@ -218,14 +224,14 @@ public sealed class InstanceExplorerSession : ExplorerSession
     private async Task<bool> CollectIntoCollectionAsync(IReadOnlyList<ExhibitModel> pending)
     {
         var existing = _profileManager.TryGetImmutable(_key, out var p)
-                           ? p.Setup.Packages
-                              .Select(e => e.Source)
-                              .OfType<string>()
-                              .Where(s => InternalUriHelper.IsKind(s, CollectionHelper.SCHEME))
-                              .Select(s => CollectionHelper.TryGetName(s, out var n) ? new CollectionModel(n, s) : null)
-                              .OfType<CollectionModel>()
-                              .Distinct()
-                              .ToList()
+                           ? p
+                            .Setup.Packages.Select(e => e.Source)
+                            .OfType<string>()
+                            .Where(s => InternalUriHelper.IsKind(s, CollectionHelper.SCHEME))
+                            .Select(s => CollectionHelper.TryGetName(s, out var n) ? new CollectionModel(n, s) : null)
+                            .OfType<CollectionModel>()
+                            .Distinct()
+                            .ToList()
                            : [];
 
         var dialog = new CollectionPickerDialog { ExistingCollections = existing };
@@ -306,8 +312,7 @@ public sealed class InstanceExplorerSession : ExplorerSession
                                              downloads,
                                              reference)
         {
-            Entry = entry,
-            IsFavorite = _persistenceService.IsFavoriteProject(label, ns, projectId)
+            Entry = entry, IsFavorite = _persistenceService.IsFavoriteProject(label, ns, projectId)
         };
         StampInstalled(model, entry);
         return model;

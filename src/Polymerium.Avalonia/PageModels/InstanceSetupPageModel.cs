@@ -127,10 +127,10 @@ public partial class InstanceSetupPageModel(
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
             var heldKeys = persistenceService
-               .GetUpdateBlacklist(Basic.Key)
-               .Where(x => x.VersionId is null)
-               .Select(x => (x.Label, x.Namespace, x.ProjectId))
-               .ToHashSet();
+                          .GetUpdateBlacklist(Basic.Key)
+                          .Where(x => x.VersionId is null)
+                          .Select(x => (x.Label, x.Namespace, x.ProjectId))
+                          .ToHashSet();
             // Entry 按地址比较，仍存在的包不动其 Entry 项（实例稳定）；信息是否陈旧由
             // RefreshMetadataAsync 现场重判，这里不预判。
             var lookup = profile.Setup.Packages.ToHashSet();
@@ -147,6 +147,7 @@ public partial class InstanceSetupPageModel(
                     item.Package.OldSourceCache = entry.Source;
                     item.Package.NotifySourceChanged();
                 }
+
                 if (!lookup.Remove(entry))
                 {
                     toRemove.Add(item.Key);
@@ -154,8 +155,7 @@ public partial class InstanceSetupPageModel(
 
                 if (PackageHelper.TryParse(entry.Pref, out var pref))
                 {
-                    item.Package.IsUpdateHeld = heldKeys.Contains((pref.Repository,
-                                                                   pref.Namespace ?? string.Empty,
+                    item.Package.IsUpdateHeld = heldKeys.Contains((pref.Repository, pref.Namespace ?? string.Empty,
                                                                    pref.Identity));
                 }
             }
@@ -171,10 +171,10 @@ public partial class InstanceSetupPageModel(
                             };
                             if (PackageHelper.TryParse(x.Pref, out var pref))
                             {
-                                pkg.IsUpdateHeld = heldKeys.Contains((pref.Repository,
-                                                                     pref.Namespace ?? string.Empty,
-                                                                     pref.Identity));
+                                pkg.IsUpdateHeld = heldKeys.Contains((pref.Repository, pref.Namespace ?? string.Empty,
+                                                                      pref.Identity));
                             }
+
                             return new PackageListItemBase.Entry
                             {
                                 Key = new PackageListKey.Entry(x), Group = GroupModelOf(pkg), Package = pkg
@@ -846,7 +846,8 @@ public partial class InstanceSetupPageModel(
                                                                  out var result)
                                                ? result.Identity
                                                : null
-                                         : null)
+                                         : null,
+                             Type: null)
             });
         }
     }
@@ -859,10 +860,10 @@ public partial class InstanceSetupPageModel(
             try
             {
                 var project = await dataService.QueryProjectAsync(source.ToProjectIdentifier());
-                overlayService.PopToast<ExhibitModpackToast>(
-                    new ExhibitModpackToastModel.Parameter(ExhibitModpackModel.From(project),
-                                                           AssetUriIndex.DirtImage,
-                                                           InstallVersionCommand));
+                overlayService.PopToast<ExhibitModpackToast>(new ExhibitModpackToastModel.Parameter(ExhibitModpackModel
+                                                                    .From(project),
+                                                                 AssetUriIndex.DirtImage,
+                                                                 InstallVersionCommand));
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)
@@ -934,15 +935,9 @@ public partial class InstanceSetupPageModel(
                 progress.AddAction(new(LanguageManager.Instance.Dialog_CancelButtonText.Current(),
                                        new RelayCommand(Cancel)));
 
-                var filter = new Filter(Kind: null,
-                                        Version: profile.Setup.Version,
-                                        Loader: LoaderHelper.TryParse(profile.Setup.Loader, out var loader)
-                                                    ? loader.Identity
-                                                    : null);
-
                 var blacklist = persistenceService
-                   .GetUpdateBlacklist(Basic.Key)
-                   .ToDictionary(x => (x.Label, x.Namespace, x.ProjectId), x => x.VersionId);
+                               .GetUpdateBlacklist(Basic.Key)
+                               .ToDictionary(x => (x.Label, x.Namespace, x.ProjectId), x => x.VersionId);
                 var suppressed = 0;
                 var updates = new ConcurrentBag<PackageBulkUpdateCandidateModel>();
                 try
@@ -975,26 +970,27 @@ public partial class InstanceSetupPageModel(
                 //  故这里直接 Dispose。
                 progress.Dispose();
 
-                notificationService.PopMessage(
-                    LanguageManager
-                       .Instance
-                       .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage
-                       .Current()
-                       .Replace("{0}", updates.Count.ToString())
-                  + (suppressed > 0
-                       ? " "
-                         + LanguageManager
-                            .Instance
-                            .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationSuppressedText
-                            .Current()
-                            .Replace("{0}", suppressed.ToString())
-                       : string.Empty),
-                    LanguageManager.Instance.InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle.Current(),
-                    thumbnail: GetNotificationThumbnail(),
-                    actions: new GrowlAction(LanguageManager.Instance
-                                                .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText
-                                                .Current(),
-                                             new RelayCommand(Review, CanReview)));
+                notificationService.PopMessage(LanguageManager
+                                              .Instance
+                                              .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationMessage
+                                              .Current()
+                                              .Replace("{0}", updates.Count.ToString())
+                                             + (suppressed > 0
+                                                    ? " "
+                                                    + LanguageManager
+                                                     .Instance
+                                                     .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationSuppressedText
+                                                     .Current()
+                                                     .Replace("{0}", suppressed.ToString())
+                                                    : string.Empty),
+                                               LanguageManager.Instance
+                                                              .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationTitle
+                                                              .Current(),
+                                               thumbnail: GetNotificationThumbnail(),
+                                               actions: new GrowlAction(LanguageManager.Instance
+                                                                           .InstanceSetupPage_PackageBulkUpdatingProgressedNotificationReviewText
+                                                                           .Current(),
+                                                                        new RelayCommand(Review, CanReview)));
                 return;
 
                 async Task UpdateAsync(
@@ -1012,10 +1008,9 @@ public partial class InstanceSetupPageModel(
                     {
                         if (result.Version is not null)
                         {
-                            var isListed = blacklist.TryGetValue((result.Repository,
-                                                                  result.Namespace ?? string.Empty,
+                            var isListed = blacklist.TryGetValue((result.Repository, result.Namespace ?? string.Empty,
                                                                   result.Identity),
-                                out var blocked);
+                                                                 out var blocked);
 
                             try
                             {
@@ -1026,6 +1021,13 @@ public partial class InstanceSetupPageModel(
                                 }
                                 else
                                 {
+                                    var package = await dataService
+                                                       .ResolvePackageAsync(result, Filter.None)
+                                                       .ConfigureAwait(false);
+                                    var filter = Filter.FromSetup(profile.Setup) with
+                                    {
+                                        Type = package.ReleaseType
+                                    };
                                     var resolved = await dataService
                                                         .ResolvePackageAsync(result with { Version = null },
                                                                              filter,
@@ -1039,9 +1041,6 @@ public partial class InstanceSetupPageModel(
                                         }
                                         else
                                         {
-                                            var package = await dataService
-                                                               .ResolvePackageAsync(result, Filter.None)
-                                                               .ConfigureAwait(false);
                                             var model = new PackageBulkUpdateCandidateModel(entry,
                                                 package,
                                                 package.Thumbnail ?? AssetUriIndex.DirtImage,
@@ -1092,8 +1091,8 @@ public partial class InstanceSetupPageModel(
 
                 void Review()
                 {
-                    overlayService.PopModal<PackageBulkUpdateReviewModal>(
-                        new PackageBulkUpdateReviewModalModel.Parameter(Basic.Key, [.. updates]));
+                    overlayService.PopModal<PackageBulkUpdateReviewModal>(new PackageBulkUpdateReviewModalModel.
+                                                                              Parameter(Basic.Key, [.. updates]));
                 }
             }
         }
@@ -1200,8 +1199,8 @@ public partial class InstanceSetupPageModel(
                                             Enabled = importedEntry.Enabled,
                                             Pref = importedEntry.Pref,
                                             Source = string.IsNullOrEmpty(importedEntry.Source)
-                                                ? null
-                                                : importedEntry.Source
+                                                         ? null
+                                                         : importedEntry.Source
                                         };
                                         guard.Value.Setup.Packages.Add(newEntry);
                                         persistenceService.AppendAction(new()
@@ -1314,7 +1313,8 @@ public partial class InstanceSetupPageModel(
                         {
                             var ns = PersistenceService.NormalizeNamespace(item.Namespace);
                             var package =
-                                resolvedByProject.GetValueOrDefault((item.Label.ToLowerInvariant(), ns, item.ProjectId));
+                                resolvedByProject.GetValueOrDefault((item.Label.ToLowerInvariant(), ns,
+                                                                     item.ProjectId));
                             var pref = package is not null
                                            ? PackageHelper.ToPref(package)
                                            : PackageHelper.ToPref(item.Label, ns, item.ProjectId, null);
@@ -1382,8 +1382,8 @@ public partial class InstanceSetupPageModel(
     {
         if (request is null
          || request.Package.Source == request.TargetSource
-         || !BuildGroupOrder().Any(group => group.Kind == PackageSourceHelper.Kind.Collection
-                                         && group.Source == request.TargetSource))
+         || !BuildGroupOrder()
+               .Any(group => group.Kind == PackageSourceHelper.Kind.Collection && group.Source == request.TargetSource))
         {
             return;
         }
@@ -1391,7 +1391,9 @@ public partial class InstanceSetupPageModel(
         await AssignPackagesToCollectionAsync([request.Package], request.TargetSource);
     }
 
-    private async Task<int> AssignPackagesToCollectionAsync(IEnumerable<Profile.Rice.Entry> packages, string targetSource)
+    private async Task<int> AssignPackagesToCollectionAsync(
+        IEnumerable<Profile.Rice.Entry> packages,
+        string targetSource)
     {
         if (!InternalUriHelper.IsKind(targetSource, CollectionHelper.SCHEME)
          || !ProfileManager.TryGetMutable(Basic.Key, out var guard))
@@ -1433,7 +1435,7 @@ public partial class InstanceSetupPageModel(
                     .OfType<CollectionModel>()
                     .Distinct()
                     .ToList()
-                  : new();
+                   : new();
     }
 
     [RelayCommand]
@@ -1471,9 +1473,10 @@ public partial class InstanceSetupPageModel(
         var picker = new CollectionPickerDialog { ExistingCollections = GetExistingCollections() };
         if (moveOutCount > 0)
         {
-            picker.Message = LanguageManager.Instance.CollectionPickerDialog_MoveSummaryFormat.Current()
-                             .Replace("{0}", (selected.Count - moveOutCount).ToString())
-                             .Replace("{1}", moveOutCount.ToString());
+            picker.Message = LanguageManager
+                            .Instance.CollectionPickerDialog_MoveSummaryFormat.Current()
+                            .Replace("{0}", (selected.Count - moveOutCount).ToString())
+                            .Replace("{1}", moveOutCount.ToString());
         }
 
         if (!await overlayService.PopDialogAsync(picker) || picker.Result is not CollectionModel collection)
@@ -2326,10 +2329,10 @@ public partial class InstanceSetupPageModel(
             try
             {
                 var project = await dataService.QueryProjectAsync(source.ToProjectIdentifier());
-                overlayService.PopToast<ExhibitModpackToast>(
-                    new ExhibitModpackToastModel.Parameter(ExhibitModpackModel.From(project),
-                                                           AssetUriIndex.DirtImage,
-                                                           InstallVersionCommand));
+                overlayService.PopToast<ExhibitModpackToast>(new ExhibitModpackToastModel.Parameter(ExhibitModpackModel
+                                                                    .From(project),
+                                                                 AssetUriIndex.DirtImage,
+                                                                 InstallVersionCommand));
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)

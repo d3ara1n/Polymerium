@@ -482,7 +482,7 @@ public partial class InstancePackageModal : Modal
             }
 
             var loader = LoaderHelper.TryParse(Guard.Value.Setup.Loader, out var result) ? result.Identity : null;
-            var resolvedPackages = await PackageResolver.ResolveAsync([Model.Owner.Entry], new(Guard.Value.Setup.Version, loader, null));
+            var resolvedPackages = await PackageResolver.ResolveAsync([Model.Owner.Entry], new(Guard.Value.Setup.Version, loader, null, null));
             var plans = PackagePlanner.Plan(resolvedPackages, [.. Guard.Value.Setup.Rules.Where(x => x.Enabled)]);
             var plan = plans.First();
             var realPath = Path.Combine(PathDef.Default.DirectoryOfBuild(Guard.Key), plan.RelativeTargetPath);
@@ -734,7 +734,7 @@ public partial class InstancePackageModal : Modal
         try
         {
             var loader = LoaderHelper.TryParse(Guard.Value.Setup.Loader, out var result) ? result.Identity : null;
-            var resolvedPackages = await PackageResolver.ResolveAsync([Model.Owner.Entry], new(Guard.Value.Setup.Version, loader, null));
+            var resolvedPackages = await PackageResolver.ResolveAsync([Model.Owner.Entry], new(Guard.Value.Setup.Version, loader, null, null));
             var plans = PackagePlanner.Plan(resolvedPackages, [.. Guard.Value.Setup.Rules.Where(x => x.Enabled)]);
             await PackageMaterializer.MaterializeAsync(plans);
             progress.Dispose();

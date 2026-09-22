@@ -139,7 +139,7 @@ public class DataService(
                     {
                         var handle = await agent.SearchAsync(CurseForgeHelper.LABEL,
                                                              string.Empty,
-                                                             new(null, null, ResourceKind.Modpack));
+                                                             new(null, null, ResourceKind.Modpack, null));
                         var exhibits = await handle.FetchAsync(CancellationToken.None);
                         var models = exhibits.Take(5);
                         return models;
