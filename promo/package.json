@@ -1,34 +1,26 @@
 {
-  "name": "promo",
-  "version": "1.0.0",
-  "description": "My Remotion video",
-  "repository": {},
-  "license": "UNLICENSED",
+  "name": "polymerium-promo",
   "private": true,
-  "dependencies": {
-    "@remotion/cli": "4.0.500",
-    "@remotion/google-fonts": "^4.0.500",
-    "@remotion/tailwind-v4": "4.0.500",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "remotion": "4.0.500",
-    "tailwindcss": "4.0.0"
-  },
-  "devDependencies": {
-    "@remotion/eslint-config-flat": "4.0.500",
-    "@types/react": "19.2.7",
-    "@types/web": "0.0.166",
-    "eslint": "9.19.0",
-    "prettier": "3.8.1",
-    "typescript": "5.9.3"
+  "type": "module",
+  "engines": {
+    "node": ">=22"
   },
   "scripts": {
-    "dev": "remotion studio",
-    "build": "remotion bundle",
-    "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "prepare": "node scripts/prepare.mjs",
+    "dev": "node scripts/prepare.mjs && hyperframes preview --foreground",
+    "lint": "node scripts/prepare.mjs && hyperframes lint",
+    "doctor": "hyperframes doctor",
+    "browser:install": "hyperframes browser ensure",
+    "check": "node scripts/prepare.mjs && hyperframes check",
+    "snapshot": "node scripts/prepare.mjs && hyperframes snapshot --at 2.5,6.5,12,20,27,33,40",
+    "render": "node scripts/prepare.mjs && node scripts/require-assets.mjs && hyperframes render --quality high --fps 60 --output renders/polymerium-launch-zh.mp4",
+    "render:docker": "node scripts/prepare.mjs && node scripts/require-assets.mjs && hyperframes render --docker --quality high --fps 60 --output renders/polymerium-launch-zh.mp4"
   },
-  "sideEffects": [
-    "*.css"
-  ]
+  "devDependencies": {
+    "gsap": "3.14.2",
+    "hyperframes": "0.8.59"
+  },
+  "dependencies": {
+    "@fontsource-variable/noto-sans-sc": "5.3.0"
+  }
 }

@@ -1,10 +1,12 @@
-node_modules
-dist
+node_modules/
+.cache/
+.hyperframes/
+.media/
+renders/
+snapshots/
+assets/vendor/
 .DS_Store
-.env
-
-# Ignore the output video from Git but not videos you import into src/.
-out
-
-# generated scores (regenerate: node scripts/make-music.mjs)
-public/music-*.wav
+assets/fonts/
+fonts.css
+assets/manifest.js
+.thumbnails/

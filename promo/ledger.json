@@ -1,0 +1,11 @@
+{
+  "fps": 60,
+  "seams": [
+    {"id":"hook-brand","cut":4,"technique":"cut-the-curve LEFT","exit":{"selector":"#s-hook","axis":"x","dir":-1},"entry":{"selector":"#s-brand","axis":"x","dir":-1}},
+    {"id":"brand-discover","cut":8,"technique":"cut-the-curve LEFT","exit":{"selector":"#s-brand","axis":"x","dir":-1},"entry":{"selector":"#s-discover","axis":"x","dir":-1}},
+    {"id":"discover-organize","cut":15,"technique":"cut-the-curve LEFT","exit":{"selector":"#s-discover","axis":"x","dir":-1},"entry":{"selector":"#s-organize","axis":"x","dir":-1}},
+    {"id":"organize-gallery","cut":24,"technique":"cut-the-curve LEFT","exit":{"selector":"#s-organize","axis":"x","dir":-1},"entry":{"selector":"#s-gallery","axis":"x","dir":-1}},
+    {"id":"gallery-launch","cut":30,"technique":"cut-the-curve LEFT","exit":{"selector":"#s-gallery","axis":"x","dir":-1},"entry":{"selector":"#s-launch","axis":"x","dir":-1}},
+    {"id":"launch-outro","cut":36,"technique":"cut-the-curve LEFT","exit":{"selector":"#s-launch","axis":"x","dir":-1},"entry":{"selector":"#s-outro","axis":"x","dir":-1}}
+  ]
+}
