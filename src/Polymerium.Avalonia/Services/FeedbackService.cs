@@ -56,7 +56,7 @@ public class FeedbackService
         {
             Level = SentryLevel.Info,
             Release = Program.Version,
-            Environment = "Production",
+            Environment = Program.Environment,
             Contexts = { Feedback = original.Contexts.Feedback }
         };
         feedback.SetTag("feedback.platform", RuntimeInformation.OSDescription);

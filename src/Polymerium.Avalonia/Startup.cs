@@ -248,57 +248,54 @@ public static class Startup
         //  Huskui 以 NuGet 消费、无法挂 BlurBackdrop.ExcludeFromCapture，只能在此按名登记全局排除。
         BlurBackdrop.ExcludedRoots.Add("PART_SmokeMask");
 
-        #region SentrySdk Init (only in Release)
+        #region SentrySdk Init
 
-        IsCrashReportingEnabled = !Program.IsDebug && !File.Exists(PathDef.Default.FileOfTelemetrySwitch());
-        if (!Program.IsDebug)
+        IsCrashReportingEnabled = !File.Exists(PathDef.Default.FileOfTelemetrySwitch());
+        SentrySdk.Init(options =>
         {
-            SentrySdk.Init(options =>
+            options.Dsn = "https://70f1e791a5f2b8cb31f0947a1bac5e7a@o941379.ingest.us.sentry.io/4510328831410176";
+            options.Environment = Program.Environment;
+            options.Release = Program.Version;
+            options.SendDefaultPii = false;
+            options.SetBeforeSendFeedback(FeedbackService.PrepareEvent);
+
+            if (IsCrashReportingEnabled)
             {
-                options.Dsn = "https://70f1e791a5f2b8cb31f0947a1bac5e7a@o941379.ingest.us.sentry.io/4510328831410176";
-                options.Environment = "Production";
-                options.Release = Program.Version;
-                options.SendDefaultPii = false;
-                options.SetBeforeSendFeedback(FeedbackService.PrepareEvent);
-
-                if (IsCrashReportingEnabled)
+                options.AutoSessionTracking = true;
+                options.CacheDirectoryPath = PathDef.Default.PrivateCacheDirectory();
+                options.AddExceptionFilterForType<OperationCanceledException>();
+                options.AddExceptionFilterForType<TaskCanceledException>();
+                options.SetBeforeSend(@event =>
                 {
-                    options.AutoSessionTracking = true;
-                    options.CacheDirectoryPath = PathDef.Default.PrivateCacheDirectory();
-                    options.AddExceptionFilterForType<OperationCanceledException>();
-                    options.AddExceptionFilterForType<TaskCanceledException>();
-                    options.SetBeforeSend(@event =>
+                    if (@event.Tags.TryGetValue("polymerium.source", out var source))
                     {
-                        if (@event.Tags.TryGetValue("polymerium.source", out var source))
-                        {
-                            @event.SetFingerprint("{{ default }}", source);
-                        }
+                        @event.SetFingerprint("{{ default }}", source);
+                    }
 
-                        return @event;
-                    });
-                }
-                else
-                {
-                    // WARNING: Reusing the telemetry cache would resend stored errors after opting out.
-                    options.CacheDirectoryPath = null;
-                    options.DisableFileWrite = true;
-                    options.AutoSessionTracking = false;
-                    options.SendClientReports = false;
-                    options.MaxBreadcrumbs = 0;
-                    options.TracesSampleRate = 0;
-                    options.DisableAppDomainUnhandledExceptionCapture();
-                    options.DisableUnobservedTaskExceptionCapture();
-                    options.DisableWinUiUnhandledExceptionIntegration();
-                    options.DisableDiagnosticSourceIntegration();
-                    options.DisableSystemDiagnosticsMetricsIntegration();
-                    options.SetBeforeSend(_ => null);
-                    options.SetBeforeSendTransaction((_, _) => null);
-                    options.SetBeforeSendLog(_ => null);
-                    options.SetBeforeSendMetric(_ => null);
-                }
-            });
-            _sentryInitialized = true;
-        }
+                    return @event;
+                });
+            }
+            else
+            {
+                // WARNING: Reusing the telemetry cache would resend stored errors after opting out.
+                options.CacheDirectoryPath = null;
+                options.DisableFileWrite = true;
+                options.AutoSessionTracking = false;
+                options.SendClientReports = false;
+                options.MaxBreadcrumbs = 0;
+                options.TracesSampleRate = 0;
+                options.DisableAppDomainUnhandledExceptionCapture();
+                options.DisableUnobservedTaskExceptionCapture();
+                options.DisableWinUiUnhandledExceptionIntegration();
+                options.DisableDiagnosticSourceIntegration();
+                options.DisableSystemDiagnosticsMetricsIntegration();
+                options.SetBeforeSend(_ => null);
+                options.SetBeforeSendTransaction((_, _) => null);
+                options.SetBeforeSendLog(_ => null);
+                options.SetBeforeSendMetric(_ => null);
+            }
+        });
+        _sentryInitialized = true;
 
         #endregion
 
