@@ -26,6 +26,9 @@ internal static class Program
 
     public static readonly string Version = GitVersionInformation.SemVer;
 
+    public static readonly string Environment =
+        IsDebug || Version.Contains('-', StringComparison.Ordinal) ? "Development" : "Production";
+
     public static readonly string ReleaseDate = GitVersionInformation.CommitDate;
 
     public static readonly string CommitHash = GitVersionInformation.ShortSha;
