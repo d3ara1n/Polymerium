@@ -4095,11 +4095,17 @@
     <data name="InstancesPage_NewInstanceButtonText" xml:space="preserve">
         <value>新建实例</value>
     </data>
-    <data name="InstancesPage_SortByLastPlayed" xml:space="preserve">
-        <value>上次游玩</value>
+    <data name="InstancesPage_SortByLastPlayedDescending" xml:space="preserve">
+        <value>上次游玩（最新）</value>
     </data>
-    <data name="InstancesPage_SortByName" xml:space="preserve">
-        <value>名称</value>
+    <data name="InstancesPage_SortByLastPlayedAscending" xml:space="preserve">
+        <value>上次游玩（最早）</value>
+    </data>
+    <data name="InstancesPage_SortByNameAscending" xml:space="preserve">
+        <value>名称（A-Z）</value>
+    </data>
+    <data name="InstancesPage_SortByNameDescending" xml:space="preserve">
+        <value>名称（Z-A）</value>
     </data>
     <data name="InstancesPage_GroupNone" xml:space="preserve">
         <value>不分组</value>
@@ -4109,6 +4115,12 @@
     </data>
     <data name="InstancesPage_GroupVersion" xml:space="preserve">
         <value>游戏版本</value>
+    </data>
+    <data name="InstancesPage_GroupSnapshot" xml:space="preserve">
+        <value>{0} 快照</value>
+    </data>
+    <data name="InstancesPage_GroupOther" xml:space="preserve">
+        <value>其他</value>
     </data>
     <data name="InstancesPage_GroupLastPlayed" xml:space="preserve">
         <value>上次游玩</value>

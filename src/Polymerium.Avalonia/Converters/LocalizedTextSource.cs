@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Avalonia;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Styling;
+using Polymerium.Avalonia.Models;
 
 namespace Polymerium.Avalonia.Converters;
 
@@ -57,6 +59,12 @@ internal sealed class LocalizedTextSource : StyledElement
     private static IObservable<object?> Resolve(object? raw)
     {
         if (raw == AvaloniaProperty.UnsetValue) return Observable.Return<object?>(AvaloniaProperty.UnsetValue);
+
+        if (raw is LocalizedLabelBase label)
+        {
+            return ResolveLabel(label);
+        }
+
         var key = raw switch
         {
             null => null,
@@ -69,6 +77,26 @@ internal sealed class LocalizedTextSource : StyledElement
             ? observable
             : Observable.Return(raw);
     }
+
+    private static IObservable<object?> ResolveLabel(LocalizedLabelBase label) =>
+        label switch
+        {
+            LocalizedLabelBase.LiteralLabel literal => Observable.Return<object?>(literal.Value),
+            LocalizedLabelBase.KeyLabel key => ResolveKey(key.Value, key.Value),
+            LocalizedLabelBase.FormattedLabel formatted => ResolveFormatted(formatted),
+            _ => Observable.Return<object?>(AvaloniaProperty.UnsetValue)
+        };
+
+    private static IObservable<object?> ResolveKey(string key, object? fallback) =>
+        LanguageManager.Instance.GetObservable(key) ?? Observable.Return(fallback);
+
+    private static IObservable<object?> ResolveFormatted(LocalizedLabelBase.FormattedLabel label) =>
+        LanguageManager.Instance.GetObservable(label.FormatKey) is { } observable
+            ? observable.Select(value => Format(value ?? label.FormatKey, label.Arguments))
+            : Observable.Return<object?>(label.FormatKey);
+
+    private static string Format(string format, IReadOnlyList<object?> arguments) =>
+        string.Format(CultureInfo.CurrentCulture, format, arguments.ToArray());
 
     private sealed class KeyConverter : IMultiValueConverter
     {
