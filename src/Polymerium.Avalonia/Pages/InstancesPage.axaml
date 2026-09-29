@@ -155,11 +155,12 @@
                         Content="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_GroupLastPlayed}}" />
                 </ComboBox>
                 <ComboBox
-                    MinWidth="140"
-                    SelectedIndex="{Binding SortIndex}">
-                    <ComboBoxItem
-                        Content="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_SortByLastPlayed}}" />
-                    <ComboBoxItem Content="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_SortByName}}" />
+                    MinWidth="190"
+                    SelectedIndex="{Binding OrderIndex}">
+                    <ComboBoxItem Content="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_SortByLastPlayedDescending}}" />
+                    <ComboBoxItem Content="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_SortByLastPlayedAscending}}" />
+                    <ComboBoxItem Content="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_SortByNameAscending}}" />
+                    <ComboBoxItem Content="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_SortByNameDescending}}" />
                 </ComboBox>
             </StackPanel>
         </Grid>

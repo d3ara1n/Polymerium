@@ -4104,11 +4104,17 @@ Affected entries: {0}
     <data name="InstancesPage_NewInstanceButtonText" xml:space="preserve">
         <value>New Instance</value>
     </data>
-    <data name="InstancesPage_SortByLastPlayed" xml:space="preserve">
-        <value>Last Played</value>
+    <data name="InstancesPage_SortByLastPlayedDescending" xml:space="preserve">
+        <value>Last Played (Newest First)</value>
     </data>
-    <data name="InstancesPage_SortByName" xml:space="preserve">
-        <value>Name</value>
+    <data name="InstancesPage_SortByLastPlayedAscending" xml:space="preserve">
+        <value>Last Played (Oldest First)</value>
+    </data>
+    <data name="InstancesPage_SortByNameAscending" xml:space="preserve">
+        <value>Name (A-Z)</value>
+    </data>
+    <data name="InstancesPage_SortByNameDescending" xml:space="preserve">
+        <value>Name (Z-A)</value>
     </data>
     <data name="InstancesPage_GroupNone" xml:space="preserve">
         <value>Ungrouped</value>
@@ -4118,6 +4124,12 @@ Affected entries: {0}
     </data>
     <data name="InstancesPage_GroupVersion" xml:space="preserve">
         <value>Game Version</value>
+    </data>
+    <data name="InstancesPage_GroupSnapshot" xml:space="preserve">
+        <value>{0} Snapshots</value>
+    </data>
+    <data name="InstancesPage_GroupOther" xml:space="preserve">
+        <value>Other</value>
     </data>
     <data name="InstancesPage_GroupLastPlayed" xml:space="preserve">
         <value>Last Played</value>

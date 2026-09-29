@@ -7,6 +7,7 @@ using System.Reactive.Disposables.Fluent;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -37,8 +38,17 @@ public partial class InstancesPageModel(
     private readonly CompositeDisposable _disposables = new();
     private readonly List<InstanceFilterBase> _filters = [];
     private IDisposable? _pipeline;
-    private const string VANILLA_LABEL = "Enum_Vanilla";
-    private const string UNGROUPED_LABEL = "InstancesPage_GroupNone";
+    private const string VANILLA_LABEL_KEY = "Enum_Vanilla";
+    private const string UNGROUPED_LABEL_KEY = "InstancesPage_GroupNone";
+    private const string FILTER_LOADER_LABEL_KEY = "InstancesPage_FilterLoaderLabel";
+    private const string FILTER_TAGS_LABEL_KEY = "InstancesPage_FilterTagsLabel";
+    private const string GROUP_SNAPSHOT_LABEL_KEY = "InstancesPage_GroupSnapshot";
+    private const string GROUP_OTHER_LABEL_KEY = "InstancesPage_GroupOther";
+    private const string GROUP_NEVER_LABEL_KEY = "InstancesPage_GroupNever";
+    private const string GROUP_TODAY_LABEL_KEY = "InstancesPage_GroupToday";
+    private const string GROUP_THIS_WEEK_LABEL_KEY = "InstancesPage_GroupThisWeek";
+    private const string GROUP_THIS_MONTH_LABEL_KEY = "InstancesPage_GroupThisMonth";
+    private const string GROUP_EARLIER_LABEL_KEY = "InstancesPage_GroupEarlier";
 
     #region Reactive
 
@@ -46,7 +56,7 @@ public partial class InstancesPageModel(
     public partial string? FilterText { get; set; }
 
     [ObservableProperty]
-    public partial int SortIndex { get; set; }
+    public partial int OrderIndex { get; set; }
 
     [ObservableProperty]
     public partial int GroupIndex { get; set; }
@@ -90,7 +100,8 @@ public partial class InstancesPageModel(
            .Subscribe(x => AnyFilterActive = x)
            .DisposeWith(_disposables);
 
-        GroupIndex = configurationService.Value.ApplicationInterfaceInstancesPageGrouping;
+        GroupIndex = configurationService.Value.ApplicationInterfaceInstancesPageGroup;
+        OrderIndex = configurationService.Value.ApplicationInterfaceInstancesPageOrder;
 
         RebuildPipeline();
 
@@ -120,11 +131,15 @@ public partial class InstancesPageModel(
 
     #region Pipeline
 
-    partial void OnSortIndexChanged(int value) => RebuildPipeline();
+    partial void OnOrderIndexChanged(int value)
+    {
+        configurationService.Value.ApplicationInterfaceInstancesPageOrder = value;
+        RebuildPipeline();
+    }
 
     partial void OnGroupIndexChanged(int value)
     {
-        configurationService.Value.ApplicationInterfaceInstancesPageGrouping = value;
+        configurationService.Value.ApplicationInterfaceInstancesPageGroup = value;
         RebuildPipeline();
     }
 
@@ -132,11 +147,11 @@ public partial class InstancesPageModel(
     {
         _filters.Add(new MultiSelectInstanceFilter(_cards.Connect(),
                                                    GetLoaderValues,
-                                                   "InstancesPage_FilterLoaderLabel"));
+                                                   FILTER_LOADER_LABEL_KEY));
 
         _filters.Add(new MultiSelectInstanceFilter(_cards.Connect(),
                                                    card => card.Tags,
-                                                   "InstancesPage_FilterTagsLabel"));
+                                                   FILTER_TAGS_LABEL_KEY));
     }
 
     private static IEnumerable<string> GetLoaderValues(InstanceCardModel card)
@@ -147,7 +162,7 @@ public partial class InstancesPageModel(
     private static string GetLoaderValue(InstanceCardModel card) =>
         LoaderHelper.TryParse(card.Basic.Loader, out var result)
             ? LoaderHelper.ToDisplayName(result.Identity)
-            : VANILLA_LABEL;
+            : VANILLA_LABEL_KEY;
 
     private void RebuildPipeline()
     {
@@ -159,82 +174,149 @@ public partial class InstancesPageModel(
                       .Select(xs => xs.Aggregate(new Func<InstanceCardModel, bool>(_ => true),
                                                  (acc, p) => x => acc(x) && p(x)));
 
-        var comparer = BuildComparer(SortIndex);
+        var comparer = BuildInstanceComparer(OrderIndex);
         var bound = _cards.Connect()
                           .Filter(combined)
                           .Group(GetGroupKey)
                           .Transform(g => new InstanceGroupModel(g, comparer))
                           .DisposeMany()
-                          .SortAndBind(out var groups, BuildGroupComparer(GroupIndex));
+                          .AutoRefresh(x => x.FirstCardVersion)
+                          .SortAndBind(out var groups, BuildGroupComparer(comparer));
 
         _pipeline = bound.Subscribe();
         Groups = groups;
     }
 
-    private string GetGroupKey(InstanceCardModel card) => GroupIndex switch
+    private InstanceGroupKey GetGroupKey(InstanceCardModel card) => GroupIndex switch
     {
-        1 => GetLoaderValue(card),
-        2 => card.Basic.Version,
-        3 => BucketLastPlayed(card.LastPlayedAtRaw),
-        _ => UNGROUPED_LABEL
+        1 => GetLoaderGroupKey(card),
+        2 => GetVersionGroupKey(card.Basic.Version),
+        3 => GetLastPlayedGroupKey(card.LastPlayedAtRaw),
+        _ => new(
+            "none",
+            LocalizedLabelBase.Key(UNGROUPED_LABEL_KEY))
     };
 
-    private static string BucketLastPlayed(DateTimeOffset? lastPlayed)
+    private static InstanceGroupKey GetLoaderGroupKey(InstanceCardModel card)
     {
-        if (lastPlayed is null)
-        {
-            return "InstancesPage_GroupNever";
-        }
-
-        var now = DateTimeOffset.Now;
-        return lastPlayed.Value.Date == now.Date
-            ? "InstancesPage_GroupToday"
-            : now - lastPlayed.Value < TimeSpan.FromDays(7)
-                ? "InstancesPage_GroupThisWeek"
-                : lastPlayed.Value.Year == now.Year && lastPlayed.Value.Month == now.Month
-                    ? "InstancesPage_GroupThisMonth"
-                    : "InstancesPage_GroupEarlier";
+        var value = GetLoaderValue(card);
+        return new(
+            $"loader:{value}",
+            LocalizedLabelBase.Key(value));
     }
 
-    private static IComparer<InstanceGroupModel> BuildGroupComparer(int groupIndex) => groupIndex switch
+    private static InstanceGroupKey GetVersionGroupKey(string value)
     {
-        1 => Comparer<InstanceGroupModel>.Create(static (a, b) =>
+        var weeklySnapshot = LegacySnapshotRegex().Match(value.Trim());
+        if (weeklySnapshot.Success)
         {
-            if (a.Label == VANILLA_LABEL)
+            var year = 2000 + int.Parse(weeklySnapshot.Groups["year"].Value);
+            return new(
+                $"snapshot:{year}",
+                LocalizedLabelBase.Formatted(GROUP_SNAPSHOT_LABEL_KEY, year));
+        }
+
+        var dottedVersion = DottedVersionRegex().Match(value.Trim());
+        if (!dottedVersion.Success)
+        {
+            return new(
+                "version:other",
+                LocalizedLabelBase.Key(GROUP_OTHER_LABEL_KEY));
+        }
+
+        var major = int.Parse(dottedVersion.Groups["major"].Value);
+        var minor = int.Parse(dottedVersion.Groups["minor"].Value);
+        var groupMinor = major == 1 ? minor : 0;
+        var label = major == 1 ? $"1.{minor}" : major.ToString();
+        return new(
+            $"version:{major}:{groupMinor}",
+            LocalizedLabelBase.Literal(label));
+    }
+
+    private static InstanceGroupKey GetLastPlayedGroupKey(DateTimeOffset? lastPlayed)
+    {
+        var label = lastPlayed is null
+            ? GROUP_NEVER_LABEL_KEY
+            : BucketLastPlayed(lastPlayed.Value);
+        return new(
+            $"last-played:{label}",
+            LocalizedLabelBase.Key(label));
+    }
+
+    private static string BucketLastPlayed(DateTimeOffset lastPlayed)
+    {
+        var now = DateTimeOffset.Now;
+        return lastPlayed.Date == now.Date
+            ? GROUP_TODAY_LABEL_KEY
+            : now - lastPlayed < TimeSpan.FromDays(7)
+                ? GROUP_THIS_WEEK_LABEL_KEY
+                : lastPlayed.Year == now.Year && lastPlayed.Month == now.Month
+                    ? GROUP_THIS_MONTH_LABEL_KEY
+                    : GROUP_EARLIER_LABEL_KEY;
+    }
+
+    private static IComparer<InstanceGroupModel> BuildGroupComparer(IComparer<InstanceCardModel> comparer) =>
+        Comparer<InstanceGroupModel>.Create((a, b) =>
+        {
+            var result = (a.FirstCard, b.FirstCard) switch
             {
-                return b.Label == VANILLA_LABEL ? 0 : -1;
+                (null, null) => 0,
+                (null, _) => 1,
+                (_, null) => -1,
+                (var first, var second) => comparer.Compare(first, second)
+            };
+
+            return result != 0
+                ? result
+                : string.CompareOrdinal(a.Key.Identity, b.Key.Identity);
+        });
+
+    private static IComparer<InstanceCardModel> BuildInstanceComparer(int sortIndex) =>
+        Comparer<InstanceCardModel>.Create((a, b) =>
+        {
+            var result = sortIndex switch
+            {
+                1 => CompareLastPlayed(a, b, ascending: true),
+                2 => string.Compare(a.Basic.Name, b.Basic.Name, StringComparison.OrdinalIgnoreCase),
+                3 => string.Compare(b.Basic.Name, a.Basic.Name, StringComparison.OrdinalIgnoreCase),
+                _ => CompareLastPlayed(a, b, ascending: false)
+            };
+
+            return result != 0
+                ? result
+                : string.CompareOrdinal(a.Basic.Key, b.Basic.Key);
+        });
+
+    private static int CompareLastPlayed(
+        InstanceCardModel a,
+        InstanceCardModel b,
+        bool ascending)
+    {
+        if (a.LastPlayedAtRaw is null || b.LastPlayedAtRaw is null)
+        {
+            if (a.LastPlayedAtRaw is null && b.LastPlayedAtRaw is null)
+            {
+                return 0;
             }
 
-            return b.Label == VANILLA_LABEL ? 1 : string.CompareOrdinal(a.Label, b.Label);
-        }),
-        2 => Comparer<InstanceGroupModel>.Create(static (a, b) =>
-            Version.TryParse(a.Label, out var va) && Version.TryParse(b.Label, out var vb)
-                ? vb.CompareTo(va)
-                : string.CompareOrdinal(b.Label, a.Label)),
-        3 => Comparer<InstanceGroupModel>.Create(static (a, b) => RankOfBucket(a.Label).CompareTo(RankOfBucket(b.Label))),
-        _ => Comparer<InstanceGroupModel>.Default
-    };
+            return a.LastPlayedAtRaw is null ? 1 : -1;
+        }
 
-    private static int RankOfBucket(string label) => label switch
-    {
-        "InstancesPage_GroupToday" => 0,
-        "InstancesPage_GroupThisWeek" => 1,
-        "InstancesPage_GroupThisMonth" => 2,
-        "InstancesPage_GroupEarlier" => 3,
-        _ => 4
-    };
+        var result = a.LastPlayedAtRaw.Value.CompareTo(b.LastPlayedAtRaw.Value);
+        return ascending ? result : -result;
+    }
+
+    [GeneratedRegex(@"^(?<year>\d{2})w\d{2}[a-z]$", RegexOptions.IgnoreCase)]
+    private static partial Regex LegacySnapshotRegex();
+
+    [GeneratedRegex(@"^(?<major>\d+)\.(?<minor>\d+)(?:\.|-|$)")]
+    private static partial Regex DottedVersionRegex();
 
     private static Func<InstanceCardModel, bool> BuildTextFilter(string? filter) =>
         string.IsNullOrEmpty(filter)
             ? _ => true
             : x => x.Basic.Name.Contains(filter, StringComparison.OrdinalIgnoreCase);
 
-    private static IComparer<InstanceCardModel> BuildComparer(int sortIndex) =>
-        sortIndex switch
-        {
-            1 => SortExpressionComparer<InstanceCardModel>.Ascending(x => x.Basic.Name),
-            _ => SortExpressionComparer<InstanceCardModel>.Descending(x => x.LastPlayedAtRaw ?? DateTimeOffset.MinValue)
-        };
 
     #endregion
 
