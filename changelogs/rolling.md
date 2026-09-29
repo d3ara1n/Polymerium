@@ -4,6 +4,7 @@
 
 - Fix bulk package update suggestions to match each package's current release type
 - Add in-app feedback that remains available with automatic crash reporting turned off
+- Add instance list grouping by loader, game version or last played date
 
 ### Fixed
 
@@ -13,6 +14,7 @@
 ### Added
 
 - Add in-app feedback that remains available with automatic crash reporting turned off
+- Add instance list grouping by loader, game version or last played date (#POLY-23)
 
 ### Changed
 

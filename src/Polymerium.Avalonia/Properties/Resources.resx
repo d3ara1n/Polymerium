@@ -4110,6 +4110,33 @@ Affected entries: {0}
     <data name="InstancesPage_SortByName" xml:space="preserve">
         <value>Name</value>
     </data>
+    <data name="InstancesPage_GroupNone" xml:space="preserve">
+        <value>Ungrouped</value>
+    </data>
+    <data name="InstancesPage_GroupLoader" xml:space="preserve">
+        <value>Loader</value>
+    </data>
+    <data name="InstancesPage_GroupVersion" xml:space="preserve">
+        <value>Game Version</value>
+    </data>
+    <data name="InstancesPage_GroupLastPlayed" xml:space="preserve">
+        <value>Last Played</value>
+    </data>
+    <data name="InstancesPage_GroupToday" xml:space="preserve">
+        <value>Today</value>
+    </data>
+    <data name="InstancesPage_GroupThisWeek" xml:space="preserve">
+        <value>This Week</value>
+    </data>
+    <data name="InstancesPage_GroupThisMonth" xml:space="preserve">
+        <value>This Month</value>
+    </data>
+    <data name="InstancesPage_GroupEarlier" xml:space="preserve">
+        <value>Earlier</value>
+    </data>
+    <data name="InstancesPage_GroupNever" xml:space="preserve">
+        <value>Never Played</value>
+    </data>
     <data name="InstancesPage_FilterButtonText" xml:space="preserve">
         <value>Filter</value>
     </data>

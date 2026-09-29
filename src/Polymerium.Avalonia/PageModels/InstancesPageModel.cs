@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
@@ -30,12 +31,14 @@ public partial class InstancesPageModel(
     PersistenceService persistenceService,
     InstanceService instanceService,
     NavigationService navigationService,
+    ConfigurationService configurationService,
     OverlayService overlayService) : ViewModelBase
 {
     private readonly SourceCache<InstanceCardModel, string> _cards = new(x => x.Basic.Key);
     private readonly CompositeDisposable _disposables = new();
     private readonly List<InstanceFilterBase> _filters = [];
     private IDisposable? _pipeline;
+    private const string VANILLA_LABEL = "Enum_Vanilla";
 
     #region Reactive
 
@@ -46,6 +49,9 @@ public partial class InstancesPageModel(
     public partial int SortIndex { get; set; }
 
     [ObservableProperty]
+    public partial int GroupIndex { get; set; }
+
+    [ObservableProperty]
     public partial bool AnyFilterActive { get; set; }
 
     [ObservableProperty]
@@ -53,7 +59,7 @@ public partial class InstancesPageModel(
 
     public IReadOnlyList<InstanceFilterBase> Filters => _filters;
 
-    public ReadOnlyObservableCollection<InstanceCardModel> View
+    public ReadOnlyObservableCollection<InstanceGroupModel> Groups
     {
         get;
         private set => SetProperty(ref field, value);
@@ -83,6 +89,8 @@ public partial class InstancesPageModel(
            .Select(xs => xs.Any(x => x))
            .Subscribe(x => AnyFilterActive = x)
            .DisposeWith(_disposables);
+
+        GroupIndex = configurationService.Value.ApplicationInterfaceInstancesPageGrouping;
 
         RebuildPipeline();
 
@@ -114,6 +122,12 @@ public partial class InstancesPageModel(
 
     partial void OnSortIndexChanged(int value) => RebuildPipeline();
 
+    partial void OnGroupIndexChanged(int value)
+    {
+        configurationService.Value.ApplicationInterfaceInstancesPageGrouping = value;
+        RebuildPipeline();
+    }
+
     private void SetupFilters()
     {
         _filters.Add(new MultiSelectInstanceFilter(_cards.Connect(),
@@ -127,10 +141,13 @@ public partial class InstancesPageModel(
 
     private static IEnumerable<string> GetLoaderValues(InstanceCardModel card)
     {
-        yield return LoaderHelper.TryParse(card.Basic.Loader, out var result)
-                         ? LoaderHelper.ToDisplayName(result.Identity)
-                         : "Enum_Vanilla";
+        yield return GetLoaderValue(card);
     }
+
+    private static string GetLoaderValue(InstanceCardModel card) =>
+        LoaderHelper.TryParse(card.Basic.Loader, out var result)
+            ? LoaderHelper.ToDisplayName(result.Identity)
+            : VANILLA_LABEL;
 
     private void RebuildPipeline()
     {
@@ -142,9 +159,78 @@ public partial class InstancesPageModel(
                       .Select(xs => xs.Aggregate(new Func<InstanceCardModel, bool>(_ => true),
                                                  (acc, p) => x => acc(x) && p(x)));
 
-        _pipeline = _cards.Connect().Filter(combined).SortAndBind(out var view, BuildComparer(SortIndex)).Subscribe();
-        View = view;
+        var comparer = BuildComparer(SortIndex);
+        var bound = _cards.Connect()
+                          .Filter(combined)
+                          .Group(GetGroupKey)
+                          .Transform(g => new InstanceGroupModel(g, comparer))
+                          .DisposeMany()
+                          .Sort(BuildGroupComparer(GroupIndex))
+                          .Bind(out var groups);
+        ((INotifyCollectionChanged)groups).CollectionChanged += (_, _) =>
+        {
+            var show = groups.Count > 1;
+            foreach (var g in groups)
+            {
+                g.ShowHeader = show;
+            }
+        };
+        _pipeline = bound.Subscribe();
+        Groups = groups;
     }
+
+    private string GetGroupKey(InstanceCardModel card) => GroupIndex switch
+    {
+        1 => GetLoaderValue(card),
+        2 => card.Basic.Version,
+        3 => BucketLastPlayed(card.LastPlayedAtRaw),
+        _ => string.Empty
+    };
+
+    private static string BucketLastPlayed(DateTimeOffset? lastPlayed)
+    {
+        if (lastPlayed is null)
+        {
+            return "InstancesPage_GroupNever";
+        }
+
+        var now = DateTimeOffset.Now;
+        return lastPlayed.Value.Date == now.Date
+            ? "InstancesPage_GroupToday"
+            : now - lastPlayed.Value < TimeSpan.FromDays(7)
+                ? "InstancesPage_GroupThisWeek"
+                : lastPlayed.Value.Year == now.Year && lastPlayed.Value.Month == now.Month
+                    ? "InstancesPage_GroupThisMonth"
+                    : "InstancesPage_GroupEarlier";
+    }
+
+    private static IComparer<InstanceGroupModel> BuildGroupComparer(int groupIndex) => groupIndex switch
+    {
+        1 => Comparer<InstanceGroupModel>.Create(static (a, b) =>
+        {
+            if (a.Label == VANILLA_LABEL)
+            {
+                return b.Label == VANILLA_LABEL ? 0 : -1;
+            }
+
+            return b.Label == VANILLA_LABEL ? 1 : string.CompareOrdinal(a.Label, b.Label);
+        }),
+        2 => Comparer<InstanceGroupModel>.Create(static (a, b) =>
+            Version.TryParse(a.Label, out var va) && Version.TryParse(b.Label, out var vb)
+                ? vb.CompareTo(va)
+                : string.CompareOrdinal(b.Label, a.Label)),
+        3 => Comparer<InstanceGroupModel>.Create(static (a, b) => RankOfBucket(a.Label).CompareTo(RankOfBucket(b.Label))),
+        _ => Comparer<InstanceGroupModel>.Default
+    };
+
+    private static int RankOfBucket(string label) => label switch
+    {
+        "InstancesPage_GroupToday" => 0,
+        "InstancesPage_GroupThisWeek" => 1,
+        "InstancesPage_GroupThisMonth" => 2,
+        "InstancesPage_GroupEarlier" => 3,
+        _ => 4
+    };
 
     private static Func<InstanceCardModel, bool> BuildTextFilter(string? filter) =>
         string.IsNullOrEmpty(filter)
@@ -311,6 +397,15 @@ public partial class InstancesPageModel(
         foreach (var filter in _filters)
         {
             filter.Clear();
+        }
+    }
+
+    [RelayCommand]
+    private void ToggleGroup(InstanceGroupModel? group)
+    {
+        if (group is not null)
+        {
+            group.IsExpanded = !group.IsExpanded;
         }
     }
 
