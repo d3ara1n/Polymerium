@@ -4101,6 +4101,33 @@
     <data name="InstancesPage_SortByName" xml:space="preserve">
         <value>名称</value>
     </data>
+    <data name="InstancesPage_GroupNone" xml:space="preserve">
+        <value>不分组</value>
+    </data>
+    <data name="InstancesPage_GroupLoader" xml:space="preserve">
+        <value>加载器</value>
+    </data>
+    <data name="InstancesPage_GroupVersion" xml:space="preserve">
+        <value>游戏版本</value>
+    </data>
+    <data name="InstancesPage_GroupLastPlayed" xml:space="preserve">
+        <value>上次游玩</value>
+    </data>
+    <data name="InstancesPage_GroupToday" xml:space="preserve">
+        <value>今天</value>
+    </data>
+    <data name="InstancesPage_GroupThisWeek" xml:space="preserve">
+        <value>本周</value>
+    </data>
+    <data name="InstancesPage_GroupThisMonth" xml:space="preserve">
+        <value>本月</value>
+    </data>
+    <data name="InstancesPage_GroupEarlier" xml:space="preserve">
+        <value>更早</value>
+    </data>
+    <data name="InstancesPage_GroupNever" xml:space="preserve">
+        <value>从未游玩</value>
+    </data>
     <data name="InstancesPage_FilterButtonText" xml:space="preserve">
         <value>筛选</value>
     </data>

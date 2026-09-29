@@ -41,6 +41,7 @@ public class Configuration
     public const string UPDATE_AUTO_CHECK = "Update.AutoCheck";
     public const string UPDATE_SOURCE = "Update.Source";
     public const string UPDATE_MIRRORCHYAN_CDK = "Update.MirrorChyan.Cdk";
+    public const string APPLICATION_INTERFACE_INSTANCESPAGE_GROUPING = "Application.Interface.InstancesPage.Grouping";
 
     private static readonly Dictionary<string, object?> DEFAULTS = new()
     {
@@ -80,7 +81,8 @@ public class Configuration
         { NETWORK_PROXY_PASSWORD, string.Empty },
         { UPDATE_AUTO_CHECK, !OperatingSystem.IsLinux() },
         { UPDATE_SOURCE, 0 },
-        { UPDATE_MIRRORCHYAN_CDK, string.Empty }
+        { UPDATE_MIRRORCHYAN_CDK, string.Empty },
+        { APPLICATION_INTERFACE_INSTANCESPAGE_GROUPING, 0 }
     };
 
     public static string[] SupportedLanguages { get; } = ["en-US", "zh-Hans"];
@@ -119,6 +121,7 @@ public class Configuration
     public bool UpdateAutoCheck { get; set; } = AccessDefault<bool>(UPDATE_AUTO_CHECK);
     public int UpdateSource { get; set; } = AccessDefault<int>(UPDATE_SOURCE);
     public string UpdateMirrorChyanCdk { get; set; } = AccessDefault<string>(UPDATE_MIRRORCHYAN_CDK);
+    public int ApplicationInterfaceInstancesPageGrouping { get; set; } = AccessDefault<int>(APPLICATION_INTERFACE_INSTANCESPAGE_GROUPING);
 
     public static T AccessDefault<T>(string key) => (T)DEFAULTS[key]!;
 }

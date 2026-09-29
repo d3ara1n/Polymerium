@@ -144,6 +144,14 @@
                     </Button.Flyout>
                 </Button>
                 <ComboBox
+                    MinWidth="120"
+                    SelectedIndex="{Binding GroupIndex}">
+                    <ComboBoxItem Content="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_GroupNone}}" />
+                    <ComboBoxItem Content="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_GroupLoader}}" />
+                    <ComboBoxItem Content="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_GroupVersion}}" />
+                    <ComboBoxItem Content="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_GroupLastPlayed}}" />
+                </ComboBox>
+                <ComboBox
                     MinWidth="140"
                     SelectedIndex="{Binding SortIndex}">
                     <ComboBoxItem Content="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_SortByLastPlayed}}" />
@@ -213,98 +221,145 @@
             <app:EmptyContainer
                 IsVisible="{Binding TotalCount, Converter={x:Static husk:NumberConverters.IsNonZero}}"
                 Icon="Search"
-                IsEmpty="{Binding View.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
+                IsEmpty="{Binding Groups.Count, Converter={x:Static husk:NumberConverters.IsZero}}"
                 Text="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_FilterEmptyText}}">
                 <ScrollViewer>
                     <ItemsControl
                         Padding="4"
-                        ItemsSource="{Binding View}">
+                        ItemsSource="{Binding Groups}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <husk:FlexWrapPanel
-                                    ColumnSpacing="12"
-                                    RowSpacing="12" />
+                                <StackPanel Spacing="20" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="app:InstanceCardModel">
-                                <app:InstanceCard
-                                    Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
-                                    CommandParameter="{Binding Basic.Key}">
-                                    <app:InstanceCard.ContextFlyout>
-                                        <MenuFlyout>
-                                            <MenuItem
-                                                Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).PlayCommand, FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding Basic.Key}"
-                                                Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_PlayMenuText}}"
-                                                Icon="{fie:SymbolIcon Symbol=Rocket,
-                                                                      FontSize={StaticResource MediumFontSize}}" />
-                                            <MenuItem
-                                                Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).DeployCommand, FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding Basic.Key}"
-                                                Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_DeployMenuText}}"
-                                                Icon="{fie:SymbolIcon Symbol=SettingsCogMultiple,
-                                                                      FontSize={StaticResource MediumFontSize}}" />
-                                            <MenuItem Header="-" />
-                                            <MenuItem
-                                                Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding Basic.Key}"
-                                                Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_ExportModpackMenuText}}"
-                                                Icon="{fie:SymbolIcon Symbol=FolderZip,
-                                                                      FontSize={StaticResource MediumFontSize}}" />
-                                            <MenuItem
-                                                Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding Basic.Key}"
-                                                Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_OpenFolderMenuText}}"
-                                                Icon="{fie:SymbolIcon Symbol=FolderOpen,
-                                                                      FontSize={StaticResource MediumFontSize}}" />
-                                            <MenuItem Header="-" />
-                                            <MenuItem
-                                                Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).GotoSetupCommand, FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding Basic.Key}"
-                                                Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_SetupMenuText}}"
-                                                Icon="{fie:SymbolIcon Symbol=BoxMultiple,
-                                                                      FontSize={StaticResource MediumFontSize}}" />
-                                            <MenuItem
-                                                Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).GotoPropertiesCommand, FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding Basic.Key}"
-                                                Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_PropertiesMenuText}}"
-                                                Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,
-                                                                      FontSize={StaticResource MediumFontSize}}" />
-                                            <MenuItem Header="-" />
-                                            <MenuItem
-                                                Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).EditTagsCommand, FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding Basic.Key}"
-                                                Header="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_EditTagsMenuText}}"
-                                                Icon="{fie:SymbolIcon Symbol=Tag,
-                                                                      FontSize={StaticResource MediumFontSize}}" />
-                                            <MenuItem
-                                                IsVisible="{Binding !IsPinned}"
-                                                Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).PinCommand, FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding Basic.Key}"
-                                                Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_PinMenuText}}"
-                                                Icon="{fie:SymbolIcon Symbol=Pin,
-                                                                      FontSize={StaticResource MediumFontSize}}" />
-                                            <MenuItem
-                                                IsVisible="{Binding IsPinned}"
-                                                Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).UnpinCommand, FallbackValue={x:Null}}"
-                                                CommandParameter="{Binding Basic.Key}"
-                                                Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_UnpinMenuText}}"
-                                                Icon="{fie:SymbolIcon Symbol=PinOff,
-                                                                      FontSize={StaticResource MediumFontSize}}" />
-                                        </MenuFlyout>
-                                    </app:InstanceCard.ContextFlyout>
-                                </app:InstanceCard>
+                            <DataTemplate x:DataType="app:InstanceGroupModel">
+                                <StackPanel Spacing="8">
+                                    <Button
+                                        Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).ToggleGroupCommand, FallbackValue={x:Null}}"
+                                        CommandParameter="{Binding}"
+                                        HorizontalAlignment="Left"
+                                        HorizontalContentAlignment="Stretch"
+                                        IsVisible="{Binding ShowHeader}"
+                                        Padding="8,4"
+                                        Theme="{StaticResource GhostButtonTheme}">
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <husk:SwitchContainer
+                                                VerticalAlignment="Center"
+                                                TargetType="x:Boolean"
+                                                Value="{Binding IsExpanded, Mode=OneWay}">
+                                                <husk:SwitchCase Value="True">
+                                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ChevronDown" />
+                                                </husk:SwitchCase>
+                                                <husk:SwitchCase Value="False">
+                                                    <fi:SymbolIcon FontSize="{StaticResource MediumFontSize}" Symbol="ChevronRight" />
+                                                </husk:SwitchCase>
+                                            </husk:SwitchContainer>
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                FontSize="{StaticResource MediumFontSize}"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{app:LocalizedKey {Binding Label}}" />
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                FontSize="{StaticResource SmallFontSize}"
+                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                                Text="{Binding Cards.Count, StringFormat='({0})'}" />
+                                        </StackPanel>
+                                    </Button>
+                                    <ItemsControl
+                                        IsVisible="{Binding IsExpanded}"
+                                        ItemsSource="{Binding Cards}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <husk:FlexWrapPanel
+                                                    ColumnSpacing="12"
+                                                    RowSpacing="12" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="app:InstanceCardModel">
+                                        <app:InstanceCard
+                                            Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).ViewInstanceCommand, FallbackValue={x:Null}}"
+                                            CommandParameter="{Binding Basic.Key}">
+                                            <app:InstanceCard.ContextFlyout>
+                                                <MenuFlyout>
+                                                    <MenuItem
+                                                        Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).PlayCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
+                                                        Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_PlayMenuText}}"
+                                                        Icon="{fie:SymbolIcon Symbol=Rocket,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                    <MenuItem
+                                                        Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).DeployCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
+                                                        Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_DeployMenuText}}"
+                                                        Icon="{fie:SymbolIcon Symbol=SettingsCogMultiple,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                    <MenuItem Header="-" />
+                                                    <MenuItem
+                                                        Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).ExportInstanceCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
+                                                        Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_ExportModpackMenuText}}"
+                                                        Icon="{fie:SymbolIcon Symbol=FolderZip,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                    <MenuItem
+                                                        Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).OpenFolderCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
+                                                        Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_OpenFolderMenuText}}"
+                                                        Icon="{fie:SymbolIcon Symbol=FolderOpen,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                    <MenuItem Header="-" />
+                                                    <MenuItem
+                                                        Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).GotoSetupCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
+                                                        Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_SetupMenuText}}"
+                                                        Icon="{fie:SymbolIcon Symbol=BoxMultiple,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                    <MenuItem
+                                                        Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).GotoPropertiesCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
+                                                        Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_PropertiesMenuText}}"
+                                                        Icon="{fie:SymbolIcon Symbol=WrenchScrewdriver,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                    <MenuItem Header="-" />
+                                                    <MenuItem
+                                                        Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).EditTagsCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
+                                                        Header="{Translate {x:Static app:LanguageManager+Keys.InstancesPage_EditTagsMenuText}}"
+                                                        Icon="{fie:SymbolIcon Symbol=Tag,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                    <MenuItem
+                                                        IsVisible="{Binding !IsPinned}"
+                                                        Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).PinCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
+                                                        Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_PinMenuText}}"
+                                                        Icon="{fie:SymbolIcon Symbol=Pin,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                    <MenuItem
+                                                        IsVisible="{Binding IsPinned}"
+                                                        Command="{Binding $parent[app:InstancesPage].((app:InstancesPageModel)DataContext).UnpinCommand, FallbackValue={x:Null}}"
+                                                        CommandParameter="{Binding Basic.Key}"
+                                                        Header="{Translate {x:Static app:LanguageManager+Keys.MainWindow_UnpinMenuText}}"
+                                                        Icon="{fie:SymbolIcon Symbol=PinOff,
+                                                                              FontSize={StaticResource MediumFontSize}}" />
+                                                </MenuFlyout>
+                                            </app:InstanceCard.ContextFlyout>
+                                        </app:InstanceCard>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemContainerTheme>
+                                    <ControlTheme TargetType="ContentPresenter">
+                                        <Setter Property="MinWidth" Value="180" />
+                                        <Setter Property="MaxWidth" Value="280" />
+                                        <Setter Property="MinHeight" Value="160" />
+                                        <Setter Property="MaxHeight" Value="260" />
+                                    </ControlTheme>
+                                </ItemsControl.ItemContainerTheme>
+                                    </ItemsControl>
+                                </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemContainerTheme>
-                            <ControlTheme TargetType="ContentPresenter">
-                                <Setter Property="MinWidth" Value="180" />
-                                <Setter Property="MaxWidth" Value="280" />
-                                <Setter Property="MinHeight" Value="160" />
-                                <Setter Property="MaxHeight" Value="260" />
-                            </ControlTheme>
-                        </ItemsControl.ItemContainerTheme>
                     </ItemsControl>
                 </ScrollViewer>
             </app:EmptyContainer>
