@@ -22,10 +22,6 @@ public sealed partial class InstanceGroupModel : ModelBase, IDisposable
     public partial bool IsExpanded { get; set; } = true;
 
     public string Label { get; }
-
-    [ObservableProperty]
-    public partial bool ShowHeader { get; set; } = true;
-
     public ReadOnlyObservableCollection<InstanceCardModel> Cards { get; }
 
     void IDisposable.Dispose() => _subscription.Dispose();

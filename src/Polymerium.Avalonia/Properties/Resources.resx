@@ -4126,7 +4126,7 @@ Affected entries: {0}
         <value>Today</value>
     </data>
     <data name="InstancesPage_GroupThisWeek" xml:space="preserve">
-        <value>This Week</value>
+        <value>Last 7 Days</value>
     </data>
     <data name="InstancesPage_GroupThisMonth" xml:space="preserve">
         <value>This Month</value>

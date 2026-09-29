@@ -4117,7 +4117,7 @@
         <value>今天</value>
     </data>
     <data name="InstancesPage_GroupThisWeek" xml:space="preserve">
-        <value>本周</value>
+        <value>最近 7 天</value>
     </data>
     <data name="InstancesPage_GroupThisMonth" xml:space="preserve">
         <value>本月</value>

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
@@ -39,6 +38,7 @@ public partial class InstancesPageModel(
     private readonly List<InstanceFilterBase> _filters = [];
     private IDisposable? _pipeline;
     private const string VANILLA_LABEL = "Enum_Vanilla";
+    private const string UNGROUPED_LABEL = "InstancesPage_GroupNone";
 
     #region Reactive
 
@@ -165,16 +165,8 @@ public partial class InstancesPageModel(
                           .Group(GetGroupKey)
                           .Transform(g => new InstanceGroupModel(g, comparer))
                           .DisposeMany()
-                          .Sort(BuildGroupComparer(GroupIndex))
-                          .Bind(out var groups);
-        ((INotifyCollectionChanged)groups).CollectionChanged += (_, _) =>
-        {
-            var show = groups.Count > 1;
-            foreach (var g in groups)
-            {
-                g.ShowHeader = show;
-            }
-        };
+                          .SortAndBind(out var groups, BuildGroupComparer(GroupIndex));
+
         _pipeline = bound.Subscribe();
         Groups = groups;
     }
@@ -184,7 +176,7 @@ public partial class InstancesPageModel(
         1 => GetLoaderValue(card),
         2 => card.Basic.Version,
         3 => BucketLastPlayed(card.LastPlayedAtRaw),
-        _ => string.Empty
+        _ => UNGROUPED_LABEL
     };
 
     private static string BucketLastPlayed(DateTimeOffset? lastPlayed)
@@ -277,6 +269,7 @@ public partial class InstancesPageModel(
                 existing.Basic.Loader = e.Value.Setup.Loader;
                 existing.Basic.Source = e.Value.Setup.Source;
                 existing.Basic.UpdateIcon();
+                _cards.Refresh(existing);
             }
             else
             {
