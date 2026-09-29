@@ -19,6 +19,7 @@
 - Improve deployment planning speed for large file sets
 - Update deployment progress to show the current step with completed and total counts
 - Change crash reporting to label development builds separately from production releases
+- Rework the development overview widget into a dashboard of status tiles with a version control banner
 
 ### Removed
 
