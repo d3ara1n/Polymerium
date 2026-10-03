@@ -1,8 +1,0 @@
-{
-  "screenshots": [
-    {"id": "landing", "label": "首页", "src": null},
-    {"id": "setup", "label": "包管理", "src": null},
-    {"id": "instance", "label": "实例主页", "src": null}
-  ],
-  "music": null
-}
