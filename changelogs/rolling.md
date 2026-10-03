@@ -15,6 +15,7 @@
 
 - Add in-app feedback that remains available with automatic crash reporting turned off
 - Add instance list grouping by loader, game version or last played date with configurable instance ordering (#POLY-23)
+- Start swimming, soldier. Make it home alive.
 
 ### Changed
 
