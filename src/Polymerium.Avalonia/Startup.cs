@@ -244,10 +244,6 @@ public static class Startup
         _singleInstance.Received += OnIpcReceived;
         _singleInstance.StartServer();
 
-        // WARNING: Huskui 的 OverlayHost SmokeMask 是半透明遮罩，进捕获会经模糊+tint 整体偏黑；
-        //  Huskui 以 NuGet 消费、无法挂 BlurBackdrop.ExcludeFromCapture，只能在此按名登记全局排除。
-        BlurBackdrop.ExcludedRoots.Add("PART_SmokeMask");
-
         #region SentrySdk Init
 
         IsCrashReportingEnabled = !File.Exists(PathDef.Default.FileOfTelemetrySwitch());
