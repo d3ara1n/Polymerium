@@ -24,11 +24,7 @@
     <husk:AppWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
-                <!--  macOS Tahoe 风格侧边栏：Liquid Glass 毛玻璃背景 + 玻璃边缘描边 + 柔和浮起投影  -->
                 <ResourceDictionary x:Key="Light">
-                    <SolidColorBrush
-                        x:Key="SidebarBackground"
-                        Color="#bfffffff" />
                     <SolidColorBrush
                         x:Key="SidebarBorder"
                         Color="#14000000" />
@@ -121,7 +117,6 @@
         <Border
             x:Name="Sidebar"
             Grid.Column="1"
-            Background="{DynamicResource SidebarBackground}"
             BorderBrush="{DynamicResource SidebarBorder}"
             BorderThickness="0,0,1,0">
             <DockPanel>
