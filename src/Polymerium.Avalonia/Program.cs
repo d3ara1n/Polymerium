@@ -9,7 +9,6 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Huskui.Avalonia.Mvvm.States;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Services.Sinks;
 using Sentry;
@@ -101,10 +100,9 @@ internal static class Program
         CultureInfo.DefaultThreadCurrentUICulture = culture;
         LanguageManager.Instance.UpdateCulture(culture);
         var loader = new AppImageLoader(Services.GetRequiredService<HttpClient>(),
-                                        Services.GetRequiredService<SkinRenderService>(),
-                                        Services.GetRequiredService<ILogger<AppImageLoader>>());
+            Services.GetRequiredService<SkinRenderService>());
+        ImageLoader.AsyncImageLoader.Dispose();
         ImageLoader.AsyncImageLoader = loader;
-        ImageBrushLoader.AsyncImageLoader = loader;
 
         // 初始化 Sinks——订阅 Aggregator 事件流，仅需一次，不依赖窗口生命周期。
         Services.GetRequiredService<ActivitySink>().Attach();

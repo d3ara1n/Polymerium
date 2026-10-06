@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -92,10 +91,10 @@ public partial class LandingPageModel(
         if (last is not null && profileManager.TryGetImmutable(last.Key, out var profile))
         {
             var iconPath = InstanceHelper.PickIcon(last.Key);
-            var icon = iconPath is not null ? new(iconPath) : AssetUriIndex.DirtImageBitmap;
+            var icon = iconPath is not null ? ImageSourceHelper.FromFile(iconPath) : AssetUriIndex.DirtImage;
 
             var screenshotPath = InstanceHelper.PickScreenshotRandomly(last.Key);
-            Bitmap? screenshot = screenshotPath is not null ? new(screenshotPath) : null;
+            Uri? screenshot = screenshotPath is not null ? ImageSourceHelper.FromFile(screenshotPath) : null;
 
             RecentPlay = new()
             {

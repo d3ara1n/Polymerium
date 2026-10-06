@@ -2,6 +2,7 @@
     x:Class="Polymerium.Avalonia.Pages.InstancePropertiesPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
@@ -78,10 +79,15 @@
                         </Border.Effect>
                         <Border
                             Name="ThumbnailBox"
-                            CornerRadius="{StaticResource SmallCornerRadius}">
-                            <Border.Background>
-                                <ImageBrush Source="{Binding ThumbnailOverwrite}" />
-                            </Border.Background>
+                            CornerRadius="{StaticResource SmallCornerRadius}"
+                            ClipToBounds="True">
+                            <Canvas>
+                                <Image
+                                    Width="{Binding $parent[Canvas].Bounds.Width}"
+                                    Height="{Binding $parent[Canvas].Bounds.Height}"
+                                    async:ImageLoader.Source="{Binding ThumbnailOverwrite}"
+                                    Stretch="Fill" />
+                            </Canvas>
                         </Border>
 
                     </Border>

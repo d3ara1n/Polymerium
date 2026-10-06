@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using Avalonia.Media.Imaging;
 using fNbt;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Models;
@@ -107,14 +106,14 @@ public static class AssetWorldHelper
     /// <summary>
     ///     从存档文件夹中提取图标（icon.png）
     /// </summary>
-    public static Bitmap? ExtractIcon(string worldPath)
+    public static Uri? ExtractIcon(string worldPath)
     {
         try
         {
             var iconPath = Path.Combine(worldPath, "icon.png");
             if (File.Exists(iconPath))
             {
-                return new(iconPath);
+                return ImageSourceHelper.FromFile(iconPath);
             }
         }
         catch
@@ -172,7 +171,7 @@ public static class AssetWorldHelper
             var isEnabled = enabledDataPacks.Count == 0 || enabledDataPacks.Contains(dataPackName);
 
             var packMetadata = AssetDataPackHelper.ParseMetadata(file);
-            var icon = AssetDataPackHelper.ExtractIcon(file) ?? AssetUriIndex.DirtImageBitmap;
+            var icon = AssetDataPackHelper.ExtractIcon(file) ?? AssetUriIndex.DirtImage;
             var displayName = !string.IsNullOrEmpty(packMetadata.Description)
                                   ? packMetadata.Description
                                   : Path.GetFileNameWithoutExtension(fileName);
@@ -201,7 +200,7 @@ public static class AssetWorldHelper
             }
 
             var packMetadata = ParsePackMcmetaFromFile(packMetaPath);
-            var icon = ExtractIconFromFolder(dir) ?? AssetUriIndex.DirtImageBitmap;
+            var icon = ExtractIconFromFolder(dir) ?? AssetUriIndex.DirtImage;
             var displayName = !string.IsNullOrEmpty(packMetadata.Description) ? packMetadata.Description : dirName;
 
             dataPacks.Add(new(displayName,
@@ -252,14 +251,14 @@ public static class AssetWorldHelper
     /// <summary>
     ///     从文件夹中提取图标
     /// </summary>
-    private static Bitmap? ExtractIconFromFolder(string folderPath)
+    private static Uri? ExtractIconFromFolder(string folderPath)
     {
         try
         {
             var iconPath = Path.Combine(folderPath, "pack.png");
             if (File.Exists(iconPath))
             {
-                return new(iconPath);
+                return ImageSourceHelper.FromFile(iconPath);
             }
         }
         catch

@@ -1,4 +1,4 @@
-using Avalonia.Media.Imaging;
+using System;
 using Polymerium.Avalonia.Facilities;
 
 namespace Polymerium.Avalonia.Models;
@@ -9,10 +9,10 @@ public class InstanceActionInfoModel(
     string projectName,
     string? oldVersionName,
     string? newVersionName,
-    Bitmap thumbnail) : ModelBase
+    Uri thumbnail) : ModelBase
 {
     public string ProjectName => projectName;
     public string? OldVersionName => oldVersionName;
     public string? NewVersionName => newVersionName;
-    public Bitmap Thumbnail => thumbnail;
+    public Uri Thumbnail => thumbnail;
 }

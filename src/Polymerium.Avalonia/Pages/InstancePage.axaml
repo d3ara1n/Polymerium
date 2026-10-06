@@ -2,6 +2,7 @@
     x:Class="Polymerium.Avalonia.Pages.InstancePage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
@@ -342,20 +343,22 @@
                             Margin="12,0,12,12"
                             ColumnDefinitions="Auto,*"
                             ColumnSpacing="12">
-                            <Border
+                            <Grid
                                 Grid.Column="0"
                                 Width="40"
                                 Height="40"
-                                BorderBrush="{StaticResource ControlBorderBrush}"
-                                BorderThickness="2"
-                                CornerRadius="{StaticResource SmallCornerRadius}"
                                 ToolTip.Tip="{Binding Basic.Name}">
-                                <Border.Background>
-                                    <ImageBrush
-                                        Source="{Binding Basic.Thumbnail}"
+                                <Border ClipToBounds="True" CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <Image
+                                        async:ImageLoader.Source="{Binding Basic.Thumbnail}"
                                         Stretch="Uniform" />
-                                </Border.Background>
-                            </Border>
+                                </Border>
+                                <Border
+                                    BorderBrush="{StaticResource ControlBorderBrush}"
+                                    BorderThickness="2"
+                                    CornerRadius="{StaticResource SmallCornerRadius}"
+                                    IsHitTestVisible="False" />
+                            </Grid>
                             <TextBlock
                                 Grid.Column="1"
                                 VerticalAlignment="Center"

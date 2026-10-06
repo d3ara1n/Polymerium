@@ -4,7 +4,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.Json;
-using Avalonia.Media.Imaging;
 using Polymerium.Avalonia.Models;
 using Tomlyn;
 using Tomlyn.Model;
@@ -72,7 +71,7 @@ public static class AssetModHelper
     /// <summary>
     ///     从 jar 文件中提取 Mod 图标
     /// </summary>
-    public static Bitmap? ExtractIcon(string jarFilePath, string? logoFile) =>
+    public static Uri? ExtractIcon(string jarFilePath, string? logoFile) =>
         AssetArchiveHelper.ExtractIcon(jarFilePath, logoFile);
 
     #region Fabric Mod 解析

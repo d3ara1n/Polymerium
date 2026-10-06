@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
 using AvaloniaGraphControl;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -13,6 +12,7 @@ using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.Utilities;
 using TridentCore.Abstractions.FileModels;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
@@ -52,6 +52,7 @@ public partial class InstanceDependencyGraphModalModel(
         try
         {
             var result = await Task.Run(() => BuildGraphAsync(profile, token), token);
+            token.ThrowIfCancellationRequested();
             DependencyGraph = result.Graph;
             _packages = result.Packages;
             _nodes = result.Nodes;
@@ -62,6 +63,7 @@ public partial class InstanceDependencyGraphModalModel(
             EdgeCount = result.Edges;
             MissingCount = result.Missing;
         }
+        catch (OperationCanceledException) when (token.IsCancellationRequested) { }
         catch (Exception ex)
         {
             notificationService.PopMessage(ex, "Failed to build dependency graph");
@@ -221,7 +223,7 @@ public partial class InstanceDependencyGraphModalModel(
                              pkg.ProjectId,
                              pkg.Kind,
                              pkg.Author,
-                             thumbnailByKey.TryGetValue(key, out var bmp) ? bmp : AssetUriIndex.DirtImageBitmap,
+                             thumbnailByKey.TryGetValue(key, out var thumbnail) ? thumbnail : AssetUriIndex.DirtImage,
                              pkg.ReleaseType)
             { IsMissing = !installedKeys.Contains(key) };
         }
@@ -241,7 +243,7 @@ public partial class InstanceDependencyGraphModalModel(
                              id.Identity,
                              ResourceKind.Mod,
                              null,
-                             AssetUriIndex.DirtImageBitmap,
+                             AssetUriIndex.DirtImage,
                              ReleaseType.Release)
             { IsMissing = true };
         }
@@ -306,7 +308,7 @@ public partial class InstanceDependencyGraphModalModel(
                    missing);
     }
 
-    private async Task<Dictionary<string, Bitmap>> PrefetchThumbnailsAsync(
+    private async Task<Dictionary<string, Uri>> PrefetchThumbnailsAsync(
         Dictionary<string, Package> resolved,
         CancellationToken token)
     {
@@ -318,15 +320,19 @@ public partial class InstanceDependencyGraphModalModel(
                                              try
                                              {
                                                  return (kv.Key,
-                                                         Bmp: (Bitmap?)
-                                                         await dataService.GetBitmapAsync(kv.Value.Thumbnail!));
+                                                         Thumbnail: (Uri?)
+                                                         ImageSourceHelper.Thumbnail(await dataService.GetImageFileAsync(kv.Value.Thumbnail!, token), 64));
+                                             }
+                                             catch (OperationCanceledException) when (token.IsCancellationRequested)
+                                             {
+                                                 throw;
                                              }
                                              catch
                                              {
-                                                 return (kv.Key, Bmp: null);
+                                                 return (kv.Key, Thumbnail: null);
                                              }
                                          }));
-        return results.Where(x => x.Bmp is not null).ToDictionary(x => x.Key, x => x.Bmp!);
+        return results.Where(x => x.Thumbnail is not null).ToDictionary(x => x.Key, x => x.Thumbnail!);
     }
 
     private record GraphBuildResult(

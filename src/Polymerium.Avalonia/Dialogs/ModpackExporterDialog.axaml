@@ -2,6 +2,7 @@
     x:Class="Polymerium.Avalonia.Dialogs.ModpackExporterDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
@@ -34,7 +35,7 @@
                             Height="36"
                             VerticalAlignment="Center"
                             RenderOptions.BitmapInterpolationMode="MediumQuality"
-                            Source="/Assets/Icons/Package.png" />
+                            async:ImageLoader.Source="avares://Polymerium/Assets/Icons/Package.png" />
                         <StackPanel Grid.Column="1" Spacing="4">
                             <TextBlock
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"

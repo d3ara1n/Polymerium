@@ -40,10 +40,11 @@
                                         Grid.Column="0"
                                         Width="48"
                                         Height="48"
+                                        ClipToBounds="True"
                                         CornerRadius="{StaticResource SmallCornerRadius}">
-                                        <Border.Background>
-                                            <ImageBrush asyncImageLoader:ImageBrushLoader.Source="{Binding Thumbnail}" />
-                                        </Border.Background>
+                                        <Image
+                                            asyncImageLoader:ImageLoader.Source="{Binding Thumbnail}"
+                                            Stretch="Fill" />
                                     </Border>
                                     <StackPanel
                                         Grid.Column="1"

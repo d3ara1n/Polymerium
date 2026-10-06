@@ -1,4 +1,4 @@
-using Avalonia.Media.Imaging;
+using System;
 using Polymerium.Avalonia.Models;
 
 namespace Polymerium.Avalonia.Utilities;
@@ -17,5 +17,5 @@ public static class AssetDataPackHelper
     /// <summary>
     ///     从 zip 文件中提取数据包图标（pack.png）
     /// </summary>
-    public static Bitmap? ExtractIcon(string zipFilePath) => AssetArchiveHelper.ExtractIcon(zipFilePath, "pack.png");
+    public static Uri? ExtractIcon(string zipFilePath) => AssetArchiveHelper.ExtractIcon(zipFilePath, "pack.png");
 }

@@ -240,12 +240,11 @@
                                                                     Grid.Column="0"
                                                                     Width="32"
                                                                     Height="32"
+                                                                    ClipToBounds="True"
                                                                     CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                    <Border.Background>
-                                                                        <ImageBrush
-                                                                            async:ImageBrushLoader.Source="{Binding Thumbnail}"
-                                                                            Stretch="UniformToFill" />
-                                                                    </Border.Background>
+                                                                    <Image
+                                                                        async:ImageLoader.Source="{Binding Thumbnail}"
+                                                                        Stretch="UniformToFill" />
                                                                 </Border>
                                                                 <TextBlock
                                                                     Grid.Column="1"
@@ -600,12 +599,11 @@
                                             Grid.Column="0"
                                             Width="42"
                                             Height="42"
+                                            ClipToBounds="True"
                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <Border.Background>
-                                                <ImageBrush
-                                                    async:ImageBrushLoader.Source="{Binding Thumbnail, FallbackValue={x:Null}}"
-                                                    Stretch="UniformToFill" />
-                                            </Border.Background>
+                                            <Image
+                                                async:ImageLoader.Source="{Binding Thumbnail, FallbackValue={x:Null}}"
+                                                Stretch="UniformToFill" />
                                         </Border>
                                         <StackPanel
                                             Grid.Column="1"

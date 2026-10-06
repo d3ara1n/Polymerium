@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Avalonia.Media.Imaging;
 using fNbt;
 using Polymerium.Avalonia.Models;
 
@@ -62,7 +61,7 @@ public static class AssetServerHelper
         return servers;
     }
 
-    public static Bitmap? ExtractIcon(string? iconBase64)
+    public static Uri? ExtractIcon(string? iconBase64)
     {
         if (string.IsNullOrWhiteSpace(iconBase64))
         {
@@ -71,16 +70,7 @@ public static class AssetServerHelper
 
         try
         {
-            var payload = iconBase64;
-            var commaIndex = payload.IndexOf(',');
-            if (commaIndex >= 0)
-            {
-                payload = payload[(commaIndex + 1)..];
-            }
-
-            var bytes = Convert.FromBase64String(payload);
-            using var memory = new MemoryStream(bytes);
-            return new(memory);
+            return ImageSourceHelper.FromBase64(iconBase64);
         }
         catch
         {

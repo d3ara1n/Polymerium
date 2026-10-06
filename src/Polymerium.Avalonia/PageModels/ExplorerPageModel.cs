@@ -8,7 +8,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Disposables.Fluent;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -143,7 +142,7 @@ public partial class ExplorerPageModel : ViewModelBase
 
     public string Title => _session.Title;
 
-    public Bitmap? Background => _session.Background;
+    public Uri? Background => _session.Background;
 
     public bool IsFilterVisible => _session.InitialFilter is not null;
 

@@ -2,6 +2,7 @@
     x:Class="Polymerium.Avalonia.Pages.NewInstancePage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="using:FluentIcons.Avalonia"
@@ -20,13 +21,16 @@
             Grid.Column="0"
             Width="320"
             Margin="8"
-            CornerRadius="{StaticResource MediumCornerRadius}">
-            <Border.Background>
-                <ImageBrush
+            CornerRadius="{StaticResource MediumCornerRadius}"
+            ClipToBounds="True">
+            <Canvas>
+                <Image
+                    Width="{Binding $parent[Canvas].Bounds.Width}"
+                    Height="{Binding $parent[Canvas].Bounds.Height}"
                     Opacity="0.9"
-                    Source="/Assets/Images/Wallpaper.png"
+                    async:ImageLoader.Source="avares://Polymerium/Assets/Images/Wallpaper.png"
                     Stretch="UniformToFill" />
-            </Border.Background>
+            </Canvas>
         </Border>
         <Grid
             Grid.Column="1"
@@ -72,7 +76,10 @@
                         <Panel>
                             <Border
                                 Name="ThumbnailBox"
-                                CornerRadius="{StaticResource MediumCornerRadius}" />
+                                ClipToBounds="True"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                <Image async:ImageLoader.Source="{Binding Thumbnail}" Stretch="Fill" />
+                            </Border>
                             <Panel
                                 Name="DropPanel"
                                 IsHitTestVisible="False">
@@ -103,11 +110,6 @@
                             </Style>
                             <Style Selector=":dragover Panel#DropPanel">
                                 <Setter Property="Opacity" Value="1" />
-                            </Style>
-                            <Style Selector=":drop Border#ThumbnailBox">
-                                <Setter Property="Background">
-                                    <ImageBrush Source="{Binding Thumbnail}" />
-                                </Setter>
                             </Style>
                             <Style Selector=":drop fi|SymbolIcon#Icon">
                                 <Setter Property="IsVisible" Value="False" />
@@ -202,7 +204,7 @@
                                         Width="36"
                                         Height="36"
                                         RenderOptions.BitmapInterpolationMode="HighQuality"
-                                        Source="/Assets/Icons/Package.png" />
+                                        async:ImageLoader.Source="avares://Polymerium/Assets/Icons/Package.png" />
                                     <StackPanel Grid.Column="1">
                                         <TextBlock
                                             Foreground="{StaticResource ControlSecondaryForegroundBrush}"

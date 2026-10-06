@@ -1,7 +1,7 @@
 using System.IO;
 using System.IO.Compression;
 using System.Text.Json;
-using Avalonia.Media.Imaging;
+using System;
 using Polymerium.Avalonia.Models;
 
 namespace Polymerium.Avalonia.Utilities;
@@ -27,7 +27,7 @@ public static class AssetArchiveHelper
         return new();
     }
 
-    public static Bitmap? ExtractIcon(string archivePath, string? entryName)
+    public static Uri? ExtractIcon(string archivePath, string? entryName)
     {
         if (string.IsNullOrEmpty(entryName))
         {
@@ -36,16 +36,7 @@ public static class AssetArchiveHelper
 
         try
         {
-            using var archive = ZipFile.OpenRead(archivePath);
-            var iconEntry = archive.GetEntry(entryName);
-            if (iconEntry != null)
-            {
-                using var stream = iconEntry.Open();
-                var memory = new MemoryStream();
-                stream.CopyTo(memory);
-                memory.Position = 0;
-                return new(memory);
-            }
+            return ImageSourceHelper.Archive(archivePath, entryName);
         }
         catch
         {

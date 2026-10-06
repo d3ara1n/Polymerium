@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
@@ -167,7 +166,8 @@ public partial class InstanceFilesPageModel(
             foreach (var file in files)
             {
                 var imported = sourced && FileHelper.IsInDirectory(file.FullName, import);
-                group.Screenshots.Add(new(new(file.FullName, UriKind.Absolute), file.CreationTimeUtc, imported));
+                var source = ImageSourceHelper.FromFile(file.FullName);
+                group.Screenshots.Add(new(source, ImageSourceHelper.Thumbnail(source, 256), file.CreationTimeUtc, imported));
             }
 
             groups.Add(group);
@@ -194,7 +194,7 @@ public partial class InstanceFilesPageModel(
         {
             var metadata = AssetModHelper.ParseMetadata(file.FullName);
 
-            Bitmap? icon = null;
+            Uri? icon = null;
             if (!string.IsNullOrEmpty(metadata.LogoFile))
             {
                 icon = AssetModHelper.ExtractIcon(file.FullName, metadata.LogoFile);
@@ -202,7 +202,7 @@ public partial class InstanceFilesPageModel(
 
             var imported = sourced
                         && FileHelper.IsInDirectory(file.FullName, PathDef.Default.DirectoryOfImport(Basic.Key));
-            var model = new AssetModModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata, imported)
+            var model = new AssetModModel(file, icon ?? AssetUriIndex.DirtImage, metadata, imported)
             {
                 IsEnabled = file.Name.EndsWith(".jar")
             };
@@ -248,7 +248,7 @@ public partial class InstanceFilesPageModel(
 
             var imported = sourced
                         && FileHelper.IsInDirectory(file.FullName, PathDef.Default.DirectoryOfImport(Basic.Key));
-            var model = new AssetResourcePackModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata, imported)
+            var model = new AssetResourcePackModel(file, icon ?? AssetUriIndex.DirtImage, metadata, imported)
             {
                 IsEnabled = file.Name.EndsWith(".zip")
             };
@@ -289,7 +289,7 @@ public partial class InstanceFilesPageModel(
 
             var imported = sourced
                         && FileHelper.IsInDirectory(file.FullName, PathDef.Default.DirectoryOfImport(Basic.Key));
-            var model = new AssetDataPackModel(file, icon ?? AssetUriIndex.DirtImageBitmap, metadata, imported)
+            var model = new AssetDataPackModel(file, icon ?? AssetUriIndex.DirtImage, metadata, imported)
             {
                 IsEnabled = file.Name.EndsWith(".zip")
             };
@@ -321,7 +321,7 @@ public partial class InstanceFilesPageModel(
             if (File.Exists(levelDatPath))
             {
                 var metadata = AssetWorldHelper.ParseMetadata(worldDir.FullName);
-                var icon = AssetWorldHelper.ExtractIcon(worldDir.FullName) ?? AssetUriIndex.DirtImageBitmap;
+                var icon = AssetWorldHelper.ExtractIcon(worldDir.FullName) ?? AssetUriIndex.DirtImage;
                 var lastPlayed = AssetWorldHelper.GetLastPlayed(worldDir.FullName);
 
                 var world = new AssetWorldModel(worldDir, icon, metadata, lastPlayed);
@@ -365,7 +365,7 @@ public partial class InstanceFilesPageModel(
 
                 var model = new AssetServerModel(file.FullName,
                                                  AssetServerHelper.ExtractIcon(metadata.IconBase64)
-                                              ?? AssetUriIndex.DirtImageBitmap,
+                                              ?? AssetUriIndex.DirtImage,
                                                  metadata);
                 servers.Add(model);
             }
@@ -686,6 +686,7 @@ public partial class InstanceFilesPageModel(
             File.Move(oldPath, newPath);
             model.IsEnabled = !model.IsEnabled;
             model.FilePath = newPath;
+            model.Icon = ImageSourceHelper.RelocateArchive(model.Icon, newPath);
         }
         catch (Exception ex)
         {

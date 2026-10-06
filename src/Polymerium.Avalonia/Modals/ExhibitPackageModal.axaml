@@ -205,18 +205,20 @@
                         <StackPanel
                             Margin="18"
                             Spacing="6">
-                            <Border
+                            <Grid
                                 Width="72"
-                                Height="72"
-                                BorderBrush="{StaticResource OverlaySolidBackgroundBrush}"
-                                BorderThickness="4"
-                                CornerRadius="{StaticResource MediumCornerRadius}">
-                                <Border.Background>
-                                    <ImageBrush
-                                        async:ImageBrushLoader.Source="{Binding Package.Thumbnail}"
+                                Height="72">
+                                <Border ClipToBounds="True" CornerRadius="{StaticResource MediumCornerRadius}">
+                                    <Image
+                                        async:ImageLoader.Source="{Binding Package.Thumbnail}"
                                         Stretch="UniformToFill" />
-                                </Border.Background>
-                            </Border>
+                                </Border>
+                                <Border
+                                    BorderBrush="{StaticResource OverlaySolidBackgroundBrush}"
+                                    BorderThickness="4"
+                                    CornerRadius="{StaticResource MediumCornerRadius}"
+                                    IsHitTestVisible="False" />
+                            </Grid>
                             <TextBlock
                                 FontSize="{StaticResource LargeFontSize}"
                                 Text="{Binding Package.ProjectName, FallbackValue=Project}"

@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
@@ -37,13 +38,27 @@
                     ClipToBounds="{TemplateBinding ClipToBounds}"
                     CornerRadius="{TemplateBinding CornerRadius}">
                     <Panel>
+                        <!--  The attached Image owns the tiled brush’s bitmap lease.  -->
+                        <Image
+                            Name="PatternImage"
+                            Width="0"
+                            Height="0"
+                            IsHitTestVisible="False" />
                         <Border
                             ClipToBounds="{TemplateBinding ClipToBounds}"
                             CornerRadius="{TemplateBinding CornerRadius}">
                             <Rectangle
                                 Name="PART_Background"
-                                Margin="-250"
-                                Fill="Transparent" />
+                                Margin="-250">
+                                <Rectangle.Fill>
+                                    <ImageBrush
+                                        DestinationRect="0,0,250,250"
+                                        Source="{Binding #PatternImage.Source}"
+                                        SourceRect="0%,0%,100%,100%"
+                                        Stretch="Fill"
+                                        TileMode="Tile" />
+                                </Rectangle.Fill>
+                            </Rectangle>
                         </Border>
                         <Panel Margin="{StaticResource CardContentMargin}">
                             <Panel>
@@ -212,22 +227,8 @@
         </Setter>
 
         <Style Selector="^[State=Idle]">
-            <Style Selector="^ /template/ Rectangle#PART_Background">
-                <Setter Property="Fill">
-                    <VisualBrush
-                        DestinationRect="0,0,250,250"
-                        SourceRect="0,0,250,250"
-                        Stretch="Fill"
-                        TileMode="Tile">
-                        <VisualBrush.Visual>
-                            <Image
-                                Width="250"
-                                Height="250"
-                                Source="/Assets/Images/Patterns/Blue_Icons.png"
-                                Stretch="Fill" />
-                        </VisualBrush.Visual>
-                    </VisualBrush>
-                </Setter>
+            <Style Selector="^ /template/ Image#PatternImage">
+                <Setter Property="async:ImageLoader.Source" Value="avares://Polymerium/Assets/Images/Patterns/Blue_Icons.png" />
             </Style>
 
             <Style Selector="^ /template/ fi|SymbolIcon#PART_IdleIcon">
@@ -264,22 +265,10 @@
         </Style>
 
         <Style Selector="^[State=Deploying]">
+            <Style Selector="^ /template/ Image#PatternImage">
+                <Setter Property="async:ImageLoader.Source" Value="avares://Polymerium/Assets/Images/Patterns/Yellow_Icons.png" />
+            </Style>
             <Style Selector="^ /template/ Rectangle#PART_Background">
-                <Setter Property="Fill">
-                    <VisualBrush
-                        DestinationRect="0,0,250,250"
-                        SourceRect="0,0,250,250"
-                        Stretch="Fill"
-                        TileMode="Tile">
-                        <VisualBrush.Visual>
-                            <Image
-                                Width="250"
-                                Height="250"
-                                Source="/Assets/Images/Patterns/Yellow_Icons.png"
-                                Stretch="Fill" />
-                        </VisualBrush.Visual>
-                    </VisualBrush>
-                </Setter>
 
                 <Style.Animations>
                     <Animation
@@ -331,22 +320,10 @@
         </Style>
 
         <Style Selector="^[State=Running]">
+            <Style Selector="^ /template/ Image#PatternImage">
+                <Setter Property="async:ImageLoader.Source" Value="avares://Polymerium/Assets/Images/Patterns/Green_Icons.png" />
+            </Style>
             <Style Selector="^ /template/ Rectangle#PART_Background">
-                <Setter Property="Fill">
-                    <VisualBrush
-                        DestinationRect="0,0,250,250"
-                        SourceRect="0,0,250,250"
-                        Stretch="Fill"
-                        TileMode="Tile">
-                        <VisualBrush.Visual>
-                            <Image
-                                Width="250"
-                                Height="250"
-                                Source="/Assets/Images/Patterns/Green_Icons.png"
-                                Stretch="Fill" />
-                        </VisualBrush.Visual>
-                    </VisualBrush>
-                </Setter>
 
                 <Style.Animations>
                     <Animation

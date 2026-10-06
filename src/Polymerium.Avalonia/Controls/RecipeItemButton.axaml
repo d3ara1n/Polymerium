@@ -54,11 +54,13 @@
                                         Width="{Binding $self.Bounds.Height}"
                                         ClipToBounds="True"
                                         CornerRadius="{StaticResource SmallCornerRadius}">
-                                        <Border.Background>
-                                            <ImageBrush
-                                                async:ImageBrushLoader.Source="{Binding Thumbnail}"
+                                        <Canvas>
+                                            <Image
+                                                Width="{Binding $parent[Canvas].Bounds.Width}"
+                                                Height="{Binding $parent[Canvas].Bounds.Height}"
+                                                async:ImageLoader.Source="{Binding Thumbnail}"
                                                 Stretch="UniformToFill" />
-                                        </Border.Background>
+                                        </Canvas>
                                     </Border>
                                     <Grid
                                         Grid.Row="0"

@@ -12,7 +12,6 @@ using System.Reactive.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -89,7 +88,7 @@ public partial class InstanceSetupPageModel(
     private class RefreshIntermediateData(InstancePackageModel model)
     {
         public InstancePackageModel Model => model;
-        public Bitmap? Thumbnail { get; set; }
+        public Uri? Thumbnail { get; set; }
         public Project? Project { get; set; }
         public Package? Package { get; set; }
     }
@@ -355,21 +354,21 @@ public partial class InstanceSetupPageModel(
                 var thumbnail = item.Data.Package?.Thumbnail ?? item.Data.Project?.Thumbnail;
                 if (thumbnail is null)
                 {
-                    item.Data.Thumbnail = AssetUriIndex.DirtImageBitmap;
+                    item.Data.Thumbnail = AssetUriIndex.DirtImage;
                     return;
                 }
 
                 try
                 {
-                    item.Data.Thumbnail = await dataService.GetBitmapAsync(thumbnail);
+                    item.Data.Thumbnail = ImageSourceHelper.Thumbnail(await dataService.GetImageFileAsync(thumbnail, token), 64);
                 }
-                catch (OperationCanceledException)
+                catch (OperationCanceledException) when (token.IsCancellationRequested)
                 {
                     throw;
                 }
                 catch
                 {
-                    item.Data.Thumbnail = AssetUriIndex.DirtImageBitmap;
+                    item.Data.Thumbnail = AssetUriIndex.DirtImage;
                 }
             }));
 

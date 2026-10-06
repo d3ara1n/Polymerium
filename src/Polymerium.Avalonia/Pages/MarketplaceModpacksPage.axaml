@@ -2,6 +2,7 @@
     x:Class="Polymerium.Avalonia.Pages.MarketplaceModpacksPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:collection="clr-namespace:System.Collections.Generic;assembly=System.Collections"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -107,38 +108,42 @@
             <StackPanel
                 Grid.Row="0"
                 Margin="8,8,8,0">
-                <Border
-                    Padding="24"
-                    CornerRadius="6,6,0,0">
-                    <Border.Background>
-                        <ImageBrush
-                            Opacity="0.6"
-                            Source="{Binding HeaderImage}"
-                            Stretch="Fill" />
-                    </Border.Background>
-                    <DockPanel HorizontalSpacing="12">
-                        <Button
-                            DockPanel.Dock="Left"
-                            VerticalAlignment="Top"
-                            Command="{Binding $parent[husk:Frame].GoBackCommand}"
-                            Theme="{StaticResource GhostButtonTheme}">
-                            <fi:SymbolIcon
-                                HorizontalAlignment="Left"
-                                FontSize="{StaticResource MediumFontSize}"
-                                Symbol="ArrowLeft" />
-                        </Button>
-                        <StackPanel Spacing="8">
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                FontSize="{StaticResource LargeFontSize}"
-                                Text="{Translate {x:Static app:LanguageManager+Keys.MarketplaceModpacksPage_Title}}" />
-                            <TextBlock
-                                Opacity="0.8"
-                                Text="{Translate {x:Static app:LanguageManager+Keys.MarketplaceModpacksPage_Message}}"
-                                TextWrapping="Wrap" />
-                        </StackPanel>
-                    </DockPanel>
-                </Border>
+                <Grid>
+                    <Border ClipToBounds="True" CornerRadius="6,6,0,0">
+                        <Canvas>
+                            <Image
+                                Width="{Binding $parent[Canvas].Bounds.Width}"
+                                Height="{Binding $parent[Canvas].Bounds.Height}"
+                                async:ImageLoader.Source="{Binding HeaderImage}"
+                                Opacity="0.6"
+                                Stretch="Fill" />
+                        </Canvas>
+                    </Border>
+                    <Border Padding="24" CornerRadius="6,6,0,0">
+                        <DockPanel HorizontalSpacing="12">
+                            <Button
+                                DockPanel.Dock="Left"
+                                VerticalAlignment="Top"
+                                Command="{Binding $parent[husk:Frame].GoBackCommand}"
+                                Theme="{StaticResource GhostButtonTheme}">
+                                <fi:SymbolIcon
+                                    HorizontalAlignment="Left"
+                                    FontSize="{StaticResource MediumFontSize}"
+                                    Symbol="ArrowLeft" />
+                            </Button>
+                            <StackPanel Spacing="8">
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="{StaticResource LargeFontSize}"
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.MarketplaceModpacksPage_Title}}" />
+                                <TextBlock
+                                    Opacity="0.8"
+                                    Text="{Translate {x:Static app:LanguageManager+Keys.MarketplaceModpacksPage_Message}}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                </Grid>
                 <Border
                     Background="{StaticResource LayerBackgroundBrush}"
                     CornerRadius="0,0,6,6">

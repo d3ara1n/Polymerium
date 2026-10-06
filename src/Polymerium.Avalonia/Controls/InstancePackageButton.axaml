@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="using:AsyncImageLoader"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia">
@@ -86,9 +87,13 @@
                                             Width="{Binding $self.Bounds.Height}"
                                             ClipToBounds="True"
                                             CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <Border.Background>
-                                                <ImageBrush Source="{Binding Thumbnail}" />
-                                            </Border.Background>
+                                            <Canvas>
+                                                <Image
+                                                    Width="{Binding $parent[Canvas].Bounds.Width}"
+                                                    Height="{Binding $parent[Canvas].Bounds.Height}"
+                                                    async:ImageLoader.Source="{Binding Thumbnail}"
+                                                    Stretch="Fill" />
+                                            </Canvas>
                                         </Border>
                                         <Grid
                                             Grid.Row="0"
@@ -333,9 +338,9 @@
                                     Margin="{StaticResource CardContentMargin}"
                                     ClipToBounds="True"
                                     CornerRadius="{StaticResource SmallCornerRadius}">
-                                    <Border.Background>
-                                        <ImageBrush Source="{Binding Thumbnail}" />
-                                    </Border.Background>
+                                    <Image
+                                        async:ImageLoader.Source="{Binding Thumbnail}"
+                                        Stretch="Fill" />
                                 </Border>
                             </DataTemplate>
                         </husk:PlaceholderContainer.SourceTemplate>

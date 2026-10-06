@@ -2,6 +2,7 @@
     x:Class="Polymerium.Avalonia.Components.OobeWelcome"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -20,7 +21,7 @@
             ClipToBounds="True"
             CornerRadius="{StaticResource LargeCornerRadius}">
             <Image
-                Source="{x:Static app:AssetUriIndex.IconBitmap}"
+                async:ImageLoader.Source="avares://Polymerium/Assets/Icon.App.png"
                 Stretch="UniformToFill" />
         </Border>
 

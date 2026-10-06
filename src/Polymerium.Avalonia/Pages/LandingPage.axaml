@@ -28,7 +28,7 @@
                 Height="48"
                 Opacity="0.9"
                 RenderOptions.BitmapInterpolationMode="HighQuality"
-                Source="/Assets/Icon.png" />
+                async:ImageLoader.Source="avares://Polymerium/Assets/Icon.png" />
             <StackPanel
                 Grid.Column="1"
                 VerticalAlignment="Center">
@@ -191,10 +191,15 @@
                                             <Border
                                                 Grid.Column="0"
                                                 Width="{Binding $self.Bounds.Height}"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <Border.Background>
-                                                    <ImageBrush Source="{Binding Thumbnail}" />
-                                                </Border.Background>
+                                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                                ClipToBounds="True">
+                                                <Canvas>
+                                                    <Image
+                                                        Width="{Binding $parent[Canvas].Bounds.Width}"
+                                                        Height="{Binding $parent[Canvas].Bounds.Height}"
+                                                        async:ImageLoader.Source="{Binding Thumbnail}"
+                                                        Stretch="Fill" />
+                                                </Canvas>
                                             </Border>
                                             <StackPanel
                                                 Grid.Column="1"
@@ -234,12 +239,8 @@
                                     </Grid>
                                 </Border>
                                 <Panel>
-                                    <Border CornerRadius="{Binding CornerRadius, Converter={x:Static husk:CornerRadiusConverters.Bottom}, RelativeSource={RelativeSource FindAncestor, AncestorType=Border}}">
-                                        <Border.Background>
-                                            <ImageBrush
-                                                Source="{Binding Screenshot}"
-                                                Stretch="UniformToFill" />
-                                        </Border.Background>
+                                    <Border CornerRadius="{Binding CornerRadius, Converter={x:Static husk:CornerRadiusConverters.Bottom}, RelativeSource={RelativeSource FindAncestor, AncestorType=Border}}"
+                                        ClipToBounds="True">
                                         <Border.OpacityMask>
                                             <LinearGradientBrush StartPoint="0%,90%" EndPoint="100%,0%">
                                                 <GradientStop Offset="0" Color="#3F000000" />
@@ -247,6 +248,13 @@
                                                 <GradientStop Offset="1" Color="#DF000000" />
                                             </LinearGradientBrush>
                                         </Border.OpacityMask>
+                                        <Canvas>
+                                            <Image
+                                                Width="{Binding $parent[Canvas].Bounds.Width}"
+                                                Height="{Binding $parent[Canvas].Bounds.Height}"
+                                                async:ImageLoader.Source="{Binding Screenshot}"
+                                                Stretch="UniformToFill" />
+                                        </Canvas>
                                     </Border>
                                     <Border Padding="{StaticResource CardContentMargin}">
                                         <husk:Card
@@ -510,12 +518,14 @@
                                             <husk:ConstrainedBox
                                                 Grid.Row="0"
                                                 AspectRatio="117:50">
-                                                <Border CornerRadius="{StaticResource MediumCornerRadius}">
-                                                    <Border.Background>
-                                                        <ImageBrush
-                                                            async:ImageBrushLoader.Source="{Binding Cover}"
+                                                <Border ClipToBounds="True" CornerRadius="{StaticResource MediumCornerRadius}">
+                                                    <Canvas>
+                                                        <Image
+                                                            Width="{Binding $parent[Canvas].Bounds.Width}"
+                                                            Height="{Binding $parent[Canvas].Bounds.Height}"
+                                                            async:ImageLoader.Source="{Binding Cover}"
                                                             Stretch="UniformToFill" />
-                                                    </Border.Background>
+                                                    </Canvas>
                                                 </Border>
                                             </husk:ConstrainedBox>
                                             <StackPanel

@@ -147,7 +147,8 @@ public partial class NewInstancePageModel(
             try
             {
                 using var stream = new MemoryStream();
-                Thumbnail.Save(stream, new PngBitmapEncoderOptions());
+                using var thumbnail = new Bitmap(Thumbnail.LocalPath);
+                thumbnail.Save(stream, new PngBitmapEncoderOptions());
                 stream.Position = 0;
                 var extension = FileHelper.GuessBitmapExtension(stream);
                 var iconPath = PathDef.Default.FileOfIcon(key.Key, extension);
@@ -199,7 +200,7 @@ public partial class NewInstancePageModel(
     public partial bool IsVersionLoaded { get; set; }
 
     [ObservableProperty]
-    public partial Bitmap? Thumbnail { get; set; }
+    public partial Uri? Thumbnail { get; set; }
 
     [ObservableProperty]
     public partial FloatingImportedPackModel? ImportedPack { get; set; }

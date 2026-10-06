@@ -94,13 +94,13 @@ public partial class ExhibitModpackToastModel(
 
             try
             {
-                var thumbnail = await dataService.GetBitmapAsync(image.Uri, 112);
+                var thumbnail = ImageSourceHelper.Thumbnail(await dataService.GetImageFileAsync(image.Uri, token), 112);
                 if (token.IsCancellationRequested)
                 {
                     return;
                 }
 
-                image.ThumbnailBitmap = thumbnail;
+                image.Thumbnail = thumbnail;
             }
             catch
             {

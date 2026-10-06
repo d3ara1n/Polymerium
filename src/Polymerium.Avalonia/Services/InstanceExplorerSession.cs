@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
 using Polymerium.Avalonia.Assets;
@@ -59,7 +58,7 @@ public sealed class InstanceExplorerSession : ExplorerSession
 
     public override string Title => _basic?.Name ?? _key;
 
-    public override Bitmap? Background => _basic?.Thumbnail;
+    public override Uri? Background => _basic?.Thumbnail;
 
     public override Filter? InitialFilter =>
         _basic is null

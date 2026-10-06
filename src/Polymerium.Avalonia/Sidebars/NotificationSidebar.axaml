@@ -176,14 +176,16 @@
                                                         <Ellipse Fill="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
                                                     </husk:SwitchCase>
                                                 </husk:SwitchContainer>
-                                                <Ellipse
+                                                <Border
                                                     Width="28"
                                                     Height="28"
-                                                    Margin="4">
-                                                    <Ellipse.Fill>
-                                                        <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
-                                                    </Ellipse.Fill>
-                                                </Ellipse>
+                                                    Margin="4"
+                                                    ClipToBounds="True"
+                                                    CornerRadius="14">
+                                                    <Image
+                                                        async:ImageLoader.Source="{Binding Thumbnail}"
+                                                        Stretch="Fill" />
+                                                </Border>
                                                 <husk:ProgressRing
                                                     Width="32"
                                                     Height="32"

@@ -1,16 +1,14 @@
 using System;
 using System.IO;
-using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.Avalonia.Facilities;
 
 namespace Polymerium.Avalonia.Models;
 
-public abstract partial class FileAssetModel(FileInfo file, Bitmap icon, bool isLocked) : ModelBase
+public abstract partial class FileAssetModel(FileInfo file, Uri icon, bool isLocked) : ModelBase
 {
     public string FileName => Path.GetFileName(FilePath);
-    public Bitmap Icon { get; } = icon;
     public long FileSizeRaw { get; } = file.Length;
     public DateTimeOffset LastModifiedRaw { get; } = file.LastWriteTime;
     public string LastModified => LastModifiedRaw.Humanize();
@@ -18,6 +16,9 @@ public abstract partial class FileAssetModel(FileInfo file, Bitmap icon, bool is
     public string FileSize => ByteSize.FromBytes(FileSizeRaw).ToString("0.#");
     public string LastModifiedFormatted => LastModifiedRaw.ToString("g");
     public virtual string DisplayName => Path.GetFileNameWithoutExtension(FileName);
+
+    [ObservableProperty]
+    public partial Uri Icon { get; set; } = icon;
 
     [ObservableProperty]
     public partial bool IsEnabled { get; set; }
@@ -28,7 +29,7 @@ public abstract partial class FileAssetModel(FileInfo file, Bitmap icon, bool is
     public partial string FilePath { get; set; } = file.FullName;
 }
 
-public abstract class FileAssetModel<TMetadata>(FileInfo file, Bitmap icon, TMetadata metadata, bool isLocked)
+public abstract class FileAssetModel<TMetadata>(FileInfo file, Uri icon, TMetadata metadata, bool isLocked)
     : FileAssetModel(file, icon, isLocked)
 {
     public TMetadata Metadata { get; } = metadata;

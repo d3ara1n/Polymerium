@@ -19,7 +19,7 @@ public class ExhibitModpackModel(
     string summary,
     DateTimeOffset createdAt,
     DateTimeOffset updatedAt,
-    IReadOnlyList<GalleryBitmapModel> gallery) : ModelBase
+    IReadOnlyList<GalleryImageModel> gallery) : ModelBase
 {
     public static ExhibitModpackModel From(Project project) =>
         new(project.Label,
@@ -34,7 +34,7 @@ public class ExhibitModpackModel(
             project.Summary,
             project.CreatedAt,
             project.UpdatedAt,
-            [.. project.Gallery.Select(x => new GalleryBitmapModel(x.Url, x.Title))]);
+            [.. project.Gallery.Select(x => new GalleryImageModel(x.Url, x.Title))]);
 
     #region Direct
 
@@ -50,7 +50,7 @@ public class ExhibitModpackModel(
     public ulong DownloadCount => downloadCount;
     public DateTimeOffset CreatedAt => createdAt;
     public DateTimeOffset UpdatedAt => updatedAt;
-    public IReadOnlyList<GalleryBitmapModel> Gallery => gallery;
+    public IReadOnlyList<GalleryImageModel> Gallery => gallery;
 
     #endregion
 }

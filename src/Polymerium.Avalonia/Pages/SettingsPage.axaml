@@ -2,6 +2,7 @@
     x:Class="Polymerium.Avalonia.Pages.SettingsPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
@@ -963,9 +964,13 @@
                             AspectRatio="0.684"
                             ZIndex="-1">
                             <Border
-                                Background="{DynamicResource SettingsImageBrush}"
-                                CornerRadius="{StaticResource MediumCornerRadius}"
-                                RenderOptions.BitmapInterpolationMode="HighQuality" />
+                                ClipToBounds="True"
+                                CornerRadius="{StaticResource MediumCornerRadius}">
+                                <Image
+                                    async:ImageLoader.Source="{DynamicResource SettingsImageSource}"
+                                    RenderOptions.BitmapInterpolationMode="HighQuality"
+                                    Stretch="UniformToFill" />
+                            </Border>
                         </husk:ConstrainedBox>
                     </Grid>
                 </app:SettingsEntry>

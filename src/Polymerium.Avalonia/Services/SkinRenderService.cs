@@ -1,27 +1,23 @@
 using System;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Microsoft.Extensions.Logging;
 using Polymerium.Avalonia.Rendering;
-using Polymerium.Avalonia.Utilities;
 using SkiaSharp;
 
 namespace Polymerium.Avalonia.Services;
 
 /// <summary>
-///     解析 <c>skin://?type=&amp;src=</c> 形态的 URI，按数据源路由取得原始皮肤 PNG，
-///     交由 <see cref="SkinRenderer" /> 本地离线渲染后返回 PNG 编码字节，由上层统一按字节缓存。
+///     取得原始皮肤后本地渲染为独立位图，由图片加载管线接管所有权。
 ///     <para>
 ///         数据源三路：<c>mojang:{uuid}</c>（经第三方皮肤镜像下载原始皮肤 PNG）、
 ///         裸 http(s) URL（直接下载，供 Authlib 账户使用）、<c>asset:{key}</c>（内置默认皮肤）。
 ///         任一来源失败一律回落内置 Steve，保证视觉不空缺。
-///     </para>
-///     <para>
-///         渲染结果由 <see cref="AppImageLoader" /> 以完整 skin:// URL 为 key 写入 MemoryCache，
-///         30 分钟滑动过期内同 URL 不重复请求，天然缓解上游服务的速率限制；
-///         加载失败同样写入负缓存（3 分钟绝对过期），避免网络不可达时反复重试刷屏。
 ///     </para>
 /// </summary>
 public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer renderer, ILogger<SkinRenderService> logger)
@@ -36,62 +32,85 @@ public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer render
     /// </summary>
     private const string SkinMirrorBase = "https://api.mineatar.io/skin/";
 
-    /// <summary>
-    ///     渲染入口：仅处理 <c>skin://</c> URI，其余返回 null 交由上层走默认网络加载。
-    ///     返回 PNG 字节供统一字节缓存，命中时由上层解码为位图。
-    /// </summary>
-    public async Task<byte[]?> RenderPngAsync(string url)
+    public async Task<Bitmap?> RenderAsync(SkinViewType view, string source, CancellationToken cancellationToken = default)
     {
-        if (!SkinHelper.TryGetQuery(url, out var type, out var src))
-        {
-            return null;
-        }
-
+        cancellationToken.ThrowIfCancellationRequested();
         try
         {
-            using var skin = await LoadSkinAsync(src).ConfigureAwait(false);
-            return skin is null ? null : Encode(type, skin);
+            using var skin = await LoadSkinAsync(source, cancellationToken).ConfigureAwait(false);
+            if (skin is null)
+            {
+                return null;
+            }
+
+            var image = await Task.Run(() => Render(view, skin, cancellationToken), cancellationToken).ConfigureAwait(false);
+            if (cancellationToken.IsCancellationRequested)
+            {
+                image.Dispose();
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+
+            return image;
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+            throw;
         }
         catch (Exception ex)
         {
-            logger.LogWarning(ex, "Failed to render skin: {Url}", url);
+            logger.LogWarning(ex, "Failed to render skin: {Source}", source);
             return null;
         }
     }
 
-    private byte[] Encode(string type, SKBitmap skin)
+    private Bitmap Render(SkinViewType view, SKBitmap skin, CancellationToken cancellationToken)
     {
         SKImage image;
         lock (renderer)
         {
-            // WARNING: SkiaSharp 位图/画布共享底层句柄，须串行渲染避免并发竞争；皮肤图小，锁开销可忽略。
-            // type 字符串直接对应 SkinViewType 枚举名（不区分大小写）；不识别时回落 Body，与历史行为一致。
-            var view = Enum.TryParse<SkinViewType>(type, true, out var v) ? v : SkinViewType.Body;
+            cancellationToken.ThrowIfCancellationRequested();
             image = renderer.Render(skin, view);
         }
 
         using (image)
         {
-            using var data = image.Encode();
-            return data.ToArray();
+            var bitmap = new WriteableBitmap(new PixelSize(image.Width, image.Height), new Vector(96, 96),
+                PixelFormat.Rgba8888, AlphaFormat.Premul);
+            try
+            {
+                using var pixels = bitmap.Lock();
+                var info = new SKImageInfo(image.Width, image.Height, SKColorType.Rgba8888, SKAlphaType.Premul);
+                if (!image.ReadPixels(info, pixels.Address, pixels.RowBytes, 0, 0))
+                {
+                    throw new InvalidOperationException("Unable to copy the rendered skin pixels.");
+                }
+
+                return bitmap;
+            }
+            catch
+            {
+                bitmap.Dispose();
+                throw;
+            }
         }
     }
 
-    private async Task<SKBitmap?> LoadSkinAsync(string src)
+    private async Task<SKBitmap?> LoadSkinAsync(string src, CancellationToken cancellationToken)
     {
-        var bytes = await TryLoadBytesAsync(src).ConfigureAwait(false);
+        var bytes = await TryLoadBytesAsync(src, cancellationToken).ConfigureAwait(false);
+        cancellationToken.ThrowIfCancellationRequested();
         bytes ??= TryLoadAsset(SteveAssetUri);
         return bytes is null ? null : SKBitmap.Decode(bytes);
     }
 
-    private async Task<byte[]?> TryLoadBytesAsync(string src)
+    private async Task<byte[]?> TryLoadBytesAsync(string src, CancellationToken cancellationToken)
     {
         try
         {
             if (src.StartsWith("mojang:", StringComparison.Ordinal))
             {
                 return await httpClient
-                            .GetByteArrayAsync(SkinMirrorBase + src["mojang:".Length..])
+                            .GetByteArrayAsync(SkinMirrorBase + src["mojang:".Length..], cancellationToken)
                             .ConfigureAwait(false);
             }
 
@@ -100,7 +119,11 @@ public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer render
                 return TryLoadAsset(ResolveAssetUri(src["asset:".Length..]));
             }
 
-            return await httpClient.GetByteArrayAsync(src).ConfigureAwait(false);
+            return await httpClient.GetByteArrayAsync(src, cancellationToken).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+            throw;
         }
         catch (Exception ex)
         {

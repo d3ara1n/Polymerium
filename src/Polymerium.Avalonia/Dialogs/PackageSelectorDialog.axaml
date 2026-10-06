@@ -33,11 +33,9 @@
                                 Height="14"
                                 ClipToBounds="True"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                <Border.Background>
-                                    <ImageBrush
-                                        async:ImageBrushLoader.Source="{Binding Thumbnail}"
-                                        Stretch="UniformToFill" />
-                                </Border.Background>
+                                <Image
+                                    async:ImageLoader.Source="{Binding Thumbnail}"
+                                    Stretch="UniformToFill" />
                             </Border>
                             <TextBlock Text="{Binding Name, FallbackValue=Modpack}" TextTrimming="CharacterEllipsis" />
                         </StackPanel>
@@ -316,7 +314,7 @@
                                         <Panel>
                                             <Image
                                                 IsVisible="{Binding Thumbnail, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
-                                                Source="{Binding Thumbnail, FallbackValue={x:Null}}"
+                                                async:ImageLoader.Source="{Binding Thumbnail, FallbackValue={x:Null}}"
                                                 Stretch="UniformToFill" />
                                             <fi:SymbolIcon
                                                 HorizontalAlignment="Center"

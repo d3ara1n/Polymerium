@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:conv="clr-namespace:Polymerium.Avalonia.Converters"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
@@ -33,22 +34,23 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding CornerRadius}" />
-                        <Rectangle
+                        <Canvas
                             Width="{Binding Bounds.Height, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                             HorizontalAlignment="Right"
                             Opacity="0.5">
-                            <Rectangle.Fill>
-                                <ImageBrush
-                                    Source="{Binding Basic.Thumbnail, FallbackValue={x:Null}}"
-                                    Stretch="Fill" />
-                            </Rectangle.Fill>
-                            <Rectangle.OpacityMask>
-                                <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
-                                    <GradientStop Offset="0" Color="Transparent" />
-                                    <GradientStop Offset="1" Color="Black" />
-                                </LinearGradientBrush>
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
+                            <Image
+                                Width="{Binding $parent[Canvas].Bounds.Width}"
+                                Height="{Binding $parent[Canvas].Bounds.Height}"
+                                async:ImageLoader.Source="{Binding Basic.Thumbnail, FallbackValue={x:Null}}"
+                                Stretch="Fill">
+                                <Image.OpacityMask>
+                                    <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                                        <GradientStop Offset="0" Color="Transparent" />
+                                        <GradientStop Offset="1" Color="Black" />
+                                    </LinearGradientBrush>
+                                </Image.OpacityMask>
+                            </Image>
+                        </Canvas>
                         <ProgressBar
                             Name="Progress"
                             Height="2"

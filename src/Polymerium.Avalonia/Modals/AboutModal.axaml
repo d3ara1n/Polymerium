@@ -2,6 +2,7 @@
     x:Class="Polymerium.Avalonia.Modals.AboutModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
@@ -43,7 +44,7 @@
                 CornerRadius="{StaticResource LargeCornerRadius}">
                 <Image
                     RenderOptions.BitmapInterpolationMode="HighQuality"
-                    Source="/Assets/Icon.App.png"
+                    async:ImageLoader.Source="avares://Polymerium/Assets/Icon.App.png"
                     Stretch="UniformToFill" />
             </Border>
 

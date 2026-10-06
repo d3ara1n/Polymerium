@@ -1,4 +1,5 @@
 using System;
+using Polymerium.Avalonia.Rendering;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,13 +36,13 @@ public partial class UnknownPageModel(
     /// </summary>
     public IReadOnlyList<SkinViewSample> SkinViewSamples { get; } =
     [
-        new("Face · 正面头像", SkinHelper.ToUri("face", "asset:Steve")),
-        new("Body · 等距全身", SkinHelper.ToUri("body", "asset:Steve")),
-        new("Cover · 等距半身", SkinHelper.ToUri("cover", "asset:Steve")),
-        new("Front · 正面平视", SkinHelper.ToUri("front", "asset:Steve")),
-        new("Right · 右侧平视", SkinHelper.ToUri("right", "asset:Steve")),
-        new("Back · 背面平视", SkinHelper.ToUri("back", "asset:Steve")),
-        new("Left · 左侧平视", SkinHelper.ToUri("left", "asset:Steve"))
+        new("Face · 正面头像", SkinHelper.ToUri(SkinViewType.Face, "asset:Steve")),
+        new("Body · 等距全身", SkinHelper.ToUri(SkinViewType.Body, "asset:Steve")),
+        new("Cover · 等距半身", SkinHelper.ToUri(SkinViewType.Cover, "asset:Steve")),
+        new("Front · 正面平视", SkinHelper.ToUri(SkinViewType.Front, "asset:Steve")),
+        new("Right · 右侧平视", SkinHelper.ToUri(SkinViewType.Right, "asset:Steve")),
+        new("Back · 背面平视", SkinHelper.ToUri(SkinViewType.Back, "asset:Steve")),
+        new("Left · 左侧平视", SkinHelper.ToUri(SkinViewType.Left, "asset:Steve"))
     ];
 
     #region Overrides

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Avalonia.Media.Imaging;
+using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Facilities;
 using TridentCore.Abstractions.Repositories.Resources;
@@ -21,7 +21,7 @@ public partial class SelectablePackageModel(InstancePackageModel source, Package
 
     public ResourceKind? Kind { get; } = source.Info?.Kind;
 
-    public Bitmap? Thumbnail { get; } = source.Info?.Thumbnail;
+    public Uri? Thumbnail { get; } = source.Info?.Thumbnail;
 
     public IReadOnlyList<string> Tags { get; } = [.. source.Tags];
 
