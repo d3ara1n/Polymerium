@@ -26,6 +26,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <!-- NOTE: Keep 12.1.2 until AvaloniaUI/Avalonia#22380 fixes render-time measurement of inline controls. -->
         <PackageReference Include="Avalonia" Version="12.1.2" />
         <PackageReference Include="Avalonia.Desktop" Version="12.1.2" />
         <PackageReference Include="AvaloniaGraphControl" Version="0.7.0"/>
@@ -33,7 +34,7 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
         <PackageReference Include="CsvHelper" Version="33.1.0"/>
         <PackageReference Include="DynamicData" Version="9.4.33"/>
-        <PackageReference Include="FluentIcons.Avalonia" Version="2.1.341" />
+        <PackageReference Include="FluentIcons.Avalonia" Version="2.1.343" />
         <PackageReference Include="fNbt" Version="2.1.0" />
         <PackageReference Include="FreeSql.Provider.SqliteCore" Version="3.5.311"/>
         <PackageReference Include="GitVersion.MsBuild" Version="6.8.2">
@@ -41,7 +42,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Humanizer" Version="3.0.10"/>
-        <PackageReference Include="Huskui.Avalonia" Version="2.1.1" />
+        <PackageReference Include="Huskui.Avalonia" Version="2.1.2" />
         <PackageReference Include="Huskui.Avalonia.Code" Version="1.5.1" />
         <PackageReference Include="Huskui.Avalonia.Markdown" Version="1.5.1"/>
         <PackageReference Include="Huskui.Avalonia.Mvvm" Version="1.4.1"/>
@@ -61,20 +62,20 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.12" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.12" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.12" />
-        <PackageReference Include="MessagePack" Version="3.1.9" />
+        <PackageReference Include="MessagePack" Version="3.1.11" />
         <PackageReference Include="NeoSmart.Caching.Sqlite.AspNetCore" Version="9.0.3" />
-        <PackageReference Include="Refit.Reflection" Version="16.1.0" />
+        <PackageReference Include="Refit.Reflection" Version="16.3.0" />
         <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.5"/>
-        <PackageReference Include="ZiggyCreatures.FusionCache" Version="2.8.0" />
-        <PackageReference Include="ZiggyCreatures.FusionCache.Serialization.NeueccMessagePack" Version="2.8.0" />
+        <PackageReference Include="ZiggyCreatures.FusionCache" Version="2.9.0" />
+        <PackageReference Include="ZiggyCreatures.FusionCache.Serialization.NeueccMessagePack" Version="2.9.0" />
         <PackageReference Include="Semver" Version="3.0.0"/>
-        <PackageReference Include="SkiaSharp" Version="4.152.1" />
-        <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="4.152.1" />
+        <PackageReference Include="SkiaSharp" Version="4.153.1" />
+        <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="4.153.1" />
         <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.8.0"/>
-        <PackageReference Include="Sentry" Version="6.11.1" />
+        <PackageReference Include="Sentry" Version="6.12.0" />
         <PackageReference Include="System.Reactive" Version="7.0.0"/>
         <PackageReference Include="Tomlyn" Version="2.10.1"/>
-        <PackageReference Include="Velopack" Version="1.2.158" />
+        <PackageReference Include="Velopack" Version="1.2.161" />
         <PackageReference Include="VelopackExtension.MirrorChyan" Version="1.0.8"/>
     </ItemGroup>
 
