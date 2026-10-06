@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import Negotiator from 'negotiator';
 import {
   isMarkdownPreferred,
   rewritePath,
-  getNegotiator,
 } from 'fumadocs-core/negotiation';
 import { docsContentRoute, docsRoute } from '@/lib/shared';
 import { i18n } from '@/lib/i18n';
@@ -23,7 +23,8 @@ export default function proxy(request: NextRequest) {
   // i18n: redirect to locale-prefixed URL (e.g. / → /en, /docs → /en/docs)
   if (!pathLocale || !(i18n.languages as readonly string[]).includes(pathLocale)) {
     const preferred =
-      getNegotiator(request).languages(i18n.languages as string[])[0] ??
+      new Negotiator({ headers: { 'accept-language': request.headers.get('accept-language') ?? undefined } })
+        .languages(i18n.languages as string[])[0] ??
       i18n.defaultLanguage;
     const target = new URL(url);
     const prefixed = `/${preferred}${url.pathname}`.replaceAll(/\/+/g, '/');
