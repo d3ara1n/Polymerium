@@ -17,17 +17,46 @@ public static class RecipeHelper
 
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
 
-    public static string ToUri(string id) => RecipePrefix + id;
+    public static string ToUri(string id)
+    {
+        if (!IsValidId(id))
+        {
+            throw new ArgumentException("A recipe ID must contain only ASCII letters, digits, '_' or '-'.", nameof(id));
+        }
+
+        return RecipePrefix + id;
+    }
 
     public static bool TryGetId(string? s, [MaybeNullWhen(false)] out string id)
     {
-        if (s is null || !s.StartsWith(RecipePrefix, StringComparison.Ordinal))
+        if (!InternalUriHelper.HasScheme(s, Scheme)
+            || !s!.StartsWith(RecipePrefix, StringComparison.OrdinalIgnoreCase)
+            || !IsValidId(s[RecipePrefix.Length..]))
         {
             id = null!;
             return false;
         }
 
+        // NOTE: Recipe IDs are case-sensitive Nanoids, so do not read them through Uri.Host.
         id = s[RecipePrefix.Length..];
+        return true;
+    }
+
+    private static bool IsValidId(string? id)
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            return false;
+        }
+
+        foreach (var character in id)
+        {
+            if (!char.IsAsciiLetterOrDigit(character) && character is not ('_' or '-'))
+            {
+                return false;
+            }
+        }
+
         return true;
     }
 

@@ -43,7 +43,7 @@ public sealed class AppImageLoader : IAsyncImageLoader
         cancellationToken.ThrowIfCancellationRequested();
         var source = request.Source;
         int? width = null;
-        for (var redirects = 0; ImageSourceHelper.IsScheme(source, ImageSourceHelper.THUMBNAIL_SCHEME); redirects++)
+        for (var redirects = 0; InternalUriHelper.HasScheme(source, ImageSourceHelper.THUMBNAIL_SCHEME); redirects++)
         {
             if (redirects == MAX_REDIRECTS)
             {
@@ -60,9 +60,9 @@ public sealed class AppImageLoader : IAsyncImageLoader
         }
 
         Bitmap? image;
-        if (ImageSourceHelper.IsScheme(source, SkinHelper.Scheme))
+        if (InternalUriHelper.HasScheme(source, ImageSourceHelper.SKIN_SCHEME))
         {
-            if (!SkinHelper.TryParse(source, out var view, out var skinSource))
+            if (!ImageSourceHelper.TryParseSkin(source, out var view, out var skinSource))
             {
                 throw new FormatException("A skin URI requires a view type and a skin source.");
             }

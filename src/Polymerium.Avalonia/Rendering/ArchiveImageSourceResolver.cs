@@ -15,7 +15,7 @@ public sealed class ArchiveImageSourceResolver : IImageSourceResolver
         ImageLoadRequest request, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        if (!ImageSourceHelper.IsScheme(request.Source, ImageSourceHelper.ARCHIVE_SCHEME))
+        if (!InternalUriHelper.HasScheme(request.Source, ImageSourceHelper.ARCHIVE_SCHEME))
         {
             return null;
         }

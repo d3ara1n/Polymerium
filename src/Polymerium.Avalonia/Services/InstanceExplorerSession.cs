@@ -226,7 +226,6 @@ public sealed class InstanceExplorerSession : ExplorerSession
                            ? p
                             .Setup.Packages.Select(e => e.Source)
                             .OfType<string>()
-                            .Where(s => InternalUriHelper.IsKind(s, CollectionHelper.SCHEME))
                             .Select(s => CollectionHelper.TryGetName(s, out var n) ? new CollectionModel(n, s) : null)
                             .OfType<CollectionModel>()
                             .Distinct()

@@ -1,6 +1,5 @@
-using System.Diagnostics;
+using System;
 using TridentCore.Abstractions.Utilities;
-using Builder = TridentCore.Pref.Building.Builder;
 
 namespace Polymerium.Avalonia.Utilities;
 
@@ -31,8 +30,8 @@ public static class PackageSourceHelper
     }
 
     /// <summary>
-    ///     把 <paramref name="source" /> 归入四种归属之一，经 <see cref="InternalUriHelper.IsKind" />
-    ///     按 scheme 显式判定而非 else 兜底：<c>recipe://</c>→Recipe，<c>pref://</c>→Modpack，<c>collection://</c>→Collection；
+    ///     把 <paramref name="source" /> 经各自的解析器归入四种归属之一：
+    ///     <c>recipe://</c>→Recipe，<c>pref://</c>→Modpack，<c>collection://</c>→Collection；
     ///     旧格式 Purl（无 scheme，如 <c>curseforge:...</c>）仍算 Modpack（兼容改名前的存量 Source）。
     ///     既非 null / recipe / 包标识的值视为非法，直接抛异常。
     /// </summary>
@@ -40,13 +39,12 @@ public static class PackageSourceHelper
         source switch
         {
             null => Kind.Manual,
-            _ when InternalUriHelper.IsKind(source, RecipeHelper.Scheme) => Kind.Recipe,
-            _ when InternalUriHelper.IsKind(source, CollectionHelper.SCHEME) => Kind.Collection,
-            _ when InternalUriHelper.IsKind(source, Builder.Scheme) => Kind.Modpack,
+            _ when RecipeHelper.TryGetId(source, out _) => Kind.Recipe,
+            _ when CollectionHelper.TryGetName(source, out _) => Kind.Collection,
             // TODO: legacy Purl-format Source from pre-rename modpacks; remove once on-disk
             //  profiles no longer carry old-format Source values.
             _ when PackageHelper.TryParse(source, out _) => Kind.Modpack,
-            _ => throw new UnreachableException($"Unrecognized Entry.Source: {source}")
+            _ => throw new FormatException($"Unrecognized Entry.Source: {source}")
         };
 
     /// <summary>单包能否删除：只有手动包（不属任何组）可删。不依赖 <paramref name="current" />。</summary>

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Polymerium.Avalonia.Models;
 using TridentCore.Pref.Parsing;
+using TridentCore.Pref.Building;
 
 namespace Polymerium.Avalonia.Utilities;
 
@@ -24,7 +25,7 @@ public static class ModpackUrlDetectionHelper
 
         if (Uri.TryCreate(input, UriKind.Absolute, out var uri))
         {
-            if (uri.Scheme.Equals("pref", StringComparison.OrdinalIgnoreCase))
+            if (TridentCore.Pref.Utilities.InternalUriHelper.HasScheme(input, Builder.Scheme))
             {
                 try
                 {

@@ -13,7 +13,7 @@ public sealed class DataImageSourceResolver : IImageSourceResolver
     public Task<ResolvedImageSource?> ResolveAsync(ImageLoadRequest request, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        if (!ImageSourceHelper.IsScheme(request.Source, ImageSourceHelper.DATA_SCHEME))
+        if (!InternalUriHelper.HasScheme(request.Source, ImageSourceHelper.DATA_SCHEME))
         {
             return Task.FromResult<ResolvedImageSource?>(null);
         }
