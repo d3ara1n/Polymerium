@@ -1,4 +1,5 @@
 using System;
+using Polymerium.Avalonia.Rendering;
 using System.Collections.Generic;
 using System.Text.Json;
 using Polymerium.Avalonia.Models;
@@ -76,21 +77,21 @@ public static class AccountHelper
     ///     <see cref="BuildSkinSource" /> 按账户类型产生，由
     ///     <see cref="Services.SkinRenderService" /> 解析路由后离线渲染。
     /// </summary>
-    public static Uri GetFaceUrl(string src) => new(SkinHelper.ToUri("face", src), UriKind.Absolute);
+    public static Uri GetFaceUrl(string src) => new(SkinHelper.ToUri(SkinViewType.Face, src), UriKind.Absolute);
 
-    public static Uri GetBodyUrl(string src) => new(SkinHelper.ToUri("body", src), UriKind.Absolute);
+    public static Uri GetBodyUrl(string src) => new(SkinHelper.ToUri(SkinViewType.Body, src), UriKind.Absolute);
 
     /// <summary>
     ///     构造半身像（Cover）的本地渲染 URI：与 <see cref="GetBodyUrl" /> 共用全身缩放，
     ///     头顶贴顶、画布截取上半身，适合方形卡片预览。
     /// </summary>
-    public static Uri GetCoverUrl(string src) => new(SkinHelper.ToUri("cover", src), UriKind.Absolute);
+    public static Uri GetCoverUrl(string src) => new(SkinHelper.ToUri(SkinViewType.Cover, src), UriKind.Absolute);
 
     public static IReadOnlyList<Uri> GetBodyViewUrls(string src) =>
     [
-        new(SkinHelper.ToUri("front", src), UriKind.Absolute),
-        new(SkinHelper.ToUri("right", src), UriKind.Absolute),
-        new(SkinHelper.ToUri("back", src), UriKind.Absolute),
-        new(SkinHelper.ToUri("left", src), UriKind.Absolute)
+        new(SkinHelper.ToUri(SkinViewType.Front, src), UriKind.Absolute),
+        new(SkinHelper.ToUri(SkinViewType.Right, src), UriKind.Absolute),
+        new(SkinHelper.ToUri(SkinViewType.Back, src), UriKind.Absolute),
+        new(SkinHelper.ToUri(SkinViewType.Left, src), UriKind.Absolute)
     ];
 }

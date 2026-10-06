@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -6,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Media;
-using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
@@ -57,7 +57,7 @@ public partial class InstanceActivitiesPageModel(
 
     private void LoadActionPage(int pageIndex)
     {
-        var lazy = new LazyObject(async _ =>
+        var lazy = new LazyObject(async token =>
         {
             var actions = persistenceService.GetActions(Basic.Key, pageIndex, ActionPageSize, out var totalCount);
             ActionTotalCount = totalCount;
@@ -87,7 +87,7 @@ public partial class InstanceActivitiesPageModel(
                     ? pkg
                     : null;
 
-            var thumbnails = new Dictionary<Uri, Bitmap>();
+            var thumbnails = new ConcurrentDictionary<Uri, Uri>();
             var thumbnailUris = valid
                                .Select(x => ResolveByPref(x.New) ?? ResolveByPref(x.Old))
                                .Where(p => p?.Thumbnail != null)
@@ -101,7 +101,11 @@ public partial class InstanceActivitiesPageModel(
                 {
                     try
                     {
-                        thumbnails[uri] = await dataService.GetBitmapAsync(uri);
+                        thumbnails[uri] = ImageSourceHelper.Thumbnail(await dataService.GetImageFileAsync(uri, token), 64);
+                    }
+                    catch (OperationCanceledException) when (token.IsCancellationRequested)
+                    {
+                        throw;
                     }
                     catch
                     {
@@ -126,9 +130,9 @@ public partial class InstanceActivitiesPageModel(
                               {
                                   model.IsLoaded = true;
                                   var thumbUri = newPkg?.Thumbnail ?? oldPkg?.Thumbnail;
-                                  var thumbnail = thumbUri is not null && thumbnails.TryGetValue(thumbUri, out var bmp)
-                                                      ? bmp
-                                                      : AssetUriIndex.DirtImageBitmap;
+                                  var thumbnail = thumbUri is not null && thumbnails.TryGetValue(thumbUri, out var imageUri)
+                                                      ? imageUri
+                                                      : AssetUriIndex.DirtImage;
                                   model.Info = new(primary.ProjectName,
                                                    oldPkg?.VersionName,
                                                    newPkg?.VersionName,

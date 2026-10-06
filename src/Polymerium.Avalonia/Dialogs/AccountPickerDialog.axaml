@@ -63,9 +63,11 @@
                                 Height="48"
                                 BoxShadow="0 0 4 0 #3F000000"
                                 CornerRadius="{StaticResource SmallCornerRadius}">
-                                <Border.Background>
-                                    <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl}" />
-                                </Border.Background>
+                                <Border ClipToBounds="True" CornerRadius="{StaticResource SmallCornerRadius}">
+                                    <Image
+                                        async:ImageLoader.Source="{Binding FaceUrl}"
+                                        Stretch="Fill" />
+                                </Border>
                             </Border>
                             <TextBlock
                                 Grid.Row="0"

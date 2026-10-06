@@ -1,4 +1,4 @@
-using Avalonia.Media.Imaging;
+using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Facilities;
 using TridentCore.Abstractions.Repositories.Resources;
@@ -13,7 +13,7 @@ public sealed partial class DependencyGraphNode(
     string projectId,
     ResourceKind kind,
     string? author,
-    Bitmap thumbnail,
+    Uri thumbnail,
     ReleaseType releaseType) : ModelBase
 {
     public string Key { get; } = key;
@@ -23,7 +23,7 @@ public sealed partial class DependencyGraphNode(
     public string ProjectId { get; } = projectId;
     public ResourceKind Kind { get; } = kind;
     public string? Author { get; } = author;
-    public Bitmap Thumbnail { get; } = thumbnail;
+    public Uri Thumbnail { get; } = thumbnail;
     public ReleaseType ReleaseType { get; } = releaseType;
 
     public bool IsMissing { get; set; }

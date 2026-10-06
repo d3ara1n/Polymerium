@@ -1,5 +1,5 @@
 using Avalonia.Input;
-using Avalonia.Media.Imaging;
+using Polymerium.Avalonia.Utilities;
 using Avalonia.Platform.Storage;
 using Huskui.Avalonia.Controls;
 using Polymerium.Avalonia.Controls;
@@ -33,7 +33,7 @@ public partial class NewInstancePage : ScopedPage
                     var path = first.TryGetLocalPath();
                     if (path != null && FileHelper.IsBitmapFile(path))
                     {
-                        e.Model = new Bitmap(path);
+                        e.Model = ImageSourceHelper.FromFile(path);
                     }
                 }
                 catch

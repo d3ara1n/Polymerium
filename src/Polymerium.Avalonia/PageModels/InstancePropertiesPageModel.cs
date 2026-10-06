@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
@@ -82,14 +83,21 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         // WARNING: 如果监听 ThumbnailOverwrite 改变去写会导致死循环
         try
         {
+            using var stream = new MemoryStream();
+            using (var input = ThumbnailOverwrite.IsFile
+                       ? File.OpenRead(ThumbnailOverwrite.LocalPath)
+                       : AssetLoader.Open(ThumbnailOverwrite))
+            using (var thumbnail = new Bitmap(input))
+            {
+                thumbnail.Save(stream, new PngBitmapEncoderOptions());
+            }
+
             var path = InstanceHelper.PickIcon(Basic.Key);
             if (path != null && File.Exists(path))
             {
                 File.Delete(path);
             }
 
-            using var stream = new MemoryStream();
-            ThumbnailOverwrite.Save(stream, new PngBitmapEncoderOptions());
             stream.Position = 0;
             var extension = FileHelper.GuessBitmapExtension(stream);
             stream.Position = 0;
@@ -270,7 +278,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     [RelayCommand]
     private async Task RemoveThumbnailAsync()
     {
-        ThumbnailOverwrite = AssetUriIndex.DirtImageBitmap;
+        ThumbnailOverwrite = AssetUriIndex.DirtImage;
         await WriteIconAsync();
     }
 
@@ -283,7 +291,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
         {
             if (FileHelper.IsBitmapFile(path))
             {
-                ThumbnailOverwrite = new(path);
+                ThumbnailOverwrite = ImageSourceHelper.FromFile(path);
                 await WriteIconAsync();
             }
             else
@@ -325,7 +333,7 @@ public partial class InstancePropertiesPageModel : InstancePageModelBase
     #region Reactive
 
     [ObservableProperty]
-    public required partial Bitmap ThumbnailOverwrite { get; set; }
+    public required partial Uri ThumbnailOverwrite { get; set; }
 
     [ObservableProperty]
     public required partial string NameOverwrite { get; set; }

@@ -2,6 +2,7 @@
     x:Class="Polymerium.Avalonia.Dialogs.PackagePickerDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="using:AsyncImageLoader"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
@@ -71,7 +72,7 @@
                                     <Panel>
                                         <Image
                                             IsVisible="{Binding Info.Thumbnail, Converter={x:Static ObjectConverters.IsNotNull}, FallbackValue=False}"
-                                            Source="{Binding Info.Thumbnail, FallbackValue={x:Null}}"
+                                            async:ImageLoader.Source="{Binding Info.Thumbnail, FallbackValue={x:Null}}"
                                             Stretch="UniformToFill" />
                                         <fi:SymbolIcon
                                             HorizontalAlignment="Center"

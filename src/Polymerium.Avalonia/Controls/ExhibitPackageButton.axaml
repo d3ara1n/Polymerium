@@ -135,10 +135,11 @@
                                     Margin="12"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    ClipToBounds="True"
                                     CornerRadius="{StaticResource SmallCornerRadius}">
-                                    <Border.Background>
-                                        <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
-                                    </Border.Background>
+                                    <Image
+                                        async:ImageLoader.Source="{Binding Thumbnail}"
+                                        Stretch="Fill" />
                                 </Border>
                                 <app:ExhibitStatePresenter
                                     HorizontalAlignment="Center"

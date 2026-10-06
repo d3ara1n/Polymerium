@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
+using Polymerium.Avalonia.Utilities;
 using Microsoft.Extensions.Caching.Memory;
 using TridentCore.Abstractions;
 using TridentCore.Abstractions.Repositories;
@@ -22,7 +23,7 @@ using Version = TridentCore.Abstractions.Repositories.Resources.Version;
 
 namespace Polymerium.Avalonia.Services;
 
-// Application 级数据整合服务，所有 API/模型统一经此提供；状态全局共享，故无需取消。
+// Application 级数据整合服务，所有 API/模型统一经此提供。
 public class DataService(
     IMemoryCache cache,
     RepositoryAgent agent,
@@ -32,6 +33,7 @@ public class DataService(
 {
     private static readonly TimeSpan EXPIRED_IN = TimeSpan.FromMinutes(5);
     private static readonly TimeSpan ICON_FILE_EXPIRED_IN = TimeSpan.FromDays(30);
+    private readonly ConcurrentDictionary<string, Lazy<Task<Uri>>> _imageFiles = new(StringComparer.Ordinal);
 
     public async ValueTask<Package> IdentifyVersionAsync(string filePath) => await agent.IdentifyAsync(filePath);
 
@@ -57,39 +59,65 @@ public class DataService(
 
     public Task<RepositoryStatus> CheckStatusAsync(string label) => agent.CheckStatusAsync(label);
 
-    // 以下为 DataService 独有的内存缓存——数据源不在 RepositoryAgent，或经过额外加工（Bitmap 解码、版本数截断）。
-
-    // WARNING: 缩略图经 DecodeToWidth 下采样到 maxWidth（默认 64px，单张 ~16KB），解码后体量可控，
-    //  故直接缓存解码结果；全尺寸图由 AppImageLoader 走字节缓存。驱逐只丢 Task 不释放 Bitmap——
-    //  UI 可能仍引用，提前释放抛 ObjectDisposedException，非托管内存由 GC finalizer 在引用消失后回收。
-    public ValueTask<Bitmap> GetBitmapAsync(Uri url, int maxWidth = 64) =>
-        GetOrCreate($"bitmap:{maxWidth}:{url.AbsoluteUri}", () => LoadOrDownloadBitmapAsync(url, maxWidth));
-
-    private async Task<Bitmap> LoadOrDownloadBitmapAsync(Uri url, int maxWidth)
+    public Task<Uri> GetImageFileAsync(Uri url, CancellationToken cancellationToken = default)
     {
-        var hash = Convert.ToHexString(SHA1.HashData(Encoding.UTF8.GetBytes(url.AbsoluteUri))).ToLowerInvariant();
-        var path = PathDef.Default.FileOfIconObject(hash);
+        cancellationToken.ThrowIfCancellationRequested();
+        var shared = _imageFiles.GetOrAdd(url.AbsoluteUri, _ => new(() => StartImageFileLoad(url))).Value;
+        return cancellationToken.CanBeCanceled ? shared.WaitAsync(cancellationToken) : shared;
+    }
 
-        byte[] bytes;
-        if (File.Exists(path) && File.GetLastWriteTimeUtc(path) + ICON_FILE_EXPIRED_IN > DateTime.UtcNow)
+    private Task<Uri> StartImageFileLoad(Uri url)
+    {
+        var task = LoadOrDownloadImageFileAsync(url);
+        // NOTE: All waiters may cancel while the shared download continues to populate the file cache.
+        _ = task.ContinueWith(static failed => { _ = failed.Exception; }, CancellationToken.None,
+            TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+        return task;
+    }
+
+    private async Task<Uri> LoadOrDownloadImageFileAsync(Uri url)
+    {
+        try
         {
-            bytes = await File.ReadAllBytesAsync(path);
+            var hash = Convert.ToHexString(SHA1.HashData(Encoding.UTF8.GetBytes(url.AbsoluteUri))).ToLowerInvariant();
+            var path = PathDef.Default.FileOfIconObject(hash);
+            var file = new FileInfo(path);
+            if (file is { Exists: true, Length: > 0 } && file.LastWriteTimeUtc + ICON_FILE_EXPIRED_IN > DateTime.UtcNow)
+            {
+                return ImageSourceHelper.FromFile(path);
+            }
+
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            var temporary = path + "." + Guid.NewGuid().ToString("N") + ".tmp";
+            try
+            {
+                using var client = httpClientFactory.CreateClient();
+                using var timeout = new CancellationTokenSource(client.Timeout);
+                using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, timeout.Token)
+                    .ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+                await using (var output = new FileStream(temporary, FileMode.CreateNew, FileAccess.Write, FileShare.None,
+                                 81920, FileOptions.Asynchronous | FileOptions.SequentialScan))
+                {
+                    await response.Content.CopyToAsync(output, timeout.Token).ConfigureAwait(false);
+                    if (output.Length == 0)
+                    {
+                        throw new InvalidDataException("The image response is empty.");
+                    }
+                }
+
+                File.Move(temporary, path, true);
+                return ImageSourceHelper.FromFile(path);
+            }
+            finally
+            {
+                File.Delete(temporary);
+            }
         }
-        else
+        finally
         {
-            using var client = httpClientFactory.CreateClient();
-            bytes = await client.GetByteArrayAsync(url);
-
-            // WARNING: 先写临时文件再 rename，崩溃时不会留下损坏文件。
-            var dir = Path.GetDirectoryName(path)!;
-            Directory.CreateDirectory(dir);
-            var tmp = path + ".tmp";
-            await File.WriteAllBytesAsync(tmp, bytes);
-            File.Move(tmp, path, true);
+            _imageFiles.TryRemove(url.AbsoluteUri, out _);
         }
-
-        using var memory = new MemoryStream(bytes);
-        return Bitmap.DecodeToWidth(memory, maxWidth, BitmapInterpolationMode.LowQuality);
     }
 
     public ValueTask<IEnumerable<Version>> InspectVersionsAsync(string label, string? ns, string pid, Filter filter) =>
@@ -97,7 +125,7 @@ public class DataService(
                     async () =>
                     {
                         // 调用以读展示数据为主，仅版本匹配需全量；此处设上限避免一次拉取过多。
-                        const int LIMIT = 20;
+                        const int limit = 20;
                         var handle = await agent.InspectAsync(new(label, ns, pid), filter);
                         var rv = new List<Version>();
                         int lastCount;
@@ -108,7 +136,7 @@ public class DataService(
                             handle.PageIndex = index;
                             rv.AddRange(await handle.FetchAsync(CancellationToken.None));
                             index++;
-                        } while (rv.Count != lastCount && rv.Count < LIMIT);
+                        } while (rv.Count != lastCount && rv.Count < limit);
 
                         return rv.AsEnumerable();
                     });

@@ -251,12 +251,18 @@
                                                     Grid.Column="0"
                                                     Width="48"
                                                     Height="48"
-                                                    CornerRadius="{StaticResource SmallCornerRadius}">
-                                                    <Border.Background>
-                                                        <ImageBrush
-                                                            Source="{Binding Icon}"
+                                                    CornerRadius="{StaticResource SmallCornerRadius}"
+                                                    ClipToBounds="True">
+                                                    <Panel>
+                                                        <Image
+                                                            IsVisible="{Binding #AssetIcon1.Source, Converter={x:Static ObjectConverters.IsNull}}"
+                                                            Source="{x:Static app:AssetUriIndex.DirtImageBitmap}"
                                                             Stretch="Uniform" />
-                                                    </Border.Background>
+                                                        <Image
+                                                            Name="AssetIcon1"
+                                                            async:ImageLoader.Source="{Binding Icon}"
+                                                            Stretch="Uniform" />
+                                                    </Panel>
                                                 </Border>
 
                                                 <!--  Mod 信息  -->
@@ -357,12 +363,18 @@
                                                 Grid.Column="0"
                                                 Width="82"
                                                 Height="82"
-                                                CornerRadius="{StaticResource MediumCornerRadius}">
-                                                <Border.Background>
-                                                    <ImageBrush
-                                                        Source="{Binding Icon}"
+                                                CornerRadius="{StaticResource MediumCornerRadius}"
+                                                ClipToBounds="True">
+                                                <Panel>
+                                                    <Image
+                                                        IsVisible="{Binding #AssetIcon2.Source, Converter={x:Static ObjectConverters.IsNull}}"
+                                                        Source="{x:Static app:AssetUriIndex.DirtImageBitmap}"
                                                         Stretch="Uniform" />
-                                                </Border.Background>
+                                                    <Image
+                                                        Name="AssetIcon2"
+                                                        async:ImageLoader.Source="{Binding Icon}"
+                                                        Stretch="Uniform" />
+                                                </Panel>
                                             </Border>
                                             <StackPanel
                                                 Grid.Column="1"
@@ -709,12 +721,18 @@
                                                 Grid.Column="0"
                                                 Width="32"
                                                 Height="32"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <Border.Background>
-                                                    <ImageBrush
-                                                        Source="{Binding Icon}"
+                                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                                ClipToBounds="True">
+                                                <Panel>
+                                                    <Image
+                                                        IsVisible="{Binding #AssetIcon3.Source, Converter={x:Static ObjectConverters.IsNull}}"
+                                                        Source="{x:Static app:AssetUriIndex.DirtImageBitmap}"
                                                         Stretch="Uniform" />
-                                                </Border.Background>
+                                                    <Image
+                                                        Name="AssetIcon3"
+                                                        async:ImageLoader.Source="{Binding Icon}"
+                                                        Stretch="Uniform" />
+                                                </Panel>
                                             </Border>
                                             <TextBlock
                                                 Grid.Row="0"
@@ -827,12 +845,18 @@
                                                 Grid.Column="0"
                                                 Width="48"
                                                 Height="48"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <Border.Background>
-                                                    <ImageBrush
-                                                        Source="{Binding Icon}"
+                                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                                ClipToBounds="True">
+                                                <Panel>
+                                                    <Image
+                                                        IsVisible="{Binding #AssetIcon4.Source, Converter={x:Static ObjectConverters.IsNull}}"
+                                                        Source="{x:Static app:AssetUriIndex.DirtImageBitmap}"
                                                         Stretch="Uniform" />
-                                                </Border.Background>
+                                                    <Image
+                                                        Name="AssetIcon4"
+                                                        async:ImageLoader.Source="{Binding Icon}"
+                                                        Stretch="Uniform" />
+                                                </Panel>
                                             </Border>
 
                                             <!--  资源包信息  -->
@@ -932,12 +956,18 @@
                                             Grid.Column="0"
                                             Width="82"
                                             Height="82"
-                                            CornerRadius="{StaticResource MediumCornerRadius}">
-                                            <Border.Background>
-                                                <ImageBrush
-                                                    Source="{Binding Icon}"
+                                            CornerRadius="{StaticResource MediumCornerRadius}"
+                                            ClipToBounds="True">
+                                            <Panel>
+                                                <Image
+                                                    IsVisible="{Binding #AssetIcon5.Source, Converter={x:Static ObjectConverters.IsNull}}"
+                                                    Source="{x:Static app:AssetUriIndex.DirtImageBitmap}"
                                                     Stretch="Uniform" />
-                                            </Border.Background>
+                                                <Image
+                                                    Name="AssetIcon5"
+                                                    async:ImageLoader.Source="{Binding Icon}"
+                                                    Stretch="Uniform" />
+                                            </Panel>
                                         </Border>
                                         <StackPanel
                                             Grid.Column="1"
@@ -1176,12 +1206,18 @@
                                                 Grid.Column="0"
                                                 Width="48"
                                                 Height="48"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <Border.Background>
-                                                    <ImageBrush
-                                                        Source="{Binding Icon}"
+                                                CornerRadius="{StaticResource SmallCornerRadius}"
+                                                ClipToBounds="True">
+                                                <Panel>
+                                                    <Image
+                                                        IsVisible="{Binding #AssetIcon6.Source, Converter={x:Static ObjectConverters.IsNull}}"
+                                                        Source="{x:Static app:AssetUriIndex.DirtImageBitmap}"
                                                         Stretch="Uniform" />
-                                                </Border.Background>
+                                                    <Image
+                                                        Name="AssetIcon6"
+                                                        async:ImageLoader.Source="{Binding Icon}"
+                                                        Stretch="Uniform" />
+                                                </Panel>
                                             </Border>
 
                                             <!--  数据包信息  -->
@@ -1282,12 +1318,18 @@
                                             Grid.Column="0"
                                             Width="82"
                                             Height="82"
-                                            CornerRadius="{StaticResource MediumCornerRadius}">
-                                            <Border.Background>
-                                                <ImageBrush
-                                                    Source="{Binding Icon}"
+                                            CornerRadius="{StaticResource MediumCornerRadius}"
+                                            ClipToBounds="True">
+                                            <Panel>
+                                                <Image
+                                                    IsVisible="{Binding #AssetIcon7.Source, Converter={x:Static ObjectConverters.IsNull}}"
+                                                    Source="{x:Static app:AssetUriIndex.DirtImageBitmap}"
                                                     Stretch="Uniform" />
-                                            </Border.Background>
+                                                <Image
+                                                    Name="AssetIcon7"
+                                                    async:ImageLoader.Source="{Binding Icon}"
+                                                    Stretch="Uniform" />
+                                            </Panel>
                                         </Border>
                                         <StackPanel
                                             Grid.Column="1"
@@ -1565,7 +1607,12 @@
                                                                                     <Panel>
                                                                                         <Border
                                                                                             Background="{TemplateBinding Background}"
-                                                                                            CornerRadius="{TemplateBinding CornerRadius}" />
+                                                                                            ClipToBounds="True"
+                                                                                            CornerRadius="{TemplateBinding CornerRadius}">
+                                                                                            <Image
+                                                                                                async:ImageLoader.Source="{Binding Thumbnail}"
+                                                                                                Stretch="UniformToFill" />
+                                                                                        </Border>
                                                                                         <Border
                                                                                             Name="Mask"
                                                                                             Background="{StaticResource OverlaySmokeBackgroundBrush}"
@@ -1595,11 +1642,6 @@
                                                                             </Style>
                                                                         </ControlTheme>
                                                                     </Button.Theme>
-                                                                    <Button.Background>
-                                                                        <ImageBrush
-                                                                            Source="{Binding Thumbnail}"
-                                                                            Stretch="UniformToFill" />
-                                                                    </Button.Background>
                                                                 </Button>
                                                                 <DockPanel Grid.Row="1">
                                                                     <husk:ButtonGroup DockPanel.Dock="Right">
@@ -1692,12 +1734,18 @@
                                         Grid.Column="0"
                                         Width="42"
                                         Height="42"
-                                        CornerRadius="{StaticResource SmallCornerRadius}">
-                                        <Border.Background>
-                                            <ImageBrush
-                                                Source="{Binding Icon}"
+                                        CornerRadius="{StaticResource SmallCornerRadius}"
+                                        ClipToBounds="True">
+                                        <Panel>
+                                            <Image
+                                                IsVisible="{Binding #AssetIcon8.Source, Converter={x:Static ObjectConverters.IsNull}}"
+                                                Source="{x:Static app:AssetUriIndex.DirtImageBitmap}"
                                                 Stretch="Uniform" />
-                                        </Border.Background>
+                                            <Image
+                                                Name="AssetIcon8"
+                                                async:ImageLoader.Source="{Binding Icon}"
+                                                Stretch="Uniform" />
+                                        </Panel>
                                     </Border>
                                     <StackPanel Grid.Column="1">
                                         <TextBlock
@@ -1729,12 +1777,18 @@
                                             Grid.Column="0"
                                             Width="82"
                                             Height="82"
-                                            CornerRadius="{StaticResource MediumCornerRadius}">
-                                            <Border.Background>
-                                                <ImageBrush
-                                                    Source="{Binding Icon}"
+                                            CornerRadius="{StaticResource MediumCornerRadius}"
+                                            ClipToBounds="True">
+                                            <Panel>
+                                                <Image
+                                                    IsVisible="{Binding #AssetIcon9.Source, Converter={x:Static ObjectConverters.IsNull}}"
+                                                    Source="{x:Static app:AssetUriIndex.DirtImageBitmap}"
                                                     Stretch="Uniform" />
-                                            </Border.Background>
+                                                <Image
+                                                    Name="AssetIcon9"
+                                                    async:ImageLoader.Source="{Binding Icon}"
+                                                    Stretch="Uniform" />
+                                            </Panel>
                                         </Border>
                                         <StackPanel
                                             Grid.Column="1"
@@ -1881,12 +1935,18 @@
                                                                     Grid.Column="0"
                                                                     Width="48"
                                                                     Height="48"
-                                                                    CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                    <Border.Background>
-                                                                        <ImageBrush
-                                                                            Source="{Binding Icon}"
+                                                                    CornerRadius="{StaticResource SmallCornerRadius}"
+                                                                    ClipToBounds="True">
+                                                                    <Panel>
+                                                                        <Image
+                                                                            IsVisible="{Binding #AssetIcon10.Source, Converter={x:Static ObjectConverters.IsNull}}"
+                                                                            Source="{x:Static app:AssetUriIndex.DirtImageBitmap}"
                                                                             Stretch="Uniform" />
-                                                                    </Border.Background>
+                                                                        <Image
+                                                                            Name="AssetIcon10"
+                                                                            async:ImageLoader.Source="{Binding Icon}"
+                                                                            Stretch="Uniform" />
+                                                                    </Panel>
                                                                 </Border>
 
                                                                 <!--  数据包信息  -->
@@ -1974,12 +2034,11 @@
                                                                 <Border
                                                                     Width="48"
                                                                     Height="48"
+                                                                    ClipToBounds="True"
                                                                     CornerRadius="{StaticResource SmallCornerRadius}">
-                                                                    <Border.Background>
-                                                                        <ImageBrush
-                                                                            async:ImageBrushLoader.Source="{Binding FaceUrl}"
-                                                                            Stretch="Uniform" />
-                                                                    </Border.Background>
+                                                                    <Image
+                                                                        async:ImageLoader.Source="{Binding FaceUrl}"
+                                                                        Stretch="Uniform" />
                                                                 </Border>
                                                                 <TextBlock
                                                                     HorizontalAlignment="Center"

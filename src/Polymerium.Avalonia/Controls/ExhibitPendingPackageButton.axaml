@@ -36,10 +36,11 @@
                     <Border
                         Width="36"
                         Height="36"
+                        ClipToBounds="True"
                         CornerRadius="{StaticResource SmallCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush async:ImageBrushLoader.Source="{Binding Thumbnail}" />
-                        </Border.Background>
+                        <Image
+                            async:ImageLoader.Source="{Binding Thumbnail}"
+                            Stretch="Fill" />
                     </Border>
                 </Border>
             </ControlTemplate>

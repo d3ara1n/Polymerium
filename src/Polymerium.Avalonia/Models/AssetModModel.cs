@@ -1,9 +1,9 @@
 using System.IO;
-using Avalonia.Media.Imaging;
+using System;
 
 namespace Polymerium.Avalonia.Models;
 
-public class AssetModModel(FileInfo file, Bitmap icon, AssetModeMetadataModel metadata, bool isLocked)
+public class AssetModModel(FileInfo file, Uri icon, AssetModeMetadataModel metadata, bool isLocked)
     : FileAssetModel<AssetModeMetadataModel>(file, icon, metadata, isLocked)
 {
     public override string DisplayName => Metadata.Name ?? base.DisplayName;

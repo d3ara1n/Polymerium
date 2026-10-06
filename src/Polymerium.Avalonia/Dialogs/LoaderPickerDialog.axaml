@@ -2,6 +2,7 @@
     x:Class="Polymerium.Avalonia.Dialogs.LoaderPickerDialog"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:husk="https://github.com/d3ara1n/Huskui.Avalonia"
@@ -19,7 +20,7 @@
                         Width="48"
                         Height="48"
                         Margin="12"
-                        Source="{Binding Thumbnail}" />
+                        async:ImageLoader.Source="{Binding Thumbnail}" />
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontWeight="{StaticResource ControlStrongFontWeight}"

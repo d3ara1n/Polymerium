@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Models;
@@ -142,9 +141,9 @@ public partial class MarketplaceModpacksPageModel
 
         HeaderImage = value.Label switch
         {
-            "curseforge" => AssetUriIndex.RepositoryHeaderCurseforgeBitmap,
-            "modrinth" => AssetUriIndex.RepositoryHeaderModrinthBitmap,
-            "favorite" => AssetUriIndex.RepositoryHeaderFavoriteBitmap,
+            "curseforge" => AssetUriIndex.RepositoryHeaderCurseforge,
+            "modrinth" => AssetUriIndex.RepositoryHeaderModrinth,
+            "favorite" => AssetUriIndex.RepositoryHeaderFavorite,
             _ => HeaderImage
         };
 
@@ -167,7 +166,7 @@ public partial class MarketplaceModpacksPageModel
     public partial InfiniteCollection<ExhibitModel>? Exhibits { get; set; }
 
     [ObservableProperty]
-    public partial Bitmap? HeaderImage { get; set; }
+    public partial Uri? HeaderImage { get; set; }
 
     [ObservableProperty]
     public partial string QueryText { get; set; } = string.Empty;

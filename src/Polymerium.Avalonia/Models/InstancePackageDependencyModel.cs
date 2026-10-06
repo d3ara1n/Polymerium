@@ -1,5 +1,5 @@
 using System;
-using Avalonia.Media.Imaging;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Facilities;
 
@@ -11,7 +11,7 @@ public partial class InstancePackageDependencyModel(
     string projectId,
     string? versionId,
     string projectName,
-    Bitmap thumbnail,
+    Uri thumbnail,
     Uri reference,
     uint refCount,
     bool isRequired) : ModelBase
@@ -30,7 +30,7 @@ public partial class InstancePackageDependencyModel(
     public string ProjectId => projectId;
     public string? VersionId => versionId;
     public string ProjectName => projectName;
-    public Bitmap Thumbnail => thumbnail;
+    public Uri Thumbnail => thumbnail;
     public Uri Reference => reference;
     public uint RefCount => refCount;
     public bool IsRequired => isRequired;

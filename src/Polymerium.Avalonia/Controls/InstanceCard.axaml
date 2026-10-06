@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:conv="clr-namespace:Polymerium.Avalonia.Converters"
     xmlns:fi="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
@@ -68,12 +69,11 @@
                                             Height="36"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
-                                            CornerRadius="{StaticResource SmallCornerRadius}">
-                                            <Border.Background>
-                                                <ImageBrush
-                                                    Source="{Binding Basic.Thumbnail, FallbackValue={x:Null}}"
-                                                    Stretch="UniformToFill" />
-                                            </Border.Background>
+                                            CornerRadius="{StaticResource SmallCornerRadius}"
+                                            ClipToBounds="True">
+                                            <Image
+                                                async:ImageLoader.Source="{Binding Basic.Thumbnail, FallbackValue={x:Null}}"
+                                                Stretch="UniformToFill" />
                                         </Border>
                                     </Panel>
                                 </Border>

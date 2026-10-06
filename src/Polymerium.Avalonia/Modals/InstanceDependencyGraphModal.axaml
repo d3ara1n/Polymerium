@@ -2,6 +2,7 @@
     x:Class="Polymerium.Avalonia.Modals.InstanceDependencyGraphModal"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:async="using:AsyncImageLoader"
     xmlns:agc="clr-namespace:AvaloniaGraphControl;assembly=AvaloniaGraphControl"
     xmlns:app="https://github.com/d3ara1n/Polymerium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -104,7 +105,7 @@
                                     <Panel>
                                         <Image
                                             IsVisible="{Binding !IsMissing}"
-                                            Source="{Binding Thumbnail}"
+                                            async:ImageLoader.Source="{Binding Thumbnail}"
                                             Stretch="UniformToFill" />
                                         <fi:SymbolIcon
                                             IsVisible="{Binding IsMissing}"
@@ -171,12 +172,11 @@
                         Grid.Column="0"
                         Width="48"
                         Height="48"
-                        CornerRadius="{StaticResource SmallCornerRadius}">
-                        <Border.Background>
-                            <ImageBrush
-                                Source="{Binding SelectedNode?.Thumbnail}"
-                                Stretch="UniformToFill" />
-                        </Border.Background>
+                        CornerRadius="{StaticResource SmallCornerRadius}"
+                        ClipToBounds="True">
+                        <Image
+                            async:ImageLoader.Source="{Binding SelectedNode?.Thumbnail}"
+                            Stretch="UniformToFill" />
                     </Border>
                     <StackPanel
                         Grid.Column="1"

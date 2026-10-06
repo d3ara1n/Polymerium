@@ -1,108 +1,139 @@
 using System;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
-using AsyncImageLoader.Loaders;
+using AsyncImageLoader;
+using AsyncImageLoader.Core.Leases;
+using AsyncImageLoader.Core.Pipeline;
+using AsyncImageLoader.Core.Sources;
+using AsyncImageLoader.Core.Transport;
+using Avalonia;
 using Avalonia.Media.Imaging;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
+using Polymerium.Avalonia.Rendering;
 using Polymerium.Avalonia.Services;
 using Polymerium.Avalonia.Utilities;
-using TridentCore.Abstractions.Utilities;
 
 namespace Polymerium.Avalonia;
 
-/// <summary>
-///     图片加载器，缓存压缩字节（网络响应原样 / 皮肤渲染 PNG）并按字节精确计费，
-///     命中时按需解码 <see cref="Bitmap" />，内存里不再长期持有解码后的大对象。
-///     可下采样的缩略图另由 <see cref="DataService.GetBitmapAsync" /> 走解码下采样缓存，二者按能否丢精度分治。
-///     加载失败时记录日志而非静音，注意：缓存驱逐不会释放 <see cref="Bitmap" />，
-///     因为 Bitmap 可能仍被 UI 引用，提前释放会导致 ObjectDisposedException。
-///     GC 的 finalizer 会在所有引用消失后自行回收非托管资源。
-/// </summary>
-public class AppImageLoader(HttpClient httpClient, SkinRenderService skinRenderer, ILogger<AppImageLoader> logger)
-    : BaseWebImageLoader(httpClient, disposeHttpClient: false)
+public sealed class AppImageLoader : IAsyncImageLoader
 {
-    private const long SIZE_LIMIT = 128L * 1024 * 1024;
-    private static readonly TimeSpan SLIDING_EXPIRATION = TimeSpan.FromMinutes(30);
-    private static readonly TimeSpan NEGATIVE_EXPIRATION = TimeSpan.FromMinutes(3);
+    private const int MAX_REDIRECTS = 16;
+    private readonly SkinRenderService _skinRenderer;
+    private readonly CompositeImageSourceResolver _sources;
+    private readonly HttpImageTransport _transport;
+    private readonly ImageLoaderPipeline _pipeline;
+    private bool _disposed;
 
-    private readonly MemoryCache _cache = new(new MemoryCacheOptions
+    public AppImageLoader(HttpClient httpClient, SkinRenderService skinRenderer)
     {
-        SizeLimit = SIZE_LIMIT,
-        CompactionPercentage = 0.10,
-        ExpirationScanFrequency = TimeSpan.FromMinutes(5)
-    });
-
-    protected override Task<Bitmap?> LoadFromGlobalCache(string url)
-    {
-        if (_cache.TryGetValue(url, out var cached) && cached is byte[] bytes)
-        {
-            try
-            {
-                using var stream = new MemoryStream(bytes);
-                return Task.FromResult<Bitmap?>(new Bitmap(stream));
-            }
-            catch (Exception ex)
-            {
-                logger.LogWarning(ex, "Failed to decode cached image, discarding: {Url}", url);
-                _cache.Remove(url);
-            }
-        }
-
-        return Task.FromResult<Bitmap?>(null);
+        _skinRenderer = skinRenderer;
+        _sources = new(new DataImageSourceResolver(), new ArchiveImageSourceResolver(),
+            new FileImageSourceResolver(), new StorageImageSourceResolver(), new AvaloniaAssetSourceResolver());
+        _transport = new(httpClient);
+        _pipeline = ImageLoaderPipelineBuilder.Uncached()
+            .UseSourceResolver(_sources)
+            .UseTransport(_transport)
+            .Build();
     }
 
-    protected override async Task<byte[]?> LoadDataFromExternalAsync(string url)
+    public async Task<IImageLease?> LoadAsync(ImageLoadRequest request, CancellationToken cancellationToken = default)
     {
-        // 负缓存命中——失败的加载结果短期内直接返回 null，避免重复请求网络。
-        if (_cache.TryGetValue(url, out NegativeMarker? _))
+        ObjectDisposedException.ThrowIf(_disposed, this);
+        cancellationToken.ThrowIfCancellationRequested();
+        var source = request.Source;
+        int? width = null;
+        for (var redirects = 0; ImageSourceHelper.IsScheme(source, ImageSourceHelper.THUMBNAIL_SCHEME); redirects++)
+        {
+            if (redirects == MAX_REDIRECTS)
+            {
+                throw new InvalidOperationException($"The image source exceeded {MAX_REDIRECTS} redirects.");
+            }
+
+            if (!ImageSourceHelper.TryParseThumbnail(source, out var inner, out var dimension))
+            {
+                throw new FormatException("A thumbnail URI requires a source and a supported width.");
+            }
+
+            width ??= dimension;
+            source = inner;
+        }
+
+        Bitmap? image;
+        if (ImageSourceHelper.IsScheme(source, SkinHelper.Scheme))
+        {
+            if (!SkinHelper.TryParse(source, out var view, out var skinSource))
+            {
+                throw new FormatException("A skin URI requires a view type and a skin source.");
+            }
+
+            image = await _skinRenderer.RenderAsync(view, skinSource, cancellationToken).ConfigureAwait(false);
+            if (image is not null && width is { } targetWidth && image.PixelSize.Width != targetWidth)
+            {
+                using var original = image;
+                cancellationToken.ThrowIfCancellationRequested();
+                var height = Math.Max(1, checked((int)Math.Round(image.PixelSize.Height * (double)targetWidth / image.PixelSize.Width)));
+                image = image.CreateScaledBitmap(new PixelSize(targetWidth, height), BitmapInterpolationMode.LowQuality);
+            }
+        }
+        else if (width is { } thumbnailWidth)
+        {
+            var innerRequest = new ImageLoadRequest(source, request.BaseUri, request.StorageProvider);
+            image = await LoadThumbnailAsync(innerRequest, thumbnailWidth, cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            return await _pipeline.LoadAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        if (image is null)
         {
             return null;
         }
 
-        try
+        // The lease takes ownership only after cancellation has been checked.
+        if (cancellationToken.IsCancellationRequested)
         {
-            var bytes = InternalUriHelper.IsKind(url, SkinHelper.Scheme)
-                ? await skinRenderer.RenderPngAsync(url).ConfigureAwait(false)
-                : await HttpClient.GetByteArrayAsync(url).ConfigureAwait(false);
-            if (bytes is null)
-            {
-                CacheNegative(url);
-            }
-            return bytes;
+            image.Dispose();
+            cancellationToken.ThrowIfCancellationRequested();
         }
-        catch (Exception ex)
-        {
-            logger.LogWarning(ex, "Failed to load image: {Url}", url);
-            CacheNegative(url);
-            return null;
-        }
+
+        return ImageLease.Owned(image);
     }
 
-    protected override Task SaveToGlobalCache(string url, byte[] imageBytes)
+    private async Task<Bitmap?> LoadThumbnailAsync(ImageLoadRequest request, int width, CancellationToken token)
     {
-        _cache.Set(url, imageBytes,
-            new MemoryCacheEntryOptions().SetSize(imageBytes.Length).SetSlidingExpiration(SLIDING_EXPIRATION));
-        return Task.CompletedTask;
-    }
-
-    private void CacheNegative(string url) =>
-        _cache.Set(url, new NegativeMarker(), new MemoryCacheEntryOptions().SetAbsoluteExpiration(NEGATIVE_EXPIRATION));
-
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
+        using var source = await _sources.ResolveAsync(request, token).ConfigureAwait(false);
+        if (source is not null)
         {
-            _cache.Dispose();
+            return await DecodeThumbnailAsync(source.Stream, width, token).ConfigureAwait(false);
         }
 
-        base.Dispose(disposing);
+        await using var stream = await _transport.GetAsync(request, token).ConfigureAwait(false);
+        return stream is null ? null : await DecodeThumbnailAsync(stream, width, token).ConfigureAwait(false);
     }
 
-    /// <summary>
-    ///     负缓存标记：加载失败（网络异常或皮肤渲染失败）会以此占位符写入缓存，
-    ///     使后续命中能区分「缓存了失败」与「缓存了成功」，短期内不再重复请求网络。
-    /// </summary>
-    private sealed record NegativeMarker;
+    private static async Task<Bitmap> DecodeThumbnailAsync(Stream stream, int width, CancellationToken token)
+    {
+        using var buffer = stream.CanSeek ? null : new MemoryStream();
+        if (buffer is not null)
+        {
+            await stream.CopyToAsync(buffer, token).ConfigureAwait(false);
+            buffer.Position = 0;
+        }
+
+        return await Task.Run(() => Bitmap.DecodeToWidth(buffer ?? stream, width, BitmapInterpolationMode.LowQuality), token)
+            .ConfigureAwait(false);
+    }
+
+    public void Dispose()
+    {
+        if (_disposed)
+        {
+            return;
+        }
+
+        _disposed = true;
+        _pipeline.Dispose();
+    }
 }

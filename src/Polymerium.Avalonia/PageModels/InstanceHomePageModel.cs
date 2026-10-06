@@ -6,7 +6,6 @@ using System.Reactive.Disposables.Fluent;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Humanizer;
@@ -130,10 +129,10 @@ public partial class InstanceHomePageModel(
         UpdateTime(key);
     }
 
-    private Bitmap GetRandomScreenshot(string key)
+    private Uri GetRandomScreenshot(string key)
     {
         var screenshotPath = InstanceHelper.PickScreenshotRandomly(key);
-        return screenshotPath is not null ? new(screenshotPath) : AssetUriIndex.WallpaperImageBitmap;
+        return screenshotPath is not null ? ImageSourceHelper.FromFile(screenshotPath) : AssetUriIndex.WallpaperImage;
     }
 
     #endregion
@@ -306,7 +305,7 @@ public partial class InstanceHomePageModel(
     partial void OnLazyDeploymentChanged(LazyObject? oldValue, LazyObject? newValue) => oldValue?.Cancel();
 
     [ObservableProperty]
-    public partial Bitmap? Screenshot { get; set; }
+    public partial Uri? Screenshot { get; set; }
 
     [ObservableProperty]
     public partial int PackageCount { get; set; }

@@ -28,9 +28,11 @@
                     Height="64"
                     BoxShadow="0 0 4 0 #3F000000"
                     CornerRadius="{StaticResource SmallCornerRadius}">
-                    <Border.Background>
-                        <ImageBrush async:ImageBrushLoader.Source="{Binding $parent[app:AccountCreationPreview].Model.FaceUrl, FallbackValue={x:Static assets:AssetUriIndex.SteveFaceImage}}" />
-                    </Border.Background>
+                    <Border ClipToBounds="True" CornerRadius="{StaticResource SmallCornerRadius}">
+                        <Image
+                            async:ImageLoader.Source="{Binding $parent[app:AccountCreationPreview].Model.FaceUrl, FallbackValue={x:Static assets:AssetUriIndex.SteveFaceImage}}"
+                            Stretch="Fill" />
+                    </Border>
                 </Border>
                 <StackPanel>
                     <TextBlock

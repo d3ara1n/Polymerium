@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
 using FluentIcons.Common;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Exceptions;
@@ -41,7 +40,7 @@ public sealed class RecipeExplorerSession : ExplorerSession
                                     CollectAsync);
     }
 
-    public override Bitmap? Background => null;
+    public override Uri? Background => null;
 
     public override string Title => _title;
 

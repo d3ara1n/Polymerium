@@ -1,68 +1,37 @@
 using System;
+using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
+using Polymerium.Avalonia.Rendering;
 
 namespace Polymerium.Avalonia.Utilities;
 
-/// <summary>
-///     皮肤渲染 URI（<c>skin://?type=&amp;src=</c>）的编制与解析工具：把视图类型与皮肤数据源
-///     编码进本地 URI，交 <see cref="Services.SkinRenderService" /> 解析后离线渲染。
-///     <para>
-///         query 格式（type/src 字段及其转义）在此唯一定义，编制与解析成对，改格式只动这里。
-///     </para>
-/// </summary>
 public static class SkinHelper
 {
     public const string Scheme = "skin";
 
-    private const string Prefix = Scheme + "://";
+    public static string ToUri(SkinViewType view, string source) =>
+        ImageSourceHelper.Create(Scheme, new NameValueCollection
+        {
+            ["type"] = view.ToString().ToLowerInvariant(),
+            ["src"] = source
+        }).AbsoluteUri;
 
-    public static string ToUri(string type, string src) =>
-        Prefix + "?type=" + Uri.EscapeDataString(type) + "&src=" + Uri.EscapeDataString(src);
-
-    public static bool TryGetQuery(
-        string? s,
-        [MaybeNullWhen(false)] out string type,
-        [MaybeNullWhen(false)] out string src)
+    public static bool TryParse(string uri, out SkinViewType view, [NotNullWhen(true)] out string? source)
     {
-        string? t = null;
-        string? sr = null;
-
-        if (s is not null && s.StartsWith(Prefix, StringComparison.Ordinal))
+        view = SkinViewType.Body;
+        source = null;
+        if (!ImageSourceHelper.TryGetParameters(uri, Scheme, out var query)
+            || string.IsNullOrWhiteSpace(query["type"]) || string.IsNullOrWhiteSpace(query["src"]))
         {
-            var q = s.IndexOf('?');
-            if (q >= 0)
-            {
-                foreach (var pair in s[(q + 1)..].Split('&', StringSplitOptions.RemoveEmptyEntries))
-                {
-                    var eq = pair.IndexOf('=');
-                    if (eq <= 0)
-                    {
-                        continue;
-                    }
-
-                    var key = Uri.UnescapeDataString(pair[..eq]);
-                    var val = Uri.UnescapeDataString(pair[(eq + 1)..]);
-                    if (key.Equals("type", StringComparison.OrdinalIgnoreCase))
-                    {
-                        t = val;
-                    }
-                    else if (key.Equals("src", StringComparison.OrdinalIgnoreCase))
-                    {
-                        sr = val;
-                    }
-                }
-            }
-        }
-
-        if (t is null || sr is null)
-        {
-            type = null!;
-            src = null!;
             return false;
         }
 
-        type = t;
-        src = sr;
+        if (Enum.TryParse<SkinViewType>(query["type"], true, out var parsed) && Enum.IsDefined(parsed))
+        {
+            view = parsed;
+        }
+
+        source = query["src"]!;
         return true;
     }
 }

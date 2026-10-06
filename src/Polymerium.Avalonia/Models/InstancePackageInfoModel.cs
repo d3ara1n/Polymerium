@@ -1,5 +1,5 @@
 using System;
-using Avalonia.Media.Imaging;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Facilities;
 using TridentCore.Abstractions.Repositories.Resources;
@@ -17,7 +17,7 @@ public partial class InstancePackageInfoModel(
     string author,
     string summary,
     Uri reference,
-    Bitmap thumbnail,
+    Uri thumbnail,
     ResourceKind kind) : ModelBase
 {
     #region Direct
@@ -30,7 +30,7 @@ public partial class InstancePackageInfoModel(
     public string ProjectName => projectName;
     public string Author => author;
     public string Summary => summary;
-    public Bitmap Thumbnail => thumbnail;
+    public Uri Thumbnail => thumbnail;
     public ResourceKind Kind => kind;
 
     #endregion

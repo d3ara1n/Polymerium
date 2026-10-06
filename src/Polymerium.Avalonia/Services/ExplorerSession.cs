@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Avalonia.Media.Imaging;
 using Polymerium.Avalonia.Models;
 using TridentCore.Abstractions.Repositories;
 using TridentCore.Abstractions.Repositories.Resources;
@@ -16,7 +15,7 @@ public abstract class ExplorerSession
 {
     public abstract string Title { get; }
 
-    public abstract Bitmap? Background { get; }
+    public abstract Uri? Background { get; }
 
     // NOTE: null 表示宿主没有版本语境（如 recipe），加载器/版本过滤开关应隐藏；非 null 即过滤基准
     public abstract Filter? InitialFilter { get; }

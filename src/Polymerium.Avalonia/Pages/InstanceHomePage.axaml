@@ -154,12 +154,8 @@
             Background="{StaticResource OverlaySolidBackgroundBrush}"
             BorderThickness="0">
             <Panel>
-                <Border CornerRadius="{StaticResource MediumCornerRadius}">
-                    <Border.Background>
-                        <ImageBrush
-                            Source="{Binding Screenshot}"
-                            Stretch="UniformToFill" />
-                    </Border.Background>
+                <Border CornerRadius="{StaticResource MediumCornerRadius}"
+                    ClipToBounds="True">
                     <Border.OpacityMask>
                         <LinearGradientBrush StartPoint="0%,10%" EndPoint="100%,100%">
                             <GradientStop Offset="0" Color="#3F000000" />
@@ -167,6 +163,13 @@
                             <GradientStop Offset="1" Color="#DF000000" />
                         </LinearGradientBrush>
                     </Border.OpacityMask>
+                    <Canvas>
+                        <Image
+                            Width="{Binding $parent[Canvas].Bounds.Width}"
+                            Height="{Binding $parent[Canvas].Bounds.Height}"
+                            async:ImageLoader.Source="{Binding Screenshot}"
+                            Stretch="UniformToFill" />
+                    </Canvas>
                 </Border>
                 <Grid
                     Margin="24"
@@ -721,6 +724,12 @@
                         </husk:SwitchCase>
                         <husk:SwitchCase Value="Running">
                             <Panel>
+                                <Image
+                                    Name="RunningPatternImage"
+                                    Width="0"
+                                    Height="0"
+                                    async:ImageLoader.Source="avares://Polymerium/Assets/Images/Patterns/Green_Icons.png"
+                                    IsHitTestVisible="False" />
                                 <Border
                                     ClipToBounds="True"
                                     CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type husk:Card}}}">
@@ -728,19 +737,12 @@
                                         Margin="-250"
                                         Opacity="0.2">
                                         <Rectangle.Fill>
-                                            <VisualBrush
+                                            <ImageBrush
                                                 DestinationRect="0,0,250,250"
-                                                SourceRect="0,0,250,250"
+                                                Source="{Binding #RunningPatternImage.Source}"
+                                                SourceRect="0%,0%,100%,100%"
                                                 Stretch="Fill"
-                                                TileMode="Tile">
-                                                <VisualBrush.Visual>
-                                                    <Image
-                                                        Width="250"
-                                                        Height="250"
-                                                        Source="/Assets/Images/Patterns/Green_Icons.png"
-                                                        Stretch="Fill" />
-                                                </VisualBrush.Visual>
-                                            </VisualBrush>
+                                                TileMode="Tile" />
                                         </Rectangle.Fill>
                                         <Rectangle.Styles>
                                             <Style Selector="Rectangle">
@@ -879,10 +881,11 @@
                                                         Grid.Column="0"
                                                         Width="28"
                                                         Height="28"
+                                                        ClipToBounds="True"
                                                         CornerRadius="{StaticResource SmallCornerRadius}">
-                                                        <Border.Background>
-                                                            <ImageBrush async:ImageBrushLoader.Source="{Binding FaceUrl, FallbackValue={x:Static app:AssetUriIndex.SteveFaceImage}}" />
-                                                        </Border.Background>
+                                                        <Image
+                                                            async:ImageLoader.Source="{Binding FaceUrl, FallbackValue={x:Static app:AssetUriIndex.SteveFaceImage}}"
+                                                            Stretch="Fill" />
                                                     </Border>
                                                     <TextBlock
                                                         Grid.Row="0"

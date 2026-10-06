@@ -22,16 +22,10 @@
             <FontFamily x:Key="LogFontFamily">Cascadia Code, Menlo, Consolas, monospace</FontFamily>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
-                    <ImageBrush
-                        x:Key="SettingsImageBrush"
-                        Source="avares://Polymerium/Assets/Images/126997360_p2.jpg"
-                        Stretch="UniformToFill" />
+                    <x:String x:Key="SettingsImageSource">avares://Polymerium/Assets/Images/126997360_p2.jpg</x:String>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
-                    <ImageBrush
-                        x:Key="SettingsImageBrush"
-                        Source="avares://Polymerium/Assets/Images/126997360_p0.jpg"
-                        Stretch="UniformToFill" />
+                    <x:String x:Key="SettingsImageSource">avares://Polymerium/Assets/Images/126997360_p0.jpg</x:String>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>

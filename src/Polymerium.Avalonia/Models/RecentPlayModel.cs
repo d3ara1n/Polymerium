@@ -1,5 +1,4 @@
 using System;
-using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Humanizer;
 using Polymerium.Avalonia.Facilities;
@@ -14,10 +13,10 @@ public partial class RecentPlayModel : ModelBase
     public required string Name { get; init; }
     public required string Version { get; init; }
     public required string LoaderLabel { get; init; }
-    public required Bitmap Thumbnail { get; init; }
+    public required Uri Thumbnail { get; init; }
     public required int PackageCount { get; init; }
     public required int SessionCount { get; init; }
-    public Bitmap? Screenshot { get; init; }
+    public Uri? Screenshot { get; init; }
 
     #endregion
 

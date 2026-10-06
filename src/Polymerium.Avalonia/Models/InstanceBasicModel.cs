@@ -1,4 +1,5 @@
-using Avalonia.Media.Imaging;
+using System;
+using Polymerium.Avalonia.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Facilities;
@@ -16,7 +17,7 @@ public partial class InstanceBasicModel : ModelBase
         Version = version;
         Loader = loader;
         Source = source;
-        Thumbnail = AssetUriIndex.DirtImageBitmap;
+        Thumbnail = AssetUriIndex.DirtImage;
 
         UpdateIcon();
     }
@@ -30,7 +31,7 @@ public partial class InstanceBasicModel : ModelBase
     public void UpdateIcon()
     {
         var iconPath = InstanceHelper.PickIcon(Key);
-        Thumbnail = iconPath is not null ? new(iconPath) : AssetUriIndex.DirtImageBitmap;
+        Thumbnail = iconPath is not null ? ImageSourceHelper.FromFile(iconPath) : AssetUriIndex.DirtImage;
     }
 
     #region Reactive
@@ -48,7 +49,7 @@ public partial class InstanceBasicModel : ModelBase
     public partial string SourceLabel { get; set; } = "local";
 
     [ObservableProperty]
-    public partial Bitmap Thumbnail { get; set; }
+    public partial Uri Thumbnail { get; set; }
 
     [ObservableProperty]
     public partial string? Source { get; set; }

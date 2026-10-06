@@ -1,4 +1,4 @@
-using Avalonia.Media.Imaging;
+using System;
 using Polymerium.Avalonia.Facilities;
 
 namespace Polymerium.Avalonia.Models;
@@ -11,7 +11,7 @@ public class AssetWorldDataPackModel : ModelBase
     public AssetWorldDataPackModel(
         string name,
         string fileName,
-        Bitmap icon,
+        Uri icon,
         string? description,
         int? packFormat,
         bool isEnabled)
@@ -28,7 +28,7 @@ public class AssetWorldDataPackModel : ModelBase
 
     public string Name { get; }
     public string FileName { get; }
-    public Bitmap Icon { get; }
+    public Uri Icon { get; }
     public string? Description { get; }
     public int? PackFormat { get; }
     public bool IsEnabled { get; }

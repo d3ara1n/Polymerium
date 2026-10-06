@@ -1,5 +1,5 @@
 using System.IO;
-using Avalonia.Media.Imaging;
+using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Utilities;
@@ -7,7 +7,7 @@ using TridentCore.Core.Utilities;
 
 namespace Polymerium.Avalonia.Models;
 
-public partial class AssetServerModel(string sourceFilePath, Bitmap icon, AssetServerMetadataModel metadata) : ModelBase
+public partial class AssetServerModel(string sourceFilePath, Uri icon, AssetServerMetadataModel metadata) : ModelBase
 {
     public string SourceFilePath { get; } = sourceFilePath;
 
@@ -44,7 +44,7 @@ public partial class AssetServerModel(string sourceFilePath, Bitmap icon, AssetS
     #region Reactive
 
     [ObservableProperty]
-    public partial Bitmap Icon { get; set; } = icon;
+    public partial Uri Icon { get; set; } = icon;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasLiveStatus))]

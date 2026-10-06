@@ -38,20 +38,11 @@ public static class AssetUriIndex
     public static readonly Uri
         LoaderQuilt = new("avares://Polymerium/Assets/Loaders/org.quiltmc.png", UriKind.Absolute);
 
-    public static readonly Bitmap RepositoryHeaderCurseforgeBitmap = new(AssetLoader.Open(RepositoryHeaderCurseforge));
+    public static readonly Bitmap DirtImageBitmap;
 
-    public static readonly Bitmap RepositoryHeaderModrinthBitmap = new(AssetLoader.Open(RepositoryHeaderModrinth));
-
-    public static readonly Bitmap RepositoryHeaderFavoriteBitmap = new(AssetLoader.Open(RepositoryHeaderFavorite));
-
-    public static readonly Bitmap DirtImageBitmap = new(AssetLoader.Open(DirtImage));
-
-    public static readonly Bitmap WallpaperImageBitmap = new(AssetLoader.Open(WallpaperImage));
-
-    public static readonly Bitmap IconBitmap = new(AssetLoader.Open(Icon));
-
-    public static readonly Bitmap LoaderNeoforgeBitmap = new(AssetLoader.Open(LoaderNeoforge));
-    public static readonly Bitmap LoaderForgeBitmap = new(AssetLoader.Open(LoaderForge));
-    public static readonly Bitmap LoaderFabricBitmap = new(AssetLoader.Open(LoaderFabric));
-    public static readonly Bitmap LoaderQuiltBitmap = new(AssetLoader.Open(LoaderQuilt));
+    static AssetUriIndex()
+    {
+        using var stream = AssetLoader.Open(DirtImage);
+        DirtImageBitmap = new(stream);
+    }
 }
