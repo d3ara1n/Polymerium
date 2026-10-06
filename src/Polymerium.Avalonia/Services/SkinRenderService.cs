@@ -8,6 +8,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Microsoft.Extensions.Logging;
 using Polymerium.Avalonia.Rendering;
+using Polymerium.Avalonia.Utilities;
 using SkiaSharp;
 
 namespace Polymerium.Avalonia.Services;
@@ -107,19 +108,24 @@ public sealed class SkinRenderService(HttpClient httpClient, SkinRenderer render
     {
         try
         {
-            if (src.StartsWith("mojang:", StringComparison.Ordinal))
+            if (!SkinHelper.TryParseSource(src, out var kind, out var value))
+            {
+                throw new FormatException("Unsupported skin source.");
+            }
+
+            if (kind == SkinHelper.SourceKind.Mojang)
             {
                 return await httpClient
-                            .GetByteArrayAsync(SkinMirrorBase + src["mojang:".Length..], cancellationToken)
+                            .GetByteArrayAsync(SkinMirrorBase + value, cancellationToken)
                             .ConfigureAwait(false);
             }
 
-            if (src.StartsWith("asset:", StringComparison.Ordinal))
+            if (kind == SkinHelper.SourceKind.Asset)
             {
-                return TryLoadAsset(ResolveAssetUri(src["asset:".Length..]));
+                return TryLoadAsset(ResolveAssetUri(value));
             }
 
-            return await httpClient.GetByteArrayAsync(src, cancellationToken).ConfigureAwait(false);
+            return await httpClient.GetByteArrayAsync(value, cancellationToken).ConfigureAwait(false);
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {

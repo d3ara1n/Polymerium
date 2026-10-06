@@ -1394,7 +1394,7 @@ public partial class InstanceSetupPageModel(
         IEnumerable<Profile.Rice.Entry> packages,
         string targetSource)
     {
-        if (!InternalUriHelper.IsKind(targetSource, CollectionHelper.SCHEME)
+        if (!CollectionHelper.TryGetName(targetSource, out _)
          || !ProfileManager.TryGetMutable(Basic.Key, out var guard))
         {
             return 0;
@@ -1405,7 +1405,7 @@ public partial class InstanceSetupPageModel(
         foreach (var entry in guard.Value.Setup.Packages.Where(requested.Contains))
         {
             if (entry.Source == targetSource
-             || entry.Source is not null && !InternalUriHelper.IsKind(entry.Source, CollectionHelper.SCHEME))
+             || entry.Source is not null && !CollectionHelper.TryGetName(entry.Source, out _))
             {
                 continue;
             }
@@ -1429,7 +1429,6 @@ public partial class InstanceSetupPageModel(
                    ? p
                     .Setup.Packages.Select(e => e.Source)
                     .OfType<string>()
-                    .Where(s => InternalUriHelper.IsKind(s, CollectionHelper.SCHEME))
                     .Select(s => CollectionHelper.TryGetName(s, out var n) ? new CollectionModel(n, s) : null)
                     .OfType<CollectionModel>()
                     .Distinct()
@@ -1444,7 +1443,7 @@ public partial class InstanceSetupPageModel(
         var candidates = _flat
                         .Items.OfType<PackageListItemBase.Entry>()
                         .Where(i => i.Package.Entry.Source is null
-                                 || InternalUriHelper.IsKind(i.Package.Entry.Source, CollectionHelper.SCHEME))
+                                 || CollectionHelper.TryGetName(i.Package.Entry.Source, out _))
                         .Select(i => new SelectablePackageModel(i.Package, i.Key) { Group = i.Group })
                         .ToList();
         if (candidates.Count == 0)

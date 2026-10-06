@@ -8,6 +8,7 @@
 ### Fixed
 
 - Fix image memory retention after leaving pages or closing overlays
+- Fix package references containing reserved characters
 
 ### Added
 

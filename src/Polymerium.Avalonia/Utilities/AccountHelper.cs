@@ -40,7 +40,7 @@ public static class AccountHelper
 
     /// <summary>
     ///     按账户类型构造本地渲染所需的皮肤数据源（src），是 <c>IAccount → src</c> 的唯一入口：<br />
-    ///     Microsoft → <c>mojang:{uuid}</c>（渲染时查 Mojang sessionserver profile）；<br />
+    ///     Microsoft → <c>mojang:{uuid}</c>；<br />
     ///     Authlib → 账户 <c>SkinUrl</c>（裸 URL），缺失时回落 Steve；<br />
     ///     Trial → 账户 <c>Skin</c> 字段指定的内置皮肤（默认 Steve，Herobrine 为专属白眼皮肤）；<br />
     ///     Offline → 内置 Steve。<br />
@@ -49,10 +49,10 @@ public static class AccountHelper
     public static string BuildSkinSource(IAccount account) =>
         account switch
         {
-            MicrosoftAccount => $"mojang:{account.Uuid}",
-            AuthlibAccount { SkinUrl: { } url } => url,
-            TrialAccount trial => $"asset:{trial.Skin}",
-            _ => "asset:Steve"
+            MicrosoftAccount when Guid.TryParse(account.Uuid, out _) => SkinHelper.MojangSource(account.Uuid),
+            AuthlibAccount { SkinUrl: { } url } when SkinHelper.TryParseSource(url, out _, out _) => url,
+            TrialAccount trial when !string.IsNullOrWhiteSpace(trial.Skin) => SkinHelper.AssetSource(trial.Skin),
+            _ => SkinHelper.AssetSource("Steve")
         };
 
     public static PersistenceService.Account ToRaw(
@@ -77,21 +77,21 @@ public static class AccountHelper
     ///     <see cref="BuildSkinSource" /> 按账户类型产生，由
     ///     <see cref="Services.SkinRenderService" /> 解析路由后离线渲染。
     /// </summary>
-    public static Uri GetFaceUrl(string src) => new(SkinHelper.ToUri(SkinViewType.Face, src), UriKind.Absolute);
+    public static Uri GetFaceUrl(string src) => ImageSourceHelper.Skin(SkinViewType.Face, src);
 
-    public static Uri GetBodyUrl(string src) => new(SkinHelper.ToUri(SkinViewType.Body, src), UriKind.Absolute);
+    public static Uri GetBodyUrl(string src) => ImageSourceHelper.Skin(SkinViewType.Body, src);
 
     /// <summary>
     ///     构造半身像（Cover）的本地渲染 URI：与 <see cref="GetBodyUrl" /> 共用全身缩放，
     ///     头顶贴顶、画布截取上半身，适合方形卡片预览。
     /// </summary>
-    public static Uri GetCoverUrl(string src) => new(SkinHelper.ToUri(SkinViewType.Cover, src), UriKind.Absolute);
+    public static Uri GetCoverUrl(string src) => ImageSourceHelper.Skin(SkinViewType.Cover, src);
 
     public static IReadOnlyList<Uri> GetBodyViewUrls(string src) =>
     [
-        new(SkinHelper.ToUri(SkinViewType.Front, src), UriKind.Absolute),
-        new(SkinHelper.ToUri(SkinViewType.Right, src), UriKind.Absolute),
-        new(SkinHelper.ToUri(SkinViewType.Back, src), UriKind.Absolute),
-        new(SkinHelper.ToUri(SkinViewType.Left, src), UriKind.Absolute)
+        ImageSourceHelper.Skin(SkinViewType.Front, src),
+        ImageSourceHelper.Skin(SkinViewType.Right, src),
+        ImageSourceHelper.Skin(SkinViewType.Back, src),
+        ImageSourceHelper.Skin(SkinViewType.Left, src)
     ];
 }
