@@ -11,7 +11,7 @@ This page explains how to manage entries already in an instance. Start with [Pac
 
 | Group | How it forms | What it is useful for |
 |-------|--------------|-----------------------|
-| **Modpack group** | Packages retain an association with their online modpack source | Keep the modpack's package list and layer your own choices over it |
+| **Modpack group** | Packages retain an association with an online or locally imported modpack | Keep the modpack's package list and layer your own choices over it |
 | **Recipe group** | Applying a recipe adds entries associated with that recipe | Add a reusable package selection to an instance |
 | **Collection** | Packages are assigned to a named collection | Organize packages by purpose within the current instance |
 | **Loose group** | Packages have no modpack, recipe, or collection association | Add individual packages or provide personal choices that take priority over grouped entries |
@@ -22,9 +22,9 @@ A recipe itself is a separately stored, shareable list of package references; a 
 
 ### A Modpack Is Also a Group Source
 
-Packages supplied by an online modpack can form a modpack group and participate in overrides alongside recipe groups, collections, and loose packages. Here, “modpack group” describes the source association of package entries. A modpack can also supply a Minecraft version, mod loader, and configuration files, which have their own management rules.
+Packages supplied by an online or locally imported modpack can form a modpack group and participate in overrides alongside recipe groups, collections, and loose packages. Here, “modpack group” describes the source association of package entries. A modpack can also supply a Minecraft version, mod loader, and configuration files, which have their own management rules.
 
-The import method affects which groups you see. For example, importing a local CurseForge or Modrinth archive without an online source association places its package references in a collection named after the modpack. Trident format can carry existing groups, so one imported modpack may appear as several groups. Content supplied only as files, without managed package references, does not automatically become group entries. See [Import & Export](/docs/managing/import-export).
+Importing a local archive without an online source association places its package references in a modpack group named after the modpack. Local modpack groups with the same name share one source association, but remain separate from collections with that name. Trident format can carry existing groups, so one imported modpack may appear as several groups. Content supplied only as files, without managed package references, does not automatically become group entries. See [Import & Export](/docs/managing/import-export).
 
 ### Where Is the Loose Group?
 
@@ -92,11 +92,11 @@ Click a group header to expand or collapse it, and use its menu for group operat
 | Operation | Result |
 |-----------|--------|
 | **Enable Whole Group / Disable Whole Group** | Set every member entry to enabled or disabled |
-| **View Details** | Open the associated recipe or modpack; collections have no independent details object |
+| **View Details** | Open the associated recipe or online modpack; local modpack groups and collections have no online details |
 | **Disband Group** | Keep the package entries, clear their group association, and make them loose packages with the highest priority |
 | **Remove Group** | Delete the group's package entries from the instance profile |
 
-The instance's currently associated modpack group cannot be directly disbanded or removed. See [Collections](/docs/managing/collections) for renaming, moving packages, and converting between collections and recipes.
+The instance's currently associated modpack group cannot be directly disbanded or removed, and its package versions remain managed by the modpack. These restrictions also apply to local modpacks. After detaching the instance from its modpack, you can disband or remove that group and edit its package versions, but the group does not gain collection operations such as renaming or moving individual packages. See [Collections](/docs/managing/collections) for collection operations.
 
 ## Groups and File Layers
 

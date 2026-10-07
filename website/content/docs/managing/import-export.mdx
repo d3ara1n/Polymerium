@@ -27,11 +27,11 @@ Polymerium supports four modpack formats for both import and export:
 
 5. Deploy and play.
 
-> **Updating a modpack?** If the instance was created from an import, you can re-import a newer version of the same pack. Polymerium replaces `import/` with the new files while leaving `persist/` untouched — files you've moved there are preserved.
+> **Updating a modpack?** Instances associated with an online modpack can switch versions from Setup. Updating an existing instance from a local archive is not currently available. An online update replaces the Pack Source (`import/`) while preserving Local Data (`persist/`).
 
 ### How Imported Packages Are Grouped
 
-Packages associated with an online modpack form a **modpack group** on the Setup page. That group participates in the same priority and override mechanism as recipe groups and collections. A local CurseForge or Modrinth archive without an online source association instead places its package references in a collection named after the modpack; Trident imports can retain groups carried in the archive.
+Packages associated with an online or locally imported modpack form a **modpack group** on the Setup page. That group participates in the same priority and override mechanism as recipe groups and collections. A local archive without an online source association uses the modpack name for its group; Trident imports can retain groups carried in the archive. Local modpack groups display their name and icon but have no online details or version list.
 
 You can keep the modpack's package entries while adding overlapping projects through other groups or as loose packages. See [Package Groups & Override Order](/docs/managing/package-groups) for which entry is deployed. Configuration files supplied in Pack Source (`import/`) follow the separate [directory layering rules](/docs/concepts/directory-model).
 
@@ -100,7 +100,7 @@ In online mode, TPI preserves declarations that external formats cannot represen
 - **Tags** — user-defined labels for categorization
 - **Deployment rules** — per-mod overrides for destination path, skipping, or normalization
 - **Instance overrides** — JVM arguments, window size, server address, deploy strategy
-- **Package groups and order** — collections and their saved order travel with online exports; local recipe groups become collections. If source information is excluded, online modpack groups also become collections instead of losing their grouping.
+- **Package groups and order** — collections and their saved order travel with online exports; local recipe groups become collections. If source information is excluded, both online and local modpack groups become collections instead of losing their grouping.
 - **Native patches** — the imported patch layer travels with its assets, disabled entries and order; user patches stay local and never travel
 
 TPI preserves these modpack declarations, not the complete local instance or its personal data.
@@ -109,7 +109,7 @@ TPI preserves these modpack declarations, not the complete local instance or its
 
 TPI is a **hybrid** format:
 
-- **Online mode (default)**: Packages remain Pref references (for example, `pref://modrinth/aC3cM3Vq@9I21YYxf`). Deployment resolves and downloads their files. The source information option controls whether the original online modpack association travels; it does not remove Pack Source files.
+- **Online mode (default)**: Packages remain Pref references (for example, `pref://modrinth/aC3cM3Vq@9I21YYxf`). Deployment resolves and downloads their files. The source information option controls whether the original modpack associations travel; it does not remove Pack Source files.
 - **Offline mode (optional)**: Bundles the enabled packages' resolved files into the archive and removes their package references from the exported profile. It is not a backup of Local Data or every file in the Run Directory.
 
 Online mode keeps archives smaller and leaves package download to deployment. The `trident.index.json` remains human-readable in either mode.

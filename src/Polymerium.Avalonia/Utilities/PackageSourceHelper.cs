@@ -5,21 +5,20 @@ namespace Polymerium.Avalonia.Utilities;
 
 /// <summary>
 ///     包来源归属与锁定语义的纯函数工具：所有判定都基于 <see cref="Entry.Source" />（部分还需当前实例引用
-///     <c>profile.Setup.Source</c>），不持有任何状态。PackageModel 与未来的 Group VM 都从此投影，
-///     无第二份真相。详见 <c>plans/SOURCE-REFERENCE-SEMANTICS.md</c> §3。
+///     <c>profile.Setup.Source</c>），不持有任何状态。
 /// </summary>
 public static class PackageSourceHelper
 {
     /// <summary>
     ///     <see cref="Entry.Source" /> 的归属分类，由 <see cref="Classify" /> 产出。是分组 UI、部署优先级、
-    ///     Exhibit 的共同输入。详见 <c>plans/SOURCE-REFERENCE-SEMANTICS.md</c> §3.1。
+    ///     Exhibit 的共同输入。
     /// </summary>
     public enum Kind
     {
         /// <summary>用户手动添加（<c>Source == null</c>），自由包。</summary>
         Manual,
 
-        /// <summary>整合包带来（<c>Source</c> 为 <c>pref://</c> 或旧格式 Purl），含当前绑定与已解绑两种。</summary>
+        /// <summary>整合包带来（<c>Source</c> 为 <c>modpack://pref/</c> 或 <c>modpack://local/</c>），含当前绑定与已解绑两种。</summary>
         Modpack,
 
         /// <summary>recipe 带来（<c>Source</c> 为 <c>recipe://</c>），锁组但不占版本。</summary>
@@ -31,9 +30,8 @@ public static class PackageSourceHelper
 
     /// <summary>
     ///     把 <paramref name="source" /> 经各自的解析器归入四种归属之一：
-    ///     <c>recipe://</c>→Recipe，<c>pref://</c>→Modpack，<c>collection://</c>→Collection；
-    ///     旧格式 Purl（无 scheme，如 <c>curseforge:...</c>）仍算 Modpack（兼容改名前的存量 Source）。
-    ///     既非 null / recipe / 包标识的值视为非法，直接抛异常。
+    ///     <c>recipe://</c>→Recipe，<c>modpack://</c>→Modpack，<c>collection://</c>→Collection。
+    ///     无法识别的来源直接抛异常。
     /// </summary>
     public static Kind Classify(string? source) =>
         source switch
@@ -41,9 +39,7 @@ public static class PackageSourceHelper
             null => Kind.Manual,
             _ when RecipeHelper.TryGetId(source, out _) => Kind.Recipe,
             _ when CollectionHelper.TryGetName(source, out _) => Kind.Collection,
-            // TODO: legacy Purl-format Source from pre-rename modpacks; remove once on-disk
-            //  profiles no longer carry old-format Source values.
-            _ when PackageHelper.TryParse(source, out _) => Kind.Modpack,
+            _ when ModpackSourceHelper.IsModpack(source) => Kind.Modpack,
             _ => throw new FormatException($"Unrecognized Entry.Source: {source}")
         };
 

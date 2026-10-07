@@ -211,42 +211,37 @@ public partial class InstanceSetupPageModel(
             return;
         }
 
-        // Basic 由 InstancePageModel 维护，理论上 ProfileUpdated 会先更新，但不可靠。
         if (ProfileManager.TryGetImmutable(Basic.Key, out var profile))
         {
-            if (profile.Setup.Source is not null)
+            var source = profile.Setup.Source;
+            if (source != _referenceSource || Reference is null)
             {
-                if (Reference is null
-                 || (Reference is { Value: InstanceReferenceModel { } reference }
-                  && reference.Pref != profile.Setup.Source))
+                _referenceSource = source;
+                if (ModpackSourceHelper.TryGetPref(source, out var pref))
                 {
-                    if (PackageHelper.TryParse(profile.Setup.Source, out var r))
+                    Reference = new(async _ =>
                     {
-                        Reference = new(async _ =>
-                        {
-                            var package = await dataService.ResolvePackageAsync(r,
-                                                                                    Filter.None with
-                                                                                    {
-                                                                                        Kind = ResourceKind.Modpack
-                                                                                    });
-
-                            return new InstanceReferenceModel(profile.Setup.Source,
-                                                              r.Repository,
-                                                              package.ProjectName,
-                                                              package.VersionId,
-                                                              package.VersionName,
-                                                              package.Thumbnail,
-                                                              package.Reference);
-                        });
-                    }
+                        var package = await dataService.ResolvePackageAsync(pref, Filter.None with { Kind = ResourceKind.Modpack });
+                        return new InstanceReferenceModel(PackageHelper.ToPref(pref),
+                                                          pref.Repository,
+                                                          package.ProjectName,
+                                                          package.VersionId,
+                                                          package.VersionName,
+                                                          package.Thumbnail,
+                                                          package.Reference);
+                    });
+                }
+                else
+                {
+                    Reference = source is null
+                                    ? null
+                                    : new(_ => throw new NotSupportedException("Local modpacks do not have repository metadata."));
                 }
             }
-            else
+
+            foreach (var model in _flat.Items.OfType<PackageListItemBase.Entry>().Select(i => i.Package))
             {
-                foreach (var model in _flat.Items.OfType<PackageListItemBase.Entry>().Select(i => i.Package))
-                {
-                    model.CanUpdate = true;
-                }
+                model.CanUpdate = PackageSourceHelper.CanUpdate(model.Entry.Source, source);
             }
         }
     }
@@ -447,9 +442,13 @@ public partial class InstanceSetupPageModel(
         var identifiable = new List<(GroupModel Group, ProjectIdentifier Id)>();
         foreach (var g in groups)
         {
-            if (g.Source is not null && PackageHelper.TryParse(g.Source, out var r))
+            if (ModpackSourceHelper.TryGetPref(g.Source, out var r))
             {
                 identifiable.Add((g, r.ToProjectIdentifier()));
+            }
+            else if (ModpackSourceHelper.TryGetLocalName(g.Source, out var name))
+            {
+                g.Info = new ModpackGroupInfoModel(name, g.Source == Basic.Source ? Basic.Thumbnail : AssetUriIndex.DirtImage);
             }
         }
 
@@ -458,11 +457,11 @@ public partial class InstanceSetupPageModel(
             token.ThrowIfCancellationRequested();
             if (identifiable.Count > 0)
             {
-                var byId = identifiable.ToDictionary(x => x.Id, x => x.Group);
-                var projects = await dataService.QueryProjectsAsync(identifiable.Select(x => x.Id));
+                var byId = identifiable.ToLookup(x => x.Id, x => x.Group);
+                var projects = await dataService.QueryProjectsAsync(byId.Select(x => x.Key));
                 foreach (var (id, project) in projects.Successful)
                 {
-                    if (byId.TryGetValue(id, out var g))
+                    foreach (var g in byId[id])
                     {
                         g.Info = new ModpackGroupInfoModel(project.ProjectName, project.Thumbnail);
                     }
@@ -494,6 +493,7 @@ public partial class InstanceSetupPageModel(
 
     #region Fields
 
+    private string? _referenceSource;
     private CancellationToken? _lifetimeToken;
     private CancellationTokenSource? _pageCancellationTokenSource;
     private readonly SourceCache<PackageListItemBase, PackageListKey> _flat = new(x => x.Key);
@@ -854,7 +854,7 @@ public partial class InstanceSetupPageModel(
     [RelayCommand]
     private async Task ViewDetails()
     {
-        if (Basic.Source is not null && PackageHelper.TryParse(Basic.Source, out var source))
+        if (ModpackSourceHelper.TryGetPref(Basic.Source, out var source))
         {
             try
             {
@@ -2304,12 +2304,8 @@ public partial class InstanceSetupPageModel(
             return false;
         }
 
-        if (group.Info is CollectionGroupInfoModel)
-        {
-            return false;
-        }
-
-        return true;
+        return group.Kind == PackageSourceHelper.Kind.Recipe
+            || ModpackSourceHelper.TryGetPref(group.Source, out _);
     }
 
     [RelayCommand(CanExecute = nameof(CanViewGroupDetails))]
@@ -2322,7 +2318,7 @@ public partial class InstanceSetupPageModel(
         }
 
         if (group is { Kind: PackageSourceHelper.Kind.Modpack, Source: not null }
-         && PackageHelper.TryParse(group.Source, out var source))
+         && ModpackSourceHelper.TryGetPref(group.Source, out var source))
         {
             try
             {

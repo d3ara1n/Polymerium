@@ -56,10 +56,7 @@ public partial class InstanceBasicModel : ModelBase
 
     partial void OnSourceChanged(string? value)
     {
-        if (!string.IsNullOrEmpty(value) && PackageHelper.TryParse(value, out var result))
-        {
-            SourceLabel = result.Repository;
-        }
+        SourceLabel = ModpackSourceHelper.TryGetPref(value, out var result) ? result.Repository : "local";
     }
 
     [ObservableProperty]
