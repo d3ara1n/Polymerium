@@ -32,7 +32,9 @@ To migrate a file yourself, back it up, replace each package or selector `purl` 
 
 ## Empty package source (1.13.0)
 
-Some imported package lists wrote `"source": ""` for an ungrouped package in `profile.json`. The current reader treats this as no source. The entry is written in normalized form when its profile is next saved. If editing manually, remove the empty `source` value or set it to `null`; do not change a nonempty source URI, which may identify a modpack, recipe, or [collection](/docs/managing/collections).
+Some imported package lists wrote `"source": ""` for an ungrouped package in `profile.json`. Loading an instance converts this to `null` and saves the migrated profile. If editing manually, remove the empty `source` value or set it to `null`; do not change a nonempty source URI, which may identify a modpack, recipe, or [collection](/docs/managing/collections).
+
+Modpack associations use `modpack://pref/<repository>/<project>@<version>` for online sources and `modpack://local/<encoded-name>` for local sources. Loading an instance converts older Pref or Purl source values to the new form throughout its profile, including package entries and group order. Package references themselves still use `pref://`. Existing collections retain their collection identity.
 
 ## Java compatibility declarations (1.13.1)
 
