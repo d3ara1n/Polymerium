@@ -1,0 +1,20 @@
+node_modules/
+.cache/
+.hyperframes/
+.thumbnails/
+renders/
+reviews/
+capture/
+*.log
+
+# Rebuildable audio intermediates.
+/assets/score-premaster.wav
+/audio_meta.json
+
+# Keep only the reviewed delivery set.
+/delivery/*
+!/delivery/polymerium-make-it-yours.mp4
+!/delivery/watch.html
+!/delivery/poster.png
+!/delivery/key-visual.png
+!/delivery/contact-sheet.jpg

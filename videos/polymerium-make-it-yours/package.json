@@ -1,0 +1,21 @@
+{
+  "name": "polymerium-make-it-yours",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes hyperframes@0.8.168 preview",
+    "check": "npx --yes hyperframes@0.8.168 check",
+    "render": "npx --yes hyperframes@0.8.168 render --quality delivery --fps 60 --workers 3",
+    "package:delivery": "node scripts/package-delivery.mjs",
+    "build:film": "node scripts/build-film.mjs && node scripts/stamp-seams.mjs --ledger ledger.json --write index.html",
+    "prepare:assets": "node scripts/prepare-assets.mjs",
+    "build:score": "node scripts/compose-score.mjs && node scripts/master-score.mjs"
+  },
+  "dependencies": {
+    "gsap": "3.14.2",
+    "sharp": "0.34.5"
+  },
+  "devDependencies": {
+    "hyperframes": "0.8.168"
+  }
+}
