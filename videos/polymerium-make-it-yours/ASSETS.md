@@ -9,7 +9,7 @@
 | GSAP 3.14.2 | npm package `gsap` | Local animation runtime; Standard no-charge license https://gsap.com/standard-license |
 | HyperFrames 0.8.168 | npm package `hyperframes` | Composition renderer and local preview |
 | Text rise and character cascade | HyperFrames registry `text-stagger` and `logo-brand-close` | Adapted text-rise and character-cascade timing primitives in the authored timeline |
-| Seam stamping and verification | Installed motion-doctrine skill | Copied into project scripts for reproducibility; local verifier uses current `renderSeek` and seek-completion barrier |
+| Seam stamping and verification | Installed motion-doctrine skill | Adapted in project scripts for reproducibility with configurable travel and matched blur; local verifier uses `renderSeek` and the seek-completion barrier |
 | Block sculpture and cache diagram | Original procedural artwork in `scripts/build-film.mjs` | Created for this film |
 | Minecraft scene | Original procedural artwork in `scripts/minecraft-world.mjs` | Animated block geometry with simplified materials; no extracted game textures |
 | Shared-cache instance cards | HTML/CSS and SVG in `scripts/cache-instances.mjs` | Actual names, loaders and versions from the screenshots; known source stamps preserved, generic profile label where the source is not established |

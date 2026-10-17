@@ -1,6 +1,6 @@
 ---
 background: "#171611"
-foreground: "#E9E4D8"
+foreground: "#F2EEE5"
 accent: "#EEA93B"
 paper: "#F2EEE5"
 ink: "#29261F"
@@ -8,17 +8,14 @@ font_display: Geist
 font_body: Geist
 font_mono: Geist Mono
 ---
-# Direction — Built from possibility
-An editorial object film built from Polymerium's linked diamonds and Minecraft's block geometry. Warm ivory, dark-brown ink, amber material. Huge tightly tracked type, precisely lit isometric cuboids, offset asymmetric layouts, fine construction rules. Actual screenshot panels carry the evidence.
+# Direction — Ideas given momentum
 
-Three directions considered:
-1. **Built from possibility — chosen.** A voxel sculpture fragments into choices, choices become real interface, shared files connect worlds, the two links lock. Playful weight and material; angular geometry versus softly rounded interface.
-2. **The living blueprint — rejected.** An orthographic drafting-table tour of the declarative profile. Accurate, but too technical for players.
-3. **Worlds in orbit — rejected.** Atmospheric planets and floating interface glass. Too generic and not tied closely enough to the interlocking identity.
+A 25-second energetic object film built from Polymerium's interlocking mark and Minecraft block geometry. Oversized tightly tracked Geist, warm ivory, dark brown and amber. The approved FORM / FORCE motion study informs force and event density; Polymerium retains its own palette, mark and real interface content.
 
-Signature: separated pieces snap into a purposeful whole — cube layers, UI fragments, shared-cache branches, brand links.
-Camera: deliberate 2.5D perspective, one mapped travel per scene, leftward scene current and an upward final reveal.
-Accent budget: material blocks, active annotations, connection pulses, Play button, official gold link.
-Typography: 170–260px hero type; 38px explanatory copy; 24px mono labels. No invented performance metrics.
-Sound: original 120 BPM D-minor electronic miniature; warm bass, glass-like arpeggio, dry percussion, link impacts. 0.5s dramatic withdrawal before launch.
-No narration, no subtitles needed. No synthetic gameplay claims. Final lockup holds still.
+A falling block is the first impulse. Every subsequent move advances the story: type makes room, packages arrive, cards dock, packets reach instances, a click releases a world, and links resolve into the official mark. Single actions take roughly 0.3–0.7 seconds. Screen-scale changes travel hundreds of pixels. Layered assembly, authored camera paths and real UI emphasis sustain motion between boundaries.
+
+Use contrasting compositions: oversized word beats, a central interaction, card choreography, a branching diagram and an asymmetrical world reveal. One global label, elapsed-time roll and progress rail replace repeated page furniture.
+
+The ordinary current is LEFT. The final UP transition means elevation into the brand. The cue grid spans 28 frames per beat at 60 fps; picture and original electronic sound share it. A one-beat withdrawal precedes the Play release. The final lockup holds for approximately two seconds while the musical resonance decays.
+
+The official logo's paths and gold remain unchanged. Screenshot content stays factual. The stylized cache cards preserve their source names and metadata; the original island is conceptual artwork. No narration, synthetic gameplay claims or invented performance metrics.

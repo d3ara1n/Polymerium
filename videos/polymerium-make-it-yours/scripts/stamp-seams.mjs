@@ -11,8 +11,8 @@
 //
 // Per-seam ledger options (all optional):
 //   exit.dur / entry.dur   — override durations (defaults below)
-//   entry.travel           — xPercent/yPercent entry offset (default 10; "soft" look = 8)
-//   blur                   — Z-seam blur px (default 18 full-frame; use 10 for text-scale)
+//   exit.travel / entry.travel — xPercent/yPercent offsets (defaults 12 / 10)
+//   blur                      — peak blur px (default 18 for Z, disabled for X/Y)
 
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -109,13 +109,18 @@ for (const seam of ledger.seams) {
     const prop = ex.axis === "x" ? "xPercent" : "yPercent";
     const exDur = ex.dur ?? 0.34,
       enDur = en.dur ?? 0.42;
-    const travel = en.travel ?? 10;
+    const travel = en.travel ?? 10,
+      exTravel = ex.travel ?? 12;
+    // Both sides of the whip share the same blur at the cut.
+    const blurOut = seam.blur ? `, filter: "blur(${seam.blur}px)"` : "",
+      blurIn = seam.blur ? `, filter: "blur(${seam.blur}px)"` : "",
+      blurEnd = seam.blur ? `, filter: "blur(0px)"` : "";
     emit(
-      `tl.to("${ex.selector}", { ${prop}: ${12 * ex.dir}, autoAlpha: 0, duration: ${exDur}, ease: "power3.in" }, ${round(cut - exDur)});`,
+      `tl.to("${ex.selector}", { ${prop}: ${exTravel * ex.dir}, autoAlpha: 0${blurOut}, duration: ${exDur}, ease: "power3.in" }, ${round(cut - exDur)});`,
     );
     emit(`tl.set("${ex.selector}", { autoAlpha: 0 }, ${cut});`);
     emit(
-      `tl.fromTo("${en.selector}", { ${prop}: ${-travel * en.dir}, autoAlpha: 0.35 }, { ${prop}: 0, autoAlpha: 1, duration: ${enDur}, ease: "power4.out", immediateRender: false }, ${cut});`,
+      `tl.fromTo("${en.selector}", { ${prop}: ${-travel * en.dir}, autoAlpha: 0.35${blurIn} }, { ${prop}: 0, autoAlpha: 1${blurEnd}, duration: ${enDur}, ease: "power4.out", immediateRender: false }, ${cut});`,
     );
   }
   emit(``);
