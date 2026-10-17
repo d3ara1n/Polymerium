@@ -122,29 +122,37 @@ public static class InternalConverters
         return Brushes.Gray;
     });
 
-    public static IMultiValueConverter MemoryUsageToColorBrush { get; } = new RelayMultiConverter(v =>
+    public static IValueConverter MiBToGiB { get; } = new RelayConverter(v => v switch
     {
-        if (v is [uint current, uint max and > 0])
-        {
-            var percent = (float)current / max;
-            if (percent > 1.0)
-            {
-                return Application.Current?.TryGetResource("ControlDangerBackgroundBrush", null, out var resource)
-                    == true
-                           ? resource as SolidColorBrush
-                           : Brushes.Red;
-            }
+        uint mib => mib / 1024d,
+        _ => AvaloniaProperty.UnsetValue
+    });
 
-            if (percent > 0.8)
-            {
-                return Application.Current?.TryGetResource("ControlWarningBackgroundBrush", null, out var resource)
-                    == true
-                           ? resource as SolidColorBrush
-                           : Brushes.Orange;
-            }
+    public static IValueConverter InstanceUptime { get; } = new RelayConverter(v =>
+    {
+        if (v is not TimeSpan uptime)
+        {
+            return AvaloniaProperty.UnsetValue;
         }
 
-        return AvaloniaProperty.UnsetValue;
+        var clock = uptime.ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture);
+        return uptime.Days > 0
+            ? string.Format(CultureInfo.CurrentUICulture,
+                            LanguageManager.Instance.InstanceDashboardPage_UptimeDaysFormat.Current(),
+                            uptime.Days,
+                            clock)
+            : clock;
+    });
+
+    public static IMultiValueConverter InstanceStartTime { get; } = new RelayMultiConverter(v =>
+    {
+        if (v is not [DateTimeOffset startedAt, TimeSpan _])
+        {
+            return AvaloniaProperty.UnsetValue;
+        }
+
+        var local = startedAt.LocalDateTime;
+        return local.ToString(local.Date == DateTime.Today ? "HH:mm" : "g", CultureInfo.CurrentUICulture);
     });
 
     public static IValueConverter CurrentCultureDateTime { get; } = new RelayConverter((v, _) =>

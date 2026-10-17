@@ -150,6 +150,9 @@ public partial class InstanceDashboardPageModel(
     [ObservableProperty]
     public partial TimeSpan Uptime { get; set; }
 
+    [ObservableProperty]
+    public partial DateTimeOffset StartedAt { get; set; }
+
     #endregion
 
     #region Fields
@@ -362,6 +365,7 @@ public partial class InstanceDashboardPageModel(
                 return;
             }
 
+            StartedAt = new DateTimeOffset(process.StartTime);
             TimeSpan? lastCpuTime = null;
             var lastSampleTime = DateTime.Now;
             var cpuCount = Environment.ProcessorCount;
@@ -407,7 +411,7 @@ public partial class InstanceDashboardPageModel(
 
         CpuPercent = cpuPercent;
         MemoryUsage = (uint)(process.WorkingSet64 / 1024 / 1024);
-        Uptime = sampleTime - process.StartTime;
+        Uptime = DateTimeOffset.Now - StartedAt;
         return (sampleTime, cpuTime);
     }
 

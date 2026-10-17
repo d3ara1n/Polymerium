@@ -100,12 +100,11 @@
         RowDefinitions="Auto,*"
         RowSpacing="12">
         <!--  顶部统计卡片区域  -->
-        <UniformGrid
+        <Grid
             Grid.Row="0"
             HorizontalAlignment="Stretch"
-            ColumnSpacing="12"
-            Columns="4"
-            Rows="1">
+            ColumnDefinitions="*,1.4*,1.4*,*"
+            ColumnSpacing="12">
             <!--  运行状态卡片  -->
             <husk:Card Padding="0">
                 <husk:SwitchContainer
@@ -192,25 +191,43 @@
             </husk:Card>
 
             <!--  游戏次数/处理器占用卡片  -->
-            <husk:Card>
+            <husk:Card Grid.Column="1" Padding="12">
                 <husk:SwitchContainer
                     TargetType="x:Boolean"
                     Value="{Binding IsOnAir}">
                     <husk:SwitchCase Value="{x:True}">
-                        <StackPanel VerticalAlignment="Center">
-                            <TextBlock TextAlignment="Center">
+                        <Grid
+                            RowDefinitions="Auto,*,Auto,Auto"
+                            RowSpacing="6">
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_CpuUsageLabelText}}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                VerticalAlignment="Center"
+                                FontWeight="{StaticResource ControlStrongFontWeight}">
                                 <Run
-                                    FontSize="{StaticResource LargeFontSize}"
+                                    FontSize="{StaticResource ExtraLargeFontSize}"
                                     Text="{Binding CpuPercent, StringFormat={}{0:F0}}" />
                                 <Run
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                                     Text="%" />
                             </TextBlock>
                             <TextBlock
+                                Grid.Row="2"
+                                FontSize="{StaticResource ExtraSmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_CpuUsageLabelText}}"
-                                TextAlignment="Center" />
-                        </StackPanel>
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_ProcessCpuLabelText}}"
+                                TextTrimming="CharacterEllipsis" />
+                            <ProgressBar
+                                Grid.Row="3"
+                                Height="4"
+                                MinHeight="0"
+                                Maximum="100"
+                                Value="{Binding CpuPercent}"
+                                ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_ProcessCpuToolTip}}" />
+                        </Grid>
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="{x:False}">
                         <Grid
@@ -251,36 +268,47 @@
             </husk:Card>
 
             <!--  崩溃次数/内存占用卡片  -->
-            <husk:Card>
+            <husk:Card Grid.Column="2" Padding="12">
                 <husk:SwitchContainer
                     TargetType="x:Boolean"
                     Value="{Binding IsOnAir}">
                     <husk:SwitchCase Value="{x:True}">
-                        <StackPanel VerticalAlignment="Center">
-                            <TextBlock TextAlignment="Center">
+                        <Grid
+                            RowDefinitions="Auto,*,Auto,Auto"
+                            RowSpacing="6"
+                            ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_ProcessMemoryToolTip}}">
+                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_MemoryUsageLabelText}}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                VerticalAlignment="Center"
+                                FontWeight="{StaticResource ControlStrongFontWeight}">
                                 <Run
-                                    FontSize="{StaticResource LargeFontSize}"
-                                    Text="{Binding MemoryUsage}">
-                                    <Run.Foreground>
-                                        <MultiBinding Converter="{x:Static app:InternalConverters.MemoryUsageToColorBrush}">
-                                            <Binding Path="MemoryUsage" />
-                                            <Binding Path="MemoryAssigned" />
-                                        </MultiBinding>
-                                    </Run.Foreground>
-                                </Run>
+                                    FontSize="{StaticResource ExtraLargeFontSize}"
+                                    Text="{Binding MemoryUsage, Converter={x:Static app:InternalConverters.MiBToGiB}, StringFormat={}{0:F2}}" />
                                 <Run
                                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="/" />
-                                <Run Text="{Binding MemoryAssigned}" />
-                                <Run
-                                    Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                    Text="MB" />
+                                    Text=" GiB" />
                             </TextBlock>
                             <TextBlock
+                                Grid.Row="2"
+                                FontSize="{StaticResource ExtraSmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_MemoryUsageLabelText}}"
-                                TextAlignment="Center" />
-                        </StackPanel>
+                                TextTrimming="CharacterEllipsis">
+                                <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_MaxHeapLabelText}}" />
+                                <Run Text=" " />
+                                <Run Text="{Binding MemoryAssigned, Converter={x:Static app:InternalConverters.MiBToGiB}, StringFormat={}{0:F2}}" />
+                                <Run Text=" GiB" />
+                            </TextBlock>
+                            <ProgressBar
+                                Grid.Row="3"
+                                Height="4"
+                                MinHeight="0"
+                                Maximum="{Binding MemoryAssigned}"
+                                Value="{Binding MemoryUsage}" />
+                        </Grid>
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="{x:False}">
                         <Grid
@@ -321,21 +349,48 @@
             </husk:Card>
 
             <!--  成功率统计/运行时间卡片  -->
-            <husk:Card>
+            <husk:Card Grid.Column="3" Padding="12">
                 <husk:SwitchContainer
                     TargetType="x:Boolean"
                     Value="{Binding IsOnAir}">
                     <husk:SwitchCase Value="{x:True}">
-                        <StackPanel VerticalAlignment="Center">
+                        <Grid
+                            RowDefinitions="Auto,*,Auto,4"
+                            RowSpacing="6">
                             <TextBlock
-                                FontSize="{StaticResource LargeFontSize}"
-                                Text="{Binding Uptime, StringFormat='{}{0:hh\\:mm\\:ss}'}"
-                                TextAlignment="Center" />
-                            <TextBlock
+                                FontSize="{StaticResource SmallFontSize}"
                                 Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_UptimeLabelText}}"
-                                TextAlignment="Center" />
-                        </StackPanel>
+                                Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_UptimeLabelText}}" />
+                            <Viewbox
+                                Grid.Row="1"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                StretchDirection="DownOnly">
+                                <TextBlock
+                                    FontFamily="{DynamicResource CodeFontFamily}"
+                                    FontFeatures="tnum"
+                                    FontSize="{StaticResource ExtraLargeFontSize}"
+                                    FontWeight="{StaticResource ControlStrongFontWeight}"
+                                    Text="{Binding Uptime, Converter={x:Static app:InternalConverters.InstanceUptime}}" />
+                            </Viewbox>
+                            <TextBlock
+                                Grid.Row="2"
+                                FontSize="{StaticResource ExtraSmallFontSize}"
+                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                                TextTrimming="CharacterEllipsis"
+                                ToolTip.Tip="{Binding StartedAt, StringFormat={}{0:G}}">
+                                <Run Text="{Translate {x:Static app:LanguageManager+Keys.InstanceDashboardPage_StartedAtLabelText}}" />
+                                <Run Text=" " />
+                                <Run>
+                                    <Run.Text>
+                                        <MultiBinding Converter="{x:Static app:InternalConverters.InstanceStartTime}">
+                                            <Binding Path="StartedAt" />
+                                            <Binding Path="Uptime" />
+                                        </MultiBinding>
+                                    </Run.Text>
+                                </Run>
+                            </TextBlock>
+                        </Grid>
                     </husk:SwitchCase>
                     <husk:SwitchCase Value="{x:False}">
                         <husk:SwitchContainer
@@ -382,7 +437,7 @@
                     </husk:SwitchCase>
                 </husk:SwitchContainer>
             </husk:Card>
-        </UniformGrid>
+        </Grid>
 
         <!--  日志查看器区域  -->
         <husk:Card

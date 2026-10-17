@@ -3212,13 +3212,31 @@
         <value>运行成功率</value>
     </data>
     <data name="InstanceDashboardPage_CpuUsageLabelText" xml:space="preserve">
-        <value>CPU 占用</value>
+        <value>CPU</value>
     </data>
     <data name="InstanceDashboardPage_MemoryUsageLabelText" xml:space="preserve">
-        <value>内存使用</value>
+        <value>内存</value>
+    </data>
+    <data name="InstanceDashboardPage_ProcessCpuLabelText" xml:space="preserve">
+        <value>实例 CPU 占用</value>
+    </data>
+    <data name="InstanceDashboardPage_ProcessCpuToolTip" xml:space="preserve">
+        <value>游戏进程的 CPU 占用，按 Polymerium 可用的逻辑处理器数量折算。</value>
+    </data>
+    <data name="InstanceDashboardPage_MaxHeapLabelText" xml:space="preserve">
+        <value>最大堆参考</value>
+    </data>
+    <data name="InstanceDashboardPage_ProcessMemoryToolTip" xml:space="preserve">
+        <value>游戏进程的驻留内存。进度条以配置的 Java 最大堆内存为参考刻度，并非进程内存上限。进程内存包含堆外开销，可以超过此参考值；超过后进度条保持满格，数值仍显示实际占用。</value>
     </data>
     <data name="InstanceDashboardPage_UptimeLabelText" xml:space="preserve">
         <value>运行时间</value>
+    </data>
+    <data name="InstanceDashboardPage_UptimeDaysFormat" xml:space="preserve">
+        <value>{0}天 {1}</value>
+    </data>
+    <data name="InstanceDashboardPage_StartedAtLabelText" xml:space="preserve">
+        <value>启动于</value>
     </data>
     <data name="InstanceDashboardPage_SearchPlaceholder" xml:space="preserve">
         <value>搜索日志内容...</value>

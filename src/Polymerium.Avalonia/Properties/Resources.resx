@@ -3221,13 +3221,31 @@
         <value>Success Rate</value>
     </data>
     <data name="InstanceDashboardPage_CpuUsageLabelText" xml:space="preserve">
-        <value>CPU Usage</value>
+        <value>CPU</value>
     </data>
     <data name="InstanceDashboardPage_MemoryUsageLabelText" xml:space="preserve">
-        <value>Memory Usage</value>
+        <value>Memory</value>
+    </data>
+    <data name="InstanceDashboardPage_ProcessCpuLabelText" xml:space="preserve">
+        <value>Instance CPU usage</value>
+    </data>
+    <data name="InstanceDashboardPage_ProcessCpuToolTip" xml:space="preserve">
+        <value>CPU usage of the game process, normalized across the logical processors available to Polymerium.</value>
+    </data>
+    <data name="InstanceDashboardPage_MaxHeapLabelText" xml:space="preserve">
+        <value>Heap reference</value>
+    </data>
+    <data name="InstanceDashboardPage_ProcessMemoryToolTip" xml:space="preserve">
+        <value>Resident memory of the game process. The bar uses the configured maximum Java heap as a reference, not a process memory limit. Process memory includes non-heap usage and can exceed this reference; the bar stops at full while the value continues to show actual usage.</value>
     </data>
     <data name="InstanceDashboardPage_UptimeLabelText" xml:space="preserve">
         <value>Uptime</value>
+    </data>
+    <data name="InstanceDashboardPage_UptimeDaysFormat" xml:space="preserve">
+        <value>{0}d {1}</value>
+    </data>
+    <data name="InstanceDashboardPage_StartedAtLabelText" xml:space="preserve">
+        <value>Started at</value>
     </data>
     <data name="InstanceDashboardPage_SearchPlaceholder" xml:space="preserve">
         <value>Search logs...</value>
