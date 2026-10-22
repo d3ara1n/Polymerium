@@ -4,16 +4,19 @@ The editable film is 25 seconds at 1920×1080 and 60 fps. Weighty block impacts,
 
 ## Preview
 
-Run from this directory:
+A fresh checkout contains sources only; every preview file is a build product. `npm ci` runs the `prepare` script, which regenerates the crops, composition and score from source:
 
 ```sh
 npm ci
 npm run dev
+npm run build:film
+npm run build:score
+npm run dev
 ```
 
-Studio supports playback and scrubbing and reloads edited sources. Review the composition there before requesting another export. The files in `delivery/` remain the earlier reviewed **32-second master**, not an export of the current timeline.
+Studio supports playback and scrubbing and reloads edited sources. Review the composition there before requesting another export. Any MP4 or stills in `delivery/` are earlier local exports and may lag the current timeline.
 
-The project pins HyperFrames 0.8.168 and GSAP 3.14.2. Node.js 22 or newer, FFmpeg and a supported Chrome binary are required for checks and rendering. All fonts, images, runtime code and sound are local assets.
+The project pins HyperFrames 0.8.168 and GSAP 3.14.2. Node.js 22 or newer, FFmpeg and a supported Chrome binary are required for checks and rendering. Fonts and the animation runtime are vendored under `assets/`; the interface imagery is cropped from the repository screenshots and the score is synthesized from source.
 
 ## Authoring
 
@@ -25,11 +28,11 @@ The project pins HyperFrames 0.8.168 and GSAP 3.14.2. Node.js 22 or newer, FFmpe
 | `scripts/minecraft-world.mjs` | Procedural island and final player-placed block |
 | `scripts/compose-score.mjs` | Original deterministic music and picture-synchronous effects |
 | `scripts/master-score.mjs` | Two-pass audio mastering |
-| `scripts/prepare-assets.mjs` | Crops from frozen source screenshots |
+| `scripts/prepare-assets.mjs` | Crops from the repository screenshots into `out/screens/` |
 | `BRIEF.md`, `frame.md`, `STORYBOARD.md` | Intent, art direction and shot plan |
 | `ASSETS.md` | Provenance and licensing |
 
-`index.html`, `compositions/*.html` and `ledger.json` are generated and retained for immediate preview. Edit the authoring sources and rebuild; direct edits to generated files are overwritten. Each scene is a separate sub-composition with a local paused timeline. The main timeline controls non-clip seam wrappers and the global HUD. HyperFrames controls host visibility and audio playback.
+`index.html`, `compositions/*.html` and `ledger.json` are generated for immediate preview and ignored by git, as are the crops in `out/screens/` and the score in `out/`. Edit the authoring sources and rebuild; direct edits to generated files are overwritten. Each scene is a separate sub-composition with a local paused timeline. The main timeline controls non-clip seam wrappers and the global HUD. HyperFrames controls host visibility and audio playback. `assets/` holds vendored inputs only.
 
 ```sh
 npm run build:film
@@ -37,7 +40,7 @@ npm run build:score
 npm run check
 ```
 
-Picture and score share one beat every 28 frames, approximately 128.571 BPM. Rebuild both when changing the cue grid. Regenerate screenshot crops with `npm run prepare:assets` only when their definitions change.
+Picture and score share one beat every 28 frames, approximately 128.571 BPM. Rebuild both when changing the cue grid. Regenerate the crops in `out/screens/` from the repository screenshots with `npm run prepare:assets` only when their definitions change.
 
 After editing transition timing or boundary movement:
 
@@ -59,4 +62,4 @@ Keep draft exports in the ignored `renders/` directory:
 npm run render -- --output renders/new-cut.mp4
 ```
 
-Only after approval should a new master replace `delivery/polymerium-make-it-yours.mp4`. `npm run package:delivery` extracts the poster, key visual and contact sheet from the existing MP4; it does not render the composition. Update its selected timestamps and watch-page runtime for the approved cut when packaging a new delivery.
+Only after approval should a new master replace `delivery/polymerium-make-it-yours.mp4`; all delivery artifacts are git-ignored and stay local. `npm run package:delivery` extracts the poster, key visual and contact sheet from the existing MP4; it does not render the composition. Update its selected timestamps and watch-page runtime for the approved cut when packaging a new delivery.

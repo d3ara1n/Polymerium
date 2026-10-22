@@ -5,16 +5,18 @@ node_modules/
 renders/
 reviews/
 capture/
+out/
 *.log
 
-# Rebuildable audio intermediates.
-/assets/score-premaster.wav
+# Generated film outputs; assets/ holds vendored inputs only.
+/index.html
+/compositions/
+/ledger.json
 /audio_meta.json
+/assets/screens/
+/assets/score-premaster.wav
+/assets/score.wav
 
-# Keep only the reviewed delivery set.
+# Delivery outputs; watch.html is the only handwritten file kept here.
 /delivery/*
-!/delivery/polymerium-make-it-yours.mp4
 !/delivery/watch.html
-!/delivery/poster.png
-!/delivery/key-visual.png
-!/delivery/contact-sheet.jpg

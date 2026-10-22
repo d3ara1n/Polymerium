@@ -6,4 +6,4 @@
 - Keep motion deterministic and seekable on the paused timelines. The main timeline owns seam wrappers; mounted scenes own their local choreography. `ledger.json` records the generated scene boundaries.
 - Run `npm run check` after composition edits; verify affected boundaries with `scripts/verify-seams.mjs` when timing or transitions change.
 - Preserve the official logo geometry and gold color. Keep instance content consistent with the source screenshots.
-- Temporary renders and drafts stay in ignored directories. The reviewed master has the stable path `delivery/polymerium-make-it-yours.mp4`.
+- Generated outputs — `index.html`, `compositions/`, `ledger.json`, `out/` media, draft renders and `delivery/` artifacts — stay in git-ignored directories and are rebuilt from source; `assets/` holds vendored inputs only. The reviewed master has the stable path `delivery/polymerium-make-it-yours.mp4`.

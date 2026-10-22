@@ -24,8 +24,8 @@ The global progress rail and rolling elapsed-time indicator continue across the 
 ## Truth sources
 
 - Official mark: frozen `assets/brand/logo-dark.svg`, unchanged paths and colors.
-- Setup and package rows: frozen `assets/screens/setup.png` and derived crops.
-- Instance cards, dashboard and Play control: frozen `assets/screens/landing.png` and derived crops.
+- Setup and package rows: frozen repository screenshot `assets/screenshots/setup.png`; derived crops in `out/screens/`.
+- Instance cards, dashboard and Play control: frozen repository screenshot `assets/screenshots/landing.png`; derived crops in `out/screens/`.
 - Shared cache and independent instance profiles: repository engine documentation.
 - Block world: original artwork with no extracted game textures.
 

@@ -49,6 +49,6 @@ let peak=0;
 for(let i=0;i<N;i++){L[i]=Math.tanh(L[i]*1.15);R[i]=Math.tanh(R[i]*1.15);peak=Math.max(peak,Math.abs(L[i]),Math.abs(R[i]));}
 const out=Buffer.alloc(44+N*4);out.write('RIFF');out.writeUInt32LE(out.length-8,4);out.write('WAVEfmt ',8);out.writeUInt32LE(16,16);out.writeUInt16LE(1,20);out.writeUInt16LE(2,22);out.writeUInt32LE(SR,24);out.writeUInt32LE(SR*4,28);out.writeUInt16LE(4,32);out.writeUInt16LE(16,34);out.write('data',36);out.writeUInt32LE(N*4,40);
 for(let i=0;i<N;i++){const fade=Math.min(1,i/120,(N-1-i)/(SR*.6));out.writeInt16LE(Math.round(L[i]/peak*.88*fade*32767),44+i*4);out.writeInt16LE(Math.round(R[i]/peak*.88*fade*32767),46+i*4);}
-fs.writeFileSync(path.join(root,'assets/score-premaster.wav'),out);
+fs.mkdirSync(path.join(root,'out'),{recursive:true});fs.writeFileSync(path.join(root,'out/score-premaster.wav'),out);
 fs.writeFileSync(path.join(root,'audio_meta.json'),JSON.stringify({duration:DURATION,bpm:BPM,beatFrames:28,source:'Original deterministic synthesis',sceneCues:SEAMS.map(s=>s.cut),click:b(36),launch:b(37),brandImpact:join},null,2));
 console.log(`Composed ${DURATION}s at ${BPM.toFixed(3)} BPM with picture-synchronous impacts.`);

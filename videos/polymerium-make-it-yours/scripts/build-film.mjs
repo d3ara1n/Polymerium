@@ -9,7 +9,7 @@ const out=path.join(root,'compositions');
 fs.mkdirSync(out,{recursive:true});
 fs.writeFileSync(path.join(root,'ledger.json'),JSON.stringify({fps:60,seams:SEAMS},null,2)+'\n');
 const letters=s=>[...s].map(c=>`<span class="letter">${c===' '?'&nbsp;':c}</span>`).join('');
-const image=(file,cls='',id='')=>`<img ${id?`id="${id}"`:''} class="${cls}" src="../assets/screens/${file}.png" alt="Polymerium interface"/>`;
+const image=(file,cls='',id='')=>`<img ${id?`id="${id}"`:''} class="${cls}" src="../out/screens/${file}.png" alt="Polymerium interface"/>`;
 const mark=fs.readFileSync(path.join(root,'assets/brand/logo-dark.svg'),'utf8')
  .replace('width="128" height="128"','id="brand-mark" width="360" height="360"')
  .replaceAll('id="link"','id="final-link"').replaceAll('#link','#final-link')
@@ -259,7 +259,7 @@ const html=`<!doctype html><html lang="en"><head><meta charset="UTF-8"><title>Po
 </style></head><body><div id="root" data-composition-id="main" data-width="1920" data-height="1080" data-duration="${DURATION}">
 ${hosts}
 <div id="hud"><div id="hud-label">POLYMERIUM / MAKE IT YOURS</div><div id="hud-clock"><div id="clock-strip" data-layout-allow-overflow>${Array.from({length:26},(_,i)=>`<span id="count-${i}" data-layout-allow-overflow>${String(i).padStart(2,'0')} : 25</span>`).join('')}</div></div><div id="progress"></div></div>
-<audio id="score" src="assets/score.wav" data-start="0" data-duration="${DURATION}" data-track-index="10" data-volume="1"></audio>
+<audio id="score" src="out/score.wav" data-start="0" data-duration="${DURATION}" data-track-index="10" data-volume="1"></audio>
 </div><script>
 const tl=gsap.timeline({paused:true});
 tl.fromTo('#progress',{scaleX:0},{scaleX:1,duration:${DURATION},ease:'none'},0);

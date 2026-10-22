@@ -25,4 +25,4 @@ Repository screenshots and brand SVGs are the primary assets. Shared-cache cards
 
 The approved revision includes shortening the film from 32 seconds to 25, rebuilding the overall rhythm and sound, removing repeated scene furniture, and adding kinetic BUILD / ORGANIZE / SHARE / PLAY beats. Work is confined to videos/polymerium-make-it-yours. No app changes, global installations, publishing or commits.
 
-Deliver this revision in Studio for review. Do not export a new MP4 until requested. The existing delivery/ files contain the earlier reviewed 32-second master and are retained separately from the current editable composition.
+Deliver this revision in Studio for review. Do not export a new MP4 until requested. Files under `delivery/` are the earlier reviewed 32-second master kept as local exports outside git, not part of the editable composition.

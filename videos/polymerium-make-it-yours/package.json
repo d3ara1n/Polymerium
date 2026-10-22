@@ -7,6 +7,7 @@
     "check": "npx --yes hyperframes@0.8.168 check",
     "render": "npx --yes hyperframes@0.8.168 render --quality delivery --fps 60 --workers 3",
     "package:delivery": "node scripts/package-delivery.mjs",
+    "prepare": "npm run prepare:assets && npm run build:film && npm run build:score",
     "build:film": "node scripts/build-film.mjs && node scripts/stamp-seams.mjs --ledger ledger.json --write index.html",
     "prepare:assets": "node scripts/prepare-assets.mjs",
     "build:score": "node scripts/compose-score.mjs && node scripts/master-score.mjs"
