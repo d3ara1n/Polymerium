@@ -1,4 +1,5 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+import { ExternalLink } from 'lucide-react';
 import { Logo } from '@/components/logo';
 import { i18n } from './i18n';
 import { uiTranslations } from 'fumadocs-ui/i18n';
@@ -38,6 +39,12 @@ export function baseOptions(lang: string): BaseLayoutProps {
         text: lang === 'zh' ? '文档' : 'Documentation',
         url: `/${lang}/docs`,
         active: 'nested-url',
+      },
+      {
+        text: lang === 'zh' ? '主站' : 'Main site',
+        url: 'https://dearain.dev',
+        icon: <ExternalLink className="size-4" />,
+        external: true,
       },
     ],
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
