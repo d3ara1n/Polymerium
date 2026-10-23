@@ -26,11 +26,11 @@
                             CornerRadius="{TemplateBinding CornerRadius}">
                             <Border.Transitions>
                                 <Transitions>
-                                    <BrushTransition
+                                    <husk:BrushTransition
                                         Easing="SineEaseOut"
                                         Property="Background"
                                         Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                    <BrushTransition
+                                    <husk:BrushTransition
                                         Easing="SineEaseOut"
                                         Property="BorderBrush"
                                         Duration="{StaticResource ControlFasterAnimationDuration}" />
@@ -83,7 +83,7 @@
                             Opacity="0">
                             <Border.Transitions>
                                 <Transitions>
-                                    <BrushTransition
+                                    <husk:BrushTransition
                                         Easing="SineEaseOut"
                                         Property="Background"
                                         Duration="{StaticResource ControlFasterAnimationDuration}" />

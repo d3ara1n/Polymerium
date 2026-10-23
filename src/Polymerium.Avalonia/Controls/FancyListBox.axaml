@@ -51,7 +51,7 @@
                                                                       Converter={x:Static husk:CornerRadiusConverters.Left}}">
                             <Border.Transitions>
                                 <Transitions>
-                                    <BrushTransition
+                                    <husk:BrushTransition
                                         Property="Background"
                                         Duration="{StaticResource ControlFasterAnimationDuration}" />
                                 </Transitions>

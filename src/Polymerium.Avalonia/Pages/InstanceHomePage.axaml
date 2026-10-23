@@ -56,7 +56,7 @@
                                         Easing="SineEaseOut"
                                         Property="Opacity"
                                         Duration="{StaticResource ControlFasterAnimationDuration}" />
-                                    <BrushTransition
+                                    <husk:BrushTransition
                                         Easing="SineEaseOut"
                                         Property="Background"
                                         Duration="{StaticResource ControlFasterAnimationDuration}" />

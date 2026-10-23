@@ -160,7 +160,7 @@
                                                         Symbol="{Binding Icon, RelativeSource={RelativeSource Mode=DataContext}, x:DataType=app:InstanceSubpageEntryModel}">
                                                         <fi:SymbolIcon.Transitions>
                                                             <Transitions>
-                                                                <BrushTransition
+                                                                <husk:BrushTransition
                                                                     Property="Foreground"
                                                                     Duration="{StaticResource ControlFasterAnimationDuration}" />
                                                             </Transitions>

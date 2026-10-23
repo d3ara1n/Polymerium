@@ -21,6 +21,7 @@
 - Improve the frosted glass background of dialogs, modals, sidebars and toasts so it stays smooth and in sync with the content behind it
 - Improve desktop material visibility in the main window sidebar
 - Improve instance monitoring with compact resource and uptime cards
+- Improve the interface with softer borders and smoother hover and press color transitions (Huskui.Avalonia)
 
 ### Removed
 

@@ -179,7 +179,7 @@
                                 <fi:SymbolIcon Symbol="Dismiss">
                                     <fi:SymbolIcon.Transitions>
                                         <Transitions>
-                                            <BrushTransition
+                                            <husk:BrushTransition
                                                 Easing="SineEaseOut"
                                                 Property="Foreground"
                                                 Duration="{StaticResource ControlFasterAnimationDuration}" />

@@ -26,10 +26,10 @@
         CornerRadius="{StaticResource MediumCornerRadius}">
         <Border.Transitions>
             <Transitions>
-                <BrushTransition
+                <husk:BrushTransition
                     Property="Background"
                     Duration="{StaticResource ControlFasterAnimationDuration}" />
-                <BrushTransition
+                <husk:BrushTransition
                     Property="BorderBrush"
                     Duration="{StaticResource ControlFasterAnimationDuration}" />
             </Transitions>
