@@ -25,4 +25,4 @@
 
 ### Removed
 
--
+- Remove the advanced settings bypass for the Microsoft account requirement when adding offline accounts

@@ -18,7 +18,6 @@ public partial class AccountsPageModel(
     OverlayService overlayService,
     NotificationService notificationService,
     PersistenceService persistenceService,
-    ConfigurationService configurationService,
     MicrosoftService microsoftService,
     XboxLiveService xboxLiveService,
     MinecraftService minecraftService,
@@ -90,9 +89,7 @@ public partial class AccountsPageModel(
         overlayService.PopModal(new AccountCreationModal
         {
             FinishCallback = Finish,
-            IsOfflineAvailable =
-                configurationService.Value.ApplicationSuperPowerActivated
-             || persistenceService.HasMicrosoftAccount(),
+            IsOfflineAvailable = persistenceService.HasMicrosoftAccount(),
             MicrosoftService = microsoftService,
             XboxLiveService = xboxLiveService,
             MinecraftService = minecraftService,
