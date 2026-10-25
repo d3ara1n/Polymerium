@@ -2,7 +2,7 @@
 
 ### ✨ Highlights ✨
 
--
+- Replace the application icon with a voxel fish tank
 
 ### Fixed
 
@@ -14,7 +14,7 @@
 
 ### Changed
 
--
+- Replace the application icon with a voxel fish tank
 
 ### Removed
 
