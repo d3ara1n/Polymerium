@@ -12,11 +12,13 @@ using CommunityToolkit.Mvvm.Input;
 using Huskui.Avalonia.Controls;
 using Huskui.Avalonia.Models;
 using Huskui.Avalonia.Mvvm.Activation;
+using Polymerium.Avalonia.Assets;
 using Polymerium.Avalonia.Dialogs;
 using Polymerium.Avalonia.Facilities;
 using Polymerium.Avalonia.Modals;
 using Polymerium.Avalonia.Models;
 using Polymerium.Avalonia.Services;
+using Polymerium.Avalonia.Sidebars;
 using Polymerium.Avalonia.Utilities;
 using Velopack;
 
@@ -237,23 +239,64 @@ public partial class UnknownPageModel(
         });
 
     [RelayCommand]
+    private void OpenNotificationSidebar() => overlayService.PopSidebar<NotificationSidebar>();
+
+    [RelayCommand]
     private void ShowInformation() =>
-        notificationService
-           .PopMessage("Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~Hello Hi~",
-                       "Hi there!");
+        notificationService.PopMessage("Toggle the read state in the notification center to compare the background and unread tag.",
+                                       "Information notification preview");
 
     [RelayCommand]
-    private void ShowSuccess() => notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Success);
+    private void ShowSuccess() =>
+        notificationService.PopMessage("The sample operation is complete. Check the success icon and severity strip at the top.",
+                                       "Success notification preview",
+                                       GrowlLevel.Success);
 
     [RelayCommand]
-    private void ShowWarning() => notificationService.PopMessage("Hello", "Hi there!", GrowlLevel.Warning);
+    private void ShowWarning() =>
+        notificationService.PopMessage("This warning checks text wrapping. The title shares its header with status tags, the time, and the actions menu, while the message wraps below.\nMark it as read to hide the tinted background and unread tag. The warning icon and severity strip at the top should remain.",
+                                       "Warning preview with a long title that wraps within the narrow sidebar",
+                                       GrowlLevel.Warning);
 
     [RelayCommand]
     private void ShowDanger() =>
-        notificationService.PopProgress("Hello",
-                                        "Hi there!",
-                                        GrowlLevel.Danger,
-                                        actions: new GrowlAction("Info", new RelayCommand(ShowInformation)));
+        notificationService.PopMessage("This simulated error previews the error icon and severity strip at the top. No actual operation has failed.",
+                                       "Error notification preview",
+                                       GrowlLevel.Danger);
+
+    [RelayCommand]
+    private void ShowThumbnailNotification() =>
+        notificationService.PopMessage("The thumbnail appears on the left. The header contains the title, status tags, time, and actions menu. The strip at the top indicates severity.",
+                                       "Thumbnail notification preview",
+                                       GrowlLevel.Warning,
+                                       thumbnail: AssetUriIndex.SteveFaceImage);
+
+    [RelayCommand]
+    private void ShowActionNotification() =>
+        notificationService.PopMessage("Each action sends another sample notification. Check button alignment, wrapping, and click feedback.",
+                                       "Multiple actions preview",
+                                       actions:
+                                       [
+                                           new("Preview information", ShowInformationCommand),
+                                           new("Preview success", ShowSuccessCommand),
+                                           new("Preview error", ShowDangerCommand)
+                                       ]);
+
+    [RelayCommand]
+    private void ShowProgressNotification()
+    {
+        var handle = notificationService.PopProgress("Progress starts indeterminate. Advance it to switch to determinate progress.",
+                                                     "Progress notification preview",
+                                                     thumbnail: AssetUriIndex.SteveFaceImage);
+        var progress = 0d;
+        handle.AddAction(new("Advance 25%", new RelayCommand(() =>
+        {
+            progress = Math.Min(progress + 25, 100);
+            ((IProgress<double>)handle).Report(progress);
+            ((IProgress<string>)handle).Report($"Sample progress: {progress:0}%. Finish the preview to check the expired state and disabled actions.");
+        })));
+        handle.AddAction(new("Finish preview", new RelayCommand(handle.Dispose)));
+    }
 
     [RelayCommand]
     private void ShowToast()

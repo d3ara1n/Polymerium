@@ -15,7 +15,53 @@
     d:DesignWidth="400"
     x:DataType="{x:Type app:NotificationSidebarModel}"
     mc:Ignorable="d">
-    <Grid RowDefinitions="Auto,*">
+    <husk:Sidebar.Resources>
+        <DataTemplate x:Key="NotificationLevelIconTemplate" x:DataType="app:NotificationModel">
+            <husk:SwitchContainer
+                AutomationProperties.Name="{app:LocalizedEnum {Binding Level}}"
+                TargetType="husk:GrowlLevel"
+                ToolTip.Tip="{app:LocalizedEnum {Binding Level}}"
+                Value="{Binding Level}">
+                <husk:SwitchCase Value="Information">
+                    <fi:SymbolIcon
+                        FontSize="20"
+                        Foreground="{DynamicResource ControlSecondaryForegroundBrush}"
+                        Symbol="Info" />
+                </husk:SwitchCase>
+                <husk:SwitchCase Value="Success">
+                    <fi:SymbolIcon
+                        FontSize="20"
+                        Foreground="{DynamicResource ControlSuccessForegroundBrush}"
+                        Symbol="CheckmarkCircle" />
+                </husk:SwitchCase>
+                <husk:SwitchCase Value="Warning">
+                    <fi:SymbolIcon
+                        FontSize="20"
+                        Foreground="{DynamicResource ControlWarningForegroundBrush}"
+                        Symbol="Warning" />
+                </husk:SwitchCase>
+                <husk:SwitchCase Value="Danger">
+                    <fi:SymbolIcon
+                        FontSize="20"
+                        Foreground="{DynamicResource ControlDangerForegroundBrush}"
+                        Symbol="DismissCircle" />
+                </husk:SwitchCase>
+            </husk:SwitchContainer>
+        </DataTemplate>
+    </husk:Sidebar.Resources>
+    <husk:Sidebar.Styles>
+        <Style Selector="Border.NotificationRow">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="Border.NotificationRow.Unread">
+            <Setter Property="Background" Value="{DynamicResource ControlAccentTranslucentHalfBackgroundBrush}" />
+        </Style>
+        <Style Selector="TextBlock.NotificationMetadata">
+            <Setter Property="FontSize" Value="{StaticResource SmallFontSize}" />
+            <Setter Property="Foreground" Value="{DynamicResource ControlSecondaryForegroundBrush}" />
+        </Style>
+    </husk:Sidebar.Styles>
+    <Grid RowDefinitions="Auto,*" RowSpacing="12">
         <Grid
             Grid.Row="0"
             Margin="{StaticResource SidebarBottomlessContentMargin}"
@@ -40,7 +86,9 @@
             <Button
                 Grid.Column="2"
                 Classes="Small"
-                Click="DismissButton_OnClick">
+                AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.Dialog_DismissButtonText}}"
+                Click="DismissButton_OnClick"
+                ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.Dialog_DismissButtonText}}">
                 <fi:SymbolIcon
                     FontSize="{StaticResource MediumFontSize}"
                     Symbol="Dismiss" />
@@ -73,63 +121,148 @@
                     Foreground="{StaticResource ControlSecondaryForegroundBrush}"
                     Text="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_EmptyPrompt}}" />
             </StackPanel>
-            <ScrollViewer IsVisible="{Binding Notifications.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}">
-                <ItemsControl
-                    Margin="{StaticResource SidebarContentMargin}"
-                    ItemsSource="{Binding Notifications}">
+            <ScrollViewer
+                HorizontalScrollBarVisibility="Disabled"
+                IsVisible="{Binding Notifications.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}">
+                <ItemsControl ItemsSource="{Binding Notifications}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="app:NotificationModel">
                             <Border
-                                Margin="4,4,4,4"
-                                BoxShadow="0 0 4 0 #3F000000"
-                                CornerRadius="{StaticResource LargeCornerRadius}">
-                                <Panel>
-                                    <husk:SwitchContainer
-                                        TargetType="husk:GrowlLevel"
-                                        Value="{Binding Level}">
-                                        <husk:SwitchCase Value="Information">
-                                            <Border
-                                                Padding="12,10"
-                                                Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                                BorderBrush="{StaticResource ControlBorderBrush}"
-                                                BorderThickness="3,0,0,0"
-                                                CornerRadius="{Binding $parent[Border].CornerRadius}" />
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="Success">
-                                            <Border
-                                                Padding="12,10"
-                                                Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                                BorderBrush="{StaticResource ControlSuccessBorderBrush}"
-                                                BorderThickness="3,0,0,0"
-                                                CornerRadius="{Binding $parent[Border].CornerRadius}" />
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="Warning">
-                                            <Border
-                                                Padding="12,10"
-                                                Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                                BorderBrush="{StaticResource ControlWarningBorderBrush}"
-                                                BorderThickness="3,0,0,0"
-                                                CornerRadius="{Binding $parent[Border].CornerRadius}" />
-                                        </husk:SwitchCase>
-                                        <husk:SwitchCase Value="Danger">
-                                            <Border
-                                                Padding="12,10"
-                                                Background="{StaticResource OverlaySolidBackgroundBrush}"
-                                                BorderBrush="{StaticResource ControlDangerBorderBrush}"
-                                                BorderThickness="3,0,0,0"
-                                                CornerRadius="{Binding $parent[Border].CornerRadius}" />
-                                        </husk:SwitchCase>
-                                    </husk:SwitchContainer>
-                                    <DockPanel Margin="12,8">
+                                Classes="NotificationRow"
+                                Classes.Unread="{Binding IsRead, Converter={x:Static BoolConverters.Not}}">
+                                <Grid RowDefinitions="2,Auto">
+                                    <Grid
+                                        Grid.Row="1"
+                                        Margin="16,12"
+                                        ColumnDefinitions="Auto,*"
+                                        ColumnSpacing="12"
+                                        RowDefinitions="Auto,Auto"
+                                        RowSpacing="8">
+                                        <Grid
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            ColumnDefinitions="*,Auto"
+                                            ColumnSpacing="8">
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                VerticalAlignment="Center"
+                                                FontWeight="{StaticResource ControlStrongFontWeight}"
+                                                Text="{Binding Title}"
+                                                TextWrapping="Wrap" />
+                                            <StackPanel
+                                                Grid.Column="1"
+                                                VerticalAlignment="Top"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                                <husk:Tag
+                                                    Classes="Small Primary"
+                                                    VerticalAlignment="Center"
+                                                    IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
+                                                    Content="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_UnreadTagText}}" />
+                                                <husk:Tag
+                                                    Classes="Small"
+                                                    VerticalAlignment="Center"
+                                                    IsVisible="{Binding IsCancelled}"
+                                                    Content="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_CancelledTagText}}" />
+                                                <TextBlock
+                                                    Classes="NotificationMetadata"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding PublishedAt}" />
+                                                <Button
+                                                    Width="28"
+                                                    Height="28"
+                                                    Classes="Small"
+                                                    Padding="4"
+                                                    AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_MoreActionsButtonText}}"
+                                                    Theme="{StaticResource GhostButtonTheme}"
+                                                    ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_MoreActionsButtonText}}">
+                                                    <Button.Flyout>
+                                                        <MenuFlyout>
+                                                            <MenuItem
+                                                                IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
+                                                                Command="{Binding $parent[app:NotificationSidebar].((app:NotificationSidebarModel)DataContext).MarkAsReadCommand, FallbackValue={x:Null}}"
+                                                                CommandParameter="{Binding}"
+                                                                Header="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_MarkAsReadMenuText}}"
+                                                                Icon="{fie:SymbolIcon CheckmarkCircle,
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
+                                                            <MenuItem
+                                                                IsVisible="{Binding IsRead}"
+                                                                Command="{Binding $parent[app:NotificationSidebar].((app:NotificationSidebarModel)DataContext).MarkAsUnreadCommand, FallbackValue={x:Null}}"
+                                                                CommandParameter="{Binding}"
+                                                                Header="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_MarkAsUnreadMenuText}}"
+                                                                Icon="{fie:SymbolIcon CheckmarkCircleHint,
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
+                                                            <MenuItem
+                                                                Command="{Binding $parent[app:NotificationSidebar].((app:NotificationSidebarModel)DataContext).RemoveNotificationCommand, FallbackValue={x:Null}}"
+                                                                CommandParameter="{Binding}"
+                                                                Header="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_RemoveMenuText}}"
+                                                                Icon="{fie:SymbolIcon DismissCircle,
+                                                                                  FontSize={StaticResource MediumFontSize}}" />
+                                                        </MenuFlyout>
+                                                    </Button.Flyout>
+                                                    <fi:SymbolIcon
+                                                        FontSize="{StaticResource MediumFontSize}"
+                                                        Symbol="MoreHorizontal" />
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Panel
+                                            Grid.Row="0"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="0"
+                                            Width="36"
+                                            Height="36"
+                                            VerticalAlignment="Top">
+                                            <husk:SwitchContainer
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                TargetType="x:Boolean"
+                                                Value="{Binding Thumbnail, Converter={x:Static ObjectConverters.IsNotNull}}">
+                                                <husk:SwitchCase Value="True">
+                                                    <Border
+                                                        Width="28"
+                                                        Height="28"
+                                                        ClipToBounds="True"
+                                                        CornerRadius="{StaticResource FullCornerRadius}">
+                                                        <Image
+                                                            async:ImageLoader.Source="{Binding Thumbnail}"
+                                                            Stretch="UniformToFill" />
+                                                    </Border>
+                                                </husk:SwitchCase>
+                                                <husk:SwitchCase Value="False">
+                                                    <ContentControl
+                                                        Content="{Binding}"
+                                                        ContentTemplate="{StaticResource NotificationLevelIconTemplate}" />
+                                                </husk:SwitchCase>
+                                            </husk:SwitchContainer>
+                                            <husk:ProgressRing
+                                                Width="36"
+                                                Height="36"
+                                                IsIndeterminate="{Binding IsProgressIndeterminate}"
+                                                ShowProgressText="False"
+                                                StrokeWidth="3"
+                                                TrackStrokeWidth="3"
+                                                Value="{Binding Progress}">
+                                                <husk:ProgressRing.IsVisible>
+                                                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                                        <Binding Path="IsProgressBarVisible" />
+                                                        <Binding
+                                                            Converter="{x:Static BoolConverters.Not}"
+                                                            Path="IsCancelled" />
+                                                    </MultiBinding>
+                                                </husk:ProgressRing.IsVisible>
+                                            </husk:ProgressRing>
+                                        </Panel>
                                         <StackPanel
-                                            DockPanel.Dock="Bottom"
-                                            Margin="0,4,0,0"
-                                            HorizontalAlignment="Right"
-                                            IsVisible="{Binding Actions.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
-                                            Orientation="Horizontal"
+                                            Grid.Row="1"
+                                            Grid.Column="1"
                                             Spacing="8">
+                                            <TextBlock
+                                                Text="{Binding Message}"
+                                                TextWrapping="Wrap" />
                                             <ItemsControl
                                                 IsEnabled="{Binding IsCancelled, Converter={x:Static BoolConverters.Not}}"
+                                                IsVisible="{Binding Actions.Count, Converter={x:Static husk:NumberConverters.IsNonZero}}"
                                                 ItemsSource="{Binding Actions}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
@@ -149,134 +282,25 @@
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
                                         </StackPanel>
-                                        <Grid
-                                            ColumnDefinitions="Auto,Auto,*,Auto,Auto"
-                                            RowDefinitions="Auto,*"
-                                            RowSpacing="4">
-                                            <Panel
-                                                Grid.Row="0"
-                                                Grid.RowSpan="2"
-                                                Grid.Column="0">
-                                                <husk:SwitchContainer
-                                                    Width="28"
-                                                    Height="28"
-                                                    Margin="4"
-                                                    TargetType="husk:GrowlLevel"
-                                                    Value="{Binding Level}">
-                                                    <husk:SwitchCase Value="Information">
-                                                        <Ellipse Fill="{StaticResource ControlTranslucentFullBackgroundBrush}" />
-                                                    </husk:SwitchCase>
-                                                    <husk:SwitchCase Value="Success">
-                                                        <Ellipse Fill="{StaticResource ControlSuccessTranslucentFullBackgroundBrush}" />
-                                                    </husk:SwitchCase>
-                                                    <husk:SwitchCase Value="Warning">
-                                                        <Ellipse Fill="{StaticResource ControlWarningTranslucentFullBackgroundBrush}" />
-                                                    </husk:SwitchCase>
-                                                    <husk:SwitchCase Value="Danger">
-                                                        <Ellipse Fill="{StaticResource ControlDangerTranslucentFullBackgroundBrush}" />
-                                                    </husk:SwitchCase>
-                                                </husk:SwitchContainer>
-                                                <Border
-                                                    Width="28"
-                                                    Height="28"
-                                                    Margin="4"
-                                                    ClipToBounds="True"
-                                                    CornerRadius="14">
-                                                    <Image
-                                                        async:ImageLoader.Source="{Binding Thumbnail}"
-                                                        Stretch="Fill" />
-                                                </Border>
-                                                <husk:ProgressRing
-                                                    Width="32"
-                                                    Height="32"
-                                                    IsIndeterminate="{Binding IsProgressIndeterminate}"
-                                                    ShowProgressText="False"
-                                                    StrokeWidth="4"
-                                                    TrackStrokeWidth="4"
-                                                    Value="{Binding Progress}">
-                                                    <husk:ProgressRing.IsVisible>
-                                                        <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                            <Binding Path="IsProgressBarVisible" />
-                                                            <Binding
-                                                                Converter="{x:Static BoolConverters.Not}"
-                                                                Path="IsCancelled" />
-                                                        </MultiBinding>
-                                                    </husk:ProgressRing.IsVisible>
-                                                </husk:ProgressRing>
-                                            </Panel>
-                                            <StackPanel
-                                                Grid.Row="0"
-                                                Grid.Column="1"
-                                                Orientation="Horizontal">
-                                                <husk:Tag
-                                                    Classes="Small Primary"
-                                                    Margin="8,0,0,0"
-                                                    IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
-                                                    Content="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_UnreadTagText}}" />
-                                                <husk:Tag
-                                                    Classes="Small"
-                                                    Margin="8,0,0,0"
-                                                    IsVisible="{Binding IsCancelled}"
-                                                    Content="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_CancelledTagText}}" />
-                                            </StackPanel>
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="2"
-                                                Margin="8,0,0,0"
-                                                FontWeight="{StaticResource ControlStrongFontWeight}"
-                                                Text="{Binding Title}"
-                                                TextTrimming="CharacterEllipsis" />
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="3"
-                                                Margin="8,0,0,0"
-                                                Foreground="{StaticResource ControlSecondaryForegroundBrush}"
-                                                Text="{Binding PublishedAt}" />
-                                            <Button
-                                                Grid.Row="0"
-                                                Grid.Column="4"
-                                                Classes="Small"
-                                                Margin="8,0,0,0"
-                                                Padding="8,2"
-                                                CornerRadius="{StaticResource SmallCornerRadius}">
-                                                <Button.Flyout>
-                                                    <MenuFlyout>
-                                                        <MenuItem
-                                                            IsVisible="{Binding IsRead, Converter={x:Static BoolConverters.Not}}"
-                                                            Command="{Binding $parent[app:NotificationSidebar].((app:NotificationSidebarModel)DataContext).MarkAsReadCommand, FallbackValue={x:Null}}"
-                                                            CommandParameter="{Binding}"
-                                                            Header="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_MarkAsReadMenuText}}"
-                                                            Icon="{fie:SymbolIcon CheckmarkCircle,
-                                                                                  FontSize={StaticResource MediumFontSize}}" />
-                                                        <MenuItem
-                                                            IsVisible="{Binding IsRead}"
-                                                            Command="{Binding $parent[app:NotificationSidebar].((app:NotificationSidebarModel)DataContext).MarkAsUnreadCommand, FallbackValue={x:Null}}"
-                                                            CommandParameter="{Binding}"
-                                                            Header="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_MarkAsUnreadMenuText}}"
-                                                            Icon="{fie:SymbolIcon CheckmarkCircleHint,
-                                                                                  FontSize={StaticResource MediumFontSize}}" />
-                                                        <MenuItem
-                                                            Command="{Binding $parent[app:NotificationSidebar].((app:NotificationSidebarModel)DataContext).RemoveNotificationCommand, FallbackValue={x:Null}}"
-                                                            CommandParameter="{Binding}"
-                                                            Header="{Translate {x:Static app:LanguageManager+Keys.NotificationSidebar_RemoveMenuText}}"
-                                                            Icon="{fie:SymbolIcon DismissCircle,
-                                                                                  FontSize={StaticResource MediumFontSize}}" />
-                                                    </MenuFlyout>
-                                                </Button.Flyout>
-                                                <fi:SymbolIcon
-                                                    FontSize="{StaticResource SmallFontSize}"
-                                                    Symbol="MoreHorizontal" />
-                                            </Button>
-                                            <TextBlock
-                                                Grid.Row="1"
-                                                Grid.Column="1"
-                                                Grid.ColumnSpan="4"
-                                                Margin="8,0,0,0"
-                                                Text="{Binding Message}"
-                                                TextWrapping="Wrap" />
-                                        </Grid>
-                                    </DockPanel>
-                                </Panel>
+                                    </Grid>
+                                    <husk:SwitchContainer
+                                        Grid.Row="0"
+                                        TargetType="husk:GrowlLevel"
+                                        Value="{Binding Level}">
+                                        <husk:SwitchCase Value="Information">
+                                            <Border Background="{DynamicResource ControlBorderBrush}" />
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="Success">
+                                            <Border Background="{DynamicResource ControlSuccessBorderBrush}" />
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="Warning">
+                                            <Border Background="{DynamicResource ControlWarningBorderBrush}" />
+                                        </husk:SwitchCase>
+                                        <husk:SwitchCase Value="Danger">
+                                            <Border Background="{DynamicResource ControlDangerBorderBrush}" />
+                                        </husk:SwitchCase>
+                                    </husk:SwitchContainer>
+                                </Grid>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

@@ -3277,6 +3277,21 @@
     <data name="NotificationSidebar_RemoveMenuText" xml:space="preserve">
         <value>Remove</value>
     </data>
+    <data name="NotificationSidebar_MoreActionsButtonText" xml:space="preserve">
+        <value>Notification actions</value>
+    </data>
+    <data name="GrowlLevel_Information" xml:space="preserve">
+        <value>Information</value>
+    </data>
+    <data name="GrowlLevel_Success" xml:space="preserve">
+        <value>Success</value>
+    </data>
+    <data name="GrowlLevel_Warning" xml:space="preserve">
+        <value>Warning</value>
+    </data>
+    <data name="GrowlLevel_Danger" xml:space="preserve">
+        <value>Error</value>
+    </data>
     <data name="ProfileRuleModal_NormalizingLabelText" xml:space="preserve">
         <value>Normalize File Name</value>
     </data>

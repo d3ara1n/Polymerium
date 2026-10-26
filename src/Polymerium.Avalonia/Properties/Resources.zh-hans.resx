@@ -3268,6 +3268,21 @@
     <data name="NotificationSidebar_RemoveMenuText" xml:space="preserve">
         <value>移除</value>
     </data>
+    <data name="NotificationSidebar_MoreActionsButtonText" xml:space="preserve">
+        <value>通知操作</value>
+    </data>
+    <data name="GrowlLevel_Information" xml:space="preserve">
+        <value>信息</value>
+    </data>
+    <data name="GrowlLevel_Success" xml:space="preserve">
+        <value>成功</value>
+    </data>
+    <data name="GrowlLevel_Warning" xml:space="preserve">
+        <value>警告</value>
+    </data>
+    <data name="GrowlLevel_Danger" xml:space="preserve">
+        <value>错误</value>
+    </data>
     <data name="ProfileRuleModal_NormalizingLabelText" xml:space="preserve">
         <value>标准化文件名</value>
     </data>

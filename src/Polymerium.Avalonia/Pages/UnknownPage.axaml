@@ -273,6 +273,50 @@
                     </husk:InfoBar>
                 </StackPanel>
             </TabItem>
+            <TabItem Header="Notifications">
+                <StackPanel Spacing="8">
+                    <DockPanel HorizontalSpacing="12">
+                        <Button
+                            DockPanel.Dock="Right"
+                            Classes="Small"
+                            Command="{Binding OpenNotificationSidebarCommand}"
+                            Content="Open notification center"
+                            Theme="{StaticResource OutlineButtonTheme}" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource MediumFontSize}"
+                            FontWeight="{StaticResource ControlStrongFontWeight}"
+                            Text="Notification preview" />
+                    </DockPanel>
+                    <TextBlock
+                        Foreground="{StaticResource ControlSecondaryForegroundBrush}"
+                        Text="Send samples, then open the notification center to check read states, severity strips, text wrapping, thumbnails, and actions. Advance or finish the progress sample manually."
+                        TextWrapping="Wrap" />
+                    <WrapPanel ItemSpacing="8" LineSpacing="8">
+                        <Button
+                            Command="{Binding ShowInformationCommand}"
+                            Content="Information" />
+                        <Button
+                            Command="{Binding ShowSuccessCommand}"
+                            Content="Success" />
+                        <Button
+                            Command="{Binding ShowWarningCommand}"
+                            Content="Warning and long text" />
+                        <Button
+                            Command="{Binding ShowDangerCommand}"
+                            Content="Error" />
+                        <Button
+                            Command="{Binding ShowThumbnailNotificationCommand}"
+                            Content="Thumbnail" />
+                        <Button
+                            Command="{Binding ShowActionNotificationCommand}"
+                            Content="Multiple actions" />
+                        <Button
+                            Command="{Binding ShowProgressNotificationCommand}"
+                            Content="Progress and expiry" />
+                    </WrapPanel>
+                </StackPanel>
+            </TabItem>
             <TabItem Header="Bar">
                 <StackPanel Spacing="12">
                     <ProgressBar
