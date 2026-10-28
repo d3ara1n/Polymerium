@@ -60,6 +60,7 @@ public partial class AppUpdateModal : Modal
             void Report(int value) => Dispatcher.UIThread.Post(() => DownloadProgress = value);
 
             await updateManager.DownloadUpdatesAsync(model.Update, Report);
+            await Task.Delay(2500);
 
             await Program.TerminateAsync(() => updateManager.ApplyUpdatesAndRestart(model.Update));
         }
