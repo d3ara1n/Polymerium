@@ -22,14 +22,19 @@ public static class InternalConverters
         return 0.0d;
     });
 
-    public static IMultiValueConverter OffsetToOpacity { get; } = new RelayMultiConverter((v, _, _) =>
+    public static IMultiValueConverter ToastHeaderOpacity { get; } = new RelayMultiConverter((v, parameter, _) =>
     {
-        if (v is [Vector offset, double max])
+        if (v is [Vector offset, double height, var revealOffset] && height > 0)
         {
-            return 1.0 - Math.Min(offset.Y, max) / max;
+            if (revealOffset is double start)
+            {
+                return Math.Clamp((offset.Y - start) / height, 0.0, 1.0);
+            }
+
+            return parameter is "Background" ? 0.0 : 1.0 - Math.Clamp(offset.Y / height, 0.0, 1.0);
         }
 
-        return v;
+        return 0.0;
     });
 
     public static IValueConverter RatioToPercent { get; } = new RelayConverter(v => v switch

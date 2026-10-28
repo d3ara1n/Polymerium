@@ -18,8 +18,10 @@
     d:DesignHeight="720"
     d:DesignWidth="1100"
     x:DataType="app:ExhibitModpackToastModel"
+    app:ToastHeader.RevealOffset="100"
+    Header="{Binding Modpack.ProjectName}"
     HorizontalAlignment="Stretch"
-    IsHeaderVisible="False"
+    IsHeaderVisible="True"
     VerticalAlignment="Bottom"
     mc:Ignorable="d">
     <Grid RowDefinitions="220,Auto">
@@ -106,11 +108,13 @@
                     </StackPanel>
                     <StackPanel
                         Grid.Column="2"
-                        VerticalAlignment="Top"
+                        VerticalAlignment="Bottom"
                         Orientation="Horizontal"
                         Spacing="8">
                         <Button
+                            Background="{StaticResource ControlBackgroundBrush}"
                             Command="{Binding FavoriteCommand}"
+                            AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.ExhibitModpackToast_FavoriteToolTip}}"
                             ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ExhibitModpackToast_FavoriteToolTip}}">
                             <husk:SwitchContainer
                                 TargetType="x:Boolean"
@@ -129,20 +133,14 @@
                             </husk:SwitchContainer>
                         </Button>
                         <Button
+                            Background="{StaticResource ControlBackgroundBrush}"
                             Command="{Binding NavigateUriCommand}"
                             CommandParameter="{Binding Modpack.Reference}"
+                            AutomationProperties.Name="{Translate {x:Static app:LanguageManager+Keys.ExhibitModpackToast_OpenProjectToolTip}}"
                             ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ExhibitModpackToast_OpenProjectToolTip}}">
                             <fi:SymbolIcon
                                 FontSize="{StaticResource MediumFontSize}"
                                 Symbol="Open" />
-                        </Button>
-                        <Button
-                            Command="{Binding $parent[husk:Toast].Dismiss}"
-                            IsCancel="True"
-                            ToolTip.Tip="{Translate {x:Static app:LanguageManager+Keys.ExhibitModpackToast_DismissToolTip}}">
-                            <fi:SymbolIcon
-                                FontSize="{StaticResource MediumFontSize}"
-                                Symbol="Dismiss" />
                         </Button>
                     </StackPanel>
                 </Grid>

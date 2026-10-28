@@ -1449,9 +1449,6 @@
     <data name="ExhibitModpackToast_OpenProjectToolTip" xml:space="preserve">
         <value>打开项目网站</value>
     </data>
-    <data name="ExhibitModpackToast_DismissToolTip" xml:space="preserve">
-        <value>关闭</value>
-    </data>
     <data name="ExhibitModpackToast_AboutTitle" xml:space="preserve">
         <value>关于</value>
     </data>
