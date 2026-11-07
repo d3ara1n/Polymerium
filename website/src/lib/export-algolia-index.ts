@@ -1,6 +1,6 @@
-import { source } from '@/lib/source';
+import { source } from './source.ts';
 import type { DocumentRecord } from 'fumadocs-core/search/algolia';
-import { i18n } from '@/lib/i18n';
+import { i18n } from './i18n.ts';
 
 export async function exportAlgoliaIndex(): Promise<DocumentRecord[]> {
   const results: DocumentRecord[] = [];

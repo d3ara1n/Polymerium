@@ -1,8 +1,8 @@
-import { docs } from 'collections/server';
+import { docs } from '../../.source/server.ts';
 import { loader } from 'fumadocs-core/source';
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
-import { i18n } from './i18n';
-import { docsContentRoute, docsImageRoute, docsRoute } from './shared';
+import { i18n } from './i18n.ts';
+import { docsContentRoute, docsImageRoute, docsRoute } from './shared.ts';
 
 export const source = loader({
   baseUrl: docsRoute,

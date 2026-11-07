@@ -2,10 +2,14 @@
   "name": "website",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "packageManager": "npm@12.2.0",
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "scripts": {
     "build": "next build",
-    "build:post": "node ./scripts/sync-algolia.mjs",
+    "build:post": "fumadocs-mdx && node ./scripts/sync-algolia.mjs",
     "dev": "next dev",
     "start": "next start",
     "notify:indexnow": "node ./scripts/notify-indexnow.mjs",
